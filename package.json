@@ -8,12 +8,17 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.12"
+    "nuxt": "3.0.0-rc.12",
+    "@intlify/nuxt3": "^0.2.4",
+    "@nuxtjs/supabase": "^0.2.1",
+    "@nuxtjs/tailwindcss": "^6.0.1"
   },
   "dependencies": {
-    "@nuxtjs/supabase": "^0.2.1",
-    "@nuxtjs/tailwindcss": "^6.0.1",
+    "@formkit/auto-animate": "^1.0.0-beta.3",
+    "@formkit/i18n": "^1.0.0-beta.11",
+    "@formkit/nuxt": "^1.0.0-beta.11",
     "@pinia/nuxt": "^0.4.3",
+    "click-outside-vue3": "^4.0.1",
     "vite-svg-loader": "^3.6.0"
   }
 }

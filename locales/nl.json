@@ -1,0 +1,83 @@
+{
+  "error": {
+    "404": {
+      "title": "Pagina niet gevonden",
+      "text": "Oeps. We kunnen deze pagina niet vinden"
+    },
+    "goHome": "Ga naar de thuispagina",
+    "general": {
+      "title": "Fout",
+      "text": "Er ging iets mis"
+    }
+  },
+  "success": {
+    "general": {
+      "title": "Succes",
+      "text": "Uw wijzigingen werden opgeslagen!"
+    }
+  },
+  "inputs": {
+    "emailLabel": "E-mail adres",
+    "passwordLabel": "Wachtwoord",
+    "usernameLabel": "Gebruikersnaam",
+    "nameLabel": "Volledige naam"
+  },
+  "register": {
+    "register": "Registreer",
+    "random": "Random avatar",
+    "toast": {
+      "success": {
+        "title": "Succesvol registreerd",
+        "text": "Bevestig je emailadres via de mail die we je hebben gestuurd en daarna kan je inloggen."
+      }
+    }
+  },
+  "login": {
+    "title": "Log in op uw account",
+    "signIn": "Log in",
+    "new": "Nieuwe gebruiker",
+    "forgot": "Wachtwoord vergeten"
+  },
+  "resetPassword": {
+    "title": "Wachtwoord resetten",
+    "reset": "Update wachtwoord",
+    "toast": {
+      "success": {
+        "title": "Wachtwoord succesvol veranderd"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Wachtwoord vergeten",
+    "reset": "Verzend reset email",
+    "toast": {
+      "success": {
+        "title": "Email is verstuurd",
+        "text": "De email is verstuurd naar jouw mailbox."
+      }
+    }
+  },
+  "logout": "Uitloggen",
+  "profile": {
+    "password": "Passwoord aanpassen"
+  },
+  "account": {
+    "general": {
+      "username": "Gebruikersnaam",
+      "name": "Naam",
+      "role": "Rol",
+      "profile": "Profiel",
+      "avatar": "Avatar"
+    }
+  },
+  "table": {
+    "noData": "Geen data in de tabel"
+  },
+  "actions": {
+    "add": "Toevoegen",
+    "selectOption": "Selecteer een optie",
+    "delete": "Verwijderen",
+    "cancel": "Annuleren",
+    "save": "Opslaan"
+  }
+}

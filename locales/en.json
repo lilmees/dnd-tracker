@@ -1,0 +1,83 @@
+{
+  "error": {
+    "404": {
+      "title": "Oops, we could not find that page",
+      "text": "Oops, we could not find that page"
+    },
+    "goHome": "Go to homepage",
+    "general": {
+      "title": "Error",
+      "text": "Something went wrong"
+    }
+  },
+  "success": {
+    "general": {
+      "title": "Success",
+      "text": "Your changes have been successfully saved!"
+    }
+  },
+  "inputs": {
+    "emailLabel": "Email address",
+    "passwordLabel": "Password",
+    "usernameLabel": "Username",
+    "nameLabel": "Full name"
+  },
+  "register": {
+    "register": "Register",
+    "random": "Random avatar",
+    "toast": {
+      "success": {
+        "title": "Successfully registrerd",
+        "text": "Confirm your email address with the email we have sent you and afterwards you can login."
+      }
+    }
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "signIn": "Sign in",
+    "new": "New user",
+    "forgot": "Forgot password"
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "reset": "Reset password",
+    "toast": {
+      "success": {
+        "title": "Password successfully resetted"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Reset password",
+    "reset": "Send reset email",
+    "toast": {
+      "success": {
+        "title": "Email is sent",
+        "text": "The email is sent to your mailbox."
+      }
+    }
+  },
+  "logout": "Logout",
+  "profile": {
+    "password": "Update password"
+  },
+  "account": {
+    "general": {
+      "username": "Username",
+      "name": "Name",
+      "role": "Role",
+      "profile": "Profile",
+      "avatar": "Avatar"
+    }
+  },
+  "table": {
+    "noData": "No data in table"
+  },
+  "actions": {
+    "add": "Add",
+    "selectOption": "Select an option",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save"
+  }
+}

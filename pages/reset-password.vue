@@ -1,0 +1,50 @@
+<script setup>
+import { useI18n } from 'vue-i18n'
+import { useAuthStore } from '@/store/auth'
+import { useToastStore } from '@/store/toast'
+
+const { t } = useI18n({ useScope: 'global' })
+const store = useAuthStore()
+const toast = useToastStore()
+const form = reactive({ password: '' })
+const isLoading = ref(false)
+const error = ref()
+
+async function resetPassword(data) {
+  const { __init, password } = data
+  error.value = null
+  try {
+    isLoading.value = true
+    await store.updateUser({ password })
+    toast.success({ title: t('resetPassword.toast.success.title') })
+    navigateTo('/')
+  } catch (err) {
+    error.value = err.message
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text'),
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>
+
+<template>
+  <NuxtLayout name="centered">
+    <section class="space-y-6">
+      <h1 class="text-center">{{ $t('resetPassword.title') }}</h1>
+      <img src="@/assets/images/dice.png" alt="D20 logo dice" class="w-10 h-10 mx-auto visibility-pulse" />
+      <p v-if="error" class="text-red-400 text-center">{{ error }}</p>
+      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
+        <Input name="password" type="password" :label="$t('inputs.passwordLabel')" validation="required|length:6,50" />
+        <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline bold />
+      </FormKit>
+      <div class="flex flex-wrap gap-2 justify-center">
+        <NuxtLink to="/">
+          <TextButton>{{ $t('actions.cancel') }}</TextButton>
+        </NuxtLink>
+      </div>
+    </section>
+  </NuxtLayout>
+</template>

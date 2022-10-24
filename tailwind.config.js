@@ -8,11 +8,22 @@ module.exports = {
         title: ['Inter', ...defaultTheme.fontFamily.sans],
         text: ['Inter', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        background: '#0e1315',
+        tracker: '#161d21',
+        primary: '#9eade6',
+        secondary: '#b4bfcd',
+        success: '#cede9c',
+        info: '#35a4cc',
+        warning: '#ffdf8a',
+        help: '#b09ce5',
+        danger: '#e693a9',
+      },
     },
     container: {
       center: true,
       padding: {
-        DEFAULT: '1rem',
+        DEFAULT: '0rem',
         sm: '2rem',
         lg: '4rem',
         xl: '5rem',
