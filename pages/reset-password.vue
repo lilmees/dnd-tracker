@@ -35,7 +35,7 @@ async function resetPassword(data) {
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('resetPassword.title') }}</h1>
       <img src="@/assets/images/dice.png" alt="D20 logo dice" class="w-10 h-10 mx-auto visibility-pulse" />
-      <p v-if="error" class="text-red-400 text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
         <Input name="password" type="password" :label="$t('inputs.passwordLabel')" validation="required|length:6,50" />
         <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline bold />

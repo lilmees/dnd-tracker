@@ -57,7 +57,13 @@
       }
     }
   },
-  "logout": "Uitloggen",
+  "navigation": {
+    "logout": "Uitloggen",
+    "login": "Login",
+    "home": "Thuis",
+    "encounters": "Encounters",
+    "profile": "Profiel"
+  },
   "profile": {
     "password": "Passwoord aanpassen"
   },

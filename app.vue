@@ -13,8 +13,8 @@ const profile = useProfileStore()
 const supabase = useSupabaseClient()
 
 supabase.auth.onAuthStateChange(async (event, session) => {
+  profile.fetch()
   if (event == 'PASSWORD_RECOVERY') navigateTo('/reset-password')
-  else profile.fetch()
 })
 
 onBeforeMount(() => profile.fetch())

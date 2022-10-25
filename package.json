@@ -8,10 +8,12 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.12",
     "@intlify/nuxt3": "^0.2.4",
-    "@nuxtjs/supabase": "^0.2.1",
-    "@nuxtjs/tailwindcss": "^6.0.1"
+    "@nuxtjs/supabase": "^0.1.27",
+    "@nuxtjs/tailwindcss": "^6.0.1",
+    "@vueuse/core": "^9.3.1",
+    "@vueuse/nuxt": "^9.3.1",
+    "nuxt": "3.0.0-rc.12"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",

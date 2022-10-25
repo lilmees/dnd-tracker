@@ -32,7 +32,7 @@
   }
 
   .error-message {
-    @apply text-red-400 body-extra-small mt-1;
+    @apply text-danger body-extra-small mt-1;
   }
 
   .help-message {

@@ -57,7 +57,13 @@
       }
     }
   },
-  "logout": "Logout",
+  "navigation": {
+    "logout": "Log out",
+    "login": "Log in",
+    "home": "Home",
+    "encounters": "Encounters",
+    "profile": "Profile"
+  },
   "profile": {
     "password": "Update password"
   },

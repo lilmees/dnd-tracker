@@ -1,11 +1,10 @@
 <script setup>
-import { useAuthStore } from '@/store/auth'
-
-const store = useAuthStore()
+const user = useSupabaseUser()
 </script>
 
 <template>
-  <NuxtLayout>
-    <Button @click="store.logout()">logout</Button>
+  <NuxtLayout name="wide">
+    <p>home</p>
+    <p>logged in: {{ !!user }}</p>
   </NuxtLayout>
 </template>

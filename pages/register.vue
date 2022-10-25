@@ -49,7 +49,7 @@ function randomAvatar() {
         <img v-if="image" :src="image" alt="avatar" />
         <TextButton @click="randomAvatar">{{ $t('register.random') }}</TextButton>
       </div>
-      <p v-if="error" class="text-red-400 text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
         <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30|alpha_spaces" />
         <Input name="username" :label="$t('inputs.usernameLabel')" validation="required|length:3,15|alpha_spaces" />

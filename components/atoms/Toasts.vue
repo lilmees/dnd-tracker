@@ -49,7 +49,7 @@ const toasts = computed(() => [...store.toasts].sort((a, b) => b.key - a.key))
             </p>
           </div>
           <Remove
-            class="max-w-[20px] max-h-[20px] w-full h-full mr-2 self-start text-red-400 cursor-pointer"
+            class="max-w-[20px] max-h-[20px] w-full h-full mr-2 self-start text-danger cursor-pointer"
             @click="store.remove(toast.key)"
           />
         </div>

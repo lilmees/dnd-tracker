@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useRuntimeConfig, useSupabaseClient } from '#imports'
+import { useSupabaseClient } from '#imports'
 
 export const useAuthStore = defineStore('useAuthStore', {
   actions: {
@@ -15,27 +15,26 @@ export const useAuthStore = defineStore('useAuthStore', {
         .insert([{ ...data, email: credentails.email, id: user.id }])
       if (profileError) throw profileError
     },
-    async login(credentails) {
-      const config = useRuntimeConfig()
-      const supabase = useSupabaseClient()
-      const { error } = await supabase.auth.signInWithPassword(credentails, {
-        redirectTo: config.supabaseRedirectUrl,
-      })
+    async login(credentials) {
+      const { auth } = useSupabaseClient()
+      const { error } = await auth.signIn(credentials)
       if (error) throw error
+      else setTimeout(() => navigateTo('/'), 100)
     },
     async logout() {
-      const supabase = useSupabaseClient()
-      const { error } = await supabase.auth.signOut()
+      const { auth } = useSupabaseClient()
+      const { error } = await auth.signOut()
       if (error) throw error
+      else setTimeout(() => navigateTo('/'), 100)
     },
     async forgotPassword(email) {
-      const supabase = useSupabaseClient()
-      const { error } = await supabase.auth.resetPasswordForEmail(email)
+      const { auth } = useSupabaseClient()
+      const { error } = await auth.resetPasswordForEmail(email)
       if (error) throw error
     },
     async updateUser(payload) {
-      const supabase = useSupabaseClient()
-      const { error } = await supabase.auth.updateUser(payload)
+      const { auth } = useSupabaseClient()
+      const { error } = await auth.updateUser(payload)
       if (error) throw error
     },
   },
