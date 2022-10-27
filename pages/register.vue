@@ -51,10 +51,21 @@ function randomAvatar() {
       </div>
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
-        <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30|alpha_spaces" />
-        <Input name="username" :label="$t('inputs.usernameLabel')" validation="required|length:3,15|alpha_spaces" />
-        <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" />
-        <Input name="password" type="password" :label="$t('inputs.passwordLabel')" validation="required|length:6,50" />
+        <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30|alpha_spaces" required />
+        <Input
+          name="username"
+          :label="$t('inputs.usernameLabel')"
+          validation="required|length:3,15|alpha_spaces"
+          required
+        />
+        <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
+        <Input
+          name="password"
+          type="password"
+          :label="$t('inputs.passwordLabel')"
+          validation="required|length:6,50"
+          required
+        />
         <Button type="submit" :label="$t('register.register')" :loading="isLoading" inline bold />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">

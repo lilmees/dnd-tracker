@@ -20,7 +20,15 @@
     "emailLabel": "E-mail adres",
     "passwordLabel": "Wachtwoord",
     "usernameLabel": "Gebruikersnaam",
-    "nameLabel": "Volledige naam"
+    "nameLabel": "Volledige naam",
+    "titleLabel": "Titel",
+    "backgroundLabel": "Achtergrond",
+    "groupLabel": "Groep"
+  },
+  "encounters": {
+    "title": "Maak een nieuwe encounter",
+    "add": "Encounter creëren",
+    "random": "Willekeurig"
   },
   "register": {
     "register": "Registreer",

@@ -8,6 +8,7 @@ defineProps({
   modelValue: { type: [String, Number] },
   validation: { type: String },
   disabled: { type: Boolean, default: false },
+  required: { type: Boolean, default: false },
   size: { type: String, default: 'large' },
   options: { type: Array, default: () => [] },
   validationRules: { type: Object },
@@ -26,7 +27,7 @@ function handleIconClick(node) {
     :name="name"
     :placeholder="placeholder"
     :help="help"
-    :label="label"
+    :label="required ? label + ' *' : label"
     :options="options"
     :validation="validation"
     :validation-rules="validationRules"

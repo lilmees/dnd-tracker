@@ -20,7 +20,15 @@
     "emailLabel": "Email address",
     "passwordLabel": "Password",
     "usernameLabel": "Username",
-    "nameLabel": "Full name"
+    "nameLabel": "Full name",
+    "titleLabel": "Title",
+    "backgroundLabel": "Background",
+    "groupLabel": "Group"
+  },
+  "encounters": {
+    "title": "Create a new encounter",
+    "add": "Create encounter",
+    "random": "Random"
   },
   "register": {
     "register": "Register",
