@@ -49,6 +49,7 @@ async function logout() {
       >
         {{ $t('navigation.logout') }}
       </div>
+      <LangSwitcher />
     </div>
 
     <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-primary" @click="isOpen = true" />

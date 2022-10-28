@@ -26,5 +26,6 @@ defineProps({
         {{ $t('navigation.logout') }}
       </div>
     </div>
+    <LangSwitcher class="pt-10" />
   </div>
 </template>
