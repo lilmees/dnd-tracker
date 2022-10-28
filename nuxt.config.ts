@@ -3,7 +3,7 @@ import svgLoader from 'vite-svg-loader'
 export default defineNuxtConfig({
   components: {
     global: true,
-    dirs: ['~/components/atoms', '~/components/molecules', '~/components/organisms'],
+    dirs: ['~/components/atoms', '~/components/molecules', '~/components/organisms','~/components/templates'],
   },
   css: ['@/assets/css/global.css'],
   buildModules: ['@nuxtjs/tailwindcss', '@intlify/nuxt3'],

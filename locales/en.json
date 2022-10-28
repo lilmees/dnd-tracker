@@ -20,15 +20,49 @@
     "emailLabel": "Email address",
     "passwordLabel": "Password",
     "usernameLabel": "Username",
-    "nameLabel": "Full name",
+    "nameLabel": "Name",
+    "fullNameLabel": "Full name",
     "titleLabel": "Title",
     "backgroundLabel": "Background",
-    "groupLabel": "Group"
+    "groupLabel": "Group",
+    "initiativeLabel": "Initiative",
+    "acLabel": "Armour class",
+    "hpLabel": "Health points"
   },
   "encounters": {
     "title": "Create a new encounter",
     "add": "Create encounter",
     "random": "Random"
+  },
+  "encounter": {
+    "next": "Next initiative",
+    "back": "Back to encounters",
+    "round": "Round",
+    "rollHide": "Hide dice roller",
+    "update": {
+      "name": "Update name",
+      "initiative": "Update initiative",
+      "ac": "Update AC",
+      "hp": "Update HP"
+    },
+    "addInitiative": "Add initiative",
+    "headers": {
+      "name": "Name",
+      "init": "Init",
+      "ac": "AC",
+      "hp": "HP",
+      "actions": "Actions",
+      "conditions": "Conditions",
+      "deathSaves": "Death saves",
+      "concentration": "Concentration",
+      "modify": "Modify"
+    },
+    "toast": {
+      "removed": {
+        "title": "Encounter is removed",
+        "text": "Someone removed the encounter so it can't be used anymore"
+      }
+    }
   },
   "register": {
     "register": "Register",
@@ -92,6 +126,8 @@
     "selectOption": "Select an option",
     "delete": "Delete",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "roll": "Roll dice",
+    "update": "Update"
   }
 }

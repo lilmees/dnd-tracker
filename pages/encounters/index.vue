@@ -4,6 +4,7 @@ import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
 definePageMeta({ middleware: ['auth'] })
+useHead({ title: 'Encounters' })
 
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })

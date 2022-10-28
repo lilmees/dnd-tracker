@@ -5,7 +5,6 @@ defineProps({
   disabled: { type: Boolean, default: false },
   label: { type: String, default: 'button' },
   loading: { type: Boolean, default: false },
-  backgroundColor: { type: String },
   bold: { type: Boolean, default: false },
   inline: { type: Boolean, default: false },
 })
@@ -18,7 +17,6 @@ defineProps({
     :disabled="disabled || loading"
     input-class="bg-black text-white py-2 px-6 shadow rounded outline-none disabled:bg-gray-400"
     :style="{
-      backgroundColor: backgroundColor,
       fontWeight: bold ? 'bold' : 'normal',
       width: inline ? '100%' : 'auto',
     }"

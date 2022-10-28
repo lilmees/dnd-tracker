@@ -51,7 +51,12 @@ function randomAvatar() {
       </div>
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
-        <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30|alpha_spaces" required />
+        <Input
+          name="name"
+          :label="$t('inputs.fullNameLabel')"
+          validation="required|length:3,30|alpha_spaces"
+          required
+        />
         <Input
           name="username"
           :label="$t('inputs.usernameLabel')"

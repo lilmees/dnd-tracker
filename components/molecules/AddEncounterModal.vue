@@ -28,6 +28,7 @@ async function addEncounter(data) {
     created_by: user.value.id,
     owners: [user.value.id],
     color: contrastColor(formData.background),
+    activeIndex: 0,
   }
 
   try {

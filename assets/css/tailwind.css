@@ -32,11 +32,11 @@
   }
 
   .error-message {
-    @apply text-danger body-extra-small mt-1;
+    @apply text-danger body-small mt-1;
   }
 
   .help-message {
-    @apply text-gray-400 body-extra-small mt-1;
+    @apply text-gray-400 body-small mt-1;
   }
 
   .tracker-shadow {
@@ -49,6 +49,10 @@
 
   .visibility-pulse {
     animation: pulsate-opacity 2s ease-in-out infinite;
+  }
+
+  .container-max {
+    @apply max-w-[1800px] mx-auto;
   }
 
   .no-scrollbar::-webkit-scrollbar {

@@ -20,15 +20,49 @@
     "emailLabel": "E-mail adres",
     "passwordLabel": "Wachtwoord",
     "usernameLabel": "Gebruikersnaam",
-    "nameLabel": "Volledige naam",
+    "nameLabel": "Naam",
+    "fullNameLabel": "Volledige naam",
     "titleLabel": "Titel",
     "backgroundLabel": "Achtergrond",
-    "groupLabel": "Groep"
+    "groupLabel": "Groep",
+    "initiativeLabel": "Initiatief",
+    "acLabel": "Pantser klasse",
+    "hpLabel": "Levens punten"
   },
   "encounters": {
     "title": "Maak een nieuwe encounter",
     "add": "Encounter creëren",
     "random": "Willekeurig"
+  },
+  "encounter": {
+    "next": "Volgende",
+    "back": "Terug naar encounters",
+    "round": "Ronde",
+    "rollHide": "Verberg dobbelsteen roller",
+    "update": {
+      "name": "Update naam",
+      "initiative": "Update Initiatief",
+      "ac": "Update AC",
+      "hp": "Update HP"
+    },
+    "addInitiative": "Initiatief toevoegen",
+    "headers": {
+      "name": "Naam",
+      "init": "Init",
+      "ac": "AC",
+      "hp": "HP",
+      "actions": "Acties",
+      "conditions": "Condities",
+      "deathSaves": "Death saves",
+      "concentration": "Concentratie",
+      "modify": "Aanpassen"
+    },
+    "toast": {
+      "removed": {
+        "title": "Encounter is verwijderd",
+        "text": "Iemand heeft de encounter verwijderd, dus je kan hem niet meer gebruiken"
+      }
+    }
   },
   "register": {
     "register": "Registreer",
@@ -92,6 +126,8 @@
     "selectOption": "Selecteer een optie",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
-    "save": "Opslaan"
+    "save": "Opslaan",
+    "roll": "Rol dobbelsteen",
+    "update": "Update"
   }
 }
