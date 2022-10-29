@@ -27,7 +27,8 @@
     "groupLabel": "Group",
     "initiativeLabel": "Initiative",
     "acLabel": "Armour class",
-    "hpLabel": "Health points"
+    "hpLabel": "Health points",
+    "linkLabel": "Url link"
   },
   "encounters": {
     "title": "Create a new encounter",
@@ -43,9 +44,15 @@
       "name": "Update name",
       "initiative": "Update initiative",
       "ac": "Update AC",
-      "hp": "Update HP"
+      "hp": "Update HP",
+      "link": "Update link"
     },
+    "heal": "Heal",
+    "damage": "Damage",
+    "baseHealth": "Set base health",
+    "temp": "Temporary",
     "addInitiative": "Add initiative",
+    "link": "Link",
     "headers": {
       "name": "Name",
       "init": "Init",
@@ -61,6 +68,10 @@
       "removed": {
         "title": "Encounter is removed",
         "text": "Someone removed the encounter so it can't be used anymore"
+      },
+      "died": {
+        "title": "Player died",
+        "text": "The player has too many negative hp and is dead"
       }
     }
   },
@@ -128,6 +139,7 @@
     "cancel": "Cancel",
     "save": "Save",
     "roll": "Roll dice",
-    "update": "Update"
+    "update": "Update",
+    "link": "Go to link"
   }
 }

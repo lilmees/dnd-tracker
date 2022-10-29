@@ -6,33 +6,12 @@ const props = defineProps({
   index: { type: Number, required: true },
 })
 
-function updateName(name) {
-  props.row.name = name
-  emit('update', props.row)
-}
-
-function updateInitiative(initiative) {
-  props.row.initiative = initiative
-  emit('update', props.row)
-}
-
-function updateAc(ac) {
-  props.row.ac = ac
-  emit('update', props.row)
-}
-
-function updateHealth(health) {
-  props.row.health = health
-  emit('update', props.row)
-}
-
-function updateDeathSaves(deathSaves) {
-  props.row.deathSaves = deathSaves
-  emit('update', props.row)
-}
-
-function updateConcentration() {
-  props.row.concentration = !props.row.concentration
+function updateRow(key, value) {
+  props.row[key] = value
+  // when updateing health or ac also update the max values
+  if (key === 'health' || key === 'ac') {
+    props.row[`max${key.charAt(0).toUpperCase() + key.slice(1)}`] = value
+  }
   emit('update', props.row)
 }
 </script>
@@ -46,21 +25,20 @@ function updateConcentration() {
     }"
   >
     <td class="px-2 py-1">
-      <Name :name="row.name" @update="updateName" />
+      <Name :name="row.name" @update="updateRow('name', $event)" />
     </td>
     <td class="px-2 py-1">
-      <Initiative :initiative="row.initiative" @update="updateInitiative" />
+      <Initiative :initiative="row.initiative" @update="updateRow('initiative', $event)" />
     </td>
     <td class="px-2 py-1">
-      <Ac :ac="row.ac" :tempAc="row.tempAc" @update="updateAc" />
+      <Ac :ac="row.ac" :tempAc="row.tempAc" @update="updateRow('ac', $event)" />
     </td>
     <td class="p-2">
-      <Health :health="row.health" :tempHealth="row.tempHealth" @update="updateHealth" />
+      <Health :health="row.health" :tempHealth="row.tempHealth" @update="updateRow('health', $event)" />
     </td>
     <td class="p-2">
-      <div class="flex gap-1">
-        actions
-        <!-- <a v-if="row.link" :href="row.link" target="_blank">
+      <Actions :row="row" @update="$emit('update', $event)" />
+      <!-- <a v-if="row.link" :href="row.link" target="_blank">
                   <Link class="w-6 h-6 cursor-pointer" v-tooltip="'Open link'" />
                 </a>
                 <Link v-else class="w-6 h-6 text-slate-300" />
@@ -76,7 +54,6 @@ function updateConcentration() {
                   class="w-6 h-6 text-blue-400 cursor-pointer"
                 />
                 <Fire v-tooltip="'Add curse'" @click="addCurse = true" class="w-6 h-6 text-orange-400 cursor-pointer" /> -->
-      </div>
     </td>
     <td class="px-2 py-1">
       <div class="flex flex-col gap-1">
@@ -104,10 +81,10 @@ function updateConcentration() {
       </div>
     </td>
     <td class="px-2 py-1">
-      <DeathSaves :deathSaves="row.deathSaves" @update="updateDeathSaves" />
+      <DeathSaves :deathSaves="row.deathSaves" @update="updateRow('deathSaves', $event)" />
     </td>
     <td class="px-2 py-1">
-      <Concentration :concentration="row.concentration" @toggle="updateConcentration" />
+      <Concentration :concentration="row.concentration" @toggle="updateRow('concentration', !row.concentration)" />
     </td>
     <td class="px-2 py-1">
       <div class="flex flex-wrap gap-1">

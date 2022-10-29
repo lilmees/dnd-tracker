@@ -26,7 +26,7 @@ function updateAc(data) {
 <template>
   <div>
     <div class="flex gap-2">
-      <div class="peer cursor-pointer" @click="isOpen = true">
+      <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
         <p v-if="ac !== null">{{ ac }}</p>
         <span v-if="tempAc" class="text-primary">+{{ tempAc }}</span>
       </div>

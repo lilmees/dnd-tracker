@@ -1,5 +1,5 @@
 <script setup>
-import Update from '@/assets/icons/update.svg'
+import Heart from '@/assets/icons/heart.svg'
 
 const emit = defineEmits(['update'])
 const props = defineProps({
@@ -9,6 +9,7 @@ const props = defineProps({
 
 const isOpen = ref(false)
 const isRollingDice = ref(false)
+const type = ref()
 const form = reactive({ health: null })
 
 function diceResult(amount) {
@@ -17,21 +18,16 @@ function diceResult(amount) {
 
 function updateHealth(data) {
   const { __init, health } = data
-  emit('update', Number(health))
+  emit('update', { type: type.value, amount: Number(health) })
   isOpen.value = false
   isRollingDice.value = false
+  type.value = null
 }
 </script>
 
 <template>
   <div>
-    <div class="flex gap-2">
-      <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
-        <p v-if="health !== null" :class="{ 'text-danger font-bold': health < 1 }">{{ health }}</p>
-        <span v-if="tempHealth" class="text-primary">+{{ tempHealth }}</span>
-      </div>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />
-    </div>
+    <Heart class="w-6 h-6 cursor-pointer text-danger" @click="isOpen = true" />
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.hp') }}</h2>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateHealth">
@@ -54,7 +50,20 @@ function updateHealth(data) {
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline bold />
+        <div class="flex gap-2 flex-wrap">
+          <div class="grow" @click="type = 'heal'">
+            <Button type="submit" :label="$t('encounter.heal')" bold inline color="success" />
+          </div>
+          <div class="grow" @click="type = 'temp'">
+            <Button type="submit" :label="$t('encounter.temp')" bold inline color="primary" />
+          </div>
+          <div class="grow" @click="type = 'damage'">
+            <Button type="submit" :label="$t('encounter.damage')" bold inline color="danger" />
+          </div>
+          <div class="grow" @click="type = 'base'">
+            <Button type="submit" :label="$t('encounter.baseHealth')" bold inline color="warning" />
+          </div>
+        </div>
       </FormKit>
     </Modal>
   </div>

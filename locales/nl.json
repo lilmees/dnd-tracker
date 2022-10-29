@@ -27,7 +27,8 @@
     "groupLabel": "Groep",
     "initiativeLabel": "Initiatief",
     "acLabel": "Pantser klasse",
-    "hpLabel": "Levens punten"
+    "hpLabel": "Levens punten",
+    "linkLabel": "Url link"
   },
   "encounters": {
     "title": "Maak een nieuwe encounter",
@@ -43,9 +44,15 @@
       "name": "Update naam",
       "initiative": "Update Initiatief",
       "ac": "Update AC",
-      "hp": "Update HP"
+      "hp": "Update HP",
+      "link": "Update link"
     },
+    "heal": "Genezen",
+    "damage": "Schaden",
+    "baseHealth": "Zet basis leven",
+    "temp": "Tijdelijk",
     "addInitiative": "Initiatief toevoegen",
+    "link": "Link",
     "headers": {
       "name": "Naam",
       "init": "Init",
@@ -61,6 +68,10 @@
       "removed": {
         "title": "Encounter is verwijderd",
         "text": "Iemand heeft de encounter verwijderd, dus je kan hem niet meer gebruiken"
+      },
+      "died": {
+        "title": "Speler is gestorven",
+        "text": "De speler heeft te veel negatieve levenspunten en is dood"
       }
     }
   },
@@ -128,6 +139,7 @@
     "cancel": "Annuleren",
     "save": "Opslaan",
     "roll": "Rol dobbelsteen",
-    "update": "Update"
+    "update": "Update",
+    "link": "Ga naar link"
   }
 }
