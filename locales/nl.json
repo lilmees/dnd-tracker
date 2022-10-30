@@ -39,7 +39,6 @@
     "next": "Volgende",
     "back": "Terug naar encounters",
     "round": "Ronde",
-    "rollHide": "Verberg dobbelsteen roller",
     "update": {
       "name": "Update naam",
       "initiative": "Update Initiatief",
@@ -47,10 +46,6 @@
       "hp": "Update HP",
       "link": "Update link"
     },
-    "heal": "Genezen",
-    "damage": "Schaden",
-    "baseHealth": "Zet basis leven",
-    "temp": "Tijdelijk",
     "addInitiative": "Initiatief toevoegen",
     "link": "Link",
     "headers": {
@@ -140,6 +135,14 @@
     "save": "Opslaan",
     "roll": "Rol dobbelsteen",
     "update": "Update",
-    "link": "Ga naar link"
+    "link": "Ga naar link",
+    "heal": "Genezen",
+    "damage": "Schaden",
+    "reset": "Reset",
+    "remove": "Verwijderen",
+    "baseHealth": "Zet basis leven",
+    "baseAc": "Zet basis AC",
+    "temp": "Tijdelijk",
+    "rollHide": "Verberg dobbelsteen roller"
   }
 }

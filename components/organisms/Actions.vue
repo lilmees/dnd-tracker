@@ -48,11 +48,39 @@ function updateHealth(update) {
   if (props.row.health < 0) props.row.health = 0
   emit('update', props.row)
 }
+
+function updateAc(update) {
+  switch (update.type) {
+    case 'reset':
+      props.row.ac = props.row.maxAc
+      props.row.tempAc = 0
+      break
+    case 'remove':
+      if (props.row.tempAc) {
+        if (props.row.tempAc >= update.amount) props.row.tempAc = props.row.tempAc - update.amount
+        else {
+          props.row.ac = props.row.ac - (update.amount - props.row.tempAc)
+          props.row.tempAc = 0
+        }
+      } else props.row.ac = props.row.ac - update.amount
+      break
+    case 'temp':
+      props.row.tempAc = update.amount
+      break
+    case 'base':
+      props.row.ac = update.amount
+      props.row.maxAc = update.amount
+      break
+  }
+  if (props.row.ac < 0) props.row.ac = 0
+  emit('update', props.row)
+}
 </script>
 
 <template>
-  <div class="flex gap-2">
+  <div class="flex gap-1">
     <LinkModal :link="row.link" @update="updateLink" />
     <HeartModal :health="row.health" :tempHealth="row.tempHealth" @update="updateHealth" />
+    <AcModal :ac="row.ac" :tempAc="row.tempAc" @update="updateAc" />
   </div>
 </template>

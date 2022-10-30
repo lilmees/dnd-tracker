@@ -47,7 +47,7 @@ function updateHealth(data) {
           </div>
           <div class="mb-3">
             <Button
-              :label="isRollingDice ? $t('encounter.rollHide') : $t('actions.roll')"
+              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               bold
               @click="isRollingDice = !isRollingDice"
             />

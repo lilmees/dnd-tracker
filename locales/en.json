@@ -39,7 +39,6 @@
     "next": "Next initiative",
     "back": "Back to encounters",
     "round": "Round",
-    "rollHide": "Hide dice roller",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",
@@ -47,10 +46,6 @@
       "hp": "Update HP",
       "link": "Update link"
     },
-    "heal": "Heal",
-    "damage": "Damage",
-    "baseHealth": "Set base health",
-    "temp": "Temporary",
     "addInitiative": "Add initiative",
     "link": "Link",
     "headers": {
@@ -140,6 +135,14 @@
     "save": "Save",
     "roll": "Roll dice",
     "update": "Update",
-    "link": "Go to link"
+    "link": "Go to link",
+    "heal": "Heal",
+    "damage": "Damage",
+    "baseHealth": "Set base health",
+    "baseAc": "Set base AC",
+    "reset": "Reset",
+    "remove": "Remove",
+    "temp": "Temporary",
+    "rollHide": "Hide dice roller"
   }
 }
