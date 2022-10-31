@@ -20,6 +20,8 @@ const headers = ref([
   t('encounter.headers.modify'),
 ])
 
+const rowsSorted = computed(() => props.rows.sort((a, b) => b.initiative - a.initiative))
+
 function updateRow(row, index) {
   props.rows[index] = row
   emit('update', props.rows)
@@ -39,7 +41,7 @@ function updateRow(row, index) {
         </thead>
         <tbody v-if="rows.length > 0">
           <EncounterTableRow
-            v-for="(row, index) in rows"
+            v-for="(row, index) in rowsSorted"
             :key="row.id"
             :row="row"
             :activeIndex="activeIndex"
