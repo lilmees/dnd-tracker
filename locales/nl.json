@@ -42,6 +42,7 @@
     "addInitiative": "Initiatief toevoegen",
     "link": "Link",
     "conditionInfo": "Effect informatie",
+    "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
     "update": {
       "name": "Update naam",
       "initiative": "Update Initiatief",

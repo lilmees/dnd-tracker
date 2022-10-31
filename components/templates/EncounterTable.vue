@@ -45,6 +45,13 @@ function updateRow(row, index) {
             :activeIndex="activeIndex"
             :index="index"
             @update="updateRow($event, index)"
+            @copy="emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"
+            @delete="
+              $emit(
+                'update',
+                rows.filter(r => r.id !== $event)
+              )
+            "
           />
         </tbody>
       </table>

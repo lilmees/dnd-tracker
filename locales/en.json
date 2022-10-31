@@ -42,6 +42,7 @@
     "addInitiative": "Add initiative",
     "link": "Link",
     "conditionInfo": "Effect information",
+    "confirmDelete": "Are you sure you want to delete the current row",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",

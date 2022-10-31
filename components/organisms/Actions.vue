@@ -98,5 +98,10 @@ function updateCondition(conditions) {
       :conditions="row.conditions"
       @update="updateCondition"
     />
+    <!-- <CurseModal
+      v-tooltip="$t('encounter.tooltip.curse')"
+      :curses="row.curses"
+      @update="updateCurse"
+    /> -->
   </div>
 </template>
