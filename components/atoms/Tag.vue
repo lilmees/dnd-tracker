@@ -17,39 +17,41 @@ defineProps({
     },
   },
 })
-
-const isOpen = ref(true)
 </script>
 
 <template>
-  <div class="relative">
-    <div
-      class="relative px-3 py-1 font-semibold leading-tight rounded flex gap-2 w-fit items-center text-black"
-      :class="{
-        'bg-primary/50 ring-primary': color === 'primary',
-        'bg-secondary/50 ring-secondary': color === 'secondary',
-        'bg-success/50 ring-success': color === 'success' || !condition.negative,
-        'bg-info/50 ring-info': color === 'info',
-        'bg-warning/50 ring-warning': color === 'warning',
-        'bg-help/50 ring-help': color === 'help',
-        'bg-danger/50 ring-danger': color === 'danger' || condition.negative,
-        'ring-2': selected,
-      }"
-    >
-      <Remove
-        v-if="removable"
-        @click="$emit('remove', condition.id)"
-        class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
-      />
-      <Add
-        v-if="addable && !removable"
-        @click="$emit('add', condition)"
-        class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
-      />
-      <div>
-        {{ condition.name }}
-      </div>
-      <Info class="w-4 h-4 hover:scale-110 cursor-pointer" @click="$emit('info', condition.description.en)" />
+  <div
+    class="px-3 py-1 font-semibold leading-tight rounded flex gap-2 w-fit items-center text-black"
+    :class="{
+      'bg-primary/50 ring-primary': color === 'primary',
+      'bg-secondary/50 ring-secondary': color === 'secondary',
+      'bg-success/50 ring-success': color === 'success' || !condition.negative,
+      'bg-info/50 ring-info': color === 'info',
+      'bg-warning/50 ring-warning': color === 'warning',
+      'bg-help/50 ring-help': color === 'help',
+      'bg-danger/50 ring-danger': color === 'danger' || condition.negative,
+      'ring-2': selected,
+    }"
+  >
+    <Remove
+      v-tooltip="$t('actions.remove')"
+      v-if="removable"
+      @click="$emit('remove', condition.id)"
+      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+    />
+    <Add
+      v-tooltip="$t('actions.add')"
+      v-if="addable && !removable"
+      @click="$emit('add', condition)"
+      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+    />
+    <div>
+      {{ condition.name }}
     </div>
+    <Info
+      v-tooltip="$t('actions.info')"
+      class="w-4 h-4 hover:scale-110 cursor-pointer"
+      @click="$emit('info', condition.description.en)"
+    />
   </div>
 </template>

@@ -39,6 +39,9 @@
     "next": "Next initiative",
     "back": "Back to encounters",
     "round": "Round",
+    "addInitiative": "Add initiative",
+    "link": "Link",
+    "conditionInfo": "Effect information",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",
@@ -47,8 +50,13 @@
       "link": "Update link",
       "conditions": "Update conditions"
     },
-    "addInitiative": "Add initiative",
-    "link": "Link",
+    "tooltip": {
+      "link": "Link actions",
+      "hp": "HP actions",
+      "ac": "AC actions",
+      "condition": "Condition actions",
+      "curse": "Curse actions"
+    },
     "headers": {
       "name": "Name",
       "init": "Init",
@@ -148,6 +156,7 @@
     "remove": "Remove",
     "temp": "Temporary",
     "rollHide": "Hide dice roller",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "info": "Show information"
   }
 }

@@ -39,6 +39,9 @@
     "next": "Volgende",
     "back": "Terug naar encounters",
     "round": "Ronde",
+    "addInitiative": "Initiatief toevoegen",
+    "link": "Link",
+    "conditionInfo": "Effect informatie",
     "update": {
       "name": "Update naam",
       "initiative": "Update Initiatief",
@@ -47,8 +50,13 @@
       "link": "Update link",
       "conditions": "Update condities"
     },
-    "addInitiative": "Initiatief toevoegen",
-    "link": "Link",
+    "tooltip": {
+      "link": "Link acties",
+      "hp": "HP acties",
+      "ac": "AC acties",
+      "condition": "Condities acties",
+      "curse": "Vloek acties"
+    },
     "headers": {
       "name": "Naam",
       "init": "Init",
@@ -148,6 +156,7 @@
     "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
     "rollHide": "Verberg dobbelsteen roller",
-    "tryAgain": "Probeer opnieuw"
+    "tryAgain": "Probeer opnieuw",
+    "info": "Toon informatie"
   }
 }

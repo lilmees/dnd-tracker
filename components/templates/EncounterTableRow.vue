@@ -56,29 +56,7 @@ function updateRow(key, value) {
                 <Fire v-tooltip="'Add curse'" @click="addCurse = true" class="w-6 h-6 text-orange-400 cursor-pointer" /> -->
     </td>
     <td class="px-2 py-1">
-      <div class="flex flex-col gap-1">
-        conditions
-        <!-- <div v-if="conditions" class="flex flex-col gap-1">
-                  tags
-                  <Tag
-                    removable
-                    @remove="removeCondition($event, index)"
-                    v-for="condition in row.conditions"
-                    :key="condition"
-                    :condition="conditions[condition]"
-                  />
-                </div> -->
-        <div v-if="row.curses?.length > 0" class="flex flex-col gap-1">
-          curse
-          <!-- <Curse
-                    removable
-                    @remove="removeCurse($event, index)"
-                    v-for="curse in row.curses"
-                    :curse="curse"
-                    :key="curse.name"
-                  /> -->
-        </div>
-      </div>
+      <Effects :conditions="row.conditions" :curses="row.curses" @update="updateRow($event.type, $event.value)" />
     </td>
     <td class="px-2 py-1">
       <DeathSaves :deathSaves="row.deathSaves" @update="updateRow('deathSaves', $event)" />

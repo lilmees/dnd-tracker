@@ -47,7 +47,7 @@ function updateConditions() {
             addable
             :selected="selected.map(s => s.id).includes(condition.id)"
             :removable="selected.map(s => s.id).includes(condition.id)"
-            @add="selected.push($event)"
+            @add="selected = [...selected, $event]"
             @remove="selected = selected.filter(s => s.id !== $event)"
             @info="info = $event"
           />
