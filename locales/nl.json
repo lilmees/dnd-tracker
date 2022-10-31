@@ -78,7 +78,8 @@
       },
       "died": {
         "title": "Speler is gestorven",
-        "text": "De speler heeft te veel negatieve levenspunten en is dood"
+        "textMinHP": "De speler heeft te veel negatieve levenspunten en is dood",
+        "textDeathSaves": "De speler heeft 3 keer gefaald bij death saves en is dood"
       }
     }
   },

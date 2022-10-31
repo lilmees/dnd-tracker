@@ -41,7 +41,7 @@ function updateHealth(update) {
   if (props.row.health < 0 && Math.abs(props.row.health) >= props.row.maxHealth) {
     toast.info({
       title: t('encounter.toast.died.title'),
-      text: t('encounter.toast.died.text'),
+      text: t('encounter.toast.died.textMinHP'),
     })
   }
   // when health is an negative number change it to 0

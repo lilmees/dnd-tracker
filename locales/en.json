@@ -78,7 +78,8 @@
       },
       "died": {
         "title": "Player died",
-        "text": "The player has too many negative hp and is dead"
+        "textMinHP": "The player has too many negative hp and is dead",
+        "textDeathSaves": "The player failed his death saves three times and is dead"
       }
     }
   },
