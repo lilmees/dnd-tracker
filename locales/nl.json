@@ -44,7 +44,8 @@
       "initiative": "Update Initiatief",
       "ac": "Update AC",
       "hp": "Update HP",
-      "link": "Update link"
+      "link": "Update link",
+      "conditions": "Update condities"
     },
     "addInitiative": "Initiatief toevoegen",
     "link": "Link",
@@ -58,6 +59,9 @@
       "deathSaves": "Death saves",
       "concentration": "Concentratie",
       "modify": "Aanpassen"
+    },
+    "conditions": {
+      "fetchErrorTitle": "Fout bij het ophalen van conditions"
     },
     "toast": {
       "removed": {
@@ -143,6 +147,7 @@
     "baseHealth": "Zet basis leven",
     "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
-    "rollHide": "Verberg dobbelsteen roller"
+    "rollHide": "Verberg dobbelsteen roller",
+    "tryAgain": "Probeer opnieuw"
   }
 }

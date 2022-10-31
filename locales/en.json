@@ -44,7 +44,8 @@
       "initiative": "Update initiative",
       "ac": "Update AC",
       "hp": "Update HP",
-      "link": "Update link"
+      "link": "Update link",
+      "conditions": "Update conditions"
     },
     "addInitiative": "Add initiative",
     "link": "Link",
@@ -58,6 +59,9 @@
       "deathSaves": "Death saves",
       "concentration": "Concentration",
       "modify": "Modify"
+    },
+    "conditions": {
+      "fetchErrorTitle": "Error while getting conditions"
     },
     "toast": {
       "removed": {
@@ -143,6 +147,7 @@
     "reset": "Reset",
     "remove": "Remove",
     "temp": "Temporary",
-    "rollHide": "Hide dice roller"
+    "rollHide": "Hide dice roller",
+    "tryAgain": "Try again"
   }
 }

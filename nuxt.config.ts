@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     dirs: ['~/components/atoms', '~/components/molecules', '~/components/organisms','~/components/templates'],
   },
   css: ['@/assets/css/global.css'],
-  buildModules: ['@nuxtjs/tailwindcss', '@intlify/nuxt3'],
+  buildModules: ['@nuxtjs/tailwindcss', '@intlify/nuxt3','floating-vue/nuxt'],
   modules: ['@nuxtjs/supabase', '@vueuse/nuxt', '@pinia/nuxt', '@formkit/nuxt'],
   runtimeConfig: {
     public: {

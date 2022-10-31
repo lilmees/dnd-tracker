@@ -72,7 +72,13 @@ function updateAc(update) {
       props.row.maxAc = update.amount
       break
   }
+  // when ac is an negative number change it to 0
   if (props.row.ac < 0) props.row.ac = 0
+  emit('update', props.row)
+}
+
+function updateCondition(conditions) {
+  props.row.conditions = conditions
   emit('update', props.row)
 }
 </script>
@@ -82,5 +88,6 @@ function updateAc(update) {
     <LinkModal :link="row.link" @update="updateLink" />
     <HeartModal :health="row.health" :tempHealth="row.tempHealth" @update="updateHealth" />
     <AcModal :ac="row.ac" :tempAc="row.tempAc" @update="updateAc" />
+    <ConditionModal :conditions="row.conditions" @update="updateCondition" />
   </div>
 </template>

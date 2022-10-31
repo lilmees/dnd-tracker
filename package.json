@@ -21,6 +21,7 @@
     "@formkit/nuxt": "^1.0.0-beta.11",
     "@pinia/nuxt": "^0.4.3",
     "click-outside-vue3": "^4.0.1",
+    "floating-vue": "^2.0.0-beta.20",
     "vite-svg-loader": "^3.6.0"
   }
 }
