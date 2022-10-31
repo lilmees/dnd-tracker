@@ -20,8 +20,8 @@ function updateRow(key, value) {
   <tr
     class="border-b border-primary"
     :class="{
-      '!bg-primary/10 tracker-shadow': index === activeIndex,
-      'bg-danger/30': row.health !== null && row.health < 1,
+      '!bg-primary/20 tracker-shadow': index === activeIndex,
+      'bg-danger/20': row.health !== null && row.health < 1,
     }"
   >
     <td class="px-2 py-1">
