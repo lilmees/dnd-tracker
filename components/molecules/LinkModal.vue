@@ -8,8 +8,7 @@ const isOpen = ref(false)
 const isUpdating = ref(false)
 const form = reactive({ link: null })
 
-function updateLink(data) {
-  const { __init, link } = data
+function updateLink({ __init, link }) {
   emit('update', link)
   isOpen.value = false
   isUpdating.value = false

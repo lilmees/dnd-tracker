@@ -15,8 +15,7 @@ const image = ref(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 
-async function register(data) {
-  const { __init, username, name, ...credentials } = data
+async function register({ __init, username, name, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true

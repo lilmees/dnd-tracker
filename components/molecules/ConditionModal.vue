@@ -11,10 +11,7 @@ const isOpen = ref(false)
 const info = ref()
 const selected = ref(props.conditions || [])
 
-onMounted(async () => {
-  // if there are no conditions in the store fetch them
-  if (!store.data && !store.loading) store.fetch()
-})
+onMounted(() => store.fetch())
 
 // reset selected and info when modal is closed
 watch(isOpen, v => {

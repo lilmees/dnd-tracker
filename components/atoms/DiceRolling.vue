@@ -14,8 +14,7 @@ const form = reactive({
 })
 const results = reactive({})
 
-function rollDice(data) {
-  const { __init, ...dices } = data
+function rollDice({ __init, ...dices }) {
   Object.keys(dices).forEach(dice => {
     if (!dices[dice]) return
     results[dice] = generateDiceRoll(dice, dices[dice])

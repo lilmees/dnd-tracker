@@ -15,8 +15,7 @@ function diceResult(amount) {
   form.ac = amount
 }
 
-function updateAc(data) {
-  const { __init, ac } = data
+function updateAc({ __init, ac }) {
   emit('update', Number(ac))
   isOpen.value = false
   isRollingDice.value = false

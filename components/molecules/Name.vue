@@ -7,8 +7,7 @@ const props = defineProps({ name: { type: String, required: true } })
 const isOpen = ref(false)
 const form = reactive({ name: null })
 
-function updateName(data) {
-  const { __init, name } = data
+function updateName({ __init, name }) {
   emit('update', name.trim())
   isOpen.value = false
 }

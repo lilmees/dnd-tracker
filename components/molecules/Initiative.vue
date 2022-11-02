@@ -12,8 +12,7 @@ function diceResult(amount) {
   form.initiative = amount
 }
 
-function updateInitiative(data) {
-  const { __init, initiative } = data
+function updateInitiative({ __init, initiative }) {
   emit('update', Number(initiative))
   isOpen.value = false
   isRollingDice.value = false

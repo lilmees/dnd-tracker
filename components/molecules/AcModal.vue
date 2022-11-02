@@ -16,8 +16,7 @@ function diceResult(amount) {
   form.ac = amount
 }
 
-function updateAc(data) {
-  const { __init, ac } = data
+function updateAc({ __init, ac }) {
   emit('update', { type: type.value, amount: Number(ac) })
   resetState()
 }

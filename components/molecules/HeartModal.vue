@@ -16,8 +16,7 @@ function diceResult(amount) {
   form.health = amount
 }
 
-function updateHealth(data) {
-  const { __init, health } = data
+function updateHealth({ __init, health }) {
   emit('update', { type: type.value, amount: Number(health) })
   isOpen.value = false
   isRollingDice.value = false

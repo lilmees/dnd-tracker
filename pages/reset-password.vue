@@ -10,8 +10,7 @@ const form = reactive({ password: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function resetPassword(data) {
-  const { __init, password } = data
+async function resetPassword({ __init, password }) {
   error.value = null
   try {
     isLoading.value = true

@@ -10,6 +10,7 @@ export const useConditionsStore = defineStore('useConditionsStore', {
     async fetch() {
       const supabase = useSupabaseClient()
       try {
+        if (this.data && this.loading) return
         this.loading = true
         this.error = null
         const { data, error } = await supabase.from('conditions').select('*')

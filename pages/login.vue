@@ -8,8 +8,7 @@ const form = reactive({ email: '', password: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function login(data) {
-  const { __init, ...credentials } = data
+async function login({ __init, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true

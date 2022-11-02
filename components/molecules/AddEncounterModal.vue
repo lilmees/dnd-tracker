@@ -1,16 +1,13 @@
 <script setup>
 import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
-import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
+import { useEncountersStore } from '@/store/encounters'
 
 const emit = defineEmits(['close', 'new'])
 defineProps({ open: { type: Boolean, required: true } })
 
-const toast = useToastStore()
+const store = useEncountersStore()
 const user = useSupabaseUser()
-const supabase = useSupabaseClient()
-const { t } = useI18n({ useScope: 'global' })
 const form = reactive({ title: null, group: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
@@ -19,29 +16,22 @@ function changeColor() {
   form.background = randomColor()
 }
 
-async function addEncounter(data) {
-  const { __init, ...formData } = data
-  const encounter = {
-    ...formData,
-    round: 1,
-    rows: [],
-    created_by: user.value.id,
-    owners: [user.value.id],
-    color: contrastColor(formData.background),
-    activeIndex: 0,
-  }
-
+async function addEncounter({ __init, ...formData }) {
+  error.value = null
   try {
     isLoading.value = true
-    const { data, error } = await supabase.from('initiative_sheets').insert([encounter])
-    if (error) throw error
-    emit('new', data[0])
+    await store.addEncounter({
+      ...formData,
+      round: 1,
+      rows: [],
+      created_by: user.value.id,
+      owners: [user.value.id],
+      color: contrastColor(formData.background),
+      activeIndex: 0,
+    })
+    emit('new')
   } catch (err) {
     error.value = err.message
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text'),
-    })
   } finally {
     isLoading.value = false
   }
@@ -61,7 +51,7 @@ async function addEncounter(data) {
           <Button :label="$t('encounters.random')" bold @click="changeColor" />
         </div>
       </div>
-      <Button type="submit" :label="$t('encounters.add')" :loading="isLoading" inline bold />
+      <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline bold />
     </FormKit>
   </Modal>
 </template>

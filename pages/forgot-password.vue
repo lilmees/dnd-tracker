@@ -12,8 +12,7 @@ const form = reactive({ email: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function forgotPassword(data) {
-  const { __init, email } = data
+async function forgotPassword({ __init, email }) {
   error.value = null
   try {
     isLoading.value = true
