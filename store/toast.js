@@ -4,6 +4,9 @@ export const useToastStore = defineStore('useToastStore', {
   state: () => ({
     toasts: [],
   }),
+  getters: {
+    sortedToasts: state => [...state.toasts].sort((a, b) => b.key - a.key),
+  },
   actions: {
     remove(key) {
       this.toasts = this.toasts.filter(obj => obj.key !== key)

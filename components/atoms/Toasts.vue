@@ -1,6 +1,5 @@
 <script setup>
-import { useToastStore } from '~~/store/toast'
-
+import { useToastStore } from '@/store/toast'
 import Info from '~/assets/icons/info.svg'
 import Check from '~/assets/icons/check.svg'
 import Warn from '~/assets/icons/warning.svg'
@@ -8,8 +7,6 @@ import Error from '~/assets/icons/error.svg'
 import Remove from '~/assets/icons/remove.svg'
 
 const store = useToastStore()
-
-const toasts = computed(() => [...store.toasts].sort((a, b) => b.key - a.key))
 </script>
 
 <template>
@@ -23,12 +20,12 @@ const toasts = computed(() => [...store.toasts].sort((a, b) => b.key - a.key))
       leave-to-class="transform scale-75 opacity-0"
     >
       <div
-        v-for="toast in toasts"
+        v-for="toast in store.sortedToasts"
         :key="toast.key"
         class="w-full mb-1 bg-tracker tracker-shadow pointer-events-auto rounded-2xl"
       >
         <div
-          class="flex p-2 items-center"
+          class="flex p-2 items-start"
           :class="{
             'text-danger': toast.type === 'error',
             'text-warning': toast.type === 'warn',
@@ -36,10 +33,10 @@ const toasts = computed(() => [...store.toasts].sort((a, b) => b.key - a.key))
             'text-info': toast.type === 'info',
           }"
         >
-          <Info v-if="toast.type === 'info'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2" />
-          <Warn v-if="toast.type === 'warn'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2" />
-          <Check v-if="toast.type === 'success'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2" />
-          <Error v-if="toast.type === 'error'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2" />
+          <Info v-if="toast.type === 'info'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
+          <Warn v-if="toast.type === 'warn'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
+          <Check v-if="toast.type === 'success'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
+          <Error v-if="toast.type === 'error'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
           <div class="grow">
             <h1 v-if="toast.title" class="font-bold">
               {{ toast.title }}

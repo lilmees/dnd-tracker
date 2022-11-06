@@ -27,7 +27,7 @@ async function getEncounter() {
     const { data, error } = await supabase.from('initiative_sheets').select('*').eq('id', route.params.id).single()
     if (error) throw error
     useHead({ title: data.title })
-    if (!data.owners.includes(user.value.id)) navigateTo('/encounters')
+    if (!data.admins.includes(user.value.id)) navigateTo('/encounters')
     encounter.value = data
   } catch (err) {
     toast.error({

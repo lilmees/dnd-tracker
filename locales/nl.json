@@ -32,6 +32,7 @@
   },
   "encounters": {
     "title": "Maak een nieuwe encounter",
+    "update": "Update encounter {title}",
     "add": "Encounter creëren",
     "random": "Willekeurig"
   },
@@ -138,8 +139,9 @@
       "avatar": "Avatar"
     }
   },
-  "table": {
-    "noData": "Geen data in de tabel"
+  "confirmation": {
+    "title": "Verwijder bevestiging",
+    "text": "Ben je zeker dat je {title} wilt verwijderen. Type {title} in het invulveld en duw op verwijderen"
   },
   "actions": {
     "add": "Toevoegen",
@@ -159,6 +161,7 @@
     "temp": "Tijdelijk",
     "rollHide": "Verberg dobbelsteen roller",
     "tryAgain": "Probeer opnieuw",
-    "info": "Toon informatie"
+    "info": "Toon informatie",
+    "copy": "kopiëren"
   }
 }

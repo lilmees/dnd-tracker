@@ -43,11 +43,11 @@ const background = computed(() => {
     :type="type"
     :label="label"
     :disabled="disabled || loading"
-    input-class="py-2 px-6 shadow rounded outline-none disabled:bg-gray-400"
+    input-class="py-2 px-6 shadow rounded outline-none"
     :style="{
       fontWeight: bold ? 'bold' : 'normal',
       width: inline ? '100%' : 'auto',
-      'background-color': background,
+      'background-color': disabled ? '#9ca3af' : background,
       color: color === 'black' ? '#fff' : '#000',
     }"
     @click="$emit('click')"

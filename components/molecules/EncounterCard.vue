@@ -1,19 +1,113 @@
 <script setup>
-defineProps({ encounter: { type: Object, required: true } })
+import Copy from '@/assets/icons/copy.svg'
+import Delete from '@/assets/icons/delete.svg'
+import Update from '@/assets/icons/update.svg'
+import Settings from '@/assets/icons/settings.svg'
+import Remove from '@/assets/icons/remove.svg'
+import { useEncountersStore } from '@/store/encounters'
+import { useToastStore } from '@/store/toast'
+import { useI18n } from 'vue-i18n'
+
+const props = defineProps({ encounter: { type: Object, required: true } })
+
+const user = useSupabaseUser()
+const store = useEncountersStore()
+const toast = useToastStore()
+const { t } = useI18n({ useScope: 'global' })
+const needConfirmation = ref(false)
+const isUpdating = ref(false)
+const isSettings = ref(false)
+
+async function deleteEncounter() {
+  try {
+    await store.deleteEncounter(props.encounter.id)
+  } catch (error) {
+    errorToast()
+  }
+}
+
+async function copyEncounter({ created_at, id, profiles, ...enc }) {
+  const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
+  try {
+    await store.addEncounter(encounter)
+  } catch (err) {
+    errorToast()
+  } finally {
+    isSettings.value = false
+  }
+}
+
+function errorToast() {
+  toast.error({
+    title: t('error.general.title'),
+    text: t('error.general.text'),
+  })
+}
+
+function closeSettings() {
+  isUpdating.value = false
+  needConfirmation.value = false
+  isSettings.value = false
+}
 </script>
 
 <template>
-  <NuxtLink
-    :to="`/encounters/${
-      encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-    }-${encounter.id}`"
-    class="rounded-xl p-4 flex flex-col gap-2 justify-between tracker-shadow min-w-[250px] max-w-md cursor-pointer"
+  <div
+    class="rounded-xl tracker-shadow min-w-[250px] max-w-md relative group"
     :style="{ 'background-color': encounter.background, color: encounter.color }"
   >
-    <h2>{{ encounter.title }}</h2>
-    <div>
-      <p v-if="encounter.profiles">Creator: {{ encounter.profiles.username }}</p>
-      <p>Rows: {{ encounter.rows.length }}</p>
+    <Settings
+      v-if="!isSettings"
+      class="w-8 h-8 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+      :style="{ color: encounter.color }"
+      @click="isSettings = true"
+    />
+    <Remove
+      v-else
+      class="w-8 h-8 cursor-pointer float-right mt-1 mr-1"
+      :style="{ color: encounter.color }"
+      @click="isSettings = false"
+    />
+    <NuxtLink
+      v-if="!isSettings"
+      :to="`/encounters/${
+        encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
+      }-${encounter.id}`"
+      class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
+    >
+      <h2>{{ encounter.title }}</h2>
+      <div>
+        <p v-if="encounter.profiles">Creator: {{ encounter.profiles.username }}</p>
+        <p>Rows: {{ encounter.rows.length }}</p>
+      </div>
+    </NuxtLink>
+    <div v-else class="flex flex-col gap-2 justify-between p-4">
+      <h2>{{ encounter.title }}</h2>
+      <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
+        <Update class="h-6 w-6" />
+        <p>{{ $t('actions.update') }}</p>
+      </div>
+      <div class="flex gap-2 cursor-pointer max-w-max" @click="copyEncounter(encounter)">
+        <Copy class="h-6 w-6" />
+        <p>{{ $t('actions.copy') }}</p>
+      </div>
+      <div
+        v-if="encounter.created_by === user.id"
+        class="flex gap-2 cursor-pointer max-w-max"
+        @click="needConfirmation = true"
+      >
+        <Delete class="h-6 w-6" />
+        <p>{{ $t('actions.delete') }}</p>
+      </div>
     </div>
-  </NuxtLink>
+    <div class="absolute z-[1]">
+      <ConfirmationModal
+        :open="needConfirmation"
+        :title="encounter.title"
+        @close="closeSettings"
+        @delete="deleteEncounter"
+      />
+      <UpdateEncounterModal :open="isUpdating" :encounter="encounter" @close="closeSettings" @update="closeSettings" />
+    </div>
+  </div>
 </template>

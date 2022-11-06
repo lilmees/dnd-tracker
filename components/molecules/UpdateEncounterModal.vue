@@ -3,12 +3,18 @@ import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 
-const emit = defineEmits(['close', 'new'])
-defineProps({ open: { type: Boolean, required: true } })
+const emit = defineEmits(['close', 'update'])
+const props = defineProps({
+  open: { type: Boolean, required: true },
+  encounter: { type: Object, required: true },
+})
 
 const store = useEncountersStore()
-const user = useSupabaseUser()
-const form = reactive({ title: null, group: null, background: '#0073A1' })
+const form = reactive({
+  title: props.encounter.title,
+  group: props.encounter.group,
+  background: props.encounter.background,
+})
 const isLoading = ref(false)
 const error = ref()
 
@@ -16,20 +22,18 @@ function changeColor() {
   form.background = randomColor()
 }
 
-async function addEncounter({ __init, ...formData }) {
+async function updateEncounter({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    await store.addEncounter({
-      ...formData,
-      round: 1,
-      rows: [],
-      created_by: user.value.id,
-      admins: [user.value.id],
-      color: contrastColor(formData.background),
-      activeIndex: 0,
-    })
-    emit('new')
+    await store.updateEncounter(
+      {
+        ...formData,
+        color: contrastColor(formData.background),
+      },
+      props.encounter.id
+    )
+    emit('update')
   } catch (err) {
     error.value = err.message
   } finally {
@@ -39,10 +43,10 @@ async function addEncounter({ __init, ...formData }) {
 </script>
 
 <template>
-  <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('encounters.title') }}</h2>
+  <Modal v-if="open" @close="$emit('update')">
+    <h2>{{ $t('encounters.update') }}</h2>
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
-    <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="addEncounter">
+    <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateEncounter">
       <Input name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
       <Input name="group" :label="$t('inputs.groupLabel')" validation="length:3,15" />
       <div class="flex gap-2 items-end">
@@ -51,7 +55,7 @@ async function addEncounter({ __init, ...formData }) {
           <Button :label="$t('encounters.random')" bold @click="changeColor" />
         </div>
       </div>
-      <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline bold />
+      <Button type="submit" :label="$t('actions.update')" :loading="store.loading" inline bold />
     </FormKit>
   </Modal>
 </template>
