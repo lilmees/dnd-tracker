@@ -27,7 +27,7 @@ watch(error, v => {
 
 <template>
   <NuxtLayout>
-    <div v-if="store.loading || !store.sortedEncounters">loading</div>
+    <div v-if="store.loading || !store.sortedEncounters" class="loader" />
     <div v-else-if="!store.error">
       <div class="py-5 flex justify-between items-center">
         <h1>{{ $t('encounters.encounters') }}</h1>

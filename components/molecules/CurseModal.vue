@@ -37,7 +37,7 @@ function updateConditions() {
     <Potion class="w-6 h-6 cursor-pointer text-success" @click="isOpen = true" />
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ !store.error ? $t('encounter.update.conditions') : $t('encounter.conditions.fetchErrorTitle') }}</h2>
-      <div v-if="store.loading">loading</div>
+      <div v-if="store.loading" class="loader" />
       <div v-else-if="!store.error && store.data" class="space-y-3">
         <div class="flex flex-wrap gap-2">
           <Tag

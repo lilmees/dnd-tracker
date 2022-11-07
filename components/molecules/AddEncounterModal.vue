@@ -95,6 +95,6 @@ function selectedCampaign(id) {
       </div>
       <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline bold />
     </FormKit>
-    <div v-else>loading</div>
+    <div v-else class="loader" />
   </Modal>
 </template>

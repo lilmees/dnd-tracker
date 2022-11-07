@@ -37,7 +37,7 @@ async function getCampaignInfo() {
 
 <template>
   <NuxtLayout name="wide">
-    <div v-if="isPending">loading</div>
+    <div v-if="isPending" class="loader" />
     <div v-else class="py-4 space-y-4">
       <Back url="/campaigns" :label="$t('campaign.back')" class="container-max" />
       <CampaignHeader :campaign="campaign" />
