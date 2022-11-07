@@ -1,4 +1,5 @@
 <script setup>
+import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
@@ -6,6 +7,7 @@ definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
 const toast = useToastStore()
+const store = useEncountersStore()
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const { t } = useI18n({ useScope: 'global' })
@@ -24,11 +26,9 @@ onMounted(() => {
 
 async function getEncounter() {
   try {
-    const { data, error } = await supabase.from('initiative_sheets').select('*').eq('id', route.params.id).single()
-    if (error) throw error
-    useHead({ title: data.title })
-    if (!data.admins.includes(user.value.id)) navigateTo('/encounters')
-    encounter.value = data
+    encounter.value = await store.getEncounterById(route.params.id)
+    if (!encounter.value.admins.includes(user.value.id)) navigateTo('/encounters')
+    useHead({ title: encounter.value.title })
   } catch (err) {
     toast.error({
       title: t('error.general.title'),
@@ -41,7 +41,7 @@ async function getEncounter() {
 
 async function subscribeEncounterChanges() {
   supabase
-    .from('initiative_sheets')
+    .from('initiative-sheets')
     .on('*', payload => {
       if (payload.eventType === 'DELETE') {
         toast.info({
@@ -78,7 +78,7 @@ function updateRows(rows) {
 }
 
 async function saveUpdate() {
-  await supabase.from('initiative_sheets').update(encounter.value).eq('id', encounter.value.id)
+  await supabase.from('initiative-sheets').update(encounter.value).eq('id', encounter.value.id)
 }
 </script>
 

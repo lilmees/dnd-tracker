@@ -4,32 +4,35 @@ import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
 import Settings from '@/assets/icons/settings.svg'
 import Remove from '@/assets/icons/remove.svg'
-import { useEncountersStore } from '@/store/encounters'
+import { useCampaignsStore } from '@/store/campaigns'
+// import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
-const props = defineProps({ encounter: { type: Object, required: true } })
+const props = defineProps({ campaign: { type: Object, required: true } })
 
 const user = useSupabaseUser()
-const store = useEncountersStore()
+const store = useCampaignsStore()
+// const encounters = useEncountersStore()
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
 
-async function deleteEncounter() {
+async function deleteCampaign() {
   try {
-    await store.deleteEncounter(props.encounter.id)
+    await store.deleteCampaign(props.campaign.id)
+    // await encounters.deleteCampaign(props.campaign.id)
   } catch (error) {
     errorToast()
   }
 }
 
-async function copyEncounter({ created_at, id, profiles, ...enc }) {
-  const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
+async function copyCampaign({ created_at, id, profiles, ...enc }) {
+  const campaign = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
   try {
-    await store.addEncounter(encounter)
+    await store.addCampaign(campaign)
   } catch (err) {
     errorToast()
   } finally {
@@ -54,45 +57,44 @@ function closeSettings() {
 <template>
   <div
     class="rounded-xl tracker-shadow min-w-[250px] max-w-md relative group"
-    :style="{ 'background-color': encounter.background, color: encounter.color }"
+    :style="{ 'background-color': campaign.background, color: campaign.color }"
   >
     <Settings
       v-if="!isSettings"
       class="w-8 h-8 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
-      :style="{ color: encounter.color }"
+      :style="{ color: campaign.color }"
       @click="isSettings = true"
     />
     <Remove
       v-else
       class="w-8 h-8 cursor-pointer float-right mt-1 mr-1"
-      :style="{ color: encounter.color }"
+      :style="{ color: campaign.color }"
       @click="isSettings = false"
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="`/encounters/${
-        encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-      }-${encounter.id}`"
+      :to="`/campaigns/${
+        campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
+      }-${campaign.id}`"
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
     >
-      <h2>{{ encounter.title }}</h2>
+      <h2>{{ campaign.title }}</h2>
       <div>
-        <p v-if="encounter.profiles">Creator: {{ encounter.profiles.username }}</p>
-        <p>Rows: {{ encounter.rows.length }}</p>
+        <p>Encounters: {{ campaign.encounters }}</p>
       </div>
     </NuxtLink>
     <div v-else class="flex flex-col gap-2 justify-between p-4">
-      <h2>{{ encounter.title }}</h2>
+      <h2>{{ campaign.title }}</h2>
       <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
         <Update class="h-6 w-6" />
         <p>{{ $t('actions.update') }}</p>
       </div>
-      <div class="flex gap-2 cursor-pointer max-w-max" @click="copyEncounter(encounter)">
+      <div class="flex gap-2 cursor-pointer max-w-max" @click="copyCampaign(campaign)">
         <Copy class="h-6 w-6" />
         <p>{{ $t('actions.copy') }}</p>
       </div>
       <div
-        v-if="encounter.created_by === user.id"
+        v-if="campaign.created_by === user.id"
         class="flex gap-2 cursor-pointer max-w-max"
         @click="needConfirmation = true"
       >
@@ -103,11 +105,11 @@ function closeSettings() {
     <div class="absolute z-[1]">
       <ConfirmationModal
         :open="needConfirmation"
-        :title="encounter.title"
+        :title="campaign.title"
         @close="closeSettings"
-        @delete="deleteEncounter"
+        @delete="deleteCampaign"
       />
-      <UpdateEncounterModal :open="isUpdating" :encounter="encounter" @close="closeSettings" />
+      <UpdateCampaignModal :open="isUpdating" :campaign="campaign" @close="closeSettings" />
     </div>
   </div>
 </template>

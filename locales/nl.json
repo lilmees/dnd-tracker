@@ -24,17 +24,38 @@
     "fullNameLabel": "Volledige naam",
     "titleLabel": "Titel",
     "backgroundLabel": "Achtergrond",
-    "groupLabel": "Groep",
+    "campaignLabel": "Campagne",
     "initiativeLabel": "Initiatief",
     "acLabel": "Pantser klasse",
     "hpLabel": "Levens punten",
     "linkLabel": "Url link"
   },
+  "campaigns": {
+    "campaign": "Campagne",
+    "no": "Geen campagne",
+    "campaigns": "Campagnes",
+    "title": "Maak een nieuwe campagne",
+    "update": "Update campagne {title}",
+    "add": "campagne creëren",
+    "noData": {
+      "title": "Je hebt nog geen campagne gemaakt",
+      "text": "Maak een campagne en begin te spelen met alle mogelijkheden"
+    }
+  },
+  "campaign": {
+    "back": "Terug naar campagnes",
+    "goCampaign": "Ga naar campagne"
+  },
   "encounters": {
+    "encounter": "Encounter",
+    "encounters": "Encounters",
     "title": "Maak een nieuwe encounter",
     "update": "Update encounter {title}",
     "add": "Encounter creëren",
-    "random": "Willekeurig"
+    "noData": {
+      "title": "Je hebt nog geen encounter gemaakt",
+      "text": "Maak een encounter en begin te spelen met alle mogelijkheden"
+    }
   },
   "encounter": {
     "next": "Volgende",
@@ -125,6 +146,7 @@
     "login": "Login",
     "home": "Thuis",
     "encounters": "Encounters",
+    "campaigns": "Campagnes",
     "profile": "Profiel"
   },
   "profile": {
@@ -162,6 +184,8 @@
     "rollHide": "Verberg dobbelsteen roller",
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
-    "copy": "kopiëren"
+    "copy": "kopiëren",
+    "random": "Willekeurig",
+    "create": "Creëren"
   }
 }

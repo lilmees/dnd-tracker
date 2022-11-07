@@ -41,7 +41,7 @@ async function logout() {
       <img src="@/assets/images/logo.png" alt="Logo dnd tracker" />
     </NuxtLink>
     <div class="hidden sm:flex justify-end gap-4">
-      <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="route.label" :url="route.url" />
+      <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
       <div
         v-if="user"
         class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"

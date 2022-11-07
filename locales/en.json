@@ -24,17 +24,38 @@
     "fullNameLabel": "Full name",
     "titleLabel": "Title",
     "backgroundLabel": "Background",
-    "groupLabel": "Group",
+    "campaignLabel": "Campaign",
     "initiativeLabel": "Initiative",
     "acLabel": "Armor class",
     "hpLabel": "Health points",
     "linkLabel": "Url link"
   },
+  "campaigns": {
+    "campaign": "Campaign",
+    "no": "No campaign",
+    "campaigns": "Campaigns",
+    "title": "Create a new campaign",
+    "update": "Update campaign {title}",
+    "add": "Create campaign",
+    "noData": {
+      "title": "You have no created campaigns",
+      "text": "Create a campaign and start playing around witth all the posibilities"
+    }
+  },
+  "campaign": {
+    "back": "Back to campaigns",
+    "goCampaign": "Go to campaign"
+  },
   "encounters": {
+    "encounter": "Encounter",
+    "encounters": "Encounters",
     "title": "Create a new encounter",
     "update": "Update encounter {title}",
     "add": "Create encounter",
-    "random": "Random"
+    "noData": {
+      "title": "You have no created encounters",
+      "text": "Create a encounter and start playing around witth all the posibilities"
+    }
   },
   "encounter": {
     "next": "Next initiative",
@@ -125,6 +146,7 @@
     "login": "Log in",
     "home": "Home",
     "encounters": "Encounters",
+    "campaigns": "Campaignes",
     "profile": "Profile"
   },
   "profile": {
@@ -162,6 +184,8 @@
     "rollHide": "Hide dice roller",
     "tryAgain": "Try again",
     "info": "Show information",
-    "copy": "Copy"
+    "copy": "Copy",
+    "random": "Random",
+    "create": "Create"
   }
 }
