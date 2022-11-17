@@ -14,7 +14,7 @@ function removeEffect(id, effectType) {
 
 <template>
   <div>
-    <div class="flex flex-col gap-2 items-center">
+    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
       <Tag
         removable
         v-for="condition in conditions"
