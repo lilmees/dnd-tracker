@@ -8,8 +8,7 @@ const props = defineProps({
 })
 
 const store = useEncountersStore()
-// const type = ref('player')
-const type = ref('summon')
+const type = ref('player')
 
 function closeModal() {
   type.value = 'player'

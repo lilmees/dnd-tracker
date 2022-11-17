@@ -1,7 +1,7 @@
 <script setup>
 defineProps({ encounter: { type: Object, required: true } })
 
-const isAddingInit = ref(true)
+const isAddingInit = ref(false)
 </script>
 
 <template>
