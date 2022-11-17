@@ -2,6 +2,7 @@
 import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
 
 const emit = defineEmits(['result'])
+defineProps({ result: { type: Boolean, default: false } })
 
 const form = ref({
   d100: null,
@@ -71,6 +72,16 @@ function generateDiceRoll(type, amount) {
           </p>
         </div>
         <p v-else>{{ results[result] }}</p>
+      </div>
+      <div v-if="Object.keys(results).length && result" class="flex flex-wrap gap-1">
+        <h3 class="font-bold">total:</h3>
+        <h3>
+          {{
+            Object.values(results)
+              .flat()
+              .reduce((s, a) => s + a, 0)
+          }}
+        </h3>
       </div>
     </div>
   </div>
