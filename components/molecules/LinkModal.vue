@@ -6,7 +6,7 @@ const props = defineProps({ link: { type: [null, String], required: true } })
 
 const isOpen = ref(false)
 const isUpdating = ref(false)
-const form = reactive({ link: null })
+const form = ref({ link: null })
 
 function updateLink({ __init, link }) {
   emit('update', link)

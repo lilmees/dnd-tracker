@@ -2,10 +2,13 @@
 import Update from '@/assets/icons/update.svg'
 
 const emit = defineEmits(['update'])
-const props = defineProps({ name: { type: String, required: true } })
+const props = defineProps({
+  name: { type: String, required: true },
+  type: { type: String, default: 'player' },
+})
 
 const isOpen = ref(false)
-const form = reactive({ name: null })
+const form = ref({ name: null })
 
 function updateName({ __init, name }) {
   emit('update', name.trim())
@@ -15,8 +18,18 @@ function updateName({ __init, name }) {
 
 <template>
   <div>
-    <div class="flex gap-2 items-center">
-      <p class="peer cursor-pointer" @click="isOpen = true">
+    <div class="flex gap-2 items-center pl-4">
+      <p
+        class="peer cursor-pointer"
+        :class="{
+          'text-white': type === 'player',
+          'text-primary': type === 'summon',
+          'text-success': type === 'npc',
+          'text-danger': type === 'monster',
+          'text-warning': type === 'lair',
+        }"
+        @click="isOpen = true"
+      >
         {{ name }}
       </p>
       <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />

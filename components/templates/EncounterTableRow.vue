@@ -21,20 +21,34 @@ function updateRow(key, value) {
     class="border-b border-primary"
     :class="{
       '!bg-primary/20 tracker-shadow': index === activeIndex,
-      'bg-danger/20': row.health !== null && row.health < 1,
+      'bg-danger/10': row.health !== null && row.health < 1,
     }"
   >
     <td class="px-2 py-1">
-      <Name :name="row.name" @update="updateRow('name', $event)" />
+      <Name :name="row.name" :type="row.type" @update="updateRow('name', $event)" />
     </td>
     <td class="px-2 py-1">
-      <Initiative :initiative="row.initiative" @update="updateRow('initiative', $event)" />
+      <Initiative
+        v-if="row.initiative !== undefined && row.initiative !== null"
+        :initiative="row.initiative"
+        @update="updateRow('initiative', $event)"
+      />
     </td>
     <td class="px-2 py-1">
-      <Ac :ac="row.ac" :tempAc="row.tempAc" @update="updateRow('ac', $event)" />
+      <Ac
+        v-if="row.ac !== undefined && row.ac !== null"
+        :ac="row.ac"
+        :tempAc="row.tempAc"
+        @update="updateRow('ac', $event)"
+      />
     </td>
     <td class="p-2">
-      <Health :health="row.health" :tempHealth="row.tempHealth" @update="updateRow('health', $event)" />
+      <Health
+        v-if="row.health"
+        :health="row.health"
+        :tempHealth="row.tempHealth"
+        @update="updateRow('health', $event)"
+      />
     </td>
     <td class="p-2">
       <Actions :row="row" @update="$emit('update', $event)" />
@@ -43,10 +57,14 @@ function updateRow(key, value) {
       <Effects :conditions="row.conditions" :curses="row.curses" @update="updateRow($event.type, $event.value)" />
     </td>
     <td class="px-2 py-1">
-      <DeathSaves :deathSaves="row.deathSaves" @update="updateRow('deathSaves', $event)" />
+      <DeathSaves v-if="row.deathSaves" :deathSaves="row.deathSaves" @update="updateRow('deathSaves', $event)" />
     </td>
     <td class="px-2 py-1">
-      <Concentration :concentration="row.concentration" @toggle="updateRow('concentration', !row.concentration)" />
+      <Concentration
+        v-if="typeof row.concentration === 'boolean'"
+        :concentration="row.concentration"
+        @toggle="updateRow('concentration', !row.concentration)"
+      />
     </td>
     <td class="px-2 py-1">
       <Modify @copy="$emit('copy', row.id)" @delete="$emit('delete', row.id)" />

@@ -78,7 +78,8 @@ function updateRows(rows) {
 }
 
 async function saveUpdate() {
-  await supabase.from('initiative-sheets').update(encounter.value).eq('id', encounter.value.id)
+  const { profiles, created_at, created_by, ...enc } = encounter.value
+  await supabase.from('initiative-sheets').update(enc).eq('id', encounter.value.id)
 }
 </script>
 
@@ -89,6 +90,7 @@ async function saveUpdate() {
       <Back url="/encounters" :label="$t('encounter.back')" class="container-max" />
       <EncounterHeader :round="encounter.round" :title="encounter.title" @next="nextInitiative" @reset="resetRounds" />
       <EncounterTable :rows="rows" :activeIndex="encounter.activeIndex" @update="updateRows" />
+      <EncounterOptions :encounter="encounter" />
     </div>
   </NuxtLayout>
 </template>

@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/auth'
 definePageMeta({ middleware: ['loggedin'] })
 
 const store = useAuthStore()
-const form = reactive({ email: '', password: '' })
+const form = ref({ email: '', password: '' })
 const isLoading = ref(false)
 const error = ref()
 

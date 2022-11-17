@@ -8,6 +8,13 @@ export const useEncountersStore = defineStore('useEncountersStore', {
     error: null,
     data: null,
     lastFetched: null,
+    initiativeTypes: [
+      { label: 'Player', id: 'player' },
+      { label: 'Summon', id: 'summon' },
+      { label: 'Npc', id: 'npc' },
+      { label: 'Monster', id: 'monster' },
+      { label: 'Lair', id: 'lair' },
+    ],
   }),
   getters: {
     sortedEncounters: state => (state.data ? sortByTeam(state.data) : null),
@@ -80,8 +87,10 @@ export const useEncountersStore = defineStore('useEncountersStore', {
       const { data, error } = await supabase.from('initiative-sheets').update(encounter).eq('id', id)
       if (error) throw error
       else {
-        this.data = this.data.filter(e => e.id !== id)
-        this.data.push(data[0])
+        if (this.data) {
+          this.data = this.data.filter(e => e.id !== id)
+          this.data.push(data[0])
+        } else this.data = [data[0]]
       }
     },
   },

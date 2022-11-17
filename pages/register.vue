@@ -8,7 +8,7 @@ definePageMeta({ middleware: ['loggedin'] })
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
-const form = reactive({ email: '', password: '', name: '', username: '' })
+const form = ref({ email: '', password: '', name: '', username: '' })
 const isLoading = ref(false)
 const error = ref()
 const image = ref(

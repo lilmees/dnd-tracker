@@ -85,15 +85,27 @@ function updateCondition(conditions) {
 
 <template>
   <div class="flex gap-1">
-    <LinkModal v-tooltip="$t('encounter.tooltip.link')" :link="row.link" @update="updateLink" />
+    <LinkModal
+      v-tooltip="$t('encounter.tooltip.link')"
+      :link="row.link === undefined ? null : row.link"
+      @update="updateLink"
+    />
     <HeartModal
+      v-if="!['lair'].includes(row.type)"
       v-tooltip="$t('encounter.tooltip.hp')"
       :health="row.health"
       :tempHealth="row.tempHealth"
       @update="updateHealth"
     />
-    <AcModal v-tooltip="$t('encounter.tooltip.ac')" :ac="row.ac" :tempAc="row.tempAc" @update="updateAc" />
+    <AcModal
+      v-if="!['lair'].includes(row.type)"
+      v-tooltip="$t('encounter.tooltip.ac')"
+      :ac="row.ac"
+      :tempAc="row.tempAc"
+      @update="updateAc"
+    />
     <ConditionModal
+      v-if="!['lair'].includes(row.type)"
       v-tooltip="$t('encounter.tooltip.condition')"
       :conditions="row.conditions"
       @update="updateCondition"

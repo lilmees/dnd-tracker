@@ -10,7 +10,7 @@ const props = defineProps({
 })
 
 const store = useCampaignsStore()
-const form = reactive({
+const form = ref({
   title: props.campaign.title,
   background: props.campaign.background,
 })
@@ -18,7 +18,7 @@ const isLoading = ref(false)
 const error = ref()
 
 function changeColor() {
-  form.background = randomColor()
+  form.value.background = randomColor()
 }
 
 async function updateCampaign({ __init, ...formData }) {

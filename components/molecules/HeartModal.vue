@@ -10,10 +10,10 @@ const props = defineProps({
 const isOpen = ref(false)
 const isRollingDice = ref(false)
 const type = ref()
-const form = reactive({ health: null })
+const form = ref({ health: null })
 
 function diceResult(amount) {
-  form.health = amount
+  form.value.health = amount
 }
 
 function updateHealth({ __init, health }) {

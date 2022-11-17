@@ -5,11 +5,11 @@ const props = defineProps({
   title: { type: String, required: true },
 })
 
-const form = reactive({ title: '' })
-const same = computed(() => props.title === form.title)
+const form = ref({ title: '' })
+const same = computed(() => props.title === form.value.title)
 
 function deleteConfirmation() {
-  if (form.title.trim() !== props.title.trim()) return
+  if (form.value.title.trim() !== props.title.trim()) return
   emit('delete')
 }
 </script>

@@ -14,7 +14,7 @@ const props = defineProps({
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const { t } = useI18n({ useScope: 'global' })
-const form = reactive({ title: props.encounter.title, background: props.encounter.background })
+const form = ref({ title: props.encounter.title, background: props.encounter.background })
 const isLoading = ref(false)
 const error = ref()
 const campaign = ref()
@@ -41,7 +41,7 @@ const campaignOptions = computed(() => {
 })
 
 function changeColor() {
-  form.background = randomColor()
+  form.value.background = randomColor()
 }
 
 async function updateEncounter({ __init, ...formData }) {

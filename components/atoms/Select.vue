@@ -7,6 +7,7 @@ defineProps({
   label: { type: String, required: true },
   bold: { type: Boolean, default: false },
   required: { type: Boolean, default: false },
+  absolute: { type: Boolean, default: true },
   options: { type: Array, default: () => [] },
 })
 
@@ -34,8 +35,8 @@ function selectedOption(option) {
         <ChevronDown class="relative duration-200 h-4 w-4 stroke-2" :class="{ 'rotate-180': isOpen }" />
       </div>
       <div
-        class="flex flex-col absolute w-full bg-black rounded rounded-t-none tracker-shadow"
-        :class="{ hidden: !isOpen }"
+        class="flex flex-col w-full bg-black rounded rounded-t-none tracker-shadow"
+        :class="{ hidden: !isOpen, absolute: absolute }"
       >
         <div
           v-for="option in options"

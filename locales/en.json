@@ -28,7 +28,11 @@
     "initiativeLabel": "Initiative",
     "acLabel": "Armor class",
     "hpLabel": "Health points",
-    "linkLabel": "Url link"
+    "linkLabel": "Url link",
+    "typeLabel": "Type",
+    "amountLabel": "Amount",
+    "summonerLabel": "Summoner",
+    "nothing": "Nothing selected"
   },
   "campaigns": {
     "campaign": "Campaign",
@@ -62,9 +66,12 @@
     "back": "Back to encounters",
     "round": "Round",
     "addInitiative": "Add initiative",
+    "addInInitiative": "Add in initiative",
+    "newInitiative": "Make a new initiative row",
     "link": "Link",
     "conditionInfo": "Effect information",
     "confirmDelete": "Are you sure you want to delete the current row",
+    "copyPlayerInit": "Use summoner initiative",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",

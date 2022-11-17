@@ -6,7 +6,7 @@ import { useToastStore } from '@/store/toast'
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
-const form = reactive({ password: '' })
+const form = ref({ password: '' })
 const isLoading = ref(false)
 const error = ref()
 

@@ -28,7 +28,11 @@
     "initiativeLabel": "Initiatief",
     "acLabel": "Pantser klasse",
     "hpLabel": "Levens punten",
-    "linkLabel": "Url link"
+    "linkLabel": "Url link",
+    "typeLabel": "Type",
+    "amountLabel": "Hoeveelheid",
+    "summonerLabel": "Oproeper",
+    "nothing": "Nog niets geselecteerd"
   },
   "campaigns": {
     "campaign": "Campagne",
@@ -62,9 +66,12 @@
     "back": "Terug naar encounters",
     "round": "Ronde",
     "addInitiative": "Initiatief toevoegen",
+    "addInInitiative": "In initiatief toevoegen",
+    "newInitiative": "Maak een nieuwe initiatief rij",
     "link": "Link",
     "conditionInfo": "Effect informatie",
     "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
+    "copyPlayerInit": "Gebruik oproeper initiatief",
     "update": {
       "name": "Update naam",
       "initiative": "Update Initiatief",

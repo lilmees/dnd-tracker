@@ -12,7 +12,7 @@ const { t } = useI18n({ useScope: 'global' })
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
-const form = reactive({ title: null, group: null, background: '#0073A1' })
+const form = ref({ title: null, group: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
 const campaign = ref()
@@ -36,7 +36,7 @@ const campaignOptions = computed(() => {
 })
 
 function changeColor() {
-  form.background = randomColor()
+  form.value.background = randomColor()
 }
 
 async function addEncounter({ __init, ...formData }) {

@@ -1,19 +1,19 @@
 <script setup>
 import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
-import { useCampaignsStore } from '@/store/Campaigns'
+import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
 defineProps({ open: { type: Boolean, required: true } })
 
 const store = useCampaignsStore()
 const user = useSupabaseUser()
-const form = reactive({ title: null, background: '#0073A1' })
+const form = ref({ title: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
 
 function changeColor() {
-  form.background = randomColor()
+  form.value.background = randomColor()
 }
 
 async function addCampaign({ __init, ...formData }) {

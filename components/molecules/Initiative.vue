@@ -6,10 +6,10 @@ const props = defineProps({ initiative: { type: [Number, null], required: true }
 
 const isOpen = ref(false)
 const isRollingDice = ref(false)
-const form = reactive({ name: null })
+const form = ref({ name: null })
 
 function diceResult(amount) {
-  form.initiative = amount
+  form.value.initiative = amount
 }
 
 function updateInitiative({ __init, initiative }) {

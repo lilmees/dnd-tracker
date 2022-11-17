@@ -3,7 +3,7 @@ import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/u
 
 const emit = defineEmits(['result'])
 
-const form = reactive({
+const form = ref({
   d100: null,
   d20: null,
   d12: null,

@@ -39,17 +39,19 @@ const background = computed(() => {
 </script>
 
 <template>
-  <FormKit
-    :type="type"
-    :label="label"
-    :disabled="disabled || loading"
-    input-class="py-2 px-6 shadow rounded outline-none"
-    :style="{
-      fontWeight: bold ? 'bold' : 'normal',
-      width: inline ? '100%' : 'auto',
-      'background-color': disabled ? '#9ca3af' : background,
-      color: color === 'black' ? '#fff' : '#000',
-    }"
-    @click="$emit('click')"
-  />
+  <div>
+    <FormKit
+      :type="type"
+      :label="label"
+      :disabled="disabled || loading"
+      input-class="py-2 px-6 shadow rounded outline-none font-bold"
+      :style="{
+        fontWeight: bold ? 'bold' : 'normal',
+        width: inline ? '100%' : 'auto',
+        'background-color': disabled ? '#9ca3af' : background,
+        color: color === 'black' ? '#fff' : '#000',
+      }"
+      @click="$emit('click')"
+    />
+  </div>
 </template>
