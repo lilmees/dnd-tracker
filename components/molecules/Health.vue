@@ -5,6 +5,7 @@ const emit = defineEmits(['update'])
 const props = defineProps({
   health: { type: [Number, null, String], required: true },
   tempHealth: { type: [Number, null, String], required: true },
+  type: { type: String, required: true },
 })
 
 const isOpen = ref(false)
@@ -27,9 +28,10 @@ function updateHealth({ __init, health }) {
     <div class="flex gap-2">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
         <p v-if="health !== null" :class="{ 'text-danger font-bold': health < 1 }">{{ health }}</p>
-        <span v-if="tempHealth" class="text-primary">+{{ tempHealth }}</span>
+        <p v-else-if="type !== 'lair'" class="text-slate-600">{{ $t('actions.add') }}</p>
+        <span v-if="health !== null && tempHealth" class="text-primary">+{{ tempHealth }}</span>
       </div>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />
+      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" :class="{ hidden: !health }" />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.hp') }}</h2>

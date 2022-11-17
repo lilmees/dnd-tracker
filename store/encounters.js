@@ -32,7 +32,6 @@ export const useEncountersStore = defineStore('useEncountersStore', {
         const { data, error } = await supabase
           .from('initiative-sheets')
           .select('*, profiles(id, name, username, avatar),group(id, title, background, color)')
-        console.log(data)
         if (error) throw error
         if (data) this.data = data
       } catch (error) {

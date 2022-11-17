@@ -8,17 +8,22 @@ const props = defineProps({
 })
 
 const { t } = useI18n({ useScope: 'global' })
-const headers = ref([
-  t('encounter.headers.name'),
-  t('encounter.headers.init'),
-  t('encounter.headers.ac'),
-  t('encounter.headers.hp'),
-  t('encounter.headers.actions'),
-  t('encounter.headers.conditions'),
-  t('encounter.headers.deathSaves'),
-  t('encounter.headers.concentration'),
-  t('encounter.headers.modify'),
-])
+const includesSummond = computed(() => !!props.rows.flat().filter(r => r.summoner).length)
+const headers = computed(() => {
+  const headers = [
+    t('encounter.headers.name'),
+    t('encounter.headers.init'),
+    t('encounter.headers.ac'),
+    t('encounter.headers.hp'),
+    t('encounter.headers.actions'),
+    t('encounter.headers.conditions'),
+    t('encounter.headers.deathSaves'),
+    t('encounter.headers.concentration'),
+    t('encounter.headers.modify'),
+  ]
+  if (includesSummond.value) headers.splice(1, 0, t('encounter.headers.summond'))
+  return headers
+})
 
 const rowsSorted = computed(() => props.rows.sort((a, b) => b.initiative - a.initiative))
 
@@ -34,7 +39,11 @@ function updateRow(row, index) {
       <table class="min-w-full">
         <thead>
           <tr>
-            <th v-for="header in headers" :key="header" class="py-3 bg-tracker border-b border-primary uppercase">
+            <th
+              v-for="header in headers"
+              :key="header"
+              class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
+            >
               {{ header }}
             </th>
           </tr>
@@ -45,6 +54,7 @@ function updateRow(row, index) {
             :key="row.id"
             :row="row"
             :activeIndex="activeIndex"
+            :includesSummond="includesSummond"
             :index="index"
             @update="updateRow($event, index)"
             @copy="emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"

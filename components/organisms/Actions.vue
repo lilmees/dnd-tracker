@@ -84,7 +84,7 @@ function updateCondition(conditions) {
 </script>
 
 <template>
-  <div class="flex gap-1">
+  <div class="flex gap-1 justify-center">
     <LinkModal
       v-tooltip="$t('encounter.tooltip.link')"
       :link="row.link === undefined ? null : row.link"

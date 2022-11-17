@@ -5,6 +5,7 @@ const emit = defineEmits(['update'])
 const props = defineProps({
   ac: { type: [Number, null, String], required: true },
   tempAc: { type: [Number, null, String], required: true },
+  type: { type: String, required: true },
 })
 
 const isOpen = ref(false)
@@ -27,9 +28,10 @@ function updateAc({ __init, ac }) {
     <div class="flex gap-2">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
         <p v-if="ac !== null">{{ ac }}</p>
-        <span v-if="tempAc" class="text-primary">+{{ tempAc }}</span>
+        <p v-else-if="type !== 'lair'" class="text-slate-600">{{ $t('actions.add') }}</p>
+        <span v-if="ac !== null && tempAc" class="text-primary">+{{ tempAc }}</span>
       </div>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />
+      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" :class="{ hidden: !ac }" />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.ac') }}</h2>

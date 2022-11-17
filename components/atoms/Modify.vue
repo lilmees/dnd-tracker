@@ -6,7 +6,7 @@ defineEmits(['copy', 'delete'])
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-1">
+  <div class="flex flex-wrap gap-1 justify-center">
     <Copy v-tooltip="'Copy row'" class="w-6 h-6 cursor-pointer text-primary" @click="$emit('copy')" />
     <VDropdown>
       <Delete v-tooltip="'Delete row'" class="w-6 h-6 cursor-pointer text-danger" />

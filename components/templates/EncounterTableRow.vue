@@ -4,6 +4,7 @@ const props = defineProps({
   row: { type: Object, required: true },
   activeIndex: { type: Number, required: true },
   index: { type: Number, required: true },
+  includesSummond: { type: Boolean, required: true },
 })
 
 function updateRow(key, value) {
@@ -18,48 +19,42 @@ function updateRow(key, value) {
 
 <template>
   <tr
-    class="border-b border-primary"
+    class="border-b last:border-b-0 border-slate-700"
     :class="{
-      '!bg-primary/20 tracker-shadow': index === activeIndex,
+      '!bg-primary/10 tracker-shadow': index === activeIndex,
       'bg-danger/10': row.health !== null && row.health < 1,
     }"
   >
-    <td class="px-2 py-1">
+    <td class="px-2 py-1 border-r border-slate-700">
       <Name :name="row.name" :type="row.type" @update="updateRow('name', $event)" />
     </td>
-    <td class="px-2 py-1">
-      <Initiative
-        v-if="row.initiative !== undefined && row.initiative !== null"
-        :initiative="row.initiative"
-        @update="updateRow('initiative', $event)"
-      />
+    <td v-if="includesSummond" class="px-2 py-1 border-r border-slate-700">
+      <p v-if="row.summoner?.name">{{ row.summoner.name }}</p>
     </td>
-    <td class="px-2 py-1">
-      <Ac
-        v-if="row.ac !== undefined && row.ac !== null"
-        :ac="row.ac"
-        :tempAc="row.tempAc"
-        @update="updateRow('ac', $event)"
-      />
+    <td class="px-2 py-1 border-r border-slate-700">
+      <Initiative :initiative="row.initiative || null" @update="updateRow('initiative', $event)" />
     </td>
-    <td class="p-2">
+    <td class="px-2 py-1 border-r border-slate-700">
+      <Ac :ac="row.ac || null" :tempAc="row.tempAc || null" :type="row.type" @update="updateRow('ac', $event)" />
+    </td>
+    <td class="p-2 border-r border-slate-700">
       <Health
-        v-if="row.health"
-        :health="row.health"
-        :tempHealth="row.tempHealth"
+        :health="row.health || null"
+        :tempHealth="row.tempHealth || null"
+        :type="row.type"
         @update="updateRow('health', $event)"
       />
     </td>
-    <td class="p-2">
+    <td class="p-2 border-r border-slate-700">
       <Actions :row="row" @update="$emit('update', $event)" />
     </td>
-    <td class="px-2 py-1">
+    <td class="px-2 py-1 border-r border-slate-700">
       <Effects :conditions="row.conditions" :curses="row.curses" @update="updateRow($event.type, $event.value)" />
     </td>
-    <td class="px-2 py-1">
+    <td class="px-2 py-1 border-r border-slate-700">
       <DeathSaves v-if="row.deathSaves" :deathSaves="row.deathSaves" @update="updateRow('deathSaves', $event)" />
     </td>
-    <td class="px-2 py-1">
+    <td class="px-2 py-1 border-r border-slate-700">
       <Concentration
         v-if="typeof row.concentration === 'boolean'"
         :concentration="row.concentration"

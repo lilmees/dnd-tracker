@@ -96,7 +96,8 @@
       "conditions": "Condities",
       "deathSaves": "Death saves",
       "concentration": "Concentratie",
-      "modify": "Aanpassen"
+      "modify": "Aanpassen",
+      "summond": "Opgeroepen door"
     },
     "conditions": {
       "fetchErrorTitle": "Fout bij het ophalen van conditions"

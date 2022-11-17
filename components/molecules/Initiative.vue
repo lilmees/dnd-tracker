@@ -25,14 +25,13 @@ function updateInitiative({ __init, initiative }) {
       <p v-if="initiative" class="peer cursor-pointer" @click="isOpen = true">
         {{ initiative }}
       </p>
-      <div
-        v-else
-        class="max-w-max px-2 py-1 rounded bg-black cursor-pointer tracker-shadow font-bold"
-        @click="isOpen = true"
-      >
-        {{ $t('encounter.addInitiative') }}
-      </div>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />
+      <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
+        {{ $t('actions.add') }}
+      </p>
+      <Update
+        class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+        :class="{ hidden: !initiative }"
+      />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.initiative') }}</h2>

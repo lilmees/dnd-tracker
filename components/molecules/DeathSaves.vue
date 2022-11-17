@@ -23,7 +23,7 @@ function updateDeathSave(index, save) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-1">
+  <div class="flex flex-wrap gap-1 justify-center">
     <div class="flex gap-1">
       <div
         v-for="(save, i) in deathSaves.save"

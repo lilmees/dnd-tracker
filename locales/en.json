@@ -96,7 +96,8 @@
       "conditions": "Conditions",
       "deathSaves": "Death saves",
       "concentration": "Concentration",
-      "modify": "Modify"
+      "modify": "Modify",
+      "summond": "Summoned by"
     },
     "conditions": {
       "fetchErrorTitle": "Error while getting conditions"
