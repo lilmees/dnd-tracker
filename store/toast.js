@@ -15,6 +15,7 @@ export const useToastStore = defineStore('useToastStore', {
       const key = this.toasts.length
       const timeout = toast.timeout || 5000
       const titleExists = this.toasts.findIndex(({ title }) => title === toast.title) > -1
+
       if (!titleExists) this.toasts = [...this.toasts, { ...toast, key }]
 
       if (timeout > 0) {
@@ -22,7 +23,6 @@ export const useToastStore = defineStore('useToastStore', {
           this.toasts = this.toasts.filter(obj => obj.key !== key)
         }, timeout)
       }
-
       return key
     },
     success({ title, text, icon, timeout, actions = [] }) {

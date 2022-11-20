@@ -25,7 +25,7 @@ const store = useToastStore()
         class="w-full mb-1 bg-tracker tracker-shadow pointer-events-auto rounded-2xl"
       >
         <div
-          class="flex p-2 items-start"
+          class="flex p-2 items-start gap-2"
           :class="{
             'text-danger': toast.type === 'error',
             'text-warning': toast.type === 'warn',
@@ -33,24 +33,27 @@ const store = useToastStore()
             'text-info': toast.type === 'info',
           }"
         >
-          <Info v-if="toast.type === 'info'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
-          <Warn v-if="toast.type === 'warn'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
-          <Check v-if="toast.type === 'success'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
-          <Error v-if="toast.type === 'error'" class="max-w-[40px] max-h-[40px] w-full h-full mr-2 pt-2" />
+          <Info v-if="toast.type === 'info'" class="icon pt-2" />
+          <Warn v-if="toast.type === 'warn'" class="icon pt-2" />
+          <Check v-if="toast.type === 'success'" class="icon pt-2" />
+          <Error v-if="toast.type === 'error'" class="icon pt-2" />
           <div class="grow">
-            <h1 v-if="toast.title" class="font-bold">
+            <h1 v-if="toast.title">
               {{ toast.title }}
             </h1>
             <p v-if="toast.text" class="body-small">
               {{ toast.text }}
             </p>
           </div>
-          <Remove
-            class="max-w-[20px] max-h-[20px] w-full h-full mr-2 self-start text-danger cursor-pointer"
-            @click="store.remove(toast.key)"
-          />
+          <Remove class="icon self-start text-danger cursor-pointer" @click="store.remove(toast.key)" />
         </div>
       </div>
     </TransitionGroup>
   </div>
 </template>
+
+<style scoped>
+.icon {
+  @apply min-w-[40px] min-h-[40px];
+}
+</style>
