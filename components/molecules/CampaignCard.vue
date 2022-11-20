@@ -5,7 +5,6 @@ import Update from '@/assets/icons/update.svg'
 import Settings from '@/assets/icons/settings.svg'
 import Remove from '@/assets/icons/remove.svg'
 import { useCampaignsStore } from '@/store/campaigns'
-// import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
@@ -13,7 +12,6 @@ const props = defineProps({ campaign: { type: Object, required: true } })
 
 const user = useSupabaseUser()
 const store = useCampaignsStore()
-// const encounters = useEncountersStore()
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 const needConfirmation = ref(false)
@@ -23,7 +21,6 @@ const isSettings = ref(false)
 async function deleteCampaign() {
   try {
     await store.deleteCampaign(props.campaign.id)
-    // await encounters.deleteCampaign(props.campaign.id)
   } catch (error) {
     errorToast()
   }
