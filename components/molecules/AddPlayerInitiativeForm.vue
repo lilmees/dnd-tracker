@@ -43,15 +43,15 @@ function createRowObject(formData) {
   const form = {
     ...formData,
     initiative: Number(formData.initiative) || null,
-    health: Number(formData.Health) || null,
+    health: Number(formData.health) || null,
     ac: Number(formData.ac) || null,
   }
   return {
     ...form,
     id: Date.now() + Math.floor(Math.random() * 100),
     type: props.type,
-    maxHealth: form.value.health,
-    maxAc: form.value.ac,
+    maxHealth: form.health,
+    maxAc: form.ac,
     tempHealth: 0,
     tempAc: 0,
     conditions: [],
