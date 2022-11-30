@@ -1,8 +1,14 @@
 <script setup>
 import Update from '@/assets/icons/update.svg'
+import ArrowDown from '@/assets/icons/arrow-down.svg'
+import ArrowUp from '@/assets/icons/arrow-up.svg'
 
-const emit = defineEmits(['update'])
-const props = defineProps({ initiative: { type: [Number, null], required: true } })
+const emit = defineEmits(['update', 'index'])
+const props = defineProps({
+  initiative: { type: [Number, null], required: true },
+  index: { type: Number, required: true },
+  rows: { type: Array, required: true },
+})
 
 const isOpen = ref(false)
 const isRollingDice = ref(false)
@@ -17,21 +23,54 @@ function updateInitiative({ __init, initiative }) {
   isOpen.value = false
   isRollingDice.value = false
 }
+
+function moveRow(up) {
+  const lowestIndex = props.rows.findIndex(r => r.index === props.index)
+  if (up) {
+    props.rows[lowestIndex].index = lowestIndex - 1
+    props.rows[lowestIndex - 1].index = lowestIndex
+    // update the follwing indexes
+    for (let i = lowestIndex + 1; i < props.rows.length; i++) {
+      props.rows[i].index = i
+    }
+  } else {
+    props.rows[lowestIndex].index = lowestIndex + 1
+    props.rows[lowestIndex + 1].index = lowestIndex
+  }
+  emit(
+    'index',
+    props.rows.sort((a, b) => a.index - b.index)
+  )
+}
 </script>
 
 <template>
   <div>
-    <div class="flex gap-2 items-center">
-      <p v-if="initiative" class="peer cursor-pointer" @click="isOpen = true">
-        {{ initiative }}
-      </p>
-      <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
-        {{ $t('actions.add') }}
-      </p>
-      <Update
-        class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
-        :class="{ hidden: !initiative }"
-      />
+    <div class="flex justify-between gap-2">
+      <div class="flex gap-2 items-center">
+        <p v-if="initiative" class="peer cursor-pointer" @click="isOpen = true">
+          {{ initiative }}
+        </p>
+        <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
+          {{ $t('actions.add') }}
+        </p>
+        <Update
+          class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+          :class="{ hidden: !initiative }"
+        />
+      </div>
+      <div v-if="initiative" class="flex gap-2 items-center">
+        <ArrowDown
+          v-if="rows.length !== index + 1 && rows[index + 1].initiative === initiative"
+          class="w-4 h-4 cursor-pointer text-primary"
+          @click="moveRow(false)"
+        />
+        <ArrowUp
+          v-if="index > 0 && rows[index - 1]?.initiative === initiative"
+          class="w-4 h-4 cursor-pointer text-primary"
+          @click="moveRow(true)"
+        />
+      </div>
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.initiative') }}</h2>

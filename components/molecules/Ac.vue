@@ -25,7 +25,7 @@ function updateAc({ __init, ac }) {
 
 <template>
   <div>
-    <div class="flex gap-2">
+    <div class="flex gap-2 items-center">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
         <p v-if="ac !== null">{{ ac }}</p>
         <p v-else-if="type !== 'lair'" class="text-slate-600">{{ $t('actions.add') }}</p>

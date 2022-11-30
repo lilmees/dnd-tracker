@@ -1,4 +1,5 @@
 <script setup>
+import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['update'])
@@ -9,8 +10,10 @@ const props = defineProps({
 
 const { t } = useI18n({ useScope: 'global' })
 const includesSummond = computed(() => !!props.rows.flat().filter(r => r.summoner).length)
+const sorted = computed(() => props.rows.sort((a, b) => a.index - b.index))
 const headers = computed(() => {
   const headers = [
+    '',
     t('encounter.headers.name'),
     t('encounter.headers.init'),
     t('encounter.headers.ac'),
@@ -21,15 +24,33 @@ const headers = computed(() => {
     t('encounter.headers.concentration'),
     t('encounter.headers.modify'),
   ]
-  if (includesSummond.value) headers.splice(1, 0, t('encounter.headers.summond'))
+  if (includesSummond.value) headers.splice(2, 0, t('encounter.headers.summond'))
   return headers
 })
 
-const rowsSorted = computed(() => props.rows.sort((a, b) => b.initiative - a.initiative))
+onMounted(() => checkIfIndexAreCorrect(props.rows))
+
+watch(sorted, v => {
+  if (v) checkIfIndexAreCorrect(props.rows)
+})
+
+onMounted(() => {
+  if (props.rows !== sorted.value) emit('update', sorted.value)
+})
 
 function updateRow(row, index) {
   props.rows[index] = row
-  emit('update', props.rows)
+  emit('update', sorted.value)
+}
+
+function updateIndexes(rows) {
+  emit('update', rows)
+}
+
+function checkIfIndexAreCorrect(rows) {
+  const indexes = rows.map(r => r.index).sort((a, b) => a - b)
+  if (JSON.stringify(indexes) === JSON.stringify([...Array(indexes.at(-1) + 1).keys()])) return
+  emit('update', correctRowItemIndexes(rows))
 }
 </script>
 
@@ -48,15 +69,17 @@ function updateRow(row, index) {
             </th>
           </tr>
         </thead>
-        <tbody v-if="rows.length > 0">
+        <tbody v-auto-animate v-if="rows.length > 0">
           <EncounterTableRow
-            v-for="(row, index) in rowsSorted"
+            v-for="(row, index) in sorted"
             :key="row.id"
             :row="row"
             :activeIndex="activeIndex"
             :includesSummond="includesSummond"
             :index="index"
+            :rows="props.rows"
             @update="updateRow($event, index)"
+            @index="updateIndexes"
             @copy="emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"
             @delete="
               $emit(

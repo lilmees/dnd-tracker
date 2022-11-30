@@ -1,9 +1,10 @@
 <script setup>
-const emit = defineEmits(['update', 'copy', 'delete'])
+const emit = defineEmits(['update', 'copy', 'delete', 'index'])
 const props = defineProps({
   row: { type: Object, required: true },
   activeIndex: { type: Number, required: true },
   index: { type: Number, required: true },
+  rows: { type: Array, required: true },
   includesSummond: { type: Boolean, required: true },
 })
 
@@ -25,6 +26,9 @@ function updateRow(key, value) {
       'bg-danger/10': row.health !== null && row.health < 1,
     }"
   >
+    <td class="px-2 py-1 border-r border-slate-700 text-primary text-center max-w-[30px]">
+      {{ row.index + 1 }}
+    </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Name :name="row.name" :type="row.type" @update="updateRow('name', $event)" />
     </td>
@@ -32,7 +36,13 @@ function updateRow(key, value) {
       <p v-if="row.summoner?.name">{{ row.summoner.name }}</p>
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
-      <Initiative :initiative="row.initiative || null" @update="updateRow('initiative', $event)" />
+      <Initiative
+        :initiative="row.initiative || null"
+        :index="row.index"
+        :rows="rows"
+        @update="updateRow('initiative', $event)"
+        @index="$emit('index', $event)"
+      />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Ac :ac="row.ac || null" :tempAc="row.tempAc || null" :type="row.type" @update="updateRow('ac', $event)" />

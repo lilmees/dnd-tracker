@@ -1,5 +1,6 @@
 <script setup>
 import { rollD20 } from '@/util/rollDice'
+import { createRowObject } from '@/util/createRowObject'
 import { useEncountersStore } from '@/store/encounters'
 import { reset } from '@formkit/core'
 
@@ -35,7 +36,7 @@ async function addInitiative({ __init, amount, ...formData }) {
   try {
     isLoading.value = true
     const rows = []
-    for (let i = 0; i < amount; i++) rows.push(createRowObject(formData))
+    for (let i = 0; i < amount; i++) rows.push(createRowObject(formData, props.type, props.encounter.rows))
     await store.updateEncounter(
       props.encounter.rows.includes('[') ? { rows: [...rows] } : { rows: [...props.encounter.rows, ...rows] },
       props.encounter.id
@@ -46,27 +47,6 @@ async function addInitiative({ __init, amount, ...formData }) {
     error.value = err.message
   } finally {
     isLoading.value = false
-  }
-}
-
-function createRowObject(formData) {
-  const form = {
-    ...formData,
-    initiative: Number(formData.initiative) || null,
-    health: Number(formData.Health) || null,
-    ac: Number(formData.ac) || null,
-  }
-  return {
-    ...form,
-    id: Date.now() + Math.floor(Math.random() * 100),
-    type: props.type,
-    maxHealth: form.health,
-    maxAc: form.ac,
-    tempHealth: 0,
-    tempAc: 0,
-    conditions: [],
-    curses: [],
-    concentration: false,
   }
 }
 
