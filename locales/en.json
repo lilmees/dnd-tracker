@@ -1,4 +1,8 @@
 {
+  "home": {
+    "start": "Let the session start",
+    "demo": "This isn't available in the demo"
+  },
   "error": {
     "404": {
       "title": "Oops, we could not find that page",
@@ -97,7 +101,7 @@
       "deathSaves": "Death saves",
       "concentration": "Concentration",
       "modify": "Modify",
-      "summond": "Summoned by"
+      "summond": "Summoner"
     },
     "conditions": {
       "fetchErrorTitle": "Error while getting conditions"

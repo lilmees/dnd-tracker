@@ -3,10 +3,11 @@ import Copy from '@/assets/icons/copy.svg'
 import Delete from '@/assets/icons/delete.svg'
 
 defineEmits(['copy', 'delete'])
+defineProps({ showcase: { type: Boolean, default: false } })
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-1 justify-center">
+  <div v-if="!showcase" class="flex flex-wrap gap-1 justify-center">
     <Copy v-tooltip="'Copy row'" class="w-6 h-6 cursor-pointer text-primary" @click="$emit('copy')" />
     <VDropdown>
       <Delete v-tooltip="'Delete row'" class="w-6 h-6 cursor-pointer text-danger" />
@@ -17,5 +18,9 @@ defineEmits(['copy', 'delete'])
         </div>
       </template>
     </VDropdown>
+  </div>
+  <div v-else class="flex flex-wrap gap-1 justify-center">
+    <Copy v-tooltip="'Copy row'" class="w-6 h-6 cursor-not-allowed text-gray-400" />
+    <Delete v-tooltip="'Delete row'" class="w-6 h-6 cursor-not-allowed text-gray-400" />
   </div>
 </template>

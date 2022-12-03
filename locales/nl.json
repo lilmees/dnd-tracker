@@ -1,4 +1,8 @@
 {
+  "home": {
+    "start": "Let the session start",
+    "demo": "Dit is niet beschikbaar in de demo"
+  },
   "error": {
     "404": {
       "title": "Pagina niet gevonden",
@@ -97,7 +101,7 @@
       "deathSaves": "Death saves",
       "concentration": "Concentratie",
       "modify": "Aanpassen",
-      "summond": "Opgeroepen door"
+      "summond": "Oproeper"
     },
     "conditions": {
       "fetchErrorTitle": "Fout bij het ophalen van conditions"

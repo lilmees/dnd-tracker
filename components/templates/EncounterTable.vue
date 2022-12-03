@@ -6,6 +6,7 @@ const emit = defineEmits(['update'])
 const props = defineProps({
   rows: { type: Array, required: true },
   activeIndex: { type: Number, required: true },
+  showcase: { type: Boolean, default: false },
 })
 
 const { t } = useI18n({ useScope: 'global' })
@@ -49,7 +50,7 @@ function updateIndexes(rows) {
 
 function checkIfIndexAreCorrect(rows) {
   const indexes = rows.map(r => r.index).sort((a, b) => a - b)
-  if (JSON.stringify(indexes) === JSON.stringify([...Array(indexes.at(-1) + 1).keys()])) return
+  if (!indexes.length || JSON.stringify(indexes) === JSON.stringify([...Array(indexes.at(-1) + 1).keys()])) return
   emit('update', correctRowItemIndexes(rows))
 }
 </script>
@@ -78,6 +79,7 @@ function checkIfIndexAreCorrect(rows) {
             :includesSummond="includesSummond"
             :index="index"
             :rows="props.rows"
+            :showcase="showcase"
             @update="updateRow($event, index)"
             @index="updateIndexes"
             @copy="emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"

@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/css/global.css'],
   buildModules: ['@nuxtjs/tailwindcss', '@intlify/nuxt3','floating-vue/nuxt'],
-  modules: ['@nuxtjs/supabase', '@vueuse/nuxt', '@pinia/nuxt', '@formkit/nuxt'],
+  modules: ['@nuxtjs/supabase', '@vueuse/nuxt', '@pinia/nuxt', '@formkit/nuxt','@vueuse/motion/nuxt'],
   runtimeConfig: {
     public: {
       supabaseRedirectUrl: process.env.NUXT_SUPABASE_REDIRECT_URL,

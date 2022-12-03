@@ -2,7 +2,7 @@
 import Update from '@/assets/icons/update.svg'
 
 const emit = defineEmits(['update'])
-const props = defineProps({
+defineProps({
   health: { type: [Number, null, String], required: true },
   tempHealth: { type: [Number, null, String], required: true },
   type: { type: String, required: true },

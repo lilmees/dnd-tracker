@@ -1,0 +1,179 @@
+{
+  "id": 35,
+  "created_at": "2022-12-03T20:54:01.195861+00:00",
+  "title": "Sandbox",
+  "round": 1,
+  "rows": [
+    {
+      "conditions": [],
+      "curses": [],
+      "index": 0,
+      "initiative": 20,
+      "link": null,
+      "name": "Lair action",
+      "type": "lair"
+    },
+    {
+      "ac": 22,
+      "concentration": true,
+      "conditions": [],
+      "curses": [],
+      "deathSaves": { "fail": [false, false, false], "save": [false, false, false] },
+      "health": 69,
+      "index": 1,
+      "id": 1,
+      "initiative": 19,
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "maxAc": { "_value": "22", "_vei": {} },
+      "maxHealth": { "_value": "69", "_vei": {} },
+      "name": "Kees",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "player"
+    },
+    {
+      "ac": 15,
+      "concentration": false,
+      "conditions": [
+        {
+          "created_at": "2022-10-30T20:53:05.432628+00:00",
+          "description": {
+            "en": ["- A deafened creature can't hear and automatically fails any ability check that requires hearing."]
+          },
+          "id": "deafened",
+          "name": "Deafened",
+          "negative": true
+        }
+      ],
+      "curses": [],
+      "deathSaves": { "fail": [true, true, false], "save": [true, false, false] },
+      "health": 0,
+      "index": 2,
+      "id": 2,
+      "initiative": 19,
+      "link": null,
+      "maxAc": { "_value": "15", "_vei": {} },
+      "maxHealth": { "_value": "60", "_vei": {} },
+      "name": "Angular",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "player"
+    },
+    {
+      "ac": 16,
+      "concentration": false,
+      "conditions": [],
+      "curses": [],
+      "deathSaves": { "fail": [false, false, false], "save": [false, false, false] },
+      "health": 70,
+      "index": 3,
+      "id": 3,
+      "initiative": 19,
+      "link": null,
+      "maxAc": { "_value": "16", "_vei": {} },
+      "maxHealth": { "_value": "70", "_vei": {} },
+      "name": "Billy Bob",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "player"
+    },
+    {
+      "ac": 15,
+      "concentration": false,
+      "conditions": [],
+      "curses": [],
+      "deathSaves": { "fail": [false, false, false], "save": [false, false, false] },
+      "health": 90,
+      "index": 4,
+      "id": 4,
+      "initiative": 16,
+      "link": "https://www.aidedd.org/dnd/monstres.php?vo=air-elemental",
+      "maxAc": { "_value": "15", "_vei": {} },
+      "maxHealth": { "_value": "90", "_vei": {} },
+      "name": "Air Elemental",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "monster"
+    },
+    {
+      "ac": 12,
+      "concentration": false,
+      "conditions": [],
+      "curses": [],
+      "health": 20,
+      "index": 5,
+      "id": 5,
+      "initiative": 16,
+      "link": null,
+      "maxAc": { "_value": "12", "_vei": {} },
+      "maxHealth": { "_value": "20", "_vei": {} },
+      "name": "Beast",
+      "summoner": { "name": "Kees" },
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "summon"
+    },
+    {
+      "ac": 15,
+      "concentration": false,
+      "conditions": [],
+      "curses": [],
+      "deathSaves": { "fail": [false, false, false], "save": [false, false, false] },
+      "health": 90,
+      "index": 6,
+      "id": 6,
+      "initiative": 6,
+      "link": "https://www.aidedd.org/dnd/monstres.php?vo=air-elemental",
+      "maxAc": { "_value": "15", "_vei": {} },
+      "maxHealth": { "_value": "90", "_vei": {} },
+      "name": "Air Elemental",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "monster"
+    },
+    {
+      "ac": 10,
+      "concentration": false,
+      "conditions": [
+        {
+          "created_at": "2022-10-30T20:53:05.432628+00:00",
+          "description": {
+            "en": [
+              "- A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
+              "- The charmer has advantage on any ability check to interact socially with the creature."
+            ]
+          },
+          "id": "charmed",
+          "name": "Charmed",
+          "negative": true
+        }
+      ],
+      "curses": [],
+      "deathSaves": { "fail": [false, false, false], "save": [false, false, false] },
+      "health": 25,
+      "index": 7,
+      "id": 7,
+      "initiative": 1,
+      "link": null,
+      "maxAc": { "_value": "10", "_vei": {} },
+      "maxHealth": { "_value": "25", "_vei": {} },
+      "name": "Random npc ",
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "npc"
+    }
+  ],
+  "info": null,
+  "created_by": "dd460152-b973-4741-ba58-ea972c313b8b",
+  "admins": ["dd460152-b973-4741-ba58-ea972c313b8b"],
+  "group": null,
+  "background": "#1ab489",
+  "color": "#FFFFFF",
+  "activeIndex": 0,
+  "profiles": {
+    "id": "dd460152-b973-4741-ba58-ea972c313b8b",
+    "name": "Jeremy Mees",
+    "username": "jeremy",
+    "avatar": "https://avatars.dicebear.com/api/open-peeps/dwdza.svg?size=100"
+  }
+}

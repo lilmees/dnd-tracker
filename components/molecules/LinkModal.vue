@@ -2,7 +2,10 @@
 import Link from '@/assets/icons/link.svg'
 
 const emit = defineEmits(['update'])
-const props = defineProps({ link: { type: [null, String], required: true } })
+const props = defineProps({
+  link: { type: [null, String], required: true },
+  showcase: { type: Boolean, default: false },
+})
 
 const isOpen = ref(false)
 const isUpdating = ref(false)
@@ -19,7 +22,10 @@ function updateLink({ __init, link }) {
   <div>
     <Link class="w-6 h-6 cursor-pointer text-info" @click="isOpen = true" />
     <Modal v-if="isOpen" @close="isOpen = false">
-      <div v-if="!isUpdating">
+      <div v-if="showcase">
+        <h3>{{ $t('home.demo') }}</h3>
+      </div>
+      <div v-else-if="!isUpdating">
         <h2 class="mb-10">{{ $t('encounter.link') }}</h2>
         <div v-if="link" class="flex gap-2 flex-wrap">
           <NuxtLink :to="link" target="_blank" rel="noreferrer noopener" class="grow">

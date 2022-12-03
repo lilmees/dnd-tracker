@@ -6,6 +6,7 @@ const props = defineProps({
   index: { type: Number, required: true },
   rows: { type: Array, required: true },
   includesSummond: { type: Boolean, required: true },
+  showcase: { type: Boolean, default: false },
 })
 
 function updateRow(key, value) {
@@ -49,14 +50,14 @@ function updateRow(key, value) {
     </td>
     <td class="p-2 border-r border-slate-700">
       <Health
-        :health="row.health || null"
+        :health="typeof row.health === 'number' ? row.health : null"
         :tempHealth="row.tempHealth || null"
         :type="row.type"
         @update="updateRow('health', $event)"
       />
     </td>
     <td class="p-2 border-r border-slate-700">
-      <Actions :row="row" @update="$emit('update', $event)" />
+      <Actions :showcase="showcase" :row="row" @update="$emit('update', $event)" />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Effects :conditions="row.conditions" :curses="row.curses" @update="updateRow($event.type, $event.value)" />
@@ -72,7 +73,7 @@ function updateRow(key, value) {
       />
     </td>
     <td class="px-2 py-1">
-      <Modify @copy="$emit('copy', row.id)" @delete="$emit('delete', row.id)" />
+      <Modify :showcase="showcase" @copy="$emit('copy', row.id)" @delete="$emit('delete', row.id)" />
     </td>
   </tr>
 </template>

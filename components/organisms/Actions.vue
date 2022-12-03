@@ -3,7 +3,10 @@ import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['update'])
-const props = defineProps({ row: { type: Object, required: true } })
+const props = defineProps({
+  row: { type: Object, required: true },
+  showcase: { type: Boolean, default: false },
+})
 
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
@@ -86,12 +89,14 @@ function updateCondition(conditions) {
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
+      :showcase="showcase"
       v-tooltip="$t('encounter.tooltip.link')"
       :link="row.link === undefined ? null : row.link"
       @update="updateLink"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
+      :showcase="showcase"
       v-tooltip="$t('encounter.tooltip.hp')"
       :health="row.health"
       :tempHealth="row.tempHealth"
@@ -99,6 +104,7 @@ function updateCondition(conditions) {
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
+      :showcase="showcase"
       v-tooltip="$t('encounter.tooltip.ac')"
       :ac="row.ac"
       :tempAc="row.tempAc"
@@ -106,6 +112,7 @@ function updateCondition(conditions) {
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
+      :showcase="showcase"
       v-tooltip="$t('encounter.tooltip.condition')"
       :conditions="row.conditions"
       @update="updateCondition"
