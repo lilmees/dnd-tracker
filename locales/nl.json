@@ -1,7 +1,25 @@
 {
   "home": {
-    "start": "Let the session start",
-    "demo": "Dit is niet beschikbaar in de demo"
+    "start": "Laat het spelen beginnen",
+    "demo": "Dit is niet beschikbaar in de demo",
+    "textBlock1": {
+      "title": "Gemaakt met liefde 💜",
+      "text": "Hier bij dnd-tracker zijn wij niet van veel woorden, maar wij laten het product voor zijn eigen spreken. Er zijn grootse ideeën om het zo uitgebreid mogelijk te maken. We zijn begonnen met de encounter tracker als hoofd idee maar daar zijn zeker nog ideeën bij gekomen terwijl deze in ontwikkeling was.",
+      "button": "Ga naar de roadmap"
+    },
+    "summary": {
+      "title": "Waarom dnd-tracker kiezen voor jouw encounters 🤔",
+      "item1": "Live updaten tussen verschillende toestellen",
+      "item2": "Continu bezig om het product beter te maken",
+      "item3": "Alles voor de DM op 1 handige plaats",
+      "item4": "Geïntegreerde dobbelsteen roller",
+      "item5": "Overvloed van informatie die je kan bemachtigen",
+      "item6": "Aantrekkelijk dark mode design voor alle vampieren onder ons"
+    },
+    "textBlock2": {
+      "title": "Vreemde dingen 🐛",
+      "text": "Moest je ergens iets raars op de website tegen komen of kloppen de regels niet 100%. Aarzel dan zeker niet om het ons te laten weten. dnd-tracker is namelijk geen groot bedrijf maar eerder een groep van vrienden die dit samen bedacht en uitgedacht hebben. Dus als wij iets over het hoofd hebben gezien laat het ons zeker weten en dan passen wij het aan."
+    }
   },
   "error": {
     "404": {

@@ -26,7 +26,10 @@ function angle(cx, cy, ex, ey) {
     </div>
     <div class="absolute inset-0 flex flex-wrap justify-center items-center p-4 gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
-        <h1 v-motion-slide-visible-bottom class="text-[3rem] leading-[3.5rem] max-w-sm uppercase">
+        <h1
+          v-motion-slide-bottom
+          class="text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase"
+        >
           {{ $t('home.start') }}
         </h1>
       </div>

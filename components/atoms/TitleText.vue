@@ -2,17 +2,22 @@
 defineProps({
   title: { type: String },
   text: { type: String },
+  buttonLabel: { type: String },
+  buttonLink: { type: String },
+  center: { type: Boolean, default: false },
 })
 </script>
 
 <template>
-  <div>
-    <h2 class="pb-4">Lorem ipsum dolor sit amet.</h2>
-    <p class="max-w-prose">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam sit soluta voluptatum eius repellat, voluptatem
-      laboriosam saepe deserunt quidem obcaecati? Sapiente in consectetur magnam fugit omnis itaque recusandae! Veniam,
-      dolores quidem porro rerum incidunt excepturi illo, maiores iusto explicabo quas nobis amet, sequi tempore
-      ratione. Quo exercitationem fugit dolore beatae!
+  <div v-motion-slide-bottom :class="{ 'text-center': center }">
+    <h2 v-if="title" class="pb-4">{{ title }}</h2>
+    <p v-if="text" class="max-w-prose" :class="{ 'mx-auto': center }">
+      {{ text }}
     </p>
+    <div v-if="buttonLink && buttonLabel" class="flex" :class="[center ? 'justify-center' : 'justify-start']">
+      <NuxtLink :to="buttonLink" class="max-w-max">
+        <Button :label="buttonLabel" color="primary" class="mt-6 w-fit tracker-shadow-pulse" />
+      </NuxtLink>
+    </div>
   </div>
 </template>
