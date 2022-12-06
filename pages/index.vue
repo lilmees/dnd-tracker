@@ -53,7 +53,7 @@ function nextInitiative() {
             class="mt-20 lg:mt-32"
           />
         </div>
-        <div v-if="encounter" v-motion-slide-bottom class="rounded-xl px-4 py-6 bg-tracker tracker-shadow">
+        <div v-if="encounter" v-motion-slide-visible-bottom class="rounded-xl px-4 py-6 bg-tracker tracker-shadow">
           <EncounterHeader
             class="w-full pb-4"
             :round="encounter.round"
