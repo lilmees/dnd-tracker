@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: dark;
+  }
+
   html {
     @apply font-text scroll-smooth text-white bg-background accent-black;
   }

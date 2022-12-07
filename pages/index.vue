@@ -8,7 +8,7 @@ onMounted(() => getEncounter())
 
 async function getEncounter() {
   try {
-    encounter.value = await store.getEncounterById(36)
+    encounter.value = await store.getSandboxEncounter()
   } catch (err) {
     console.error(err)
   }

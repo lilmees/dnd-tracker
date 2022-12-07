@@ -41,6 +41,12 @@ export const useEncountersStore = defineStore('useEncountersStore', {
         this.loading = false
       }
     },
+    async getSandboxEncounter() {
+      const supabase = useSupabaseClient()
+      const { data, error } = await supabase.from('showcase').select('*').single()
+      if (error) throw error
+      else return data
+    },
     async getEncounterById(id) {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase
