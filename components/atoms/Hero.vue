@@ -21,14 +21,14 @@ function angle(cx, cy, ex, ey) {
 
 <template>
   <div class="relative" @mousemove="calculateEyes">
-    <div class="w-full h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6">
+    <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6">
       <img src="@/assets/images/background.png" alt="Hero image" class="w-full h-full object-cover" />
     </div>
     <div class="absolute inset-0 flex flex-wrap justify-center items-center p-4 gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
         <h1
           v-motion-slide-bottom
-          class="text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase"
+          class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase"
         >
           {{ $t('home.start') }}
         </h1>
