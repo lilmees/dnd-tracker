@@ -11,7 +11,7 @@ const props = defineProps({
     type: String,
     default: 'black',
     validator(value) {
-      return ['black', 'primary', 'secundary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
+      return ['black', 'primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
     },
   },
 })
@@ -22,7 +22,7 @@ const background = computed(() => {
       return '#000000'
     case 'primary':
       return '#9eade6'
-    case 'secundary':
+    case 'secondary':
       return '#b4bfcd'
     case 'success':
       return '#cede9c'
@@ -44,7 +44,7 @@ const background = computed(() => {
       :type="type"
       :label="label"
       :disabled="disabled || loading"
-      input-class="py-2 px-6 shadow rounded outline-none font-bold"
+      input-class="py-2 px-6 shadow rounded-md outline-none active:scale-95 duration-200 ease-in-out"
       :style="{
         fontWeight: bold ? 'bold' : 'normal',
         width: inline ? '100%' : 'auto',

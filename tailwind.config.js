@@ -12,7 +12,7 @@ module.exports = {
         background: '#0e1315',
         tracker: '#161d21',
         primary: '#9eade6',
-        secundary: '#b4bfcd',
+        secondary: '#b4bfcd',
         success: '#cede9c',
         info: '#35a4cc',
         warning: '#ffdf8a',

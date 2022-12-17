@@ -13,7 +13,7 @@ defineProps({
     type: String,
     default: 'success',
     validator(value) {
-      return ['primary', 'secundary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
+      return ['primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
     },
   },
 })
@@ -24,7 +24,7 @@ defineProps({
     class="px-3 py-1 font-semibold leading-tight rounded flex gap-2 w-fit items-center text-black"
     :class="{
       'bg-primary/50 ring-primary': color === 'primary',
-      'bg-secundary/50 ring-secundary': color === 'secundary',
+      'bg-secondary/50 ring-secondary': color === 'secondary',
       'bg-success/50 ring-success': color === 'success' || !condition.negative,
       'bg-info/50 ring-info': color === 'info',
       'bg-warning/50 ring-warning': color === 'warning',

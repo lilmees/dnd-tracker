@@ -16,7 +16,7 @@ defineProps({
     </p>
     <div v-if="buttonLink && buttonLabel" class="flex" :class="[center ? 'justify-center' : 'justify-start']">
       <NuxtLink :to="buttonLink" class="max-w-max">
-        <Button :label="buttonLabel" color="primary" class="mt-6 w-fit tracker-shadow-pulse" />
+        <Button bold :label="buttonLabel" color="primary" class="mt-6 w-fit tracker-shadow-pulse" />
       </NuxtLink>
     </div>
   </div>
