@@ -1,5 +1,4 @@
 <script setup>
-import { onBeforeMount } from 'vue'
 import { useProfileStore } from '@/store/profile'
 
 const appName = 'DnD tracker'
