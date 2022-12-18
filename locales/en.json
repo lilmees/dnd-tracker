@@ -1,4 +1,9 @@
 {
+  "cookie": {
+    "text": "When u use this website you accept that we only use functionel cookies.",
+    "policy": "Cookie policy",
+    "button": "OK"
+  },
   "home": {
     "start": "Let the session start",
     "demo": "This isn't available in the demo",

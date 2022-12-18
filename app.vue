@@ -23,5 +23,8 @@ onBeforeMount(() => profile.fetch())
   <div>
     <Toasts />
     <NuxtPage />
+    <ClientOnly>
+      <CookieBanner />
+    </ClientOnly>
   </div>
 </template>

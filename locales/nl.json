@@ -1,4 +1,9 @@
 {
+  "cookie": {
+    "text": "Als je deze website gebruikt ga je akkoord dat wij alleen functionele cookies gebruiken.",
+    "policy": "Cookie policy",
+    "button": "OK"
+  },
   "home": {
     "start": "Laat het spelen beginnen",
     "demo": "Dit is niet beschikbaar in de demo",
