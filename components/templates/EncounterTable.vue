@@ -41,7 +41,7 @@ onMounted(() => {
 
 function updateRow(row, index) {
   props.rows[index] = row
-  emit('update', sorted.value)
+  checkIfIndexAreCorrect(sorted.value)
 }
 
 function updateIndexes(rows) {
@@ -82,7 +82,7 @@ function checkIfIndexAreCorrect(rows) {
             :showcase="showcase"
             @update="updateRow($event, index)"
             @index="updateIndexes"
-            @copy="emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"
+            @copy="$emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"
             @delete="
               $emit(
                 'update',

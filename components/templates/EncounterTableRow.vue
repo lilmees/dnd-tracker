@@ -1,4 +1,6 @@
 <script setup>
+import { calculateRowIndex } from '@/util/calculateRowIndex'
+
 const emit = defineEmits(['update', 'copy', 'delete', 'index'])
 const props = defineProps({
   row: { type: Object, required: true },
@@ -10,11 +12,12 @@ const props = defineProps({
 })
 
 function updateRow(key, value) {
-  props.row[key] = value
   // when updateing health or ac also update the max values
-  if (key === 'health' || key === 'ac') {
-    props.row[`max${key.charAt(0).toUpperCase() + key.slice(1)}`] = value
-  }
+  if (key === 'health' || key === 'ac') props.row[`max${key.charAt(0).toUpperCase() + key.slice(1)}`] = value
+  // update index when changing initiative
+  if (key === 'initiative') props.row.index = calculateRowIndex(props.rows, value)
+  props.row[key] = value
+
   emit('update', props.row)
 }
 </script>
