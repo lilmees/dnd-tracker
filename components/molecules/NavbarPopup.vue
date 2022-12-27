@@ -4,8 +4,11 @@ import Remove from '~/assets/icons/remove.svg'
 defineEmits(['logout', 'close'])
 defineProps({
   routes: { type: Array, required: true },
+  dropdown: { type: Array, required: true },
   loggedIn: { type: Boolean, required: true },
 })
+
+const isOpen = ref(false)
 </script>
 
 <template>
@@ -18,9 +21,20 @@ defineProps({
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
       <RouteLink v-for="route in routes" :key="route.url" :label="$t(route.label)" :url="route.url" />
+      <div v-if="loggedIn">
+        <div
+          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
+          @click="isOpen = !isOpen"
+        >
+          {{ $t('navigation.collections') }}
+        </div>
+        <div v-if="isOpen" class="flex flex-col gap-y-2 bg-black p-2 rounded" @click="isOpen = false">
+          <RouteLink v-for="route in dropdown" :key="route.url" :label="$t(route.label)" :url="route.url" />
+        </div>
+      </div>
       <div
         v-if="loggedIn"
-        class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
+        class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
         @click="$emit('logout')"
       >
         {{ $t('navigation.logout') }}
