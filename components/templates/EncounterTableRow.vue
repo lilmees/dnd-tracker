@@ -11,6 +11,11 @@ const props = defineProps({
   showcase: { type: Boolean, default: false },
 })
 
+const summoner = computed(() => {
+  const sum = props.rows.filter(r => r.id === props.row.summoner?.id)
+  return sum.length ? sum[0].name : null
+})
+
 function updateRow(key, value) {
   // when updateing health or ac also update the max values
   if (key === 'health' || key === 'ac') props.row[`max${key.charAt(0).toUpperCase() + key.slice(1)}`] = value
@@ -37,7 +42,7 @@ function updateRow(key, value) {
       <Name :name="row.name" :type="row.type" @update="updateRow('name', $event)" />
     </td>
     <td v-if="includesSummond" class="px-2 py-1 border-r border-slate-700">
-      <p v-if="row.summoner?.name">{{ row.summoner.name }}</p>
+      <div v-if="row.summoner?.id && summoner">{{ summoner }}</div>
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Initiative

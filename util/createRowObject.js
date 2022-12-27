@@ -6,7 +6,7 @@ export const createRowObject = (formData, type, encounters) => {
   const ac = Number(formData.ac) || null
 
   const index = calculateRowIndex(encounters, initiative)
-  const id = () => Date.now() + Math.floor(Math.random() * 100)
+  const id = Date.now() + Math.floor(Math.random() * 100)
 
   let row = { ...formData, id, conditions: [], curses: [], type, index, initiative }
 
