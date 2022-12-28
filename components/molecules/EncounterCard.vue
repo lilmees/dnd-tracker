@@ -77,7 +77,6 @@ function closeSettings() {
     >
       <h2>{{ encounter.title }}</h2>
       <div>
-        <p v-if="encounter.profiles">Creator: {{ encounter.profiles.username }}</p>
         <p>Rows: {{ encounter.rows.length }}</p>
       </div>
     </NuxtLink>

@@ -17,11 +17,7 @@ const { error } = storeToRefs(store)
 onMounted(() => store.fetch())
 
 watch(error, v => {
-  if (!v) return
-  toast.error({
-    title: t('error.general.title'),
-    text: t('error.general.text'),
-  })
+  if (v) toast.error({ title: t('error.general.title'), text: t('error.general.text') })
 })
 </script>
 
