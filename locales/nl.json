@@ -194,7 +194,10 @@
       "name": "Naam",
       "role": "Rol",
       "profile": "Profiel",
-      "avatar": "Avatar"
+      "avatar": "Avatar",
+      "encounters": "Encounters",
+      "players": "Spelers",
+      "monsters": "Monsters"
     }
   },
   "confirmation": {
@@ -223,5 +226,10 @@
     "copy": "kopiëren",
     "random": "Willekeurig",
     "create": "Creëren"
+  },
+  "general": {
+    "encounters": "Encounters",
+    "players": "Spelers",
+    "monsters": "Monsters"
   }
 }

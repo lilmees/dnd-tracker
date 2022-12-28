@@ -194,7 +194,10 @@
       "name": "Name",
       "role": "Role",
       "profile": "Profile",
-      "avatar": "Avatar"
+      "avatar": "Avatar",
+      "encounters": "Encounters",
+      "players": "Players",
+      "monsters": "Monsters"
     }
   },
   "confirmation": {
@@ -223,5 +226,10 @@
     "copy": "Copy",
     "random": "Random",
     "create": "Create"
+  },
+  "general": {
+    "encounters": "Encounters",
+    "players": "Players",
+    "monsters": "Monsters"
   }
 }

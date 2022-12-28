@@ -40,9 +40,34 @@ async function getCampaignInfo() {
     <div v-if="isPending" class="loader" />
     <div v-else class="py-4 space-y-4">
       <Back url="/campaigns" :label="$t('campaign.back')" class="container-max" />
-      <CampaignHeader :campaign="campaign" />
-      <div v-if="encounters.length" class="flex flex-wrap gap-4">
-        <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
+      <h1
+        class="rounded w-full tracker-shadow relative p-2 text-center"
+        :style="{ 'background-color': campaign.background || '#000', color: campaign.color || '#fff' }"
+      >
+        {{ campaign.title }}
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <h2>{{ $t('general.encounters') }}</h2>
+            <div v-if="encounters.length" class="flex flex-wrap gap-4">
+              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
+            </div>
+          </div>
+          <div class="space-y-4">
+            <h2>{{ $t('general.players') }}</h2>
+            <div v-if="encounters.length" class="flex flex-wrap gap-4">
+              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
+            </div>
+          </div>
+          <div class="space-y-4">
+            <h2>{{ $t('general.monsters') }}</h2>
+            <div v-if="encounters.length" class="flex flex-wrap gap-4">
+              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
+            </div>
+          </div>
+        </div>
+        <div>notes...</div>
       </div>
     </div>
   </NuxtLayout>
