@@ -44,7 +44,10 @@ async function logout() {
     </NuxtLink>
     <div class="hidden sm:flex justify-end gap-4">
       <Menu>
-        <div v-if="user" class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max">
+        <div
+          v-if="user"
+          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
+        >
           {{ $t('navigation.collections') }}
         </div>
 
@@ -57,7 +60,7 @@ async function logout() {
       <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
       <div
         v-if="user"
-        class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
+        class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
         @click="logout()"
       >
         {{ $t('navigation.logout') }}

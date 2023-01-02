@@ -8,7 +8,7 @@ defineProps({
 <template>
   <NuxtLink
     :to="url"
-    class="text-slate-300 hover:text-white duration-200 ease-in-out max-w-max"
+    class="text-slate-300 hover:text-white duration-200 ease-in-out max-w-max font-bold"
     active-class="active-link"
   >
     {{ label }}

@@ -23,7 +23,7 @@ const isOpen = ref(false)
       <RouteLink v-for="route in routes" :key="route.url" :label="$t(route.label)" :url="route.url" />
       <div v-if="loggedIn">
         <div
-          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
+          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
           @click="isOpen = !isOpen"
         >
           {{ $t('navigation.collections') }}
@@ -34,7 +34,7 @@ const isOpen = ref(false)
       </div>
       <div
         v-if="loggedIn"
-        class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max"
+        class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
         @click="$emit('logout')"
       >
         {{ $t('navigation.logout') }}
