@@ -18,24 +18,24 @@ export const useToastStore = defineStore('useToastStore', {
 
       if (!titleExists) this.toasts = [...this.toasts, { ...toast, key }]
 
-      if (timeout > 0) {
+      if (timeout > 0 && toast.timed) {
         setTimeout(() => {
           this.toasts = this.toasts.filter(obj => obj.key !== key)
         }, timeout)
       }
       return key
     },
-    success({ title, text, icon, timeout, actions = [] }) {
-      return this.add({ title, text, icon, actions, timeout, type: 'success' })
+    success({ title, text, icon, timeout, actions = [], timed = true }) {
+      return this.add({ title, text, icon, actions, timeout, timed, type: 'success' })
     },
-    warn({ title, text, icon, timeout, actions = [] }) {
-      return this.add({ title, text, icon, actions, timeout, type: 'warn' })
+    warn({ title, text, icon, timeout, actions = [], timed = true }) {
+      return this.add({ title, text, icon, actions, timeout, timed, type: 'warn' })
     },
-    error({ title, text, icon, timeout, actions = [] }) {
-      return this.add({ title, text, icon, actions, timeout, type: 'error' })
+    error({ title, text, icon, timeout, actions = [], timed = true }) {
+      return this.add({ title, text, icon, actions, timeout, timed, type: 'error' })
     },
-    info({ title, text, icon, timeout, actions = [] }) {
-      return this.add({ title, text, icon, actions, timeout, type: 'info' })
+    info({ title, text, icon, timeout, actions = [], timed = true }) {
+      return this.add({ title, text, icon, actions, timeout, timed, type: 'info' })
     },
   },
 })

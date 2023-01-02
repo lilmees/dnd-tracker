@@ -25,10 +25,7 @@ async function getCampaignInfo() {
     useHead({ title: campaign.value.title })
     encounters.value = await encountersStore.getEncountersByCampaign(campaign.value.id)
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text'),
-    })
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isPending.value = false
   }
@@ -56,15 +53,9 @@ async function getCampaignInfo() {
           </div>
           <div class="space-y-4">
             <h2>{{ $t('general.players') }}</h2>
-            <div v-if="encounters.length" class="flex flex-wrap gap-4">
-              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
-            </div>
           </div>
           <div class="space-y-4">
-            <h2>{{ $t('general.monsters') }}</h2>
-            <div v-if="encounters.length" class="flex flex-wrap gap-4">
-              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
-            </div>
+            <h2>{{ $t('general.homebrewMonsters') }}</h2>
           </div>
         </div>
         <div>notes...</div>

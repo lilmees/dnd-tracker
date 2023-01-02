@@ -28,7 +28,7 @@
   }
 
   .body-small {
-    @apply font-text text-[0.75rem] leading-[1.25rem] sm:text-[0.875rem] sm:leading-[1.25rem] md:text-[1rem] md:leading-[1.5rem];
+    @apply font-text text-[0.75rem] leading-[1.25rem] sm:text-[0.875rem] sm:leading-[1.25rem];
   }
 
   .body-extra-small {

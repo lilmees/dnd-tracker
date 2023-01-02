@@ -230,6 +230,7 @@
   "general": {
     "encounters": "Encounters",
     "players": "Players",
-    "monsters": "Monsters"
+    "monsters": "Monsters",
+    "homebrewMonsters": "Homebrew monster"
   }
 }
