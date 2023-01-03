@@ -9,19 +9,19 @@ const props = defineProps({
 
 const isOpen = ref(false)
 
-function addedPlayer(players) {
-  emitAndResetState(players)
+function addedMonster(monsters) {
+  emitAndResetState(monsters)
 }
 
-function removedPlayer(id) {
+function removedMonster(id) {
   emitAndResetState(props.modelValue.filter(p => p.id !== id))
 }
 
-function updatedPlayer(player) {
-  const index = props.modelValue.findIndex(p => p.id === player.id)
-  const players = props.modelValue
-  players[index] = player
-  emitAndResetState(players)
+function updatedMonster(monster) {
+  const index = props.modelValue.findIndex(p => p.id === monster.id)
+  const monsters = props.modelValue
+  monsters[index] = monster
+  emitAndResetState(monsters)
 }
 
 function emitAndResetState(state) {
@@ -33,7 +33,7 @@ function emitAndResetState(state) {
 <template>
   <section class="space-y-4">
     <div class="flex justify-between border-b border-slate-700 pb-1">
-      <h2>{{ $t('general.players') }}</h2>
+      <h2>{{ $t('monsters.homebrew') }}</h2>
       <Add
         v-tooltip="$t('actions.add')"
         @click="isOpen = true"
@@ -41,18 +41,24 @@ function emitAndResetState(state) {
       />
     </div>
     <div v-if="!modelValue.length" class="space-y-2">
-      <p class="text-center">{{ $t('players.title') }}</p>
-      <Button :label="$t('players.add')" color="primary" bold class="mx-auto w-fit" @click="isOpen = true" />
+      <p class="text-center">{{ $t('monsters.none') }}</p>
+      <Button :label="$t('monsters.add')" color="primary" bold class="mx-auto w-fit" @click="isOpen = true" />
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
-      <PlayerCard
-        v-for="player in modelValue"
-        :key="player.created_at"
-        :player="player"
-        @deleted="removedPlayer"
-        @updated="updatedPlayer"
+      <HomebrewMonsterCard
+        v-for="monster in modelValue"
+        :key="monster.created_at"
+        :monster="monster"
+        @deleted="removedMonster"
+        @updated="updatedMonster"
       />
     </div>
-    <AddCampaignPlayer :open="isOpen" :id="id" :players="modelValue" @close="isOpen = false" @players="addedPlayer" />
+    <AddCampaignMonster
+      :open="isOpen"
+      :id="id"
+      :monsters="modelValue"
+      @close="isOpen = false"
+      @monsters="addedMonster"
+    />
   </section>
 </template>

@@ -233,14 +233,14 @@
     "monsters": "Monsters"
   },
   "players": {
-    "none": {
-      "title": "Geen spelers toegevoegd",
-      "button": "Add player"
-    },
+    "none": "Geen spelers toegevoegd",
     "add": "Speler creëren",
     "update": "Speler bijwerken"
   },
   "monsters": {
-    "homebrew": "Homebrew monsters"
+    "homebrew": "Homebrew monsters",
+    "none": "Geen monsters toegevoegd",
+    "add": "Monster creëren",
+    "update": "Monster bijwerken"
   }
 }

@@ -63,9 +63,7 @@ async function getCampaignInfo() {
         </div>
         <div class="space-y-8">
           <CampaignPlayers v-model="campaign.players" :id="campaign.id" />
-          <div class="space-y-4">
-            <h2>{{ $t('monsters.homebrew') }}</h2>
-          </div>
+          <CampaignMonsters v-model="campaign['homebrew-monsters']" :id="campaign.id" />
         </div>
       </div>
       <div>notes...</div>
