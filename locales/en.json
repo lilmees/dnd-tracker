@@ -230,7 +230,17 @@
   "general": {
     "encounters": "Encounters",
     "players": "Players",
-    "monsters": "Monsters",
-    "homebrewMonsters": "Homebrew monster"
+    "monsters": "Monsters"
+  },
+  "players": {
+    "none": {
+      "title": "No players added",
+      "button": "Add player"
+    },
+    "add": "Create player",
+    "update": "Update player"
+  },
+  "monsters": {
+    "homebrew": "Homebrew monsters"
   }
 }

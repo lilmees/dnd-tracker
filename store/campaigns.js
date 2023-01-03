@@ -35,7 +35,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
     },
     async getCampaignById(id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('campaigns').select('*').eq('id', id).single()
+      const { data, error } = await supabase.from('campaigns').select('*, players(*)').eq('id', id).single()
       if (error) throw error
       else return data
     },

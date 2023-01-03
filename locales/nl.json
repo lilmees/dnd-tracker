@@ -230,7 +230,17 @@
   "general": {
     "encounters": "Encounters",
     "players": "Spelers",
-    "monsters": "Monsters",
-    "homebrewMonsters": "Homebrew monster"
+    "monsters": "Monsters"
+  },
+  "players": {
+    "none": {
+      "title": "Geen spelers toegevoegd",
+      "button": "Add player"
+    },
+    "add": "Speler creëren",
+    "update": "Speler bijwerken"
+  },
+  "monsters": {
+    "homebrew": "Homebrew monsters"
   }
 }
