@@ -70,7 +70,10 @@ export const useEncountersStore = defineStore('useEncountersStore', {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase.from('initiative-sheets').insert([encounter])
       if (error) throw error
-      else this.data.push(data[0])
+      else {
+        this.data && this.data.length ? this.data.push(data[0]) : (this.data = [data[0]])
+        return data[0]
+      }
     },
     async deleteEncounter(id) {
       const supabase = useSupabaseClient()
@@ -78,7 +81,8 @@ export const useEncountersStore = defineStore('useEncountersStore', {
       if (error) throw error
       else {
         // check if the data is older than 5 minutes if so filter the encounters otherwise fetch data
-        !minutesAgo(5, this.lastFetched) ? (this.data = this.data.filter(d => d.id !== id)) : this.fetch()
+        if (!minutesAgo(5, this.lastFetched)) this.data = this.data ? this.data.filter(d => d.id !== id) : []
+        else this.fetch()
         return data
       }
     },
@@ -97,6 +101,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
           this.data = this.data.filter(e => e.id !== id)
           this.data.push(data[0])
         } else this.data = [data[0]]
+        return data[0]
       }
     },
   },

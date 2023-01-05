@@ -3,6 +3,7 @@ import { useCampaignsStore } from '@/store/campaigns'
 import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
+import Add from '~/assets/icons/add.svg'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -12,9 +13,11 @@ const store = useCampaignsStore()
 const encountersStore = useEncountersStore()
 const user = useSupabaseUser()
 const { t } = useI18n({ useScope: 'global' })
+
 const campaign = ref()
 const encounters = ref([])
 const isPending = ref(true)
+const isCreatingEncounter = ref(false)
 
 onMounted(() => getCampaignInfo())
 
@@ -30,6 +33,21 @@ async function getCampaignInfo() {
   } finally {
     isPending.value = false
   }
+}
+
+function addedEncounter(encounter) {
+  encounters.value.push(encounter)
+  isCreatingEncounter.value = false
+}
+
+function deletedEncounter(id) {
+  encounters.value = encounters.value.filter(e => e.id !== id)
+  isCreatingEncounter.value = false
+}
+
+function updatedEncounter(encounter) {
+  const index = encounters.value.findIndex(e => e.id === encounter.id)
+  encounters.value[index] = encounter
 }
 </script>
 
@@ -55,18 +73,48 @@ async function getCampaignInfo() {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
         <div class="space-y-8">
           <div class="space-y-4">
-            <h2>{{ $t('general.encounters') }}</h2>
-            <div v-if="encounters.length" class="flex flex-wrap gap-4">
-              <EncounterCard v-for="encounter in encounters" :key="encounter.id" :encounter="encounter" />
+            <div class="flex justify-between border-b border-slate-700 pb-1">
+              <h2>{{ $t('general.encounters') }}</h2>
+              <Add
+                v-tooltip="$t('actions.add')"
+                @click="isCreatingEncounter = true"
+                class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
+              />
+            </div>
+            <div v-if="encounters.length" class="flex flex-wrap gap-4 items-start">
+              <EncounterCard
+                v-for="encounter in encounters"
+                :key="encounter.id"
+                :encounter="encounter"
+                @deleted="deletedEncounter"
+                @copied="addedEncounter"
+                @updated="updatedEncounter"
+              />
+            </div>
+            <div v-else class="space-y-2">
+              <p class="text-center">{{ $t('encounters.noData.title') }}</p>
+              <Button
+                :label="$t('encounters.add')"
+                color="primary"
+                bold
+                class="mx-auto w-fit"
+                @click="isCreatingEncounter = true"
+              />
             </div>
           </div>
         </div>
-        <div class="space-y-8">
+        <div class="space-y-8 pt-4 md:pt-0">
           <CampaignPlayers v-model="campaign.players" :id="campaign.id" />
           <CampaignMonsters v-model="campaign['homebrew-monsters']" :id="campaign.id" />
         </div>
       </div>
       <div>notes...</div>
+      <AddEncounterModal
+        :open="isCreatingEncounter"
+        :campaignId="campaign.id"
+        @close="isCreatingEncounter = false"
+        @added="addedEncounter"
+      />
     </div>
   </NuxtLayout>
 </template>

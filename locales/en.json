@@ -225,7 +225,9 @@
     "info": "Show information",
     "copy": "Copy",
     "random": "Random",
-    "create": "Create"
+    "create": "Create",
+    "openSettings": "Settings",
+    "closeSettings": "Close settings"
   },
   "general": {
     "encounters": "Encounters",

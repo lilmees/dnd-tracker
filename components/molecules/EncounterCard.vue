@@ -8,6 +8,7 @@ import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
+const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps({ encounter: { type: Object, required: true } })
 
 const user = useSupabaseUser()
@@ -21,27 +22,27 @@ const isSettings = ref(false)
 async function deleteEncounter() {
   try {
     await store.deleteEncounter(props.encounter.id)
-  } catch (error) {
-    errorToast()
+    emit('deleted', props.encounter.id)
+  } catch (err) {
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   }
 }
 
 async function copyEncounter({ created_at, id, profiles, ...enc }) {
   const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
   try {
-    await store.addEncounter(encounter)
+    const enc = await store.addEncounter(encounter)
+    emit('copied', enc)
   } catch (err) {
-    errorToast()
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isSettings.value = false
   }
 }
 
-function errorToast() {
-  toast.error({
-    title: t('error.general.title'),
-    text: t('error.general.text'),
-  })
+function updatedEncounter(encounter) {
+  emit('updated', encounter)
+  closeSettings()
 }
 
 function closeSettings() {
@@ -58,12 +59,14 @@ function closeSettings() {
   >
     <Settings
       v-if="!isSettings"
+      v-tooltip="$t('actions.openSettings')"
       class="w-8 h-8 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       :style="{ color: encounter.color }"
       @click="isSettings = true"
     />
     <Remove
       v-else
+      v-tooltip="$t('actions.closeSettings')"
       class="w-8 h-8 cursor-pointer float-right mt-1 mr-1"
       :style="{ color: encounter.color }"
       @click="isSettings = false"
@@ -106,7 +109,12 @@ function closeSettings() {
         @close="closeSettings"
         @delete="deleteEncounter"
       />
-      <UpdateEncounterModal :open="isUpdating" :encounter="encounter" @close="closeSettings" />
+      <UpdateEncounterModal
+        :open="isUpdating"
+        :encounter="encounter"
+        @close="closeSettings"
+        @updated="updatedEncounter"
+      />
     </div>
   </div>
 </template>

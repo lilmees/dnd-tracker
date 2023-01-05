@@ -225,7 +225,9 @@
     "info": "Toon informatie",
     "copy": "kopiëren",
     "random": "Willekeurig",
-    "create": "Creëren"
+    "create": "Creëren",
+    "openSettings": "Instelling",
+    "closeSettings": "Sluit instelling"
   },
   "general": {
     "encounters": "Encounters",

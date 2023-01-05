@@ -51,7 +51,11 @@ watch(error, v => {
         <p>{{ $t('encounters.noData.text') }}</p>
         <Button :label="$t('encounters.add')" bold @click="isCreatingEncounter = true" />
       </div>
-      <AddEncounterModal :open="isCreatingEncounter" @close="isCreatingEncounter = false" />
+      <AddEncounterModal
+        :open="isCreatingEncounter"
+        @close="isCreatingEncounter = false"
+        @added="isCreatingEncounter = false"
+      />
       <AddCampaignModal :open="isCreatingCampaign" @close="isCreatingCampaign = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">

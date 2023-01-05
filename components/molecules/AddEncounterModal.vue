@@ -5,19 +5,25 @@ import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
 import { useI18n } from 'vue-i18n'
 
-const emit = defineEmits(['close'])
-const props = defineProps({ open: { type: Boolean, required: true } })
+const emit = defineEmits(['close', 'added'])
+const props = defineProps({
+  open: { type: Boolean, required: true },
+  campaignId: { type: [Number, String] },
+})
 
 const { t } = useI18n({ useScope: 'global' })
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
+
 const form = ref({ title: null, group: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
 const campaign = ref()
 
-onMounted(() => campaigns.fetch())
+onMounted(() => {
+  if (!props.campaignId) campaigns.fetch()
+})
 
 watch(
   () => props.open,
@@ -43,9 +49,10 @@ async function addEncounter({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    await store.addEncounter({
+    let group = props.campaignId || (campaign.value && campaign.value.id !== 'none' ? campaign.value.id : null)
+    const encounter = await store.addEncounter({
       ...formData,
-      group: campaign.value && campaign.value.id !== 'none' ? campaign.value.id : null,
+      group,
       round: 1,
       rows: [],
       created_by: user.value.id,
@@ -53,7 +60,7 @@ async function addEncounter({ __init, ...formData }) {
       color: contrastColor(formData.background),
       activeIndex: 0,
     })
-    emit('close')
+    emit('added', encounter)
   } catch (err) {
     error.value = err.message
   } finally {
@@ -72,7 +79,7 @@ function selectedCampaign(id) {
     <h2>{{ $t('encounters.title') }}</h2>
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
     <FormKit
-      v-if="campaigns.data"
+      v-if="campaignId || campaigns.data"
       v-model="form"
       type="form"
       :actions="false"
@@ -81,6 +88,7 @@ function selectedCampaign(id) {
     >
       <Input name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
       <Select
+        v-if="!campaignId"
         :inputLabel="$t('inputs.campaignLabel')"
         :label="campaign?.label || $t('campaigns.no')"
         bold
