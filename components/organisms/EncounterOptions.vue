@@ -1,20 +1,18 @@
 <script setup>
 defineProps({ encounter: { type: Object, required: true } })
 
-const isAddingInit = ref(false)
-const isRolling = ref(false)
+const isAddingHomebrew = ref(false)
+const isAddingMonster = ref(false)
+const isAddingCampaignMonster = ref(false)
+const isAddingCampaignPlayer = ref(false)
 </script>
 
 <template>
-  <div class="flex justify-end gap-2">
-    <Button :label="$t('actions.roll')" class="tracker-shadow" @click="isRolling = true" />
-    <Button
-      :label="$t('encounter.addInInitiative')"
-      color="primary"
-      class="tracker-shadow"
-      @click="isAddingInit = true"
-    />
-    <RollDiceModal :open="isRolling" @close="isRolling = false" />
-    <AddInitiativeModal :open="isAddingInit" :encounter="encounter" @close="isAddingInit = false" />
+  <div class="flex flex-wrap justify-end gap-2">
+    <Button :label="$t('encounter.addMonster')" color="danger" @click="isAddingMonster = true" />
+    <Button :label="$t('encounter.addCampaignMonster')" color="success" @click="isAddingCampaignMonster = true" />
+    <Button :label="$t('encounter.addCampaignPlayer')" color="info" @click="isAddingCampaignPlayer = true" />
+    <Button :label="$t('encounter.addHomebrew')" color="primary" @click="isAddingHomebrew = true" />
+    <AddInitiativeModal :open="isAddingHomebrew" :encounter="encounter" @close="isAddingHomebrew = false" />
   </div>
 </template>
