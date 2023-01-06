@@ -59,6 +59,7 @@
     "typeLabel": "Type",
     "amountLabel": "Amount",
     "summonerLabel": "Summoner",
+    "textLabel": "Text",
     "nothing": "Nothing selected"
   },
   "campaigns": {
@@ -237,7 +238,13 @@
   "players": {
     "none": "No players added",
     "add": "Create player",
-    "update": "Update player"
+    "update": "Update player",
+    "notes": "Notes"
+  },
+  "notes": {
+    "none": "No notes added",
+    "add": "Create note",
+    "update": "Update note"
   },
   "monsters": {
     "homebrew": "Homebrew monsters",

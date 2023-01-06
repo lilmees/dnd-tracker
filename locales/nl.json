@@ -59,6 +59,7 @@
     "typeLabel": "Type",
     "amountLabel": "Hoeveelheid",
     "summonerLabel": "Oproeper",
+    "textLabel": "Tekst",
     "nothing": "Nog niets geselecteerd"
   },
   "campaigns": {
@@ -232,12 +233,18 @@
   "general": {
     "encounters": "Encounters",
     "players": "Spelers",
-    "monsters": "Monsters"
+    "monsters": "Monsters",
+    "notes": "Notities"
   },
   "players": {
     "none": "Geen spelers toegevoegd",
     "add": "Speler creëren",
     "update": "Speler bijwerken"
+  },
+  "notes": {
+    "none": "Geen notities toegevoegd",
+    "add": "Notitie creëren",
+    "update": "Notitie bijwerken"
   },
   "monsters": {
     "homebrew": "Homebrew monsters",

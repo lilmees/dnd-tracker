@@ -37,7 +37,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase
         .from('campaigns')
-        .select('*, players(*), homebrew-monsters(*)')
+        .select('*, players(*), homebrew-monsters(*), notes(*)')
         .eq('id', id)
         .single()
       if (error) throw error

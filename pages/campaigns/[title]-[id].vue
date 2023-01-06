@@ -70,45 +70,43 @@ function updatedEncounter(encounter) {
           :color="campaign.color || '#fff'"
         />
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-        <div class="space-y-8">
-          <div class="space-y-4">
-            <div class="flex justify-between border-b border-slate-700 pb-1">
-              <h2>{{ $t('general.encounters') }}</h2>
-              <Add
-                v-tooltip="$t('actions.add')"
-                @click="isCreatingEncounter = true"
-                class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
-              />
-            </div>
-            <div v-if="encounters.length" class="flex flex-wrap gap-4 items-start">
-              <EncounterCard
-                v-for="encounter in encounters"
-                :key="encounter.id"
-                :encounter="encounter"
-                @deleted="deletedEncounter"
-                @copied="addedEncounter"
-                @updated="updatedEncounter"
-              />
-            </div>
-            <div v-else class="space-y-2">
-              <p class="text-center">{{ $t('encounters.noData.title') }}</p>
-              <Button
-                :label="$t('encounters.add')"
-                color="primary"
-                bold
-                class="mx-auto w-fit"
-                @click="isCreatingEncounter = true"
-              />
-            </div>
+      <div class="space-y-8">
+        <div class="space-y-4">
+          <div class="flex justify-between border-b border-slate-700 pb-1">
+            <h2>{{ $t('general.encounters') }}</h2>
+            <Add
+              v-tooltip="$t('actions.add')"
+              @click="isCreatingEncounter = true"
+              class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
+            />
+          </div>
+          <div v-if="encounters.length" class="flex flex-wrap gap-4 items-start">
+            <EncounterCard
+              v-for="encounter in encounters"
+              :key="encounter.id"
+              :encounter="encounter"
+              @deleted="deletedEncounter"
+              @copied="addedEncounter"
+              @updated="updatedEncounter"
+            />
+          </div>
+          <div v-else class="space-y-2">
+            <p class="text-center">{{ $t('encounters.noData.title') }}</p>
+            <Button
+              :label="$t('encounters.add')"
+              color="primary"
+              bold
+              class="mx-auto w-fit"
+              @click="isCreatingEncounter = true"
+            />
           </div>
         </div>
-        <div class="space-y-8 pt-4 md:pt-0">
-          <CampaignPlayers v-model="campaign.players" :id="campaign.id" />
-          <CampaignMonsters v-model="campaign['homebrew-monsters']" :id="campaign.id" />
-        </div>
       </div>
-      <div>notes...</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 py-8">
+        <CampaignPlayers v-model="campaign.players" :id="campaign.id" />
+        <CampaignMonsters v-model="campaign['homebrew-monsters']" :id="campaign.id" />
+      </div>
+      <CampaignNotes v-model="campaign.notes" :id="campaign.id" />
       <AddEncounterModal
         :open="isCreatingEncounter"
         :campaignId="campaign.id"
