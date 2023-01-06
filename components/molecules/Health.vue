@@ -55,7 +55,7 @@ function updateHealth({ __init, health }) {
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline bold />
+        <Button type="submit" :label="$t('actions.update')" inline />
       </FormKit>
     </Modal>
   </div>

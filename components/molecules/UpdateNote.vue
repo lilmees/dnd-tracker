@@ -44,7 +44,7 @@ async function updateNote({ __init, ...formData }) {
         required
         validation="required|length:10,1000"
       />
-      <Button type="submit" :label="$t('notes.update')" :loading="isLoading" inline bold />
+      <Button type="submit" :label="$t('notes.update')" :loading="isLoading" inline />
     </FormKit>
   </Modal>
 </template>

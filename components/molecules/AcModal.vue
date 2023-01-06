@@ -60,16 +60,16 @@ function resetState() {
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
         <div class="flex gap-2 flex-wrap">
           <div class="grow" @click="resetAc">
-            <Button :label="$t('actions.reset')" bold inline color="success" />
+            <Button :label="$t('actions.reset')" inline color="success" />
           </div>
           <div class="grow" @click="type = 'temp'">
-            <Button type="submit" :label="$t('actions.temp')" bold inline color="primary" />
+            <Button type="submit" :label="$t('actions.temp')" inline color="primary" />
           </div>
           <div class="grow" @click="type = 'remove'">
-            <Button type="submit" :label="$t('actions.remove')" bold inline color="danger" />
+            <Button type="submit" :label="$t('actions.remove')" inline color="danger" />
           </div>
           <div class="grow" @click="type = 'base'">
-            <Button type="submit" :label="$t('actions.baseAc')" bold inline color="warning" />
+            <Button type="submit" :label="$t('actions.baseAc')" inline color="warning" />
           </div>
         </div>
       </FormKit>

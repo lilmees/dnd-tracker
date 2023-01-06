@@ -42,7 +42,7 @@ function emitAndResetState(state) {
     </div>
     <div v-if="!modelValue.length" class="space-y-2">
       <p class="text-center">{{ $t('monsters.none') }}</p>
-      <Button :label="$t('monsters.add')" color="primary" bold class="mx-auto w-fit" @click="isOpen = true" />
+      <Button :label="$t('monsters.add')" color="primary" class="mx-auto w-fit" @click="isOpen = true" />
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
       <HomebrewMonsterCard

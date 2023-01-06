@@ -14,7 +14,7 @@ defineProps({ showcase: { type: Boolean, default: false } })
       <template #popper>
         <div class="flex flex-col gap-2 p-4 !bg-black text-white !border-none">
           <p>{{ $t('encounter.confirmDelete') }}</p>
-          <Button :label="$t('actions.delete')" color="danger" bold inline @click="$emit('delete')" />
+          <Button :label="$t('actions.delete')" color="danger" inline @click="$emit('delete')" />
         </div>
       </template>
     </VDropdown>

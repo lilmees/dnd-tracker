@@ -71,7 +71,7 @@ function rollDice() {
       <Input name="ac" type="number" :label="$t('inputs.acLabel')" validation="between:1,100|number" />
       <Input name="health" type="number" :label="$t('inputs.hpLabel')" validation="between:1,1000|number" />
       <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />
-      <Button type="submit" :label="$t('encounter.addInInitiative')" :loading="isLoading" inline bold />
+      <Button type="submit" :label="$t('encounter.addInInitiative')" :loading="isLoading" inline />
     </FormKit>
   </div>
 </template>

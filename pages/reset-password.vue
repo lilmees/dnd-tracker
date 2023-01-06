@@ -43,7 +43,7 @@ async function resetPassword({ __init, password }) {
           validation="required|length:6,50"
           required
         />
-        <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline bold />
+        <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink to="/">

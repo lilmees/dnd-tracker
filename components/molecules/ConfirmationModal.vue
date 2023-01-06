@@ -21,7 +21,7 @@ function deleteConfirmation() {
       <p class="font-bold text-danger pb-4">{{ $t('confirmation.text', { title }) }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="deleteConfirmation">
         <Input name="title" :label="$t('inputs.titleLabel')" validation="required" required :placeholder="title" />
-        <Button type="submit" :label="$t('actions.delete')" color="danger" inline bold :disabled="!same" />
+        <Button type="submit" :label="$t('actions.delete')" color="danger" inline :disabled="!same" />
       </FormKit>
     </div>
   </Modal>

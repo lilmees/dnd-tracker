@@ -61,7 +61,7 @@ function generateDiceRoll(type, amount) {
         <Input name="d6" type="number" label="D6" validation="between:1,20|number" />
         <Input name="d4" type="number" label="D4" validation="between:1,20|number" />
       </div>
-      <Button type="submit" :label="$t('actions.roll')" inline bold />
+      <Button type="submit" :label="$t('actions.roll')" inline />
     </FormKit>
     <div class="flex flex-col mt-3">
       <div v-for="result in Object.keys(results)" class="flex flex-wrap gap-1">

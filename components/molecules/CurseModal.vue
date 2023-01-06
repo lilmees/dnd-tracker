@@ -56,10 +56,10 @@ function updateConditions() {
           <Remove class="absolute top-1 right-1 text-danger cursor-pointer w-8 h-8" @click="info = null" />
           <p v-for="desc in info" :key="desc">{{ desc }}</p>
         </div>
-        <Button :label="$t('actions.update')" inline bold @click="updateConditions" />
+        <Button :label="$t('actions.update')" inline @click="updateConditions" />
       </div>
       <div v-else>
-        <Button :label="$t('actions.tryAgain')" inline bold @click="store.fetch()" />
+        <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
       </div>
     </Modal>
   </div>

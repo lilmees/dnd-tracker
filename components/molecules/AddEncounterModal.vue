@@ -98,10 +98,10 @@ function selectedCampaign(id) {
       <div class="flex gap-2 items-end">
         <ColorPicker name="background" :label="$t('inputs.backgroundLabel')" validation="required" required />
         <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" bold @click="changeColor" />
+          <Button :label="$t('actions.random')" @click="changeColor" />
         </div>
       </div>
-      <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline bold />
+      <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline />
     </FormKit>
     <div v-else class="loader" />
   </Modal>

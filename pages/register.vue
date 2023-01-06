@@ -70,7 +70,7 @@ function randomAvatar() {
           validation="required|length:6,50"
           required
         />
-        <Button type="submit" :label="$t('register.register')" :loading="isLoading" inline bold />
+        <Button type="submit" :label="$t('register.register')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink to="/register">

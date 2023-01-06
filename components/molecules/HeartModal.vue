@@ -51,16 +51,16 @@ function updateHealth({ __init, health }) {
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
         <div class="flex gap-2 flex-wrap">
           <div class="grow" @click="type = 'heal'">
-            <Button type="submit" :label="$t('actions.heal')" bold inline color="success" />
+            <Button type="submit" :label="$t('actions.heal')" inline color="success" />
           </div>
           <div class="grow" @click="type = 'temp'">
-            <Button type="submit" :label="$t('actions.temp')" bold inline color="primary" />
+            <Button type="submit" :label="$t('actions.temp')" inline color="primary" />
           </div>
           <div class="grow" @click="type = 'damage'">
-            <Button type="submit" :label="$t('actions.damage')" bold inline color="danger" />
+            <Button type="submit" :label="$t('actions.damage')" inline color="danger" />
           </div>
           <div class="grow" @click="type = 'base'">
-            <Button type="submit" :label="$t('actions.baseHealth')" bold inline color="warning" />
+            <Button type="submit" :label="$t('actions.baseHealth')" inline color="warning" />
           </div>
         </div>
       </FormKit>

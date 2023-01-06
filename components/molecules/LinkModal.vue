@@ -29,19 +29,19 @@ function updateLink({ __init, link }) {
         <h2 class="mb-10">{{ $t('encounter.link') }}</h2>
         <div v-if="link" class="flex gap-2 flex-wrap">
           <NuxtLink :to="link" target="_blank" rel="noreferrer noopener" class="grow">
-            <Button :label="$t('actions.link')" bold inline />
+            <Button :label="$t('actions.link')" inline />
           </NuxtLink>
           <div class="grow" @click="isUpdating = true">
-            <Button :label="$t('actions.update')" bold inline />
+            <Button :label="$t('actions.update')" inline />
           </div>
         </div>
-        <Button v-else :label="$t('actions.add')" bold inline @click="isUpdating = true" />
+        <Button v-else :label="$t('actions.add')" inline @click="isUpdating = true" />
       </div>
       <div v-else>
         <h2 class="mb-10">{{ $t('encounter.update.link') }}</h2>
         <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateLink">
           <Input name="link" :label="$t('inputs.linkLabel')" validation="required|length10,200|url" required />
-          <Button type="submit" :label="link ? $t('actions.update') : $t('actions.add')" bold inline />
+          <Button type="submit" :label="link ? $t('actions.update') : $t('actions.add')" inline />
         </FormKit>
       </div>
     </Modal>

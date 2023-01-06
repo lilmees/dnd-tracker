@@ -69,7 +69,7 @@ function rollDice() {
         <Button :label="$t('actions.roll')" inline class="mb-2" @click="rollDice" />
       </div>
       <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />
-      <Button type="submit" :label="$t('encounter.addInInitiative')" :loading="isLoading" inline bold />
+      <Button type="submit" :label="$t('encounter.addInInitiative')" :loading="isLoading" inline />
     </FormKit>
   </div>
 </template>

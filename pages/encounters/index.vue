@@ -49,7 +49,7 @@ watch(error, v => {
       <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4">
         <h2>{{ $t('encounters.noData.title') }}</h2>
         <p>{{ $t('encounters.noData.text') }}</p>
-        <Button :label="$t('encounters.add')" bold @click="isCreatingEncounter = true" />
+        <Button :label="$t('encounters.add')" @click="isCreatingEncounter = true" />
       </div>
       <AddEncounterModal
         :open="isCreatingEncounter"
@@ -60,7 +60,7 @@ watch(error, v => {
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>
-      <Button :label="$t('actions.tryAgain')" inline bold @click="store.fetch()" />
+      <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
     </div>
   </NuxtLayout>
 </template>
