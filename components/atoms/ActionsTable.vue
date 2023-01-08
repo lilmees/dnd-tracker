@@ -64,7 +64,7 @@ const actionTypes = computed(() => {
                 </td>
                 <td>
                   <Info
-                    v-tooltip="$t('actions.info')"
+                    v-tippy="$t('actions.info')"
                     class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                     @click="toast.info({ text: action.description.en, timed: false })"
                   />
@@ -98,7 +98,7 @@ const actionTypes = computed(() => {
               </td>
               <td>
                 <Info
-                  v-tooltip="$t('actions.info')"
+                  v-tippy="$t('actions.info')"
                   class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                   @click="toast.info({ text: action.description.en, timed: false })"
                 />
@@ -135,7 +135,7 @@ const actionTypes = computed(() => {
             </td>
             <td>
               <Info
-                v-tooltip="$t('actions.info')"
+                v-tippy="$t('actions.info')"
                 class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                 @click="toast.info({ text: action.description.en, timed: false })"
               />

@@ -8,23 +8,25 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@intlify/nuxt3": "^0.2.4",
     "@nuxtjs/supabase": "^0.1.27",
-    "@nuxtjs/tailwindcss": "^6.0.1",
+    "@nuxtjs/tailwindcss": "^6.2.0",
     "@vueuse/core": "^9.3.1",
     "@vueuse/nuxt": "^9.3.1",
-    "nuxt": "3.0.0-rc.12"
+    "nuxt": "3.0.0",
+    "postcss-custom-properties": "^12.1.11"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@formkit/i18n": "^1.0.0-beta.11",
     "@formkit/nuxt": "^1.0.0-beta.11",
     "@nuxtjs/algolia": "^1.4.0",
+    "@nuxtjs/i18n": "^8.0.0-beta.2",
     "@pinia/nuxt": "^0.4.3",
     "@vueuse/motion": "^2.0.0-beta.25",
     "algoliasearch": "^4.14.2",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^2.0.0-beta.20",
-    "vite-svg-loader": "^3.6.0"
+    "vite-svg-loader": "^3.6.0",
+    "vue-tippy": "v6"
   }
 }

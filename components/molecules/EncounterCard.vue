@@ -59,14 +59,14 @@ function closeSettings() {
   >
     <Settings
       v-if="!isSettings"
-      v-tooltip="$t('actions.openSettings')"
+      v-tippy="$t('actions.openSettings')"
       class="w-8 h-8 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       :style="{ color: encounter.color }"
       @click="isSettings = true"
     />
     <Remove
       v-else
-      v-tooltip="$t('actions.closeSettings')"
+      v-tippy="$t('actions.closeSettings')"
       class="w-8 h-8 cursor-pointer float-right mt-1 mr-1"
       :style="{ color: encounter.color }"
       @click="isSettings = false"

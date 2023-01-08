@@ -1,13 +1,31 @@
 import svgLoader from 'vite-svg-loader'
+import en from './locales/en.json'
+import nl from './locales/nl.json'
 
 export default defineNuxtConfig({
   components: {
     global: true,
-    dirs: ['~/components/atoms', '~/components/molecules', '~/components/organisms', '~/components/templates'],
+    dirs: [
+      '~/components/atoms', 
+      '~/components/molecules', 
+      '~/components/organisms', 
+      '~/components/templates'
+    ],
   },
-  css: ['@/assets/css/global.css', 'floating-vue/dist/style.css'],
-  buildModules: ['@nuxtjs/tailwindcss', '@intlify/nuxt3', 'floating-vue/nuxt', '@nuxtjs/algolia'],
-  modules: ['@nuxtjs/supabase', '@vueuse/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@vueuse/motion/nuxt'],
+  css: [
+    '@/assets/css/global.css', 
+    'floating-vue/dist/style.css'
+  ],
+  modules: [
+    '@nuxtjs/supabase', 
+    '@nuxtjs/tailwindcss', 
+    '@nuxtjs/i18n', 
+    '@nuxtjs/algolia',
+    '@vueuse/nuxt', 
+    '@pinia/nuxt', 
+    '@formkit/nuxt', 
+    '@vueuse/motion/nuxt'
+  ],
   runtimeConfig: {
     public: {
       supabaseRedirectUrl: process.env.NUXT_SUPABASE_REDIRECT_URL,
@@ -19,10 +37,17 @@ export default defineNuxtConfig({
   formkit: {
     configFile: './formkit.config.ts',
   },
-  intlify: {
-    localeDir: 'locales',
+  i18n: {
+    defaultLocale: 'nl',
+    locales: [
+      { code: 'nl', iso: 'nl-BE', name: 'Nederlands',icon: '🇧🇪' },
+      { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' },
+    ],
     vueI18n: {
+      legacy: false,
       locale: 'nl',
+      fallbackLocale: 'nl',
+      messages: { en, nl},
     },
   },
   algolia: {
@@ -34,5 +59,6 @@ export default defineNuxtConfig({
     configPath: '~/tailwind.config.js',
     injectPosition: 0,
     viewer: false,
+    exposeConfig: true,
   },
 })

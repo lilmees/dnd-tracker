@@ -75,7 +75,7 @@ function updatedEncounter(encounter) {
           <div class="flex justify-between border-b border-slate-700 pb-1">
             <h2>{{ $t('general.encounters') }}</h2>
             <Add
-              v-tooltip="$t('actions.add')"
+              v-tippy="$t('actions.add')"
               @click="isCreatingEncounter = true"
               class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
             />

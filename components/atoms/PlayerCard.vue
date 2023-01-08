@@ -43,13 +43,13 @@ async function updatePlayer(player) {
       <h3>{{ player.name }}</h3>
       <Settings
         v-if="!isSettings"
-        v-tooltip="$t('actions.openSettings')"
+        v-tippy="$t('actions.openSettings')"
         @click="isSettings = !isSettings"
         class="w-4 h-4 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       />
       <Remove
         v-else
-        v-tooltip="$t('actions.closeSettings')"
+        v-tippy="$t('actions.closeSettings')"
         class="w-8 h-8 cursor-pointer text-primary"
         @click="isSettings = false"
       />
