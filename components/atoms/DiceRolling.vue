@@ -20,7 +20,7 @@ function rollDice({ __init, ...dices }) {
     if (!dices[dice]) return
     results[dice] = generateDiceRoll(dice, dices[dice])
   })
-  if (results === {}) return
+  if ((!Object, keys(results).length)) return
   emit(
     'result',
     Object.values(results)
