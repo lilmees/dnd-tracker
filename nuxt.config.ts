@@ -61,4 +61,7 @@ export default defineNuxtConfig({
     viewer: false,
     exposeConfig: true,
   },
+  nitro: {
+    compressPublicAssets: true,
+  },
 })
