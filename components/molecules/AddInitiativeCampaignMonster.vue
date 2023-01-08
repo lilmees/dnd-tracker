@@ -5,7 +5,10 @@ import { useMonstersStore } from '@/store/monsters'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
-const props = defineProps({ encounter: { type: Object, required: true } })
+const props = defineProps({
+  encounter: { type: Object, required: true },
+  sandbox: { type: Boolean, default: false },
+})
 
 const store = useMonstersStore()
 const encounterStore = useEncountersStore()
@@ -18,6 +21,7 @@ const id = computed(() => props.encounter.group?.id || props.encounter.group)
 
 onMounted(async () => {
   if (id.value) monsters.value = await store.getMonsterByCampaignId(id.value)
+  else if (props.sandbox) monsters.value = store.sandboxMonsters
 })
 
 function selectMonster(monster) {
@@ -34,7 +38,7 @@ async function addMonsters(monsters) {
       const row = createRowObject(monster, 'monster', props.encounter.rows)
       props.encounter.rows.includes('[') ? (props.encounter.rows = [row]) : props.encounter.rows.push(row)
     })
-    await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
+    if (!props.sandbox) await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
     closeModal()
   } catch (err) {
     console.error(err)
@@ -51,7 +55,12 @@ function closeModal() {
 
 <template>
   <section>
-    <Button :label="$t('encounter.addCampaignMonster')" color="warning" @click="isOpen = true" :disabled="!id" />
+    <Button
+      :label="$t('encounter.addCampaignMonster')"
+      color="warning"
+      @click="isOpen = true"
+      :disabled="!id && !sandbox"
+    />
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignMonster') }}</h2>
       <div v-if="monsters && monsters.length" class="space-y-4">
@@ -80,7 +89,7 @@ function closeModal() {
           :label="$t('encounter.addMonsters')"
           color="primary"
           @click="addMonsters(selected)"
-          :disabled="isLoading"
+          :disabled="isLoading || !selected.length"
         />
       </div>
       <div v-else-if="monsters && !monsters.length">

@@ -43,7 +43,7 @@ const background = computed(() => {
       :type="type"
       :label="label"
       :disabled="disabled || loading"
-      input-class="py-2 px-6 shadow rounded-md outline-none active:scale-95 duration-200 ease-in-out"
+      input-class="py-2 px-6 shadow rounded-md outline-none active:scale-95 duration-200 ease-in-out disabled:cursor-not-allowed"
       :style="{
         fontWeight: 'bold',
         width: inline ? '100%' : 'auto',

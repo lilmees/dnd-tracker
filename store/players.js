@@ -1,6 +1,15 @@
 import { defineStore } from 'pinia'
 
 export const usePlayersStore = defineStore('usePlayersStore', {
+  state: () => ({
+    sandboxPlayers: [
+      { type: 'player', id: 'nelson', name: 'Nelson', health: '37', ac: '13' },
+      { type: 'player', id: 'silvin', name: 'Silvin', health: '33', ac: '14' },
+      { type: 'player', id: 'alexis', name: 'Alaxis', health: '29', ac: '12' },
+      { type: 'player', id: 'thernus', name: 'Thernus', health: '31', ac: '16' },
+      { type: 'player', id: 'banthaaja', name: 'Banthaaja', health: '30', ac: '15' },
+    ],
+  }),
   actions: {
     async getPlayerByCampaignId(id) {
       const supabase = useSupabaseClient()

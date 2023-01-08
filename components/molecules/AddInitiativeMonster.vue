@@ -2,7 +2,10 @@
 import { createRowObject } from '@/util/createRowObject'
 import { useEncountersStore } from '@/store/encounters'
 
-const props = defineProps({ encounter: { type: Object, required: true } })
+const props = defineProps({
+  encounter: { type: Object, required: true },
+  sandbox: { type: Boolean, default: false },
+})
 
 const store = useEncountersStore()
 
@@ -15,7 +18,7 @@ async function addMonster(monster) {
     isLoading.value = true
     const row = createRowObject(monster, 'monster', props.encounter.rows)
     props.encounter.rows.includes('[') ? (props.encounter.rows = [row]) : props.encounter.rows.push(row)
-    await store.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
+    if (!props.sandbox) await store.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
     isOpen.value = false
   } catch (err) {
     console.error(err)

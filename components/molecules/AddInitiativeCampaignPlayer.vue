@@ -5,7 +5,10 @@ import { usePlayersStore } from '@/store/players'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
-const props = defineProps({ encounter: { type: Object, required: true } })
+const props = defineProps({
+  encounter: { type: Object, required: true },
+  sandbox: { type: Boolean, default: false },
+})
 
 const store = usePlayersStore()
 const encounterStore = useEncountersStore()
@@ -18,6 +21,7 @@ const id = computed(() => props.encounter.group?.id || props.encounter.group)
 
 onMounted(async () => {
   if (id.value) players.value = await store.getPlayerByCampaignId(id.value)
+  else if (props.sandbox) players.value = store.sandboxPlayers
 })
 
 function selectPlayer(player) {
@@ -29,12 +33,11 @@ function selectPlayer(player) {
 async function addPlayers(players) {
   try {
     isLoading.value = true
-
     players.forEach(player => {
       const row = createRowObject(player, 'player', props.encounter.rows)
       props.encounter.rows.includes('[') ? (props.encounter.rows = [row]) : props.encounter.rows.push(row)
     })
-    await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
+    if (!props.sandbox) await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
     closeModal()
   } catch (err) {
     console.error(err)
@@ -51,7 +54,12 @@ function closeModal() {
 
 <template>
   <section>
-    <Button :label="$t('encounter.addCampaignPlayer')" color="info" @click="isOpen = true" :disabled="!id" />
+    <Button
+      :label="$t('encounter.addCampaignPlayer')"
+      color="info"
+      @click="isOpen = true"
+      :disabled="!id && !sandbox"
+    />
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignPlayer') }}</h2>
       <div v-if="players && players.length" class="space-y-4">
@@ -81,7 +89,7 @@ function closeModal() {
             :label="$t('encounter.addPlayers')"
             color="primary"
             @click="addPlayers(selected)"
-            :disabled="isLoading"
+            :disabled="isLoading || !selected.length"
           />
           <Button
             :label="$t('encounter.addAllPlayers')"

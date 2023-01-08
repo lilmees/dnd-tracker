@@ -67,6 +67,7 @@ function nextInitiative() {
             showcase
             @update="v => (encounter.rows = v)"
           />
+          <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
         </div>
         <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
       </div>
