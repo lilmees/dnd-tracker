@@ -1,4 +1,4 @@
-import { fontFamily as _fontFamily } from 'tailwindcss/defaultTheme'
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 export const content = [
   './pages/**/*.{vue,js}',
@@ -10,8 +10,8 @@ export const content = [
 export const theme = {
   extend: {
     fontFamily: {
-      title: ['Inter', ..._fontFamily.sans],
-      text: ['Inter', ..._fontFamily.sans],
+      title: ['Lato', 'sans-serif'],
+      text: ['Inter', 'sans-serif'],
     },
     colors: {
       background: '#0e1315',

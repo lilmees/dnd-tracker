@@ -7,6 +7,24 @@
     color-scheme: dark;
   }
 
+  @font-face {
+    font-family: 'Lato';
+    src: url('@/assets/fonts/Lato-Bold.woff') format('woff');
+    font-weight: 800;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    src: url('@/assets/fonts/Lato-Regular.woff') format('woff');
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('@/assets/fonts/Inter.woff') format('woff');
+    font-weight: 400;
+  }
+
   html {
     @apply font-text scroll-smooth text-white bg-background accent-black;
   }
