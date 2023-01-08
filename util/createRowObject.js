@@ -2,8 +2,8 @@ import { calculateRowIndex } from '@/util/calculateRowIndex'
 
 export const createRowObject = (formData, type, encounters) => {
   const initiative = Number(formData.initiative) || null
-  const health = Number(formData.health) || null
-  const ac = Number(formData.ac) || null
+  const health = Number(formData.health || formData.hit_points) || null
+  const ac = Number(formData.ac || formData.armor_class) || null
 
   const index = calculateRowIndex(encounters, initiative)
   const id = Date.now() + Math.floor(Math.random() * 100)

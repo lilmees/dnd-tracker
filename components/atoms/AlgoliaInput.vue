@@ -7,6 +7,7 @@ const props = defineProps({
   index: { type: String, required: true },
   placeholder: { type: String, required: true },
   label: { type: String, required: true },
+  disabled: { type: Boolean, default: false },
 })
 
 const { t } = useI18n({ useScope: 'global' })
@@ -51,6 +52,7 @@ async function paginate(page) {
       type="text"
       :placeholder="placeholder"
       :label="label"
+      :disabled="disabled"
       label-class="font-bold body-small"
       inner-class="border-2 border-slate-400 rounded overflow-hidden focus-within:border-white"
       input-class="w-full h-8 px-3 border-none rounded text-white body-small placeholder-slate-400 bg-transparent"
