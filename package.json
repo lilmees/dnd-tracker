@@ -13,7 +13,7 @@
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@vueuse/core": "^9.4.0",
     "@vueuse/nuxt": "^9.4.0",
-    "nuxt": "^3.0.0",
+    "nuxt": "^3.0.0-rc.12",
     "postcss-custom-properties": "^12.1.11"
   },
   "dependencies": {
