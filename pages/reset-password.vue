@@ -33,7 +33,7 @@ async function resetPassword({ __init, password }) {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('resetPassword.title') }}</h1>
-      <img src="@/assets/images/dice.png" alt="D20 logo dice" class="w-10 h-10 mx-auto visibility-pulse" />
+      <img src="@/assets/images/dice.webp" alt="D20 logo dice" class="w-10 h-10 mx-auto visibility-pulse" />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
         <Input
