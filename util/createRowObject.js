@@ -11,7 +11,7 @@ export const createRowObject = (formData, type, encounters) => {
   let row = { ...formData, id, conditions: [], curses: [], type, index, initiative }
 
   if (type !== 'lair') {
-    row = { ...row, health, ac, maxHealth: form.health, maxAc: form.ac, tempHealth: 0, tempAc: 0, concentration: false }
+    row = { ...row, health, ac, maxHealth: health, maxAc: ac, tempHealth: 0, tempAc: 0, concentration: false }
   }
 
   if (type !== 'lair' && type !== 'summon') {

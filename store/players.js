@@ -2,6 +2,12 @@ import { defineStore } from 'pinia'
 
 export const usePlayersStore = defineStore('usePlayersStore', {
   actions: {
+    async getPlayerByCampaignId(id) {
+      const supabase = useSupabaseClient()
+      const { data, error } = await supabase.from('players').select('*').eq('campaign', id)
+      if (error) throw error
+      else return data
+    },
     async getPlayerById(id) {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase.from('players').select('*').eq('id', id).single()

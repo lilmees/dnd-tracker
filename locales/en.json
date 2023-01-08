@@ -99,6 +99,8 @@
     "addMonster": "Add Monster",
     "addCampaignMonster": "Add campaign monster",
     "addCampaignPlayer": "Add campaign player",
+    "addPlayers": "Add selected players",
+    "addAllPlayers": "Add all players",
     "newInitiative": "Make a new initiative row",
     "link": "Link",
     "conditionInfo": "Effect information",
