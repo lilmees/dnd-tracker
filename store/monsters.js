@@ -2,6 +2,12 @@ import { defineStore } from 'pinia'
 
 export const useMonstersStore = defineStore('useMonstersStore', {
   actions: {
+    async getMonsterByCampaignId(id) {
+      const supabase = useSupabaseClient()
+      const { data, error } = await supabase.from('homebrew-monsters').select('*').eq('campaign', id)
+      if (error) throw error
+      else return data
+    },
     async getMonsterById(id) {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase.from('homebrew-monsters').select('*').eq('id', id).single()
