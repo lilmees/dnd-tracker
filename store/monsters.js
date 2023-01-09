@@ -8,6 +8,7 @@ export const useMonstersStore = defineStore('useMonstersStore', {
       { type: 'monster', id: 'rocky', name: 'Rocky', health: '24', ac: '16' },
       { type: 'monster', id: 'inli', name: 'Inli', health: '18', ac: '12' },
       { type: 'monster', id: 'gray', name: 'Gray', health: '20', ac: '16' },
+      { type: 'monster', id: 'ginger', name: 'Ginger', health: '10', ac: '18' },
     ],
   }),
   actions: {
@@ -40,6 +41,12 @@ export const useMonstersStore = defineStore('useMonstersStore', {
       const { data, error } = await supabase.from('homebrew-monsters').update(monster).eq('id', id)
       if (error) throw error
       else return data[0]
+    },
+    async fuzzySearchMonsters(query) {
+      const supabase = useSupabaseClient()
+      const { data, error } = await supabase.from('monsters').select().textSearch('name', `${query}:*`)
+      if (error) throw error
+      else return data
     },
   },
 })

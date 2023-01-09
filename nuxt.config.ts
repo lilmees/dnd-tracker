@@ -18,8 +18,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/supabase', 
-    '@nuxtjs/tailwindcss', 
-    // '@nuxtjs/algolia',
+    '@nuxtjs/tailwindcss',
     '@vueuse/nuxt', 
     '@pinia/nuxt', 
     '@formkit/nuxt', 
@@ -50,10 +49,6 @@ export default defineNuxtConfig({
       messages: { en, nl},
     },
   },
-  // algolia: {
-  //   apiKey: process.env.ALGOLIA_ADMIN_KEY,
-  //   applicationId: process.env.ALGOLIA_APP_ID,
-  // },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.js',

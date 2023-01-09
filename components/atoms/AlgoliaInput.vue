@@ -1,5 +1,6 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
+import { useMonstersStore } from '@/store/monsters'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['hits'])
@@ -12,43 +13,28 @@ const props = defineProps({
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
-// const { result, search } = useAlgoliaSearch(props.index)
+const store = useMonstersStore()
 
 const query = ref('')
-
-// watchDebounced(
-//   query,
-//   async v => {
-//     if (v) {
-//       try {
-//         await search({ query: query.value })
-//       } catch (err) {
-//         toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-//       }
-//     } else emit('hits', [])
-//   },
-//   { debounce: 500, maxWait: 1000 }
-// )
-
-// // emit new values when they are fetched
-// watch(
-//   () => result.value,
-//   v => emit('hits', v.hits)
-// )
-
-// async function paginate(page) {
-//   try {
-//     await search({ query: query.value, requestOptions: { page } })
-//   } catch (err) {
-//     toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-//   }
-// }
+watchDebounced(
+  query,
+  async v => {
+    if (v) {
+      try {
+        const results = await store.fuzzySearchMonsters(v)
+        emit('hits', results)
+      } catch (err) {
+        toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+      }
+    } else emit('hits', [])
+  },
+  { debounce: 500, maxWait: 1000 }
+)
 </script>
 
 <template>
   <div>
-    help
-    <!-- <FormKit
+    <FormKit
       v-model="query"
       type="text"
       :placeholder="placeholder"
@@ -60,11 +46,5 @@ const query = ref('')
       outer-class="mb-3"
     />
     <slot />
-    <Pagination
-      v-if="result && result.nbPages > 1"
-      v-model="result.page"
-      :totalPages="result.nbPages"
-      @paginate="paginate"
-    /> -->
   </div>
 </template>
