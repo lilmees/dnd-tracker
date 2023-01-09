@@ -42,11 +42,16 @@ export const useMonstersStore = defineStore('useMonstersStore', {
       if (error) throw error
       else return data[0]
     },
-    async fuzzySearchMonsters(query) {
+    async fuzzySearchMonsters(query, from, to) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('monsters').select().textSearch('name', `${query}:*`)
+      const { error, data, count } = await supabase
+        .from('monsters')
+        .select('*', { count: 'exact' })
+        .order('id', { ascending: true })
+        .ilike('name', `%${query}%`)
+        .range(from, to)
       if (error) throw error
-      else return data
+      else return { data, count }
     },
   },
 })

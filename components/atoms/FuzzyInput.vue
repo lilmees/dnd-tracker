@@ -1,6 +1,7 @@
 <script setup>
-import { useToastStore } from '@/store/toast'
+import { calculatePagination } from '@/util/calculatePagination'
 import { useMonstersStore } from '@/store/monsters'
+import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['hits'])
@@ -16,20 +17,35 @@ const toast = useToastStore()
 const store = useMonstersStore()
 
 const query = ref('')
+const page = ref(0)
+const pages = ref(0)
+
 watchDebounced(
   query,
   async v => {
     if (v) {
-      try {
-        const results = await store.fuzzySearchMonsters(v)
-        emit('hits', results)
-      } catch (err) {
-        toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-      }
+      page.value = 0
+      fetchMonsters(v, page.value)
     } else emit('hits', [])
   },
   { debounce: 500, maxWait: 1000 }
 )
+
+async function fetchMonsters(query, page) {
+  try {
+    const { from, to } = calculatePagination(page, 20)
+    const { data, count } = await store.fuzzySearchMonsters(query, from, to)
+    pages.value = Math.ceil(count / 20)
+    emit('hits', data)
+  } catch (err) {
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  }
+}
+
+async function paginate(newPage) {
+  page.value = newPage
+  fetchMonsters(query.value, newPage)
+}
 </script>
 
 <template>
@@ -46,5 +62,6 @@ watchDebounced(
       outer-class="mb-3"
     />
     <slot />
+    <Pagination v-if="pages > 1" v-model="page" :totalPages="pages" @paginate="paginate" />
   </div>
 </template>

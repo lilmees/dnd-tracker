@@ -32,7 +32,7 @@ async function addMonster(monster) {
   <section>
     <Button :label="$t('encounter.addMonster')" color="danger" @click="isOpen = true" />
     <Modal v-if="isOpen" @close="isOpen = false" big>
-      <AlgoliaInput
+      <FuzzyInput
         index="monsters"
         placeholder="Copper dragon"
         label="Monster"
@@ -42,7 +42,7 @@ async function addMonster(monster) {
         <div class="overflow-y-auto max-h-full space-y-2">
           <MonsterCard v-for="hit in hits" :key="hit.id" :monster="hit" addable @add="addMonster" />
         </div>
-      </AlgoliaInput>
+      </FuzzyInput>
     </Modal>
   </section>
 </template>
