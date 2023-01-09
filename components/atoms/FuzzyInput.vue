@@ -45,12 +45,15 @@ async function fetchMonsters(query, page) {
 async function paginate(newPage) {
   page.value = newPage
   fetchMonsters(query.value, newPage)
+  const el = document.getElementById('el')
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'end' })
 }
 </script>
 
 <template>
   <div>
     <FormKit
+      id="el"
       v-model="query"
       type="text"
       :placeholder="placeholder"
