@@ -1,5 +1,4 @@
 <script setup>
-import { Menu, hideAllPoppers } from 'floating-vue'
 import { useI18n } from 'vue-i18n'
 import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'
@@ -22,7 +21,6 @@ const visibleRoutes = computed(() => {
 
 watch(isSmall, v => {
   if (!v && isOpen.value) isOpen.value = false
-  if (v) hideAllPoppers()
 })
 
 async function logout() {
@@ -43,20 +41,6 @@ async function logout() {
       <img src="@/assets/images/logo.webp" alt="Logo dnd tracker" />
     </NuxtLink>
     <div class="hidden sm:flex justify-end gap-4">
-      <Menu>
-        <div
-          v-if="user"
-          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
-        >
-          {{ $t('navigation.collections') }}
-        </div>
-
-        <template #popper>
-          <div class="flex flex-col p-6 space-y-5 rounded-md shadow-md text-greys-light-gray bg-tracker border-tracker">
-            <RouteLink v-for="route in store.dropdown" :key="route.url" :label="$t(route.label)" :url="route.url" />
-          </div>
-        </template>
-      </Menu>
       <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
       <div
         v-if="user"
@@ -80,7 +64,6 @@ async function logout() {
       <NavbarPopup
         v-if="isOpen"
         :routes="visibleRoutes"
-        :dropdown="store.dropdown"
         :loggedIn="user ? true : false"
         @logout="logout"
         @close="isOpen = false"

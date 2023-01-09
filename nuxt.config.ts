@@ -12,18 +12,18 @@ export default defineNuxtConfig({
       '~/components/templates'
     ],
   },
-  css: [
-    '@/assets/css/global.css', 
-    'floating-vue/dist/style.css'
-  ],
+  css: [ '@/assets/css/global.css' ],
+  build: {
+    transpile: []
+  },
   modules: [
     '@nuxtjs/supabase', 
     '@nuxtjs/tailwindcss', 
-    '@nuxtjs/i18n', 
-    '@nuxtjs/algolia',
+    // '@nuxtjs/algolia',
     '@vueuse/nuxt', 
     '@pinia/nuxt', 
     '@formkit/nuxt', 
+    '@nuxtjs/i18n',
     '@vueuse/motion/nuxt'
   ],
   runtimeConfig: {
@@ -50,10 +50,10 @@ export default defineNuxtConfig({
       messages: { en, nl},
     },
   },
-  algolia: {
-    apiKey: process.env.ALGOLIA_ADMIN_KEY,
-    applicationId: process.env.ALGOLIA_APP_ID,
-  },
+  // algolia: {
+  //   apiKey: process.env.ALGOLIA_ADMIN_KEY,
+  //   applicationId: process.env.ALGOLIA_APP_ID,
+  // },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.js',

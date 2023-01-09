@@ -12,42 +12,43 @@ const props = defineProps({
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
-const { result, search } = useAlgoliaSearch(props.index)
+// const { result, search } = useAlgoliaSearch(props.index)
 
 const query = ref('')
 
-watchDebounced(
-  query,
-  async v => {
-    if (v) {
-      try {
-        await search({ query: query.value })
-      } catch (err) {
-        toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-      }
-    } else emit('hits', [])
-  },
-  { debounce: 500, maxWait: 1000 }
-)
+// watchDebounced(
+//   query,
+//   async v => {
+//     if (v) {
+//       try {
+//         await search({ query: query.value })
+//       } catch (err) {
+//         toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+//       }
+//     } else emit('hits', [])
+//   },
+//   { debounce: 500, maxWait: 1000 }
+// )
 
-// emit new values when they are fetched
-watch(
-  () => result.value,
-  v => emit('hits', v.hits)
-)
+// // emit new values when they are fetched
+// watch(
+//   () => result.value,
+//   v => emit('hits', v.hits)
+// )
 
-async function paginate(page) {
-  try {
-    await search({ query: query.value, requestOptions: { page } })
-  } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-  }
-}
+// async function paginate(page) {
+//   try {
+//     await search({ query: query.value, requestOptions: { page } })
+//   } catch (err) {
+//     toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+//   }
+// }
 </script>
 
 <template>
   <div>
-    <FormKit
+    help
+    <!-- <FormKit
       v-model="query"
       type="text"
       :placeholder="placeholder"
@@ -64,6 +65,6 @@ async function paginate(page) {
       v-model="result.page"
       :totalPages="result.nbPages"
       @paginate="paginate"
-    />
+    /> -->
   </div>
 </template>
