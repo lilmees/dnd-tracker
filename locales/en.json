@@ -24,6 +24,10 @@
     "textBlock2": {
       "title": "Weird stuff 🐛",
       "text": "Should you come across something strange on the website or the rules aren't 100% correct. Then don't hesitate to let us know. dnd-tracker is not a big company, but rather a group of friends who came up with this together. So if we have overlooked something, let us know and we will adjust it."
+    },
+    "diceRoller": {
+      "title": "Rollen maar",
+      "text": "dit is echt een tijdelijke tekst tot mijn vriendin mij helpt"
     }
   },
   "error": {
@@ -240,7 +244,10 @@
   "general": {
     "encounters": "Encounters",
     "players": "Players",
-    "monsters": "Monsters"
+    "monsters": "Monsters",
+    "notes": "Notes",
+    "total": "Totaal",
+    "grandTotal": "Eindtotaal"
   },
   "players": {
     "none": "No players added",
