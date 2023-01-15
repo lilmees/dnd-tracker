@@ -69,6 +69,12 @@ function nextInitiative() {
           />
           <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
         </div>
+        <div class="container-max !mx-0 grid grid-cols-1 md:grid-cols-2">
+          <TitleText :title="$t('home.diceRoller.title')" :text="$t('home.diceRoller.text')" />
+          <div v-motion-slide-visible-bottom class="tracker-shadow">
+            <DiceRolling result />
+          </div>
+        </div>
         <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
       </div>
     </div>
