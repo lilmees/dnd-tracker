@@ -1,4 +1,5 @@
 <script setup>
+import { rollD20 } from '@/util/rollDice'
 import Update from '@/assets/icons/update.svg'
 import ArrowDown from '@/assets/icons/arrow-down.svg'
 import ArrowUp from '@/assets/icons/arrow-up.svg'
@@ -11,17 +12,15 @@ const props = defineProps({
 })
 
 const isOpen = ref(false)
-const isRollingDice = ref(false)
 const form = ref({ name: null })
 
-function diceResult(amount) {
-  form.value.initiative = amount
+function diceRoll() {
+  form.value.initiative = rollD20()
 }
 
 function updateInitiative({ __init, initiative }) {
   emit('update', Number(initiative))
   isOpen.value = false
-  isRollingDice.value = false
 }
 
 function moveRow(up) {
@@ -86,14 +85,9 @@ function moveRow(up) {
             />
           </div>
           <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
-              @click="isRollingDice = !isRollingDice"
-            />
+            <Button :label="$t('actions.roll')" bold @click="diceRoll" />
           </div>
         </div>
-        <DiceRolling v-if="isRollingDice" @result="diceResult" />
         <Button type="submit" :label="$t('actions.update')" inline />
       </FormKit>
     </Modal>
