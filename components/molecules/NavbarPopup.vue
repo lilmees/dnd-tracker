@@ -11,8 +11,8 @@ defineProps({
 <template>
   <div class="fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto bg-tracker p-4 z-20">
     <div class="flex justify-between items-center gap-4">
-      <NuxtLink to="/" class="max-w-[200px]">
-        <img src="@/assets/images/icon.webp" alt="Logo dnd tracker" />
+      <NuxtLink to="/" class="max-w-[40px]">
+        <NuxtImg src="/images/icon.webp" alt="Logo dnd tracker" sizes="sm:40px md:40px lg:40px" format="webp" />
       </NuxtLink>
       <Remove class="w-8 h-8 cursor-pointer text-danger" @click="$emit('close')" />
     </div>

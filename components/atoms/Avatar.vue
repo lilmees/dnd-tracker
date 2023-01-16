@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="flex flex-col items-center">
-    <img :src="image" :alt="alt" class="w-10 h-10" />
+    <NuxtImg :src="image" :alt="alt" sizes="sm:40px md:40px lg:40px" format="webp" class="w-10 h-10" />
     <p
       v-if="name"
       :class="{

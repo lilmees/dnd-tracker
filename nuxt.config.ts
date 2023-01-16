@@ -23,7 +23,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt', 
     '@formkit/nuxt', 
     '@nuxtjs/i18n',
-    '@vueuse/motion/nuxt'
+    '@vueuse/motion/nuxt',
+    '@nuxt/image-edge'
   ],
   runtimeConfig: {
     public: {

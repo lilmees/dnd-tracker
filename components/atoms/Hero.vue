@@ -22,7 +22,13 @@ function angle(cx, cy, ex, ey) {
 <template>
   <div class="relative" @mousemove="calculateEyes">
     <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6">
-      <img src="@/assets/images/background.webp" alt="Hero image" class="w-full h-full object-cover" />
+      <NuxtImg
+        src="/images/background.webp"
+        alt="Hero image"
+        sizes="sm:100vw md:100vw lg:100vw"
+        format="webp"
+        class="w-full h-full object-cover"
+      />
     </div>
     <div class="absolute inset-0 flex flex-wrap justify-center items-center p-4 gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
@@ -45,7 +51,14 @@ function angle(cx, cy, ex, ey) {
         <div ref="eyeRight" class="absolute top-[54%] right-[60%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
-        <img ref="anchor" src="@/assets/images/draakje.webp" alt="Hero image" class="w-full h-full object-cover" />
+        <NuxtImg
+          ref="anchor"
+          src="/images/draakje.webp"
+          alt="Hero image"
+          sizes="sm:500px md:500px lg:500px"
+          format="webp"
+          class="w-full h-full object-cover"
+        />
       </div>
     </div>
   </div>
