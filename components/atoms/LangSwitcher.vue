@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 const { locale, availableLocales } = useI18n({ useScope: 'global' })
 const cookieLang = useCookie('lang')
 const localeLang = computed(() => cookieLang.value || locale.value)
+const route = useRoute()
 
 // set the language when mounted if there's a cookie for it
 onMounted(() => {

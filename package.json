@@ -21,6 +21,7 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@formkit/i18n": "^1.0.0-beta.11",
     "@formkit/nuxt": "^1.0.0-beta.11",
+    "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@nuxtjs/i18n": "^8.0.0-beta.2",
     "@pinia/nuxt": "^0.4.6",
     "@vueuse/motion": "^2.0.0-beta.25",
