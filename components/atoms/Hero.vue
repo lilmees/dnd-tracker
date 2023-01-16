@@ -51,14 +51,15 @@ function angle(cx, cy, ex, ey) {
         <div ref="eyeRight" class="absolute top-[54%] right-[60%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
-        <NuxtImg
-          ref="anchor"
-          src="/images/draakje.webp"
-          alt="Hero image"
-          sizes="sm:500px md:500px lg:500px"
-          format="webp"
-          class="w-full h-full object-cover"
-        />
+        <div ref="anchor">
+          <NuxtImg
+            src="/images/draakje.webp"
+            alt="Hero image"
+            sizes="sm:500px md:500px lg:500px"
+            format="webp"
+            class="w-full h-full object-cover"
+          />
+        </div>
       </div>
     </div>
   </div>

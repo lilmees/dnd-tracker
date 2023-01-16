@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     transpile: []
   },
   modules: [
+    'nuxt-security',
     '@nuxtjs/supabase', 
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt', 
