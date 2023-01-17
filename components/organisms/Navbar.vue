@@ -12,6 +12,8 @@ const store = useRouteStore()
 const auth = useAuthStore()
 const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
+const localePath = useLocalePath()
+
 const isOpen = ref(false)
 
 const visibleRoutes = computed(() => {
@@ -37,7 +39,7 @@ async function logout() {
 
 <template>
   <nav class="bg-black rounded-xl p-4 flex justify-between items-center gap-4 tracker-shadow m-2">
-    <NuxtLink to="/" class="flex gap-4 items-center">
+    <NuxtLink :to="localePath('/')" class="flex gap-4 items-center">
       <NuxtImg
         src="/images/icon.webp"
         alt="Logo dnd tracker"

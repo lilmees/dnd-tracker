@@ -15,6 +15,8 @@ const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
+const localePath = useLocalePath()
+
 const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
@@ -73,9 +75,13 @@ function closeSettings() {
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="`/encounters/${
-        encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-      }-${encounter.id}`"
+      :to="
+        localePath(
+          `/encounters/${
+            encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
+          }-${encounter.id}`
+        )
+      "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
     >
       <h2>{{ encounter.title }}</h2>

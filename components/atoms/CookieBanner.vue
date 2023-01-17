@@ -1,5 +1,6 @@
 <script setup>
 const acceptedCookie = useCookie('accepted')
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -14,7 +15,7 @@ const acceptedCookie = useCookie('accepted')
         </h2>
       </div>
       <div class="inline-flex gap-x-24 text-lg md:gap-x-8">
-        <NuxtLink to="/" class="underline whitespace-pre underline-offset-2">
+        <NuxtLink :to="localePath('/')" class="underline whitespace-pre underline-offset-2">
           {{ $t('cookie.policy') }}
         </NuxtLink>
         <button class="underline underline-offset-4" @click="acceptedCookie = true">

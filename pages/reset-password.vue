@@ -6,6 +6,8 @@ import { useToastStore } from '@/store/toast'
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
+const localePath = useLocalePath()
+
 const form = ref({ password: '' })
 const isLoading = ref(false)
 const error = ref()
@@ -52,7 +54,7 @@ async function resetPassword({ __init, password }) {
         <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink to="/">
+        <NuxtLink :to="localePath('/')">
           <TextButton>{{ $t('actions.cancel') }}</TextButton>
         </NuxtLink>
       </div>

@@ -62,6 +62,19 @@ export default defineNuxtConfig({
       lastmod: new Date().toISOString(),
     },
   },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        // this rules allows images to be loaded via https
+        value: {
+          'img-src': ['\'self\'', 'https:', 'data:'],
+        },
+        route: '/**',
+      },
+      // disable so that images of Storyblok could be loaded
+      crossOriginEmbedderPolicy: false,
+    },
+  },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.js',

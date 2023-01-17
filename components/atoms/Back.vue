@@ -6,10 +6,12 @@ defineProps({
   label: { type: String, required: true },
   color: { type: String, default: '#fff' },
 })
+
+const localePath = useLocalePath()
 </script>
 
 <template>
-  <NuxtLink :to="url" class="flex justify-end">
+  <NuxtLink :to="localePath(`/${url}`)" class="flex justify-end">
     <div
       class="flex gap-2 items-center hover:text-primary duration-200 ease-in-out"
       :style="{ color: color || '#fff' }"

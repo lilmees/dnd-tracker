@@ -4,6 +4,8 @@ import { useAuthStore } from '@/store/auth'
 definePageMeta({ middleware: ['loggedin'] })
 
 const store = useAuthStore()
+const localePath = useLocalePath()
+
 const form = ref({ email: '', password: '' })
 const isLoading = ref(false)
 const error = ref()
@@ -45,10 +47,10 @@ async function login({ __init, ...credentials }) {
         <Button type="submit" :label="$t('login.signIn')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink to="/register">
+        <NuxtLink :to="localePath('/register')">
           <TextButton>{{ $t('login.new') }}</TextButton>
         </NuxtLink>
-        <NuxtLink to="/forgot-password">
+        <NuxtLink :to="localePath('/forgot-password')">
           <TextButton>{{ $t('login.forgot') }}</TextButton>
         </NuxtLink>
       </div>

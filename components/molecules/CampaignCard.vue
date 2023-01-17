@@ -14,6 +14,8 @@ const user = useSupabaseUser()
 const store = useCampaignsStore()
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
+const localePath = useLocalePath()
+
 const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
@@ -70,9 +72,13 @@ function closeSettings() {
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="`/campaigns/${
-        campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
-      }-${campaign.id}`"
+      :to="
+        localePath(
+          `/campaigns/${
+            campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
+          }-${campaign.id}`
+        )
+      "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>

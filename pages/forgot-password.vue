@@ -8,6 +8,8 @@ definePageMeta({ middleware: ['loggedin'] })
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
+const localePath = useLocalePath()
+
 const form = ref({ email: '' })
 const isLoading = ref(false)
 const error = ref()
@@ -48,10 +50,10 @@ async function forgotPassword({ __init, email }) {
         <Button type="submit" :label="$t('forgotPassword.reset')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink to="/register">
+        <NuxtLink :to="localePath('/register')">
           <TextButton>{{ $t('login.new') }}</TextButton>
         </NuxtLink>
-        <NuxtLink to="/login">
+        <NuxtLink :to="localePath('/login')">
           <TextButton>{{ $t('login.signIn') }}</TextButton>
         </NuxtLink>
       </div>

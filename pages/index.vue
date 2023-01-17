@@ -37,7 +37,7 @@ function nextInitiative() {
           <TitleText
             :title="$t('home.textBlock1.title')"
             :text="$t('home.textBlock1.text')"
-            buttonLink="/roadmap"
+            buttonLink="roadmap"
             :buttonLabel="'Go to the roadmap'"
           />
           <Summary

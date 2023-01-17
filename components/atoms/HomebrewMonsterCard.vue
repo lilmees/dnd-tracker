@@ -16,6 +16,7 @@ const props = defineProps({ monster: { type: Object, required: true } })
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 const store = useMonstersStore()
+const localePath = useLocalePath()
 
 const isSettings = ref(false)
 const isUpdating = ref(false)
@@ -63,7 +64,7 @@ async function updateMonster(monster) {
         <p class="font-bold">{{ monster.ac || '_' }}</p>
         <Shield class="w-6 h-6 text-help" />
       </div>
-      <NuxtLink v-if="monster.link" :to="monster.link" target="_blank" rel="noreferrer noopener">
+      <NuxtLink v-if="monster.link" :to="localePath(`/${monster.link}`)" target="_blank" rel="noreferrer noopener">
         <Link class="w-6 h-6 text-info" />
       </NuxtLink>
     </div>
