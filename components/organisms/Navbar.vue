@@ -28,6 +28,7 @@ async function logout() {
   try {
     await auth.logout()
     profile.data = null
+    isOpen.value = false
   } catch (err) {
     toast.error({
       title: t('error.general.title'),
@@ -52,8 +53,8 @@ async function logout() {
     <div class="hidden sm:flex justify-end items-center gap-4">
       <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
       <template v-if="!user">
-        <RouteLink v-if="!user" :label="$t('navigation.login')" url="login" />
-        <RouteLink v-if="!user" :label="$t('navigation.register')" url="register" />
+        <RouteLink :label="$t('navigation.login')" url="login" />
+        <RouteLink :label="$t('navigation.register')" url="register" />
         <LangSwitcher />
       </template>
       <NavigationDropdown v-else :routes="route.dropdownRoutes" @logout="logout" />
@@ -71,6 +72,7 @@ async function logout() {
       <NavbarPopup
         v-if="isOpen"
         :routes="visibleRoutes"
+        :dropDownRoutes="route.dropdownRoutes"
         :loggedIn="user ? true : false"
         @logout="logout"
         @close="isOpen = false"

@@ -27,7 +27,7 @@ onBeforeMount(() => profile.fetch())
         <RouteLink v-for="route in routes" :key="route.url" :label="$t(route.label)" :url="route.url" />
         <div
           v-if="user"
-          class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
+          class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
           @click="$emit('logout')"
         >
           {{ $t('navigation.logout') }}
