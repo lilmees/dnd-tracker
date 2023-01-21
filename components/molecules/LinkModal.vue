@@ -7,8 +7,6 @@ const props = defineProps({
   showcase: { type: Boolean, default: false },
 })
 
-const localePath = useLocalePath()
-
 const isOpen = ref(false)
 const isUpdating = ref(false)
 const form = ref({ link: null })
@@ -30,7 +28,7 @@ function updateLink({ __init, link }) {
       <div v-else-if="!isUpdating">
         <h2 class="mb-10">{{ $t('encounter.link') }}</h2>
         <div v-if="link" class="flex gap-2 flex-wrap">
-          <NuxtLink :to="localePath(`/${link}`)" target="_blank" rel="noreferrer noopener" class="grow">
+          <NuxtLink :to="link" target="_blank" rel="noreferrer noopener" class="grow">
             <Button :label="$t('actions.link')" inline />
           </NuxtLink>
           <div class="grow" @click="isUpdating = true">

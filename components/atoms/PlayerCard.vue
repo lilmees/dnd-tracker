@@ -16,7 +16,6 @@ const props = defineProps({ player: { type: Object, required: true } })
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 const store = usePlayersStore()
-const localePath = useLocalePath()
 
 const isSettings = ref(false)
 const isUpdating = ref(false)
@@ -64,7 +63,7 @@ async function updatePlayer(player) {
         <p class="font-bold">{{ player.ac || '_' }}</p>
         <Shield class="w-6 h-6 text-help" />
       </div>
-      <NuxtLink v-if="player.link" :to="localePath(`/${player.link}`)" target="_blank" rel="noreferrer noopener">
+      <NuxtLink v-if="player.link" :to="player.link" target="_blank" rel="noreferrer noopener">
         <Link class="w-6 h-6 text-info" />
       </NuxtLink>
     </div>
