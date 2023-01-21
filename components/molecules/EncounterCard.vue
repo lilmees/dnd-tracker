@@ -32,6 +32,7 @@ async function deleteEncounter() {
 
 async function copyEncounter({ created_at, id, profiles, ...enc }) {
   const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
+  if (typeof encounter.group === 'object') encounter.group = encounter.group.id
   try {
     const enc = await store.addEncounter(encounter)
     emit('copied', enc)
