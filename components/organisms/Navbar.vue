@@ -3,23 +3,22 @@ import { useI18n } from 'vue-i18n'
 import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'
 import { useAuthStore } from '@/store/auth'
+import { useProfileStore } from '@/store/profile'
 import { useMediaQuery } from '@vueuse/core'
 import Hamburger from '@/assets/icons/hamburger.svg'
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
-const store = useRouteStore()
+const route = useRouteStore()
 const auth = useAuthStore()
+const profile = useProfileStore()
 const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
 
 const isOpen = ref(false)
 
-const visibleRoutes = computed(() => {
-  if (user.value) return store.routes.filter(r => !r.requiredLogOut)
-  else return store.routes.filter(r => !r.requiredLogIn || (!r.requiredLogIn && !r.requiredLogOut))
-})
+const visibleRoutes = computed(() => (user.value ? route.routes : route.routes.filter(r => !r.requiredLogIn)))
 
 watch(isSmall, v => {
   if (!v && isOpen.value) isOpen.value = false
@@ -28,6 +27,7 @@ watch(isSmall, v => {
 async function logout() {
   try {
     await auth.logout()
+    profile.data = null
   } catch (err) {
     toast.error({
       title: t('error.general.title'),
@@ -49,16 +49,14 @@ async function logout() {
       />
       <h2>DND-TRACKER</h2>
     </NuxtLink>
-    <div class="hidden sm:flex justify-end gap-4">
+    <div class="hidden sm:flex justify-end items-center gap-4">
       <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
-      <div
-        v-if="user"
-        class="text-slate-300 hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold"
-        @click="logout()"
-      >
-        {{ $t('navigation.logout') }}
-      </div>
-      <LangSwitcher />
+      <template v-if="!user">
+        <RouteLink v-if="!user" :label="$t('navigation.login')" url="login" />
+        <RouteLink v-if="!user" :label="$t('navigation.register')" url="register" />
+        <LangSwitcher />
+      </template>
+      <NavigationDropdown v-else :routes="route.dropdownRoutes" @logout="logout" />
     </div>
 
     <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-primary" @click="isOpen = true" />

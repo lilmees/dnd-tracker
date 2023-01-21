@@ -10,7 +10,7 @@ const router = useRouter()
 // set the language when mounted if there's a cookie for it
 onMounted(() => {
   if (cookieLang.value) locale.value = cookieLang.value
-  else locale.value = v.includes('/en') ? 'en' : 'nl'
+  else locale.value = router.currentRoute.value.fullPath.includes('/en') ? 'en' : 'nl'
 })
 
 watch(

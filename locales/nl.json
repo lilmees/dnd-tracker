@@ -191,6 +191,7 @@
   "navigation": {
     "logout": "Uitloggen",
     "login": "Login",
+    "register": "Registreer",
     "home": "Thuis",
     "collections": "Collecties",
     "encounters": "Encounters",
