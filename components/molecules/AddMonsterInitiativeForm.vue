@@ -57,7 +57,7 @@ function rollDice() {
       message-class="error-message"
       @submit="addInitiative"
     >
-      <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
       <Input
         name="amount"
         type="number"

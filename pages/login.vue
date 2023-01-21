@@ -36,7 +36,7 @@ async function login({ __init, ...credentials }) {
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="login">
-        <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
+        <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
         <Input
           name="password"
           type="password"

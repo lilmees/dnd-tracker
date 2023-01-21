@@ -19,6 +19,19 @@ const form = ref({
   link: props.player.link || null,
 })
 
+watch(
+  () => props.open,
+  v => {
+    if (!v) return
+    form.value = {
+      name: props.player.name,
+      ac: props.player.ac || null,
+      health: props.player.health || null,
+      link: props.player.link || null,
+    }
+  }
+)
+
 async function updatePlayer({ __init, ...formData }) {
   error.value = null
   try {
@@ -38,7 +51,7 @@ async function updatePlayer({ __init, ...formData }) {
   <Modal v-if="open" @close="$emit('close')">
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
     <FormKit id="form" v-model="form" type="form" :actions="false" message-class="error-message" @submit="updatePlayer">
-      <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
       <Input name="ac" type="number" :label="$t('inputs.acLabel')" validation="between:1,100|number" />
       <Input name="health" type="number" :label="$t('inputs.hpLabel')" validation="between:1,1000|number" />
       <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />

@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   label: { type: String, required: true },
   help: { type: String, required: '' },
   placeholder: { type: String, required: false },
@@ -9,9 +9,14 @@ defineProps({
   validation: { type: String },
   disabled: { type: Boolean, default: false },
   required: { type: Boolean, default: false },
+  focus: { type: Boolean, default: false },
   size: { type: String, default: 'large' },
   options: { type: Array, default: () => [] },
   validationRules: { type: Object },
+})
+
+onMounted(() => {
+  if (props.focus) document.querySelector(`#${props.name}`)?.focus()
 })
 
 function handleIconClick(node) {
@@ -25,6 +30,7 @@ function handleIconClick(node) {
     :value="modelValue"
     :type="type"
     :name="name"
+    :id="name"
     :placeholder="placeholder"
     :help="help"
     :label="required ? label + ' *' : label"

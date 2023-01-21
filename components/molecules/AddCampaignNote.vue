@@ -34,7 +34,7 @@ async function addNote({ __init, ...formData }) {
   <Modal v-if="open" @close="$emit('close')">
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
     <FormKit id="form" v-model="form" type="form" :actions="false" message-class="error-message" @submit="addNote">
-      <Input name="title" :label="$t('inputs.titleLabel')" required validation="required|length:3,50" />
+      <Input focus name="title" :label="$t('inputs.titleLabel')" required validation="required|length:3,50" />
       <Input
         name="text"
         type="textarea"

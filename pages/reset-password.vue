@@ -45,6 +45,7 @@ async function resetPassword({ __init, password }) {
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
         <Input
+          focus
           name="password"
           type="password"
           :label="$t('inputs.passwordLabel')"

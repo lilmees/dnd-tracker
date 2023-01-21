@@ -10,6 +10,7 @@ const props = defineProps({
   placeholder: { type: String, required: true },
   label: { type: String, required: true },
   disabled: { type: Boolean, default: false },
+  focus: { type: Boolean, default: false },
 })
 
 const { t } = useI18n({ useScope: 'global' })
@@ -19,6 +20,10 @@ const store = useMonstersStore()
 const query = ref('')
 const page = ref(0)
 const pages = ref(0)
+
+onMounted(() => {
+  if (props.focus) document.querySelector('#el')?.focus()
+})
 
 watchDebounced(
   query,

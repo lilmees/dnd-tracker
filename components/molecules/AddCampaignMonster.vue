@@ -34,7 +34,7 @@ async function addMonster({ __init, ...formData }) {
   <Modal v-if="open" @close="$emit('close')">
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
     <FormKit id="form" v-model="form" type="form" :actions="false" message-class="error-message" @submit="addMonster">
-      <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
       <Input name="ac" type="number" :label="$t('inputs.acLabel')" validation="between:1,100|number" />
       <Input name="health" type="number" :label="$t('inputs.hpLabel')" validation="between:1,1000|number" />
       <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />

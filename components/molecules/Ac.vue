@@ -39,6 +39,7 @@ function updateAc({ __init, ac }) {
         <div class="flex gap-2 items-end">
           <div class="grow">
             <Input
+              focus
               name="ac"
               type="number"
               :label="$t('inputs.acLabel')"

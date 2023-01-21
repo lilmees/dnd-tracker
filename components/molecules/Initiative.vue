@@ -77,6 +77,7 @@ function moveRow(up) {
         <div class="flex gap-2 items-end">
           <div class="grow">
             <Input
+              focus
               name="initiative"
               :label="$t('inputs.initiativeLabel')"
               validation="required|between:1,50|number"

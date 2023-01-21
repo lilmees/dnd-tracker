@@ -37,7 +37,7 @@ function updateName({ __init, name }) {
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.name') }}</h2>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateName">
-        <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+        <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
         <Button type="submit" :label="$t('actions.update')" inline />
       </FormKit>
     </Modal>

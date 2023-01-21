@@ -46,7 +46,7 @@ async function forgotPassword({ __init, email }) {
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="forgotPassword">
-        <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
+        <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
         <Button type="submit" :label="$t('forgotPassword.reset')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">

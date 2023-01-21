@@ -33,6 +33,7 @@ function updateHealth({ __init, health }) {
         <div class="flex gap-2 items-end">
           <div class="grow">
             <Input
+              focus
               name="health"
               type="number"
               :label="$t('inputs.hpLabel')"
