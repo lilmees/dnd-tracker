@@ -13,7 +13,12 @@ defineProps({ big: { type: Boolean, default: false } })
       :class="[big ? 'max-w-[1000px]' : 'max-w-2xl']"
     >
       <div class="relative">
-        <Remove class="absolute -top-5 -right-5 text-danger cursor-pointer w-8 h-8" @click="$emit('close')" />
+        <button class="absolute -top-5 -right-5 group">
+          <Remove
+            class="text-danger w-8 h-8 rounded-full ring-danger group-focus-within:ring"
+            @click="$emit('close')"
+          />
+        </button>
         <div class="space-y-8">
           <slot />
         </div>

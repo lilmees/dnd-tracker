@@ -39,7 +39,7 @@ function handleIconClick(node) {
     :validation-rules="validationRules"
     rows="10"
     label-class="font-bold body-small"
-    inner-class="border-2 border-slate-400 rounded overflow-hidden focus-within:border-white"
+    inner-class="ring ring-slate-400 rounded overflow-hidden focus-within:ring-white my-1"
     input-class="w-full py-2 px-3 border-none rounded text-white body-small placeholder-slate-400 bg-transparent"
     outer-class="mb-3"
     help-class="help-message"
