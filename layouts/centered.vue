@@ -13,7 +13,9 @@ const localePath = useLocalePath()
             class="w-5 h-5 text-danger cursor-pointer absolute right-4 top-4 rounded-full ring-danger group-focus-within:ring"
           />
         </NuxtLink>
-        <slot />
+        <div class="px-4 sm:px-8">
+          <slot />
+        </div>
       </div>
     </div>
   </div>
