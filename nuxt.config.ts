@@ -28,11 +28,6 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxt/image-edge'
   ],
-  runtimeConfig: {
-    public: {
-      supabaseRedirectUrl: process.env.NUXT_SUPABASE_REDIRECT_URL,
-    },
-  },
   vite: {
     plugins: [svgLoader()],
   },
@@ -71,7 +66,6 @@ export default defineNuxtConfig({
         },
         route: '/**',
       },
-      // disable so that images of Storyblok could be loaded
       crossOriginEmbedderPolicy: false,
     },
   },
