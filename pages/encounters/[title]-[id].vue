@@ -91,6 +91,7 @@ async function saveUpdate() {
       <EncounterHeader :round="encounter.round" :title="encounter.title" @next="nextInitiative" @reset="resetRounds" />
       <EncounterTable :rows="rows" :activeIndex="encounter.activeIndex" @update="updateRows" />
       <EncounterOptions :encounter="encounter" />
+      <FabRoller />
     </div>
   </NuxtLayout>
 </template>
