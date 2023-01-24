@@ -6,6 +6,8 @@ defineProps({
   buttonLink: { type: String },
   center: { type: Boolean, default: false },
 })
+
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -15,7 +17,7 @@ defineProps({
       {{ text }}
     </p>
     <div v-if="buttonLink && buttonLabel" class="flex" :class="[center ? 'justify-center' : 'justify-start']">
-      <NuxtLink :to="buttonLink" class="max-w-max">
+      <NuxtLink :to="localePath(`/${buttonLink}`)" class="max-w-max">
         <Button :label="buttonLabel" color="primary" class="mt-6 w-fit tracker-shadow-pulse" />
       </NuxtLink>
     </div>

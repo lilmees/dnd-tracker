@@ -76,7 +76,7 @@ function selectedSummoner(id) {
       message-class="error-message"
       @submit="addInitiative"
     >
-      <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
       <Select
         :absolute="false"
         :inputLabel="$t('inputs.summonerLabel')"

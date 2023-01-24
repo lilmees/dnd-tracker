@@ -6,6 +6,8 @@ import { useToastStore } from '@/store/toast'
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
+const localePath = useLocalePath()
+
 const form = ref({ password: '' })
 const isLoading = ref(false)
 const error = ref()
@@ -33,10 +35,17 @@ async function resetPassword({ __init, password }) {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('resetPassword.title') }}</h1>
-      <img src="@/assets/images/dice.webp" alt="D20 logo dice" class="w-10 h-10 mx-auto visibility-pulse" />
+      <NuxtImg
+        src="/images/dice.webp"
+        alt="D20 logo dice"
+        sizes="sm:40px md:40px lg:40px"
+        format="webp"
+        class="w-10 h-10 mx-auto visibility-pulse"
+      />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
         <Input
+          focus
           name="password"
           type="password"
           :label="$t('inputs.passwordLabel')"
@@ -46,7 +55,7 @@ async function resetPassword({ __init, password }) {
         <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink to="/">
+        <NuxtLink :to="localePath('/')">
           <TextButton>{{ $t('actions.cancel') }}</TextButton>
         </NuxtLink>
       </div>

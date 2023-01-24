@@ -53,7 +53,7 @@ const isOpen = ref(false)
         </div>
       </template>
     </div>
-    <ActionsTable v-if="monster.actions && isOpen" :actions="JSON.parse(monster.actions)" :class="{ 'pb-5': isOpen }" />
+    <ActionsTable v-if="monster.actions && isOpen" :actions="monster.actions" :class="{ 'pb-5': isOpen }" />
     <ChevronDown
       class="cursor-pointer duration-200 h-6 w-6 stroke-2 absolute bottom-1 right-1"
       :class="{ 'rotate-180': isOpen }"

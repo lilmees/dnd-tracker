@@ -9,6 +9,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/image-edge": "^1.0.0-27840416.dc1ed65",
     "@nuxtjs/supabase": "^0.1.27",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@vueuse/core": "^9.4.0",
@@ -20,10 +21,12 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@formkit/i18n": "^1.0.0-beta.11",
     "@formkit/nuxt": "^1.0.0-beta.11",
+    "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@nuxtjs/i18n": "^8.0.0-beta.2",
     "@pinia/nuxt": "^0.4.6",
     "@vueuse/motion": "^2.0.0-beta.25",
     "click-outside-vue3": "^4.0.1",
+    "nuxt-security": "^0.10.0",
     "vite-svg-loader": "^3.6.0",
     "vue-tippy": "v6"
   }

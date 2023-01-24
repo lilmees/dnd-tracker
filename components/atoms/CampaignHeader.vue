@@ -5,6 +5,8 @@ const props = defineProps({ campaign: { type: [Object, Number], required: true }
 
 const store = useCampaignsStore()
 const route = useRoute()
+const localePath = useLocalePath()
+
 const fetchedCampaign = ref()
 const chosenCampaign = computed(() => fetchedCampaign.value || props.campaign)
 
@@ -34,9 +36,13 @@ watch(
     <div class="mb-1">
       <NuxtLink
         v-if="!route.path.includes('/campaigns/') && chosenCampaign.title"
-        :to="`/campaigns/${
-          chosenCampaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : chosenCampaign.title.replace(/[\W]/g, '')
-        }-${chosenCampaign.id}`"
+        :to="
+          localePath(
+            `/campaigns/${
+              chosenCampaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : chosenCampaign.title.replace(/[\W]/g, '')
+            }-${chosenCampaign.id}`
+          )
+        "
       >
         <Button :label="$t('campaign.goCampaign')" />
       </NuxtLink>

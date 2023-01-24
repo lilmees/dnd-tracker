@@ -19,6 +19,19 @@ const form = ref({
   link: props.monster.link || null,
 })
 
+watch(
+  () => props.open,
+  v => {
+    if (!v) return
+    form.value = {
+      name: props.monster.name,
+      ac: props.monster.ac || null,
+      health: props.monster.health || null,
+      link: props.monster.link || null,
+    }
+  }
+)
+
 async function updateMonster({ __init, ...formData }) {
   error.value = null
   try {
@@ -45,7 +58,7 @@ async function updateMonster({ __init, ...formData }) {
       message-class="error-message"
       @submit="updateMonster"
     >
-      <Input name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
       <Input name="ac" type="number" :label="$t('inputs.acLabel')" validation="between:1,100|number" />
       <Input name="health" type="number" :label="$t('inputs.hpLabel')" validation="between:1,1000|number" />
       <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />

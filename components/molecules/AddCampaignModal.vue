@@ -41,7 +41,7 @@ async function addCampaign({ __init, ...formData }) {
     <h2>{{ $t('campaigns.title') }}</h2>
     <p v-if="error" class="text-danger text-center">{{ error }}</p>
     <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="addCampaign">
-      <Input name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
+      <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
       <div class="flex gap-2 items-end">
         <ColorPicker name="background" :label="$t('inputs.backgroundLabel')" validation="required" required />
         <div class="mb-[14px]">

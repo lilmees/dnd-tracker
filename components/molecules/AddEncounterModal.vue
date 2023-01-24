@@ -86,7 +86,7 @@ function selectedCampaign(id) {
       message-class="error-message"
       @submit="addEncounter"
     >
-      <Input name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
+      <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
       <Select
         v-if="!campaignId"
         :inputLabel="$t('inputs.campaignLabel')"

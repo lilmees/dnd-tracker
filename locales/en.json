@@ -191,6 +191,7 @@
   "navigation": {
     "logout": "Log out",
     "login": "Log in",
+    "register": "Register",
     "home": "Home",
     "collections": "Collections",
     "encounters": "Encounters",

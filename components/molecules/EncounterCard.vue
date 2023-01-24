@@ -15,6 +15,8 @@ const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
+const localePath = useLocalePath()
+
 const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
@@ -30,6 +32,7 @@ async function deleteEncounter() {
 
 async function copyEncounter({ created_at, id, profiles, ...enc }) {
   const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
+  if (typeof encounter.group === 'object') encounter.group = encounter.group.id
   try {
     const enc = await store.addEncounter(encounter)
     emit('copied', enc)
@@ -73,9 +76,13 @@ function closeSettings() {
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="`/encounters/${
-        encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-      }-${encounter.id}`"
+      :to="
+        localePath(
+          `/encounters/${
+            encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
+          }-${encounter.id}`
+        )
+      "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
     >
       <h2>{{ encounter.title }}</h2>

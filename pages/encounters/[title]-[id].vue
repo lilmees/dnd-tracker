@@ -87,10 +87,11 @@ async function saveUpdate() {
   <NuxtLayout name="wide">
     <div v-if="isPending" class="loader" />
     <div v-else class="py-4 space-y-4">
-      <Back url="/encounters" :label="$t('encounter.back')" class="container-max" />
+      <Back url="encounters" :label="$t('encounter.back')" class="container-max" />
       <EncounterHeader :round="encounter.round" :title="encounter.title" @next="nextInitiative" @reset="resetRounds" />
       <EncounterTable :rows="rows" :activeIndex="encounter.activeIndex" @update="updateRows" />
       <EncounterOptions :encounter="encounter" />
+      <FabRoller />
     </div>
   </NuxtLayout>
 </template>

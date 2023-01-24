@@ -40,7 +40,7 @@ function updateLink({ __init, link }) {
       <div v-else>
         <h2 class="mb-10">{{ $t('encounter.update.link') }}</h2>
         <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateLink">
-          <Input name="link" :label="$t('inputs.linkLabel')" validation="required|length10,200|url" required />
+          <Input focus name="link" :label="$t('inputs.linkLabel')" validation="required|length10,200|url" required />
           <Button type="submit" :label="link ? $t('actions.update') : $t('actions.add')" inline />
         </FormKit>
       </div>

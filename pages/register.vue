@@ -8,6 +8,8 @@ definePageMeta({ middleware: ['loggedin'] })
 const { t } = useI18n({ useScope: 'global' })
 const store = useAuthStore()
 const toast = useToastStore()
+const localePath = useLocalePath()
+
 const form = ref({ email: '', password: '', name: '', username: '' })
 const isLoading = ref(false)
 const error = ref()
@@ -44,13 +46,16 @@ function randomAvatar() {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('register.register') }}</h1>
-      <div class="flex items-end flex-wrap gap-2 justify-center">
-        <img v-if="image" :src="image" alt="avatar" />
+      <div class="flex flex-col gap-2 items-center">
+        <div class="w-[100px] h-[100px]">
+          <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" format="webp" />
+        </div>
         <TextButton @click="randomAvatar">{{ $t('register.random') }}</TextButton>
       </div>
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
         <Input
+          focus
           name="name"
           :label="$t('inputs.fullNameLabel')"
           validation="required|length:3,30|alpha_spaces"
@@ -73,10 +78,10 @@ function randomAvatar() {
         <Button type="submit" :label="$t('register.register')" :loading="isLoading" inline />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink to="/register">
+        <NuxtLink :to="localePath('/register')">
           <TextButton>{{ $t('login.new') }}</TextButton>
         </NuxtLink>
-        <NuxtLink to="/forgot-password">
+        <NuxtLink :to="localePath('/forgot-password')">
           <TextButton>{{ $t('login.forgot') }}</TextButton>
         </NuxtLink>
       </div>

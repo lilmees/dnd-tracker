@@ -17,19 +17,17 @@ export default defineNuxtConfig({
     transpile: []
   },
   modules: [
+    'nuxt-security',
     '@nuxtjs/supabase', 
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt', 
     '@pinia/nuxt', 
     '@formkit/nuxt', 
     '@nuxtjs/i18n',
-    '@vueuse/motion/nuxt'
+    '@funken-studio/sitemap-nuxt-3',
+    '@vueuse/motion/nuxt',
+    '@nuxt/image-edge'
   ],
-  runtimeConfig: {
-    public: {
-      supabaseRedirectUrl: process.env.NUXT_SUPABASE_REDIRECT_URL,
-    },
-  },
   vite: {
     plugins: [svgLoader()],
   },
@@ -47,6 +45,28 @@ export default defineNuxtConfig({
       locale: 'nl',
       fallbackLocale: 'nl',
       messages: { en, nl},
+    },
+  },
+  sitemap: {
+    hostname: 'https://dnd-tracker.com', 
+    cacheTime: 1,
+    generateOnBuild: true,
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date().toISOString(),
+    },
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        // this rules allows images to be loaded via https
+        value: {
+          'img-src': ['\'self\'', 'https:', 'data:'],
+        },
+        route: '/**',
+      },
+      crossOriginEmbedderPolicy: false,
     },
   },
   tailwindcss: {

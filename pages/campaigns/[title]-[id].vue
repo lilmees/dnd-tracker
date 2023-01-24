@@ -55,7 +55,7 @@ function updatedEncounter(encounter) {
   <NuxtLayout>
     <div v-if="isPending" class="loader" />
     <div v-else-if="campaign" class="py-4 space-y-4">
-      <Back url="/campaigns" :label="$t('campaign.back')" class="sm:hidden" />
+      <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
       <div
         class="rounded w-full tracker-shadow relative p-2 flex"
         :style="{ 'background-color': campaign.background || '#000', color: campaign.color || '#fff' }"
@@ -64,7 +64,7 @@ function updatedEncounter(encounter) {
           {{ campaign.title }}
         </h1>
         <Back
-          url="/campaigns"
+          url="campaigns"
           :label="$t('campaign.back')"
           class="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2"
           :color="campaign.color || '#fff'"
