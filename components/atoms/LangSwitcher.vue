@@ -3,24 +3,27 @@ import { useI18n } from 'vue-i18n'
 
 const { locale, availableLocales } = useI18n({ useScope: 'global' })
 const cookieLang = useCookie('lang')
-const localeLang = computed(() => cookieLang.value || locale.value)
 const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
+const config = inject(Symbol.for('FormKitConfig'))
+
+const localeLang = computed(() => cookieLang.value || locale.value)
 
 // set the language when mounted if there's a cookie for it
 onMounted(() => {
-  if (cookieLang.value) locale.value = cookieLang.value
-  else locale.value = router.currentRoute.value.fullPath.includes('/en') ? 'en' : 'nl'
+  if (cookieLang.value) setLang(cookieLang.value)
+  else setLang(router.currentRoute.value.fullPath.includes('/en') ? 'en' : 'nl')
 })
 
 watch(
   () => router.currentRoute.value.fullPath,
-  v => (locale.value = v.includes('/en') ? 'en' : 'nl')
+  v => setLang(v.includes('/en') ? 'en' : 'nl')
 )
 
 function setLang(lang) {
   cookieLang.value = lang
   locale.value = lang
+  config.locale = lang
 }
 </script>
 
