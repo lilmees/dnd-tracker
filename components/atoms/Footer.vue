@@ -10,6 +10,7 @@ const localePath = useLocalePath()
         alt="Logo dnd tracker"
         sizes="sm:40px md:40px lg:40px"
         format="webp"
+        provider="imagekit"
         class="w-10"
       />
       <h2>DND-TRACKER</h2>

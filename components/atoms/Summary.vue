@@ -15,6 +15,7 @@ defineProps({
           alt="Dice"
           sizes="sm:40px md:40px lg:40px"
           format="webp"
+          provider="imagekit"
           class="w-6 h-6 animate-pulse"
         />
         <p>{{ item }}</p>

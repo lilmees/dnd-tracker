@@ -17,9 +17,10 @@ onBeforeMount(() => profile.fetch())
         :src="profile.data?.avatar || '/dice.webp'"
         alt="Logo dnd tracker"
         sizes="sm:40px md:40px lg:40px"
-        format="webp"
         class="w-10 -scale-x-100"
         :class="{ 'relative bottom-1': profile.data?.avatar }"
+        format="webp"
+        :provider="profile.data?.avatar ? '' : 'imagekit'"
       />
     </div>
     <template #content>
@@ -37,5 +38,3 @@ onBeforeMount(() => profile.fetch())
     </template>
   </tippy>
 </template>
-
-// fix mobile menu

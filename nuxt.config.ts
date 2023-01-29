@@ -58,7 +58,9 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    dir: 'assets/images'
+    imagekit: {
+      baseURL: 'https://ik.imagekit.io/c2es1qasw',
+    },
   },
   security: {
     headers: {

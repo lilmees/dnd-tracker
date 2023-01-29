@@ -84,8 +84,9 @@ function generateDiceRoll(type, amount = 1) {
             src="/d100.webp"
             alt="D100"
             sizes="sm:40px md:40px lg:40px"
-            format="webp"
             class="w-full h-full object-contain"
+            format="webp"
+            provider="imagekit"
           />
         </button>
       </transition>
@@ -98,8 +99,9 @@ function generateDiceRoll(type, amount = 1) {
           src="/d20.webp"
           alt="D20"
           sizes="sm:40px md:40px lg:40px"
-          format="webp"
           class="w-full h-full object-contain"
+          format="webp"
+          provider="imagekit"
         />
       </button>
       <div class="flex flex-col-reverse absolute bottom-[3.5rem]">
@@ -129,8 +131,9 @@ function generateDiceRoll(type, amount = 1) {
                 :src="`/${dice}.webp`"
                 :alt="dice.toUpperCase()"
                 sizes="sm:40px md:40px lg:40px"
-                format="webp"
                 class="w-full h-full object-contain"
+                format="webp"
+                provider="imagekit"
               />
             </button>
           </transition>

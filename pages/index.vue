@@ -32,7 +32,7 @@ function nextInitiative() {
   <NuxtLayout name="wide">
     <div>
       <Hero />
-      <div class="flex flex-col gap-y-20 py-20 px-4 container-max">
+      <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
         <div class="container-max !mx-0 grid grid-cols-1 lg:grid-cols-2">
           <TitleText
             :title="$t('home.textBlock1.title')"
@@ -40,20 +40,21 @@ function nextInitiative() {
             buttonLink="roadmap"
             :buttonLabel="'Go to the roadmap'"
           />
-          <Summary
-            :title="$t('home.summary.title')"
-            :items="[
-              $t('home.summary.item1'),
-              $t('home.summary.item2'),
-              $t('home.summary.item3'),
-              $t('home.summary.item4'),
-              $t('home.summary.item5'),
-              $t('home.summary.item6'),
-            ]"
-            class="mt-20 lg:mt-32"
-          />
+          <div class="mt-20 lg:mt-32 flex justify-end">
+            <Summary
+              :title="$t('home.summary.title')"
+              :items="[
+                $t('home.summary.item1'),
+                $t('home.summary.item2'),
+                $t('home.summary.item3'),
+                $t('home.summary.item4'),
+                $t('home.summary.item5'),
+                $t('home.summary.item6'),
+              ]"
+            />
+          </div>
         </div>
-        <div v-if="encounter" v-motion-slide-visible-bottom class="rounded-xl px-4 py-6 bg-tracker tracker-shadow">
+        <div v-if="encounter" v-motion-slide-visible-bottom class="rounded-xl px-4 bg-tracker tracker-shadow">
           <EncounterHeader
             class="w-full pb-4"
             :round="encounter.round"
@@ -71,8 +72,8 @@ function nextInitiative() {
         </div>
         <div class="container-max !mx-0 grid grid-cols-1 md:grid-cols-2">
           <TitleText :title="$t('home.diceRoller.title')" :text="$t('home.diceRoller.text')" />
-          <div v-motion-slide-visible-bottom class="tracker-shadow">
-            <DiceRolling result />
+          <div v-motion-slide-visible-bottom class="mt-10 md:mt-0">
+            <HomeDiceRolling />
           </div>
         </div>
         <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
