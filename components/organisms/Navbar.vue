@@ -42,7 +42,7 @@ async function logout() {
   <nav class="bg-black rounded-xl p-4 flex justify-between items-center gap-4 tracker-shadow m-2">
     <NuxtLink :to="localePath('/')" class="flex gap-4 items-center">
       <NuxtImg
-        src="/images/icon.webp"
+        src="/icon.webp"
         alt="Logo dnd tracker"
         sizes="sm:40px md:40px lg:40px"
         format="webp"

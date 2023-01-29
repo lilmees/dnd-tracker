@@ -11,7 +11,7 @@ defineProps({
     <div v-if="items.length" class="flex flex-col gap-4">
       <div v-for="item in items" :key="item" class="flex items-center gap-4">
         <NuxtImg
-          src="/images/dice.webp"
+          src="/dice.webp"
           alt="Dice"
           sizes="sm:40px md:40px lg:40px"
           format="webp"
