@@ -57,10 +57,6 @@ export default defineNuxtConfig({
       lastmod: new Date().toISOString(),
     },
   },
-  image: {
-    dir: 'assets/images',
-    provider: "ipx"
-  },
   security: {
     headers: {
       contentSecurityPolicy: {

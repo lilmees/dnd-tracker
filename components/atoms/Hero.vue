@@ -23,7 +23,7 @@ function angle(cx, cy, ex, ey) {
   <div class="relative" @mousemove="calculateEyes">
     <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6">
       <NuxtImg
-        src="/background.webp"
+        src="/images/background.webp"
         alt="Hero image"
         sizes="sm:100vw md:100vw lg:100vw"
         class="w-full h-full object-cover"
@@ -52,7 +52,7 @@ function angle(cx, cy, ex, ey) {
         </div>
         <div ref="anchor">
           <NuxtImg
-            src="/draakje.webp"
+            src="/images/draakje.webp"
             alt="Hero image"
             sizes="sm:500px md:500px lg:500px"
             class="w-full h-full object-cover"

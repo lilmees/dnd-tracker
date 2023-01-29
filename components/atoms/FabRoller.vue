@@ -80,7 +80,12 @@ function generateDiceRoll(type, amount = 1) {
           class="bg-black tracker-shadow rounded-full p-2 border-4 border-secondary w-14 h-14 absolute top-[3.5rem]"
           @click="rollDice('d100')"
         >
-          <NuxtImg src="/d100.webp" alt="D100" sizes="sm:40px md:40px lg:40px" class="w-full h-full object-contain" />
+          <NuxtImg
+            src="/images/d100.webp"
+            alt="D100"
+            sizes="sm:40px md:40px lg:40px"
+            class="w-full h-full object-contain"
+          />
         </button>
       </transition>
       <button
@@ -88,7 +93,12 @@ function generateDiceRoll(type, amount = 1) {
         class="bg-black tracker-shadow rounded-full p-2 border-4 border-primary w-14 h-14 z-[1]"
         @click="rollDice('d20')"
       >
-        <NuxtImg src="/d20.webp" alt="D20" sizes="sm:40px md:40px lg:40px" class="w-full h-full object-contain" />
+        <NuxtImg
+          src="/images/d20.webp"
+          alt="D20"
+          sizes="sm:40px md:40px lg:40px"
+          class="w-full h-full object-contain"
+        />
       </button>
       <div class="flex flex-col-reverse absolute bottom-[3.5rem]">
         <template v-for="dice in ['d12', 'd10', 'd8', 'd6', 'd4']" :key="dice">
@@ -114,7 +124,7 @@ function generateDiceRoll(type, amount = 1) {
               @click="rollDice(dice)"
             >
               <NuxtImg
-                :src="`/${dice}.webp`"
+                :src="`/images/${dice}.webp`"
                 :alt="dice.toUpperCase()"
                 sizes="sm:40px md:40px lg:40px"
                 class="w-full h-full object-contain"
