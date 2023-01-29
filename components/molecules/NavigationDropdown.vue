@@ -14,7 +14,7 @@ onBeforeMount(() => profile.fetch())
   <tippy interactive>
     <div class="bg-tracker p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer">
       <NuxtImg
-        :src="profile.data?.avatar || '/images/dice.webp'"
+        :src="profile.data?.avatar || '/dice.webp'"
         alt="Logo dnd tracker"
         sizes="sm:40px md:40px lg:40px"
         format="webp"
