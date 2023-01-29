@@ -11,7 +11,7 @@ defineProps({
   selected: { type: Boolean, default: true },
   color: {
     type: String,
-    default: 'success',
+    default: 'danger',
     validator(value) {
       return ['primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
     },
@@ -21,7 +21,7 @@ defineProps({
 
 <template>
   <div
-    class="px-3 py-1 font-semibold leading-tight rounded flex gap-2 w-fit items-center text-black"
+    class="px-3 py-1 font-semibold leading-tight rounded flex gap-2 w-fit items-center text-white"
     :class="{
       'bg-primary/50 ring-primary': color === 'primary',
       'bg-secondary/50 ring-secondary': color === 'secondary',
