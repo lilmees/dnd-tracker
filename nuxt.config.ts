@@ -28,9 +28,6 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxt/image-edge'
   ],
-  serverMiddleware: {
-    '/_ipx': '~/server/middleware/ipx.js'
-  },
   vite: {
     plugins: [svgLoader()],
   },

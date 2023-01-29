@@ -26,7 +26,6 @@ function angle(cx, cy, ex, ey) {
         src="/background.webp"
         alt="Hero image"
         sizes="sm:100vw md:100vw lg:100vw"
-        format="webp"
         class="w-full h-full object-cover"
       />
     </div>
@@ -56,7 +55,6 @@ function angle(cx, cy, ex, ey) {
             src="/draakje.webp"
             alt="Hero image"
             sizes="sm:500px md:500px lg:500px"
-            format="webp"
             class="w-full h-full object-cover"
           />
         </div>

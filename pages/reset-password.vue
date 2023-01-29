@@ -39,7 +39,6 @@ async function resetPassword({ __init, password }) {
         src="/dice.webp"
         alt="D20 logo dice"
         sizes="sm:40px md:40px lg:40px"
-        format="webp"
         class="w-10 h-10 mx-auto visibility-pulse"
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>

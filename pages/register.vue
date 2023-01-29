@@ -48,7 +48,7 @@ function randomAvatar() {
       <h1 class="text-center">{{ $t('register.register') }}</h1>
       <div class="flex flex-col gap-2 items-center">
         <div class="w-[100px] h-[100px]">
-          <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" format="webp" />
+          <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" />
         </div>
         <TextButton @click="randomAvatar">{{ $t('register.random') }}</TextButton>
       </div>
