@@ -57,6 +57,11 @@ export default defineNuxtConfig({
       lastmod: new Date().toISOString(),
     },
   },
+  image: {
+    imagekit: {
+      baseURL: 'https://ik.imagekit.io/c2es1qasw',
+    },
+  },
   security: {
     headers: {
       contentSecurityPolicy: {

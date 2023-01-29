@@ -14,11 +14,13 @@ onBeforeMount(() => profile.fetch())
   <tippy interactive>
     <div class="bg-tracker p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer">
       <NuxtImg
-        :src="profile.data?.avatar || '/images/dice.webp'"
+        :src="profile.data?.avatar || '/dice.webp'"
         alt="Logo dnd tracker"
         sizes="sm:40px md:40px lg:40px"
         class="w-10 -scale-x-100"
         :class="{ 'relative bottom-1': profile.data?.avatar }"
+        format="webp"
+        :provider="profile.data?.avatar ? '' : 'imagekit'"
       />
     </div>
     <template #content>
@@ -36,5 +38,3 @@ onBeforeMount(() => profile.fetch())
     </template>
   </tippy>
 </template>
-
-// fix mobile menu

@@ -82,9 +82,11 @@ function generateDiceRoll(type, amount = 1) {
           @click="rollDice(dice)"
         >
           <NuxtImg
-            :src="`/images/${dice}.webp`"
+            :src="`/${dice}.webp`"
             :alt="dice.toUpperCase()"
             sizes="sm:40px md:40px lg:40px"
+            format="webp"
+            provider="imagekit"
             class="w-full h-full object-contain"
           />
         </button>

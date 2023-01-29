@@ -81,10 +81,12 @@ function generateDiceRoll(type, amount = 1) {
           @click="rollDice('d100')"
         >
           <NuxtImg
-            src="/images/d100.webp"
+            src="/d100.webp"
             alt="D100"
             sizes="sm:40px md:40px lg:40px"
             class="w-full h-full object-contain"
+            format="webp"
+            provider="imagekit"
           />
         </button>
       </transition>
@@ -94,10 +96,12 @@ function generateDiceRoll(type, amount = 1) {
         @click="rollDice('d20')"
       >
         <NuxtImg
-          src="/images/d20.webp"
+          src="/d20.webp"
           alt="D20"
           sizes="sm:40px md:40px lg:40px"
           class="w-full h-full object-contain"
+          format="webp"
+          provider="imagekit"
         />
       </button>
       <div class="flex flex-col-reverse absolute bottom-[3.5rem]">
@@ -124,10 +128,12 @@ function generateDiceRoll(type, amount = 1) {
               @click="rollDice(dice)"
             >
               <NuxtImg
-                :src="`/images/${dice}.webp`"
+                :src="`/${dice}.webp`"
                 :alt="dice.toUpperCase()"
                 sizes="sm:40px md:40px lg:40px"
                 class="w-full h-full object-contain"
+                format="webp"
+                provider="imagekit"
               />
             </button>
           </transition>

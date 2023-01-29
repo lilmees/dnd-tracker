@@ -38,9 +38,11 @@ async function forgotPassword({ __init, email }) {
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('forgotPassword.title') }}</h1>
       <NuxtImg
-        src="/images/dice.webp"
+        src="/dice.webp"
         alt="D20 logo dice"
         sizes="sm:40px md:40px lg:40px"
+        format="webp"
+        provider="imagekit"
         class="w-10 h-10 mx-auto visibility-pulse"
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
