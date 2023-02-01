@@ -31,10 +31,8 @@
     }
   },
   "error": {
-    "404": {
-      "title": "Oops, we could not find that page",
-      "text": "Oops, we could not find that page"
-    },
+    "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
+    "meme": "I want another meme",
     "goHome": "Go to homepage",
     "general": {
       "title": "Error",

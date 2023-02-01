@@ -31,10 +31,8 @@
     }
   },
   "error": {
-    "404": {
-      "title": "Pagina niet gevonden",
-      "text": "Oeps. We kunnen deze pagina niet vinden"
-    },
+    "404": "Oeps. We kunnen deze pagina niet vinden maar hier heb je een radom meme van reddit.",
+    "meme": "Ik wil nog een meme",
     "goHome": "Ga naar de thuispagina",
     "general": {
       "title": "Fout",
