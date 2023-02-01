@@ -28,6 +28,7 @@
     "click-outside-vue3": "^4.0.1",
     "nuxt-security": "^0.10.0",
     "vite-svg-loader": "^3.6.0",
-    "vue-tippy": "v6"
+    "vue-tippy": "v6",
+    "vue3-lottie": "^2.4.0"
   }
 }
