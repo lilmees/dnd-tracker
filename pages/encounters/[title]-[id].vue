@@ -1,5 +1,6 @@
 <script setup>
 import { useEncountersStore } from '@/store/encounters'
+import { watchDebounced } from '@vueuse/core'
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
@@ -12,6 +13,7 @@ const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const { t } = useI18n({ useScope: 'global' })
 const encounter = ref()
+const info = ref('')
 const isPending = ref(true)
 
 // if the rows are json parse them
@@ -24,9 +26,21 @@ onMounted(() => {
   subscribeEncounterChanges()
 })
 
+watchDebounced(
+  info,
+  v => {
+    if (v) {
+      encounter.value.info = v
+      saveUpdate()
+    }
+  },
+  { debounce: 500, maxWait: 1000 }
+)
+
 async function getEncounter() {
   try {
     encounter.value = await store.getEncounterById(route.params.id)
+    info.value = encounter.value.info
     if (!encounter.value.admins.includes(user.value.id)) navigateTo('/encounters')
     useHead({ title: encounter.value.title })
   } catch (err) {
@@ -79,6 +93,7 @@ function updateRows(rows) {
 
 async function saveUpdate() {
   const { profiles, created_at, created_by, ...enc } = encounter.value
+  if (typeof enc.group === 'object') enc.group = enc.group.id
   await supabase.from('initiative-sheets').update(enc).eq('id', encounter.value.id)
 }
 </script>
@@ -91,6 +106,7 @@ async function saveUpdate() {
       <EncounterHeader :round="encounter.round" :title="encounter.title" @next="nextInitiative" @reset="resetRounds" />
       <EncounterTable :rows="rows" :activeIndex="encounter.activeIndex" @update="updateRows" />
       <EncounterOptions :encounter="encounter" />
+      <Input type="textarea" name="info" v-model="info" :label="$t('encounter.info')" />
       <FabRoller />
     </div>
   </NuxtLayout>
