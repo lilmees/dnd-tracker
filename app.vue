@@ -30,9 +30,9 @@ useSchemaOrg([
   defineOrganization({
     name: appName,
     url: 'https://dnd-tracker.com',
-    logo: 'https://ik.imagekit.io/c2es1qasw/logo.svg',
+    logo: 'https://dnd-tracker.com/socials.png',
   }),
-  defineWebSite({ name: 'The best initiative tracker for Dungeon & Dragons' }),
+  defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' }),
 ])
 
 const profile = useProfileStore()

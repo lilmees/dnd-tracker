@@ -1251,18 +1251,6 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
-"@types/lodash.template@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@types/lodash.template/-/lodash.template-4.5.1.tgz#3a2325e02963ca8aced4a657598ac26816340d83"
-  integrity sha512-0y71S2dGgmwdkSsyW95JBp8HSZchgKCsjr6F0lsT3eSMtaT3Nn9rcMHU1U4UKu6XjQT3YC6/PNwgFI7k9f+ltw==
-  dependencies:
-    "@types/lodash" "*"
-
-"@types/lodash@*":
-  version "4.14.191"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
-  integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
-
 "@types/node@*":
   version "18.11.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
@@ -4356,17 +4344,6 @@ nuxi@3.1.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-nuxt-delay-hydration@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/nuxt-delay-hydration/-/nuxt-delay-hydration-1.1.0.tgz#256ba80fcc5812f8f39361b3a58560afa1dc9c6d"
-  integrity sha512-qywpbGPHLrAHzHRFEw9CSGo8wp0sfRH+DHHwonj1Mw65Ploh8MKGk3k7hQFfKzluIP+nK3T739uwGjagwhNpLA==
-  dependencies:
-    "@nuxt/kit" "^3.1.1"
-    "@types/lodash.template" "^4.5.1"
-    lodash.template "^4.5.0"
-    packrup "^0.1.0"
-    radix3 "^1.0.0"
-
 nuxt-schema-org@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/nuxt-schema-org/-/nuxt-schema-org-2.1.1.tgz#fe9e165b6d0cb75a6ff3566440fe90f529c002cb"
@@ -4527,11 +4504,6 @@ os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
-
-packrup@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/packrup/-/packrup-0.1.0.tgz#8a2d865a45aaee9807504046548678fa3382b6e3"
-  integrity sha512-HnUl9ztHGty5ZK13WM8Q7854SWPKH/eCT+MiTO0P1qCu1Y4S5PPJ8E9MwD3cnjSr7PUPzXDnmOVJIKM043OfJQ==
 
 parent-module@^1.0.0:
   version "1.0.1"
