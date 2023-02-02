@@ -13,9 +13,6 @@ export default defineNuxtConfig({
     ],
   },
   css: [ '@/assets/css/global.css' ],
-  build: {
-    transpile: []
-  },
   modules: [
     'nuxt-security',
     '@nuxtjs/supabase', 

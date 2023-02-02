@@ -1,4 +1,4 @@
 User-Agent: *
 Disallow:
 Allow: /
-Sitemap:
+Sitemap: https://dnd-tracker.com/sitemap.xml
