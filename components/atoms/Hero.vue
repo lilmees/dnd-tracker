@@ -20,16 +20,9 @@ function angle(cx, cy, ex, ey) {
 </script>
 
 <template>
-  <div class="relative" @mousemove="calculateEyes">
-    <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6">
-      <NuxtImg
-        src="/background.webp"
-        alt="Hero image"
-        sizes="sm:100vw md:100vw lg:100vw"
-        class="w-full h-full object-cover"
-        format="webp"
-        provider="imagekit"
-      />
+  <div id="heroContainer" class="relative" @mousemove="calculateEyes">
+    <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden">
+      <Vue3Lottie animationLink="https://lottie.host/ec4c0970-aa71-48c4-ad7a-ec92d18703b2/IxnndcbWtB.json" />
     </div>
     <div class="absolute inset-0 flex flex-wrap justify-center items-center p-4 gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">

@@ -15,6 +15,7 @@
     "@vueuse/core": "^9.4.0",
     "@vueuse/nuxt": "^9.4.0",
     "nuxt": "^3.1.0",
+    "nuxt-schema-org": "^2.1.1",
     "postcss-custom-properties": "^12.1.11"
   },
   "dependencies": {
@@ -24,10 +25,12 @@
     "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@nuxtjs/i18n": "^8.0.0-beta.2",
     "@pinia/nuxt": "^0.4.6",
+    "@unhead/addons": "^1.0.20",
     "@vueuse/motion": "^2.0.0-beta.25",
     "click-outside-vue3": "^4.0.1",
     "nuxt-security": "^0.10.0",
     "vite-svg-loader": "^3.6.0",
-    "vue-tippy": "v6"
+    "vue-tippy": "v6",
+    "vue3-lottie": "^2.4.0"
   }
 }

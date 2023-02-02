@@ -1,4 +1,5 @@
 import svgLoader from 'vite-svg-loader'
+import UnheadVite from '@unhead/addons/vite'
 import en from './locales/en.json'
 import nl from './locales/nl.json'
 
@@ -13,11 +14,9 @@ export default defineNuxtConfig({
     ],
   },
   css: [ '@/assets/css/global.css' ],
-  build: {
-    transpile: []
-  },
   modules: [
     'nuxt-security',
+    'nuxt-schema-org',
     '@nuxtjs/supabase', 
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt', 
@@ -29,7 +28,7 @@ export default defineNuxtConfig({
     '@nuxt/image-edge'
   ],
   vite: {
-    plugins: [svgLoader()],
+    plugins: [svgLoader(), UnheadVite(),],
   },
   formkit: {
     configFile: './formkit.config.ts',
@@ -56,6 +55,9 @@ export default defineNuxtConfig({
       priority: 1,
       lastmod: new Date().toISOString(),
     },
+  },
+  schemaOrg: {
+    host: 'https://dnd-tracker.com',
   },
   image: {
     imagekit: {
