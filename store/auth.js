@@ -7,11 +7,11 @@ export const useAuthStore = defineStore('useAuthStore', {
       const supabase = useSupabaseClient()
       const { error, user } = await supabase.auth.signUp(credentails)
       if (error) throw error
-      console.log('user', user)
       const { error: profileError } = await supabase
         .from('profiles')
         .insert([{ ...data, email: credentails.email, id: user.id }])
-      if (profileError) throw profileError
+      if (profileError?.message.includes('duplicate key')) throw new Error('Email already in use')
+      else if (profileError) throw profileError
     },
     async login(credentials) {
       const { auth } = useSupabaseClient()
