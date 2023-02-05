@@ -12,12 +12,12 @@ const localeLang = computed(() => cookieLang.value || locale.value)
 // set the language when mounted if there's a cookie for it
 onMounted(() => {
   if (cookieLang.value) setLang(cookieLang.value)
-  else setLang(router.currentRoute.value.fullPath.includes('/en') ? 'en' : 'nl')
+  else setLang(router.currentRoute.value.fullPath.includes('/en/') ? 'en' : 'nl')
 })
 
 watch(
   () => router.currentRoute.value.fullPath,
-  v => setLang(v.includes('/en') ? 'en' : 'nl')
+  v => setLang(v.includes('/en/') ? 'en' : 'nl')
 )
 
 function setLang(lang) {

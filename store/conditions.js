@@ -17,7 +17,6 @@ export const useConditionsStore = defineStore('useConditionsStore', {
         if (error) throw error
         if (data) this.data = data
       } catch (error) {
-        console.error(error)
         this.error = error
       } finally {
         this.loading = false

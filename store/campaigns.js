@@ -45,7 +45,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
     },
     async addCampaign(campaign) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('campaigns').insert([campaign])
+      const { data, error } = await supabase.from('campaigns').insert([campaign]).select('*')
       if (error) throw error
       else this.data.push(data[0])
     },
@@ -54,7 +54,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
       const encounters = useEncountersStore()
       //delete encounters first
       await encounters.deleteEncounterByCampaign(id)
-      const { data, error } = await supabase.from('campaigns').delete().eq('id', id)
+      const { data, error } = await supabase.from('campaigns').delete().eq('id', id).select('*')
       if (error) throw error
       else {
         // check if the data is older than 5 minutes if so filter the campaigns otherwise fetch data
@@ -64,7 +64,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
     },
     async updateCampaign(campaign, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('campaigns').update(campaign).eq('id', id)
+      const { data, error } = await supabase.from('campaigns').update(campaign).eq('id', id).select('*')
       if (error) throw error
       else {
         this.data = this.data.filter(e => e.id !== id)

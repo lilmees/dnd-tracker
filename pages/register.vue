@@ -23,7 +23,7 @@ async function register({ __init, username, name, ...credentials }) {
     isLoading.value = true
     await store.register(credentials, { username, name, avatar: image.value, role: 'User' })
     toast.success({ title: t('register.toast.success.title'), text: t('register.toast.success.text') })
-    navigateTo('/login')
+    navigateTo(localePath('/login'))
   } catch (err) {
     error.value = err.message
     toast.error({

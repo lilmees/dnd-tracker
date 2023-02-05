@@ -5,6 +5,7 @@ import meta from '@/seo/meta.json'
 const appName = 'DND TRACKER'
 
 const i18nHead = useLocaleHead({ addDirAttribute: true, identifierAttribute: 'hid', addSeoAttributes: true })
+const localePath = useLocalePath()
 
 useHead({
   titleTemplate: title => (title ? `${title} | ${appName}` : appName),
@@ -36,11 +37,11 @@ useSchemaOrg([
 ])
 
 const profile = useProfileStore()
-const supabase = useSupabaseClient()
+const { auth } = useSupabaseAuthClient()
 
-supabase.auth.onAuthStateChange(async (event, session) => {
+auth.onAuthStateChange(async (event, session) => {
   profile.fetch()
-  if (event == 'PASSWORD_RECOVERY') navigateTo('/reset-password')
+  if (event == 'PASSWORD_RECOVERY') navigateTo(localePath('/reset-password'))
 })
 
 onBeforeMount(() => profile.fetch())

@@ -20,7 +20,7 @@ async function forgotPassword({ __init, email }) {
     isLoading.value = true
     await store.forgotPassword(email)
     toast.success({ title: t('forgotPassword.toast.success.title'), text: t('forgotPassword.toast.success.text') })
-    navigateTo('/login')
+    navigateTo(localePath('/login'))
   } catch (err) {
     error.value = err.message
     toast.error({

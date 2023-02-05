@@ -25,19 +25,19 @@ export const usePlayersStore = defineStore('usePlayersStore', {
     },
     async addPlayer(player) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('players').insert([player])
+      const { data, error } = await supabase.from('players').insert([player]).select('*')
       if (error) throw error
       else return data[0]
     },
     async deletePlayer(id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('players').delete().eq('id', id)
+      const { data, error } = await supabase.from('players').delete().eq('id', id).select('*')
       if (error) throw error
       else return data
     },
     async updatePlayer(player, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('players').update(player).eq('id', id)
+      const { data, error } = await supabase.from('players').update(player).eq('id', id).select('*')
       if (error) throw error
       else return data[0]
     },

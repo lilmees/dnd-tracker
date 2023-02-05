@@ -68,7 +68,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
     },
     async addEncounter(encounter) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('initiative-sheets').insert([encounter])
+      const { data, error } = await supabase.from('initiative-sheets').insert([encounter]).select('*')
       if (error) throw error
       else {
         this.data && this.data.length ? this.data.push(data[0]) : (this.data = [data[0]])
@@ -77,7 +77,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
     },
     async deleteEncounter(id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('initiative-sheets').delete().eq('id', id)
+      const { data, error } = await supabase.from('initiative-sheets').delete().eq('id', id).select('*')
       if (error) throw error
       else {
         // check if the data is older than 5 minutes if so filter the encounters otherwise fetch data
@@ -88,13 +88,13 @@ export const useEncountersStore = defineStore('useEncountersStore', {
     },
     async deleteEncounterByCampaign(campaign) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('initiative-sheets').delete().eq('group', `${campaign}`)
+      const { data, error } = await supabase.from('initiative-sheets').delete().eq('group', `${campaign}`).select('*')
       if (error) throw error
       else return data
     },
     async updateEncounter(encounter, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('initiative-sheets').update(encounter).eq('id', id)
+      const { data, error } = await supabase.from('initiative-sheets').update(encounter).eq('id', id).select('*')
       if (error) throw error
       else {
         if (this.data) {

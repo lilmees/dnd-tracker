@@ -1,4 +1,5 @@
 <script setup>
+defineEmits(['update:modelValue'])
 const props = defineProps({
   label: { type: String, required: true },
   help: { type: String, required: '' },
@@ -47,6 +48,7 @@ function handleIconClick(node) {
     :disabled="disabled"
     :suffix-icon="type === 'password' ? 'eye' : undefined"
     @suffix-icon-click="handleIconClick"
+    @input="$emit('update:modelValue', $event)"
   />
 </template>
 
