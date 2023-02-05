@@ -5,7 +5,6 @@ import meta from '@/seo/meta.json'
 const appName = 'DND TRACKER'
 
 const i18nHead = useLocaleHead({ addDirAttribute: true, identifierAttribute: 'hid', addSeoAttributes: true })
-const localePath = useLocalePath()
 
 useHead({
   titleTemplate: title => (title ? `${title} | ${appName}` : appName),
@@ -36,6 +35,7 @@ useSchemaOrg([
   defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' }),
 ])
 
+const localePath = useLocalePath()
 const profile = useProfileStore()
 const { auth } = useSupabaseAuthClient()
 

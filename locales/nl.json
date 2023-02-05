@@ -198,7 +198,8 @@
     "profile": "Profiel"
   },
   "profile": {
-    "password": "Passwoord aanpassen"
+    "password": "Passwoord aanpassen",
+    "update": "Profiel bijwerken"
   },
   "account": {
     "general": {

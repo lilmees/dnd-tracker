@@ -23,5 +23,19 @@ export const useProfileStore = defineStore('useProfileStore', {
         this.loading = false
       }
     },
+    async updateProfile(credentials, data) {
+      const supabase = useSupabaseAuthClient()
+      const user = useSupabaseUser()
+      const { auth } = useSupabaseClient()
+      const { error } = await auth.updateUser(credentials)
+      if (error) throw error
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ ...data, email: credentials.email })
+        .eq('id', user.value.id)
+        .select('*')
+      if (profileError) throw profileError
+      else this.fetch()
+    },
   },
 })

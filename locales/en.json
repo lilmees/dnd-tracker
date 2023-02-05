@@ -198,7 +198,8 @@
     "profile": "Profile"
   },
   "profile": {
-    "password": "Update password"
+    "password": "Update password",
+    "update": "Update profile"
   },
   "account": {
     "general": {
