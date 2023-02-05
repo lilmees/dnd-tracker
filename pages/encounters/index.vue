@@ -26,7 +26,7 @@ watch(error, v => {
     <div v-else-if="!store.error">
       <div class="py-5 flex justify-between items-center">
         <h1>{{ $t('encounters.encounters') }}</h1>
-        <Button :label="$t('actions.create')" @click="isOpen = true" />
+        <Button :label="$t('encounters.add')" @click="isOpen = true" />
       </div>
       <div v-if="store.sortedEncounters">
         <div v-for="(group, index) in Object.values(store.sortedEncounters)" :key="index" class="space-y-4 pb-10">
