@@ -37,9 +37,9 @@ useSchemaOrg([
 ])
 
 const profile = useProfileStore()
-const supabase = useSupabaseClient()
+const { auth } = useSupabaseAuthClient()
 
-supabase.auth.onAuthStateChange(async (event, session) => {
+auth.onAuthStateChange(async (event, session) => {
   profile.fetch()
   if (event == 'PASSWORD_RECOVERY') navigateTo(localePath('/reset-password'))
 })
