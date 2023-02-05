@@ -18,7 +18,7 @@ async function resetPassword({ __init, password }) {
     isLoading.value = true
     await store.updateUser({ password })
     toast.success({ title: t('resetPassword.toast.success.title') })
-    navigateTo('/')
+    navigateTo(localePath('/'))
   } catch (err) {
     error.value = err.message
     toast.error({

@@ -10,8 +10,7 @@ useHead({ title: 'Encounters' })
 const toast = useToastStore()
 const store = useEncountersStore()
 const { t } = useI18n({ useScope: 'global' })
-const isCreatingEncounter = ref(false)
-const isCreatingCampaign = ref(false)
+const isOpen = ref(false)
 const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())
@@ -27,16 +26,7 @@ watch(error, v => {
     <div v-else-if="!store.error">
       <div class="py-5 flex justify-between items-center">
         <h1>{{ $t('encounters.encounters') }}</h1>
-        <Select
-          bold
-          :label="$t('actions.create')"
-          :options="[
-            { label: $t('encounters.encounter'), id: 'encounter' },
-            { label: $t('campaigns.campaign'), id: 'campaign' },
-          ]"
-          class="tracker-shadow-pulse"
-          @selected="v => (v === 'encounter' ? (isCreatingEncounter = true) : (isCreatingCampaign = true))"
-        />
+        <Button :label="$t('actions.create')" @click="isOpen = true" />
       </div>
       <div v-if="store.sortedEncounters">
         <div v-for="(group, index) in Object.values(store.sortedEncounters)" :key="index" class="space-y-4 pb-10">
@@ -49,14 +39,9 @@ watch(error, v => {
       <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4">
         <h2>{{ $t('encounters.noData.title') }}</h2>
         <p>{{ $t('encounters.noData.text') }}</p>
-        <Button :label="$t('encounters.add')" @click="isCreatingEncounter = true" />
+        <Button :label="$t('encounters.add')" @click="isOpen = true" />
       </div>
-      <AddEncounterModal
-        :open="isCreatingEncounter"
-        @close="isCreatingEncounter = false"
-        @added="isCreatingEncounter = false"
-      />
-      <AddCampaignModal :open="isCreatingCampaign" @close="isCreatingCampaign = false" />
+      <AddEncounterModal :open="isOpen" @close="isOpen = false" @added="isOpen = false"/>
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>

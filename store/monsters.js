@@ -26,19 +26,19 @@ export const useMonstersStore = defineStore('useMonstersStore', {
     },
     async addMonster(monster) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').insert([monster])
+      const { data, error } = await supabase.from('homebrew-monsters').insert([monster]).select('*')
       if (error) throw error
       else return data[0]
     },
     async deleteMonster(id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').delete().eq('id', id)
+      const { data, error } = await supabase.from('homebrew-monsters').delete().eq('id', id).select('*')
       if (error) throw error
       else return data
     },
     async updateMonster(monster, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').update(monster).eq('id', id)
+      const { data, error } = await supabase.from('homebrew-monsters').update(monster).eq('id', id).select('*')
       if (error) throw error
       else return data[0]
     },

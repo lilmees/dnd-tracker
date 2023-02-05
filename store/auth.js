@@ -15,16 +15,18 @@ export const useAuthStore = defineStore('useAuthStore', {
       else if (profileError) throw profileError
     },
     async login(credentials) {
+      const localePath = useLocalePath()
       const { auth } = useSupabaseClient()
       const { error } = await auth.signInWithPassword(credentials)
       if (error) throw error
-      else setTimeout(() => navigateTo('/'), 100)
+      else setTimeout(() => navigateTo(localePath('/')), 100)
     },
     async logout() {
+      const localePath = useLocalePath()
       const { auth } = useSupabaseAuthClient()
       const { error } = await auth.signOut()
       if (error) throw error
-      else setTimeout(() => navigateTo('/'), 100)
+      else setTimeout(() => navigateTo(localePath('/')), 100)
     },
     async forgotPassword(email) {
       const { auth } = useSupabaseAuthClient()

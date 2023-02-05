@@ -10,19 +10,19 @@ export const useNotesStore = defineStore('useNotesStore', {
     },
     async addNote(note) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('notes').insert([note])
+      const { data, error } = await supabase.from('notes').insert([note]).select('*')
       if (error) throw error
       else return data[0]
     },
     async deleteNote(id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('notes').delete().eq('id', id)
+      const { data, error } = await supabase.from('notes').delete().eq('id', id).select('*')
       if (error) throw error
       else return data
     },
     async updateNote(note, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('notes').update(note).eq('id', id)
+      const { data, error } = await supabase.from('notes').update(note).eq('id', id).select('*')
       if (error) throw error
       else return data[0]
     },

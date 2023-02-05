@@ -8,13 +8,6 @@ const props = defineProps({
 const form = ref({ title: '' })
 const same = computed(() => props.title === form.value.title)
 
-watch(
-  () => props.open,
-  v => {
-    if (v) form.value = { title: props.title }
-  }
-)
-
 function deleteConfirmation() {
   if (form.value.title.trim() !== props.title.trim()) return
   emit('delete')

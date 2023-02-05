@@ -8,6 +8,7 @@ import Add from '~/assets/icons/add.svg'
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
+const localePath = useLocalePath()
 const toast = useToastStore()
 const store = useCampaignsStore()
 const encountersStore = useEncountersStore()
@@ -24,7 +25,7 @@ onMounted(() => getCampaignInfo())
 async function getCampaignInfo() {
   try {
     campaign.value = await store.getCampaignById(route.params.id)
-    if (!campaign.value.admins.includes(user.value.id)) navigateTo('/campaigns')
+    if (!campaign.value.admins.includes(user.value.id)) navigateTo(localePath('/campaigns'))
     useHead({ title: campaign.value.title })
     encounters.value = await encountersStore.getEncountersByCampaign(campaign.value.id)
   } catch (err) {
