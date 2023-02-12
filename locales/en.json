@@ -195,10 +195,13 @@
     "collections": "Collections",
     "encounters": "Encounters",
     "campaigns": "Campaignes",
-    "profile": "Profile"
+    "profile": "Profile",
+    "pricing": "Pricing",
+    "play": "Play"
   },
   "profile": {
-    "password": "Update password"
+    "password": "Update password",
+    "update": "Update profile"
   },
   "account": {
     "general": {
@@ -265,5 +268,20 @@
     "none": "No monster added",
     "add": "Create monster",
     "update": "Update monster"
+  },
+  "pricing": {
+    "title": "Designed for the best dungeon masters, like you.",
+    "text": "Affordable Prices, Quality Service. At DND-TRACKER, we believe in delivering high-quality service at a fair price. Our pricing plans are designed to fit your needs and budget. Choose the best option for you and enjoy a seamless experience with us. Get in touch with us today to learn more.",
+    "starter": "Best option for getting to know the product. Best for dungeon masters with 1-3 running campaigns.",
+    "medior": "Best option for the dungeon master with multiple active campaigns running at the same time.",
+    "pro": "Best option for the professional dungeon masters and when you work with multiple DM's on the same campaigns.",
+    "encounters": "Encounters: {number}",
+    "campaigns": "Campaigns: {number}",
+    "multiple": "Multiple campaign admins",
+    "setup": "No setup, or hidden fees",
+    "update": "Updates: always free",
+    "month": "month",
+    "start": "Get started",
+    "current": "Current"
   }
 }

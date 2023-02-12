@@ -26,10 +26,7 @@ async function register({ __init, username, name, ...credentials }) {
     navigateTo(localePath('/login'))
   } catch (err) {
     error.value = err.message
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text'),
-    })
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isLoading.value = false
   }

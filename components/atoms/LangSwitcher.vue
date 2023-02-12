@@ -15,11 +15,6 @@ onMounted(() => {
   else setLang(router.currentRoute.value.fullPath.includes('/en/') ? 'en' : 'nl')
 })
 
-watch(
-  () => router.currentRoute.value.fullPath,
-  v => setLang(v.includes('/en/') ? 'en' : 'nl')
-)
-
 function setLang(lang) {
   cookieLang.value = lang
   locale.value = lang
