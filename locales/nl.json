@@ -195,7 +195,8 @@
     "collections": "Collecties",
     "encounters": "Encounters",
     "campaigns": "Campagnes",
-    "profile": "Profiel"
+    "profile": "Profiel",
+    "pricing": "Prijzen"
   },
   "profile": {
     "password": "Passwoord aanpassen",
@@ -265,5 +266,20 @@
     "none": "Geen monsters toegevoegd",
     "add": "Monster creëren",
     "update": "Monster bijwerken"
+  },
+  "pricing": {
+    "title": "Gemaakt voor de beste dungeon masters, zoals jij.",
+    "text": "Betaalbare prijzen, kwaliteitsservice. Bij DND-TRACKER geloven we in het leveren van hoogwaardige service tegen een eerlijke prijs. Onze prijsplannen zijn ontworpen om aan uw behoeften en budget te voldoen. Kies de beste optie voor u en geniet van een naadloze ervaring met ons. Neem vandaag nog contact met ons op voor meer informatie.",
+    "starter": "Beste optie om het product te leren kennen. Het beste voor dungeon masters met 1-3 lopende campagnes.",
+    "medior": "Beste optie voor de dungeon master met meerdere actieve campagnes tegelijk.",
+    "pro": "De beste optie voor de professionele dungeon masters en wanneer je met meerdere DM's aan dezelfde campagnes werkt.",
+    "encounters": "Encounters: {number}",
+    "campaigns": "Campagnes: {number}",
+    "multiple": "Meerdere campagne beheerders",
+    "setup": "Geen setup, of verborgen kosten",
+    "update": "Updates: altijd gratis",
+    "month": "maand",
+    "start": "Start nu",
+    "current": "Huidig"
   }
 }

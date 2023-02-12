@@ -7,7 +7,6 @@ definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
-const localePath = useLocalePath()
 const { t } = useI18n({ useScope: 'global' })
 
 const image = ref(profile.data?.avatar || null)
