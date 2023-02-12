@@ -30,10 +30,7 @@ async function logout() {
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text'),
-    })
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   }
 }
 </script>
@@ -58,7 +55,10 @@ async function logout() {
         <RouteLink :label="$t('navigation.register')" url="register" />
         <LangSwitcher />
       </template>
-      <NavigationDropdown v-else :routes="route.dropdownRoutes" @logout="logout" />
+      <template v-else>
+        <NavDropdown :routes="route.playRoutes" :label="$t('navigation.play')" />
+        <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
+      </template>
     </div>
 
     <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-primary" @click="isOpen = true" />
@@ -73,7 +73,7 @@ async function logout() {
       <NavbarPopup
         v-if="isOpen"
         :routes="visibleRoutes"
-        :dropDownRoutes="route.dropdownRoutes"
+        :dropDownRoutes="[...route.playRoutes, ...route.profileRoutes]"
         :loggedIn="user ? true : false"
         @logout="logout"
         @close="isOpen = false"
