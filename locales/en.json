@@ -62,6 +62,7 @@
     "amountLabel": "Amount",
     "summonerLabel": "Summoner",
     "textLabel": "Text",
+    "questionLabel": "Your question?",
     "nothing": "Nothing selected"
   },
   "campaigns": {
@@ -192,6 +193,7 @@
     "login": "Log in",
     "register": "Register",
     "home": "Home",
+    "contact": "Contact",
     "collections": "Collections",
     "encounters": "Encounters",
     "campaigns": "Campaignes",
@@ -283,5 +285,10 @@
     "month": "month",
     "start": "Get started",
     "current": "Current"
+  },
+  "contact": {
+    "title": "Love to hear from you, Get in touch 👋",
+    "send": "Send your question",
+    "success": "Contact email was successfully sent"
   }
 }

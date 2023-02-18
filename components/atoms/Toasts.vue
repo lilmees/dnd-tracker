@@ -33,10 +33,10 @@ const store = useToastStore()
             'text-info': toast.type === 'info',
           }"
         >
-          <Info v-if="toast.type === 'info'" class="icon pt-2" />
-          <Warn v-if="toast.type === 'warn'" class="icon pt-2" />
-          <Check v-if="toast.type === 'success'" class="icon pt-2" />
-          <Error v-if="toast.type === 'error'" class="icon pt-2" />
+          <Info v-if="toast.type === 'info'" class="icon" />
+          <Warn v-if="toast.type === 'warn'" class="icon" />
+          <Check v-if="toast.type === 'success'" class="icon" />
+          <Error v-if="toast.type === 'error'" class="icon" />
           <div class="grow">
             <h1 v-if="toast.title">
               {{ toast.title }}
@@ -45,7 +45,11 @@ const store = useToastStore()
               {{ toast.text }}
             </p>
           </div>
-          <Remove class="icon self-start text-danger cursor-pointer" @click="store.remove(toast.key)" />
+          <Remove
+            v-if="!toast.timed"
+            class="icon self-start text-danger cursor-pointer"
+            @click="store.remove(toast.key)"
+          />
         </div>
       </div>
     </TransitionGroup>

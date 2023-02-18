@@ -62,6 +62,7 @@
     "amountLabel": "Hoeveelheid",
     "summonerLabel": "Oproeper",
     "textLabel": "Tekst",
+    "questionLabel": "Je vraag?",
     "nothing": "Nog niets geselecteerd"
   },
   "campaigns": {
@@ -191,7 +192,8 @@
     "logout": "Uitloggen",
     "login": "Login",
     "register": "Registreer",
-    "home": "Thuis",
+    "home": "Home",
+    "contact": "Contact",
     "collections": "Collecties",
     "encounters": "Encounters",
     "campaigns": "Campagnes",
@@ -282,5 +284,10 @@
     "month": "maand",
     "start": "Start nu",
     "current": "Huidig"
+  },
+  "contact": {
+    "title": "Hoor graag van je, neem contact op 👋",
+    "send": "Verstuur je vraag",
+    "success": "Contact email is verstuurd"
   }
 }
