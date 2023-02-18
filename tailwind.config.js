@@ -9,6 +9,7 @@ export const theme = {
     fontFamily: {
       title: ['Lato', 'sans-serif'],
       text: ['Inter', 'sans-serif'],
+      logo: ['Logo', 'sans-serif'],
     },
     colors: {
       background: '#0e1315',

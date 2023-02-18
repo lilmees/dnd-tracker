@@ -21,14 +21,21 @@ function angle(cx, cy, ex, ey) {
 
 <template>
   <div id="heroContainer" class="relative" @mousemove="calculateEyes">
-    <div class="w-full h-[80vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden">
-      <Vue3Lottie animationLink="https://lottie.host/ec4c0970-aa71-48c4-ad7a-ec92d18703b2/IxnndcbWtB.json" />
+    <div class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden">
+      <NuxtImg
+        src="/background.webp"
+        alt="Background image"
+        sizes="sm:500px md:500px lg:500px"
+        class="w-full h-full object-cover"
+        format="webp"
+        provider="imagekit"
+      />
     </div>
-    <div class="absolute inset-0 flex flex-wrap justify-center items-center p-4 gap-x-20 container-max">
+    <div class="absolute inset-0 flex flex-col md:flex-row justify-center items-center p-4 md:gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
         <h1
           v-motion-slide-bottom
-          class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase"
+          class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
         >
           {{ $t('home.start') }}
         </h1>
