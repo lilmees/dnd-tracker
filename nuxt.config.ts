@@ -23,9 +23,19 @@ export default defineNuxtConfig({
     '@pinia/nuxt', 
     '@formkit/nuxt', 
     '@nuxtjs/i18n',
-    '@funken-studio/sitemap-nuxt-3',
     '@vueuse/motion/nuxt',
-    '@nuxt/image-edge'
+    '@nuxt/image-edge',
+    ['@funken-studio/sitemap-nuxt-3',
+    {
+      hostname: process.env.NUXT_PUBLIC_SITE_URL, 
+      cacheTime: 1,
+      generateOnBuild: true,
+      defaults: {
+        changefreq: 'daily',
+        priority: 1,
+        lastmod: new Date().toISOString(),
+      },
+    }]
   ],
   vite: {
     plugins: [svgLoader(), UnheadVite(),],
@@ -46,18 +56,8 @@ export default defineNuxtConfig({
       messages: { en, nl},
     },
   },
-  sitemap: {
-    hostname: 'https://dnd-tracker.com', 
-    cacheTime: 1,
-    generateOnBuild: true,
-    defaults: {
-      changefreq: 'daily',
-      priority: 1,
-      lastmod: new Date().toISOString(),
-    },
-  },
   schemaOrg: {
-    host: 'https://dnd-tracker.com',
+    host: process.env.NUXT_PUBLIC_SITE_URL,
   },
   image: {
     imagekit: {
