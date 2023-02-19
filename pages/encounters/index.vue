@@ -30,7 +30,7 @@ watch(error, v => {
       </div>
       <div v-if="store.sortedEncounters">
         <div v-for="(group, index) in Object.values(store.sortedEncounters)" :key="index" class="space-y-4 pb-10">
-          <CampaignHeader v-if="Object.keys(store.sortedEncounters)[index] !== '0'" :campaign="group[0].group" />
+          <CampaignHeader v-if="Object.keys(store.sortedEncounters)[index] !== '0'" :campaign="group[0].campaign" />
           <div class="flex flex-wrap gap-4">
             <EncounterCard v-for="encounter in group" :key="encounter.id" :encounter="encounter" />
           </div>
@@ -41,7 +41,7 @@ watch(error, v => {
         <p>{{ $t('encounters.noData.text') }}</p>
         <Button :label="$t('encounters.add')" @click="isOpen = true" />
       </div>
-      <AddEncounterModal :open="isOpen" @close="isOpen = false" @added="isOpen = false"/>
+      <AddEncounterModal :open="isOpen" @close="isOpen = false" @added="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>

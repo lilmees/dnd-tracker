@@ -1,7 +1,7 @@
 export const sortByTeam = encounters => {
   const groupObj = {}
   encounters.forEach(encounter => {
-    const key = encounter.group?.id || encounter.group
+    const key = encounter.campaign?.id || encounter.campaign
     if (groupObj[key || '0']) {
       const array = groupObj[key || '0']
       array.push(encounter)
