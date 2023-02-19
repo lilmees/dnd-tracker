@@ -12,6 +12,7 @@ const { t } = useI18n({ useScope: 'global' })
 const image = ref(profile.data?.avatar || null)
 const isUpdating = ref(false)
 const isLoading = ref(false)
+const needConfirmation = ref(false)
 const error = ref()
 const form = ref({
   email: profile.data?.email || '',
@@ -50,6 +51,19 @@ function randomAvatar() {
     .toString(36)
     .substring(7)}.svg?size=100`
 }
+
+async function deleteUser() {
+  try {
+    needConfirmation.value = false
+    isLoading.value = true
+    await profile.deleteProfile()
+  } catch (err) {
+    console.log('catched error: ', err)
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
 
 <template>
@@ -71,7 +85,16 @@ function randomAvatar() {
         <p>
           <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
         </p>
-        <Button :label="$t('profile.update')" @click="isUpdating = true" />
+        <div class="flex flex-wrap gap-x-4 gap-y-2">
+          <Button :label="$t('profile.update')" @click="isUpdating = true" :loading="isLoading" />
+          <Button :label="$t('profile.delete')" color="danger" @click="needConfirmation = true" :loading="isLoading" />
+        </div>
+        <ConfirmationModal
+          :open="needConfirmation"
+          :title="profile.data.username"
+          @close="needConfirmation = false"
+          @delete="deleteUser"
+        />
       </template>
       <template v-else>
         <h1 class="text-center">{{ $t('profile.update') }}</h1>

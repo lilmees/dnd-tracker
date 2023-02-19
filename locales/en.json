@@ -203,7 +203,8 @@
   },
   "profile": {
     "password": "Update password",
-    "update": "Update profile"
+    "update": "Update profile",
+    "delete": "Delete profile"
   },
   "account": {
     "general": {
@@ -219,7 +220,7 @@
   },
   "confirmation": {
     "title": "Delete confirmation",
-    "text": "If you are sure you want to delete {title}. Type {title} in the input field and press delete"
+    "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
   },
   "actions": {
     "add": "Add",

@@ -203,7 +203,8 @@
   },
   "profile": {
     "password": "Passwoord aanpassen",
-    "update": "Profiel bijwerken"
+    "update": "Profiel bijwerken",
+    "delete": "Profiel Verwijderen"
   },
   "account": {
     "general": {
@@ -219,7 +220,7 @@
   },
   "confirmation": {
     "title": "Verwijder bevestiging",
-    "text": "Ben je zeker dat je {title} wilt verwijderen. Type {title} in het invulveld en duw op verwijderen"
+    "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
   },
   "actions": {
     "add": "Toevoegen",

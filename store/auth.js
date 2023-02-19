@@ -5,8 +5,8 @@ export const useAuthStore = defineStore('useAuthStore', {
   actions: {
     async register(credentails, data) {
       const supabase = useSupabaseAuthClient()
-      const {auth} = useSupabaseClient()
-      const { error, data : userData } = await auth.signUp(credentails)
+      const { auth } = useSupabaseClient()
+      const { error, data: userData } = await auth.signUp(credentails)
       if (error) throw error
       const { error: profileError } = await supabase
         .from('profiles')
