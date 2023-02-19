@@ -5,10 +5,23 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
 const localePath = useLocalePath()
+const mail = useMail()
 
 const form = ref({ name: null, email: null, question: null })
 
-function submitted() {
+function sendContactMail(form) {
+  mail.send({
+    from: form.email,
+    subject: form.name ? `Contact/question mail from ${form.name}` : 'Contact/question mail',
+    html: `
+    <h1>New question/contact</h1>
+    <p>DATE: ${new Date()} </p>
+    <p>EMAIL: ${form.email} </p>
+    ${form.name ? `<p>NAME: ${form.name} </p>` : ''}
+    </br>
+    <p>${form.question} </p>
+    `,
+  })
   toast.success({ title: t('contact.success') })
   navigateTo(localePath('/'))
 }
@@ -20,19 +33,7 @@ function submitted() {
       <h1 class="max-w-[300px] pb-4">
         {{ $t('contact.title') }}
       </h1>
-      <FormKit
-        v-model="form"
-        type="form"
-        :actions="false"
-        message-class="error-message"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        name="contact-form"
-        method="post"
-        netlify
-        @submit="submitted"
-      >
-        <input type="hidden" name="form-name" value="contact-form" />
+      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="sendContactMail">
         <Input focus name="name" :label="$t('inputs.nameLabel')" validation="length:3,30|alpha_spaces" />
         <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
         <Input

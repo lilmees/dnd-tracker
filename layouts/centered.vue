@@ -7,7 +7,7 @@ const localePath = useLocalePath()
 <template>
   <div class="w-screen min-h-screen background relative">
     <div class="absolute inset-0 bg-black/80 cursor-pointer" @click="navigateTo(localePath('/'))" />
-    <div class="container absolute w-full max-w-xl -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+    <div class="container absolute w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
       <div class="bg-tracker px-2 py-6 sm:p-8 rounded-xl relative tracker-shadow">
         <NuxtLink :to="localePath('/')" class="group">
           <Remove
@@ -27,6 +27,7 @@ const localePath = useLocalePath()
   background: linear-gradient(-45deg, #9eade6, #b09ce5, #cede9c, #35a4cc);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+  backdrop-filter: blur(10px);
 }
 
 @keyframes gradient {

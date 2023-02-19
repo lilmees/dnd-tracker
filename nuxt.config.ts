@@ -35,7 +35,19 @@ export default defineNuxtConfig({
         priority: 1,
         lastmod: new Date().toISOString(),
       },
-    }]
+    }],
+    ['nuxt-mail', {
+      message: { 
+        to: 'jeremy@dnd-tracker.com' // default fallback 
+      },
+      smtp: { 
+        service: 'gmail',
+        auth: {
+          user: process.env.MAIL,
+          pass: process.env.MAIL_PASSWORD,
+        },
+      },
+    }],
   ],
   vite: {
     plugins: [svgLoader(), UnheadVite(),],

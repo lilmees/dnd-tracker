@@ -28,6 +28,7 @@
     "@unhead/addons": "^1.0.20",
     "@vueuse/motion": "^2.0.0-beta.25",
     "click-outside-vue3": "^4.0.1",
+    "nuxt-mail": "^3.1.5",
     "nuxt-security": "^0.10.0",
     "vite-svg-loader": "^3.6.0",
     "vue-tippy": "v6"
