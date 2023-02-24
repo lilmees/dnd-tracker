@@ -1,4 +1,6 @@
 <script setup>
+import { Power3, gsap } from 'gsap'
+
 const anchor = ref()
 const eyeLeft = ref()
 const eyeRight = ref()
@@ -17,15 +19,52 @@ function calculateEyes(e) {
 function angle(cx, cy, ex, ey) {
   return (Math.atan2(ey - cy, ex - cx) * 180) / Math.PI
 }
+
+onMounted(() => {
+  const wrapper = document.querySelector('[data-wrapper]')
+  const image = document.querySelector('[data-image]')
+  const container = document.querySelector('[data-container]')
+  const title = document.querySelector('[data-title]')
+  const dragon = document.querySelector('[data-dragon]')
+
+  gsap.from(wrapper, { duration: 1.5, scale: 1.5, x: '25vw', ease: Power3.easeOut})
+
+  gsap.to(image, {
+    scrollTrigger: {
+      trigger: container,
+      toggleActions: 'restart none none none',
+      start: 'top 5%',
+      end: 'bottom 0%',
+      scrub: 2,
+    },
+    scale: 1.3,
+  })
+
+  gsap.from(title, { duration: 0.6, delay: 0.2, y: 100, opacity: 0, ease: Power3.easeOut})
+
+  gsap.fromTo(dragon,
+    { y: '100%', scale: 0.5, opacity: 0.5},
+    { 
+      scrollTrigger: {trigger: container, toggleActions: "restart none none none", scrub: 2},
+      y: '-20%',
+      scale: 1,
+      opacity: 1
+    }
+  )
+})
 </script>
 
 <template>
-  <div id="heroContainer" class="relative" @mousemove="calculateEyes">
-    <div class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden">
+  <div data-container class="relative" @mousemove="calculateEyes">
+    <div 
+      data-wrapper
+      class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden"
+    >
       <NuxtImg
+        data-image
         src="/background.webp"
         alt="Background image"
-        sizes="sm:500px md:500px lg:500px"
+        sizes="sm:500px md:1000px lg:1500px"
         class="w-full h-full object-cover"
         format="webp"
         provider="imagekit"
@@ -34,16 +73,14 @@ function angle(cx, cy, ex, ey) {
     <div class="absolute inset-0 flex flex-col md:flex-row justify-center items-center p-4 md:gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
         <h1
-          v-motion-slide-bottom
+          data-title
           class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
         >
           {{ $t('home.start') }}
         </h1>
       </div>
       <div
-        v-motion
-        :initial="{ y: 10 }"
-        :enter="{ y: 0, transition: { repeat: Infinity, repeatType: 'mirror', duration: 1500 } }"
+        data-dragon
         class="max-w-[500px] relative"
       >
         <div ref="eyeLeft" class="absolute top-[55%] left-[55%] pt-1 sm:pt-2">

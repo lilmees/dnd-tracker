@@ -28,12 +28,9 @@ async function login({ __init, ...credentials }) {
     <section class="space-y-6">
       <h1 class="text-center">{{ $t('login.title') }}</h1>
       <NuxtImg
-        v-motion
-        :initial="{ y: 10 }"
-        :enter="{ y: 0, transition: { repeat: Infinity, repeatType: 'mirror', duration: 1500 } }"
         src="/classes.png"
         alt="D20 logo dice"
-        sizes="sm:200px md:200px lg:200px"
+        sizes="sm:250px md:250px lg:250px"
         format="webp"
         provider="imagekit"
         class="mx-auto visibility-pulse"

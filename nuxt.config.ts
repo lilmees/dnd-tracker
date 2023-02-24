@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt', 
     '@formkit/nuxt', 
     '@nuxtjs/i18n',
-    '@vueuse/motion/nuxt',
     '@nuxt/image-edge',
     ['@funken-studio/sitemap-nuxt-3',
     {
