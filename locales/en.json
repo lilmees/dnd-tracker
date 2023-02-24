@@ -9,21 +9,21 @@
     "demo": "This isn't available in the demo",
     "textBlock1": {
       "title": "Made with love 💜",
-      "text": "Here at dnd-tracker we are not of many words, but we let the product speak for itself. There are grand ideas to make it as comprehensive as possible. We started with the encounter tracker as the main idea, but more ideas were certainly added while it was in development.",
+      "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
       "button": "Go to the roadmap"
     },
     "summary": {
       "title": "Why choose dnd-tracker for your encounters 🤔",
       "item1": "Live updating between different devices",
-      "item2": "Continuously working to improve the product",
-      "item3": "Everything for the DM in 1 handy place",
+      "item2": "We are constantly working to optimize the product",
+      "item3": "Everything in 1 convenient place for the DM",
       "item4": "Integrated dice roller",
       "item5": "Plenty of information you can get your hands on",
       "item6": "Attractive dark mode design for all vampires among us"
     },
     "textBlock2": {
       "title": "Weird stuff 🐛",
-      "text": "Should you come across something strange on the website or the rules aren't 100% correct. Then don't hesitate to let us know. dnd-tracker is not a big company, but rather a group of friends who came up with this together. So if we have overlooked something, let us know and we will adjust it."
+      "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
     },
     "diceRoller": {
       "title": "Rollen maar",
