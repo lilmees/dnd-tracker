@@ -31,12 +31,12 @@ async function login({ __init, ...credentials }) {
         v-motion
         :initial="{ y: 10 }"
         :enter="{ y: 0, transition: { repeat: Infinity, repeatType: 'mirror', duration: 1500 } }"
-        src="/dice.webp"
+        src="/classes.png"
         alt="D20 logo dice"
-        sizes="sm:80px md:80px lg:80px"
+        sizes="sm:200px md:200px lg:200px"
         format="webp"
         provider="imagekit"
-        class="w-20 h-20 mx-auto visibility-pulse"
+        class="mx-auto visibility-pulse"
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="login">

@@ -33,7 +33,7 @@ function nextInitiative() {
     <div>
       <Hero />
       <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
-        <div class="container-max !mx-0 grid grid-cols-1 lg:grid-cols-2">
+        <div class="container grid grid-cols-1 lg:grid-cols-2">
           <TitleText
             :title="$t('home.textBlock1.title')"
             :text="$t('home.textBlock1.text')"
@@ -70,9 +70,17 @@ function nextInitiative() {
           />
           <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
         </div>
-        <div class="container-max !mx-0 grid grid-cols-1 md:grid-cols-2">
-          <TitleText :title="$t('home.diceRoller.title')" :text="$t('home.diceRoller.text')" />
-          <div v-motion-slide-visible-bottom class="mt-10 md:mt-0">
+        <div class="container flex justify-center items-center flex-wrap gap-x-20">
+          <NuxtImg
+            src="/hoard.png"
+            alt="Dragon on hoard"
+            sizes="sm:500px md:500px lg:500px"
+            class="-scale-x-100"
+            format="webp"
+            provider="imagekit"
+          />
+          <div v-motion-slide-visible-bottom class="pt-10">
+            <h2 class="pb-10 text-center">{{ $t('home.diceRoller.title') }}</h2>
             <HomeDiceRolling />
           </div>
         </div>
