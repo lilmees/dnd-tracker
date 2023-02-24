@@ -17,7 +17,7 @@ const isOpen = ref(false)
 const isLoading = ref(false)
 const players = ref()
 const selected = ref([])
-const id = computed(() => props.encounter.group?.id || props.encounter.group)
+const id = computed(() => props.encounter.campaign?.id || props.encounter.campaign)
 
 onMounted(async () => {
   if (id.value) players.value = await store.getPlayerByCampaignId(id.value)

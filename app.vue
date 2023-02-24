@@ -1,10 +1,15 @@
 <script setup>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useProfileStore } from '@/store/profile'
 import meta from '@/seo/meta.json'
 
 const appName = 'DND TRACKER'
 
 const i18nHead = useLocaleHead({ addDirAttribute: true, identifierAttribute: 'hid', addSeoAttributes: true })
+const localePath = useLocalePath()
+const profile = useProfileStore()
+const { auth } = useSupabaseAuthClient()
 
 useHead({
   titleTemplate: title => (title ? `${title} | ${appName}` : appName),
@@ -35,9 +40,10 @@ useSchemaOrg([
   defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' }),
 ])
 
-const localePath = useLocalePath()
-const profile = useProfileStore()
-const { auth } = useSupabaseAuthClient()
+if (process.client) {
+  gsap.registerPlugin(ScrollTrigger)
+  ScrollTrigger.getAll().forEach(t => t.kill())
+}
 
 auth.onAuthStateChange(async (event, session) => {
   profile.fetch()

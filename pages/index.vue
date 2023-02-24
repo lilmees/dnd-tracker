@@ -1,10 +1,24 @@
 <script setup>
 import { useEncountersStore } from '@/store/encounters'
+import { useElementVisibility } from '@vueuse/core'
+import { gsap } from 'gsap'
 
 const store = useEncountersStore()
 const encounter = ref()
+const elTable = ref()
+const elDice = ref()
+const TableIsVisible = useElementVisibility(elTable)
+const DiceIsVisible = useElementVisibility(elDice)
 
 onMounted(() => getEncounter())
+
+watch(TableIsVisible, v => {
+  if(v) gsap.fromTo(elTable.value, { y: 100 }, { y: 0 })
+})
+
+watch(DiceIsVisible, v => {
+  if(v) gsap.fromTo(elDice.value, { y: 100 }, { y: 0 })
+})
 
 async function getEncounter() {
   try {
@@ -33,14 +47,14 @@ function nextInitiative() {
     <div>
       <Hero />
       <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
-        <div class="container-max !mx-0 grid grid-cols-1 lg:grid-cols-2">
+        <div class="container grid gap-10 lg:grid-cols-2">
           <TitleText
             :title="$t('home.textBlock1.title')"
             :text="$t('home.textBlock1.text')"
             buttonLink="roadmap"
             :buttonLabel="'Go to the roadmap'"
           />
-          <div class="mt-20 lg:mt-32 flex justify-end">
+          <div class="mt-20 lg:mt-32 flex md:justify-end">
             <Summary
               :title="$t('home.summary.title')"
               :items="[
@@ -54,7 +68,7 @@ function nextInitiative() {
             />
           </div>
         </div>
-        <div v-if="encounter" v-motion-slide-visible-bottom class="rounded-xl px-4 bg-tracker tracker-shadow">
+        <div v-if="encounter" ref="elTable" class="rounded-xl px-4 bg-tracker tracker-shadow">
           <EncounterHeader
             class="w-full pb-4"
             :round="encounter.round"
@@ -70,9 +84,17 @@ function nextInitiative() {
           />
           <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
         </div>
-        <div class="container-max !mx-0 grid grid-cols-1 md:grid-cols-2">
-          <TitleText :title="$t('home.diceRoller.title')" :text="$t('home.diceRoller.text')" />
-          <div v-motion-slide-visible-bottom class="mt-10 md:mt-0">
+        <div class="container flex justify-center items-center flex-wrap gap-x-20">
+          <NuxtImg
+            src="/hoard.png"
+            alt="Dragon on hoard"
+            sizes="sm:500px md:500px lg:500px"
+            class="-scale-x-100"
+            format="webp"
+            provider="imagekit"
+          />
+          <div ref="elDice" class="pt-10">
+            <h2 class="pb-10 text-center">{{ $t('home.diceRoller.title') }}</h2>
             <HomeDiceRolling />
           </div>
         </div>

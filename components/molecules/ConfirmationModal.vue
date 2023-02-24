@@ -17,8 +17,8 @@ function deleteConfirmation() {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <div class="text-white space-y-4">
-      <h2>{{ $t('confirmation.title') }}</h2>
-      <p class="font-bold text-danger pb-4">{{ $t('confirmation.text', { title }) }}</p>
+      <h2 class="text-danger">{{ $t('confirmation.title') }}</h2>
+      <p class="pb-4">{{ $t('confirmation.text', { title }) }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="deleteConfirmation">
         <Input
           focus

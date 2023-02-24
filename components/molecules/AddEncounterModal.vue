@@ -16,10 +16,10 @@ const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
 
-const form = ref({ title: null, group: null, background: '#0073A1' })
+const form = ref({ title: null, campaign: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
-const campaign = ref()
+const chosenCampaign = ref()
 
 onMounted(() => {
   if (!props.campaignId) campaigns.fetch()
@@ -28,7 +28,7 @@ onMounted(() => {
 watch(
   () => props.open,
   v => {
-    if (!v) campaign.value = null
+    if (!v) chosenCampaign.value = null
   }
 )
 
@@ -49,10 +49,11 @@ async function addEncounter({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    let group = props.campaignId || (campaign.value && campaign.value.id !== 'none' ? campaign.value.id : null)
+    let campaign =
+      props.campaignId || (chosenCampaign.value && chosenCampaign.value.id !== 'none' ? chosenCampaign.value.id : null)
     const encounter = await store.addEncounter({
       ...formData,
-      group,
+      campaign,
       round: 1,
       rows: [],
       created_by: user.value.id,
@@ -70,7 +71,7 @@ async function addEncounter({ __init, ...formData }) {
 
 function selectedCampaign(id) {
   const filtered = campaignOptions.value.filter(c => c.id === id && c.id !== 'none')
-  campaign.value = filtered[0] || null
+  chosenCampaign.value = filtered[0] || null
 }
 </script>
 
@@ -90,7 +91,7 @@ function selectedCampaign(id) {
       <Select
         v-if="!campaignId"
         :inputLabel="$t('inputs.campaignLabel')"
-        :label="campaign?.label || $t('campaigns.no')"
+        :label="chosenCampaign?.label || $t('campaigns.no')"
         bold
         :options="campaignOptions"
         @selected="selectedCampaign"

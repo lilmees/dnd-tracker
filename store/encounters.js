@@ -31,7 +31,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
         this.error = null
         const { data, error } = await supabase
           .from('initiative-sheets')
-          .select('*, profiles(id, name, username, avatar),group(id, title, background, color)')
+          .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
         if (error) throw error
         if (data) this.data = data
       } catch (error) {
@@ -51,7 +51,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
       const supabase = useSupabaseClient()
       const { data, error } = await supabase
         .from('initiative-sheets')
-        .select('*, profiles(id, name, username, avatar),group(id, title, background, color)')
+        .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
         .eq('id', id)
         .single()
       if (error) throw error
@@ -62,7 +62,7 @@ export const useEncountersStore = defineStore('useEncountersStore', {
       const { data, error } = await supabase
         .from('initiative-sheets')
         .select('*, profiles(id, name, username, avatar)')
-        .eq('group', `${campaign}`)
+        .eq('campaign', `${campaign}`)
       if (error) throw error
       else return data
     },
@@ -88,7 +88,11 @@ export const useEncountersStore = defineStore('useEncountersStore', {
     },
     async deleteEncounterByCampaign(campaign) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('initiative-sheets').delete().eq('group', `${campaign}`).select('*')
+      const { data, error } = await supabase
+        .from('initiative-sheets')
+        .delete()
+        .eq('campaign', `${campaign}`)
+        .select('*')
       if (error) throw error
       else return data
     },

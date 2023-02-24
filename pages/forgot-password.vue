@@ -40,10 +40,10 @@ async function forgotPassword({ __init, email }) {
       <NuxtImg
         src="/dice.webp"
         alt="D20 logo dice"
-        sizes="sm:40px md:40px lg:40px"
+        sizes="sm:80px md:80px lg:80px"
         format="webp"
         provider="imagekit"
-        class="w-10 h-10 mx-auto visibility-pulse"
+        class="w-20 h-20 mx-auto visibility-pulse"
       />
       <p v-if="error" class="text-danger text-center">{{ error }}</p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="forgotPassword">

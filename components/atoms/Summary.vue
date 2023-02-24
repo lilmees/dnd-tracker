@@ -1,12 +1,22 @@
 <script setup>
+import { useElementVisibility } from '@vueuse/core'
+import { gsap } from 'gsap'
+
 defineProps({
   title: { type: String },
   items: { type: Array },
 })
+
+const el = ref()
+const isVisible = useElementVisibility(el)
+
+watch(isVisible, v => {
+  if(v) gsap.fromTo(el.value, { y: 100 }, { y: 0 })
+})
 </script>
 
 <template>
-  <div v-motion-slide-bottom>
+  <div ref="el">
     <h2 v-if="title" class="pb-4">{{ title }}</h2>
     <div v-if="items.length" class="flex flex-col gap-4">
       <div v-for="item in items" :key="item" class="flex items-center gap-4">

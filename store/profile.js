@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useAuthStore } from '@/store/auth'
 
 export const useProfileStore = defineStore('useProfileStore', {
   state: () => ({
@@ -10,13 +11,19 @@ export const useProfileStore = defineStore('useProfileStore', {
     async fetch() {
       const supabase = useSupabaseClient()
       const user = useSupabaseUser()
+      const auth = useAuthStore()
       try {
-        if (!user.value) return
-        this.error = null
-        this.loading = true
-        const { data, error } = await supabase.from('profiles').select('*').eq('id', user.value.id).single()
-        if (error) this.error = error
-        if (data) this.data = data
+        if (!user.value) this.data = null
+        else {
+          this.error = null
+          this.loading = true
+          const { data, error } = await supabase.from('profiles').select('*').eq('id', user.value.id).single()
+          if (error) {
+            if (error.details.includes('Results contain 0 rows')) await auth.logout()
+            else this.error = error
+          }
+          if (data) this.data = data
+        }
       } catch (error) {
         this.error = error
       } finally {
@@ -36,6 +43,22 @@ export const useProfileStore = defineStore('useProfileStore', {
         .select('*')
       if (profileError) throw profileError
       else this.fetch()
+    },
+    async deleteProfile() {
+      const user = useSupabaseUser()
+      const supabase = useSupabaseClient()
+      const auth = useAuthStore()
+      const id = user.value.id
+      // logout user
+      await auth.logout()
+      // delete user profile and data with cascade delete
+      const { error } = await supabase.from('profiles').delete().eq('id', id)
+      if (error) throw error
+      // delete user auth profile
+      const { data, error: fetchError } = await useFetch('/api/user/remove', { method: 'POST', body: { id } })
+      if (data.value?.error) throw data.value.error
+      if (fetchError.value) throw fetchError.value
+      this.data = null
     },
   },
 })

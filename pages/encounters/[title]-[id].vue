@@ -46,7 +46,7 @@ async function getEncounter() {
     if (!encounter.value.admins.includes(user.value.id)) navigateTo(localePath('/encounters'))
     useHead({ title: encounter.value.title })
   } catch (err) {
-    toast.error({title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isPending.value = false
   }
@@ -55,9 +55,9 @@ async function getEncounter() {
 async function subscribeEncounterChanges() {
   supabase
     .channel('initiative-sheets-updates')
-    .on('postgres_changes',  { event: '*', schema: 'public', table: 'initiative-sheets' }, payload => {
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'initiative-sheets' }, payload => {
       if (payload.eventType === 'DELETE') {
-        toast.info({title: t('encounter.toast.removed.title'),text: t('encounter.toast.removed.text')})
+        toast.info({ title: t('encounter.toast.removed.title'), text: t('encounter.toast.removed.text') })
         navigateTo(localePath('/encounters'))
       } else {
         encounter.value = payload.new
@@ -89,7 +89,7 @@ function updateRows(rows) {
 
 async function saveUpdate() {
   const { profiles, created_at, created_by, ...enc } = encounter.value
-  if (typeof enc.group === 'object') enc.group = enc.group.id
+  if (typeof enc.campaign === 'object') enc.campaign = enc.campaign.id
   await supabase.from('initiative-sheets').update(enc).eq('id', encounter.value.id)
 }
 </script>
