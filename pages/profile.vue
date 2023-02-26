@@ -2,11 +2,13 @@
 import { useProfileStore } from '@/store/profile'
 import { useI18n } from 'vue-i18n'
 import { useToastStore } from '@/store/toast'
+import { useStripeStore} from '@/store/stripe'
 
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
+const stripe = useStripeStore()
 const { t } = useI18n({ useScope: 'global' })
 
 const image = ref(profile.data?.avatar || null)
@@ -36,7 +38,7 @@ async function updateProfile({ __init, username, name, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true
-    await profile.updateProfile(credentials, { username, name, avatar: image.value, role: 'User' })
+    await profile.updateCredentialsProfile(credentials, { username, name, avatar: image.value, role: 'User' })
     isUpdating.value = false
   } catch (err) {
     error.value = err.message
@@ -58,7 +60,17 @@ async function deleteUser() {
     isLoading.value = true
     await profile.deleteProfile()
   } catch (err) {
-    console.log('catched error: ', err)
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  } finally {
+    isLoading.value = false
+  }
+}
+
+async function manageSubscription(){
+  try {
+    isLoading.value = true
+    await stripe.createPortalSession(profile.data.stripe_session_id)
+  } catch (err) {
     toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isLoading.value = false
@@ -86,6 +98,13 @@ async function deleteUser() {
           <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
         </p>
         <div class="flex flex-wrap gap-x-4 gap-y-2">
+          <Button
+            v-if="profile.data.stripe_session_id"
+            :label="$t('profile.subscription')" 
+            :loading="isLoading" 
+            color="primary" 
+            @click="manageSubscription" 
+          />
           <Button :label="$t('profile.update')" @click="isUpdating = true" :loading="isLoading" />
           <Button :label="$t('profile.delete')" color="danger" @click="needConfirmation = true" :loading="isLoading" />
         </div>
