@@ -13,5 +13,5 @@ export default defineEventHandler(async event => {
     return_url: config.public.appDomain,
   })
 
-  await sendRedirect(event, portalSession.url)
+  return { url: portalSession.url }
 })

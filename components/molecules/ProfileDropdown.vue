@@ -1,15 +1,29 @@
 <script setup>
 import { useProfileStore } from '@/store/profile'
+import { useStripeStore} from '@/store/stripe'
+import { useToastStore } from '@/store/toast'
 
 defineEmits(['logout'])
 defineProps({ routes: { type: Array, required: true } })
 
 const profile = useProfileStore()
+const stripe = useStripeStore()
+const toast = useToastStore()
 const user = useSupabaseUser()
+const { t } = useI18n({ useScope: 'global' })
 
 const isOpen = ref(false)
 
 onBeforeMount(() => profile.fetch())
+
+async function manageSubscription(){
+  try {
+    isOpen.value = false
+    await stripe.createPortalSession(profile.data.stripe_session_id)
+  } catch (err) {
+    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  } 
+}
 </script>
 
 <template>
@@ -37,7 +51,7 @@ onBeforeMount(() => profile.fetch())
         format="webp"
       />
     </button>
-    <div class="absolute z-[1] block w-max right-0" :class="{ 'invisble top-[-200px]': !isOpen }">
+    <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div
         class="bg-tracker flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b rounded-tl box-border text-slate-300"
       >
@@ -48,18 +62,28 @@ onBeforeMount(() => profile.fetch())
           :url="route.url"
           @click="isOpen = false"
         />
-        <button
-          v-if="user"
-          class="text-danger hover:text-white cursor-pointer max-w-max font-bold"
-          @click="
-            () => {
-              isOpen = false
-              $emit('logout')
-            }
-          "
-        >
-          {{ $t('navigation.logout') }}
-        </button>
+        <template v-if="user">
+          <ClientOnly>
+            <button
+              v-if="profile?.data?.stripe_session_id"
+              class="text-slate-300 hover:text-white max-w-max font-bold"
+              @click="manageSubscription"
+            >
+              {{ $t('navigation.subscription') }}
+            </button>
+          </ClientOnly>
+          <button
+            class="text-danger hover:text-white max-w-max font-bold"
+            @click="
+              () => {
+                isOpen = false
+                $emit('logout')
+              }
+            "
+          >
+            {{ $t('navigation.logout') }}
+          </button>
+        </template>
         <LangSwitcher class="pt-4" @click="isOpen = false" />
       </div>
     </div>

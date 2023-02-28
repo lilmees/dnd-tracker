@@ -199,11 +199,11 @@
     "campaigns": "Campagnes",
     "profile": "Profiel",
     "pricing": "Prijzen",
-    "play": "Spelen"
+    "play": "Spelen",
+    "subscription": "Abonnement"
   },
   "profile": {
     "password": "Passwoord aanpassen",
-    "subscription": "Subscription bijwerken",
     "update": "Profiel bijwerken",
     "delete": "Profiel Verwijderen"
   },

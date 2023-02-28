@@ -199,11 +199,11 @@
     "campaigns": "Campaignes",
     "profile": "Profile",
     "pricing": "Pricing",
-    "play": "Play"
+    "play": "Play",
+    "subscription": "Subscription"
   },
   "profile": {
     "password": "Update password",
-    "subscription": "Manage subscription",
     "update": "Update profile",
     "delete": "Delete profile"
   },

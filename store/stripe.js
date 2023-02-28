@@ -22,7 +22,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
       method: 'POST',
       body: { session_id: id }
     })
-    console.log(data)
+    navigateTo(data.value.url, { external: true })
   }
 
   const products = ref([
