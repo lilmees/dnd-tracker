@@ -1,28 +1,30 @@
 <script setup>
-import { useEncountersStore } from '@/store/encounters'
 import { useElementVisibility } from '@vueuse/core'
-import { gsap } from 'gsap'
+import { useEncountersStore } from '@/store/encounters'
+import { Power3, gsap } from 'gsap'
 
 const store = useEncountersStore()
+
 const encounter = ref()
-const elTable = ref()
-const elDice = ref()
-const TableIsVisible = useElementVisibility(elTable)
-const DiceIsVisible = useElementVisibility(elDice)
+const hoard = ref()
+const table = ref()
+const hoardVisible = useElementVisibility(hoard)
+const tableVisible = useElementVisibility(table)
 
 onMounted(() => getEncounter())
 
-watch(TableIsVisible, v => {
-  if(v) gsap.fromTo(elTable.value, { y: 100 }, { y: 0 })
+watch(hoardVisible, v => {
+  if(v) gsap.fromTo(hoard.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
 })
 
-watch(DiceIsVisible, v => {
-  if(v) gsap.fromTo(elDice.value, { y: 100 }, { y: 0 })
+watch(tableVisible, v => {
+  if(v) gsap.fromTo(table.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
 })
+
 
 async function getEncounter() {
   try {
-    encounter.value = await store.getSandboxEncounter()
+    encounter.value = await store.getSandboxEncounter()      
   } catch (err) {
     console.error(err)
   }
@@ -68,7 +70,7 @@ function nextInitiative() {
             />
           </div>
         </div>
-        <div v-if="encounter" ref="elTable" class="rounded-xl px-4 bg-tracker tracker-shadow">
+        <div v-if="encounter" ref="table" class="rounded-xl px-4 py-2 bg-tracker tracker-shadow">
           <EncounterHeader
             class="w-full pb-4"
             :round="encounter.round"
@@ -84,21 +86,20 @@ function nextInitiative() {
           />
           <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
         </div>
-        <div class="container flex justify-center items-center flex-wrap gap-x-20">
+        <div ref="hoard" class="container flex justify-center items-center flex-wrap gap-x-10">
+        <div class="pt-10">
+          <h2 class="pb-10 text-center">{{ $t('home.diceRoller.title') }}</h2>
+          <HomeDiceRolling />
+        </div>
           <NuxtImg
-            src="/hoard.png"
+            src="/dragon_hoard.webp"
             alt="Dragon on hoard"
             sizes="sm:500px md:500px lg:500px"
-            class="-scale-x-100"
             format="webp"
             provider="imagekit"
           />
-          <div ref="elDice" class="pt-10">
-            <h2 class="pb-10 text-center">{{ $t('home.diceRoller.title') }}</h2>
-            <HomeDiceRolling />
-          </div>
         </div>
-        <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
+        <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')"/>
       </div>
     </div>
   </NuxtLayout>
