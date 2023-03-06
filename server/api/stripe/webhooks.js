@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
   const subscription = body.data.object
   const typeId = subscription.items.data[0].plan.id
   let productName
-  const stripeData = {
+  let stripeData = {
     stripe_last_event: body.created,
     stripe_status: subscription.status,
     stripe_trail_ends_at: subscription.trail_end,
