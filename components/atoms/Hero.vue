@@ -83,15 +83,15 @@ onMounted(() => {
         data-dragon
         class="max-w-[500px] relative"
       >
-        <div ref="eyeLeft" class="absolute top-[55%] left-[55%] pt-1 sm:pt-2">
+        <div ref="eyeLeft" class="absolute top-[55%] left-[54%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
-        <div ref="eyeRight" class="absolute top-[54%] right-[60%] pt-1 sm:pt-2">
+        <div ref="eyeRight" class="absolute top-[55%] right-[61%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
         <div ref="anchor">
           <NuxtImg
-            src="/draakje.webp"
+            src="/dragon.webp"
             alt="Hero image"
             sizes="sm:500px md:500px lg:500px"
             class="w-full h-full object-cover"

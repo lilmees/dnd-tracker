@@ -48,8 +48,19 @@ export default defineNuxtConfig({
       },
     }],
   ],
+  runtimeConfig: {
+    public : {
+      appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
+      stripePk: process.env.STRIPE_PK,
+      stripeMediorMonthly : process.env.STRIPE_MEDIOR_MONTHLY,
+      stripeMediorYearly : process.env.STRIPE_MEDIOR_YEARLY,
+      stripeProMonthly : process.env.STRIPE_PRO_MONTHLY,
+      stripeProYearly : process.env.STRIPE_PRO_YEARLY,
+    },
+    stripeSk: process.env.STRIPE_SK
+  },
   vite: {
-    plugins: [svgLoader(), UnheadVite(),],
+    plugins: [svgLoader(), UnheadVite()],
   },
   formkit: {
     configFile: './formkit.config.ts',

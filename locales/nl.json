@@ -199,7 +199,8 @@
     "campaigns": "Campagnes",
     "profile": "Profiel",
     "pricing": "Prijzen",
-    "play": "Spelen"
+    "play": "Spelen",
+    "subscription": "Abonnement"
   },
   "profile": {
     "password": "Passwoord aanpassen",
@@ -283,6 +284,7 @@
     "setup": "Geen setup, of verborgen kosten",
     "update": "Updates: altijd gratis",
     "month": "maand",
+    "year": "jaar",
     "start": "Start nu",
     "current": "Huidig"
   },

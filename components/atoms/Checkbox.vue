@@ -1,4 +1,5 @@
 <script setup>
+defineEmits(['update:modelValue'])
 defineProps({
   label: { type: String, required: true },
   modelValue: { type: Boolean },
@@ -21,10 +22,11 @@ defineProps({
       :name="name"
       :help="help"
       :validation="validation"
-      input-class="w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent"
+      input-class="w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer"
       help-class="help-message"
       message-class="error-message"
       :disabled="disabled"
+      @input="$emit('update:modelValue', $event)"
     />
   </div>
 </template>

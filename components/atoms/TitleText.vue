@@ -1,6 +1,6 @@
 <script setup>
 import { useElementVisibility } from '@vueuse/core'
-import { gsap } from 'gsap'
+import { gsap, Power3 } from 'gsap'
 
 defineProps({
   title: { type: String },
@@ -16,7 +16,7 @@ const el = ref()
 const isVisible = useElementVisibility(el)
 
 watch(isVisible, v => {
-  if(v) gsap.fromTo(el.value, { y: 100 }, { y: 0 })
+  if(v) gsap.fromTo(el.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
 })
 </script>
 

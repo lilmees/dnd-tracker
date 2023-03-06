@@ -199,7 +199,8 @@
     "campaigns": "Campaignes",
     "profile": "Profile",
     "pricing": "Pricing",
-    "play": "Play"
+    "play": "Play",
+    "subscription": "Subscription"
   },
   "profile": {
     "password": "Update password",
@@ -284,6 +285,7 @@
     "setup": "No setup, or hidden fees",
     "update": "Updates: always free",
     "month": "month",
+    "year": "year",
     "start": "Get started",
     "current": "Current"
   },

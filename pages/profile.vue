@@ -36,7 +36,7 @@ async function updateProfile({ __init, username, name, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true
-    await profile.updateProfile(credentials, { username, name, avatar: image.value, role: 'User' })
+    await profile.updateCredentialsProfile(credentials, { username, name, avatar: image.value, role: 'User' })
     isUpdating.value = false
   } catch (err) {
     error.value = err.message
@@ -58,7 +58,6 @@ async function deleteUser() {
     isLoading.value = true
     await profile.deleteProfile()
   } catch (err) {
-    console.log('catched error: ', err)
     toast.error({ title: t('error.general.title'), text: t('error.general.text') })
   } finally {
     isLoading.value = false
