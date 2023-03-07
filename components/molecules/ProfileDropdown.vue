@@ -29,12 +29,21 @@ async function manageSubscription(){
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="bg-tracker p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer"
+      class="bg-tracker p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
+    <ClientOnly>
       <NuxtImg
-        v-if="!profile.data?.avatar"
+        v-if="profile.data?.avatar"
+        :src="profile.data.avatar"
+        alt="Avatar image"
+        sizes="sm:40px md:40px lg:40px"
+        class="w-10 -scale-x-100 relative bottom-1"
+        format="webp"
+      />
+      <NuxtImg
+        v-else
         src="/dice.webp"
         alt="D20 dice"
         sizes="sm:40px md:40px lg:40px"
@@ -42,14 +51,7 @@ async function manageSubscription(){
         format="webp"
         provider="imagekit"
       />
-      <NuxtImg
-        v-else
-        :src="profile.data.avatar"
-        alt="Avatar image"
-        sizes="sm:40px md:40px lg:40px"
-        class="w-10 -scale-x-100 relative bottom-1"
-        format="webp"
-      />
+    </ClientOnly>
     </button>
     <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div
