@@ -87,7 +87,6 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (key === 'health' || key === 'ac') row[`max${key.charAt(0).toUpperCase() + key.slice(1)}`] = value
 
     if (key === 'initiative') {
-      console.log(value)
       const calculatedIndex = calculateRowIndex(rows, value)
       rows[index].initiative = value
       rows[index].index = calculatedIndex

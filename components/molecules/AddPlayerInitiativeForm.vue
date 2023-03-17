@@ -25,7 +25,6 @@ async function addInitiative({ __init, ...formData }) {
   try {
     isLoading.value = true
     const row = createRowObject(formData, props.type, store.encounter.rows)
-    console.log(row, store.encounter.rows.includes('[') ? [row] : [...store.encounter.rows, row])
     await store.encounterUpdate({ 
       rows: store.encounter.rows.includes('[') ? [row] : [...store.encounter.rows, row]
     })
