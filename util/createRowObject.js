@@ -8,7 +8,7 @@ export const createRowObject = (formData, type, encounters) => {
   const index = calculateRowIndex(encounters, initiative)
   const id = Date.now() + Math.floor(Math.random() * 100)
 
-  let row = { ...formData, id, conditions: [], curses: [], type, index, initiative }
+  let row = { ...formData, id, conditions: [], type, index, initiative: initiative || -1, note: '' }
 
   if (type !== 'lair') {
     row = { ...row, health, ac, maxHealth: health, maxAc: ac, tempHealth: 0, tempAc: 0, concentration: false }

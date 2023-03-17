@@ -1,14 +1,11 @@
 <script setup>
 const emit = defineEmits(['update'])
-const props = defineProps({
-  conditions: { type: Array, default: [] },
-  curses: { type: Array, default: [] },
-})
+const props = defineProps({ conditions: { type: Array, default: [] }})
 
 const info = ref()
 
-function removeEffect(id, effectType) {
-  emit('update', { value: props[effectType].filter(s => s.id !== id), type: effectType })
+function removeEffect(id, type) {
+  emit('update', { value: props.conditions.filter(s => s.id !== id), type })
 }
 </script>
 
@@ -21,14 +18,6 @@ function removeEffect(id, effectType) {
         :key="condition"
         :condition="condition"
         @remove="removeEffect($event, 'conditions')"
-        @info="info = $event"
-      />
-      <Tag
-        removable
-        v-for="curse in curses"
-        :key="curse"
-        :condition="curse"
-        @remove="removeEffect($event, 'curses')"
         @info="info = $event"
       />
     </div>

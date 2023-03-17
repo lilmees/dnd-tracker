@@ -1,45 +1,46 @@
 <script setup>
+import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
+import { useTableStore } from '@/store/table'
 import { rollD20 } from '@/util/rollDice'
 import Update from '@/assets/icons/update.svg'
 import ArrowDown from '@/assets/icons/arrow-down.svg'
 import ArrowUp from '@/assets/icons/arrow-up.svg'
 
-const emit = defineEmits(['update', 'index'])
+const emit = defineEmits(['update'])
 const props = defineProps({
   initiative: { type: [Number, null], required: true },
   index: { type: Number, required: true },
-  rows: { type: Array, required: true },
 })
 
+const store = useTableStore()
+
 const isOpen = ref(false)
-const form = ref({ name: null })
+const form = ref({ initiative: null })
 
 function diceRoll() {
   form.value.initiative = rollD20()
 }
 
 function updateInitiative({ __init, initiative }) {
-  emit('update', Number(initiative))
+  emit('update', Number(initiative) || -1)
   isOpen.value = false
 }
 
-function moveRow(up) {
-  const lowestIndex = props.rows.findIndex(r => r.index === props.index)
+async function moveRow(up) {
+  const rows = store.encounter.rows
+  const lowestIndex = rows.findIndex(r => r.index === props.index)
   if (up) {
-    props.rows[lowestIndex].index = lowestIndex - 1
-    props.rows[lowestIndex - 1].index = lowestIndex
+    rows[lowestIndex].index = lowestIndex - 1
+    rows[lowestIndex - 1].index = lowestIndex
     // update the follwing indexes
-    for (let i = lowestIndex + 1; i < props.rows.length; i++) {
-      props.rows[i].index = i
+    for (let i = lowestIndex + 1; i < rows.length; i++) {
+      rows[i].index = i
     }
   } else {
-    props.rows[lowestIndex].index = lowestIndex + 1
-    props.rows[lowestIndex + 1].index = lowestIndex
+    rows[lowestIndex].index = lowestIndex + 1
+    rows[lowestIndex + 1].index = lowestIndex
   }
-  emit(
-    'index',
-    props.rows.sort((a, b) => a.index - b.index)
-  )
+  await store.encounterUpdate({ rows : rows.sort((a, b) => a.index - b.index) })
 }
 </script>
 
@@ -47,7 +48,7 @@ function moveRow(up) {
   <div>
     <div class="flex justify-between gap-2">
       <div class="flex gap-2 items-center">
-        <p v-if="initiative" class="peer cursor-pointer" @click="isOpen = true">
+        <p v-if="initiative >= 0" class="peer cursor-pointer" @click="isOpen = true">
           {{ initiative }}
         </p>
         <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
@@ -60,12 +61,12 @@ function moveRow(up) {
       </div>
       <div v-if="initiative" class="flex gap-2 items-center">
         <ArrowDown
-          v-if="rows.length !== index + 1 && rows[index + 1].initiative === initiative"
+          v-if="store.encounter.rows.length !== index + 1 && store.encounter.rows[index + 1].initiative === initiative"
           class="w-4 h-4 cursor-pointer text-primary"
           @click="moveRow(false)"
         />
         <ArrowUp
-          v-if="index > 0 && rows[index - 1]?.initiative === initiative"
+          v-if="index > 0 && store.encounter.rows[index - 1]?.initiative === initiative"
           class="w-4 h-4 cursor-pointer text-primary"
           @click="moveRow(true)"
         />
