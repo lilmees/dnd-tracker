@@ -1,17 +1,10 @@
 <script setup>
-import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
+import { useTableStore } from '@/store/table'
 import { useI18n } from 'vue-i18n'
 
-const emit = defineEmits(['update'])
-const props = defineProps({
-  rows: { type: Array, required: true },
-  activeIndex: { type: Number, required: true },
-  showcase: { type: Boolean, default: false },
-})
-
+const store = useTableStore()
 const { t } = useI18n({ useScope: 'global' })
-const includesSummond = computed(() => !!props.rows.flat().filter(r => r.summoner).length)
-const sorted = computed(() => props.rows.sort((a, b) => a.index - b.index))
+
 const headers = computed(() => {
   const headers = [
     '',
@@ -21,38 +14,14 @@ const headers = computed(() => {
     t('encounter.headers.hp'),
     t('encounter.headers.actions'),
     t('encounter.headers.conditions'),
+    t('encounter.headers.note'),
     t('encounter.headers.deathSaves'),
-    t('encounter.headers.concentration'),
+    'con',
     t('encounter.headers.modify'),
   ]
-  if (includesSummond.value) headers.splice(2, 0, t('encounter.headers.summond'))
+  if (store.includesSummond) headers.splice(2, 0, t('encounter.headers.summond'))
   return headers
 })
-
-onMounted(() => checkIfIndexAreCorrect(props.rows))
-
-watch(sorted, v => {
-  if (v) checkIfIndexAreCorrect(props.rows)
-})
-
-onMounted(() => {
-  if (props.rows !== sorted.value) emit('update', sorted.value)
-})
-
-function updateRow(row, index) {
-  props.rows[index] = row
-  checkIfIndexAreCorrect(sorted.value)
-}
-
-function updateIndexes(rows) {
-  emit('update', rows)
-}
-
-function checkIfIndexAreCorrect(rows) {
-  const indexes = rows.map(r => r.index).sort((a, b) => a - b)
-  if (!indexes.length || JSON.stringify(indexes) === JSON.stringify([...Array(indexes.at(-1) + 1).keys()])) return
-  emit('update', correctRowItemIndexes(rows))
-}
 </script>
 
 <template>
@@ -63,6 +32,7 @@ function checkIfIndexAreCorrect(rows) {
           <tr>
             <th
               v-for="header in headers"
+              v-tippy="header === 'con' ? $t('encounter.headers.concentration') : ''"
               :key="header"
               class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
@@ -70,25 +40,12 @@ function checkIfIndexAreCorrect(rows) {
             </th>
           </tr>
         </thead>
-        <tbody v-auto-animate v-if="rows.length > 0">
+        <tbody v-auto-animate v-if="store.encounter.rows.length > 0">
           <EncounterTableRow
-            v-for="(row, index) in sorted"
+            v-for="(row, index) in store.encounter.rows"
             :key="row.id"
             :row="row"
-            :activeIndex="activeIndex"
-            :includesSummond="includesSummond"
-            :index="index"
-            :rows="props.rows"
-            :showcase="showcase"
-            @update="updateRow($event, index)"
-            @index="updateIndexes"
-            @copy="$emit('update', [...rows, { ...rows.filter(r => r.id === $event)[0], id: Date.now() }])"
-            @delete="
-              $emit(
-                'update',
-                rows.filter(r => r.id !== $event)
-              )
-            "
+            :index="index"           
           />
         </tbody>
       </table>

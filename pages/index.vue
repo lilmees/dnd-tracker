@@ -1,17 +1,24 @@
 <script setup>
+import { useToastStore } from '@/store/toast'
+import { useI18n } from 'vue-i18n'
 import { useElementVisibility } from '@vueuse/core'
-import { useEncountersStore } from '@/store/encounters'
+import { useTableStore } from '@/store/table'
 import { Power3, gsap } from 'gsap'
 
-const store = useEncountersStore()
+const store = useTableStore()
+const toast = useToastStore()
+const { t } = useI18n({ useScope: 'global' })
 
-const encounter = ref()
 const hoard = ref()
 const table = ref()
 const hoardVisible = useElementVisibility(hoard)
 const tableVisible = useElementVisibility(table)
 
-onMounted(() => getEncounter())
+try{
+  await store.getSandboxEncounter()
+} catch (err) {
+  toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+}   
 
 watch(hoardVisible, v => {
   if(v) gsap.fromTo(hoard.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
@@ -20,28 +27,6 @@ watch(hoardVisible, v => {
 watch(tableVisible, v => {
   if(v) gsap.fromTo(table.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
 })
-
-
-async function getEncounter() {
-  try {
-    encounter.value = await store.getSandboxEncounter()      
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-function resetRounds() {
-  encounter.value.round = 1
-  encounter.value.activeIndex = 0
-}
-
-function nextInitiative() {
-  if (encounter.value.activeIndex + 1 < encounter.value.rows.length) encounter.value.activeIndex++
-  else {
-    encounter.value.activeIndex = 0
-    encounter.value.round = encounter.value.round + 1
-  }
-}
 </script>
 
 <template>
@@ -70,21 +55,10 @@ function nextInitiative() {
             />
           </div>
         </div>
-        <div v-if="encounter" ref="table" class="rounded-xl px-4 py-2 bg-tracker tracker-shadow">
-          <EncounterHeader
-            class="w-full pb-4"
-            :round="encounter.round"
-            :title="encounter.title"
-            @next="nextInitiative"
-            @reset="resetRounds"
-          />
-          <EncounterTable
-            :rows="encounter.rows"
-            :activeIndex="encounter.activeIndex"
-            showcase
-            @update="v => (encounter.rows = v)"
-          />
-          <EncounterOptions :encounter="encounter" class="pt-4" sandbox />
+        <div v-if="store.encounter" ref="table" class="rounded-xl px-4 py-2 bg-tracker tracker-shadow">
+          <EncounterHeader class="w-full pb-4"/>
+          <EncounterTable />
+          <EncounterOptions class="pt-4" />
         </div>
         <div ref="hoard" class="container flex justify-center items-center flex-wrap gap-x-10">
         <div class="pt-10">

@@ -1,11 +1,11 @@
 <script setup>
+import { useTableStore } from '@/store/table'
 import Link from '@/assets/icons/link.svg'
 
 const emit = defineEmits(['update'])
-const props = defineProps({
-  link: { type: [null, String], required: true },
-  showcase: { type: Boolean, default: false },
-})
+defineProps({ link: { type: [null, String], required: true } })
+
+const store = useTableStore()
 
 const isOpen = ref(false)
 const isUpdating = ref(false)
@@ -22,7 +22,7 @@ function updateLink({ __init, link }) {
   <div>
     <Link class="w-6 h-6 cursor-pointer text-info" @click="isOpen = true" />
     <Modal v-if="isOpen" @close="isOpen = false">
-      <div v-if="showcase">
+      <div v-if="store.isSandbox">
         <h3>{{ $t('home.demo') }}</h3>
       </div>
       <div v-else-if="!isUpdating">

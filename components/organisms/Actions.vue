@@ -2,11 +2,9 @@
 import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
 
+
 const emit = defineEmits(['update'])
-const props = defineProps({
-  row: { type: Object, required: true },
-  showcase: { type: Boolean, default: false },
-})
+const props = defineProps({ row: { type: Object, required: true } })
 
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
@@ -42,10 +40,7 @@ function updateHealth(update) {
   }
   // when user is dies because of going to much in the negative hp
   if (props.row.health < 0 && Math.abs(props.row.health) >= props.row.maxHealth) {
-    toast.info({
-      title: t('encounter.toast.died.title'),
-      text: t('encounter.toast.died.textMinHP'),
-    })
+    toast.info({ title: t('encounter.toast.died.title'), text: t('encounter.toast.died.textMinHP') })
   }
   // when health is an negative number change it to 0
   if (props.row.health < 0) props.row.health = 0
@@ -89,14 +84,12 @@ function updateCondition(conditions) {
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      :showcase="showcase"
       v-tippy="$t('encounter.tooltip.link')"
       :link="row.link === undefined ? null : row.link"
       @update="updateLink"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      :showcase="showcase"
       v-tippy="$t('encounter.tooltip.hp')"
       :health="row.health"
       :tempHealth="row.tempHealth"
@@ -104,7 +97,6 @@ function updateCondition(conditions) {
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      :showcase="showcase"
       v-tippy="$t('encounter.tooltip.ac')"
       :ac="row.ac"
       :tempAc="row.tempAc"
@@ -112,15 +104,9 @@ function updateCondition(conditions) {
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      :showcase="showcase"
       v-tippy="$t('encounter.tooltip.condition')"
       :conditions="row.conditions"
       @update="updateCondition"
     />
-    <!-- <CurseModal
-      v-tippy="$t('encounter.tooltip.curse')"
-      :curses="row.curses"
-      @update="updateCurse"
-    /> -->
   </div>
 </template>

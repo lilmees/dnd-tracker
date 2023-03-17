@@ -55,8 +55,8 @@
     "backgroundLabel": "Achtergrond",
     "campaignLabel": "Campagne",
     "initiativeLabel": "Initiatief",
-    "acLabel": "Pantser klasse",
-    "hpLabel": "Levens punten",
+    "acLabel": "AC",
+    "hpLabel": "HP",
     "linkLabel": "Url link",
     "typeLabel": "Type",
     "amountLabel": "Hoeveelheid",
@@ -102,9 +102,9 @@
     "addMonster": "Monster toevoegen",
     "addCampaignMonster": "Campaign monster toevoegen",
     "addCampaignPlayer": "Campaign speler toevoegen",
-    "addPlayers": "Geselecteerden spelers toevoegen",
+    "addPlayers": "Geselecteerde spelers toevoegen",
     "addAllPlayers": "Alle spelers toevoegen",
-    "addMonsters": "Geselecteerden monsters toevoegen",
+    "addMonsters": "Geselecteerde monsters toevoegen",
     "newInitiative": "Maak een nieuwe initiatief rij",
     "link": "Link",
     "conditionInfo": "Effect informatie",
@@ -123,8 +123,7 @@
       "link": "Link acties",
       "hp": "HP acties",
       "ac": "AC acties",
-      "condition": "Condities acties",
-      "curse": "Vloek acties"
+      "condition": "Condities acties"
     },
     "headers": {
       "name": "Naam",
@@ -133,6 +132,7 @@
       "hp": "HP",
       "actions": "Acties",
       "conditions": "Condities",
+      "note": "Notitie",
       "deathSaves": "Death saves",
       "concentration": "Concentratie",
       "modify": "Aanpassen",
@@ -148,7 +148,7 @@
       },
       "died": {
         "title": "Speler is gestorven",
-        "textMinHP": "De speler heeft te veel negatieve levenspunten en is dood",
+        "textMinHP": "De speler heeft te veel negatieve hp en is dood",
         "textDeathSaves": "De speler heeft 3 keer gefaald bij death saves en is dood"
       }
     }
@@ -233,7 +233,7 @@
     "update": "Update",
     "link": "Ga naar link",
     "heal": "Genezen",
-    "damage": "Schaden",
+    "damage": "Schade",
     "reset": "Reset",
     "remove": "Verwijderen",
     "baseHealth": "Zet basis leven",

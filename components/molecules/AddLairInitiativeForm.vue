@@ -1,16 +1,14 @@
 <script setup>
 import { rollD20 } from '@/util/rollDice'
 import { createRowObject } from '@/util/createRowObject'
-import { useEncountersStore } from '@/store/encounters'
+import { useTableStore } from '@/store/table'
 import { reset } from '@formkit/core'
 
 const emit = defineEmits(['form'])
-const props = defineProps({
-  type: { type: String, required: true },
-  encounter: { type: Object, required: true },
-})
+const props = defineProps({ type: { type: String, required: true }})
 
-const store = useEncountersStore()
+const store = useTableStore()
+
 const error = ref()
 const isLoading = ref(false)
 const form = ref({ name: null, initiative: null, link: null })
@@ -26,11 +24,10 @@ async function addInitiative({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    const row = createRowObject(formData, props.type, props.encounter.rows)
-    await store.updateEncounter(
-      props.encounter.rows.includes('[') ? { rows: [row] } : { rows: [...props.encounter.rows, row] },
-      props.encounter.id
-    )
+    const row = createRowObject(formData, props.type, store.encounter.rows)
+    await store.encounterUpdate({ 
+      rows: store.encounter.rows.includes('[') ? [row] : [...store.encounter.rows, row]
+    })
     reset('form')
     emit('close')
   } catch (err) {

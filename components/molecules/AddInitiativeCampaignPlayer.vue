@@ -1,27 +1,23 @@
 <script setup>
 import { createRowObject } from '@/util/createRowObject'
-import { useEncountersStore } from '@/store/encounters'
+import { useTableStore } from '@/store/table'
 import { usePlayersStore } from '@/store/players'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
-const props = defineProps({
-  encounter: { type: Object, required: true },
-  sandbox: { type: Boolean, default: false },
-})
+const player = usePlayersStore()
+const store = useTableStore()
 
-const store = usePlayersStore()
-const encounterStore = useEncountersStore()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
 const players = ref()
 const selected = ref([])
-const id = computed(() => props.encounter.campaign?.id || props.encounter.campaign)
+const id = computed(() => store.encounter.campaign?.id || store.encounter.campaign)
 
 onMounted(async () => {
-  if (id.value) players.value = await store.getPlayerByCampaignId(id.value)
-  else if (props.sandbox) players.value = store.sandboxPlayers
+  if (id.value) players.value = await player.getPlayerByCampaignId(id.value)
+  else if (store.isSandbox) players.value = player.sandboxPlayers
 })
 
 function selectPlayer(player) {
@@ -33,11 +29,11 @@ function selectPlayer(player) {
 async function addPlayers(players) {
   try {
     isLoading.value = true
-    players.forEach(player => {
-      const row = createRowObject(player, 'player', props.encounter.rows)
-      props.encounter.rows.includes('[') ? (props.encounter.rows = [row]) : props.encounter.rows.push(row)
+    const playerRows = []
+    players.forEach(player => playerRows.push(createRowObject(player, 'player', store.encounter.rows)))
+    await store.encounterUpdate({ 
+      rows: store.encounter.rows.includes('[') ? playerRows : [...store.encounter.rows, ...playerRows] 
     })
-    if (!props.sandbox) await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
     closeModal()
   } catch (err) {
     console.error(err)
@@ -58,7 +54,7 @@ function closeModal() {
       :label="$t('encounter.addCampaignPlayer')"
       color="info"
       @click="isOpen = true"
-      :disabled="!id && !sandbox"
+      :disabled="!id && !store.isSandbox"
     />
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignPlayer') }}</h2>

@@ -18,7 +18,7 @@ export const useToastStore = defineStore('useToastStore', {
 
       if (!titleExists) this.toasts = [...this.toasts, { ...toast, key }]
 
-      if (timeout > 0 && toast.timed) {
+      if (toast.timed) {
         setTimeout(() => {
           this.toasts = this.toasts.filter(obj => obj.key !== key)
         }, timeout)

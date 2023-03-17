@@ -55,8 +55,8 @@
     "backgroundLabel": "Background",
     "campaignLabel": "Campaign",
     "initiativeLabel": "Initiative",
-    "acLabel": "Armor class",
-    "hpLabel": "Health points",
+    "acLabel": "AC",
+    "hpLabel": "HP",
     "linkLabel": "Url link",
     "typeLabel": "Type",
     "amountLabel": "Amount",
@@ -123,8 +123,7 @@
       "link": "Link actions",
       "hp": "HP actions",
       "ac": "AC actions",
-      "condition": "Condition actions",
-      "curse": "Curse actions"
+      "condition": "Condition actions"
     },
     "headers": {
       "name": "Name",
@@ -133,6 +132,7 @@
       "hp": "HP",
       "actions": "Actions",
       "conditions": "Conditions",
+      "note": "Notes",
       "deathSaves": "Death saves",
       "concentration": "Concentration",
       "modify": "Modify",
@@ -253,8 +253,8 @@
     "players": "Players",
     "monsters": "Monsters",
     "notes": "Notes",
-    "total": "Totaal",
-    "grandTotal": "Eindtotaal"
+    "total": "Total",
+    "grandTotal": "Grand total"
   },
   "players": {
     "none": "No players added",

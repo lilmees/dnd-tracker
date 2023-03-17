@@ -1,27 +1,22 @@
 <script setup>
 import { createRowObject } from '@/util/createRowObject'
-import { useEncountersStore } from '@/store/encounters'
+import { useTableStore } from '@/store/table'
 import { useMonstersStore } from '@/store/monsters'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
-const props = defineProps({
-  encounter: { type: Object, required: true },
-  sandbox: { type: Boolean, default: false },
-})
-
-const store = useMonstersStore()
-const encounterStore = useEncountersStore()
+const monster = useMonstersStore()
+const store = useTableStore()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
 const monsters = ref()
 const selected = ref([])
-const id = computed(() => props.encounter.campaign?.id || props.encounter.campaign)
+const id = computed(() => store.encounter.campaign?.id || store.encounter.campaign)
 
 onMounted(async () => {
-  if (id.value) monsters.value = await store.getMonsterByCampaignId(id.value)
-  else if (props.sandbox) monsters.value = store.sandboxMonsters
+  if (id.value) monsters.value = await monster.getMonsterByCampaignId(id.value)
+  else if (store.isSandbox) monsters.value = monster.sandboxMonsters
 })
 
 function selectMonster(monster) {
@@ -33,12 +28,11 @@ function selectMonster(monster) {
 async function addMonsters(monsters) {
   try {
     isLoading.value = true
-
-    monsters.forEach(monster => {
-      const row = createRowObject(monster, 'monster', props.encounter.rows)
-      props.encounter.rows.includes('[') ? (props.encounter.rows = [row]) : props.encounter.rows.push(row)
+    const monsterRows = []
+    monsters.forEach(monster => monsterRows.push(createRowObject(monster, 'monster', store.encounter.rows)))
+    await encounterStore.encounterUpdate({ 
+      rows: store.encounter.rows.includes('[') ? monsterRows : [...store.encounter.rows, ...monsterRows]
     })
-    if (!props.sandbox) await encounterStore.updateEncounter({ rows: props.encounter.rows }, props.encounter.id)
     closeModal()
   } catch (err) {
     console.error(err)
@@ -59,7 +53,7 @@ function closeModal() {
       :label="$t('encounter.addCampaignMonster')"
       color="warning"
       @click="isOpen = true"
-      :disabled="!id && !sandbox"
+      :disabled="!id && !store.isSandbox"
     />
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignMonster') }}</h2>
