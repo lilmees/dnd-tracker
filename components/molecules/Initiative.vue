@@ -1,5 +1,4 @@
 <script setup>
-import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
 import { useTableStore } from '@/store/table'
 import { rollD20 } from '@/util/rollDice'
 import Update from '@/assets/icons/update.svg'
