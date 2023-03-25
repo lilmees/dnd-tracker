@@ -69,7 +69,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   async function encounterUpdate(enc) {
     if (enc.rows?.length) enc.rows = correctRowItemIndexes(enc.rows)
     const { admins, created_at, created_by, id, profiles, ...data } = { ...encounter.value, ...enc }
-    if (typeof data.campaign === 'object') data.campaign = data.campaign.id
+    if (data.campaign && typeof data.campaign === 'object') data.campaign = data.campaign.id
     if (!isSandbox.value) {
       try {
         const { error } = await supabase.from('initiative-sheets').update(data).eq('id', id)
