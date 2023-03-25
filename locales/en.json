@@ -99,7 +99,7 @@
     "addInitiative": "Add initiative",
     "addInInitiative": "Add in initiative",
     "addHomebrew": "Add homebrew",
-    "addMonster": "Add Monster",
+    "monsterManual": "Monster manual",
     "addCampaignMonster": "Add campaign monster",
     "addCampaignPlayer": "Add campaign player",
     "addPlayers": "Add selected players",
@@ -112,6 +112,7 @@
     "copyPlayerInit": "Use summoner initiative",
     "info": "You can jot something down here",
     "empty": "Add a row to your encounter to get started!",
+    "actions": "Actions:",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",

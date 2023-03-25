@@ -26,7 +26,10 @@ const headers = computed(() => {
 
 <template>
   <section>
-    <div class="inline-block tracker-shadow rounded-xl overflow-x-auto w-full">
+    <div 
+      class="inline-block rounded-xl overflow-x-auto w-full"
+      :class="{'tracker-shadow': !store.isSandbox}"
+    >
       <table class="min-w-full">
         <thead>
           <tr>

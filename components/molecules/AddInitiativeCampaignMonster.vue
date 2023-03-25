@@ -2,6 +2,7 @@
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 import { useMonstersStore } from '@/store/monsters'
+import Dragon from '@/assets/icons/dragon.svg'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
@@ -49,12 +50,17 @@ function closeModal() {
 
 <template>
   <section>
-    <Button
-      :label="$t('encounter.addCampaignMonster')"
-      color="warning"
-      @click="isOpen = true"
+    <button 
+      v-tippy="$t('encounter.addCampaignMonster')" 
+      class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
-    />
+      @click="isOpen = true"
+    >
+      <span class="md:hidden">
+        {{ $t('encounter.addCampaignMonster') }}
+      </span>
+      <Dragon class="text-danger w-10 h-10"/>
+    </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignMonster') }}</h2>
       <div v-if="monsters && monsters.length" class="space-y-4">
