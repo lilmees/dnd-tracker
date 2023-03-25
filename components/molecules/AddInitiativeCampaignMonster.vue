@@ -30,7 +30,7 @@ async function addMonsters(monsters) {
     isLoading.value = true
     const monsterRows = []
     monsters.forEach(monster => monsterRows.push(createRowObject(monster, 'monster', store.encounter.rows)))
-    await encounterStore.encounterUpdate({ 
+    await store.encounterUpdate({ 
       rows: store.encounter.rows.includes('[') ? monsterRows : [...store.encounter.rows, ...monsterRows]
     })
     closeModal()

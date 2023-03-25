@@ -67,18 +67,18 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   async function encounterUpdate(enc) {
-    if (typeof enc.campaign === 'object') enc.campaign = enc.campaign.id
     if (enc.rows?.length) enc.rows = correctRowItemIndexes(enc.rows)
+    const { admins, created_at, created_by, id, profiles, ...data } = { ...encounter.value, ...enc }
+    if (typeof data.campaign === 'object') data.campaign = data.campaign.id
     if (!isSandbox.value) {
       try {
-        const { admins, created_at, created_by, id, profiles, ...data } = { ...encounter.value, ...enc }
         const { error } = await supabase.from('initiative-sheets').update(data).eq('id', id)
         if (error) throw error
         encounter.value = { ...encounter.value, ...enc }
       } catch (error) {
         toast.error({ title: t('error.general.title'), text: t('error.general.text') })
       }
-    } else encounter.value = { ...encounter.value, ...enc }
+    } else encounter.value = data
   }
 
   async function updateRow(key, value, row, index) {

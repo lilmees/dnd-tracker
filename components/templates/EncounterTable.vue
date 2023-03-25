@@ -49,6 +49,12 @@ const headers = computed(() => {
           />
         </tbody>
       </table>
+      <div 
+        v-if="!store.encounter.rows.length"  
+        class="bg-tracker w-full px-8 py-4"
+      >
+        {{ $t('encounter.empty') }}
+      </div>
     </div>
   </section>
 </template>

@@ -111,6 +111,7 @@
     "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
     "copyPlayerInit": "Gebruik oproeper initiatief",
     "info": "Je kan hier wat info neerschrijven",
+    "empty": "Voeg een rij toe aan je encounter om te starten!",
     "update": {
       "name": "Update naam",
       "initiative": "Update Initiatief",

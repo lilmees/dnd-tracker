@@ -111,6 +111,7 @@
     "confirmDelete": "Are you sure you want to delete the current row",
     "copyPlayerInit": "Use summoner initiative",
     "info": "You can jot something down here",
+    "empty": "Add a row to your encounter to get started!",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",

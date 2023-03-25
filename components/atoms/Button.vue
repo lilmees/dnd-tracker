@@ -47,8 +47,9 @@ const background = computed(() => {
       :style="{
         fontWeight: 'bold',
         width: inline ? '100%' : 'auto',
-        'background-color': disabled ? '#9ca3af' : background,
+        'background-color': background,
         color: color === 'black' ? '#fff' : '#000',
+        opacity: disabled ? 0.4 : 1
       }"
       @click="$emit('click')"
     />
