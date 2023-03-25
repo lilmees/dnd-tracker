@@ -38,8 +38,13 @@ watchDebounced(
         <Back url="encounters" :label="$t('encounter.back')" class="container-max" />
         <EncounterHeader />
         <EncounterTable />
-        <EncounterOptions />
-        <Input type="textarea" name="info" v-model="info" :label="$t('encounter.info')" />
+        <EncounterOptions class="pb-10"/>
+        <Input 
+          type="textarea" 
+          name="info" 
+          v-model="info" 
+          :label="$t('encounter.info')" 
+        />
         <FabRoller />
       </div>
     </ClientOnly>

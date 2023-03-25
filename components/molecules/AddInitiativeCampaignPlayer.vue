@@ -2,6 +2,7 @@
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 import { usePlayersStore } from '@/store/players'
+import Sword from '@/assets/icons/sword.svg'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
 
@@ -50,12 +51,17 @@ function closeModal() {
 
 <template>
   <section>
-    <Button
-      :label="$t('encounter.addCampaignPlayer')"
-      color="info"
-      @click="isOpen = true"
+  <button 
+      v-tippy="$t('encounter.addCampaignPlayer')" 
+      class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
-    />
+      @click="isOpen = true"
+    >
+      <span class="md:hidden">
+        {{ $t('encounter.addCampaignPlayer') }}
+      </span>
+      <Sword class="text-primary w-10 h-10"/>
+    </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.addCampaignPlayer') }}</h2>
       <div v-if="players && players.length" class="space-y-4">
