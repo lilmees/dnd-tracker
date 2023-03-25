@@ -26,8 +26,8 @@
       "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
     },
     "diceRoller": {
-      "title": "Rollen maar",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at volutpat nisi. Fusce porta ac orci a hendrerit. Ut ante turpis, convallis vitae nulla nec, dictum tempor nisi. Etiam id turpis aliquam elit consectetur dignissim at nec sem."
+      "title": "Roll with ease",
+      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
     }
   },
   "error": {
@@ -248,7 +248,8 @@
     "random": "Random",
     "create": "Create",
     "openSettings": "Settings",
-    "closeSettings": "Close settings"
+    "closeSettings": "Close settings",
+    "drag": "Drag me"
   },
   "general": {
     "encounters": "Encounters",

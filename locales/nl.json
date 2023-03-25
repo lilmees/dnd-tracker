@@ -26,8 +26,8 @@
       "text": "Doordat we nog in de startfase zitten van deze dnd-tracker  kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet en laat zeker iets weten, zodat we deze snel kunnen oplossen."
     },
     "diceRoller": {
-      "title": "Rollen maar",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at volutpat nisi. Fusce porta ac orci a hendrerit. Ut ante turpis, convallis vitae nulla nec, dictum tempor nisi. Etiam id turpis aliquam elit consectetur dignissim at nec sem."
+      "title": "Rollen met gemak",
+      "text": "Een digitale dobbelsteenroller is een handig hulpmiddel waarmee gebruikers gemakkelijk meerdere dobbelstenen van hetzelfde type kunnen rollen. Met zijn snelle en gemakkelijke rolmogelijkheden is het een essentieel hulpmiddel voor elke tabletop gamer. Voor dungeon masters kan het hun werkproces aanzienlijk versnellen, zodat ze zich meer kunnen richten op het vertellen van verhalen en het spelen."
     }
   },
   "error": {
@@ -248,7 +248,8 @@
     "random": "Willekeurig",
     "create": "Creëren",
     "openSettings": "Instelling",
-    "closeSettings": "Sluit instelling"
+    "closeSettings": "Sluit instelling",
+    "drag": "Sleep mij"
   },
   "general": {
     "encounters": "Encounters",
