@@ -92,9 +92,14 @@ watchDebounced(
       />
     </td>
     <td class="px-2 py-1">
-      <Modify 
-        @copy="store.encounterUpdate({ rows:[...store.encounter.rows, { ...store.encounter.rows.filter(r => r.id === $event)[0], id: Date.now() }] })"
-        @delete="store.encounterUpdate({ rows: store.encounter.rows.filter(r => r.id !== $event) })"
+      <Modify
+        @copy="store.encounterUpdate({ 
+          rows:[
+            ...store.encounter.rows, 
+            { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() }
+          ] 
+        })"
+        @delete="store.encounterUpdate({ rows: store.encounter.rows.filter(r => r.id !== row.id) })"
       />
     </td>
   </tr>
