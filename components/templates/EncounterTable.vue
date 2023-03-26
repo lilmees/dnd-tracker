@@ -26,7 +26,10 @@ const headers = computed(() => {
 
 <template>
   <section>
-    <div class="inline-block tracker-shadow rounded-xl overflow-x-auto w-full">
+    <div 
+      class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
+      :class="{'tracker-shadow': !store.isSandbox}"
+    >
       <table class="min-w-full">
         <thead>
           <tr>
@@ -49,6 +52,12 @@ const headers = computed(() => {
           />
         </tbody>
       </table>
+      <div 
+        v-if="!store.encounter.rows.length"  
+        class="bg-tracker w-full px-8 py-4"
+      >
+        {{ $t('encounter.empty') }}
+      </div>
     </div>
   </section>
 </template>

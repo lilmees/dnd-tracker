@@ -1,5 +1,4 @@
 <script setup>
-import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
 import { useTableStore } from '@/store/table'
 import { rollD20 } from '@/util/rollDice'
 import Update from '@/assets/icons/update.svg'
@@ -59,7 +58,7 @@ async function moveRow(up) {
           :class="{ hidden: !initiative }"
         />
       </div>
-      <div v-if="initiative" class="flex gap-2 items-center">
+      <div v-if="initiative >= 0" class="flex gap-2 items-center">
         <ArrowDown
           v-if="store.encounter.rows.length !== index + 1 && store.encounter.rows[index + 1].initiative === initiative"
           class="w-4 h-4 cursor-pointer text-primary"

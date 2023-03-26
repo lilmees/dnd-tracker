@@ -1,4 +1,6 @@
 <script setup>
+import Beer from '@/assets/icons/beer.svg'
+
 const type = ref('player')
 const isOpen = ref(false)
 
@@ -10,7 +12,16 @@ function closeModal() {
 
 <template>
   <section>
-    <Button :label="$t('encounter.addHomebrew')" color="primary" @click="isOpen = true" />
+    <button 
+      v-tippy="$t('encounter.addHomebrew')" 
+      class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
+      @click="isOpen = true"
+    >
+      <span class="md:hidden">
+        {{ $t('encounter.addHomebrew') }}
+      </span>
+      <Beer class="text-warning w-10 h-10"/>
+    </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.newInitiative') }}</h2>
       <Select

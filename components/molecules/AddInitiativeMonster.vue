@@ -1,4 +1,5 @@
 <script setup>
+import Book from '@/assets/icons/book.svg'
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 
@@ -26,9 +27,19 @@ async function addMonster(monster) {
 
 <template>
   <section>
-    <Button :label="$t('encounter.addMonster')" color="danger" @click="isOpen = true" />
+    <button 
+      v-tippy="$t('encounter.monsterManual')" 
+      class="flex gap-2 items-center"
+      @click="isOpen = true"
+    >
+      <span class="md:hidden">
+        {{ $t('encounter.monsterManual') }}
+      </span>
+      <Book class="text-info w-10 h-10"/>
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false" big>
       <FuzzyInput
+        focus
         index="monsters"
         placeholder="Copper dragon"
         label="Monster"

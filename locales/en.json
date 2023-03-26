@@ -26,8 +26,8 @@
       "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
     },
     "diceRoller": {
-      "title": "Rollen maar",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at volutpat nisi. Fusce porta ac orci a hendrerit. Ut ante turpis, convallis vitae nulla nec, dictum tempor nisi. Etiam id turpis aliquam elit consectetur dignissim at nec sem."
+      "title": "Roll with ease",
+      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
     }
   },
   "error": {
@@ -99,7 +99,7 @@
     "addInitiative": "Add initiative",
     "addInInitiative": "Add in initiative",
     "addHomebrew": "Add homebrew",
-    "addMonster": "Add Monster",
+    "monsterManual": "Monster manual",
     "addCampaignMonster": "Add campaign monster",
     "addCampaignPlayer": "Add campaign player",
     "addPlayers": "Add selected players",
@@ -111,6 +111,8 @@
     "confirmDelete": "Are you sure you want to delete the current row",
     "copyPlayerInit": "Use summoner initiative",
     "info": "You can jot something down here",
+    "empty": "Add a row to your encounter to get started!",
+    "actions": "Actions:",
     "update": {
       "name": "Update name",
       "initiative": "Update initiative",
@@ -246,7 +248,8 @@
     "random": "Random",
     "create": "Create",
     "openSettings": "Settings",
-    "closeSettings": "Close settings"
+    "closeSettings": "Close settings",
+    "drag": "Drag me"
   },
   "general": {
     "encounters": "Encounters",

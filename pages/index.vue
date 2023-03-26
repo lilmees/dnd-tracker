@@ -60,17 +60,15 @@ watch(tableVisible, v => {
           <EncounterTable />
           <EncounterOptions class="pt-4" />
         </div>
-        <div ref="hoard" class="container flex justify-center items-center flex-wrap gap-x-10">
-        <div class="pt-10">
-          <h2 class="pb-10 text-center">{{ $t('home.diceRoller.title') }}</h2>
+        <div ref="hoard" class="container grid md:grid-cols-2 gap-10">
           <HomeDiceRolling />
-        </div>
           <NuxtImg
             src="/dragon_hoard.webp"
             alt="Dragon on hoard"
             sizes="sm:500px md:500px lg:500px"
             format="webp"
             provider="imagekit"
+            class="mx-auto"
           />
         </div>
         <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')"/>
