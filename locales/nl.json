@@ -94,6 +94,7 @@
   },
   "encounter": {
     "next": "Volgende",
+    "prev": "Vorige",
     "back": "Terug naar encounters",
     "round": "Ronde",
     "addInitiative": "Initiatief toevoegen",

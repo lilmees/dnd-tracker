@@ -104,6 +104,14 @@ export const useTableStore = defineStore('useTableStore', () => {
       : encounterUpdate({ activeIndex: 0, round: encounter.value.round + 1 })
   }
 
+  function prevInitiative() {
+    if (encounter.value.activeIndex === 0 && encounter.value.round === 1) return
+    else if (encounter.value.activeIndex === 0) {
+      encounterUpdate({ activeIndex: encounter.value.rows.length - 1, round: encounter.value.round - 1 })
+    }
+    else encounterUpdate({ activeIndex: encounter.value.activeIndex - 1 })
+  }
+
   return {
     encounter,
     isLoading,
@@ -114,6 +122,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     subscribeEncounterChanges,
     encounterUpdate,
     updateRow,
-    nextInitiative
+    nextInitiative,
+    prevInitiative
   }
 })

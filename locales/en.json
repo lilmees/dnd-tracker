@@ -93,7 +93,8 @@
     }
   },
   "encounter": {
-    "next": "Next initiative",
+    "next": "Next",
+    "prev": "Previous",
     "back": "Back to encounters",
     "round": "Round",
     "addInitiative": "Add initiative",
