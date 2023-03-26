@@ -36,24 +36,26 @@ async function logout() {
 </script>
 
 <template>
-  <nav class="bg-black rounded-xl p-4 flex justify-between items-center gap-4 tracker-shadow m-2">
-    <NuxtLink :to="localePath('/')">
-      <h1 class="font-logo">DND-TRACKER</h1>
-    </NuxtLink>
-    <div class="hidden sm:flex justify-end items-center gap-4">
-      <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
-      <template v-if="!user">
-        <RouteLink :label="$t('navigation.login')" url="login" />
-        <RouteLink :label="$t('navigation.register')" url="register" />
-        <LangSwitcher />
-      </template>
-      <template v-else>
-        <NavDropdown :routes="route.playRoutes" :label="$t('navigation.play')" />
-        <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
-      </template>
+  <nav class="bg-black tracker-shadow">
+    <div class="dnd-container py-4 flex justify-between items-center gap-4">
+      <NuxtLink :to="localePath('/')">
+        <h1 class="font-logo">DND-TRACKER</h1>
+      </NuxtLink>
+      <div class="hidden sm:flex justify-end items-center gap-4">
+        <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
+        <template v-if="!user">
+          <RouteLink :label="$t('navigation.login')" url="login" />
+          <RouteLink :label="$t('navigation.register')" url="register" />
+          <LangSwitcher />
+        </template>
+        <template v-else>
+          <NavDropdown :routes="route.playRoutes" :label="$t('navigation.play')" />
+          <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
+        </template>
+      </div>
+      <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-white" @click="isOpen = true" />
     </div>
 
-    <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-primary" @click="isOpen = true" />
     <transition
       enter-active-class="duration-300 ease-in-out"
       enter-from-class="!-translate-y-full"

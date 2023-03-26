@@ -83,6 +83,10 @@
     @apply max-w-[1800px] mx-auto;
   }
 
+  .dnd-container {
+    @apply max-w-[1800px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     @apply hidden;
   }
@@ -95,6 +99,7 @@
   .loader {
     @apply text-primary grid h-10 w-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
+
   .loader,
   .loader:before,
   .loader:after {
