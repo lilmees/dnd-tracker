@@ -123,10 +123,11 @@
       "conditions": "Update conditions"
     },
     "tooltip": {
-      "link": "Link actions",
+      "link": "Link",
       "hp": "HP actions",
       "ac": "AC actions",
-      "condition": "Condition actions"
+      "condition": "Conditions",
+      "attacks": "Possible attacks"
     },
     "headers": {
       "name": "Name",
