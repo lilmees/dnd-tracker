@@ -123,10 +123,11 @@
       "conditions": "Update condities"
     },
     "tooltip": {
-      "link": "Link acties",
+      "link": "Link",
       "hp": "HP acties",
       "ac": "AC acties",
-      "condition": "Condities acties"
+      "condition": "Condities",
+      "attacks": "mogelijke aanvallen"
     },
     "headers": {
       "name": "Naam",
