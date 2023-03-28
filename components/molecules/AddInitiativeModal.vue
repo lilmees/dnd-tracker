@@ -23,7 +23,7 @@ function closeModal() {
       <Beer class="text-warning w-10 h-10"/>
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.newInitiative') }}</h2>
+      <h2>{{ $t('encounter.newHomebrew') }}</h2>
       <Select
         :absolute="false"
         :inputLabel="$t('inputs.typeLabel')"

@@ -93,7 +93,8 @@
     }
   },
   "encounter": {
-    "next": "Next initiative",
+    "next": "Next",
+    "prev": "Previous",
     "back": "Back to encounters",
     "round": "Round",
     "addInitiative": "Add initiative",
@@ -105,7 +106,7 @@
     "addPlayers": "Add selected players",
     "addAllPlayers": "Add all players",
     "addMonsters": "Add selected monsters",
-    "newInitiative": "Make a new initiative row",
+    "newHomebrew": "Make a new homebrew",
     "link": "Link",
     "conditionInfo": "Effect information",
     "confirmDelete": "Are you sure you want to delete the current row",
@@ -122,10 +123,11 @@
       "conditions": "Update conditions"
     },
     "tooltip": {
-      "link": "Link actions",
+      "link": "Link",
       "hp": "HP actions",
       "ac": "AC actions",
-      "condition": "Condition actions"
+      "condition": "Conditions",
+      "attacks": "Possible attacks"
     },
     "headers": {
       "name": "Name",

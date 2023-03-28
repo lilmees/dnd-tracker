@@ -1,4 +1,6 @@
 <script setup>
+import Cookie from '@/assets/icons/cookie.svg'
+
 const acceptedCookie = useCookie('accepted')
 const localePath = useLocalePath()
 </script>
@@ -9,6 +11,7 @@ const localePath = useLocalePath()
     <div
       class="fixed z-50 flex flex-col items-center justify-center p-6 bg-primary rounded-md gap-y-10 bottom-4 left-4 right-4 md:flex-row md:justify-between md:px-10 md:py-8 md:bottom-10 md:left-10 md:right-10"
     >
+      <Cookie class="w-12"/>
       <div class="flex flex-col items-center text-center gap-y-6 md:flex-row md:inline-flex md:gap-x-7">
         <h2>
           {{ $t('cookie.text') }}

@@ -31,7 +31,7 @@ watch(error, v => {
           <Button :label="$t('campaigns.add')" @click="isOpen = true" />
         </div>
       </div>
-      <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4">
+      <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4 items-start">
         <CampaignCard v-for="campaign in store.sortedCampaigns" :key="campaign.id" :campaign="campaign" />
       </div>
       <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4">

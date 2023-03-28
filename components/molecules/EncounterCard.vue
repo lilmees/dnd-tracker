@@ -78,9 +78,9 @@ function closeSettings() {
       v-if="!isSettings"
       :to="
         localePath(
-          `/encounters/${
+          `/encounters/${encounter.id}-${
             encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-          }-${encounter.id}`
+          }`
         )
       "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"

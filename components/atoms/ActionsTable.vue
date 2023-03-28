@@ -2,7 +2,10 @@
 import Info from '~/assets/icons/info.svg'
 import { useToastStore } from '@/store/toast'
 
-const props = defineProps({ actions: { type: Array, required: true } })
+const props = defineProps({ 
+  actions: { type: Array, required: true }, 
+  big: { type: Boolean, default: false }, 
+})
 
 const toast = useToastStore()
 
@@ -29,12 +32,17 @@ const actionTypes = computed(() => {
       <table v-if="actionTypes.attacks.length" class="w-full overflow-x-auto">
         <thead>
           <tr>
-            <th v-for="header in attackHeaders" :key="header" class="uppercase p-1 body-extra-small text-start">
+            <th 
+              v-for="header in attackHeaders" 
+              :key="header" 
+              class="uppercase p-1 text-start text-slate-400"
+              :class="[!big ? 'body-extra-small' : 'body-small']"
+            >
               {{ header }}
             </th>
           </tr>
         </thead>
-        <tbody class="body-extra-small sm:body-small">
+        <tbody :class="{ 'body-extra-small sm:body-small': !big }">
           <template v-for="action in actionTypes.attacks" :key="action">
             <template v-if="action.damage?.length && action.damage[0]?.choose">
               <tr v-for="damage in action.damage[0]?.from?.options">
@@ -110,12 +118,17 @@ const actionTypes = computed(() => {
       <table v-if="actionTypes.spells.length" class="min-w-full" :class="{ 'mt-4': actionTypes.attacks.length }">
         <thead>
           <tr>
-            <th v-for="header in spellHeaders" :key="header" class="uppercase p-1 body-extra-small text-start">
+            <th 
+              v-for="header in spellHeaders" 
+              :key="header" 
+              class="uppercase p-1 text-start text-slate-400"
+              :class="[!big ? 'body-extra-small' : 'body-small']"
+            >
               {{ header }}
             </th>
           </tr>
         </thead>
-        <tbody class="body-extra-small sm:body-small">
+        <tbody :class="{ 'body-extra-small sm:body-small': !big }">
           <tr v-for="action in actionTypes.spells" :key="action">
             <td>
               {{ action.name || '' }}
@@ -143,8 +156,17 @@ const actionTypes = computed(() => {
           </tr>
         </tbody>
       </table>
-      <div v-if="actionTypes.multi_attacks.length || actionTypes.multi.length">
-        <p class="font-bold">Multiattacks</p>
+      <div 
+        v-if="actionTypes.multi_attacks.length || actionTypes.multi.length"
+        class="pt-4"
+        :class="{ 'body-extra-small sm:body-small': !big }"
+      >
+        <p 
+          class="font-bold uppercase pb-2 text-slate-400" 
+          :class="{ 'body-extra-small sm:body-small': !big }"
+        >
+          Multiattacks
+        </p>
         <template v-if="actionTypes.multi_attacks.length">
           <template v-for="multi in actionTypes.multi_attacks" :key="multi">
             <p v-for="option in multi" :key="option">

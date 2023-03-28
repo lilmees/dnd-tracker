@@ -94,6 +94,7 @@
   },
   "encounter": {
     "next": "Volgende",
+    "prev": "Vorige",
     "back": "Terug naar encounters",
     "round": "Ronde",
     "addInitiative": "Initiatief toevoegen",
@@ -105,7 +106,7 @@
     "addPlayers": "Geselecteerde spelers toevoegen",
     "addAllPlayers": "Alle spelers toevoegen",
     "addMonsters": "Geselecteerde monsters toevoegen",
-    "newInitiative": "Maak een nieuwe initiatief rij",
+    "newHomebrew": "Maak een nieuwe homebrew",
     "link": "Link",
     "conditionInfo": "Effect informatie",
     "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
@@ -122,10 +123,11 @@
       "conditions": "Update condities"
     },
     "tooltip": {
-      "link": "Link acties",
+      "link": "Link",
       "hp": "HP acties",
       "ac": "AC acties",
-      "condition": "Condities acties"
+      "condition": "Condities",
+      "attacks": "mogelijke aanvallen"
     },
     "headers": {
       "name": "Naam",

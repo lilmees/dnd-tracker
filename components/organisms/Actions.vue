@@ -108,5 +108,10 @@ function updateCondition(conditions) {
       :conditions="row.conditions"
       @update="updateCondition"
     />
+    <PossibleAttacksModal
+      v-if="row.actions"
+      v-tippy="$t('encounter.tooltip.attacks')"
+      :actions="Array.isArray(row.actions) ? row.actions : JSON.parse(row.actions)"
+    />
   </div>
 </template>

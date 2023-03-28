@@ -1,6 +1,7 @@
 <script setup>
 import { useTableStore } from '@/store/table'
 import Reset from '@/assets/icons/reset.svg'
+import Chevron from '@/assets/icons/chevron-down.svg'
 
 const store = useTableStore()
 </script>
@@ -18,10 +19,25 @@ const store = useTableStore()
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
-    <Button 
-      :label="$t('encounter.next')"
-      :disabled="!store.encounter.rows.length"
-      @click="store.nextInitiative" 
-    />
+    <div class="flex gap-2 items-center bg-black rounded-xl p-2">
+      <button
+        v-tippy="$t('encounter.prev')"
+        :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
+        class="disabled:opacity-40 disabled:cursor-not-allowed duration-300 ease-in-out"
+        @click="store.prevInitiative"
+      >
+        <Chevron class="rotate-90"/>
+      </button>
+      <p class="uppercase">
+        {{ $t('inputs.initiativeLabel') }}
+      </p>
+      <button 
+        v-tippy="$t('encounter.next')"
+        :disabled="!store.encounter.rows.length" 
+        @click="store.nextInitiative"
+      >
+        <Chevron class="-rotate-90"/>
+      </button>
+    </div>
   </div>
 </template>
