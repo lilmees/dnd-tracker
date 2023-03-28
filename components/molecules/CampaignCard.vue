@@ -74,9 +74,9 @@ function closeSettings() {
       v-if="!isSettings"
       :to="
         localePath(
-          `/campaigns/${
+          `/campaigns/${campaign.id}-${
             campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
-          }-${campaign.id}`
+          }`
         )
       "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
