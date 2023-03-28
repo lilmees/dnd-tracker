@@ -31,7 +31,7 @@ watch(error, v => {
       <div v-if="store.sortedEncounters">
         <div v-for="(group, index) in Object.values(store.sortedEncounters)" :key="index" class="space-y-4 pb-10">
           <CampaignHeader v-if="Object.keys(store.sortedEncounters)[index] !== '0'" :campaign="group[0].campaign" />
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-4 items-start">
             <EncounterCard v-for="encounter in group" :key="encounter.id" :encounter="encounter" />
           </div>
         </div>
