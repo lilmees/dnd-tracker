@@ -4,7 +4,7 @@ import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 import { reset } from '@formkit/core'
 
-const emit = defineEmits(['form'])
+const emit = defineEmits(['close'])
 const props = defineProps({ type: { type: String, required: true }})
 
 const store = useTableStore()

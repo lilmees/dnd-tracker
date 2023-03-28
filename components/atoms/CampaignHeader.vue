@@ -38,9 +38,9 @@ watch(
         v-if="!route.path.includes('/campaigns/') && chosenCampaign.title"
         :to="
           localePath(
-            `/campaigns/${
+            `/campaigns/${chosenCampaign.id}-${
               chosenCampaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : chosenCampaign.title.replace(/[\W]/g, '')
-            }-${chosenCampaign.id}`
+            }`
           )
         "
       >

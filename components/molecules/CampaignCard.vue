@@ -1,5 +1,5 @@
 <script setup>
-import Copy from '@/assets/icons/copy.svg'
+// import Copy from '@/assets/icons/copy.svg'
 import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
 import Settings from '@/assets/icons/settings.svg'
@@ -28,16 +28,17 @@ async function deleteCampaign() {
   }
 }
 
-async function copyCampaign({ created_at, id, profiles, ...enc }) {
-  const campaign = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
-  try {
-    await store.addCampaign(campaign)
-  } catch (err) {
-    errorToast()
-  } finally {
-    isSettings.value = false
-  }
-}
+// async function copyCampaign({ created_at, id, profiles, ...enc }) {
+//   const campaign = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
+//   delete campaign['initiative-sheets']
+//   try {
+//     await store.addCampaign(campaign)
+//   } catch (err) {
+//     errorToast()
+//   } finally {
+//     isSettings.value = false
+//   }
+// }
 
 function errorToast() {
   toast.error({
@@ -74,16 +75,16 @@ function closeSettings() {
       v-if="!isSettings"
       :to="
         localePath(
-          `/campaigns/${
+          `/campaigns/${campaign.id}-${
             campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
-          }-${campaign.id}`
+          }`
         )
       "
       class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>
       <div>
-        <p>Encounters: {{ campaign.encounters }}</p>
+        <p>Encounters: {{ campaign['initiative-sheets']?.length || 0 }}</p>
       </div>
     </NuxtLink>
     <div v-else class="flex flex-col gap-2 justify-between p-4">
@@ -92,10 +93,10 @@ function closeSettings() {
         <Update class="h-6 w-6" />
         <p>{{ $t('actions.update') }}</p>
       </div>
-      <div class="flex gap-2 cursor-pointer max-w-max" @click="copyCampaign(campaign)">
+      <!-- <div class="flex gap-2 cursor-pointer max-w-max" @click="copyCampaign(campaign)">
         <Copy class="h-6 w-6" />
         <p>{{ $t('actions.copy') }}</p>
-      </div>
+      </div> -->
       <div
         v-if="campaign.created_by === user.id"
         class="flex gap-2 cursor-pointer max-w-max"
