@@ -23,7 +23,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
 
         this.loading = true
         this.error = null
-        const { data, error } = await supabase.from('campaigns').select('*')
+        const { data, error } = await supabase.from('campaigns').select('*, initiative-sheets(title)')
         if (error) throw error
         if (data) this.data = data
       } catch (error) {
@@ -67,8 +67,9 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
       const { data, error } = await supabase.from('campaigns').update(campaign).eq('id', id).select('*')
       if (error) throw error
       else {
-        this.data = this.data.filter(e => e.id !== id)
-        this.data.push(data[0])
+        const index = this.data.findIndex(e => e.id === id)
+        const oldData = this.data.splice(index, 1)
+        this.data.push({ ...oldData[0], ...data[0] })
       }
     },
   },
