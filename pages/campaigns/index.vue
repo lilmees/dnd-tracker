@@ -1,8 +1,6 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
 import { useCampaignsStore } from '@/store/campaigns'
-import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
@@ -11,11 +9,10 @@ const toast = useToastStore()
 const store = useCampaignsStore()
 const { t } = useI18n({ useScope: 'global' })
 const isOpen = ref(false)
-const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())
 
-watch(error, v => {
+watch(()=> store.error, v => {
   if (!v) return
   toast.error({ title: t('error.general.title'), text: t('error.general.text') })
 })

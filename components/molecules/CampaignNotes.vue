@@ -1,31 +1,26 @@
 <script setup>
+import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import Add from '~/assets/icons/add.svg'
 
 const emit = defineEmits(['update:modelValue'])
-const props = defineProps({
-  modelValue: { type: Array, required: true },
-  id: { type: Number, required: true },
-})
+
+const store = useCurrentCampaignStore()
 
 const isOpen = ref(false)
 
-function addedNote(notes) {
-  emitAndResetState(notes)
+function addedNote(notes){
+  store.campaign.notes = notes
+  isOpen.value = false
 }
 
 function removedNote(id) {
-  emitAndResetState(props.modelValue.filter(p => p.id !== id))
+  store.campaign.notes = store.campaign.notes.filter(p => p.id !== id)
+  isOpen.value = false
 }
 
 function updatedNote(note) {
-  const index = props.modelValue.findIndex(p => p.id === note.id)
-  const notes = props.modelValue
-  notes[index] = note
-  emitAndResetState(notes)
-}
-
-function emitAndResetState(state) {
-  emit('update:modelValue', state)
+  const index = store.campaign.notes.findIndex(p => p.id === note.id)
+  store.campaign.notes[index] = note
   isOpen.value = false
 }
 </script>
@@ -40,19 +35,25 @@ function emitAndResetState(state) {
         class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
       />
     </div>
-    <div v-if="!modelValue.length" class="space-y-2">
+    <div v-if="!store.campaign.notes.length" class="space-y-2">
       <p class="text-center">{{ $t('notes.none') }}</p>
       <Button :label="$t('notes.add')" color="primary" class="mx-auto w-fit" @click="isOpen = true" />
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
       <NoteCard
-        v-for="note in modelValue"
+        v-for="note in store.campaign.notes"
         :key="note.created_at"
         :note="note"
         @deleted="removedNote"
         @updated="updatedNote"
       />
     </div>
-    <AddCampaignNote :open="isOpen" :id="id" :notes="modelValue" @close="isOpen = false" @notes="addedNote" />
+    <AddCampaignNote 
+      :open="isOpen" 
+      :id="store.campaign.id" 
+      :notes="store.campaign.notes" 
+      @close="isOpen = false" 
+      @notes="addedNote" 
+    />
   </section>
 </template>

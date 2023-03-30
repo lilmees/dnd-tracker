@@ -259,7 +259,8 @@
     "monsters": "Monsters",
     "notes": "Notities",
     "total": "Totaal",
-    "grandTotal": "Eindtotaal"
+    "grandTotal": "Eindtotaal",
+    "homebrew": "Homebrew"
   },
   "players": {
     "none": "Geen spelers toegevoegd",

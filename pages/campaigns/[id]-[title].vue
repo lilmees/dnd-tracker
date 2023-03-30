@@ -1,77 +1,55 @@
 <script setup>
-import { useCampaignsStore } from '@/store/campaigns'
-import { useEncountersStore } from '@/store/encounters'
-import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
+import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import Add from '~/assets/icons/add.svg'
 
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
-const localePath = useLocalePath()
-const toast = useToastStore()
-const store = useCampaignsStore()
-const encountersStore = useEncountersStore()
-const user = useSupabaseUser()
-const { t } = useI18n({ useScope: 'global' })
+const store = useCurrentCampaignStore()
 
-const campaign = ref()
-const encounters = ref([])
-const isPending = ref(true)
 const isCreatingEncounter = ref(false)
 
-onMounted(() => getCampaignInfo())
-
-async function getCampaignInfo() {
-  try {
-    campaign.value = await store.getCampaignById(route.params.id)
-    if (!campaign.value.admins.includes(user.value.id)) navigateTo(localePath('/campaigns'))
-    useHead({ title: campaign.value.title })
-    encounters.value = await encountersStore.getEncountersByCampaign(campaign.value.id)
-  } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-    navigateTo('/campaigns')
-  } finally {
-    isPending.value = false
-  }
-}
+onMounted(() => store.getCampaignInfo(route.params.id))
 
 function addedEncounter(encounter) {
-  encounters.value.push(encounter)
+  store.encounters.push(encounter)
   isCreatingEncounter.value = false
 }
 
 function deletedEncounter(id) {
-  encounters.value = encounters.value.filter(e => e.id !== id)
+  store.encounters = store.encounters.filter(e => e.id !== id)
   isCreatingEncounter.value = false
 }
 
 function updatedEncounter(encounter) {
-  const index = encounters.value.findIndex(e => e.id === encounter.id)
-  encounters.value[index] = encounter
+  const index = store.encounters.findIndex(e => e.id === encounter.id)
+  store.encounters[index] = encounter
 }
 </script>
 
 <template>
   <NuxtLayout>
-    <div v-if="isPending" class="loader" />
-    <div v-else-if="campaign" class="py-4 space-y-4">
+    <div v-if="store.loading" class="loader" />
+    <div v-else-if="store.campaign" class="py-4 space-y-4 mt-10 mb-20">
       <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
       <div
         class="rounded w-full tracker-shadow relative p-2 flex"
-        :style="{ 'background-color': campaign.background || '#000', color: campaign.color || '#fff' }"
+        :style="{ 
+          'background-color': store.campaign.background || '#000',
+           color: store.campaign.color || '#fff' 
+        }"
       >
         <h1 class="grow text-center">
-          {{ campaign.title }}
+          {{ store.campaign.title }}
         </h1>
         <Back
           url="campaigns"
           :label="$t('campaign.back')"
           class="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2"
-          :color="campaign.color || '#fff'"
+          :color="store.campaign.color || '#fff'"
         />
       </div>
-      <div class="space-y-8">
+      <div class="space-y-8 pt-10">
         <div class="space-y-4">
           <div class="flex justify-between border-b border-slate-700 pb-1">
             <h2>{{ $t('general.encounters') }}</h2>
@@ -81,9 +59,9 @@ function updatedEncounter(encounter) {
               class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
             />
           </div>
-          <div v-if="encounters.length" class="flex flex-wrap gap-4 items-start">
+          <div v-if="store.encounters.length" class="flex flex-wrap gap-4 items-start">
             <EncounterCard
-              v-for="encounter in encounters"
+              v-for="encounter in store.encounters"
               :key="encounter.id"
               :encounter="encounter"
               @deleted="deletedEncounter"
@@ -103,14 +81,15 @@ function updatedEncounter(encounter) {
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 py-8">
-        <CampaignPlayers v-model="campaign.players" :id="campaign.id" />
-        <CampaignMonsters v-model="campaign['homebrew-monsters']" :id="campaign.id" />
-      </div>
-      <CampaignNotes v-model="campaign.notes" :id="campaign.id" />
+      <HomebrewTable class="py-10" />
+      <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 py-8">
+        <CampaignPlayers v-model="store.campaign.players" :id="store.campaign.id" />
+        <CampaignMonsters v-model="store.campaign['homebrew-monsters']" :id="store.campaign.id" />
+      </div> -->
+      <CampaignNotes v-model="store.campaign.notes" :id="store.campaign.id" />
       <AddEncounterModal
         :open="isCreatingEncounter"
-        :campaignId="campaign.id"
+        :campaignId="store.campaign.id"
         @close="isCreatingEncounter = false"
         @added="addedEncounter"
       />

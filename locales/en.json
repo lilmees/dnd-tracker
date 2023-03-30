@@ -259,7 +259,8 @@
     "monsters": "Monsters",
     "notes": "Notes",
     "total": "Total",
-    "grandTotal": "Grand total"
+    "grandTotal": "Grand total",
+    "homebrew": "Homebrew"
   },
   "players": {
     "none": "No players added",
