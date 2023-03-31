@@ -12,8 +12,8 @@ function closeModal() {
 
 <template>
   <section>
-    <button 
-      v-tippy="$t('encounter.addHomebrew')" 
+    <button
+      v-tippy="{ content: $t('encounter.addHomebrew'), animation: 'shift-away' }"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >
