@@ -50,8 +50,8 @@ function closeModal() {
 
 <template>
   <section>
-    <button 
-      v-tippy="$t('encounter.addCampaignMonster')" 
+    <button
+      v-tippy="{ content: $t('encounter.addCampaignMonster'), animation: 'shift-away' }"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
       @click="isOpen = true"

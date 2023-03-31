@@ -94,33 +94,33 @@ function updateRow(){
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      v-tippy="$t('encounter.tooltip.link')"
+      v-tippy="{ content: $t('encounter.tooltip.link'), animation: 'shift-away' }"
       :url="row.link"
       @update="updateLink"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.hp')"
+      v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
       :health="row.health"
       :tempHealth="row.tempHealth"
       @update="updateHealth"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.ac')"
+      v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
       :ac="row.ac"
       :tempAc="row.tempAc"
       @update="updateAc"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.condition')"
+      v-tippy="{ content: $t('encounter.tooltip.condition'), animation: 'shift-away' }"
       :conditions="row.conditions"
       @update="updateCondition"
     />
     <PossibleAttacksModal
       v-if="row.actions"
-      v-tippy="$t('encounter.tooltip.attacks')"
+      v-tippy="{ content: $t('encounter.tooltip.attacks'), animation: 'shift-away' }"
       :actions="Array.isArray(row.actions) ? row.actions : JSON.parse(row.actions)"
     />
   </div>

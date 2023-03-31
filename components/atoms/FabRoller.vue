@@ -109,7 +109,7 @@ function generateDiceRoll(type) {
       >
         <template v-if="isOpen">
           <div
-            v-tippy="$t('actions.drag')"
+            v-tippy="{ content: $t('actions.drag'), animation: 'shift-away' }"
             class="bg-tracker text-center pb-[6px] rounded-full cursor-grab mb-2"
           >
             <span class="pointer-events-none">
@@ -131,7 +131,7 @@ function generateDiceRoll(type) {
         </template>
         <button
           v-if="!isOpen"
-          v-tippy="$t('actions.roll')"
+          v-tippy="{ content: $t('actions.roll'), animation: 'shift-away' }"
           class="w-14 h-14 border-4 border-primary rounded-xl p-2 bg-black"
         >
           <NuxtImg
@@ -158,7 +158,7 @@ function generateDiceRoll(type) {
             >
               <button
                 v-if="isOpen"
-                v-tippy="{ content: dice.toUpperCase(), placement: 'left' }"
+                v-tippy="{ content: dice.toUpperCase(), placement: 'left', animation: 'shift-away' }"
                 class="bg-black tracker-shadow rounded-xl p-2 border-4 w-14 h-14 z-0"
                 :class="{
                   'border-secondary': dice === 'd100',
