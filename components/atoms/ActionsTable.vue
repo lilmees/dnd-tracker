@@ -72,7 +72,7 @@ const actionTypes = computed(() => {
                 </td>
                 <td>
                   <Info
-                    v-tippy="$t('actions.info')"
+                    v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
                     class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                     @click="toast.info({ text: action.description.en, timed: false })"
                   />
@@ -106,7 +106,7 @@ const actionTypes = computed(() => {
               </td>
               <td>
                 <Info
-                  v-tippy="$t('actions.info')"
+                  v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
                   class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                   @click="toast.info({ text: action.description.en, timed: false })"
                 />
@@ -148,7 +148,7 @@ const actionTypes = computed(() => {
             </td>
             <td>
               <Info
-                v-tippy="$t('actions.info')"
+                v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
                 class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
                 @click="toast.info({ text: action.description.en, timed: false })"
               />

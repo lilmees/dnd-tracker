@@ -21,7 +21,7 @@ const store = useTableStore()
     <h1>{{ store.encounter.title }}</h1>
     <div class="flex gap-2 items-center bg-black rounded-xl p-2">
       <button
-        v-tippy="$t('encounter.prev')"
+        v-tippy="{ content: $t('encounter.prev'), animation: 'shift-away' }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
         class="disabled:opacity-40 disabled:cursor-not-allowed duration-300 ease-in-out"
         @click="store.prevInitiative"
@@ -32,7 +32,7 @@ const store = useTableStore()
         {{ $t('inputs.initiativeLabel') }}
       </p>
       <button 
-        v-tippy="$t('encounter.next')"
+        v-tippy="{ content: $t('encounter.next'), animation: 'shift-away' }"
         :disabled="!store.encounter.rows.length" 
         @click="store.nextInitiative"
       >

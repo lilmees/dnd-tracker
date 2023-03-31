@@ -1,17 +1,19 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
+import { useTableStore } from '@/store/table'
 
-
-const emit = defineEmits(['update'])
-const props = defineProps({ row: { type: Object, required: true } })
+const props = defineProps({ 
+  row: { type: Object, required: true }, 
+  index: { type: Number, required: true }, 
+})
 
 const toast = useToastStore()
+const store = useTableStore()
 const { t } = useI18n({ useScope: 'global' })
 
 function updateLink(link) {
   props.row.link = link
-  emit('update', props.row)
+  store.updateRow('link', link, props.row, props.index)
 }
 
 function updateHealth(update) {
@@ -44,7 +46,8 @@ function updateHealth(update) {
   }
   // when health is an negative number change it to 0
   if (props.row.health < 0) props.row.health = 0
-  emit('update', props.row)
+
+  updateRow()
 }
 
 function updateAc(update) {
@@ -72,45 +75,52 @@ function updateAc(update) {
   }
   // when ac is an negative number change it to 0
   if (props.row.ac < 0) props.row.ac = 0
-  emit('update', props.row)
+ 
+  updateRow()
 }
 
 function updateCondition(conditions) {
   props.row.conditions = conditions
-  emit('update', props.row)
+  updateRow()
+}
+
+function updateRow(){
+  const rows = store.encounter.rows
+  rows[props.index] = props.row
+  store.encounterUpdate({ rows })
 }
 </script>
 
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      v-tippy="$t('encounter.tooltip.link')"
-      :link="row.link === undefined ? null : row.link"
+      v-tippy="{ content: $t('encounter.tooltip.link'), animation: 'shift-away' }"
+      :url="row.link"
       @update="updateLink"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.hp')"
+      v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
       :health="row.health"
       :tempHealth="row.tempHealth"
       @update="updateHealth"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.ac')"
+      v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
       :ac="row.ac"
       :tempAc="row.tempAc"
       @update="updateAc"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="$t('encounter.tooltip.condition')"
+      v-tippy="{ content: $t('encounter.tooltip.condition'), animation: 'shift-away' }"
       :conditions="row.conditions"
       @update="updateCondition"
     />
     <PossibleAttacksModal
       v-if="row.actions"
-      v-tippy="$t('encounter.tooltip.attacks')"
+      v-tippy="{ content: $t('encounter.tooltip.attacks'), animation: 'shift-away' }"
       :actions="Array.isArray(row.actions) ? row.actions : JSON.parse(row.actions)"
     />
   </div>

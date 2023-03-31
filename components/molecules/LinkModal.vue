@@ -3,7 +3,7 @@ import { useTableStore } from '@/store/table'
 import Link from '@/assets/icons/link.svg'
 
 const emit = defineEmits(['update'])
-defineProps({ link: { type: [null, String], required: true } })
+defineProps({ url: { type: [null, String], default: null } })
 
 const store = useTableStore()
 
@@ -27,8 +27,8 @@ function updateLink({ __init, link }) {
       </div>
       <div v-else-if="!isUpdating">
         <h2 class="mb-10">{{ $t('encounter.link') }}</h2>
-        <div v-if="link" class="flex gap-2 flex-wrap">
-          <NuxtLink :to="link" target="_blank" rel="noreferrer noopener" class="grow">
+        <div v-if="url" class="flex gap-2 flex-wrap">
+          <NuxtLink :to="url" target="_blank" rel="noreferrer noopener" class="grow">
             <Button :label="$t('actions.link')" inline />
           </NuxtLink>
           <div class="grow" @click="isUpdating = true">
@@ -41,7 +41,7 @@ function updateLink({ __init, link }) {
         <h2 class="mb-10">{{ $t('encounter.update.link') }}</h2>
         <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateLink">
           <Input focus name="link" :label="$t('inputs.linkLabel')" validation="required|length10,200|url" required />
-          <Button type="submit" :label="link ? $t('actions.update') : $t('actions.add')" inline />
+          <Button type="submit" :label="url ? $t('actions.update') : $t('actions.add')" inline />
         </FormKit>
       </div>
     </Modal>

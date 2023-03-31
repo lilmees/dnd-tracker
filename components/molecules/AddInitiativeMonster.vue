@@ -27,8 +27,8 @@ async function addMonster(monster) {
 
 <template>
   <section>
-    <button 
-      v-tippy="$t('encounter.monsterManual')" 
+    <button
+      v-tippy="{ content: $t('encounter.monsterManual'), animation: 'shift-away' }"
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >

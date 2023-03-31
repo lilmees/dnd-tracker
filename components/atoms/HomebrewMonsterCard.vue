@@ -43,13 +43,13 @@ async function updateMonster(monster) {
       <h3>{{ monster.name }}</h3>
       <Settings
         v-if="!isSettings"
-        v-tippy="$t('actions.openSettings')"
+        v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
         @click="isSettings = !isSettings"
         class="w-4 h-4 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       />
       <Remove
         v-else
-        v-tippy="$t('actions.closeSettings')"
+        v-tippy="{ content: $t('actions.closeSettings'), animation: 'shift-away' }"
         class="w-8 h-8 cursor-pointer text-primary"
         @click="isSettings = false"
       />

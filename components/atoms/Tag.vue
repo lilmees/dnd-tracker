@@ -34,13 +34,13 @@ defineProps({
     }"
   >
     <Remove
-      v-tippy="$t('actions.remove')"
+      v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
       v-if="removable"
       @click="$emit('remove', condition.id)"
       class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
     />
     <Add
-      v-tippy="$t('actions.add')"
+      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
       v-if="addable && !removable"
       @click="$emit('add', condition)"
       class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
@@ -49,7 +49,7 @@ defineProps({
       {{ condition.name }}
     </div>
     <Info
-      v-tippy="$t('actions.info')"
+      v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
       class="w-4 h-4 hover:scale-110 cursor-pointer"
       @click="$emit('info', condition.description.en)"
     />
