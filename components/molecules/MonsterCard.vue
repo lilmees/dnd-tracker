@@ -20,7 +20,7 @@ const isOpen = ref(false)
   <div class="rounded-xl w-full bg-black p-3 relative space-y-1">
     <Add
       v-if="addable"
-      v-tippy="$t('actions.add')"
+      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
       class="absolute top-1 right-1 text-success cursor-pointer w-8 h-8"
       @click="$emit('add', monster)"
     />
