@@ -62,7 +62,7 @@ watchDebounced(
       />
     </td>
     <td class="p-2 border-r border-slate-700">
-      <Actions :row="row" />
+      <Actions :row="row" :index="index" />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Effects 

@@ -1,17 +1,19 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
+import { useTableStore } from '@/store/table'
 
-
-const emit = defineEmits(['update'])
-const props = defineProps({ row: { type: Object, required: true } })
+const props = defineProps({ 
+  row: { type: Object, required: true }, 
+  index: { type: Number, required: true }, 
+})
 
 const toast = useToastStore()
+const store = useTableStore()
 const { t } = useI18n({ useScope: 'global' })
 
 function updateLink(link) {
   props.row.link = link
-  emit('update', props.row)
+  store.updateRow('link', link, props.row, props.index)
 }
 
 function updateHealth(update) {
@@ -44,7 +46,8 @@ function updateHealth(update) {
   }
   // when health is an negative number change it to 0
   if (props.row.health < 0) props.row.health = 0
-  emit('update', props.row)
+
+  updateRow()
 }
 
 function updateAc(update) {
@@ -72,12 +75,19 @@ function updateAc(update) {
   }
   // when ac is an negative number change it to 0
   if (props.row.ac < 0) props.row.ac = 0
-  emit('update', props.row)
+ 
+  updateRow()
 }
 
 function updateCondition(conditions) {
   props.row.conditions = conditions
-  emit('update', props.row)
+  updateRow()
+}
+
+function updateRow(){
+  const rows = store.encounter.rows
+  rows[props.index] = props.row
+  store.encounterUpdate({ rows })
 }
 </script>
 
@@ -85,7 +95,7 @@ function updateCondition(conditions) {
   <div class="flex gap-1 justify-center">
     <LinkModal
       v-tippy="$t('encounter.tooltip.link')"
-      :link="row.link === undefined ? null : row.link"
+      :url="row.link"
       @update="updateLink"
     />
     <HeartModal
