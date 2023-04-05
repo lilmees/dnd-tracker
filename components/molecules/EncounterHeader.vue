@@ -10,7 +10,8 @@ const store = useTableStore()
   <div class="flex flex-wrap gap-4 items-center justify-between container-max">
     <div class="flex gap-2 font-bold">
       <p>{{ $t('encounter.round') }}: {{ store.encounter.round }}</p>
-      <button 
+      <button
+        v-tippy="{ content: $t('actions.reset'), animation: 'shift-away' }" 
         :disabled="!store.encounter.rows.length"
         class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="store.encounterUpdate({ round: 1, activeIndex: 0 })"

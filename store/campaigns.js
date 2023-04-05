@@ -23,7 +23,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', {
 
         this.loading = true
         this.error = null
-        const { data, error } = await supabase.from('campaigns').select('*, initiative-sheets(title)')
+        const { data, error } = await supabase.from('campaigns').select('*, initiative_sheets(title)')
         if (error) throw error
         if (data) this.data = data
       } catch (error) {
