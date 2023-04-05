@@ -61,8 +61,19 @@
   },
   {
     "$cmp": "Button",
+    "if": "$encounter",
     "props": {
       "label": "encounter.addInInitiative",
+      "type": "submit",
+      "loading": "$isLoading",
+      "inline": true
+    }
+  },
+  {
+    "$cmp": "Button",
+    "if": "!$encounter",
+    "props": {
+      "label": "encounter.addHomebrew",
       "type": "submit",
       "loading": "$isLoading",
       "inline": true
