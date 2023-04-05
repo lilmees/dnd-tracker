@@ -24,8 +24,7 @@ async function addCampaign({ __init, ...formData }) {
       ...formData,
       created_by: user.value.id,
       admins: [user.value.id],
-      color: contrastColor(formData.background),
-      encounters: 0,
+      color: contrastColor(formData.background)
     })
     emit('close')
   } catch (err) {
