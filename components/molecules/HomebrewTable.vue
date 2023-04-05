@@ -1,6 +1,5 @@
 <script setup>
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import Add from '~/assets/icons/add.svg'
 import Copy from '@/assets/icons/copy.svg'
 import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
@@ -22,10 +21,7 @@ const store = useCurrentCampaignStore()
           <p>Lair)</p>
         </div>
       </div>
-      <Add
-        v-tippy="$t('actions.add')"
-        class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
-      />
+      <AddHomebrew />
     </div>
     <div class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full">
       <table class="min-w-full bg-tracker">
@@ -40,9 +36,9 @@ const store = useCurrentCampaignStore()
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-auto-animate>
           <tr 
-            v-for="item in store.campaign['homebrew-items']" 
+            v-for="item in store.campaign.homebrew_items" 
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
@@ -79,17 +75,17 @@ const store = useCurrentCampaignStore()
             </td>
             <td class="px-2 py-1 border-r border-slate-700 flex gap-1 flex-wrap justify-center">
               <Update 
-                v-tippy="$t('actions.update')" 
+                v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
                 class="w-6 h-6 cursor-pointer text-warning outline-none" 
                 @click="$emit('copy')" 
               />
-              <Copy 
-                v-tippy="$t('actions.copy')" 
+              <Copy
+                v-tippy="{ content: $t('actions.copy'), animation: 'shift-away' }"
                 class="w-6 h-6 cursor-pointer text-primary outline-none" 
                 @click="$emit('copy')" 
               />
               <Delete 
-                v-tippy="$t('actions.delete')" 
+                v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }" 
                 class="w-6 h-6 cursor-pointer text-danger outline-none" 
                 @click="$emit('delete')" 
               />

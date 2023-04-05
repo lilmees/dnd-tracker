@@ -24,7 +24,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     isLoading.value = true
 
     const { data, error } = await supabase
-      .from('initiative-sheets')
+      .from('initiative_sheets')
       .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
       .eq('id', id)
       .single()
@@ -54,8 +54,8 @@ export const useTableStore = defineStore('useTableStore', () => {
 
   async function subscribeEncounterChanges() {
     supabase
-      .channel('initiative-sheets-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'initiative-sheets' }, payload => {
+      .channel('initiative_sheets-updates')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'initiative_sheets' }, payload => {
         if (payload.eventType === 'DELETE') {
           toast.info({ title: t('encounter.toast.removed.title'), text: t('encounter.toast.removed.text') })
           navigateTo(localePath('/encounters'))
@@ -72,7 +72,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (data.campaign && typeof data.campaign === 'object') data.campaign = data.campaign.id
     if (!isSandbox.value) {
       try {
-        const { error } = await supabase.from('initiative-sheets').update(data).eq('id', id)
+        const { error } = await supabase.from('initiative_sheets').update(data).eq('id', id)
         if (error) throw error
         encounter.value = { ...encounter.value, ...enc }
       } catch (error) {

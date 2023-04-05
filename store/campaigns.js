@@ -27,7 +27,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
 
       loading.value = true
       error.value = null
-      const { data, error: errorMessage } = await supabase.from('campaigns').select('*, initiative-sheets(title)')
+      const { data, error: errorMessage } = await supabase.from('campaigns').select('*, initiative_sheets(title)')
       if (errorMessage) throw errorMessage
       if (data) campaigns.value = data
     } catch (err) {
@@ -40,7 +40,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   async function getCampaignById(id) {
     const { data, error } = await supabase
       .from('campaigns')
-      .select('*, homebrew-items(*), notes(*)')
+      .select('*, homebrew_items(*), notes(*)')
       .eq('id', id)
       .single()
     if (error) throw error

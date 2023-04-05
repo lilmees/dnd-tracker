@@ -22,7 +22,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       loading.value = true
       error.value = null
       const { data: sheets, error: err } = await supabase
-        .from('initiative-sheets')
+        .from('initiative_sheets')
         .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
       if (err) throw err
       if (sheets) data.value = sheets
@@ -36,7 +36,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   async function getEncountersByCampaign(campaign) {
     const { data: sheets, error: err } = await supabase
-      .from('initiative-sheets')
+      .from('initiative_sheets')
       .select('*, profiles(id, name, username, avatar)')
       .eq('campaign', `${campaign}`)
     if (err) throw err
@@ -44,7 +44,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   }
 
   async function addEncounter(encounter) {
-    const { data: sheets, error: err } = await supabase.from('initiative-sheets').insert([encounter]).select('*')
+    const { data: sheets, error: err } = await supabase.from('initiative_sheets').insert([encounter]).select('*')
     if (err) throw err
     else {
       data.value && data.value.length ? data.value.push(sheets[0]) : (data.value = [sheets[0]])
@@ -53,7 +53,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   }
 
   async function deleteEncounter(id) {
-    const { data: sheets, error: err } = await supabase.from('initiative-sheets').delete().eq('id', id).select('*')
+    const { data: sheets, error: err } = await supabase.from('initiative_sheets').delete().eq('id', id).select('*')
     if (err) throw err
     else {
       // check if the data is older than 5 minutes if so filter the encounters otherwise fetch data
@@ -65,7 +65,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   async function deleteEncounterByCampaign(campaign) {
     const { data: sheets, error: err } = await supabase
-      .from('initiative-sheets')
+      .from('initiative_sheets')
       .delete()
       .eq('campaign', `${campaign}`)
       .select('*')
@@ -74,7 +74,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   }
 
   async function updateEncounter(encounter, id) {
-    const { data: sheets, error: err } = await supabase.from('initiative-sheets').update(encounter).eq('id', id).select('*')
+    const { data: sheets, error: err } = await supabase.from('initiative_sheets').update(encounter).eq('id', id).select('*')
     if (err) throw err
     else {
       if (data.value) {

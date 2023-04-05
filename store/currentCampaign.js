@@ -1,3 +1,4 @@
+
 import { defineStore } from 'pinia'
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
@@ -5,6 +6,7 @@ import { useToastStore } from '@/store/toast'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const user = useSupabaseUser()
+  const supabase = useSupabaseClient()
   const store = useCampaignsStore()
   const encounterStore = useEncountersStore()
   const toast = useToastStore()
@@ -25,12 +27,24 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       useHead({ title: campaign.value.title })
       encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
     } catch (err) {
-      console.log(err)
       error.value = err
       toast.error({ title: $i18n.t('error.general.title'), text: $i18n.t('error.general.text') })
       navigateTo(localePath('/campaigns'))
     } finally {
       loading.value = false
+    }
+  }
+
+  async function addHomebrewToCampaign(homebrew) {
+    try {
+      const { data, error: err } = await supabase.from('homebrew_items')
+        .insert([homebrew])
+        .select('*')
+      if (err) throw err
+      campaign.value.homebrew_items = [...campaign.value.homebrew_items, ...data]
+    } catch (err) {
+      toast.error({ title: $i18n.t('error.general.title'), text: $i18n.t('error.general.text') })
+      navigateTo(localePath('/campaigns'))
     }
   }
 
@@ -40,5 +54,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     campaign,
     encounters,
     getCampaignInfo,
+    addHomebrewToCampaign
   }
 })

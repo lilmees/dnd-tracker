@@ -30,7 +30,7 @@ async function deleteCampaign() {
 
 // async function copyCampaign({ created_at, id, profiles, ...enc }) {
 //   const campaign = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
-//   delete campaign['initiative-sheets']
+//   delete campaign.initiative_sheets
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
@@ -84,7 +84,7 @@ function closeSettings() {
     >
       <h2>{{ campaign.title }}</h2>
       <div>
-        <p>Encounters: {{ campaign['initiative-sheets']?.length || 0 }}</p>
+        <p>Encounters: {{ campaign.initiative_sheets?.length || 0 }}</p>
       </div>
     </NuxtLink>
     <div v-else class="flex flex-col gap-2 justify-between p-4">

@@ -35,7 +35,7 @@ async function updateNote(note) {
 </script>
 
 <template>
-  <section class="rounded-xl w-fit bg-black p-3 relative space-y-1 tracker-shadow group">
+  <section class="rounded-xl w-fit bg-black p-3 relative space-y-1 tracker-shadow group min-w-[250px]">
     <div class="flex gap-2 items-center justify-between">
       <h3 v-if="note.title">{{ note.title }}</h3>
       <Settings

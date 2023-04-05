@@ -1,0 +1,79 @@
+[
+  {
+    "$cmp": "Input",
+    "props": {
+      "focus": true,
+      "name": "name",
+      "label": "inputs.nameLabel",
+      "validation": "required|length:3,30",
+      "required": true
+    }
+  },
+  {
+    "$cmp": "Input",
+    "if": "($type === 'monster' || $type === 'summon') && $encounter",
+    "props": {
+      "name": "amount",
+      "type": "number",
+      "label": "inputs.amountLabel",
+      "validation": "between:1,15|number|required",
+      "required" : true
+    }
+  },
+  {
+    "$cmp": "Input",
+    "if": "$encounter",
+    "props": {
+      "name": "initiative",
+      "type": "number",
+      "label": "inputs.initiativeLabel",
+      "validation": "between:1,50|number"
+    }
+  },
+  {
+    "$cmp": "Input",
+    "if": "$type !== 'lair'",
+    "props": {
+      "name": "ac",
+      "type": "number",
+      "label": "inputs.acLabel",
+      "validation": "between:1,100|number"
+    }
+  },
+  {
+    "$cmp": "Input",
+    "if": "$type !== 'lair'",
+    "props": {
+      "name": "health",
+      "type": "number",
+      "label": "inputs.hpLabel",
+      "validation": "between:1,1000|number"
+    }
+  },
+  {
+    "$cmp": "Input",
+    "props": {
+      "name": "link",
+      "type": "number",
+      "label": "inputs.linkLabel",
+      "validation": "length:10,200|url"
+    }
+  },
+  {
+    "$cmp": "Button",
+    "props": {
+      "label": "encounter.addInInitiative",
+      "type": "submit",
+      "loading": "$isLoading",
+      "inline": true
+    }
+  },
+  {
+    "$el": "p",
+    "if": "$error",
+    "attrs": {
+      "class": "error-message"
+    },
+    "children": "$error"
+  }
+]
