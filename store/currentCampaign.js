@@ -35,7 +35,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addHomebrewToCampaign(homebrew) {
+  async function addHomebrew(homebrew) {
     try {
       const { data, error: err } = await supabase.from('homebrew_items')
         .insert([homebrew])
@@ -43,8 +43,43 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       if (err) throw err
       campaign.value.homebrew_items = [...campaign.value.homebrew_items, ...data]
     } catch (err) {
-      toast.error({ title: $i18n.t('error.general.title'), text: $i18n.t('error.general.text') })
+      toast.error({
+        title: $i18n.t('error.general.title'),
+        text: $i18n.t('error.general.text')
+      })
       navigateTo(localePath('/campaigns'))
+    }
+  }
+
+  async function updateHomebrew(homebrew, id) {
+    try {
+      const { error: err } = await supabase.from('homebrew_items')
+        .update(homebrew)
+        .eq('id', id)
+      if (err) throw err
+      const index = campaign.value.homebrew_items.findIndex(e => e.id === id)
+      campaign.value.homebrew_items[index] = {
+        ...campaign.value.homebrew_items[index],
+        ...homebrew
+      }
+    } catch (err) {
+      toast.error({
+        title: $i18n.t('error.general.title'),
+        text: $i18n.t('error.general.text')
+      })
+    }
+  }
+
+  async function removeHomebrew(id) {
+    try {
+      const { error: err } = await supabase.from('homebrew_items').delete().eq('id', id)
+      if (err) throw err
+      campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
+    } catch (err) {
+      toast.error({
+        title: $i18n.t('error.general.title'),
+        text: $i18n.t('error.general.text')
+      })
     }
   }
 
@@ -54,6 +89,8 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     campaign,
     encounters,
     getCampaignInfo,
-    addHomebrewToCampaign
+    addHomebrew,
+    updateHomebrew,
+    removeHomebrew
   }
 })

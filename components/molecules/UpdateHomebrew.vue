@@ -4,7 +4,9 @@ import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
-import Add from '~/assets/icons/add.svg'
+import Update from '~/assets/icons/update.svg'
+
+const props = defineProps({ item: { type: Object, required: true }})
 
 const { t } = useI18n({ useScope: 'global' })
 const store = useCurrentCampaignStore()
@@ -22,17 +24,24 @@ const formSchema = computed(() => {
   return form
 })
 
-async function addHomebrew({ __init, ...formData }) {
+onMounted(()=> {
+  data.type = props.item.type
+  
+  form.value = {
+    name: props.item.name,
+    initiative: props.item.initiative,
+    link: props.item.link
+  }
+})
+
+async function updateHomebrew({ __init, ...formData }) {
   data.error = null
   try {
     data.isLoading = true
 
-    store.addHomebrew(
-      removeEmptyKeys({ 
-        ...formData, 
-        campaign: store.campaign.id,
-        type: data.type 
-      })
+    store.updateHomebrew(
+      removeEmptyKeys({ ...formData, type: data.type }), 
+      props.item.id 
     )
 
     reset('form')
@@ -52,14 +61,14 @@ function closeModal() {
 
 <template>
   <section>
-    <button 
-        v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-        @click="isOpen = true"
-      >
-        <Add class="w-4 h-4 text-success" />
-      </button>
+    <button
+      v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
+      @click="isOpen = true"
+    >
+      <Update class="w-6 h-6 text-info outline-none relative top-1"/>
+    </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.newHomebrew') }}</h2>
+      <h2>{{ $t('encounter.updateHomebrew') }}</h2>
       <Select
         :absolute="false"
         :inputLabel="$t('inputs.typeLabel')"
@@ -80,7 +89,7 @@ function closeModal() {
         type="form"
         :actions="false"
         message-class="error-message"
-        @submit="addHomebrew"
+        @submit="updateHomebrew"
       >
         <FormKitSchema :data="data" :schema="formSchema" />
       </FormKit>

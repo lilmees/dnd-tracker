@@ -1,8 +1,6 @@
 <script setup>
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import Copy from '@/assets/icons/copy.svg'
 import Delete from '@/assets/icons/delete.svg'
-import Update from '@/assets/icons/update.svg'
 import Link from '@/assets/icons/link.svg'
 
 const store = useCurrentCampaignStore()
@@ -28,7 +26,7 @@ const store = useCurrentCampaignStore()
         <thead>
           <tr>
             <th 
-              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions']" 
+              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']" 
               :key="header" 
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
@@ -42,8 +40,8 @@ const store = useCurrentCampaignStore()
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
-            <td class="px-2 py-1 border-r border-slate-700">
-              {{ item.name || '' }}
+            <td class="px-2 py-1 border-r border-slate-700 relative">
+              {{ item.name }}
             </td>
             <td 
               class="px-2 py-1 border-r border-slate-700"
@@ -58,37 +56,35 @@ const store = useCurrentCampaignStore()
               {{ item.type || '' }}
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              {{ item.health || '' }}
+              {{ item.type === 'lair' ? '' : item.health || '' }}
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              {{ item.ac || '' }}
+              {{ item.type === 'lair' ? '' : item.ac || '' }}
             </td>
-            <td class="px-2 py-1 border-r border-slate-700">
+            <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
               <NuxtLink
                 v-if="item.link"
                 :to="item.link" 
                 target="_blank" 
                 rel="noreferrer noopener"
-              >
-                <Link class="w-6 h-6 cursor-pointer text-info mx-auto" />
+                class="w-fit"
+                >
+                  <Link class="w-6 h-6 cursor-pointer text-info" />
               </NuxtLink>
             </td>
-            <td class="px-2 py-1 border-r border-slate-700 flex gap-1 flex-wrap justify-center">
-              <Update 
-                v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
-                class="w-6 h-6 cursor-pointer text-warning outline-none" 
-                @click="$emit('copy')" 
-              />
-              <Copy
-                v-tippy="{ content: $t('actions.copy'), animation: 'shift-away' }"
-                class="w-6 h-6 cursor-pointer text-primary outline-none" 
-                @click="$emit('copy')" 
-              />
-              <Delete 
-                v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }" 
-                class="w-6 h-6 cursor-pointer text-danger outline-none" 
-                @click="$emit('delete')" 
-              />
+            <td class="px-2 py-1 border-r border-slate-700">
+              <p class="text-slate-400">
+                coming soon
+              </p>
+            </td>
+            <td class="px-2 py-1 border-r border-slate-700 flex justify-center gap-1">
+              <UpdateHomebrew :item="item" />
+              <button
+                v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
+                @click="store.removeHomebrew(item.id)"
+              >
+                <Delete class="w-6 h-6 text-danger outline-none"/>
+              </button>
             </td>
           </tr>
         </tbody>

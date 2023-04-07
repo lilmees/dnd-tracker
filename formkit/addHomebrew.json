@@ -47,14 +47,13 @@
       "name": "health",
       "type": "number",
       "label": "inputs.hpLabel",
-      "validation": "between:1,1000|number"
+      "validation": "between:1,100|number"
     }
   },
   {
     "$cmp": "Input",
     "props": {
       "name": "link",
-      "type": "number",
       "label": "inputs.linkLabel",
       "validation": "length:10,200|url"
     }
