@@ -1,8 +1,7 @@
 <script setup>
+import { storeToRefs } from 'pinia'
 import { useToastStore } from '@/store/toast'
 import { useEncountersStore } from '@/store/encounters'
-import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Encounters' })
@@ -15,8 +14,13 @@ const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())
 
-watch(error, v => {
-  if (v) toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+watch(error, (v) => {
+  if (v) {
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
+  }
 })
 </script>
 
@@ -44,7 +48,9 @@ watch(error, v => {
       <AddEncounterModal :open="isOpen" @close="isOpen = false" @added="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
-      <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>
+      <h2 class="text-center text-danger">
+        {{ $t('error.general.text') }}
+      </h2>
       <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
     </div>
   </NuxtLayout>

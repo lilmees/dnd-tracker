@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   url: { type: String, required: true },
-  label: { type: String, required: true },
+  label: { type: String, required: true }
 })
 
 const localePath = useLocalePath()

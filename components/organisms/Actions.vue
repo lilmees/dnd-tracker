@@ -2,21 +2,21 @@
 import { useToastStore } from '@/store/toast'
 import { useTableStore } from '@/store/table'
 
-const props = defineProps({ 
-  row: { type: Object, required: true }, 
-  index: { type: Number, required: true }, 
+const props = defineProps({
+  row: { type: Object, required: true },
+  index: { type: Number, required: true }
 })
 
 const toast = useToastStore()
 const store = useTableStore()
 const { t } = useI18n({ useScope: 'global' })
 
-function updateLink(link) {
+function updateLink (link) {
   props.row.link = link
   store.updateRow('link', link, props.row, props.index)
 }
 
-function updateHealth(update) {
+function updateHealth (update) {
   switch (update.type) {
     case 'heal':
       props.row.health + update.amount > props.row.maxHealth
@@ -25,12 +25,13 @@ function updateHealth(update) {
       break
     case 'damage':
       if (props.row.tempHealth) {
-        if (props.row.tempHealth >= update.amount) props.row.tempHealth = props.row.tempHealth - update.amount
-        else {
+        if (props.row.tempHealth >= update.amount) {
+          props.row.tempHealth = props.row.tempHealth - update.amount
+        } else {
           props.row.health = props.row.health - (update.amount - props.row.tempHealth)
           props.row.tempHealth = 0
         }
-      } else props.row.health = props.row.health - update.amount
+      } else { props.row.health = props.row.health - update.amount }
       break
     case 'temp':
       props.row.tempHealth = update.amount
@@ -42,15 +43,20 @@ function updateHealth(update) {
   }
   // when user is dies because of going to much in the negative hp
   if (props.row.health < 0 && Math.abs(props.row.health) >= props.row.maxHealth) {
-    toast.info({ title: t('encounter.toast.died.title'), text: t('encounter.toast.died.textMinHP') })
+    toast.info({
+      title: t('encounter.toast.died.title'),
+      text: t('encounter.toast.died.textMinHP')
+    })
   }
   // when health is an negative number change it to 0
-  if (props.row.health < 0) props.row.health = 0
+  if (props.row.health < 0) {
+    props.row.health = 0
+  }
 
   updateRow()
 }
 
-function updateAc(update) {
+function updateAc (update) {
   switch (update.type) {
     case 'reset':
       props.row.ac = props.row.maxAc
@@ -58,12 +64,13 @@ function updateAc(update) {
       break
     case 'remove':
       if (props.row.tempAc) {
-        if (props.row.tempAc >= update.amount) props.row.tempAc = props.row.tempAc - update.amount
-        else {
+        if (props.row.tempAc >= update.amount) {
+          props.row.tempAc = props.row.tempAc - update.amount
+        } else {
           props.row.ac = props.row.ac - (update.amount - props.row.tempAc)
           props.row.tempAc = 0
         }
-      } else props.row.ac = props.row.ac - update.amount
+      } else { props.row.ac = props.row.ac - update.amount }
       break
     case 'temp':
       props.row.tempAc = update.amount
@@ -74,17 +81,17 @@ function updateAc(update) {
       break
   }
   // when ac is an negative number change it to 0
-  if (props.row.ac < 0) props.row.ac = 0
- 
+  if (props.row.ac < 0) { props.row.ac = 0 }
+
   updateRow()
 }
 
-function updateCondition(conditions) {
+function updateCondition (conditions) {
   props.row.conditions = conditions
   updateRow()
 }
 
-function updateRow(){
+function updateRow () {
   const rows = store.encounter.rows
   rows[props.index] = props.row
   store.encounterUpdate({ rows })
@@ -102,14 +109,14 @@ function updateRow(){
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
       :health="row.health"
-      :tempHealth="row.tempHealth"
+      :temp-health="row.tempHealth"
       @update="updateHealth"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
       :ac="row.ac"
-      :tempAc="row.tempAc"
+      :temp-ac="row.tempAc"
       @update="updateAc"
     />
     <ConditionModal

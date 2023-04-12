@@ -1,25 +1,27 @@
 <script setup>
-import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
 import { useTimeout } from '@vueuse/core'
+import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
 
 const { ready, start } = useTimeout(5000, { controls: true })
 
 const amount = ref(1)
 const rolled = ref()
 
-function rollDice(dice) {
-  if (amount.value < 1 || amount.value > 50) amount.value = 1
-  rolled.value = { 
-    dice, 
-    result: generateDiceRoll(dice), 
+function rollDice (dice) {
+  if (amount.value < 1 || amount.value > 50) {
+    amount.value = 1
+  }
+  rolled.value = {
+    dice,
+    result: generateDiceRoll(dice),
     max: +dice.replace('d', ''),
-    amount: amount.value 
+    amount: amount.value
   }
   amount.value = 1
   start()
 }
 
-function generateDiceRoll(type) {
+function generateDiceRoll (type) {
   switch (type) {
     case 'd100':
       return rollD100(amount.value)
@@ -51,13 +53,13 @@ function generateDiceRoll(type) {
       <p>
         {{ $t('inputs.amountLabel') }}:
       </p>
-      <input 
+      <input
         v-model="amount"
         type="number"
         min="1"
         max="50"
         class="outline-none text-white font-bold w-10 bg-transparent border-b border-slate-400"
-      />
+      >
     </div>
     <div class="flex gap-2 flex-wrap">
       <template v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']" :key="dice">
@@ -94,7 +96,7 @@ function generateDiceRoll(type) {
       leave-from-class="scale-100"
       leave-to-class="scale-0"
     >
-    <section
+      <section
         v-if="rolled && !ready"
         class="bg-black border-4 rounded-xl py-2 px-6 w-fit mt-4"
         :class="{
@@ -108,28 +110,31 @@ function generateDiceRoll(type) {
         }"
       >
         <h3 class="text-center">
-          {{ 
+          {{
             rolled.amount > 1
               ? `${rolled.amount}x ${rolled.dice.toUpperCase()}`
-              : rolled.dice.toUpperCase() 
-            }}
+              : rolled.dice.toUpperCase()
+          }}
         </h3>
         <p class="flex gap-2">
           {{ $t('general.total') }}:
           <span class="font-bold">
-            {{ 
-              Array.isArray(rolled.result) 
-                ? rolled.result.reduce((sum, a) => sum + a, 0)  
-                : rolled.result 
+            {{
+              Array.isArray(rolled.result)
+                ? rolled.result.reduce((sum, a) => sum + a, 0)
+                : rolled.result
             }}
           </span>
           <span v-if="rolled.max === rolled.result">🎉</span>
         </p>
-        <p 
-          v-if="Array.isArray(rolled.result)" 
+        <p
+          v-if="Array.isArray(rolled.result)"
           class="flex flex-wrap gap-1 max-w-[350px]"
         >
-          <span v-for="(result, index) in rolled.result" >
+          <span
+            v-for="(result, index) in rolled.result"
+            :key="result"
+          >
             {{ index !== rolled.result.length - 1 ? `${result},` : result }}
           </span>
         </p>

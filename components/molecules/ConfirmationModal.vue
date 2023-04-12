@@ -2,24 +2,35 @@
 const emit = defineEmits(['close', 'delete'])
 const props = defineProps({
   open: { type: Boolean, required: true },
-  title: { type: String, required: true },
+  title: { type: String, required: true }
 })
 
 const form = ref({ title: '' })
 const same = computed(() => props.title === form.value.title)
 
-function deleteConfirmation() {
-  if (form.value.title.trim() !== props.title.trim()) return
-  emit('delete')
+function deleteConfirmation () {
+  if (form.value.title.trim() === props.title.trim()) {
+    emit('delete')
+  }
 }
 </script>
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <div class="text-white space-y-4">
-      <h2 class="text-danger">{{ $t('confirmation.title') }}</h2>
-      <p class="pb-4">{{ $t('confirmation.text', { title }) }}</p>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="deleteConfirmation">
+      <h2 class="text-danger">
+        {{ $t('confirmation.title') }}
+      </h2>
+      <p class="pb-4">
+        {{ $t('confirmation.text', { title }) }}
+      </p>
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        message-class="error-message"
+        @submit="deleteConfirmation"
+      >
         <Input
           focus
           name="title"
@@ -28,7 +39,13 @@ function deleteConfirmation() {
           required
           :placeholder="title"
         />
-        <Button type="submit" :label="$t('actions.delete')" color="danger" inline :disabled="!same" />
+        <Button
+          type="submit"
+          :label="$t('actions.delete')"
+          color="danger"
+          inline
+          :disabled="!same"
+        />
       </FormKit>
     </div>
   </Modal>

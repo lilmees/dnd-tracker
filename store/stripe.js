@@ -8,8 +8,10 @@ export const useStripeStore = defineStore('useStripeStore', () => {
   const localePath = useLocalePath()
   const profile = useProfileStore()
 
-  async function subscribe(user, lookup, locale) {
-    if (!user) navigateTo(localePath('/login'))
+  async function subscribe (user, lookup, locale) {
+    if (!user) {
+      navigateTo(localePath('/login'))
+    }
     const { data } = await useFetch('/api/stripe/subscribe', {
       method: 'POST',
       body: { user, lookup, locale, customer: profile.data.stripe_id }
@@ -17,7 +19,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     navigateTo(data.value.url, { external: true })
   }
 
-  async function createPortalSession(id) {
+  async function createPortalSession (id) {
     const { data } = await useFetch('/api/stripe/create_portal_session', {
       method: 'POST',
       body: { session_id: id }
@@ -35,8 +37,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { label: $i18n.t('pricing.campaigns', { number: 3 }), icon: 'check' },
         { label: $i18n.t('pricing.multiple'), icon: 'cross' },
         { label: $i18n.t('pricing.setup'), icon: 'check' },
-        { label: $i18n.t('pricing.update'), icon: 'check' },
-      ],
+        { label: $i18n.t('pricing.update'), icon: 'check' }
+      ]
     },
     {
       title: 'Medior',
@@ -47,10 +49,10 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { label: $i18n.t('pricing.campaigns', { number: 10 }), icon: 'check' },
         { label: $i18n.t('pricing.multiple'), icon: 'cross' },
         { label: $i18n.t('pricing.setup'), icon: 'check' },
-        { label: $i18n.t('pricing.update'), icon: 'check' },
+        { label: $i18n.t('pricing.update'), icon: 'check' }
       ],
       monthId: config.public.stripeMediorMonthly,
-      yearId: config.public.stripeMediorYearly,
+      yearId: config.public.stripeMediorYearly
     },
     {
       title: 'Pro',
@@ -61,10 +63,10 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { label: $i18n.t('pricing.campaigns', { number: 'infinite' }), icon: 'check' },
         { label: $i18n.t('pricing.multiple'), icon: 'check' },
         { label: $i18n.t('pricing.setup'), icon: 'check' },
-        { label: $i18n.t('pricing.update'), icon: 'check' },
+        { label: $i18n.t('pricing.update'), icon: 'check' }
       ],
       monthId: config.public.stripeProMonthly,
-      yearId: config.public.stripeProYearly,
+      yearId: config.public.stripeProYearly
     }
   ])
 

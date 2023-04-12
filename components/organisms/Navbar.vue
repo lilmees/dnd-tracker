@@ -1,10 +1,9 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
+import { useMediaQuery } from '@vueuse/core'
 import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'
 import { useAuthStore } from '@/store/auth'
 import { useProfileStore } from '@/store/profile'
-import { useMediaQuery } from '@vueuse/core'
 import Hamburger from '@/assets/icons/hamburger.svg'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -18,19 +17,28 @@ const localePath = useLocalePath()
 
 const isOpen = ref(false)
 
-const visibleRoutes = computed(() => (user.value ? route.routes : route.routes.filter(r => !r.requiredLogIn)))
+const visibleRoutes = computed(() =>
+  user.value
+    ? route.routes
+    : route.routes.filter(r => !r.requiredLogIn)
+)
 
-watch(isSmall, v => {
-  if (!v && isOpen.value) isOpen.value = false
+watch(isSmall, (v) => {
+  if (!v && isOpen.value) {
+    isOpen.value = false
+  }
 })
 
-async function logout() {
+async function logout () {
   try {
     await auth.logout()
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
   }
 }
 </script>
@@ -39,10 +47,17 @@ async function logout() {
   <nav class="bg-black tracker-shadow">
     <div class="dnd-container py-4 flex justify-between items-center gap-4">
       <NuxtLink :to="localePath('/')">
-        <h1 class="font-logo">DND-TRACKER</h1>
+        <h1 class="font-logo">
+          DND-TRACKER
+        </h1>
       </NuxtLink>
       <div class="hidden sm:flex justify-end items-center gap-4">
-        <RouteLink v-for="route in visibleRoutes" :key="route.url" :label="$t(route.label)" :url="route.url" />
+        <RouteLink
+          v-for="link in visibleRoutes"
+          :key="link.url"
+          :label="$t(link.label)"
+          :url="link.url"
+        />
         <template v-if="!user">
           <RouteLink :label="$t('navigation.login')" url="login" />
           <RouteLink :label="$t('navigation.register')" url="register" />
@@ -53,7 +68,10 @@ async function logout() {
           <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
         </template>
       </div>
-      <Hamburger class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-white" @click="isOpen = true" />
+      <Hamburger
+        class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-white"
+        @click="isOpen = true"
+      />
     </div>
 
     <transition
@@ -67,8 +85,8 @@ async function logout() {
       <NavbarPopup
         v-if="isOpen"
         :routes="visibleRoutes"
-        :dropDownRoutes="[...route.playRoutes, ...route.profileRoutes]"
-        :loggedIn="user ? true : false"
+        :drop-down-routes="[...route.playRoutes, ...route.profileRoutes]"
+        :logged-in="user ? true : false"
         @logout="logout"
         @close="isOpen = false"
       />

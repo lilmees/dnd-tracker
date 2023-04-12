@@ -1,8 +1,7 @@
 <script setup>
-import { useTableStore } from '@/store/table'
 import { watchDebounced } from '@vueuse/core'
+import { useTableStore } from '@/store/table'
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -13,18 +12,20 @@ const { t } = useI18n({ useScope: 'global' })
 
 const info = ref('')
 
-try{
+try {
   await store.getEncounter(route.params.id)
   useHead({ title: store.encounter.title })
   info.value = store.encounter.info
 } catch (err) {
   toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-} 
+}
 
 watchDebounced(
   info,
-  v => {
-    if (v) store.encounterUpdate({info : v})
+  (v) => {
+    if (v) {
+      store.encounterUpdate({ info: v })
+    }
   },
   { debounce: 500, maxWait: 1000 }
 )
@@ -38,12 +39,12 @@ watchDebounced(
         <Back url="encounters" :label="$t('encounter.back')" class="container-max" />
         <EncounterHeader />
         <EncounterTable />
-        <EncounterOptions class="pb-10"/>
-        <Input 
-          type="textarea" 
-          name="info" 
-          v-model="info" 
-          :label="$t('encounter.info')" 
+        <EncounterOptions class="pb-10" />
+        <Input
+          v-model="info"
+          type="textarea"
+          name="info"
+          :label="$t('encounter.info')"
         />
         <FabRoller />
       </div>

@@ -5,7 +5,7 @@ const store = useTableStore()
 </script>
 
 <template>
-  <div 
+  <div
     class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2"
   >
     <p class="hidden md:block pr-2 text-slate-400">

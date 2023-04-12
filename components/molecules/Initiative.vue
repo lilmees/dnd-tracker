@@ -8,7 +8,7 @@ import ArrowUp from '@/assets/icons/arrow-up.svg'
 const emit = defineEmits(['update'])
 const props = defineProps({
   initiative: { type: [Number, null], required: true },
-  index: { type: Number, required: true },
+  index: { type: Number, required: true }
 })
 
 const store = useTableStore()
@@ -16,16 +16,16 @@ const store = useTableStore()
 const isOpen = ref(false)
 const form = ref({ initiative: null })
 
-function diceRoll() {
+function diceRoll () {
   form.value.initiative = rollD20()
 }
 
-function updateInitiative({ __init, initiative }) {
+function updateInitiative ({ __init, initiative }) {
   emit('update', Number(initiative) || -1)
   isOpen.value = false
 }
 
-async function moveRow(up) {
+async function moveRow (up) {
   const rows = store.encounter.rows
   const lowestIndex = rows.findIndex(r => r.index === props.index)
   if (up) {
@@ -39,7 +39,9 @@ async function moveRow(up) {
     rows[lowestIndex].index = lowestIndex + 1
     rows[lowestIndex + 1].index = lowestIndex
   }
-  await store.encounterUpdate({ rows : rows.sort((a, b) => a.index - b.index) })
+  await store.encounterUpdate({
+    rows: rows.sort((a, b) => a.index - b.index)
+  })
 }
 </script>
 
@@ -73,7 +75,13 @@ async function moveRow(up) {
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.initiative') }}</h2>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateInitiative">
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        message-class="error-message"
+        @submit="updateInitiative"
+      >
         <div class="flex gap-2 items-end">
           <div class="grow">
             <Input

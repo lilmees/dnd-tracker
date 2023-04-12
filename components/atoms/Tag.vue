@@ -12,10 +12,10 @@ defineProps({
   color: {
     type: String,
     default: 'danger',
-    validator(value) {
+    validator (value) {
       return ['primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
-    },
-  },
+    }
+  }
 })
 </script>
 
@@ -34,16 +34,16 @@ defineProps({
     }"
   >
     <Remove
-      v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
       v-if="removable"
-      @click="$emit('remove', condition.id)"
+      v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
       class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+      @click="$emit('remove', condition.id)"
     />
     <Add
-      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
       v-if="addable && !removable"
-      @click="$emit('add', condition)"
+      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
       class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+      @click="$emit('add', condition)"
     />
     <div>
       {{ condition.name }}

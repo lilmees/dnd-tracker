@@ -3,7 +3,7 @@ import { useTableStore } from '@/store/table'
 
 const props = defineProps({
   row: { type: Object, required: true },
-  index: { type: Number, required: true },
+  index: { type: Number, required: true }
 })
 
 const store = useTableStore()
@@ -16,8 +16,8 @@ const summoner = computed(() => {
 })
 
 watchDebounced(
-  note, 
-  () => store.updateRow('note', note.value, props.row, props.index), 
+  note,
+  () => store.updateRow('note', note.value, props.row, props.index),
   { debounce: 500, maxWait: 1000 }
 )
 </script>
@@ -34,10 +34,19 @@ watchDebounced(
       {{ row.index + 1 }}
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
-      <Name :name="row.name" :type="row.type" @update="store.updateRow('name', $event, row, index)" />
+      <Name
+        :name="row.name"
+        :type="row.type"
+        @update="store.updateRow('name', $event, row, index)"
+      />
     </td>
-    <td v-if="store.includesSummond" class="px-2 py-1 border-r border-slate-700">
-      <div v-if="row.summoner?.id && summoner">{{ summoner }}</div>
+    <td
+      v-if="store.includesSummond"
+      class="px-2 py-1 border-r border-slate-700"
+    >
+      <div v-if="row.summoner?.id && summoner">
+        {{ summoner }}
+      </div>
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Initiative
@@ -47,16 +56,17 @@ watchDebounced(
       />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
-      <Ac 
-        :ac="row.ac || null" :tempAc="row.tempAc || null" 
-        :type="row.type" 
-        @update="store.updateRow('ac', $event, row, index)" 
+      <Ac
+        :ac="row.ac || null"
+        :temp-ac="row.tempAc || null"
+        :type="row.type"
+        @update="store.updateRow('ac', $event, row, index)"
       />
     </td>
     <td class="p-2 border-r border-slate-700">
       <Health
         :health="typeof row.health === 'number' ? row.health : null"
-        :tempHealth="row.tempHealth || null"
+        :temp-health="row.tempHealth || null"
         :type="row.type"
         @update="store.updateRow('health', $event, row, index)"
       />
@@ -65,23 +75,23 @@ watchDebounced(
       <Actions :row="row" :index="index" />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
-      <Effects 
-        :conditions="row.conditions" 
-        @update="store.updateRow($event.type, $event.value, row, index)" 
+      <Effects
+        :conditions="row.conditions"
+        @update="store.updateRow($event.type, $event.value, row, index)"
       />
     </td>
     <td class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative">
       <textarea
-      v-model="note"
-      placeholder="Note"
-      class="border-none outline-none text-white body-small placeholder-slate-400 bg-transparent w-full p-2 absolute inset-0 resize-none"
-     />
+        v-model="note"
+        placeholder="Note"
+        class="border-none outline-none text-white body-small placeholder-slate-400 bg-transparent w-full p-2 absolute inset-0 resize-none"
+      />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
-      <DeathSaves 
-        v-if="row.deathSaves" 
-        :deathSaves="row.deathSaves" 
-        @update="store.updateRow('deathSaves', $event, row, index)" 
+      <DeathSaves
+        v-if="row.deathSaves"
+        :death-saves="row.deathSaves"
+        @update="store.updateRow('deathSaves', $event, row, index)"
       />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
@@ -93,11 +103,11 @@ watchDebounced(
     </td>
     <td class="px-2 py-1">
       <Modify
-        @copy="store.encounterUpdate({ 
+        @copy="store.encounterUpdate({
           rows:[
-            ...store.encounter.rows, 
+            ...store.encounter.rows,
             { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() }
-          ] 
+          ]
         })"
         @delete="store.encounterUpdate({ rows: store.encounter.rows.filter(r => r.id !== row.id) })"
       />

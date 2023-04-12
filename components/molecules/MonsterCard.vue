@@ -7,7 +7,7 @@ import ChevronDown from '~/assets/icons/chevron-down.svg'
 defineEmits(['add'])
 defineProps({
   monster: { type: Object, required: true },
-  addable: { type: Boolean, default: false },
+  addable: { type: Boolean, default: false }
 })
 
 const abilities = ref(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
@@ -30,11 +30,15 @@ const isOpen = ref(false)
       </h3>
       <div class="flex gap-4">
         <div class="flex gap-1">
-          <p class="font-bold">{{ monster.armor_class || '_' }}</p>
+          <p class="font-bold">
+            {{ monster.armor_class || '_' }}
+          </p>
           <Shield class="w-6 h-6 text-help" />
         </div>
         <div class="flex gap-1">
-          <p class="font-bold">{{ monster.hit_points || '_' }}</p>
+          <p class="font-bold">
+            {{ monster.hit_points || '_' }}
+          </p>
           <Heart class="w-6 h-6 text-danger" />
         </div>
       </div>
@@ -42,7 +46,9 @@ const isOpen = ref(false)
     <div class="flex gap-x-4 gap-y-1 flex-wrap">
       <div v-for="(ability, index) in abilities" :key="ability" class="flex gap-1">
         <p>{{ ability }}:</p>
-        <p class="font-bold">{{ monster[abilitiesNames[index]] || '_' }}</p>
+        <p class="font-bold">
+          {{ monster[abilitiesNames[index]] || '_' }}
+        </p>
       </div>
     </div>
     <div class="flex gap-x-4 gap-y-1 flex-wrap">

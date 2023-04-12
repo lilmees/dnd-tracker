@@ -1,6 +1,5 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
@@ -9,7 +8,7 @@ const mail = useMail()
 
 const form = ref({ name: null, email: null, question: null })
 
-function sendContactMail(form) {
+function sendContactMail (form) {
   mail.send({
     from: form.email,
     subject: form.name ? `Contact/question mail from ${form.name}` : 'Contact/question mail',
@@ -20,7 +19,7 @@ function sendContactMail(form) {
     ${form.name ? `<p>NAME: ${form.name} </p>` : ''}
     </br>
     <p>${form.question} </p>
-    `,
+    `
   })
   toast.success({ title: t('contact.success') })
   navigateTo(localePath('/'))

@@ -1,12 +1,16 @@
 <script setup>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useProfileStore } from '@/store/profile'
 import meta from '@/seo/meta.json'
 
 const appName = 'DND TRACKER'
 
-const i18nHead = useLocaleHead({ addDirAttribute: true, identifierAttribute: 'hid', addSeoAttributes: true })
+const i18nHead = useLocaleHead({
+  addDirAttribute: true,
+  identifierAttribute: 'hid',
+  addSeoAttributes: true
+})
 const localePath = useLocalePath()
 const profile = useProfileStore()
 const { auth } = useSupabaseAuthClient()
@@ -27,17 +31,17 @@ useHead({
     { hid: 'og:site_name', property: 'og:site_name', content: meta.og_sitename },
     { hid: 'og:image', property: 'og:image', content: meta.og_image },
     { hid: 'og:title', property: 'og:title', content: meta.og_title },
-    { hid: 'og:description', property: 'og:description', content: meta.og_description },
-  ],
+    { hid: 'og:description', property: 'og:description', content: meta.og_description }
+  ]
 })
 
 useSchemaOrg([
   defineOrganization({
     name: appName,
     url: 'https://dnd-tracker.com',
-    logo: 'https://dnd-tracker.com/socials.png',
+    logo: 'https://dnd-tracker.com/socials.png'
   }),
-  defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' }),
+  defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' })
 ])
 
 if (process.client) {
@@ -45,12 +49,14 @@ if (process.client) {
   ScrollTrigger.getAll().forEach(t => t.kill())
 }
 
-auth.onAuthStateChange(async (event, session) => {
-  profile.fetch()
-  if (event == 'PASSWORD_RECOVERY') navigateTo(localePath('/reset-password'))
-})
+// auth.onAuthStateChange((event, session) => {
+//   profile.fetch()
+//   if (event === 'PASSWORD_RECOVERY') {
+//     navigateTo(localePath('/reset-password'))
+//   }
+// })
 
-onBeforeMount(() => profile.fetch())
+// onBeforeMount(() => profile.fetch())
 </script>
 
 <template>

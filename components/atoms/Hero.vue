@@ -5,7 +5,7 @@ const anchor = ref()
 const eyeLeft = ref()
 const eyeRight = ref()
 
-function calculateEyes(e) {
+function calculateEyes (e) {
   const mouseX = e.clientX
   const mouseY = e.clientY
   const rekt = anchor.value.getBoundingClientRect()
@@ -16,7 +16,7 @@ function calculateEyes(e) {
   eyeRight.value.style.transform = `rotate(${90 + angleDeg}deg)`
 }
 
-function angle(cx, cy, ex, ey) {
+function angle (cx, cy, ex, ey) {
   return (Math.atan2(ey - cy, ex - cx) * 180) / Math.PI
 }
 
@@ -27,7 +27,10 @@ onMounted(() => {
   const title = document.querySelector('[data-title]')
   const dragon = document.querySelector('[data-dragon]')
 
-  gsap.from(wrapper, { duration: 1.5, scale: 1.5, x: '25vw', ease: Power3.easeOut})
+  gsap.from(
+    wrapper,
+    { duration: 1.5, scale: 1.5, x: '25vw', ease: Power3.easeOut }
+  )
 
   gsap.to(image, {
     scrollTrigger: {
@@ -35,17 +38,20 @@ onMounted(() => {
       toggleActions: 'restart none none none',
       start: 'top 5%',
       end: 'bottom 0%',
-      scrub: 2,
+      scrub: 2
     },
-    scale: 1.3,
+    scale: 1.3
   })
 
-  gsap.from(title, { duration: 0.6, delay: 0.2, y: 100, opacity: 0, ease: Power3.easeOut})
+  gsap.from(
+    title,
+    { duration: 0.6, delay: 0.2, y: 100, opacity: 0, ease: Power3.easeOut }
+  )
 
   gsap.fromTo(dragon,
-    { y: '100%', scale: 0.5, opacity: 0.5},
-    { 
-      scrollTrigger: {trigger: container, toggleActions: "restart none none none", scrub: 2},
+    { y: '100%', scale: 0.5, opacity: 0.5 },
+    {
+      scrollTrigger: { trigger: container, toggleActions: 'restart none none none', scrub: 2 },
       y: '-20%',
       scale: 1,
       opacity: 1
@@ -56,9 +62,9 @@ onMounted(() => {
 
 <template>
   <div data-container class="relative" @mousemove="calculateEyes">
-    <div 
+    <div
       data-wrapper
-      class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] overflow-hidden rounded-lg blur-md pt-6 overflow-hidden"
+      class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] rounded-lg blur-md pt-6 overflow-hidden"
     >
       <NuxtImg
         data-image

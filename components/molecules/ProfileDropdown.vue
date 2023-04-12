@@ -1,6 +1,6 @@
 <script setup>
 import { useProfileStore } from '@/store/profile'
-import { useStripeStore} from '@/store/stripe'
+import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
 
 defineEmits(['logout'])
@@ -16,13 +16,16 @@ const isOpen = ref(false)
 
 onBeforeMount(() => profile.fetch())
 
-async function manageSubscription(){
+async function manageSubscription () {
   try {
     isOpen.value = false
     await stripe.createPortalSession(profile.data.stripe_session_id)
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-  } 
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
+  }
 }
 </script>
 
@@ -33,25 +36,25 @@ async function manageSubscription(){
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
-    <ClientOnly>
-      <NuxtImg
-        v-if="profile.data?.avatar"
-        :src="profile.data.avatar"
-        alt="Avatar image"
-        sizes="sm:40px md:40px lg:40px"
-        class="w-10 -scale-x-100 relative bottom-1"
-        format="webp"
-      />
-      <NuxtImg
-        v-else
-        src="/dice.webp"
-        alt="D20 dice"
-        sizes="sm:40px md:40px lg:40px"
-        class="w-10"
-        format="webp"
-        provider="imagekit"
-      />
-    </ClientOnly>
+      <ClientOnly>
+        <NuxtImg
+          v-if="profile.data?.avatar"
+          :src="profile.data.avatar"
+          alt="Avatar image"
+          sizes="sm:40px md:40px lg:40px"
+          class="w-10 -scale-x-100 relative bottom-1"
+          format="webp"
+        />
+        <NuxtImg
+          v-else
+          src="/dice.webp"
+          alt="D20 dice"
+          sizes="sm:40px md:40px lg:40px"
+          class="w-10"
+          format="webp"
+          provider="imagekit"
+        />
+      </ClientOnly>
     </button>
     <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div

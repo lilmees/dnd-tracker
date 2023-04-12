@@ -1,3 +1,5 @@
-export default defineNuxtRouteMiddleware(async to => {
-  if (!to.query.session_id) return abortNavigation()
+export default defineNuxtRouteMiddleware((to) => {
+  if (!to.query.session_id) {
+    return abortNavigation()
+  }
 })

@@ -1,8 +1,8 @@
 <script setup>
+import { reset } from '@formkit/core'
 import { rollD20 } from '@/util/rollDice'
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
-import { reset } from '@formkit/core'
 
 const emit = defineEmits(['close'])
 const props = defineProps({ type: { type: String, required: true } })
@@ -16,27 +16,31 @@ const form = ref({ name: null, initiative: null, amount: 1, ac: null, health: nu
 const optionalSummoners = computed(() =>
   store.encounter?.rows
     .filter(r => r.type !== 'summon')
-    .map(o => {
+    .map((o) => {
       return { label: o.name, id: o.id }
     })
 )
 
 watch(
   () => props.type,
-  v => {
-    if (v === 'summon') reset('form')
+  (v) => {
+    if (v === 'summon') { reset('form') }
   }
 )
 
-async function addInitiative({ __init, amount, ...formData }) {
+async function addInitiative ({ __init, amount, ...formData }) {
   error.value = null
-  if (!formData.summoner) return
+  if (!formData.summoner) { return }
   try {
     isLoading.value = true
     const rows = []
-    for (let i = 0; i < amount; i++) rows.push(createRowObject(formData, props.type, store.encounter.rows))
-    await store.encounterUpdate({ 
-      rows: store.encounter.rows.includes('[') ? rows : [...store.encounter.rows, ...rows]
+    for (let i = 0; i < amount; i++) {
+      rows.push(createRowObject(formData, props.type, store.encounter.rows))
+    }
+    await store.encounterUpdate({
+      rows: store.encounter.rows.includes('[')
+        ? rows
+        : [...store.encounter.rows, ...rows]
     })
     reset('form')
     emit('close')
@@ -47,16 +51,16 @@ async function addInitiative({ __init, amount, ...formData }) {
   }
 }
 
-function rollDice() {
+function rollDice () {
   form.value.initiative = rollD20()
 }
 
-function addPlayerInit() {
+function addPlayerInit () {
   const sum = store.encounter.rows.filter(r => r.id === form.value.summoner.id)[0]
   form.value.initiative = sum.initiative
 }
 
-function selectedSummoner(id) {
+function selectedSummoner (id) {
   const sum = store.encounter.rows.filter(r => r.id === id)[0]
   form.value.summoner = { name: sum.name, id: sum.id }
 }
@@ -64,7 +68,9 @@ function selectedSummoner(id) {
 
 <template>
   <div v-if="type === 'summon'">
-    <p v-if="error" class="text-danger text-center">{{ error }}</p>
+    <p v-if="error" class="text-danger text-center">
+      {{ error }}
+    </p>
     <FormKit
       id="form"
       v-model="form"
@@ -73,10 +79,16 @@ function selectedSummoner(id) {
       message-class="error-message"
       @submit="addInitiative"
     >
-      <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
+      <Input
+        focus
+        name="name"
+        :label="$t('inputs.nameLabel')"
+        validation="required|length:3,30"
+        required
+      />
       <Select
         :absolute="false"
-        :inputLabel="$t('inputs.summonerLabel')"
+        :input-label="$t('inputs.summonerLabel')"
         :label="form.summoner?.name || $t('inputs.nothing')"
         bold
         required
@@ -109,9 +121,23 @@ function selectedSummoner(id) {
         />
       </div>
       <Input name="ac" type="number" :label="$t('inputs.acLabel')" validation="between:1,100|number" />
-      <Input name="health" type="number" :label="$t('inputs.hpLabel')" validation="between:1,1000|number" />
-      <Input name="link" :label="$t('inputs.linkLabel')" validation="length10,200|url" />
-      <Button type="submit" :label="$t('encounter.addInInitiative')" :loading="isLoading" inline />
+      <Input
+        name="health"
+        type="number"
+        :label="$t('inputs.hpLabel')"
+        validation="between:1,1000|number"
+      />
+      <Input
+        name="link"
+        :label="$t('inputs.linkLabel')"
+        validation="length10,200|url"
+      />
+      <Button
+        type="submit"
+        :label="$t('encounter.addInInitiative')"
+        :loading="isLoading"
+        inline
+      />
     </FormKit>
   </div>
 </template>

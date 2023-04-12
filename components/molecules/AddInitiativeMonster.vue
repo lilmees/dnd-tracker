@@ -9,12 +9,14 @@ const isOpen = ref(false)
 const isLoading = ref(false)
 const hits = ref([])
 
-async function addMonster(monster) {
+async function addMonster (monster) {
   try {
     isLoading.value = true
     const row = createRowObject(monster, 'monster', store.encounter.rows)
-    await store.encounterUpdate({ 
-      rows: store.encounter.rows.includes('[') ? [row] : [...store.encounter.rows, row]
+    await store.encounterUpdate({
+      rows: store.encounter.rows.includes('[')
+        ? [row]
+        : [...store.encounter.rows, row]
     })
     isOpen.value = false
   } catch (err) {
@@ -35,16 +37,16 @@ async function addMonster(monster) {
       <span class="md:hidden">
         {{ $t('encounter.monsterManual') }}
       </span>
-      <Book class="text-info w-10 h-10"/>
+      <Book class="text-info w-10 h-10" />
     </button>
-    <Modal v-if="isOpen" @close="isOpen = false" big>
+    <Modal v-if="isOpen" big @close="isOpen = false">
       <FuzzyInput
         focus
         index="monsters"
         placeholder="Copper dragon"
         label="Monster"
-        @hits="v => (hits = v)"
         :disabled="isLoading"
+        @hits="v => (hits = v)"
       >
         <div class="overflow-y-auto max-h-full space-y-2">
           <MonsterCard v-for="hit in hits" :key="hit.id" :monster="hit" addable @add="addMonster" />

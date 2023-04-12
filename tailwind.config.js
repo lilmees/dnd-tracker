@@ -2,14 +2,14 @@ export const content = [
   './pages/**/*.{vue,js}',
   './layouts/**/*.{vue,js}',
   './components/**/*.{vue,js}',
-  './plugins/**/*.{js,ts}',
+  './plugins/**/*.{js,ts}'
 ]
 export const theme = {
   extend: {
     fontFamily: {
       title: ['Lato', 'sans-serif'],
       text: ['Inter', 'sans-serif'],
-      logo: ['Logo', 'sans-serif'],
+      logo: ['Logo', 'sans-serif']
     },
     colors: {
       background: '#0e1315',
@@ -20,8 +20,8 @@ export const theme = {
       info: '#35a4cc',
       warning: '#ffdf8a',
       help: '#b09ce5',
-      danger: '#e693a9',
-    },
+      danger: '#e693a9'
+    }
   },
   container: {
     center: true,
@@ -30,14 +30,14 @@ export const theme = {
       sm: '2rem',
       lg: '4rem',
       xl: '5rem',
-      '2xl': '6rem',
-    },
+      '2xl': '6rem'
+    }
   },
   screens: {
     sm: '768px',
     md: '1024px',
     lg: '1440px',
-    xl: '1920px',
-  },
+    xl: '1920px'
+  }
 }
 export const plugins = []
