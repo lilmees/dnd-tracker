@@ -1,6 +1,5 @@
 <script setup>
 import { watchDebounced } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
 import { useTableStore } from '@/store/table'
 import { useToastStore } from '@/store/toast'
 

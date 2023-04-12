@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useElementVisibility } from '@vueuse/core'
 import { Power3, gsap } from 'gsap'
 import { useTableStore } from '@/store/table'

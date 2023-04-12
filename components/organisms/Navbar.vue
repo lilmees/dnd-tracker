@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useMediaQuery } from '@vueuse/core'
 import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'

@@ -1,6 +1,5 @@
 <script setup>
 // import Copy from '@/assets/icons/copy.svg'
-import { useI18n } from 'vue-i18n'
 import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
 import Settings from '@/assets/icons/settings.svg'

@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useToastStore } from '@/store/toast'
 import { usePlayersStore } from '@/store/players'
 import Shield from '@/assets/icons/shield.svg'

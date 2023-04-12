@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useToastStore } from '@/store/toast'
 
 const { t } = useI18n({ useScope: 'global' })

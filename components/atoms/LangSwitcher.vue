@@ -1,6 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
-
 const { locale, availableLocales } = useI18n({ useScope: 'global' })
 const cookieLang = useCookie('lang')
 const switchLocalePath = useSwitchLocalePath()

@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useToastStore } from '@/store/toast'
 import { useEncountersStore } from '@/store/encounters'

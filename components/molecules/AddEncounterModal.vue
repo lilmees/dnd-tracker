@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'

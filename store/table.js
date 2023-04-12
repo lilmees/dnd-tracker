@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
 import { calculateRowIndex } from '@/util/calculateRowIndex'
 import { useToastStore } from '@/store/toast'

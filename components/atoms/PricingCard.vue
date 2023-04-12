@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import Check from '~/assets/icons/check.svg'
 import Remove from '@/assets/icons/remove.svg'
 import { useStripeStore } from '@/store/stripe'

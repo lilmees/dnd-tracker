@@ -1,5 +1,4 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useProfileStore } from '@/store/profile'
 import { useToastStore } from '@/store/toast'
 
