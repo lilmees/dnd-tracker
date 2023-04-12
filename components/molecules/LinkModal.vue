@@ -11,7 +11,7 @@ const isOpen = ref(false)
 const isUpdating = ref(false)
 const form = ref({ link: null })
 
-function updateLink({ __init, link }) {
+function updateLink ({ __init, link }) {
   emit('update', link)
   isOpen.value = false
   isUpdating.value = false
@@ -26,7 +26,9 @@ function updateLink({ __init, link }) {
         <h3>{{ $t('home.demo') }}</h3>
       </div>
       <div v-else-if="!isUpdating">
-        <h2 class="mb-10">{{ $t('encounter.link') }}</h2>
+        <h2 class="mb-10">
+          {{ $t('encounter.link') }}
+        </h2>
         <div v-if="url" class="flex gap-2 flex-wrap">
           <NuxtLink :to="url" target="_blank" rel="noreferrer noopener" class="grow">
             <Button :label="$t('actions.link')" inline />
@@ -38,10 +40,28 @@ function updateLink({ __init, link }) {
         <Button v-else :label="$t('actions.add')" inline @click="isUpdating = true" />
       </div>
       <div v-else>
-        <h2 class="mb-10">{{ $t('encounter.update.link') }}</h2>
-        <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateLink">
-          <Input focus name="link" :label="$t('inputs.linkLabel')" validation="required|length10,200|url" required />
-          <Button type="submit" :label="url ? $t('actions.update') : $t('actions.add')" inline />
+        <h2 class="mb-10">
+          {{ $t('encounter.update.link') }}
+        </h2>
+        <FormKit
+          v-model="form"
+          type="form"
+          :actions="false"
+          message-class="error-message"
+          @submit="updateLink"
+        >
+          <Input
+            focus
+            name="link"
+            :label="$t('inputs.linkLabel')"
+            validation="required|length10,200|url"
+            required
+          />
+          <Button
+            type="submit"
+            :label="url ? $t('actions.update') : $t('actions.add')"
+            inline
+          />
         </FormKit>
       </div>
     </Modal>

@@ -4,7 +4,7 @@ import ArrowLeft from '@/assets/icons/arrow-left.svg'
 defineProps({
   url: { type: String, required: true },
   label: { type: String, required: true },
-  color: { type: String, default: '#fff' },
+  color: { type: String, default: '#fff' }
 })
 
 const localePath = useLocalePath()

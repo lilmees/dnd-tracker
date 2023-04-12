@@ -5,18 +5,18 @@ const emit = defineEmits(['update'])
 const props = defineProps({
   ac: { type: [Number, null, String], required: true },
   tempAc: { type: [Number, null, String], required: true },
-  type: { type: String, required: true },
+  type: { type: String, required: true }
 })
 
 const isOpen = ref(false)
 const isRollingDice = ref(false)
 const form = ref({ ac: null })
 
-function diceResult(amount) {
+function diceResult (amount) {
   form.value.ac = amount
 }
 
-function updateAc({ __init, ac }) {
+function updateAc ({ __init, ac }) {
   emit('update', Number(ac))
   isOpen.value = false
   isRollingDice.value = false
@@ -27,15 +27,34 @@ function updateAc({ __init, ac }) {
   <div>
     <div class="flex gap-2 items-center">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
-        <p v-if="ac !== null">{{ ac }}</p>
-        <p v-else-if="type !== 'lair'" class="text-slate-600">{{ $t('actions.add') }}</p>
-        <span v-if="ac !== null && tempAc" class="text-primary">+{{ tempAc }}</span>
+        <p v-if="ac !== null">
+          {{ ac }}
+        </p>
+        <p
+          v-else-if="type !== 'lair'"
+          class="text-slate-600"
+        >
+          {{ $t('actions.add') }}
+        </p>
+        <span
+          v-if="ac !== null && tempAc"
+          class="text-primary"
+        >+{{ tempAc }}</span>
       </div>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" :class="{ hidden: !ac }" />
+      <Update
+        class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+        :class="{ hidden: !ac }"
+      />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.ac') }}</h2>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateAc">
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        message-class="error-message"
+        @submit="updateAc"
+      >
         <div class="flex gap-2 items-end">
           <div class="grow">
             <Input

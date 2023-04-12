@@ -2,8 +2,8 @@
 import ChevronDown from '@/assets/icons/chevron-down.svg'
 
 defineProps({
-  label: { type: String },
-  routes: { type: Array },
+  label: { type: String, default: '' },
+  routes: { type: Array, default: () => [] }
 })
 
 const localePath = useLocalePath()

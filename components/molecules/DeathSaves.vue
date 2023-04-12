@@ -1,6 +1,6 @@
 <script setup>
-import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
+import { useToastStore } from '@/store/toast'
 
 const emit = defineEmits(['update'])
 const props = defineProps({ deathSaves: { type: Object, required: true } })
@@ -8,14 +8,17 @@ const props = defineProps({ deathSaves: { type: Object, required: true } })
 const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 
-function updateDeathSave(index, save) {
-  if (save) props.deathSaves.save[index] = !props.deathSaves.save[index]
-  else props.deathSaves.fail[index] = !props.deathSaves.fail[index]
+function updateDeathSave (index, save) {
+  if (save) {
+    props.deathSaves.save[index] = !props.deathSaves.save[index]
+  } else {
+    props.deathSaves.fail[index] = !props.deathSaves.fail[index]
+  }
   // show toast when player died
   if (JSON.stringify(props.deathSaves.fail) === JSON.stringify([true, true, true])) {
     toast.info({
       title: t('encounter.toast.died.title'),
-      text: t('encounter.toast.died.textDeathSaves'),
+      text: t('encounter.toast.died.textDeathSaves')
     })
   }
   emit('update', props.deathSaves)

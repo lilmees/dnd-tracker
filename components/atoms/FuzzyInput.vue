@@ -1,8 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { calculatePagination } from '@/util/calculatePagination'
 import { useMonstersStore } from '@/store/monsters'
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['hits'])
 const props = defineProps({
@@ -10,7 +10,7 @@ const props = defineProps({
   placeholder: { type: String, required: true },
   label: { type: String, required: true },
   disabled: { type: Boolean, default: false },
-  focus: { type: Boolean, default: false },
+  focus: { type: Boolean, default: false }
 })
 
 const { t } = useI18n({ useScope: 'global' })
@@ -22,36 +22,45 @@ const page = ref(0)
 const pages = ref(0)
 
 onMounted(() => {
-  if (props.focus) document.querySelector('#el')?.focus()
+  if (props.focus) {
+    document.querySelector('#el')?.focus()
+  }
 })
 
 watchDebounced(
   query,
-  async v => {
+  (v) => {
     if (v) {
       page.value = 0
       fetchMonsters(v, page.value)
-    } else emit('hits', [])
+    } else {
+      emit('hits', [])
+    }
   },
   { debounce: 500, maxWait: 1000 }
 )
 
-async function fetchMonsters(query, page) {
+async function fetchMonsters (query, page) {
   try {
     const { from, to } = calculatePagination(page, 20)
     const { data, count } = await store.fuzzySearchMonsters(query, from, to)
     pages.value = Math.ceil(count / 20)
     emit('hits', data)
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
   }
 }
 
-async function paginate(newPage) {
+function paginate (newPage) {
   page.value = newPage
   fetchMonsters(query.value, newPage)
   const el = document.getElementById('el')
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }
 }
 </script>
 
@@ -70,6 +79,6 @@ async function paginate(newPage) {
       outer-class="mb-3"
     />
     <slot />
-    <Pagination v-if="pages > 1" v-model="page" :totalPages="pages" @paginate="paginate" />
+    <Pagination v-if="pages > 1" v-model="page" :total-pages="pages" @paginate="paginate" />
   </div>
 </template>

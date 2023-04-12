@@ -1,6 +1,6 @@
 <script setup>
-import { useToastStore } from '@/store/toast'
 import { useI18n } from 'vue-i18n'
+import { useToastStore } from '@/store/toast'
 import { usePlayersStore } from '@/store/players'
 import Shield from '@/assets/icons/shield.svg'
 import Heart from '@/assets/icons/heart.svg'
@@ -21,16 +21,19 @@ const isSettings = ref(false)
 const isUpdating = ref(false)
 const needConfirmation = ref(false)
 
-async function deletePlayer() {
+async function deletePlayer () {
   try {
     await store.deletePlayer(props.player.id)
     emit('deleted', props.player.id)
   } catch (error) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
   }
 }
 
-async function updatePlayer(player) {
+function updatePlayer (player) {
   emit('updated', player)
   isSettings.value = false
   isUpdating.value = false
@@ -44,8 +47,8 @@ async function updatePlayer(player) {
       <Settings
         v-if="!isSettings"
         v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
-        @click="isSettings = !isSettings"
         class="w-4 h-4 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+        @click="isSettings = !isSettings"
       />
       <Remove
         v-else
@@ -56,11 +59,15 @@ async function updatePlayer(player) {
     </div>
     <div class="flex gap-4 pt-2 justify-center">
       <div class="flex gap-1">
-        <p class="font-bold">{{ player.health || '_' }}</p>
+        <p class="font-bold">
+          {{ player.health || '_' }}
+        </p>
         <Heart class="w-6 h-6 text-danger" />
       </div>
       <div class="flex gap-1">
-        <p class="font-bold">{{ player.ac || '_' }}</p>
+        <p class="font-bold">
+          {{ player.ac || '_' }}
+        </p>
         <Shield class="w-6 h-6 text-help" />
       </div>
       <NuxtLink v-if="player.link" :to="player.link" target="_blank" rel="noreferrer noopener">

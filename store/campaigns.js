@@ -19,17 +19,24 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       : null
   })
 
-  async function fetch() {
+  async function fetch () {
     try {
       // check if there is data that is older then 1 minutes old otherwise refetch the data
-      if ((!minutesAgo(1, lastFetched.value) && campaigns.value) || loading.value) return
-      else lastFetched.value = Date.now()
+      if ((!minutesAgo(1, lastFetched.value) && campaigns.value) || loading.value) {
+        return
+      } else {
+        lastFetched.value = Date.now()
+      }
 
       loading.value = true
       error.value = null
       const { data, error: errorMessage } = await supabase.from('campaigns').select('*, initiative_sheets(title)')
-      if (errorMessage) throw errorMessage
-      if (data) campaigns.value = data
+      if (errorMessage) {
+        throw errorMessage
+      }
+      if (data) {
+        campaigns.value = data
+      }
     } catch (err) {
       error.value = err
     } finally {
@@ -37,38 +44,46 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function getCampaignById(id) {
+  async function getCampaignById (id) {
     const { data, error } = await supabase
       .from('campaigns')
       .select('*, homebrew_items(*), notes(*)')
       .eq('id', id)
       .single()
-    if (error) throw error
-    else return data
+    if (error) {
+      throw error
+    } else {
+      return data
+    }
   }
 
-  async function addCampaign(campaign) {
+  async function addCampaign (campaign) {
     const { data, error } = await supabase.from('campaigns').insert([campaign]).select('*')
-    if (error) throw error
-    else campaigns.value.push(data[0])
+    if (error) {
+      throw error
+    } else {
+      campaigns.value.push(data[0])
+    }
   }
 
-  async function deleteCampaign(id) {
-    //delete encounters first
+  async function deleteCampaign (id) {
+    // delete encounters first
     await encounters.deleteEncounterByCampaign(id)
     const { data, error } = await supabase.from('campaigns').delete().eq('id', id).select('*')
-    if (error) throw error
-    else {
+    if (error) {
+      throw error
+    } else {
       // check if the data is older than 1 minutes if so filter the campaigns otherwise fetch data
       !minutesAgo(1, lastFetched.value) ? (campaigns.value = campaigns.value.filter(d => d.id !== id)) : fetch()
       return data
     }
   }
 
-  async function updateCampaign(campaign, id) {
+  async function updateCampaign (campaign, id) {
     const { data, error } = await supabase.from('campaigns').update(campaign).eq('id', id).select('*')
-    if (error) throw error
-    else {
+    if (error) {
+      throw error
+    } else {
       const index = campaigns.value.findIndex(e => e.id === id)
       const oldData = campaigns.value.splice(index, 1)
       campaigns.value.push({ ...oldData[0], ...data[0] })

@@ -1,6 +1,6 @@
 <script setup>
-import { useProfileStore } from '@/store/profile'
 import { useI18n } from 'vue-i18n'
+import { useProfileStore } from '@/store/profile'
 import { useToastStore } from '@/store/toast'
 
 definePageMeta({ middleware: ['auth'] })
@@ -18,21 +18,24 @@ const form = ref({
   email: profile.data?.email || '',
   password: '',
   name: profile.data?.name || '',
-  username: profile.data?.username || '',
+  username: profile.data?.username || ''
 })
 
-watch(isUpdating, v => {
-  if (v)
+watch(isUpdating, (v) => {
+  if (v) {
     form.value = {
       email: profile.data?.email || '',
       password: '',
       name: profile.data?.name || '',
-      username: profile.data?.username || '',
+      username: profile.data?.username || ''
     }
-  if (profile.data.avatar) image.value = profile.data.avatar
+  }
+  if (profile.data.avatar) {
+    image.value = profile.data.avatar
+  }
 })
 
-async function updateProfile({ __init, username, name, ...credentials }) {
+async function updateProfile ({ __init, username, name, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true
@@ -46,13 +49,13 @@ async function updateProfile({ __init, username, name, ...credentials }) {
   }
 }
 
-function randomAvatar() {
+function randomAvatar () {
   image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
     .toString(36)
     .substring(7)}.svg?size=100`
 }
 
-async function deleteUser() {
+async function deleteUser () {
   try {
     needConfirmation.value = false
     isLoading.value = true
@@ -85,8 +88,8 @@ async function deleteUser() {
           <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
         </p>
         <div class="flex flex-wrap gap-x-4 gap-y-2">
-          <Button :label="$t('profile.update')" @click="isUpdating = true" :loading="isLoading" />
-          <Button :label="$t('profile.delete')" color="danger" @click="needConfirmation = true" :loading="isLoading" />
+          <Button :label="$t('profile.update')" :loading="isLoading" @click="isUpdating = true" />
+          <Button :label="$t('profile.delete')" color="danger" :loading="isLoading" @click="needConfirmation = true" />
         </div>
         <ConfirmationModal
           :open="needConfirmation"
@@ -96,14 +99,20 @@ async function deleteUser() {
         />
       </template>
       <template v-else>
-        <h1 class="text-center">{{ $t('profile.update') }}</h1>
+        <h1 class="text-center">
+          {{ $t('profile.update') }}
+        </h1>
         <div class="flex flex-col gap-2 items-center">
           <div class="w-[100px] h-[100px]">
             <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" />
           </div>
-          <TextButton @click="randomAvatar">{{ $t('register.random') }}</TextButton>
+          <TextButton @click="randomAvatar">
+            {{ $t('register.random') }}
+          </TextButton>
         </div>
-        <p v-if="error" class="text-danger text-center">{{ error }}</p>
+        <p v-if="error" class="text-danger text-center">
+          {{ error }}
+        </p>
         <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateProfile">
           <Input
             focus
@@ -135,7 +144,7 @@ async function deleteUser() {
               class="grow"
               color="primary"
             />
-            <Button :label="$t('actions.cancel')" @click="isUpdating = false" inline class="grow" />
+            <Button :label="$t('actions.cancel')" inline class="grow" @click="isUpdating = false" />
           </div>
         </FormKit>
       </template>

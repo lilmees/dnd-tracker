@@ -6,7 +6,7 @@ const emit = defineEmits(['close', 'notes'])
 const props = defineProps({
   notes: { type: Array, required: true },
   open: { type: Boolean, required: true },
-  id: { type: Number, required: true },
+  id: { type: Number, required: true }
 })
 
 const store = useNotesStore()
@@ -15,7 +15,7 @@ const error = ref()
 const isLoading = ref(false)
 const form = ref({ title: null, text: null })
 
-async function addNote({ __init, ...formData }) {
+async function addNote ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
@@ -32,9 +32,24 @@ async function addNote({ __init, ...formData }) {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <p v-if="error" class="text-danger text-center">{{ error }}</p>
-    <FormKit id="form" v-model="form" type="form" :actions="false" message-class="error-message" @submit="addNote">
-      <Input focus name="title" :label="$t('inputs.titleLabel')" required validation="required|length:3,50" />
+    <p v-if="error" class="text-danger text-center">
+      {{ error }}
+    </p>
+    <FormKit
+      id="form"
+      v-model="form"
+      type="form"
+      :actions="false"
+      message-class="error-message"
+      @submit="addNote"
+    >
+      <Input
+        focus
+        name="title"
+        :label="$t('inputs.titleLabel')"
+        required
+        validation="required|length:3,50"
+      />
       <Input
         name="text"
         type="textarea"

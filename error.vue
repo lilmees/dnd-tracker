@@ -7,7 +7,9 @@ const { data, refresh } = useFetch('https://meme-api.com/gimme')
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen">
     <div class="flex flex-col space-y-6">
-      <h1 class="text-primary max-w-2xl">{{ $t('error.404') }}</h1>
+      <h1 class="text-primary max-w-2xl">
+        {{ $t('error.404') }}
+      </h1>
       <div class="flex flex-wrap gap-x-4 pb-10">
         <NuxtLink :to="localePath('/')" class="w-fit">
           <Button :label="$t('error.goHome')" color="primary" />

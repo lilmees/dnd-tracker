@@ -3,21 +3,29 @@ import { useElementVisibility } from '@vueuse/core'
 import { gsap, Power3 } from 'gsap'
 
 defineProps({
-  title: { type: String },
-  items: { type: Array },
+  title: { type: String, default: '' },
+  items: { type: Array, default: () => [] }
 })
 
 const el = ref()
 const isVisible = useElementVisibility(el)
 
-watch(isVisible, v => {
-  if(v) gsap.fromTo(el.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
+watch(isVisible, (v) => {
+  if (v) {
+    gsap.fromTo(
+      el.value,
+      { scale: 0.85 },
+      { scale: 1, duration: 0.75, ease: Power3.easeOut }
+    )
+  }
 })
 </script>
 
 <template>
   <div ref="el">
-    <h2 v-if="title" class="pb-4">{{ title }}</h2>
+    <h2 v-if="title" class="pb-4">
+      {{ title }}
+    </h2>
     <div v-if="items.length" class="flex flex-col gap-4">
       <div v-for="item in items" :key="item" class="flex items-center gap-4">
         <NuxtImg

@@ -9,10 +9,10 @@ const props = defineProps({
   color: {
     type: String,
     default: 'black',
-    validator(value) {
+    validator (value) {
       return ['black', 'primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
-    },
-  },
+    }
+  }
 })
 
 const background = computed(() => {

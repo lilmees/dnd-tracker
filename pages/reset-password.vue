@@ -12,7 +12,7 @@ const form = ref({ password: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function resetPassword({ __init, password }) {
+async function resetPassword ({ __init, password }) {
   error.value = null
   try {
     isLoading.value = true
@@ -23,7 +23,7 @@ async function resetPassword({ __init, password }) {
     error.value = err.message
     toast.error({
       title: t('error.general.title'),
-      text: t('error.general.text'),
+      text: t('error.general.text')
     })
   } finally {
     isLoading.value = false
@@ -34,7 +34,9 @@ async function resetPassword({ __init, password }) {
 <template>
   <NuxtLayout name="centered">
     <section class="space-y-6">
-      <h1 class="text-center">{{ $t('resetPassword.title') }}</h1>
+      <h1 class="text-center">
+        {{ $t('resetPassword.title') }}
+      </h1>
       <NuxtImg
         src="/dice.webp"
         alt="D20 logo dice"
@@ -43,7 +45,9 @@ async function resetPassword({ __init, password }) {
         provider="imagekit"
         class="w-10 h-10 mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">
+        {{ error }}
+      </p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
         <Input
           focus

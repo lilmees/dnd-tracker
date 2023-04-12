@@ -1,4 +1,5 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import Copy from '@/assets/icons/copy.svg'
 import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
@@ -6,7 +7,6 @@ import Settings from '@/assets/icons/settings.svg'
 import Remove from '@/assets/icons/remove.svg'
 import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps({ encounter: { type: Object, required: true } })
@@ -21,34 +21,46 @@ const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
 
-async function deleteEncounter() {
+async function deleteEncounter () {
   try {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
   }
 }
 
-async function copyEncounter({ created_at, id, profiles, ...enc }) {
-  const encounter = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
-  if (typeof encounter.campaign === 'object') encounter.campaign = encounter.campaign.id
+async function copyEncounter ({ created_at, id, profiles, ...enc }) {
+  const encounter = {
+    ...enc,
+    title: `copy ${enc.title}`.slice(0, 30),
+    created_by: user.value.id
+  }
+  if (typeof encounter.campaign === 'object') {
+    encounter.campaign = encounter.campaign.id
+  }
   try {
     const enc = await store.addEncounter(encounter)
     emit('copied', enc)
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
   } finally {
     isSettings.value = false
   }
 }
 
-function updatedEncounter(encounter) {
+function updatedEncounter (encounter) {
   emit('updated', encounter)
   closeSettings()
 }
 
-function closeSettings() {
+function closeSettings () {
   isUpdating.value = false
   needConfirmation.value = false
   isSettings.value = false

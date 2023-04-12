@@ -1,11 +1,11 @@
-import { serverSupabaseClient } from '#supabase/server'
 import Stripe from 'stripe'
+import { serverSupabaseClient } from '#supabase/server'
 
 const config = useRuntimeConfig()
 
 const stripe = new Stripe(config.stripeSk, null)
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const client = serverSupabaseClient(event)
   const body = await readBody(event)
 
@@ -25,7 +25,7 @@ export default defineEventHandler(async event => {
     success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
     customer: body.customer || customer.id
-  });
+  })
 
   return { url: session.url }
 })

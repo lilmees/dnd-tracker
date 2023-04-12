@@ -2,9 +2,9 @@
 import Info from '~/assets/icons/info.svg'
 import { useToastStore } from '@/store/toast'
 
-const props = defineProps({ 
-  actions: { type: Array, required: true }, 
-  big: { type: Boolean, default: false }, 
+const props = defineProps({
+  actions: { type: Array, required: true },
+  big: { type: Boolean, default: false }
 })
 
 const toast = useToastStore()
@@ -13,12 +13,17 @@ const attackHeaders = ref(['Name', 'Range', 'To hit', 'Damage', 'Damage type', '
 const spellHeaders = ref(['Name', 'DC', 'Damage', 'Success', 'Usage', 'Info'])
 const actionTypes = computed(() => {
   const actionsObj = { attacks: [], spells: [], multi_attacks: [], multi: [] }
-  props.actions.forEach(action => {
-    if (action.damage && !action.dc) actionsObj.attacks.push(action)
-    else if (action.dc) actionsObj.spells.push(action)
-    else if (action.name === 'Multiattack') {
-      if (action?.action_options?.from?.options) actionsObj.multi_attacks.push(action.action_options.from.options)
-      else if (action?.actions) actionsObj.multi.push(action.actions)
+  props.actions.forEach((action) => {
+    if (action.damage && !action.dc) {
+      actionsObj.attacks.push(action)
+    } else if (action.dc) {
+      actionsObj.spells.push(action)
+    } else if (action.name === 'Multiattack') {
+      if (action?.action_options?.from?.options) {
+        actionsObj.multi_attacks.push(action.action_options.from.options)
+      } else if (action?.actions) {
+        actionsObj.multi.push(action.actions)
+      }
     }
   })
   return actionsObj
@@ -27,14 +32,16 @@ const actionTypes = computed(() => {
 
 <template>
   <section v-if="actions.length">
-    <p class="font-bold text-center border-x border-t border-slate-700 rounded-t-md">Actions</p>
+    <p class="font-bold text-center border-x border-t border-slate-700 rounded-t-md">
+      Actions
+    </p>
     <div class="border border-slate-700 rounded-b-md p-4">
       <table v-if="actionTypes.attacks.length" class="w-full overflow-x-auto">
         <thead>
           <tr>
-            <th 
-              v-for="header in attackHeaders" 
-              :key="header" 
+            <th
+              v-for="header in attackHeaders"
+              :key="header"
               class="uppercase p-1 text-start text-slate-400"
               :class="[!big ? 'body-extra-small' : 'body-small']"
             >
@@ -45,7 +52,10 @@ const actionTypes = computed(() => {
         <tbody :class="{ 'body-extra-small sm:body-small': !big }">
           <template v-for="action in actionTypes.attacks" :key="action">
             <template v-if="action.damage?.length && action.damage[0]?.choose">
-              <tr v-for="damage in action.damage[0]?.from?.options">
+              <tr
+                v-for="damage in action.damage[0]?.from?.options"
+                :key="damage"
+              >
                 <td>
                   {{ action.name || '' }}
                 </td>
@@ -54,8 +64,8 @@ const actionTypes = computed(() => {
                     action.description.en.includes('reach')
                       ? action.description.en.split('reach')[1].split('.')[0]
                       : action.description.en.includes('range')
-                      ? action.description.en.split('range')[1].split('.')[0]
-                      : ''
+                        ? action.description.en.split('range')[1].split('.')[0]
+                        : ''
                   }}
                 </td>
                 <td>
@@ -88,8 +98,8 @@ const actionTypes = computed(() => {
                   action.description.en.includes('reach')
                     ? action.description.en.split('reach')[1].split('.')[0]
                     : action.description.en.includes('range')
-                    ? action.description.en.split('range')[1].split('.')[0]
-                    : ''
+                      ? action.description.en.split('range')[1].split('.')[0]
+                      : ''
                 }}
               </td>
               <td>
@@ -118,9 +128,9 @@ const actionTypes = computed(() => {
       <table v-if="actionTypes.spells.length" class="min-w-full" :class="{ 'mt-4': actionTypes.attacks.length }">
         <thead>
           <tr>
-            <th 
-              v-for="header in spellHeaders" 
-              :key="header" 
+            <th
+              v-for="header in spellHeaders"
+              :key="header"
               class="uppercase p-1 text-start text-slate-400"
               :class="[!big ? 'body-extra-small' : 'body-small']"
             >
@@ -137,7 +147,7 @@ const actionTypes = computed(() => {
             <td v-if="action.damage?.length">
               {{ action.damage[0]?.damage_dice || '' }} {{ action.damage[0]?.damage_type?.name || '' }}
             </td>
-            <td v-else></td>
+            <td v-else />
             <td>
               {{ action.dc.success_type || '' }}
             </td>
@@ -156,13 +166,13 @@ const actionTypes = computed(() => {
           </tr>
         </tbody>
       </table>
-      <div 
+      <div
         v-if="actionTypes.multi_attacks.length || actionTypes.multi.length"
         class="pt-4"
         :class="{ 'body-extra-small sm:body-small': !big }"
       >
-        <p 
-          class="font-bold uppercase pb-2 text-slate-400" 
+        <p
+          class="font-bold uppercase pb-2 text-slate-400"
           :class="{ 'body-extra-small sm:body-small': !big }"
         >
           Multiattacks

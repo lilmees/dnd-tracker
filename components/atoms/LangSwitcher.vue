@@ -11,11 +11,14 @@ const localeLang = computed(() => cookieLang.value || locale.value)
 
 // set the language when mounted if there's a cookie for it
 onMounted(() => {
-  if (cookieLang.value) setLang(cookieLang.value)
-  else setLang(router.currentRoute.value.fullPath.includes('/en/') ? 'en' : 'nl')
+  if (cookieLang.value) {
+    setLang(cookieLang.value)
+  } else {
+    setLang(router.currentRoute.value.fullPath.includes('/en/') ? 'en' : 'nl')
+  }
 })
 
-function setLang(lang) {
+function setLang (lang) {
   cookieLang.value = lang
   locale.value = lang
   config.locale = lang
@@ -30,7 +33,9 @@ function setLang(lang) {
       :to="switchLocalePath(lang)"
       class="uppercase flex gap-1"
     >
-      <p v-if="index > 0 && index < availableLocales.length">|</p>
+      <p v-if="index > 0 && index < availableLocales.length">
+        |
+      </p>
       <p
         class="text-slate-300 hover:text-white duration-200 ease-in-out cursor-pointer"
         :class="{ '!text-primary': localeLang === lang }"

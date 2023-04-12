@@ -12,9 +12,13 @@ const isOpen = ref(false)
 
 onMounted(() => store.fetch())
 
-watch(()=> store.error, v => {
-  if (!v) return
-  toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+watch(() => store.error, (v) => {
+  if (v) {
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
+  }
 })
 </script>
 
@@ -39,7 +43,9 @@ watch(()=> store.error, v => {
       <AddCampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
-      <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>
+      <h2 class="text-center text-danger">
+        {{ $t('error.general.text') }}
+      </h2>
       <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
     </div>
   </NuxtLayout>

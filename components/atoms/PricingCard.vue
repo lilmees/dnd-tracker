@@ -1,22 +1,22 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import Check from '~/assets/icons/check.svg'
 import Remove from '@/assets/icons/remove.svg'
-import { useStripeStore} from '@/store/stripe'
-import { useI18n } from 'vue-i18n'
+import { useStripeStore } from '@/store/stripe'
 
 const props = defineProps({
   product: { type: Object, required: true },
   current: { type: Boolean, default: false },
   yearly: { type: Boolean, default: false },
-  user: { type: Object },
+  user: { type: Object, default: () => {} }
 })
 
 const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
 
-async function subscribe(){
- await stripe.subscribe(
-    props.user, 
+async function subscribe () {
+  await stripe.subscribe(
+    props.user,
     props.yearly ? props.product.yearId : props.product.monthId,
     locale.value
   )
@@ -30,8 +30,12 @@ async function subscribe(){
     @click="subscribe"
   >
     <div class="flex flex-col">
-      <h1 class="mb-4">{{ product.title }}</h1>
-      <p class="">{{ product.description }}</p>
+      <h1 class="mb-4">
+        {{ product.title }}
+      </h1>
+      <p class="">
+        {{ product.description }}
+      </p>
       <div class="flex justify-center items-baseline my-8">
         <span class="mr-2 text-5xl font-extrabold">
           {{ product.prices[yearly && product.prices.length > 1 ? 1 : 0] }}€
@@ -46,6 +50,6 @@ async function subscribe(){
         </li>
       </ul>
     </div>
-    <Button  :label="current ? $t('pricing.current') : $t('pricing.start')" inline  color="primary" :disabled="current" />
+    <Button :label="current ? $t('pricing.current') : $t('pricing.start')" inline color="primary" :disabled="current" />
   </div>
 </template>

@@ -1,12 +1,12 @@
 <script setup>
 // import Copy from '@/assets/icons/copy.svg'
+import { useI18n } from 'vue-i18n'
 import Delete from '@/assets/icons/delete.svg'
 import Update from '@/assets/icons/update.svg'
 import Settings from '@/assets/icons/settings.svg'
 import Remove from '@/assets/icons/remove.svg'
 import { useCampaignsStore } from '@/store/campaigns'
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 
 const props = defineProps({ campaign: { type: Object, required: true } })
 
@@ -20,7 +20,7 @@ const needConfirmation = ref(false)
 const isUpdating = ref(false)
 const isSettings = ref(false)
 
-async function deleteCampaign() {
+async function deleteCampaign () {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (error) {
@@ -40,14 +40,14 @@ async function deleteCampaign() {
 //   }
 // }
 
-function errorToast() {
+function errorToast () {
   toast.error({
     title: t('error.general.title'),
-    text: t('error.general.text'),
+    text: t('error.general.text')
   })
 }
 
-function closeSettings() {
+function closeSettings () {
   isUpdating.value = false
   needConfirmation.value = false
   isSettings.value = false

@@ -1,14 +1,14 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
-import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['close', 'added'])
 const props = defineProps({
   open: { type: Boolean, required: true },
-  campaignId: { type: [Number, String] },
+  campaignId: { type: [Number, String], default: null }
 })
 
 const { t } = useI18n({ useScope: 'global' })
@@ -22,35 +22,38 @@ const error = ref()
 const chosenCampaign = ref()
 
 onMounted(() => {
-  if (!props.campaignId) campaigns.fetch()
+  if (!props.campaignId) { campaigns.fetch() }
 })
 
 watch(
   () => props.open,
-  v => {
-    if (!v) chosenCampaign.value = null
+  (v) => {
+    if (!v) { chosenCampaign.value = null }
   }
 )
 
 const campaignOptions = computed(() => {
   return [
     { label: t('campaigns.no'), id: 'none' },
-    ...campaigns.data.map(c => {
+    ...campaigns.data.map((c) => {
       return { label: c.title, id: c.id }
-    }),
+    })
   ]
 })
 
-function changeColor() {
+function changeColor () {
   form.value.background = randomColor()
 }
 
-async function addEncounter({ __init, ...formData }) {
+async function addEncounter ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    let campaign =
-      props.campaignId || (chosenCampaign.value && chosenCampaign.value.id !== 'none' ? chosenCampaign.value.id : null)
+    const campaign =
+      props.campaignId || (chosenCampaign.value && chosenCampaign.value.id !== 'none'
+        ? chosenCampaign.value.id
+        : null
+      )
     const encounter = await store.addEncounter({
       ...formData,
       campaign,
@@ -59,7 +62,7 @@ async function addEncounter({ __init, ...formData }) {
       created_by: user.value.id,
       admins: [user.value.id],
       color: contrastColor(formData.background),
-      activeIndex: 0,
+      activeIndex: 0
     })
     emit('added', encounter)
   } catch (err) {
@@ -69,7 +72,7 @@ async function addEncounter({ __init, ...formData }) {
   }
 }
 
-function selectedCampaign(id) {
+function selectedCampaign (id) {
   const filtered = campaignOptions.value.filter(c => c.id === id && c.id !== 'none')
   chosenCampaign.value = filtered[0] || null
 }
@@ -78,7 +81,9 @@ function selectedCampaign(id) {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <h2>{{ $t('encounters.title') }}</h2>
-    <p v-if="error" class="text-danger text-center">{{ error }}</p>
+    <p v-if="error" class="text-danger text-center">
+      {{ error }}
+    </p>
     <FormKit
       v-if="campaignId || campaigns.data"
       v-model="form"
@@ -90,7 +95,7 @@ function selectedCampaign(id) {
       <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
       <Select
         v-if="!campaignId"
-        :inputLabel="$t('inputs.campaignLabel')"
+        :input-label="$t('inputs.campaignLabel')"
         :label="chosenCampaign?.label || $t('campaigns.no')"
         bold
         :options="campaignOptions"

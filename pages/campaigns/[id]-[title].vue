@@ -11,17 +11,17 @@ const isCreatingEncounter = ref(false)
 
 onMounted(() => store.getCampaignInfo(route.params.id))
 
-function addedEncounter(encounter) {
+function addedEncounter (encounter) {
   store.encounters.push(encounter)
   isCreatingEncounter.value = false
 }
 
-function deletedEncounter(id) {
+function deletedEncounter (id) {
   store.encounters = store.encounters.filter(e => e.id !== id)
   isCreatingEncounter.value = false
 }
 
-function updatedEncounter(encounter) {
+function updatedEncounter (encounter) {
   const index = store.encounters.findIndex(e => e.id === encounter.id)
   store.encounters[index] = encounter
 }
@@ -34,9 +34,9 @@ function updatedEncounter(encounter) {
       <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
       <div
         class="rounded w-full tracker-shadow relative p-2 flex"
-        :style="{ 
+        :style="{
           'background-color': store.campaign.background || '#000',
-           color: store.campaign.color || '#fff' 
+          color: store.campaign.color || '#fff'
         }"
       >
         <h1 class="grow text-center">
@@ -55,8 +55,8 @@ function updatedEncounter(encounter) {
             <h2>{{ $t('general.encounters') }}</h2>
             <Add
               v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-              @click="isCreatingEncounter = true"
               class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
+              @click="isCreatingEncounter = true"
             />
           </div>
           <div v-if="store.encounters.length" class="flex flex-wrap gap-4 items-start">
@@ -70,7 +70,9 @@ function updatedEncounter(encounter) {
             />
           </div>
           <div v-else class="space-y-2">
-            <p class="text-center">{{ $t('encounters.noData.title') }}</p>
+            <p class="text-center">
+              {{ $t('encounters.noData.title') }}
+            </p>
             <Button
               :label="$t('encounters.add')"
               color="primary"
@@ -86,10 +88,10 @@ function updatedEncounter(encounter) {
         <CampaignPlayers v-model="store.campaign.players" :id="store.campaign.id" />
         <CampaignMonsters v-model="store.campaign['homebrew-monsters']" :id="store.campaign.id" />
       </div> -->
-      <CampaignNotes v-model="store.campaign.notes" :id="store.campaign.id" />
+      <CampaignNotes :id="store.campaign.id" v-model="store.campaign.notes" />
       <AddEncounterModal
         :open="isCreatingEncounter"
-        :campaignId="store.campaign.id"
+        :campaign-id="store.campaign.id"
         @close="isCreatingEncounter = false"
         @added="addedEncounter"
       />

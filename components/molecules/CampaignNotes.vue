@@ -8,17 +8,17 @@ const store = useCurrentCampaignStore()
 
 const isOpen = ref(false)
 
-function addedNote(notes){
+function addedNote (notes) {
   store.campaign.notes = notes
   isOpen.value = false
 }
 
-function removedNote(id) {
+function removedNote (id) {
   store.campaign.notes = store.campaign.notes.filter(p => p.id !== id)
   isOpen.value = false
 }
 
-function updatedNote(note) {
+function updatedNote (note) {
   const index = store.campaign.notes.findIndex(p => p.id === note.id)
   store.campaign.notes[index] = note
   isOpen.value = false
@@ -31,12 +31,14 @@ function updatedNote(note) {
       <h2>{{ $t('general.notes') }}</h2>
       <Add
         v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-        @click="isOpen = true"
         class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
+        @click="isOpen = true"
       />
     </div>
     <div v-if="!store.campaign.notes.length" class="space-y-2">
-      <p class="text-center">{{ $t('notes.none') }}</p>
+      <p class="text-center">
+        {{ $t('notes.none') }}
+      </p>
       <Button :label="$t('notes.add')" color="primary" class="mx-auto w-fit" @click="isOpen = true" />
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
@@ -48,12 +50,12 @@ function updatedNote(note) {
         @updated="updatedNote"
       />
     </div>
-    <AddCampaignNote 
-      :open="isOpen" 
-      :id="store.campaign.id" 
-      :notes="store.campaign.notes" 
-      @close="isOpen = false" 
-      @notes="addedNote" 
+    <AddCampaignNote
+      :id="store.campaign.id"
+      :open="isOpen"
+      :notes="store.campaign.notes"
+      @close="isOpen = false"
+      @notes="addedNote"
     />
   </section>
 </template>

@@ -17,7 +17,7 @@ const image = ref(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 
-async function register({ __init, username, name, ...credentials }) {
+async function register ({ __init, username, name, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true
@@ -32,7 +32,7 @@ async function register({ __init, username, name, ...credentials }) {
   }
 }
 
-function randomAvatar() {
+function randomAvatar () {
   image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
     .toString(36)
     .substring(7)}.svg?size=100`
@@ -42,14 +42,20 @@ function randomAvatar() {
 <template>
   <NuxtLayout name="centered">
     <section class="space-y-6">
-      <h1 class="text-center">{{ $t('register.register') }}</h1>
+      <h1 class="text-center">
+        {{ $t('register.register') }}
+      </h1>
       <div class="flex flex-col gap-2 items-center">
         <div class="w-[100px] h-[100px]">
           <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" />
         </div>
-        <TextButton @click="randomAvatar">{{ $t('register.random') }}</TextButton>
+        <TextButton @click="randomAvatar">
+          {{ $t('register.random') }}
+        </TextButton>
       </div>
-      <p v-if="error" class="text-danger text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">
+        {{ error }}
+      </p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
         <Input
           focus

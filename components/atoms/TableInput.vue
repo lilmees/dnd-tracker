@@ -1,15 +1,15 @@
 <script setup>
 const emit = defineEmits(['update'])
-const props = defineProps({ 
+const props = defineProps({
   value: { type: [String, Number, null], default: null },
-  placeholder: { type: String },
+  placeholder: { type: String, default: '' }
 })
 
 const text = ref(props.value)
 
 watchDebounced(
-  text, 
-  () => emit('update', text.value), 
+  text,
+  () => emit('update', text.value),
   { debounce: 500, maxWait: 1000 }
 )
 </script>

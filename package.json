@@ -4,19 +4,24 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "prod": "nuxt build && nuxt start",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27913696.5d122a3",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/supabase": "^0.3.0",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@vueuse/core": "^9.4.0",
     "@vueuse/nuxt": "^9.4.0",
-    "nuxt": "^3.1.0",
+    "eslint": "^8.36.0",
+    "nuxt": "^3.4.0",
     "nuxt-schema-org": "^2.1.1",
-    "postcss-custom-properties": "^12.1.11"
+    "postcss-custom-properties": "^12.1.11",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
@@ -29,7 +34,6 @@
     "click-outside-vue3": "^4.0.1",
     "gsap": "^3.11.4",
     "nuxt-mail": "^3.1.5",
-    "nuxt-security": "^0.10.0",
     "stripe": "^11.12.0",
     "vite-svg-loader": "^3.6.0",
     "vue-tippy": "v6"

@@ -25,9 +25,9 @@ const store = useCurrentCampaignStore()
       <table class="min-w-full bg-tracker">
         <thead>
           <tr>
-            <th 
-              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']" 
-              :key="header" 
+            <th
+              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']"
+              :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ header }}
@@ -35,15 +35,15 @@ const store = useCurrentCampaignStore()
           </tr>
         </thead>
         <tbody v-auto-animate>
-          <tr 
-            v-for="item in store.campaign.homebrew_items" 
+          <tr
+            v-for="item in store.campaign.homebrew_items"
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
             <td class="px-2 py-1 border-r border-slate-700 relative">
               {{ item.name }}
             </td>
-            <td 
+            <td
               class="px-2 py-1 border-r border-slate-700"
               :class="{
                 'text-white': item.type === 'player',
@@ -64,12 +64,12 @@ const store = useCurrentCampaignStore()
             <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
               <NuxtLink
                 v-if="item.link"
-                :to="item.link" 
-                target="_blank" 
+                :to="item.link"
+                target="_blank"
                 rel="noreferrer noopener"
                 class="w-fit"
-                >
-                  <Link class="w-6 h-6 cursor-pointer text-info" />
+              >
+                <Link class="w-6 h-6 cursor-pointer text-info" />
               </NuxtLink>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
@@ -83,7 +83,7 @@ const store = useCurrentCampaignStore()
                 v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
                 @click="store.removeHomebrew(item.id)"
               >
-                <Delete class="w-6 h-6 text-danger outline-none"/>
+                <Delete class="w-6 h-6 text-danger outline-none" />
               </button>
             </td>
           </tr>

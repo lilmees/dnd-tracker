@@ -31,13 +31,13 @@
       </p>
       <ul>
         <li>
-          <NuxtLink 
-            to="https://stripe.com/en-be/privacy" 
-            target="_blank" 
-            rel 
+          <NuxtLink
+            to="https://stripe.com/en-be/privacy"
+            target="_blank"
+            rel
             class="inline text-primary underline"
-            >
-              Stripe
+          >
+            Stripe
           </NuxtLink>
         </li>
       </ul>
@@ -48,7 +48,7 @@
         Third Party Privacy Policies
       </h2>
       <p>
-        DND-TRACKERs Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. 
+        DND-TRACKERs Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.
       </p>
       <p>
         You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers respective websites.
@@ -73,7 +73,7 @@
       </h2>
       <p>
         By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.
-      </p>									
+      </p>
     </div>
   </NuxtLayout>
 </template>

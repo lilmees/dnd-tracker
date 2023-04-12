@@ -18,12 +18,14 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const campaign = ref(null)
   const encounters = ref([])
 
-  async function getCampaignInfo(id) {
+  async function getCampaignInfo (id) {
     loading.value = true
     error.value = null
     try {
       campaign.value = await store.getCampaignById(id)
-      if (!campaign.value.admins.includes(user.value.id)) navigateTo(localePath('/campaigns'))
+      if (!campaign.value.admins.includes(user.value.id)) {
+        navigateTo(localePath('/campaigns'))
+      }
       useHead({ title: campaign.value.title })
       encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
     } catch (err) {
@@ -35,12 +37,14 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addHomebrew(homebrew) {
+  async function addHomebrew (homebrew) {
     try {
       const { data, error: err } = await supabase.from('homebrew_items')
         .insert([homebrew])
         .select('*')
-      if (err) throw err
+      if (err) {
+        throw err
+      }
       campaign.value.homebrew_items = [...campaign.value.homebrew_items, ...data]
     } catch (err) {
       toast.error({
@@ -51,12 +55,14 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function updateHomebrew(homebrew, id) {
+  async function updateHomebrew (homebrew, id) {
     try {
       const { error: err } = await supabase.from('homebrew_items')
         .update(homebrew)
         .eq('id', id)
-      if (err) throw err
+      if (err) {
+        throw err
+      }
       const index = campaign.value.homebrew_items.findIndex(e => e.id === id)
       campaign.value.homebrew_items[index] = {
         ...campaign.value.homebrew_items[index],
@@ -70,10 +76,12 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function removeHomebrew(id) {
+  async function removeHomebrew (id) {
     try {
       const { error: err } = await supabase.from('homebrew_items').delete().eq('id', id)
-      if (err) throw err
+      if (err) {
+        throw err
+      }
       campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
     } catch (err) {
       toast.error({

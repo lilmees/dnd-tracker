@@ -14,7 +14,7 @@ const form = ref({ email: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function forgotPassword({ __init, email }) {
+async function forgotPassword ({ __init, email }) {
   error.value = null
   try {
     isLoading.value = true
@@ -25,7 +25,7 @@ async function forgotPassword({ __init, email }) {
     error.value = err.message
     toast.error({
       title: t('error.general.title'),
-      text: t('error.general.text'),
+      text: t('error.general.text')
     })
   } finally {
     isLoading.value = false
@@ -36,7 +36,9 @@ async function forgotPassword({ __init, email }) {
 <template>
   <NuxtLayout name="centered">
     <section class="space-y-6">
-      <h1 class="text-center">{{ $t('forgotPassword.title') }}</h1>
+      <h1 class="text-center">
+        {{ $t('forgotPassword.title') }}
+      </h1>
       <NuxtImg
         src="/dice.webp"
         alt="D20 logo dice"
@@ -45,7 +47,9 @@ async function forgotPassword({ __init, email }) {
         provider="imagekit"
         class="w-20 h-20 mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">
+        {{ error }}
+      </p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="forgotPassword">
         <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
         <Button type="submit" :label="$t('forgotPassword.reset')" :loading="isLoading" inline />

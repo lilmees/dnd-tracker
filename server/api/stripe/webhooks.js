@@ -2,7 +2,7 @@ import { serverSupabaseClient } from '#supabase/server'
 
 const config = useRuntimeConfig()
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const client = serverSupabaseClient(event)
   const body = await readBody(event)
 
@@ -17,30 +17,39 @@ export default defineEventHandler(async event => {
     stripe_started_at: subscription.start_date
   }
 
-  if (typeId === config.public.stripeMediorMonthly || typeId === config.public.stripeMediorYearly) productName = 'medior'
-  else if (typeId === config.public.stripeProMonthly || typeId === config.public.stripeProYearly) productName = 'pro'
+  if (typeId === config.public.stripeMediorMonthly || typeId === config.public.stripeMediorYearly) {
+    productName = 'medior'
+  } else if (typeId === config.public.stripeProMonthly || typeId === config.public.stripeProYearly) {
+    productName = 'pro'
+  }
 
-  const { data } = await client.from('profiles').select('stripe_last_event').eq('stripe_id', subscription.customer).single()
-  if (data?.stripe_last_event > body.created) return `Did not handle ${body.type} because it was an old event`
+  const { data } = await client
+    .from('profiles')
+    .select('stripe_last_event')
+    .eq('stripe_id', subscription.customer)
+    .single()
+
+  if (data?.stripe_last_event > body.created) {
+    return `Did not handle ${body.type} because it was an old event`
+  }
 
   if (
-    body.type === 'customer.subscription.created'
-    || body.type === 'customer.subscription.resumed'
-    || body.type === 'customer.subscription.updated'
+    body.type === 'customer.subscription.created' ||
+    body.type === 'customer.subscription.resumed' ||
+    body.type === 'customer.subscription.updated'
   ) {
     stripeData = {
       ...stripeData,
       paid_subscription_active: true,
       subscription_id: subscription.id,
-      subscription_type: productName,
+      subscription_type: productName
     }
-  }
-  else if (body.type === 'customer.subscription.deleted' || body.type === 'customer.subscription.paused') {
+  } else if (body.type === 'customer.subscription.deleted' || body.type === 'customer.subscription.paused') {
     stripeData = {
       ...stripeData,
       paid_subscription_active: false,
       subscription_id: null,
-      subscription_type: 'free',
+      subscription_type: 'free'
     }
   }
 
