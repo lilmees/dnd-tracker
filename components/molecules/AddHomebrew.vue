@@ -11,7 +11,7 @@ const store = useCurrentCampaignStore()
 
 const isOpen = ref(false)
 const form = ref({ name: null, initiative: null, link: null })
-const data = reactive({ isLoading: false, type: 'player', error: null })
+const data = reactive({ isLoading: false, update: false, type: 'player', error: null })
 
 const formSchema = computed(() => {
   const form = []

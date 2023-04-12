@@ -70,9 +70,19 @@
   },
   {
     "$cmp": "Button",
-    "if": "!$encounter",
+    "if": "$update === false",
     "props": {
       "label": "encounter.addHomebrew",
+      "type": "submit",
+      "loading": "$isLoading",
+      "inline": true
+    }
+  },
+  {
+    "$cmp": "Button",
+    "if": "$update",
+    "props": {
+      "label": "encounter.updateHomebrew",
       "type": "submit",
       "loading": "$isLoading",
       "inline": true

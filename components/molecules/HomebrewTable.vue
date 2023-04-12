@@ -77,7 +77,7 @@ const store = useCurrentCampaignStore()
                 coming soon
               </p>
             </td>
-            <td class="px-2 py-1 border-r border-slate-700 flex justify-center gap-1">
+            <td class="px-2 py-1 flex justify-center gap-1">
               <UpdateHomebrew :item="item" />
               <button
                 v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
