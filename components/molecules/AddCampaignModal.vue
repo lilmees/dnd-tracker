@@ -12,11 +12,11 @@ const form = ref({ title: null, background: '#0073A1' })
 const isLoading = ref(false)
 const error = ref()
 
-function changeColor() {
+function changeColor () {
   form.value.background = randomColor()
 }
 
-async function addCampaign({ __init, ...formData }) {
+async function addCampaign ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
@@ -38,16 +38,40 @@ async function addCampaign({ __init, ...formData }) {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <h2>{{ $t('campaigns.title') }}</h2>
-    <p v-if="error" class="text-danger text-center">{{ error }}</p>
-    <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="addCampaign">
-      <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
+    <p v-if="error" class="text-danger text-center">
+      {{ error }}
+    </p>
+    <FormKit
+      v-model="form"
+      type="form"
+      :actions="false"
+      message-class="error-message"
+      @submit="addCampaign"
+    >
+      <Input
+        focus
+        name="title"
+        :label="$t('inputs.titleLabel')"
+        validation="required|length:3,30"
+        required
+      />
       <div class="flex gap-2 items-end">
-        <ColorPicker name="background" :label="$t('inputs.backgroundLabel')" validation="required" required />
+        <ColorPicker
+          name="background"
+          :label="$t('inputs.backgroundLabel')"
+          validation="required"
+          required
+        />
         <div class="mb-[14px]">
           <Button :label="$t('actions.random')" @click="changeColor" />
         </div>
       </div>
-      <Button type="submit" :label="$t('campaigns.add')" :loading="store.loading" inline />
+      <Button
+        type="submit"
+        :label="$t('campaigns.add')"
+        :loading="store.loading"
+        inline
+      />
     </FormKit>
   </Modal>
 </template>

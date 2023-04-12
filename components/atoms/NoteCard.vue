@@ -1,6 +1,5 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 import { useNotesStore } from '@/store/notes'
 import Settings from '@/assets/icons/settings.svg'
 import Delete from '@/assets/icons/delete.svg'
@@ -18,7 +17,7 @@ const isSettings = ref(false)
 const isUpdating = ref(false)
 const needConfirmation = ref(false)
 
-async function deleteNote() {
+async function deleteNote () {
   try {
     await store.deleteNote(props.note.id)
     emit('deleted', props.note.id)
@@ -27,7 +26,7 @@ async function deleteNote() {
   }
 }
 
-async function updateNote(note) {
+function updateNote (note) {
   emit('updated', note)
   isSettings.value = false
   isUpdating.value = false
@@ -35,14 +34,16 @@ async function updateNote(note) {
 </script>
 
 <template>
-  <section class="rounded-xl w-fit bg-black p-3 relative space-y-1 tracker-shadow group">
+  <section class="rounded-xl w-fit bg-black p-3 relative space-y-1 tracker-shadow group min-w-[250px]">
     <div class="flex gap-2 items-center justify-between">
-      <h3 v-if="note.title">{{ note.title }}</h3>
+      <h3 v-if="note.title">
+        {{ note.title }}
+      </h3>
       <Settings
         v-if="!isSettings"
         v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
-        @click="isSettings = !isSettings"
         class="w-4 h-4 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+        @click="isSettings = !isSettings"
       />
       <Remove
         v-else

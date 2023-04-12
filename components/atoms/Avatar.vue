@@ -2,9 +2,9 @@
 defineProps({
   image: { type: String, required: true },
   alt: { type: String, default: 'broken image' },
-  name: { type: String },
+  name: { type: String, default: '' },
   color: { type: String, default: '#ffffff' },
-  owner: { type: Boolean, default: false },
+  owner: { type: Boolean, default: false }
 })
 </script>
 

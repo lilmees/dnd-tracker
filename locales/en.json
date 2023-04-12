@@ -100,6 +100,7 @@
     "addInitiative": "Add initiative",
     "addInInitiative": "Add in initiative",
     "addHomebrew": "Add homebrew",
+    "updateHomebrew": "Update homebrew",
     "monsterManual": "Monster manual",
     "addCampaignMonster": "Add campaign monster",
     "addCampaignPlayer": "Add campaign player",
@@ -259,7 +260,8 @@
     "monsters": "Monsters",
     "notes": "Notes",
     "total": "Total",
-    "grandTotal": "Grand total"
+    "grandTotal": "Grand total",
+    "homebrew": "Homebrew"
   },
   "players": {
     "none": "No players added",

@@ -3,17 +3,17 @@ import ChevronDown from '~/assets/icons/chevron-down.svg'
 
 const emit = defineEmits(['selected'])
 defineProps({
-  inputLabel: { type: String },
+  inputLabel: { type: String, default: '' },
   label: { type: String, required: true },
   bold: { type: Boolean, default: false },
   required: { type: Boolean, default: false },
   absolute: { type: Boolean, default: true },
-  options: { type: Array, default: () => [] },
+  options: { type: Array, default: () => [] }
 })
 
 const isOpen = ref(false)
 
-function selectedOption(option) {
+function selectedOption (option) {
   isOpen.value = false
   emit('selected', option.id)
 }
@@ -31,7 +31,9 @@ function selectedOption(option) {
         :class="{ 'rounded-b-none': isOpen }"
         @click="isOpen = !isOpen"
       >
-        <div :class="{ 'font-bold': bold }">{{ label }}</div>
+        <div :class="{ 'font-bold': bold }">
+          {{ label }}
+        </div>
         <ChevronDown class="relative duration-200 h-4 w-4 stroke-2" :class="{ 'rotate-180': isOpen }" />
       </div>
       <div

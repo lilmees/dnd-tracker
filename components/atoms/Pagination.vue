@@ -5,18 +5,18 @@ const emit = defineEmits(['update:modelValue', 'paginate'])
 const props = defineProps({
   modelValue: { type: Number, required: true },
   perPage: { type: Number, default: 20 },
-  totalPages: { type: Number, required: true },
+  totalPages: { type: Number, required: true }
 })
 
-function handleNext() {
+function handleNext () {
   handleSelect(Math.min(props.modelValue + 1, props.totalPages))
 }
 
-function handlePrevious() {
+function handlePrevious () {
   handleSelect(Math.max(props.modelValue - 1, 0))
 }
 
-function handleSelect(v) {
+function handleSelect (v) {
   emit('update:modelValue', v)
   emit('paginate', v)
 }
@@ -25,21 +25,23 @@ const numbersList = computed(() => Array.from({ length: props.totalPages }, (_, 
 
 const limitedNumbersList = computed(() => {
   let limited = []
-  if (props.totalPages <= 4) limited = numbersList.value
-  // get first four of array when page is the first or second of the array
-  else if (props.modelValue === 0 || props.modelValue === 1) limited = numbersList.value.slice(0, 4)
-  // get last four of array when page is the last or second last of the array
-  else if (
+  if (props.totalPages <= 4) {
+    limited = numbersList.value
+  } else if (props.modelValue === 0 || props.modelValue === 1) {
+    // get first four of array when page is the first or second of the array
+    limited = numbersList.value.slice(0, 4)
+  } else if (
     props.modelValue + 1 === numbersList.value[[numbersList.value.length - 1]] ||
     props.modelValue + 1 === numbersList.value[[numbersList.value.length - 2]]
-  )
+  ) {
+    // get last four of array when page is the last or second last of the array
     limited = numbersList.value.slice(-4)
-  else {
+  } else {
     limited = [
       numbersList.value[props.modelValue - 1],
       numbersList.value[props.modelValue],
       numbersList.value[props.modelValue + 1],
-      numbersList.value[props.modelValue + 2],
+      numbersList.value[props.modelValue + 2]
     ]
   }
   return limited

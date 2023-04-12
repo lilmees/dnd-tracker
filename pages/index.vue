@@ -1,9 +1,8 @@
 <script setup>
-import { useToastStore } from '@/store/toast'
-import { useI18n } from 'vue-i18n'
 import { useElementVisibility } from '@vueuse/core'
-import { useTableStore } from '@/store/table'
 import { Power3, gsap } from 'gsap'
+import { useTableStore } from '@/store/table'
+import { useToastStore } from '@/store/toast'
 
 const store = useTableStore()
 const toast = useToastStore()
@@ -14,18 +13,30 @@ const table = ref()
 const hoardVisible = useElementVisibility(hoard)
 const tableVisible = useElementVisibility(table)
 
-try{
+try {
   await store.getSandboxEncounter()
 } catch (err) {
   toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-}   
+}
 
-watch(hoardVisible, v => {
-  if(v) gsap.fromTo(hoard.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
+watch(hoardVisible, (v) => {
+  if (v) {
+    gsap.fromTo(
+      hoard.value,
+      { scale: 0.85 },
+      { scale: 1, duration: 0.75, ease: Power3.easeOut }
+    )
+  }
 })
 
-watch(tableVisible, v => {
-  if(v) gsap.fromTo(table.value, { scale: 0.85 }, { scale:1, duration: 0.75, ease: Power3.easeOut })
+watch(tableVisible, (v) => {
+  if (v) {
+    gsap.fromTo(
+      table.value,
+      { scale: 0.85 },
+      { scale: 1, duration: 0.75, ease: Power3.easeOut }
+    )
+  }
 })
 </script>
 
@@ -38,8 +49,8 @@ watch(tableVisible, v => {
           <TitleText
             :title="$t('home.textBlock1.title')"
             :text="$t('home.textBlock1.text')"
-            buttonLink="roadmap"
-            :buttonLabel="'Go to the roadmap'"
+            button-link="roadmap"
+            :button-label="'Go to the roadmap'"
           />
           <div class="mt-20 lg:mt-32 flex md:justify-end">
             <Summary
@@ -56,7 +67,7 @@ watch(tableVisible, v => {
           </div>
         </div>
         <div v-if="store.encounter" ref="table" class="rounded-xl px-4 py-2 bg-tracker tracker-shadow">
-          <EncounterHeader class="w-full pb-4"/>
+          <EncounterHeader class="w-full pb-4" />
           <EncounterTable />
           <EncounterOptions class="pt-4" />
         </div>
@@ -71,7 +82,7 @@ watch(tableVisible, v => {
             class="mx-auto"
           />
         </div>
-        <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')"/>
+        <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
       </div>
     </div>
   </NuxtLayout>

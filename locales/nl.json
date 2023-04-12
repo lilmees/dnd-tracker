@@ -107,6 +107,7 @@
     "addAllPlayers": "Alle spelers toevoegen",
     "addMonsters": "Geselecteerde monsters toevoegen",
     "newHomebrew": "Maak een nieuwe homebrew",
+    "updateHomebrew": "Homebrew aanpassen",
     "link": "Link",
     "conditionInfo": "Effect informatie",
     "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
@@ -259,7 +260,8 @@
     "monsters": "Monsters",
     "notes": "Notities",
     "total": "Totaal",
-    "grandTotal": "Eindtotaal"
+    "grandTotal": "Eindtotaal",
+    "homebrew": "Homebrew"
   },
   "players": {
     "none": "Geen spelers toegevoegd",

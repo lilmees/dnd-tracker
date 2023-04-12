@@ -4,10 +4,10 @@ defineProps({
   label: { type: String, required: true },
   modelValue: { type: Boolean },
   disabled: { type: Boolean, default: false },
-  help: { type: String, required: false },
-  validation: { type: String },
+  help: { type: String, default: null },
+  validation: { type: String, default: '' },
   name: { type: String, required: true },
-  type: { type: String, default: 'text' },
+  type: { type: String, default: 'text' }
 })
 </script>
 

@@ -4,7 +4,7 @@ import Beer from '@/assets/icons/beer.svg'
 const type = ref('player')
 const isOpen = ref(false)
 
-function closeModal() {
+function closeModal () {
   type.value = 'player'
   isOpen.value = false
 }
@@ -20,13 +20,13 @@ function closeModal() {
       <span class="md:hidden">
         {{ $t('encounter.addHomebrew') }}
       </span>
-      <Beer class="text-warning w-10 h-10"/>
+      <Beer class="text-warning w-10 h-10" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.newHomebrew') }}</h2>
       <Select
         :absolute="false"
-        :inputLabel="$t('inputs.typeLabel')"
+        :input-label="$t('inputs.typeLabel')"
         :label="type"
         bold
         :options="[

@@ -4,13 +4,13 @@ import Update from '@/assets/icons/update.svg'
 const emit = defineEmits(['update'])
 const props = defineProps({
   name: { type: String, required: true },
-  type: { type: String, default: 'player' },
+  type: { type: String, default: 'player' }
 })
 
 const isOpen = ref(false)
 const form = ref({ name: null })
 
-function updateName({ __init, name }) {
+function updateName ({ __init, name }) {
   emit('update', name.trim())
   isOpen.value = false
 }
@@ -36,9 +36,25 @@ function updateName({ __init, name }) {
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.name') }}</h2>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateName">
-        <Input focus name="name" :label="$t('inputs.nameLabel')" validation="required|length:3,30" required />
-        <Button type="submit" :label="$t('actions.update')" inline />
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        message-class="error-message"
+        @submit="updateName"
+      >
+        <Input
+          focus
+          name="name"
+          :label="$t('inputs.nameLabel')"
+          validation="required|length:3,30"
+          required
+        />
+        <Button
+          type="submit"
+          :label="$t('actions.update')"
+          inline
+        />
       </FormKit>
     </Modal>
   </div>

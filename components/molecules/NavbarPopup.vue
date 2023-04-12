@@ -1,6 +1,6 @@
 <script setup>
 import { useProfileStore } from '@/store/profile'
-import { useStripeStore} from '@/store/stripe'
+import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
 import Remove from '~/assets/icons/remove.svg'
 
@@ -8,7 +8,7 @@ defineEmits(['logout', 'close'])
 defineProps({
   routes: { type: Array, required: true },
   dropDownRoutes: { type: Array, required: true },
-  loggedIn: { type: Boolean, required: true },
+  loggedIn: { type: Boolean, required: true }
 })
 
 const profile = useProfileStore()
@@ -17,22 +17,32 @@ const toast = useToastStore()
 const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
-async function manageSubscription(){
+async function manageSubscription () {
   try {
     await stripe.createPortalSession(profile.data.stripe_session_id)
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
-  } 
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
+  }
 }
 </script>
 
 <template>
-  <div class="fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto bg-tracker p-4 z-20">
+  <div
+    class="fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto bg-tracker p-4 z-20"
+  >
     <div class="flex justify-between items-center gap-4 pb-10">
       <NuxtLink :to="localePath('/')">
-        <h1 class="font-logo">DND-TRACKER</h1>
+        <h1 class="font-logo">
+          DND-TRACKER
+        </h1>
       </NuxtLink>
-      <Remove class="w-10 h-10 cursor-pointer text-danger" @click="$emit('close')" />
+      <Remove
+        class="w-10 h-10 cursor-pointer text-danger"
+        @click="$emit('close')"
+      />
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
       <template v-if="!loggedIn">

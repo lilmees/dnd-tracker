@@ -1,8 +1,6 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
 import { useCampaignsStore } from '@/store/campaigns'
-import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
@@ -11,13 +9,16 @@ const toast = useToastStore()
 const store = useCampaignsStore()
 const { t } = useI18n({ useScope: 'global' })
 const isOpen = ref(false)
-const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())
 
-watch(error, v => {
-  if (!v) return
-  toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+watch(() => store.error, (v) => {
+  if (v) {
+    toast.error({
+      title: t('error.general.title'),
+      text: t('error.general.text')
+    })
+  }
 })
 </script>
 
@@ -42,7 +43,9 @@ watch(error, v => {
       <AddCampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
-      <h2 class="text-center text-danger">{{ $t('error.general.text') }}</h2>
+      <h2 class="text-center text-danger">
+        {{ $t('error.general.text') }}
+      </h2>
       <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
     </div>
   </NuxtLayout>

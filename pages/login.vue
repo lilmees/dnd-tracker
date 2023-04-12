@@ -10,7 +10,7 @@ const form = ref({ email: '', password: '' })
 const isLoading = ref(false)
 const error = ref()
 
-async function login({ __init, ...credentials }) {
+async function login ({ __init, ...credentials }) {
   error.value = null
   try {
     isLoading.value = true
@@ -26,7 +26,9 @@ async function login({ __init, ...credentials }) {
 <template>
   <NuxtLayout name="centered">
     <section class="space-y-6">
-      <h1 class="text-center">{{ $t('login.title') }}</h1>
+      <h1 class="text-center">
+        {{ $t('login.title') }}
+      </h1>
       <NuxtImg
         src="/classes.png"
         alt="D20 logo dice"
@@ -35,7 +37,9 @@ async function login({ __init, ...credentials }) {
         provider="imagekit"
         class="mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center">{{ error }}</p>
+      <p v-if="error" class="text-danger text-center">
+        {{ error }}
+      </p>
       <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="login">
         <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
         <Input

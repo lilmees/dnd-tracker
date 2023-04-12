@@ -7,6 +7,14 @@ defineProps({ concentration: { type: Boolean, required: true } })
 </script>
 
 <template>
-  <Check v-if="concentration" @click="$emit('toggle')" class="w-6 h-6 text-green-400 cursor-pointer mx-auto" />
-  <Remove v-else @click="$emit('toggle')" class="w-6 h-6 text-red-400 cursor-pointer mx-auto" />
+  <Check
+    v-if="concentration"
+    class="w-6 h-6 text-green-400 cursor-pointer mx-auto"
+    @click="$emit('toggle')"
+  />
+  <Remove
+    v-else
+    class="w-6 h-6 text-red-400 cursor-pointer mx-auto"
+    @click="$emit('toggle')"
+  />
 </template>
