@@ -86,7 +86,7 @@ function updatedEncounter (encounter) {
       <HomebrewTable class="py-10" />
       <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 py-8">
         <CampaignPlayers v-model="store.campaign.players" :id="store.campaign.id" />
-        <CampaignMonsters v-model="store.campaign['homebrew-monsters']" :id="store.campaign.id" />
+        <CampaignMonsters v-model="store.campaign['homebrew_items']" :id="store.campaign.id" />
       </div> -->
       <CampaignNotes :id="store.campaign.id" v-model="store.campaign.notes" />
       <AddEncounterModal
