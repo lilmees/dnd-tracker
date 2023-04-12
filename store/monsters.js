@@ -14,7 +14,10 @@ export const useMonstersStore = defineStore('useMonstersStore', {
   actions: {
     async getMonsterByCampaignId (id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').select('*').eq('campaign', id)
+      const { data, error } = await supabase.from('homebrew_items')
+        .select('*')
+        .eq('campaign', id)
+        .eq('type', 'monster')
       if (error) {
         throw error
       } else {
@@ -23,7 +26,7 @@ export const useMonstersStore = defineStore('useMonstersStore', {
     },
     async getMonsterById (id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').select('*').eq('id', id).single()
+      const { data, error } = await supabase.from('homebrew_items').select('*').eq('id', id).single()
       if (error) {
         throw error
       } else {
@@ -32,7 +35,7 @@ export const useMonstersStore = defineStore('useMonstersStore', {
     },
     async addMonster (monster) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').insert([monster]).select('*')
+      const { data, error } = await supabase.from('homebrew_items').insert([monster]).select('*')
       if (error) {
         throw error
       } else {
@@ -41,7 +44,7 @@ export const useMonstersStore = defineStore('useMonstersStore', {
     },
     async deleteMonster (id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').delete().eq('id', id).select('*')
+      const { data, error } = await supabase.from('homebrew_items').delete().eq('id', id).select('*')
       if (error) {
         throw error
       } else {
@@ -50,7 +53,11 @@ export const useMonstersStore = defineStore('useMonstersStore', {
     },
     async updateMonster (monster, id) {
       const supabase = useSupabaseClient()
-      const { data, error } = await supabase.from('homebrew-monsters').update(monster).eq('id', id).select('*')
+      const { data, error } = await supabase.from('homebrew_items')
+        .update(monster)
+        .eq('id', id)
+        .select('*')
+        .eq('type', 'monster')
       if (error) {
         throw error
       } else {
