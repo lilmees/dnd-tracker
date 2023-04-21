@@ -11,7 +11,7 @@ const store = useCurrentCampaignStore()
     <div class="flex justify-between border-b border-slate-700 pb-1">
       <div class="flex gap-4 items-end">
         <h2>{{ $t('general.homebrew') }}</h2>
-        <div class="flex gap-1 text-[10px]">
+        <div class="hidden md:flex gap-1 text-[10px]">
           <p>(Monsters,</p>
           <p>Players,</p>
           <p>Npc's,</p>
@@ -21,7 +21,10 @@ const store = useCurrentCampaignStore()
       </div>
       <AddHomebrew />
     </div>
-    <div class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full">
+    <div
+      v-if="store.campaign.homebrew_items.length"
+      class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
+    >
       <table class="min-w-full bg-tracker">
         <thead>
           <tr>
@@ -89,6 +92,24 @@ const store = useCurrentCampaignStore()
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
+      <div class="flex flex-col justify-center gap-4">
+        <h2 class="pb-2">
+          {{ $t('campaign.homebrew.title') }}
+        </h2>
+        <p class="max-w-prose">
+          {{ $t('campaign.homebrew.text') }}
+        </p>
+      </div>
+      <NuxtImg
+        src="/dragon_hoard.webp"
+        alt="Dragon on hoard"
+        sizes="sm:500px md:500px lg:500px"
+        format="webp"
+        provider="imagekit"
+        class="mx-auto"
+      />
     </div>
   </section>
 </template>

@@ -79,7 +79,10 @@
   },
   "campaign": {
     "back": "Back to campaigns",
-    "goCampaign": "Go to campaign"
+    "goCampaign": "Go to campaign",
+    "homebrew": {
+      "title": "Ready to unleash your creativity?",
+      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"    }
   },
   "encounters": {
     "encounter": "Encounter",

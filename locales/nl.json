@@ -79,7 +79,11 @@
   },
   "campaign": {
     "back": "Terug naar campagnes",
-    "goCampaign": "Ga naar campagne"
+    "goCampaign": "Ga naar campagne",
+    "homebrew": {
+      "title": "Klaar om je creativiteit de vrije loop te laten?",
+      "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campaign. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
+    }
   },
   "encounters": {
     "encounter": "Encounter",
