@@ -36,7 +36,23 @@ watchDebounced(
     <ClientOnly>
       <div v-if="store.isLoading" class="loader" />
       <div v-else class="py-4 space-y-4">
-        <Back url="encounters" :label="$t('encounter.back')" class="container-max" />
+        <Back
+          :url="store.encounter.campaign
+            ? `campaigns/${typeof store.encounter.campaign === 'object'
+              ? store.encounter.campaign.id
+              : store.encounter.campaign
+            }-${
+              typeof store.encounter.campaign === 'object'
+                ? store.encounter.campaign.title.replace(/[\W]/g, '') === ''
+                  ? 'campaign'
+                  : store.encounter.campaign.title.replace(/[\W]/g, '')
+                : 'campaign'
+            }`
+            : 'encounters'
+          "
+          :label="$t(store.encounter.campaign ? 'encounter.campaignBack' : 'encounter.back')"
+          class="container-max"
+        />
         <EncounterHeader />
         <EncounterTable />
         <EncounterOptions class="pb-10" />

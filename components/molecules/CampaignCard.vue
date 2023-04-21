@@ -75,7 +75,7 @@ function closeSettings () {
       :to="
         localePath(
           `/campaigns/${campaign.id}-${
-            campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
+            campaign.title.replace(/[\W]/g, '') === '' ? 'campaign' : campaign.title.replace(/[\W]/g, '')
           }`
         )
       "
