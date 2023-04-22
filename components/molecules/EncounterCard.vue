@@ -13,7 +13,6 @@ const props = defineProps({ encounter: { type: Object, required: true } })
 const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
 const needConfirmation = ref(false)
@@ -25,10 +24,7 @@ async function deleteEncounter () {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   }
 }
 
@@ -45,10 +41,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }) {
     const enc = await store.addEncounter(encounter)
     emit('copied', enc)
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   } finally {
     isSettings.value = false
   }

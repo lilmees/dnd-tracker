@@ -4,7 +4,7 @@ import { useToastStore } from '@/store/toast'
 
 definePageMeta({ middleware: ['loggedin'] })
 
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
@@ -18,14 +18,14 @@ async function forgotPassword ({ __init, email }) {
   try {
     isLoading.value = true
     await store.forgotPassword(email)
-    toast.success({ title: t('forgotPassword.toast.success.title'), text: t('forgotPassword.toast.success.text') })
+    toast.success({
+      title: $i18n.t('forgotPassword.toast.success.title'),
+      text: $i18n.t('forgotPassword.toast.success.text')
+    })
     navigateTo(localePath('/login'))
   } catch (err) {
     error.value = err.message
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   } finally {
     isLoading.value = false
   }

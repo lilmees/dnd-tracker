@@ -6,7 +6,6 @@ import { useAuthStore } from '@/store/auth'
 import { useProfileStore } from '@/store/profile'
 import Hamburger from '@/assets/icons/hamburger.svg'
 
-const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
 const route = useRouteStore()
 const auth = useAuthStore()
@@ -35,10 +34,7 @@ async function logout () {
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   }
 }
 </script>

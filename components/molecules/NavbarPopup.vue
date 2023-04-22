@@ -14,17 +14,13 @@ defineProps({
 const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
 async function manageSubscription () {
   try {
     await stripe.createPortalSession(profile.data.stripe_session_id)
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   }
 }
 </script>
