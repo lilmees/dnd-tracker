@@ -5,7 +5,7 @@ const emit = defineEmits(['update'])
 const props = defineProps({ deathSaves: { type: Object, required: true } })
 
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 
 function updateDeathSave (index, save) {
   if (save) {
@@ -16,8 +16,8 @@ function updateDeathSave (index, save) {
   // show toast when player died
   if (JSON.stringify(props.deathSaves.fail) === JSON.stringify([true, true, true])) {
     toast.info({
-      title: t('encounter.toast.died.title'),
-      text: t('encounter.toast.died.textDeathSaves')
+      title: $i18n.t('encounter.toast.died.title'),
+      text: $i18n.t('encounter.toast.died.textDeathSaves')
     })
   }
   emit('update', props.deathSaves)

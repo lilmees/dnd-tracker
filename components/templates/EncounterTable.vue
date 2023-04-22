@@ -2,24 +2,24 @@
 import { useTableStore } from '@/store/table'
 
 const store = useTableStore()
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 
 const headers = computed(() => {
   const headers = [
     '',
-    t('encounter.headers.name'),
-    t('encounter.headers.init'),
-    t('encounter.headers.ac'),
-    t('encounter.headers.hp'),
-    t('encounter.headers.actions'),
-    t('encounter.headers.conditions'),
-    t('encounter.headers.note'),
-    t('encounter.headers.deathSaves'),
+    $i18n.t('encounter.headers.name'),
+    $i18n.t('encounter.headers.init'),
+    $i18n.t('encounter.headers.ac'),
+    $i18n.t('encounter.headers.hp'),
+    $i18n.t('encounter.headers.actions'),
+    $i18n.t('encounter.headers.conditions'),
+    $i18n.t('encounter.headers.note'),
+    $i18n.t('encounter.headers.deathSaves'),
     'con',
-    t('encounter.headers.modify')
+    $i18n.t('encounter.headers.modify')
   ]
   if (store.includesSummond) {
-    headers.splice(2, 0, t('encounter.headers.summond'))
+    headers.splice(2, 0, $i18n.t('encounter.headers.summond'))
   }
   return headers
 })
