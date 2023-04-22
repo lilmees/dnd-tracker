@@ -1,4 +1,3 @@
-import svgLoader from 'vite-svg-loader'
 import UnheadVite from '@unhead/addons/vite'
 import en from './locales/en.json'
 import nl from './locales/nl.json'
@@ -62,7 +61,7 @@ export default defineNuxtConfig({
     stripeSk: process.env.STRIPE_SK
   },
   vite: {
-    plugins: [svgLoader(), UnheadVite()]
+    plugins: [UnheadVite()]
   },
   formkit: {
     configFile: './formkit.config.ts'

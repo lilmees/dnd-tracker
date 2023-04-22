@@ -1,10 +1,5 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
-import Info from '~/assets/icons/info.svg'
-import Check from '~/assets/icons/check.svg'
-import Warn from '~/assets/icons/warning.svg'
-import Error from '~/assets/icons/error.svg'
-import Remove from '~/assets/icons/remove.svg'
 
 const store = useToastStore()
 </script>
@@ -34,10 +29,26 @@ const store = useToastStore()
               'text-info': toast.type === 'info',
             }"
           >
-            <Info v-if="toast.type === 'info'" class="icon" />
-            <Warn v-if="toast.type === 'warn'" class="icon" />
-            <Check v-if="toast.type === 'success'" class="icon" />
-            <Error v-if="toast.type === 'error'" class="icon" />
+            <Icon
+              v-if="toast.type === 'info'"
+              name="material-symbols:info-outline-rounded"
+              class="icon"
+            />
+            <Icon
+              v-if="toast.type === 'warn'"
+              name="material-symbols:warning-outline-rounded"
+              class="icon"
+            />
+            <Icon
+              v-if="toast.type === 'success'"
+              name="material-symbols:check-small-rounded"
+              class="icon"
+            />
+            <Icon
+              v-if="toast.type === 'error'"
+              name="material-symbols:error-outline-rounded"
+              class="icon"
+            />
             <div class="grow">
               <h1 v-if="toast.title">
                 {{ toast.title }}
@@ -46,8 +57,9 @@ const store = useToastStore()
                 {{ toast.text }}
               </p>
             </div>
-            <Remove
+            <Icon
               v-if="!toast.timed"
+              name="ic:round-clear"
               class="icon self-start text-danger cursor-pointer"
               @click="store.remove(toast.key)"
             />

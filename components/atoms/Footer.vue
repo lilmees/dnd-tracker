@@ -1,9 +1,4 @@
 <script setup>
-import Mail from '@/assets/icons/mail.svg'
-import Form from '@/assets/icons/form.svg'
-import Shield from '@/assets/icons/shield.svg'
-import Cookie from '@/assets/icons/cookie.svg'
-
 const localePath = useLocalePath()
 </script>
 
@@ -23,13 +18,16 @@ const localePath = useLocalePath()
             </h3>
             <div class="flex flex-col gap-4">
               <NuxtLink to="mailto:jeremy@dnd-tracker.com" class="flex">
-                <Mail class="w-6 mr-2" />
+                <Icon
+                  name="material-symbols:mail-outline-rounded"
+                  class="w-6 h-6 mr-2"
+                />
                 <span>
                   Email
                 </span>
               </NuxtLink>
               <NuxtLink :to="localePath('/contact')" class="flex">
-                <Form class="w-6 mr-2" />
+                <Icon name="fluent:form-24-regular" class="w-6 h-6 mr-2" />
                 <span>
                   Form
                 </span>
@@ -42,13 +40,13 @@ const localePath = useLocalePath()
             </h3>
             <div class="flex flex-col gap-4">
               <NuxtLink :to="localePath('/cookie-policy')" class="flex">
-                <Cookie class="w-6 mr-2" />
+                <Icon name="material-symbols:cookie-outline-rounded" class="w-6 h-6 mr-2" />
                 <span>
                   Cookie
                 </span>
               </NuxtLink>
               <NuxtLink :to="localePath('/privacy-policy')" class="flex">
-                <Shield class="w-6 mr-2" />
+                <Icon name="ic:outline-shield" class="w-6 h-6 mr-2" />
                 <span>
                   Privacy
                 </span>

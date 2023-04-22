@@ -1,6 +1,4 @@
 <script setup>
-import Remove from '@/assets/icons/remove.svg'
-
 defineEmits(['close'])
 defineProps({ big: { type: Boolean, default: false } })
 </script>
@@ -14,7 +12,8 @@ defineProps({ big: { type: Boolean, default: false } })
     >
       <div class="relative">
         <button class="absolute -top-5 -right-5 group">
-          <Remove
+          <Icon
+            name="ic:round-clear"
             class="text-danger w-8 h-8 rounded-full ring-danger group-focus-within:ring"
             @click="$emit('close')"
           />

@@ -1,6 +1,4 @@
 <script setup>
-import Shield from '@/assets/icons/shield.svg'
-
 const emit = defineEmits(['update'])
 const props = defineProps({
   ac: { type: [Number, null, String], required: true },
@@ -35,7 +33,11 @@ function resetState () {
 
 <template>
   <div>
-    <Shield class="w-6 h-6 cursor-pointer text-help" @click="isOpen = true" />
+    <Icon
+      name="ic:outline-shield"
+      class="w-6 h-6 cursor-pointer text-help"
+      @click="isOpen = true"
+    />
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.ac') }}</h2>
       <FormKit

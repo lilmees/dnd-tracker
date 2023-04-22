@@ -1,9 +1,4 @@
 <script setup>
-import Add from '~/assets/icons/add.svg'
-import Shield from '@/assets/icons/shield.svg'
-import Heart from '@/assets/icons/heart.svg'
-import ChevronDown from '~/assets/icons/chevron-down.svg'
-
 defineEmits(['add'])
 defineProps({
   monster: { type: Object, required: true },
@@ -18,9 +13,10 @@ const isOpen = ref(false)
 
 <template>
   <div class="rounded-xl w-full bg-black p-3 relative space-y-1">
-    <Add
+    <Icon
       v-if="addable"
       v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+      name="material-symbols:add"
       class="absolute top-1 right-1 text-success cursor-pointer w-8 h-8"
       @click="$emit('add', monster)"
     />
@@ -33,13 +29,13 @@ const isOpen = ref(false)
           <p class="font-bold">
             {{ monster.armor_class || '_' }}
           </p>
-          <Shield class="w-6 h-6 text-help" />
+          <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
         </div>
         <div class="flex gap-1">
           <p class="font-bold">
             {{ monster.hit_points || '_' }}
           </p>
-          <Heart class="w-6 h-6 text-danger" />
+          <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
         </div>
       </div>
     </div>
@@ -60,7 +56,8 @@ const isOpen = ref(false)
       </template>
     </div>
     <ActionsTable v-if="monster.actions && isOpen" :actions="monster.actions" :class="{ 'pb-5': isOpen }" />
-    <ChevronDown
+    <Icon
+      name="tabler:chevron-down"
       class="cursor-pointer duration-200 h-6 w-6 stroke-2 absolute bottom-1 right-1"
       :class="{ 'rotate-180': isOpen }"
       @click="isOpen = !isOpen"

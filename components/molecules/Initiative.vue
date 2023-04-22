@@ -1,9 +1,6 @@
 <script setup>
 import { useTableStore } from '@/store/table'
 import { rollD20 } from '@/util/rollDice'
-import Update from '@/assets/icons/update.svg'
-import ArrowDown from '@/assets/icons/arrow-down.svg'
-import ArrowUp from '@/assets/icons/arrow-up.svg'
 
 const emit = defineEmits(['update'])
 const props = defineProps({
@@ -55,20 +52,23 @@ async function moveRow (up) {
         <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
           {{ $t('actions.add') }}
         </p>
-        <Update
+        <Icon
+          name="lucide:wrench"
           class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
           :class="{ hidden: !initiative }"
         />
       </div>
-      <div v-if="initiative >= 0" class="flex gap-2 items-center">
-        <ArrowDown
+      <div v-if="initiative >= 0" class="flex gap-1 items-center">
+        <Icon
           v-if="store.encounter.rows.length !== index + 1 && store.encounter.rows[index + 1].initiative === initiative"
-          class="w-4 h-4 cursor-pointer text-primary"
+          name="ph:arrow-down"
+          class="w-6 h-6 cursor-pointer text-primary"
           @click="moveRow(false)"
         />
-        <ArrowUp
+        <Icon
           v-if="index > 0 && store.encounter.rows[index - 1]?.initiative === initiative"
-          class="w-4 h-4 cursor-pointer text-primary"
+          name="ph:arrow-up"
+          class="w-6 h-6 cursor-pointer text-primary"
           @click="moveRow(true)"
         />
       </div>

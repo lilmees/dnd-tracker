@@ -1,6 +1,5 @@
 <script setup>
 import { useTableStore } from '@/store/table'
-import Link from '@/assets/icons/link.svg'
 
 const emit = defineEmits(['update'])
 defineProps({ url: { type: [null, String], default: null } })
@@ -20,7 +19,11 @@ function updateLink ({ __init, link }) {
 
 <template>
   <div>
-    <Link class="w-6 h-6 cursor-pointer text-info" @click="isOpen = true" />
+    <Icon
+      name="ph:link-simple-horizontal"
+      class="w-6 h-6 cursor-pointer text-info"
+      @click="isOpen = true"
+    />
     <Modal v-if="isOpen" @close="isOpen = false">
       <div v-if="store.isSandbox">
         <h3>{{ $t('home.demo') }}</h3>

@@ -1,7 +1,5 @@
 <script setup>
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import Delete from '@/assets/icons/delete.svg'
-import Link from '@/assets/icons/link.svg'
 
 const store = useCurrentCampaignStore()
 </script>
@@ -73,7 +71,10 @@ const store = useCurrentCampaignStore()
                   rel="noreferrer noopener"
                   class="w-fit"
                 >
-                  <Link class="w-6 h-6 cursor-pointer text-info" />
+                  <Icon
+                    name="ph:link-simple-horizontal"
+                    class="w-8 h-8 cursor-pointer text-info"
+                  />
                 </NuxtLink>
               </div>
             </td>
@@ -88,7 +89,10 @@ const store = useCurrentCampaignStore()
                 v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
                 @click="store.removeHomebrew(item.id)"
               >
-                <Delete class="w-6 h-6 text-danger outline-none" />
+                <Icon
+                  name="material-symbols:delete-outline-rounded"
+                  class="w-6 h-6 text-danger outline-none"
+                />
               </button>
             </td>
           </tr>

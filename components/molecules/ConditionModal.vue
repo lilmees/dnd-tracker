@@ -1,6 +1,4 @@
 <script setup>
-import Potion from '@/assets/icons/potion.svg'
-import Remove from '@/assets/icons/remove.svg'
 import { useConditionsStore } from '@/store/conditions'
 
 const emit = defineEmits(['update'])
@@ -29,7 +27,11 @@ function updateConditions () {
 
 <template>
   <div>
-    <Potion class="w-6 h-6 cursor-pointer text-success" @click="isOpen = true" />
+    <Icon
+      name="iconoir:round-flask"
+      class="w-6 h-6 cursor-pointer text-success"
+      @click="isOpen = true"
+    />
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>
         {{ !store.error
@@ -53,7 +55,8 @@ function updateConditions () {
           />
         </div>
         <div v-if="info" class="border-primary border rounded p-4 relative">
-          <Remove
+          <Icon
+            name="ic:round-clear"
             class="absolute top-1 right-1 text-danger cursor-pointer w-8 h-8"
             @click="info = null"
           />

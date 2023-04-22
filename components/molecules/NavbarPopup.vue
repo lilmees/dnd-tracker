@@ -2,7 +2,6 @@
 import { useProfileStore } from '@/store/profile'
 import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
-import Remove from '~/assets/icons/remove.svg'
 
 defineEmits(['logout', 'close'])
 defineProps({
@@ -35,7 +34,8 @@ async function manageSubscription () {
           DND-TRACKER
         </h1>
       </NuxtLink>
-      <Remove
+      <Icon
+        name="ic:round-clear"
         class="w-10 h-10 cursor-pointer text-danger"
         @click="$emit('close')"
       />
