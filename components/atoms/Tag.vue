@@ -1,8 +1,4 @@
 <script setup>
-import Remove from '~/assets/icons/remove.svg'
-import Add from '~/assets/icons/add.svg'
-import Info from '~/assets/icons/info.svg'
-
 defineEmits(['remove', 'add', 'info'])
 defineProps({
   condition: { type: Object, required: true },
@@ -33,24 +29,27 @@ defineProps({
       'ring-2': selected,
     }"
   >
-    <Remove
+    <Icon
       v-if="removable"
       v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
-      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+      name="ic:round-clear"
+      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out"
       @click="$emit('remove', condition.id)"
     />
-    <Add
+    <Icon
       v-if="addable && !removable"
       v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+      name="material-symbols:add"
+      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out"
       @click="$emit('add', condition)"
     />
     <div>
       {{ condition.name }}
     </div>
-    <Info
+    <Icon
       v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
-      class="w-4 h-4 hover:scale-110 cursor-pointer"
+      name="material-symbols:info-outline-rounded"
+      class="w-6 h-6 hover:scale-110 cursor-pointer"
       @click="$emit('info', condition.description.en)"
     />
   </div>

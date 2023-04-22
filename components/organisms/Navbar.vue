@@ -4,7 +4,6 @@ import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'
 import { useAuthStore } from '@/store/auth'
 import { useProfileStore } from '@/store/profile'
-import Hamburger from '@/assets/icons/hamburger.svg'
 
 const toast = useToastStore()
 const route = useRouteStore()
@@ -64,8 +63,10 @@ async function logout () {
           <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
         </template>
       </div>
-      <Hamburger
-        class="block sm:hidden w-8 h-8 min-w-[2rem] cursor-pointer text-white"
+      <Icon
+        v-if="isSmall"
+        name="ci:hamburger-lg"
+        class="w-8 h-8 min-w-[2rem] cursor-pointer text-white"
         @click="isOpen = true"
       />
     </div>

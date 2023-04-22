@@ -1,6 +1,4 @@
 <script setup>
-import Beer from '@/assets/icons/beer.svg'
-
 const type = ref('player')
 const isOpen = ref(false)
 
@@ -20,7 +18,7 @@ function closeModal () {
       <span class="md:hidden">
         {{ $t('encounter.addHomebrew') }}
       </span>
-      <Beer class="text-warning w-10 h-10" />
+      <Icon name="ph:beer-stein" class="text-warning w-10 h-10" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.newHomebrew') }}</h2>

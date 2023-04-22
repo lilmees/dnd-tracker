@@ -1,6 +1,4 @@
 <script setup>
-import ChevronDown from '@/assets/icons/chevron-down.svg'
-
 defineProps({
   label: { type: String, default: '' },
   routes: { type: Array, default: () => [] }
@@ -21,7 +19,11 @@ const isOpen = ref(false)
       <span class="duration-200 font-bold text-slate-300 group-hover:text-white">
         {{ label }}
       </span>
-      <ChevronDown class="duration-200 ease-in-out" :class="{ 'rotate-180': isOpen }" />
+      <Icon
+        class="duration-200 ease-in-out w-6 h-6"
+        :class="{ 'rotate-180': isOpen }"
+        name="tabler:chevron-down"
+      />
     </button>
     <div class="absolute z-[1] block w-max right-0" :class="{ 'invisible top-0': !isOpen }">
       <div

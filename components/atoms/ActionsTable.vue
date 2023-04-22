@@ -1,5 +1,4 @@
 <script setup>
-import Info from '~/assets/icons/info.svg'
 import { useToastStore } from '@/store/toast'
 
 const props = defineProps({
@@ -81,9 +80,10 @@ const actionTypes = computed(() => {
                   {{ damage.notes || '' }}
                 </td>
                 <td>
-                  <Info
+                  <Icon
                     v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
-                    class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
+                    name="material-symbols:info-outline-rounded"
+                    class="text-info w-6 h-6 hover:scale-110 cursor-pointer"
                     @click="toast.info({ text: action.description.en, timed: false })"
                   />
                 </td>
@@ -115,9 +115,10 @@ const actionTypes = computed(() => {
                 {{ action.damage[0].notes || '' }}
               </td>
               <td>
-                <Info
+                <Icon
                   v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
-                  class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
+                  name="material-symbols:info-outline-rounded"
+                  class="text-info w-6 h-6 hover:scale-110 cursor-pointer"
                   @click="toast.info({ text: action.description.en, timed: false })"
                 />
               </td>
@@ -157,9 +158,10 @@ const actionTypes = computed(() => {
               <p>{{ action.usage?.min_value ? `Min value: ${action.usage?.min_value}` : '' }}</p>
             </td>
             <td>
-              <Info
+              <Icon
                 v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
-                class="text-info w-4 h-4 hover:scale-110 cursor-pointer"
+                name="material-symbols:info-outline-rounded"
+                class="text-info w-6 h-6 hover:scale-110 cursor-pointer"
                 @click="toast.info({ text: action.description.en, timed: false })"
               />
             </td>

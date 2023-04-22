@@ -4,7 +4,6 @@ import { reset } from '@formkit/core'
 import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
-import Update from '~/assets/icons/update.svg'
 
 const props = defineProps({ item: { type: Object, required: true } })
 
@@ -67,7 +66,10 @@ function closeModal () {
       v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
       @click="isOpen = true"
     >
-      <Update class="w-6 h-6 text-info outline-none relative top-1" />
+      <Icon
+        name="lucide:wrench"
+        class="w-6 h-6 text-info outline-none relative top-1"
+      />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.updateHomebrew') }}</h2>

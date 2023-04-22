@@ -1,7 +1,5 @@
 <script setup>
 import { useTableStore } from '@/store/table'
-import Reset from '@/assets/icons/reset.svg'
-import Chevron from '@/assets/icons/chevron-down.svg'
 
 const store = useTableStore()
 </script>
@@ -16,7 +14,7 @@ const store = useTableStore()
         class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="store.encounterUpdate({ round: 1, activeIndex: 0 })"
       >
-        <Reset class="w-5 h-5 text-danger" />
+        <Icon name="carbon:reset" class="w-5 h-5 text-danger" />
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
@@ -27,7 +25,7 @@ const store = useTableStore()
         class="disabled:opacity-40 disabled:cursor-not-allowed duration-300 ease-in-out"
         @click="store.prevInitiative"
       >
-        <Chevron class="rotate-90" />
+        <Icon name="tabler:chevron-left" class="w-6 h-6" />
       </button>
       <p class="uppercase">
         {{ $t('inputs.initiativeLabel') }}
@@ -37,7 +35,7 @@ const store = useTableStore()
         :disabled="!store.encounter.rows.length"
         @click="store.nextInitiative"
       >
-        <Chevron class="-rotate-90" />
+        <Icon name="tabler:chevron-right" class="w-6 h-6" />
       </button>
     </div>
   </div>

@@ -2,12 +2,9 @@
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 import { useHomebrewStore } from '@/store/homebrew'
-import Shield from '@/assets/icons/shield.svg'
-import Heart from '@/assets/icons/heart.svg'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
-const { $i18n } = useNuxtApp()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
@@ -144,13 +141,13 @@ function selectedSummoner (id) {
                   <p class="font-bold">
                     {{ hb.health || '_' }}
                   </p>
-                  <Heart class="w-6 h-6 text-danger" />
+                  <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
                 </div>
                 <div class="flex gap-1">
                   <p class="font-bold">
                     {{ hb.ac || '_' }}
                   </p>
-                  <Shield class="w-6 h-6 text-help" />
+                  <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
                 </div>
               </div>
               <p

@@ -1,5 +1,4 @@
 <script setup>
-import Book from '@/assets/icons/book.svg'
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 
@@ -37,7 +36,7 @@ async function addMonster (monster) {
       <span class="md:hidden">
         {{ $t('encounter.monsterManual') }}
       </span>
-      <Book class="text-info w-10 h-10" />
+      <Icon name="solar:book-bookmark-linear" class="text-info w-10 h-10" />
     </button>
     <Modal v-if="isOpen" big @close="isOpen = false">
       <FuzzyInput
