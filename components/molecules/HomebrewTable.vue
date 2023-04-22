@@ -64,19 +64,21 @@ const store = useCurrentCampaignStore()
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.ac || '' }}
             </td>
-            <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
-              <NuxtLink
-                v-if="item.link"
-                :to="item.link"
-                target="_blank"
-                rel="noreferrer noopener"
-                class="w-fit"
-              >
-                <Link class="w-6 h-6 cursor-pointer text-info" />
-              </NuxtLink>
+            <td class="px-2 py-1 border-r border-slate-700">
+              <div class="flex justify-center">
+                <NuxtLink
+                  v-if="item.link"
+                  :to="item.link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="w-fit"
+                >
+                  <Link class="w-6 h-6 cursor-pointer text-info" />
+                </NuxtLink>
+              </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <p class="text-slate-400">
+              <p class="text-slate-400 text-center">
                 coming soon
               </p>
             </td>

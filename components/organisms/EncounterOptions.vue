@@ -13,8 +13,7 @@ const store = useTableStore()
     </p>
     <AddInitiativeMonster />
     <template v-if="store.encounter.campaign || store.isSandbox">
-      <AddInitiativeCampaignMonster />
-      <AddInitiativeCampaignPlayer />
+      <AddInitiativeCampaignHomebrew />
     </template>
     <AddInitiativeModal />
   </div>

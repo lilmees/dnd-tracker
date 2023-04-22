@@ -104,15 +104,11 @@
     "round": "Ronde",
     "addInitiative": "Initiatief toevoegen",
     "addInInitiative": "In initiatief toevoegen",
-    "addHomebrew": "Homebrew toevoegen",
-    "monsterManual": "Monster manual",
-    "addCampaignMonster": "Campaign monster toevoegen",
-    "addCampaignPlayer": "Campaign speler toevoegen",
-    "addPlayers": "Geselecteerde spelers toevoegen",
-    "addAllPlayers": "Alle spelers toevoegen",
-    "addMonsters": "Geselecteerde monsters toevoegen",
-    "newHomebrew": "Maak een nieuwe homebrew",
+    "addHomebrew": "Homebrew maken",
     "updateHomebrew": "Homebrew aanpassen",
+    "monsterManual": "Monster manual",
+    "addCampaignHomebrew": "Campaign homebrew toevoegen",
+    "newHomebrew": "Maak een nieuwe homebrew",
     "link": "Link",
     "conditionInfo": "Effect informatie",
     "confirmDelete": "Ben je zeker dat je de huidige rij wilt verwijderen",
@@ -235,6 +231,8 @@
   },
   "actions": {
     "add": "Toevoegen",
+    "addSelected": "Geselecteerden toevoegen",
+    "addAll": "Alles toevoegen",
     "selectOption": "Selecteer een optie",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
@@ -268,21 +266,15 @@
     "grandTotal": "Eindtotaal",
     "homebrew": "Homebrew"
   },
-  "players": {
-    "none": "Geen spelers toegevoegd",
-    "add": "Speler creëren",
-    "update": "Speler bijwerken"
+  "homebrews": {
+    "none": "Geen homebrews toegevoegd",
+    "add": "Homebrew creëren",
+    "update": "Homebrew bijwerken"
   },
   "notes": {
     "none": "Geen notities toegevoegd",
     "add": "Notitie creëren",
     "update": "Notitie bijwerken"
-  },
-  "monsters": {
-    "homebrew": "Homebrew monsters",
-    "none": "Geen monsters toegevoegd",
-    "add": "Monster creëren",
-    "update": "Monster bijwerken"
   },
   "pricing": {
     "title": "Gemaakt voor de beste dungeon masters, zoals jij.",

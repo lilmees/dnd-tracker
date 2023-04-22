@@ -8,8 +8,8 @@ import Update from '~/assets/icons/update.svg'
 
 const props = defineProps({ item: { type: Object, required: true } })
 
-const { t } = useI18n({ useScope: 'global' })
 const store = useCurrentCampaignStore()
+const { $i18n } = useNuxtApp()
 
 const isOpen = ref(false)
 const form = ref({ name: null, initiative: null, link: null })
@@ -19,7 +19,7 @@ const formSchema = computed(() => {
   const form = []
   schema.forEach((cmp) => {
     if (cmp?.props?.label) {
-      cmp.props.label = t(cmp.props.label)
+      cmp.props.label = $i18n.t(cmp.props.label)
     }
     form.push(cmp)
   })

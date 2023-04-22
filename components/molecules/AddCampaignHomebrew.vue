@@ -1,26 +1,26 @@
 <script setup>
 import { reset } from '@formkit/core'
-import { useMonstersStore } from '@/store/monsters'
+import { useHomebrewStore } from '@/store/homebrew'
 
-const emit = defineEmits(['close', 'monsters'])
+const emit = defineEmits(['close', 'homebrews'])
 const props = defineProps({
-  monsters: { type: Array, required: true },
+  homebrews: { type: Array, required: true },
   open: { type: Boolean, required: true },
   id: { type: Number, required: true }
 })
 
-const store = useMonstersStore()
+const store = useHomebrewStore()
 
 const error = ref()
 const isLoading = ref(false)
-const form = ref({ name: null, ac: null, health: null, link: null })
+const form = ref({ type: 'player', name: null, ac: null, health: null, link: null })
 
-async function addMonster ({ __init, ...formData }) {
+async function addHomebrew ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    const monster = await store.addMonster({ ...formData, campaign: props.id }, props.id)
-    emit('monsters', [...props.monsters, monster])
+    const homebrew = await store.addHomebrew({ ...formData, campaign: props.id }, props.id)
+    emit('homebrews', [...props.homebrews, homebrew])
     reset('form')
   } catch (err) {
     error.value = err.message
@@ -41,7 +41,7 @@ async function addMonster ({ __init, ...formData }) {
       type="form"
       :actions="false"
       message-class="error-message"
-      @submit="addMonster"
+      @submit="addHomebrew"
     >
       <Input
         focus
@@ -67,12 +67,7 @@ async function addMonster ({ __init, ...formData }) {
         :label="$t('inputs.linkLabel')"
         validation="length10,200|url"
       />
-      <Button
-        type="submit"
-        :label="$t('monsters.add')"
-        :loading="isLoading"
-        inline
-      />
+      <Button type="submit" :label="$t('homebrews.add')" :loading="isLoading" inline />
     </FormKit>
   </Modal>
 </template>

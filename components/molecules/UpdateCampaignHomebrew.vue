@@ -1,26 +1,51 @@
 <script setup>
 import { reset } from '@formkit/core'
-import { usePlayersStore } from '@/store/players'
+import { useHomebrewStore } from '@/store/homebrew'
 
-const emit = defineEmits(['close', 'players'])
+const emit = defineEmits(['close', 'updated'])
 const props = defineProps({
-  players: { type: Array, required: true },
-  open: { type: Boolean, required: true },
-  id: { type: Number, required: true }
+  homebrew: { type: Object, required: true },
+  open: { type: Boolean, required: true }
 })
 
-const store = usePlayersStore()
+const store = useHomebrewStore()
 
 const error = ref()
 const isLoading = ref(false)
-const form = ref({ name: null, ac: null, health: null, link: null })
+const form = ref({
+  link: props.homebrew.link || null,
+  name: props.homebrew.name,
+  ac: props.homebrew.ac || null,
+  health: props.homebrew.health || null,
+  type: props.homebrew.link || null
+})
 
-async function addPlayer ({ __init, ...formData }) {
+watch(
+  () => props.open,
+  (v) => {
+    if (v) {
+      form.value = {
+        type: props.homebrew.type || null,
+        name: props.homebrew.name,
+        ac: props.homebrew.ac || null,
+        health: props.homebrew.health || null,
+        link: props.homebrew.link || null
+      }
+    }
+  }
+)
+
+async function updateHomebrew ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    const player = await store.addPlayer({ ...formData, campaign: props.id }, props.id)
-    emit('players', [...props.players, player])
+    const hb = await store.updateHomebrew({
+      ...formData,
+      campaign: props.homebrew.campaign
+    },
+    props.homebrew.id
+    )
+    emit('updated', hb)
     reset('form')
   } catch (err) {
     error.value = err.message
@@ -41,7 +66,7 @@ async function addPlayer ({ __init, ...formData }) {
       type="form"
       :actions="false"
       message-class="error-message"
-      @submit="addPlayer"
+      @submit="updateHomebrew"
     >
       <Input
         focus
@@ -67,7 +92,12 @@ async function addPlayer ({ __init, ...formData }) {
         :label="$t('inputs.linkLabel')"
         validation="length10,200|url"
       />
-      <Button type="submit" :label="$t('players.add')" :loading="isLoading" inline />
+      <Button
+        type="submit"
+        :label="$t('homebrews.update')"
+        :loading="isLoading"
+        inline
+      />
     </FormKit>
   </Modal>
 </template>

@@ -1,6 +1,5 @@
 <script setup>
 import { calculatePagination } from '@/util/calculatePagination'
-import { useMonstersStore } from '@/store/monsters'
 import { useToastStore } from '@/store/toast'
 
 const emit = defineEmits(['hits'])
@@ -12,9 +11,7 @@ const props = defineProps({
   focus: { type: Boolean, default: false }
 })
 
-const { t } = useI18n({ useScope: 'global' })
 const toast = useToastStore()
-const store = useMonstersStore()
 
 const query = ref('')
 const page = ref(0)
@@ -26,32 +23,29 @@ onMounted(() => {
   }
 })
 
-watchDebounced(
-  query,
-  (v) => {
-    if (v) {
-      page.value = 0
-      fetchMonsters(v, page.value)
-    } else {
-      emit('hits', [])
-    }
-  },
-  { debounce: 500, maxWait: 1000 }
-)
+// watchDebounced(
+//   query,
+//   (v) => {
+//     if (v) {
+//       page.value = 0
+//       fetchMonsters(v, page.value)
+//     } else {
+//       emit('hits', [])
+//     }
+//   },
+//   { debounce: 500, maxWait: 1000 }
+// )
 
-async function fetchMonsters (query, page) {
-  try {
-    const { from, to } = calculatePagination(page, 20)
-    const { data, count } = await store.fuzzySearchMonsters(query, from, to)
-    pages.value = Math.ceil(count / 20)
-    emit('hits', data)
-  } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
-  }
-}
+// async function fetchMonsters (query, page) {
+//   try {
+//     const { from, to } = calculatePagination(page, 20)
+// const { data, count } = await store.fuzzySearchMonsters(query, from, to)
+// pages.value = Math.ceil(count / 20)
+// emit('hits', data)
+//   } catch (err) {
+//     toast.error()
+//   }
+// }
 
 function paginate (newPage) {
   page.value = newPage

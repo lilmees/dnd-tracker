@@ -103,14 +103,10 @@
     "round": "Round",
     "addInitiative": "Add initiative",
     "addInInitiative": "Add in initiative",
-    "addHomebrew": "Add homebrew",
+    "addHomebrew": "Create homebrew",
     "updateHomebrew": "Update homebrew",
     "monsterManual": "Monster manual",
-    "addCampaignMonster": "Add campaign monster",
-    "addCampaignPlayer": "Add campaign player",
-    "addPlayers": "Add selected players",
-    "addAllPlayers": "Add all players",
-    "addMonsters": "Add selected monsters",
+    "addCampaignHomebrew": "Add campaign homebrew",
     "newHomebrew": "Make a new homebrew",
     "link": "Link",
     "conditionInfo": "Effect information",
@@ -234,6 +230,8 @@
   },
   "actions": {
     "add": "Add",
+    "addSelected": "Add selected",
+    "addAll": "Add all",
     "selectOption": "Select an option",
     "delete": "Delete",
     "cancel": "Cancel",
@@ -267,22 +265,15 @@
     "grandTotal": "Grand total",
     "homebrew": "Homebrew"
   },
-  "players": {
-    "none": "No players added",
-    "add": "Create player",
-    "update": "Update player",
-    "notes": "Notes"
+  "homebrews": {
+    "none": "No homebrews added",
+    "add": "Create homebrew",
+    "update": "Update homebrew"
   },
   "notes": {
     "none": "No notes added",
     "add": "Create note",
     "update": "Update note"
-  },
-  "monsters": {
-    "homebrew": "Homebrew monsters",
-    "none": "No monster added",
-    "add": "Create monster",
-    "update": "Update monster"
   },
   "pricing": {
     "title": "Designed for the best dungeon masters, like you.",

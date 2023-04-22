@@ -47,7 +47,7 @@
       "name": "health",
       "type": "number",
       "label": "inputs.hpLabel",
-      "validation": "between:1,100|number"
+      "validation": "between:1,1000|number"
     }
   },
   {
