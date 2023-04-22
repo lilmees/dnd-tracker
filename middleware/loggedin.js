@@ -1,7 +1,7 @@
-export default defineNuxtRouteMiddleware(() => {
+export default defineNuxtRouteMiddleware((to) => {
   const user = useSupabaseUser()
-  const localePath = useLocalePath()
+
   if (user.value) {
-    return navigateTo(localePath('/'))
+    return navigateTo(to.fullPath.includes('/en/') ? '/en/' : '/')
   }
 })

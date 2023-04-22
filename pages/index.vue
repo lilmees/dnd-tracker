@@ -6,7 +6,6 @@ import { useToastStore } from '@/store/toast'
 
 const store = useTableStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 
 const hoard = ref()
 const table = ref()
@@ -16,7 +15,7 @@ const tableVisible = useElementVisibility(table)
 try {
   await store.getSandboxEncounter()
 } catch (err) {
-  toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  toast.error()
 }
 
 watch(hoardVisible, (v) => {

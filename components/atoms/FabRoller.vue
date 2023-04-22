@@ -110,7 +110,7 @@ function generateDiceRoll (type) {
     >
       <div
         class="bg-transparent duration-500 ease-in-out rounded-xl p-2"
-        :class="{'bg-black tracker-shadow': isOpen}"
+        :class="{'!bg-black tracker-shadow': isOpen}"
       >
         <template v-if="isOpen">
           <div
