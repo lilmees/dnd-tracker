@@ -8,7 +8,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const user = useSupabaseUser()
   const localePath = useLocalePath()
   const toast = useToastStore()
-  const { t } = useI18n({ useScope: 'global' })
+  const { $i18n } = useNuxtApp()
 
   const encounter = ref(null)
   const isLoading = ref(true)
@@ -65,8 +65,8 @@ export const useTableStore = defineStore('useTableStore', () => {
         (payload) => {
           if (payload.eventType === 'DELETE') {
             toast.info({
-              title: t('encounter.toast.removed.title'),
-              text: t('encounter.toast.removed.text')
+              title: $i18n.t('encounter.toast.removed.title'),
+              text: $i18n.t('encounter.toast.removed.text')
             })
             navigateTo(localePath('/encounters'))
           } else {
@@ -91,10 +91,7 @@ export const useTableStore = defineStore('useTableStore', () => {
         }
         encounter.value = { ...encounter.value, ...enc }
       } catch (error) {
-        toast.error({
-          title: t('error.general.title'),
-          text: t('error.general.text')
-        })
+        toast.error()
       }
     } else {
       encounter.value = data

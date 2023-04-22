@@ -10,7 +10,6 @@ const emit = defineEmits(['deleted', 'updated'])
 const props = defineProps({ note: { type: Object, required: true } })
 
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const store = useNotesStore()
 
 const isSettings = ref(false)
@@ -22,7 +21,7 @@ async function deleteNote () {
     await store.deleteNote(props.note.id)
     emit('deleted', props.note.id)
   } catch (error) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error()
   }
 }
 

@@ -12,7 +12,6 @@ const props = defineProps({ campaign: { type: Object, required: true } })
 const user = useSupabaseUser()
 const store = useCampaignsStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
 const needConfirmation = ref(false)
@@ -23,7 +22,7 @@ async function deleteCampaign () {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (error) {
-    errorToast()
+    toast.error()
   }
 }
 
@@ -33,18 +32,11 @@ async function deleteCampaign () {
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
-//     errorToast()
+//     toast.error()
 //   } finally {
 //     isSettings.value = false
 //   }
 // }
-
-function errorToast () {
-  toast.error({
-    title: t('error.general.title'),
-    text: t('error.general.text')
-  })
-}
 
 function closeSettings () {
   isUpdating.value = false

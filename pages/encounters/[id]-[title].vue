@@ -8,7 +8,6 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const toast = useToastStore()
 const store = useTableStore()
-const { t } = useI18n({ useScope: 'global' })
 
 const info = ref('')
 
@@ -17,7 +16,7 @@ try {
   useHead({ title: store.encounter.title })
   info.value = store.encounter.info
 } catch (err) {
-  toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+  toast.error()
 }
 
 watchDebounced(

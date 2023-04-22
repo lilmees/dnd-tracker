@@ -6,7 +6,6 @@ definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 
 const image = ref(profile.data?.avatar || null)
 const isUpdating = ref(false)
@@ -42,7 +41,7 @@ async function updateProfile ({ __init, username, name, ...credentials }) {
     isUpdating.value = false
   } catch (err) {
     error.value = err.message
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error()
   } finally {
     isLoading.value = false
   }
@@ -60,7 +59,7 @@ async function deleteUser () {
     isLoading.value = true
     await profile.deleteProfile()
   } catch (err) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error()
   } finally {
     isLoading.value = false
   }
