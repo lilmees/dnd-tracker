@@ -7,12 +7,28 @@ import Heart from '@/assets/icons/heart.svg'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
+const { $i18n } = useNuxtApp()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
 const homebrews = ref()
 const selected = ref([])
+const summoner = ref()
+
 const id = computed(() => store.encounter.campaign?.id || store.encounter.campaign)
+const summon = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
+const summonOptions = computed(() => {
+  return [
+    ...store.encounter.rows.map((r) => {
+      return { label: r.name, id: r.id }
+    })
+  ]
+})
+
+// delete selections that are not from the summon type when a summon is selected
+watch(() => summon.value, () => {
+  selected.value = selected.value.filter(s => s.type === 'summon')
+})
 
 onMounted(async () => {
   if (id.value) {
@@ -35,14 +51,24 @@ async function addHomebrews (homebrews) {
   try {
     isLoading.value = true
     const homebrewRows = []
+
     homebrews.forEach((hb) => {
+      if (summon.value && summoner.value && hb.type === 'summon') {
+        hb.summoner = {
+          name: summoner.value.label,
+          id: summoner.value.id
+        }
+      }
+
       homebrewRows.push(createRowObject(hb, hb.type, store.encounter.rows))
     })
+
     await store.encounterUpdate({
       rows: store.encounter.rows.includes('[')
         ? homebrewRows
         : [...store.encounter.rows, ...homebrewRows]
     })
+
     closeModal()
   } catch (err) {
     console.error(err)
@@ -54,6 +80,11 @@ async function addHomebrews (homebrews) {
 function closeModal () {
   isOpen.value = false
   selected.value = []
+}
+
+function selectedSummoner (id) {
+  const filtered = summonOptions.value.filter(s => s.id === id && s.id !== 'none')
+  summoner.value = filtered[0] || null
 }
 </script>
 
@@ -77,18 +108,35 @@ function closeModal () {
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.addCampaignHomebrew') }}</h2>
+      <h2>
+        {{ $t('encounter.addCampaignHomebrew') }}
+      </h2>
       <div v-if="homebrews?.length" class="space-y-4">
+        <template v-if="summon">
+          <p>
+            {{ $t('homebrews.initiative.selectSummoner') }}
+          </p>
+          <Select
+            :input-label="$t('inputs.summonerLabel')"
+            :label="summoner?.name || $t('homebrews.initiative.select')"
+            bold
+            :options="summonOptions"
+            @selected="selectedSummoner"
+          />
+        </template>
         <div class="flex flex-col">
-          <template v-for="hb in homebrews" :key="hb.id">
+          <template
+            v-for="hb in summon ? homebrews.filter(h => h.type === 'summon') : homebrews"
+            :key="hb.id"
+          >
             <div
-              class="first:rounded-t-xl last:rounded-b-xl w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3"
+              class="first:rounded-t-xl last:rounded-b-xl w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
               :class="{
                 'border-2 border-b-2 border-primary': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >
-              <h3 class="text-center">
+              <h3>
                 {{ hb.name }}
               </h3>
               <div class="flex gap-4">
@@ -120,17 +168,26 @@ function closeModal () {
           </template>
         </div>
         <div class="flex gap-2 flex-wrap">
+          <template v-if="!summon">
+            <Button
+              :label="$t('actions.addSelected')"
+              color="primary"
+              :disabled="isLoading || !selected.length"
+              @click="addHomebrews(selected)"
+            />
+            <Button
+              :label="$t('actions.addAll')"
+              color="success"
+              :disabled="isLoading"
+              @click="addHomebrews(homebrews)"
+            />
+          </template>
           <Button
-            :label="$t('actions.addSelected')"
+            v-else
+            :label="$t('homebrews.initiative.add')"
             color="primary"
-            :disabled="isLoading || !selected.length"
+            :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
-          />
-          <Button
-            :label="$t('actions.addAll')"
-            color="success"
-            :disabled="isLoading"
-            @click="addHomebrews(homebrews)"
           />
         </div>
       </div>

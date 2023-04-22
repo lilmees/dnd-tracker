@@ -3,22 +3,6 @@ import { defineStore } from 'pinia'
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
 
-  const sandbox = [
-    { type: 'player', id: 'nelson', name: 'Nelson', health: '37', ac: '13' },
-    { type: 'player', id: 'silvin', name: 'Silvin', health: '33', ac: '14' },
-    { type: 'player', id: 'alexis', name: 'Alexis', health: '29', ac: '12' },
-    { type: 'player', id: 'thernus', name: 'Thernus', health: '31', ac: '16' },
-    { type: 'player', id: 'banthaaja', name: 'Banthaaja', health: '30', ac: '15' },
-    { type: 'player', id: 'banthaaja', name: 'Banthaaja', health: '30', ac: '15' },
-    { type: 'monster', id: 'lulu', name: 'Lulu', health: '69', ac: '20' },
-    { type: 'monster', id: 'pony', name: 'Pony', health: '33', ac: '10' },
-    { type: 'npc', id: 'rocky', name: 'Rocky', health: '24', ac: '16' },
-    { type: 'npc', id: 'gray', name: 'Gray', health: '20', ac: '16' },
-    { type: 'npc', id: 'ginger', name: 'Ginger', health: '10', ac: '18' },
-    { type: 'summon', id: 'inli', name: 'Inli', health: '18', ac: '12' },
-    { type: 'lair', id: 'lair', name: 'Lair action' }
-  ]
-
   async function getHomebrewByCampaignId (id) {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
@@ -94,12 +78,25 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   }
 
   return {
-    sandbox,
     getHomebrewByCampaignId,
     getHomebrewById,
     getHomebrewByType,
     addHomebrew,
     updateHomebrew,
-    deleteHomebrew
+    deleteHomebrew,
+    sandbox: [
+      { type: 'player', id: 'nelson', name: 'Nelson', health: '37', ac: '13' },
+      { type: 'player', id: 'silvin', name: 'Silvin', health: '33', ac: '14' },
+      { type: 'player', id: 'alexis', name: 'Alexis', health: '29', ac: '12' },
+      { type: 'player', id: 'thernus', name: 'Thernus', health: '31', ac: '16' },
+      { type: 'player', id: 'banthaaja', name: 'Banthaaja', health: '30', ac: '15' },
+      { type: 'monster', id: 'lulu', name: 'Lulu', health: '69', ac: '20' },
+      { type: 'monster', id: 'pony', name: 'Pony', health: '33', ac: '10' },
+      { type: 'npc', id: 'rocky', name: 'Rocky', health: '24', ac: '16' },
+      { type: 'npc', id: 'gray', name: 'Gray', health: '20', ac: '16' },
+      { type: 'npc', id: 'ginger', name: 'Ginger', health: '10', ac: '18' },
+      { type: 'summon', id: 'inli', name: 'Inli', health: '18', ac: '12' },
+      { type: 'lair', id: 'lair', name: 'Lair action' }
+    ]
   }
 })

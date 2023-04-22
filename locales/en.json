@@ -268,7 +268,12 @@
   "homebrews": {
     "none": "No homebrews added",
     "add": "Create homebrew",
-    "update": "Update homebrew"
+    "update": "Update homebrew",
+    "initiative": {
+      "selectSummoner" : "hen selecting a summon, you must also choose a character that will summon it.",
+      "add": "Add summon",
+      "select": "Select summoner"
+    }
   },
   "notes": {
     "none": "No notes added",

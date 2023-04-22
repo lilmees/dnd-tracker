@@ -269,7 +269,12 @@
   "homebrews": {
     "none": "Geen homebrews toegevoegd",
     "add": "Homebrew creëren",
-    "update": "Homebrew bijwerken"
+    "update": "Homebrew bijwerken",
+    "initiative": {
+      "selectSummoner" : "Wanneer je een summon selecteert, dien je ook een personage te kiezen dat deze summon oproept.",
+      "add": "Summon toevoegen",
+      "select": "Selecteer oproeper"
+    }
   },
   "notes": {
     "none": "Geen notities toegevoegd",
