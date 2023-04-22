@@ -9,7 +9,7 @@ const props = defineProps({
 
 const toast = useToastStore()
 const store = useTableStore()
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 
 function updateLink (link) {
   props.row.link = link
@@ -44,8 +44,8 @@ function updateHealth (update) {
   // when user is dies because of going to much in the negative hp
   if (props.row.health < 0 && Math.abs(props.row.health) >= props.row.maxHealth) {
     toast.info({
-      title: t('encounter.toast.died.title'),
-      text: t('encounter.toast.died.textMinHP')
+      title: $i18n.t('encounter.toast.died.title'),
+      text: $i18n.t('encounter.toast.died.textMinHP')
     })
   }
   // when health is an negative number change it to 0

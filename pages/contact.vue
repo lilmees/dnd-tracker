@@ -1,7 +1,7 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
 
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 const toast = useToastStore()
 const localePath = useLocalePath()
 const mail = useMail()
@@ -11,7 +11,9 @@ const form = ref({ name: null, email: null, question: null })
 function sendContactMail (form) {
   mail.send({
     from: form.email,
-    subject: form.name ? `Contact/question mail from ${form.name}` : 'Contact/question mail',
+    subject: form.name
+      ? `Contact/question mail from ${form.name}`
+      : 'Contact/question mail',
     html: `
     <h1>New question/contact</h1>
     <p>DATE: ${new Date()} </p>
@@ -21,7 +23,7 @@ function sendContactMail (form) {
     <p>${form.question} </p>
     `
   })
-  toast.success({ title: t('contact.success') })
+  toast.success({ title: $i18n.t('contact.success') })
   navigateTo(localePath('/'))
 }
 </script>

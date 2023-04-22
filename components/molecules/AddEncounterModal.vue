@@ -10,7 +10,7 @@ const props = defineProps({
   campaignId: { type: [Number, String], default: null }
 })
 
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
@@ -33,7 +33,7 @@ watch(
 
 const campaignOptions = computed(() => {
   return [
-    { label: t('campaigns.no'), id: 'none' },
+    { label: $i18n.t('campaigns.no'), id: 'none' },
     ...campaigns.data.map((c) => {
       return { label: c.title, id: c.id }
     })
