@@ -63,6 +63,7 @@
     "summonerLabel": "Summoner",
     "textLabel": "Text",
     "questionLabel": "Your question?",
+    "challengeLabel": "Challenge rating",
     "nothing": "Nothing selected"
   },
   "campaigns": {
@@ -79,7 +80,10 @@
   },
   "campaign": {
     "back": "Back to campaigns",
-    "goCampaign": "Go to campaign"
+    "goCampaign": "Go to campaign",
+    "homebrew": {
+      "title": "Ready to unleash your creativity?",
+      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"    }
   },
   "encounters": {
     "encounter": "Encounter",
@@ -96,17 +100,14 @@
     "next": "Next",
     "prev": "Previous",
     "back": "Back to encounters",
+    "campaignBack": "Back to campaign",
     "round": "Round",
     "addInitiative": "Add initiative",
     "addInInitiative": "Add in initiative",
-    "addHomebrew": "Add homebrew",
+    "addHomebrew": "Create homebrew",
     "updateHomebrew": "Update homebrew",
     "monsterManual": "Monster manual",
-    "addCampaignMonster": "Add campaign monster",
-    "addCampaignPlayer": "Add campaign player",
-    "addPlayers": "Add selected players",
-    "addAllPlayers": "Add all players",
-    "addMonsters": "Add selected monsters",
+    "addCampaignHomebrew": "Add campaign homebrew",
     "newHomebrew": "Make a new homebrew",
     "link": "Link",
     "conditionInfo": "Effect information",
@@ -230,6 +231,8 @@
   },
   "actions": {
     "add": "Add",
+    "addSelected": "Add selected",
+    "addAll": "Add all",
     "selectOption": "Select an option",
     "delete": "Delete",
     "cancel": "Cancel",
@@ -252,7 +255,8 @@
     "create": "Create",
     "openSettings": "Settings",
     "closeSettings": "Close settings",
-    "drag": "Drag me"
+    "drag": "Drag me",
+    "close": "Close"
   },
   "general": {
     "encounters": "Encounters",
@@ -263,22 +267,20 @@
     "grandTotal": "Grand total",
     "homebrew": "Homebrew"
   },
-  "players": {
-    "none": "No players added",
-    "add": "Create player",
-    "update": "Update player",
-    "notes": "Notes"
+  "homebrews": {
+    "none": "No homebrews added",
+    "add": "Create homebrew",
+    "update": "Update homebrew",
+    "initiative": {
+      "selectSummoner" : "hen selecting a summon, you must also choose a character that will summon it.",
+      "add": "Add summon",
+      "select": "Select summoner"
+    }
   },
   "notes": {
     "none": "No notes added",
     "add": "Create note",
     "update": "Update note"
-  },
-  "monsters": {
-    "homebrew": "Homebrew monsters",
-    "none": "No monster added",
-    "add": "Create monster",
-    "update": "Update monster"
   },
   "pricing": {
     "title": "Designed for the best dungeon masters, like you.",

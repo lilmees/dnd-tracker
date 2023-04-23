@@ -1,7 +1,5 @@
 <script setup>
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import Delete from '@/assets/icons/delete.svg'
-import Link from '@/assets/icons/link.svg'
 
 const store = useCurrentCampaignStore()
 </script>
@@ -11,7 +9,7 @@ const store = useCurrentCampaignStore()
     <div class="flex justify-between border-b border-slate-700 pb-1">
       <div class="flex gap-4 items-end">
         <h2>{{ $t('general.homebrew') }}</h2>
-        <div class="flex gap-1 text-[10px]">
+        <div class="hidden md:flex gap-1 text-[10px]">
           <p>(Monsters,</p>
           <p>Players,</p>
           <p>Npc's,</p>
@@ -21,7 +19,10 @@ const store = useCurrentCampaignStore()
       </div>
       <AddHomebrew />
     </div>
-    <div class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full">
+    <div
+      v-if="store.campaign.homebrew_items.length"
+      class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
+    >
       <table class="min-w-full bg-tracker">
         <thead>
           <tr>
@@ -61,19 +62,24 @@ const store = useCurrentCampaignStore()
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.ac || '' }}
             </td>
-            <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
-              <NuxtLink
-                v-if="item.link"
-                :to="item.link"
-                target="_blank"
-                rel="noreferrer noopener"
-                class="w-fit"
-              >
-                <Link class="w-6 h-6 cursor-pointer text-info" />
-              </NuxtLink>
+            <td class="px-2 py-1 border-r border-slate-700">
+              <div class="flex justify-center">
+                <NuxtLink
+                  v-if="item.link"
+                  :to="item.link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="w-fit"
+                >
+                  <Icon
+                    name="ph:link-simple-horizontal"
+                    class="w-8 h-8 cursor-pointer text-info"
+                  />
+                </NuxtLink>
+              </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <p class="text-slate-400">
+              <p class="text-slate-400 text-center">
                 coming soon
               </p>
             </td>
@@ -83,12 +89,33 @@ const store = useCurrentCampaignStore()
                 v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
                 @click="store.removeHomebrew(item.id)"
               >
-                <Delete class="w-6 h-6 text-danger outline-none" />
+                <Icon
+                  name="material-symbols:delete-outline-rounded"
+                  class="w-6 h-6 text-danger outline-none"
+                />
               </button>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
+      <div class="flex flex-col justify-center gap-4">
+        <h2 class="pb-2">
+          {{ $t('campaign.homebrew.title') }}
+        </h2>
+        <p class="max-w-prose">
+          {{ $t('campaign.homebrew.text') }}
+        </p>
+      </div>
+      <NuxtImg
+        src="/dragon_hoard.webp"
+        alt="Dragon on hoard"
+        sizes="sm:500px md:500px lg:500px"
+        format="webp"
+        provider="imagekit"
+        class="mx-auto"
+      />
     </div>
   </section>
 </template>

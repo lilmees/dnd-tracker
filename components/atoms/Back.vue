@@ -1,6 +1,4 @@
 <script setup>
-import ArrowLeft from '@/assets/icons/arrow-left.svg'
-
 defineProps({
   url: { type: String, required: true },
   label: { type: String, required: true },
@@ -16,7 +14,7 @@ const localePath = useLocalePath()
       class="flex gap-2 items-center hover:text-primary duration-200 ease-in-out"
       :style="{ color: color || '#fff' }"
     >
-      <ArrowLeft class="h-8 w-8" />
+      <Icon name="ph:arrow-left" class="h-6 w-6" />
       <p>{{ label }}</p>
     </div>
   </NuxtLink>

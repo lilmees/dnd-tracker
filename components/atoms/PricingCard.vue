@@ -1,6 +1,4 @@
 <script setup>
-import Check from '~/assets/icons/check.svg'
-import Remove from '@/assets/icons/remove.svg'
 import { useStripeStore } from '@/store/stripe'
 
 const props = defineProps({
@@ -43,8 +41,12 @@ async function subscribe () {
       </div>
       <ul class="mb-8 space-y-4 text-left">
         <li v-for="item in product.items" :key="item" class="flex items-center space-x-3">
-          <Check v-if="item.icon === 'check'" class="text-success" />
-          <Remove v-else class="text-danger" />
+          <icon
+            v-if="item.icon === 'check'"
+            name="material-symbols:check-small-rounded"
+            class="text-success w-8 h-8"
+          />
+          <Icon v-else name="ic:round-clear" class="text-danger w-8 h-8" />
           <span>{{ item.label }}</span>
         </li>
       </ul>

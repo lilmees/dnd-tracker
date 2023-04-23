@@ -1,16 +1,11 @@
 <script setup>
 import { useToastStore } from '@/store/toast'
 import { useNotesStore } from '@/store/notes'
-import Settings from '@/assets/icons/settings.svg'
-import Delete from '@/assets/icons/delete.svg'
-import Update from '@/assets/icons/update.svg'
-import Remove from '@/assets/icons/remove.svg'
 
 const emit = defineEmits(['deleted', 'updated'])
 const props = defineProps({ note: { type: Object, required: true } })
 
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const store = useNotesStore()
 
 const isSettings = ref(false)
@@ -22,7 +17,7 @@ async function deleteNote () {
     await store.deleteNote(props.note.id)
     emit('deleted', props.note.id)
   } catch (error) {
-    toast.error({ title: t('error.general.title'), text: t('error.general.text') })
+    toast.error()
   }
 }
 
@@ -39,16 +34,18 @@ function updateNote (note) {
       <h3 v-if="note.title">
         {{ note.title }}
       </h3>
-      <Settings
+      <Icon
         v-if="!isSettings"
         v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
-        class="w-4 h-4 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+        name="material-symbols:settings-outline-rounded"
+        class="w-6 h-6 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
         @click="isSettings = !isSettings"
       />
-      <Remove
+      <Icon
         v-else
         v-tippy="{ content: $t('actions.closeSettings'), animation: 'shift-away' }"
-        class="w-8 h-8 cursor-pointer text-primary"
+        name="ic:round-clear"
+        class="w-6 h-6 cursor-pointer text-primary"
         @click="isSettings = false"
       />
     </div>
@@ -57,11 +54,11 @@ function updateNote (note) {
     </p>
     <div v-if="isSettings" class="flex flex-col gap-2 pt-4">
       <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
-        <Update class="h-6 w-6" />
+        <Icon name="lucide:wrench" class="h-6 w-6" />
         <p>{{ $t('actions.update') }}</p>
       </div>
       <div class="flex gap-2 cursor-pointer max-w-max" @click="needConfirmation = true">
-        <Delete class="h-6 w-6" />
+        <Icon name="material-symbols:delete-outline-rounded" class="h-6 w-6" />
         <p>{{ $t('actions.delete') }}</p>
       </div>
     </div>

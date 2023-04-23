@@ -8,7 +8,6 @@ useHead({ title: 'Encounters' })
 
 const toast = useToastStore()
 const store = useEncountersStore()
-const { t } = useI18n({ useScope: 'global' })
 const isOpen = ref(false)
 const { error } = storeToRefs(store)
 
@@ -16,10 +15,7 @@ onMounted(() => store.fetch())
 
 watch(error, (v) => {
   if (v) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   }
 })
 </script>

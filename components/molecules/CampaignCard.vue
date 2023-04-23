@@ -1,9 +1,4 @@
 <script setup>
-// import Copy from '@/assets/icons/copy.svg'
-import Delete from '@/assets/icons/delete.svg'
-import Update from '@/assets/icons/update.svg'
-import Settings from '@/assets/icons/settings.svg'
-import Remove from '@/assets/icons/remove.svg'
 import { useCampaignsStore } from '@/store/campaigns'
 import { useToastStore } from '@/store/toast'
 
@@ -12,7 +7,6 @@ const props = defineProps({ campaign: { type: Object, required: true } })
 const user = useSupabaseUser()
 const store = useCampaignsStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
 const needConfirmation = ref(false)
@@ -23,7 +17,7 @@ async function deleteCampaign () {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (error) {
-    errorToast()
+    toast.error()
   }
 }
 
@@ -33,18 +27,11 @@ async function deleteCampaign () {
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
-//     errorToast()
+//     toast.error()
 //   } finally {
 //     isSettings.value = false
 //   }
 // }
-
-function errorToast () {
-  toast.error({
-    title: t('error.general.title'),
-    text: t('error.general.text')
-  })
-}
 
 function closeSettings () {
   isUpdating.value = false
@@ -58,15 +45,17 @@ function closeSettings () {
     class="rounded-xl tracker-shadow min-w-[250px] max-w-md relative group"
     :style="{ 'background-color': campaign.background, color: campaign.color }"
   >
-    <Settings
+    <Icon
       v-if="!isSettings"
-      class="w-8 h-8 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+      name="material-symbols:settings-outline-rounded"
+      class="w-6 h-6 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       :style="{ color: campaign.color }"
       @click="isSettings = true"
     />
-    <Remove
+    <Icon
       v-else
-      class="w-8 h-8 cursor-pointer float-right mt-1 mr-1"
+      name="ic:round-clear"
+      class="w-6 h-6 cursor-pointer float-right mt-1 mr-1"
       :style="{ color: campaign.color }"
       @click="isSettings = false"
     />
@@ -75,7 +64,7 @@ function closeSettings () {
       :to="
         localePath(
           `/campaigns/${campaign.id}-${
-            campaign.title.replace(/[\W]/g, '') === '' ? 'encounter' : campaign.title.replace(/[\W]/g, '')
+            campaign.title.replace(/[\W]/g, '') === '' ? 'campaign' : campaign.title.replace(/[\W]/g, '')
           }`
         )
       "
@@ -89,11 +78,11 @@ function closeSettings () {
     <div v-else class="flex flex-col gap-2 justify-between p-4">
       <h2>{{ campaign.title }}</h2>
       <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
-        <Update class="h-6 w-6" />
+        <Icon name="lucide:wrench" class="h-6 w-6" />
         <p>{{ $t('actions.update') }}</p>
       </div>
       <!-- <div class="flex gap-2 cursor-pointer max-w-max" @click="copyCampaign(campaign)">
-        <Copy class="h-6 w-6" />
+        <Icon name="material-symbols:content-copy-outline-rounded" class="h-6 w-6" />
         <p>{{ $t('actions.copy') }}</p>
       </div> -->
       <div
@@ -101,7 +90,7 @@ function closeSettings () {
         class="flex gap-2 cursor-pointer max-w-max"
         @click="needConfirmation = true"
       >
-        <Delete class="h-6 w-6" />
+        <Icon name="material-symbols:delete-outline-rounded" class="h-6 w-6" />
         <p>{{ $t('actions.delete') }}</p>
       </div>
     </div>

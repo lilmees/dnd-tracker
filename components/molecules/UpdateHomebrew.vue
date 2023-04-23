@@ -4,12 +4,11 @@ import { reset } from '@formkit/core'
 import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
-import Update from '~/assets/icons/update.svg'
 
 const props = defineProps({ item: { type: Object, required: true } })
 
-const { t } = useI18n({ useScope: 'global' })
 const store = useCurrentCampaignStore()
+const { $i18n } = useNuxtApp()
 
 const isOpen = ref(false)
 const form = ref({ name: null, initiative: null, link: null })
@@ -19,7 +18,7 @@ const formSchema = computed(() => {
   const form = []
   schema.forEach((cmp) => {
     if (cmp?.props?.label) {
-      cmp.props.label = t(cmp.props.label)
+      cmp.props.label = $i18n.t(cmp.props.label)
     }
     form.push(cmp)
   })
@@ -67,7 +66,10 @@ function closeModal () {
       v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
       @click="isOpen = true"
     >
-      <Update class="w-6 h-6 text-info outline-none relative top-1" />
+      <Icon
+        name="lucide:wrench"
+        class="w-6 h-6 text-info outline-none relative top-1"
+      />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.updateHomebrew') }}</h2>

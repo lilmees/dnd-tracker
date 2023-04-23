@@ -1,6 +1,5 @@
 <script setup>
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import Add from '~/assets/icons/add.svg'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -53,9 +52,10 @@ function updatedEncounter (encounter) {
         <div class="space-y-4">
           <div class="flex justify-between border-b border-slate-700 pb-1">
             <h2>{{ $t('general.encounters') }}</h2>
-            <Add
+            <Icon
               v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-              class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out text-success"
+              name="material-symbols:add"
+              class="w-6 h-6 cursor-pointer text-success"
               @click="isCreatingEncounter = true"
             />
           </div>
@@ -84,10 +84,6 @@ function updatedEncounter (encounter) {
         </div>
       </div>
       <HomebrewTable class="py-10" />
-      <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 py-8">
-        <CampaignPlayers v-model="store.campaign.players" :id="store.campaign.id" />
-        <CampaignMonsters v-model="store.campaign['homebrew_items']" :id="store.campaign.id" />
-      </div> -->
       <CampaignNotes :id="store.campaign.id" v-model="store.campaign.notes" />
       <AddEncounterModal
         :open="isCreatingEncounter"

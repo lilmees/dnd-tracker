@@ -4,9 +4,8 @@ import { reset } from '@formkit/core'
 import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
-import Add from '~/assets/icons/add.svg'
 
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 const store = useCurrentCampaignStore()
 
 const isOpen = ref(false)
@@ -17,7 +16,7 @@ const formSchema = computed(() => {
   const form = []
   schema.forEach((cmp) => {
     if (cmp?.props?.label) {
-      cmp.props.label = t(cmp.props.label)
+      cmp.props.label = $i18n.t(cmp.props.label)
     }
     form.push(cmp)
   })
@@ -58,7 +57,7 @@ function closeModal () {
       v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
       @click="isOpen = true"
     >
-      <Add class="w-4 h-4 text-success" />
+      <Icon name="material-symbols:add" class="w-6 h-6 text-success" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.newHomebrew') }}</h2>

@@ -1,6 +1,4 @@
 <script setup>
-import Heart from '@/assets/icons/heart.svg'
-
 const emit = defineEmits(['update'])
 const props = defineProps({
   health: { type: [Number, null, String], required: true },
@@ -26,7 +24,11 @@ function updateHealth ({ __init, health }) {
 
 <template>
   <div>
-    <Heart class="w-6 h-6 cursor-pointer text-danger" @click="isOpen = true" />
+    <Icon
+      name="mdi:cards-heart-outline"
+      class="w-6 h-6 cursor-pointer text-danger"
+      @click="isOpen = true"
+    />
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.hp') }}</h2>
       <FormKit

@@ -1,6 +1,4 @@
 <script setup>
-import Update from '@/assets/icons/update.svg'
-
 const emit = defineEmits(['update'])
 const props = defineProps({
   name: { type: String, required: true },
@@ -32,7 +30,10 @@ function updateName ({ __init, name }) {
       >
         {{ name }}
       </p>
-      <Update class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out" />
+      <Icon
+        name="lucide:wrench"
+        class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+      />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>{{ $t('encounter.update.name') }}</h2>

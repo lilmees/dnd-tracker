@@ -27,15 +27,15 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@formkit/i18n": "^1.0.0-beta.11",
     "@formkit/nuxt": "^1.0.0-beta.11",
-    "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@nuxtjs/i18n": "^8.0.0-beta.2",
     "@pinia/nuxt": "^0.4.6",
     "@unhead/addons": "^1.0.20",
     "click-outside-vue3": "^4.0.1",
     "gsap": "^3.11.4",
+    "nuxt-icon": "^0.3.3",
     "nuxt-mail": "^3.1.5",
+    "nuxt-simple-sitemap": "^2.4.11",
     "stripe": "^11.12.0",
-    "vite-svg-loader": "^3.6.0",
     "vue-tippy": "v6"
   }
 }

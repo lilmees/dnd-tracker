@@ -1,10 +1,6 @@
 <script setup>
-import Remove from '~/assets/icons/remove.svg'
-import Add from '~/assets/icons/add.svg'
-import Info from '~/assets/icons/info.svg'
-
-defineEmits(['remove', 'add', 'info'])
-defineProps({
+defineEmits(['remove', 'add'])
+const props = defineProps({
   condition: { type: Object, required: true },
   removable: { type: Boolean, default: false },
   addable: { type: Boolean, default: false },
@@ -25,33 +21,65 @@ defineProps({
     :class="{
       'bg-primary/50 ring-primary': color === 'primary',
       'bg-secondary/50 ring-secondary': color === 'secondary',
-      'bg-success/50 ring-success': color === 'success' || !condition.negative,
+      'bg-success/50 ring-success': color === 'success',
       'bg-info/50 ring-info': color === 'info',
       'bg-warning/50 ring-warning': color === 'warning',
       'bg-help/50 ring-help': color === 'help',
-      'bg-danger/50 ring-danger': color === 'danger' || condition.negative,
+      'bg-danger/50 ring-danger': color === 'danger',
       'ring-2': selected,
     }"
   >
-    <Remove
+    <Icon
       v-if="removable"
       v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
-      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
-      @click="$emit('remove', condition.id)"
+      name="ic:round-clear"
+      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
+      @click="$emit('remove', condition.slug)"
     />
-    <Add
+    <Icon
       v-if="addable && !removable"
       v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
-      class="w-4 h-4 cursor-pointer hover:scale-110 duration-200 ease-in-out"
+      name="material-symbols:add"
+      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
       @click="$emit('add', condition)"
     />
     <div>
       {{ condition.name }}
     </div>
-    <Info
-      v-tippy="{ content: $t('actions.info'), animation: 'shift-away' }"
-      class="w-4 h-4 hover:scale-110 cursor-pointer"
-      @click="$emit('info', condition.description.en)"
-    />
+    <tippy animation="shift-away">
+      <Icon
+        name="material-symbols:info-outline-rounded"
+        class="w-6 h-6 hover:scale-110 cursor-pointer outline-none"
+      />
+      <template #content>
+        <div class="p-4 space-y-2 overflow-auto">
+          <h3>
+            {{ condition.name }}
+          </h3>
+          <template v-if="condition.desc">
+            <template v-if="condition.name === 'Exhaustion'">
+              <ul class="mx-6">
+                <li
+                  v-for="bullet in condition.desc.replace('*','').split(/\|\s\d+\s+\|/g).slice(1)"
+                  :key="bullet"
+                  class="list-decimal body-small pb-1"
+                >
+                  {{ bullet.split('|')[0] }}
+                </li>
+              </ul>
+            </template>
+            <ul v-else class="mx-6">
+              <li
+                v-for="bullet in condition.desc.replace('*','').split(/\s\*\s/g)"
+                :key="bullet"
+                class="list-disc body-small pb-1"
+              >
+                {{ bullet }}
+              </li>
+            </ul>
+          </template>
+        </div>
+      </template>
+    </tippy>
   </div>
 </template>

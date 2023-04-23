@@ -2,7 +2,6 @@
 import { useProfileStore } from '@/store/profile'
 import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
-import Remove from '~/assets/icons/remove.svg'
 
 defineEmits(['logout', 'close'])
 defineProps({
@@ -14,17 +13,13 @@ defineProps({
 const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
-const { t } = useI18n({ useScope: 'global' })
 const localePath = useLocalePath()
 
 async function manageSubscription () {
   try {
     await stripe.createPortalSession(profile.data.stripe_session_id)
   } catch (err) {
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   }
 }
 </script>
@@ -39,7 +34,8 @@ async function manageSubscription () {
           DND-TRACKER
         </h1>
       </NuxtLink>
-      <Remove
+      <Icon
+        name="ic:round-clear"
         class="w-10 h-10 cursor-pointer text-danger"
         @click="$emit('close')"
       />

@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/store/auth'
 import { useToastStore } from '@/store/toast'
 
-const { t } = useI18n({ useScope: 'global' })
+const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
@@ -16,14 +16,11 @@ async function resetPassword ({ __init, password }) {
   try {
     isLoading.value = true
     await store.updateUser({ password })
-    toast.success({ title: t('resetPassword.toast.success.title') })
+    toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err) {
     error.value = err.message
-    toast.error({
-      title: t('error.general.title'),
-      text: t('error.general.text')
-    })
+    toast.error()
   } finally {
     isLoading.value = false
   }

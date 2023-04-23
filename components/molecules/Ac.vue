@@ -1,6 +1,4 @@
 <script setup>
-import Update from '@/assets/icons/update.svg'
-
 const emit = defineEmits(['update'])
 const props = defineProps({
   ac: { type: [Number, null, String], required: true },
@@ -34,14 +32,15 @@ function updateAc ({ __init, ac }) {
           v-else-if="type !== 'lair'"
           class="text-slate-600"
         >
-          {{ $t('actions.add') }}
+          Add
         </p>
         <span
           v-if="ac !== null && tempAc"
           class="text-primary"
         >+{{ tempAc }}</span>
       </div>
-      <Update
+      <Icon
+        name="lucide:wrench"
         class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
         :class="{ hidden: !ac }"
       />

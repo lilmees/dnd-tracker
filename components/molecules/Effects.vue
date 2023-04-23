@@ -4,9 +4,9 @@ const props = defineProps({ conditions: { type: Array, default: () => [] } })
 
 const info = ref()
 
-function removeEffect (id, type) {
+function removeEffect (slug, type) {
   emit('update', {
-    value: props.conditions.filter(s => s.id !== id),
+    value: props.conditions.filter(s => s.slug !== slug),
     type
   })
 }

@@ -1,6 +1,4 @@
 <script setup>
-import ArrowLeft from '@/assets/icons/arrow-left.svg'
-
 const emit = defineEmits(['update:modelValue', 'paginate'])
 const props = defineProps({
   modelValue: { type: Number, required: true },
@@ -56,7 +54,7 @@ const limitedNumbersList = computed(() => {
       :disabled="modelValue === 0"
       @click="handlePrevious"
     >
-      <ArrowLeft class="h-8 w-8" />
+      <Icon name="ph:arrow-left" class="h-6 w-6" />
     </button>
     <div class="flex items-center space-x-4">
       <button
@@ -75,7 +73,7 @@ const limitedNumbersList = computed(() => {
       :disabled="modelValue === totalPages - 1"
       @click="handleNext"
     >
-      <ArrowLeft class="h-8 w-8 rotate-180" />
+      <Icon name="ph:arrow-right" class="h-6 w-6" />
     </button>
   </div>
 </template>
