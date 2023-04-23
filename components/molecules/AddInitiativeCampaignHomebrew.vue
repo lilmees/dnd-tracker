@@ -76,6 +76,7 @@ async function addHomebrews (homebrews) {
 
 function closeModal () {
   isOpen.value = false
+  summoner.value = null
   selected.value = []
 }
 
@@ -115,7 +116,7 @@ function selectedSummoner (id) {
           </p>
           <Select
             :input-label="$t('inputs.summonerLabel')"
-            :label="summoner?.name || $t('homebrews.initiative.select')"
+            :label="summoner?.label || $t('homebrews.initiative.select')"
             bold
             :options="summonOptions"
             @selected="selectedSummoner"
