@@ -32,7 +32,7 @@ function updateAc ({ __init, ac }) {
           v-else-if="type !== 'lair'"
           class="text-slate-600"
         >
-          {{ $t('actions.add') }}
+          Add
         </p>
         <span
           v-if="ac !== null && tempAc"

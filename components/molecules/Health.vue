@@ -29,7 +29,7 @@ function updateHealth ({ __init, health }) {
           {{ health }}
         </p>
         <p v-else-if="type !== 'lair'" class="text-slate-600">
-          {{ $t('actions.add') }}
+          Add
         </p>
         <span v-if="health !== null && tempHealth" class="text-primary">+{{ tempHealth }}</span>
       </div>

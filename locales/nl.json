@@ -256,7 +256,8 @@
     "create": "Creëren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
-    "drag": "Sleep mij"
+    "drag": "Sleep mij",
+    "close": "Sluiten"
   },
   "general": {
     "encounters": "Encounters",

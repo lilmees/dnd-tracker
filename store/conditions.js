@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import { useOpen5eStore } from '@/store/open5e'
 
 export const useConditionsStore = defineStore('useConditionsStore', () => {
-  const supabase = useSupabaseClient()
+  const open5e = useOpen5eStore()
 
   const loading = ref(false)
   const error = ref(null)
@@ -16,13 +17,11 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
     error.value = null
 
     try {
-      const { data, error } = await supabase.from('conditions').select('*')
-      if (error) {
-        throw error
-      }
-      if (data) {
-        data.value = data
-      }
+      const { results } = await open5e.getData({
+        limit: 100,
+        type: 'conditions'
+      })
+      data.value = results
     } catch (error) {
       error.value = error
     } finally {
