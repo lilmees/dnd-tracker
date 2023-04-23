@@ -2,11 +2,12 @@
 import { useConditionsStore } from '@/store/conditions'
 
 const emit = defineEmits(['update'])
-const props = defineProps({ conditions: { type: Array, required: true, default: () => [] } })
+const props = defineProps({
+  conditions: { type: Array, required: true, default: () => [] }
+})
 
 const store = useConditionsStore()
 const isOpen = ref(false)
-const info = ref()
 const selected = ref(props.conditions || [])
 
 // reset selected and info when modal is closed
@@ -15,7 +16,6 @@ watch(isOpen, (v) => {
     selected.value = props.conditions || []
   } else {
     selected.value = []
-    info.value = null
   }
 })
 
@@ -47,22 +47,11 @@ function updateConditions () {
             :key="condition.id"
             :condition="condition"
             addable
-            :selected="selected.map(s => s.id).includes(condition.id)"
-            :removable="selected.map(s => s.id).includes(condition.id)"
+            :selected="selected.map(s => s.slug).includes(condition.slug)"
+            :removable="selected.map(s => s.slug).includes(condition.slug)"
             @add="selected = [...selected, $event]"
-            @remove="selected = selected.filter(s => s.id !== $event)"
-            @info="info = $event"
+            @remove="selected = selected.filter(s => s.slug !== $event)"
           />
-        </div>
-        <div v-if="info" class="border-primary border rounded p-4 relative">
-          <Icon
-            name="ic:round-clear"
-            class="absolute top-1 right-1 text-danger cursor-pointer w-8 h-8"
-            @click="info = null"
-          />
-          <p v-for="desc in info" :key="desc">
-            {{ desc }}
-          </p>
         </div>
         <Button :label="$t('actions.update')" inline @click="updateConditions" />
       </div>

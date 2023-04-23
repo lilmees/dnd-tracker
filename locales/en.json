@@ -255,7 +255,8 @@
     "create": "Create",
     "openSettings": "Settings",
     "closeSettings": "Close settings",
-    "drag": "Drag me"
+    "drag": "Drag me",
+    "close": "Close"
   },
   "general": {
     "encounters": "Encounters",

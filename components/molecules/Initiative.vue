@@ -50,7 +50,7 @@ async function moveRow (up) {
           {{ initiative }}
         </p>
         <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
-          {{ $t('actions.add') }}
+          Add
         </p>
         <Icon
           name="lucide:wrench"
