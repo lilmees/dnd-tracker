@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ actions: { type: Array, required: true } })
+defineProps({ monster: { type: Object, required: true } })
 
 const isOpen = ref(false)
 </script>
@@ -12,7 +12,7 @@ const isOpen = ref(false)
       @click="isOpen = true"
     />
     <Modal v-if="isOpen" big @close="isOpen = false">
-      <ActionsTable big :actions="actions" />
+      <ActionsTable :monster="monster" />
     </Modal>
   </div>
 </template>

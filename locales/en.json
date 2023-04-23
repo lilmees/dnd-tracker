@@ -63,6 +63,7 @@
     "summonerLabel": "Summoner",
     "textLabel": "Text",
     "questionLabel": "Your question?",
+    "challengeLabel": "Challenge rating",
     "nothing": "Nothing selected"
   },
   "campaigns": {

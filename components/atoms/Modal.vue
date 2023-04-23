@@ -11,7 +11,7 @@ defineProps({ big: { type: Boolean, default: false } })
       :class="[big ? 'max-w-[1000px]' : 'max-w-2xl']"
     >
       <div class="relative">
-        <button class="absolute -top-5 -right-5 group">
+        <button class="absolute -top-7 -right-7 group">
           <Icon
             name="ic:round-clear"
             class="text-danger w-8 h-8 rounded-full ring-danger group-focus-within:ring"

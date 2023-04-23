@@ -21,21 +21,36 @@ const isOpen = ref(false)
       @click="$emit('add', monster)"
     />
     <div class="flex gap-x-10 gap-y-2 items-center flex-wrap">
-      <h3>
+      <h3 class="pb-2">
         {{ monster.name }}
       </h3>
       <div class="flex gap-4">
-        <div class="flex gap-1">
+        <div
+          v-tippy="{ content: 'CR', animation: 'shift-away' }"
+          class="flex gap-1"
+        >
+          <Icon name="lucide:skull" class="w-6 h-6 text-warning" />
+          <p class="font-bold">
+            {{ monster.challenge_rating || '_' }}
+          </p>
+        </div>
+        <div
+          v-tippy="{ content: 'AC', animation: 'shift-away' }"
+          class="flex gap-1"
+        >
+          <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
           <p class="font-bold">
             {{ monster.armor_class || '_' }}
           </p>
-          <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
         </div>
-        <div class="flex gap-1">
+        <div
+          v-tippy="{ content: 'HP', animation: 'shift-away' }"
+          class="flex gap-1"
+        >
+          <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
           <p class="font-bold">
             {{ monster.hit_points || '_' }}
           </p>
-          <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
         </div>
       </div>
     </div>
@@ -50,12 +65,20 @@ const isOpen = ref(false)
     <div class="flex gap-x-4 gap-y-1 flex-wrap">
       <template v-for="stat in stats" :key="stat">
         <div v-if="monster[stat]" class="flex gap-1">
-          <p>{{ stat }}:</p>
-          <p>{{ monster[stat] || '_' }}</p>
+          <p>
+            {{ stat }}:
+          </p>
+          <p class="lowercase">
+            {{ monster[stat] || '_' }}
+          </p>
         </div>
       </template>
     </div>
-    <ActionsTable v-if="monster.actions && isOpen" :actions="monster.actions" :class="{ 'pb-5': isOpen }" />
+    <ActionsTable
+      v-if="monster.actions && isOpen"
+      :monster="monster"
+      :class="{ 'pb-5': isOpen }"
+    />
     <Icon
       name="tabler:chevron-down"
       class="cursor-pointer duration-200 h-6 w-6 stroke-2 absolute bottom-1 right-1"

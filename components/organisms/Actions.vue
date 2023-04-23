@@ -128,7 +128,7 @@ function updateRow () {
     <PossibleAttacksModal
       v-if="row.actions"
       v-tippy="{ content: $t('encounter.tooltip.attacks'), animation: 'shift-away' }"
-      :actions="Array.isArray(row.actions) ? row.actions : JSON.parse(row.actions)"
+      :monster="row"
     />
   </div>
 </template>
