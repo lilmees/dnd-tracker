@@ -23,17 +23,7 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     '@nuxtjs/i18n',
     '@nuxt/image-edge',
-    ['@funken-studio/sitemap-nuxt-3',
-      {
-        hostname: process.env.NUXT_PUBLIC_SITE_URL,
-        cacheTime: 1,
-        generateOnBuild: true,
-        defaults: {
-          changefreq: 'daily',
-          priority: 1,
-          lastmod: new Date().toISOString()
-        }
-      }],
+    'nuxt-simple-sitemap',
     ['nuxt-mail', {
       message: {
         to: 'jeremy@dnd-tracker.com' // default fallback
@@ -49,9 +39,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      appDomain: process.env.NODE_ENV === 'production'
-        ? process.env.NUXT_PUBLIC_SITE_URL
-        : 'http://localhost:3000',
+      appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
+      siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       stripePk: process.env.STRIPE_PK,
       stripeMediorMonthly: process.env.STRIPE_MEDIOR_MONTHLY,
       stripeMediorYearly: process.env.STRIPE_MEDIOR_YEARLY,
