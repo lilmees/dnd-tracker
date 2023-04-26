@@ -16,6 +16,7 @@ try {
   useHead({ title: store.encounter.title })
   info.value = store.encounter.info
 } catch (err) {
+  useBugsnag().notify(`Handeld in catch: ${err}`)
   toast.error()
 }
 

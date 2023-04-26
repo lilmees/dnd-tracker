@@ -16,7 +16,8 @@ const isSettings = ref(false)
 async function deleteCampaign () {
   try {
     await store.deleteCampaign(props.campaign.id)
-  } catch (error) {
+  } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   }
 }
@@ -27,6 +28,7 @@ async function deleteCampaign () {
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
+// useBugsnag().notify(`Handeld in catch: ${err}`)
 //     toast.error()
 //   } finally {
 //     isSettings.value = false

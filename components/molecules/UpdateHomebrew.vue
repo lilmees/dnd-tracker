@@ -48,6 +48,7 @@ function updateHomebrew ({ __init, ...formData }) {
     reset('form')
     closeModal()
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     data.error = err.message
   } finally {
     data.isLoading = false

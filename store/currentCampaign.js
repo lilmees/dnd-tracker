@@ -29,6 +29,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       useHead({ title: campaign.value.title })
       encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
     } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
       error.value = err
       toast.error()
       navigateTo(localePath('/campaigns'))
@@ -42,6 +43,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       const data = await homebrew.addHomebrew(hb)
       campaign.value.homebrew_items = [...campaign.value.homebrew_items, ...data]
     } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
       toast.error()
     }
   }
@@ -55,6 +57,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         ...hb
       }
     } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
       toast.error()
     }
   }
@@ -64,6 +67,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       await homebrew.deleteHomebrew(id)
       campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
     } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
       toast.error()
     }
   }

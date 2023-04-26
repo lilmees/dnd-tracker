@@ -33,6 +33,7 @@ async function logout () {
     profile.data = null
     isOpen.value = false
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   }
 }

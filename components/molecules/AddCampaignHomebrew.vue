@@ -23,6 +23,7 @@ async function addHomebrew ({ __init, ...formData }) {
     emit('homebrews', [...props.homebrews, homebrew])
     reset('form')
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false

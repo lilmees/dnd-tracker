@@ -38,6 +38,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
         campaigns.value = data
       }
     } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
       error.value = err
     } finally {
       loading.value = false

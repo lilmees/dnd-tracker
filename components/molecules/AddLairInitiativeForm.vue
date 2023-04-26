@@ -35,6 +35,7 @@ async function addInitiative ({ __init, ...formData }) {
     reset('form')
     emit('close')
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false

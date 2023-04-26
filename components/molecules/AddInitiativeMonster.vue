@@ -38,6 +38,7 @@ async function fetchMonsters (query, page) {
     pages.value = Math.ceil(count / 20)
     hits.value = results
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   }
 }
@@ -62,6 +63,7 @@ async function addMonster (monster) {
     })
     reset()
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error(err)
   } finally {
     isLoading.value = false

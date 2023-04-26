@@ -22,8 +22,9 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
         type: 'conditions'
       })
       data.value = results
-    } catch (error) {
-      error.value = error
+    } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
+      error.value = err
     } finally {
       loading.value = false
     }
