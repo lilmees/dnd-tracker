@@ -28,6 +28,7 @@ async function addCampaign ({ __init, ...formData }) {
     })
     emit('close')
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false

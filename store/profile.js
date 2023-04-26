@@ -30,8 +30,9 @@ export const useProfileStore = defineStore('useProfileStore', {
             this.data = data
           }
         }
-      } catch (error) {
-        this.error = error
+      } catch (err) {
+        useBugsnag().notify(`Handeld in catch: ${err}`)
+        this.error = err
       } finally {
         this.loading = false
       }

@@ -31,6 +31,7 @@ async function updateNote ({ __init, ...formData }) {
     emit('updated', note)
     reset('form')
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false

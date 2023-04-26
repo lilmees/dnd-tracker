@@ -23,6 +23,7 @@ async function addNote ({ __init, ...formData }) {
     emit('notes', [...props.notes, note])
     reset('form')
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false
