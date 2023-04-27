@@ -80,7 +80,7 @@ export default defineNuxtConfig({
   bugsnag: {
     publishRelease: true,
     config: {
-      apiKey: process.env.BUGSNAG_KEY,
+      apiKey: '859a62cc4ade4a1b5ec65c5f1a08c2d8',
       enabledReleaseStages: ['staging', 'production'],
       releaseStage: process.env.NODE_ENV
     }
