@@ -1,6 +1,5 @@
 <script setup>
 import { reset } from '@formkit/core'
-import { rollD20 } from '@/util/rollDice'
 import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 
@@ -43,7 +42,7 @@ async function addInitiative ({ __init, ...formData }) {
 }
 
 function rollDice () {
-  form.value.initiative = rollD20()
+  form.value.initiative = useDiceRoll(20)
 }
 </script>
 

@@ -1,6 +1,4 @@
 <script setup>
-import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
-
 const emit = defineEmits(['result'])
 defineProps({ result: { type: Boolean, default: false } })
 
@@ -9,7 +7,9 @@ const results = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6:
 
 function rollDice ({ __init, ...dices }) {
   Object.keys(dices).forEach((dice) => {
-    results.value[dice] = !dices[dice] ? null : generateDiceRoll(dice, dices[dice])
+    results.value[dice] = !dices[dice]
+      ? null
+      : useDiceRoll(Number(dice.replace('d', '')), dices[dice])
   })
   if (Object.keys(results.value).length) {
     emit(
@@ -18,25 +18,6 @@ function rollDice ({ __init, ...dices }) {
         .flat()
         .reduce((t, c) => t + c, 0)
     )
-  }
-}
-
-function generateDiceRoll (type, amount) {
-  switch (type) {
-    case 'd100':
-      return rollD100(amount)
-    case 'd20':
-      return rollD20(amount)
-    case 'd12':
-      return rollD12(amount)
-    case 'd10':
-      return rollD10(amount)
-    case 'd8':
-      return rollD8(amount)
-    case 'd6':
-      return rollD6(amount)
-    case 'd4':
-      return rollD4(amount)
   }
 }
 
