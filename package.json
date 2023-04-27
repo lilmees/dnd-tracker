@@ -32,6 +32,7 @@
     "@unhead/addons": "^1.0.20",
     "click-outside-vue3": "^4.0.1",
     "gsap": "^3.11.4",
+    "nuxt-bugsnag": "^5.9.2",
     "nuxt-icon": "^0.3.3",
     "nuxt-mail": "^3.1.5",
     "nuxt-simple-sitemap": "^2.4.11",

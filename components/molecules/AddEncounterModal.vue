@@ -65,6 +65,7 @@ async function addEncounter ({ __init, ...formData }) {
     })
     emit('added', encounter)
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
     isLoading.value = false

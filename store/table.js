@@ -90,7 +90,8 @@ export const useTableStore = defineStore('useTableStore', () => {
           throw error
         }
         encounter.value = { ...encounter.value, ...enc }
-      } catch (error) {
+      } catch (err) {
+        useBugsnag().notify(`Handeld in catch: ${err}`)
         toast.error()
       }
     } else {

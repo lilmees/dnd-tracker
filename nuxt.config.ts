@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   css: ['@/assets/css/global.css'],
   modules: [
     'nuxt-icon',
+    'nuxt-bugsnag',
     'nuxt-schema-org',
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
@@ -74,6 +75,14 @@ export default defineNuxtConfig({
   image: {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/c2es1qasw'
+    }
+  },
+  bugsnag: {
+    publishRelease: true,
+    config: {
+      apiKey: '859a62cc4ade4a1b5ec65c5f1a08c2d8',
+      enabledReleaseStages: ['staging', 'production'],
+      releaseStage: process.env.NODE_ENV
     }
   },
   tailwindcss: {

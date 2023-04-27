@@ -40,6 +40,7 @@ async function updateProfile ({ __init, username, name, ...credentials }) {
     await profile.updateCredentialsProfile(credentials, { username, name, avatar: image.value, role: 'User' })
     isUpdating.value = false
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
     toast.error()
   } finally {
@@ -59,6 +60,7 @@ async function deleteUser () {
     isLoading.value = true
     await profile.deleteProfile()
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   } finally {
     isLoading.value = false

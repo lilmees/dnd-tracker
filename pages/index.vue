@@ -15,6 +15,7 @@ const tableVisible = useElementVisibility(table)
 try {
   await store.getSandboxEncounter()
 } catch (err) {
+  useBugsnag().notify(`Handeld in catch: ${err}`)
   toast.error()
 }
 

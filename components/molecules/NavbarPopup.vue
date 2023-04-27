@@ -19,6 +19,7 @@ async function manageSubscription () {
   try {
     await stripe.createPortalSession(profile.data.stripe_session_id)
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   }
 }

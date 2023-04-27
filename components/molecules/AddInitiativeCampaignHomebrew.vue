@@ -68,6 +68,7 @@ async function addHomebrews (homebrews) {
 
     closeModal()
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     console.error(err)
   } finally {
     isLoading.value = false

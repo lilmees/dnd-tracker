@@ -19,6 +19,7 @@ async function resetPassword ({ __init, password }) {
     toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
     toast.error()
   } finally {

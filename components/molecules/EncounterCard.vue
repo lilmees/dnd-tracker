@@ -19,6 +19,7 @@ async function deleteEncounter () {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   }
 }
@@ -36,6 +37,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }) {
     const enc = await store.addEncounter(encounter)
     emit('copied', enc)
   } catch (err) {
+    useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()
   } finally {
     isSettings.value = false
