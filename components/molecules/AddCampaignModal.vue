@@ -1,5 +1,4 @@
 <script setup>
-import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -24,7 +23,7 @@ async function addCampaign ({ __init, ...formData }) {
       ...formData,
       created_by: user.value.id,
       admins: [user.value.id],
-      color: contrastColor(formData.background)
+      color: useContrastColor(formData.background)
     })
     emit('close')
   } catch (err) {

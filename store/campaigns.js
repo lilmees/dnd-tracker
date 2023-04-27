@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { minutesAgo } from '@/util/minutesAgo'
 import { useEncountersStore } from '@/store/encounters'
 
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
@@ -22,7 +21,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   async function fetch () {
     try {
       // check if there is data that is older then 1 minutes old otherwise refetch the data
-      if ((!minutesAgo(1, lastFetched.value) && campaigns.value) || loading.value) {
+      if ((!useMinutesAgo(1, lastFetched.value) && campaigns.value) || loading.value) {
         return
       } else {
         lastFetched.value = Date.now()
@@ -75,7 +74,9 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       throw error
     } else {
       // check if the data is older than 1 minutes if so filter the campaigns otherwise fetch data
-      !minutesAgo(1, lastFetched.value) ? (campaigns.value = campaigns.value.filter(d => d.id !== id)) : fetch()
+      !useMinutesAgo(1, lastFetched.value)
+        ? (campaigns.value = campaigns.value.filter(d => d.id !== id))
+        : fetch()
       return data
     }
   }

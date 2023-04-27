@@ -1,5 +1,4 @@
 <script setup>
-import { contrastColor } from '@/util/contrastColor'
 import { randomColor } from '@/util/randomColor'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -41,7 +40,7 @@ async function updateCampaign ({ __init, ...formData }) {
     await store.updateCampaign(
       {
         ...formData,
-        color: contrastColor(formData.background)
+        color: useContrastColor(formData.background)
       },
       props.campaign.id
     )
