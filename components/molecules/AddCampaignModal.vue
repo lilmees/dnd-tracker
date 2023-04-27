@@ -1,5 +1,4 @@
 <script setup>
-import { randomColor } from '@/util/randomColor'
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
@@ -12,7 +11,7 @@ const isLoading = ref(false)
 const error = ref()
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function addCampaign ({ __init, ...formData }) {

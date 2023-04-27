@@ -1,5 +1,4 @@
 <script setup>
-import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -40,7 +39,7 @@ const campaignOptions = computed(() => {
 })
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function addEncounter ({ __init, ...formData }) {

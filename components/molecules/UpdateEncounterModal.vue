@@ -1,5 +1,4 @@
 <script setup>
-import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 
 const emit = defineEmits(['close', 'updated'])
@@ -27,7 +26,7 @@ watch(
 )
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function updateEncounter ({ __init, ...formData }) {
