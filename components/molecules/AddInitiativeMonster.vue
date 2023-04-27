@@ -1,5 +1,4 @@
 <script setup>
-import { createRowObject } from '@/util/createRowObject'
 import { useToastStore } from '@/store/toast'
 import { useTableStore } from '@/store/table'
 import { useOpen5eStore } from '@/store/open5e'
@@ -54,7 +53,7 @@ function paginate (newPage) {
 async function addMonster (monster) {
   try {
     isLoading.value = true
-    const row = createRowObject(monster, 'monster', store.encounter.rows)
+    const row = useCreateRow(monster, 'monster', store.encounter.rows)
     await store.encounterUpdate({
       rows: store.encounter.rows.includes('[')
         ? [row]

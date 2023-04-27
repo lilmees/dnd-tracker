@@ -1,6 +1,5 @@
 <script setup>
 import { reset } from '@formkit/core'
-import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 
 const emit = defineEmits(['close'])
@@ -25,7 +24,7 @@ async function addInitiative ({ __init, ...formData }) {
   error.value = null
   try {
     isLoading.value = true
-    const row = createRowObject(formData, props.type, store.encounter.rows)
+    const row = useCreateRow(formData, props.type, store.encounter.rows)
     await store.encounterUpdate({
       rows: store.encounter.rows.includes('[')
         ? [row]
