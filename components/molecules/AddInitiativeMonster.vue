@@ -1,5 +1,4 @@
 <script setup>
-import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { createRowObject } from '@/util/createRowObject'
 import { useToastStore } from '@/store/toast'
 import { useTableStore } from '@/store/table'
@@ -20,7 +19,7 @@ watchDebounced(
   form,
   (v) => {
     if (v) {
-      fetchMonsters(removeEmptyKeys(form.value), page.value)
+      fetchMonsters(useEmptyKeyRemover(form.value), page.value)
       page.value = 0
     } else {
       hits.value = []
