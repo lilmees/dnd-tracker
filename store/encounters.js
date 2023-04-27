@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { sortByTeam } from '@/util/sortByTeam'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
@@ -9,7 +8,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const data = ref(null)
   let lastFetched = ref(null)
 
-  const sortedEncounters = computed(() => data.value ? sortByTeam(data.value) : null)
+  const sortedEncounters = computed(() => data.value
+    ? useEncountersByTeam(data.value)
+    : null
+  )
 
   async function fetch () {
     try {
