@@ -11,7 +11,7 @@ interface Row {
   health?: number
   id: string | number
   index: number
-  initiative?: number
+  initiative: number
   link?: string
   maxAc?: number
   maxHealth?: number
