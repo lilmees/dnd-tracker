@@ -1,4 +1,4 @@
-export const contrastColor = (hex) => {
+export const useContrastColor = (hex: string): string => {
   if (hex.indexOf('#') === 0) {
     hex = hex.slice(1)
   }

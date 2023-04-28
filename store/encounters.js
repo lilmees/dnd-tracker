@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import { sortByTeam } from '@/util/sortByTeam'
-import { minutesAgo } from '@/util/minutesAgo'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
@@ -10,12 +8,15 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const data = ref(null)
   let lastFetched = ref(null)
 
-  const sortedEncounters = computed(() => data.value ? sortByTeam(data.value) : null)
+  const sortedEncounters = computed(() => data.value
+    ? useEncountersByTeam(data.value)
+    : null
+  )
 
   async function fetch () {
     try {
       // check if there is data that is older then 5 minutes old otherwise refetch the data
-      if ((!minutesAgo(5, lastFetched.value) && data.value) || loading.value) {
+      if ((!useMinutesAgo(5, lastFetched.value) && data.value) || loading.value) {
         return
       } else {
         lastFetched = Date.now()
@@ -68,7 +69,11 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       throw err
     } else {
       // check if the data is older than 5 minutes if so filter the encounters otherwise fetch data
-      if (!minutesAgo(5, lastFetched.value)) { data.value = data.value ? data.value.filter(d => d.id !== id) : [] } else { fetch() }
+      if (!useMinutesAgo(5, lastFetched.value)) {
+        data.value = data.value
+          ? data.value.filter(d => d.id !== id)
+          : []
+      } else { fetch() }
       return sheets
     }
   }

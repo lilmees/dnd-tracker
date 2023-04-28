@@ -1,5 +1,4 @@
 <script setup>
-import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 import { useHomebrewStore } from '@/store/homebrew'
 
@@ -57,7 +56,7 @@ async function addHomebrews (homebrews) {
         }
       }
 
-      homebrewRows.push(createRowObject(hb, hb.type, store.encounter.rows))
+      homebrewRows.push(useCreateRow(hb, hb.type, store.encounter.rows))
     })
 
     await store.encounterUpdate({

@@ -1,6 +1,5 @@
 <script setup>
 import { useTableStore } from '@/store/table'
-import { rollD20 } from '@/util/rollDice'
 
 const emit = defineEmits(['update'])
 const props = defineProps({
@@ -14,7 +13,7 @@ const isOpen = ref(false)
 const form = ref({ initiative: null })
 
 function diceRoll () {
-  form.value.initiative = rollD20()
+  form.value.initiative = useDiceRoll(20)
 }
 
 function updateInitiative ({ __init, initiative }) {

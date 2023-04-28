@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import { correctRowItemIndexes } from '@/util/correctRowItemIndexes'
-import { calculateRowIndex } from '@/util/calculateRowIndex'
 import { useToastStore } from '@/store/toast'
 
 export const useTableStore = defineStore('useTableStore', () => {
@@ -36,7 +34,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     data.rows = typeof data.rows === 'string' ? JSON.parse(data.rows) : data.rows
-    data.rows = correctRowItemIndexes(data.rows)
+    data.rows = useIndexCorrecter(data.rows)
 
     subscribeEncounterChanges()
 
@@ -53,7 +51,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     data.rows = typeof data.rows === 'string' ? JSON.parse(data.rows) : data.rows
-    data.rows = correctRowItemIndexes(data.rows)
+    data.rows = useIndexCorrecter(data.rows)
     encounter.value = data
   }
 
@@ -77,7 +75,9 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   async function encounterUpdate (enc) {
-    if (enc.rows?.length) { enc.rows = correctRowItemIndexes(enc.rows) }
+    if (enc.rows?.length) {
+      enc.rows = useIndexCorrecter(enc.rows)
+    }
 
     const { admins, created_at, created_by, id, profiles, ...data } = { ...encounter.value, ...enc }
     if (data.campaign && typeof data.campaign === 'object') {
@@ -107,7 +107,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     if (key === 'initiative') {
-      const calculatedIndex = calculateRowIndex(rows, value)
+      const calculatedIndex = useCalculateIndex(rows, value)
       rows[index].initiative = value
       rows[index].index = calculatedIndex
     } else {

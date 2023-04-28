@@ -1,7 +1,5 @@
 <script setup>
 import { reset } from '@formkit/core'
-import { rollD20 } from '@/util/rollDice'
-import { createRowObject } from '@/util/createRowObject'
 import { useTableStore } from '@/store/table'
 
 const emit = defineEmits(['close'])
@@ -35,7 +33,7 @@ async function addInitiative ({ __init, amount, ...formData }) {
     isLoading.value = true
     const rows = []
     for (let i = 0; i < amount; i++) {
-      rows.push(createRowObject(formData, props.type, store.encounter.rows))
+      rows.push(useCreateRow(formData, props.type, store.encounter.rows))
     }
     await store.encounterUpdate({
       rows: store.encounter.rows.includes('[')
@@ -53,7 +51,7 @@ async function addInitiative ({ __init, amount, ...formData }) {
 }
 
 function rollDice () {
-  form.value.initiative = rollD20()
+  form.value.initiative = useDiceRoll(20)
 }
 
 function addPlayerInit () {

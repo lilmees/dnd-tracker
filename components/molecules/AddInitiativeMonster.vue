@@ -1,6 +1,4 @@
 <script setup>
-import { removeEmptyKeys } from '@/util/removeEmptyKeys'
-import { createRowObject } from '@/util/createRowObject'
 import { useToastStore } from '@/store/toast'
 import { useTableStore } from '@/store/table'
 import { useOpen5eStore } from '@/store/open5e'
@@ -20,7 +18,7 @@ watchDebounced(
   form,
   (v) => {
     if (v) {
-      fetchMonsters(removeEmptyKeys(form.value), page.value)
+      fetchMonsters(useEmptyKeyRemover(form.value), page.value)
       page.value = 0
     } else {
       hits.value = []
@@ -55,7 +53,7 @@ function paginate (newPage) {
 async function addMonster (monster) {
   try {
     isLoading.value = true
-    const row = createRowObject(monster, 'monster', store.encounter.rows)
+    const row = useCreateRow(monster, 'monster', store.encounter.rows)
     await store.encounterUpdate({
       rows: store.encounter.rows.includes('[')
         ? [row]

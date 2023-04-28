@@ -1,6 +1,4 @@
 <script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 
 const emit = defineEmits(['close', 'updated'])
@@ -28,7 +26,7 @@ watch(
 )
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function updateEncounter ({ __init, ...formData }) {
@@ -36,7 +34,7 @@ async function updateEncounter ({ __init, ...formData }) {
   try {
     isLoading.value = true
     const enc = await store.updateEncounter(
-      { ...formData, color: contrastColor(formData.background) },
+      { ...formData, color: useContrastColor(formData.background) },
       props.encounter.id
     )
     emit('updated', enc)

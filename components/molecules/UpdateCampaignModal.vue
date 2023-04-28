@@ -1,6 +1,4 @@
 <script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
@@ -31,7 +29,7 @@ watch(
 )
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function updateCampaign ({ __init, ...formData }) {
@@ -41,7 +39,7 @@ async function updateCampaign ({ __init, ...formData }) {
     await store.updateCampaign(
       {
         ...formData,
-        color: contrastColor(formData.background)
+        color: useContrastColor(formData.background)
       },
       props.campaign.id
     )

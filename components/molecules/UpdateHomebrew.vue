@@ -1,7 +1,6 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
-import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
 
@@ -41,7 +40,7 @@ function updateHomebrew ({ __init, ...formData }) {
     data.isLoading = true
 
     store.updateHomebrew(
-      removeEmptyKeys({ ...formData, type: data.type }),
+      useEmptyKeyRemover({ ...formData, type: data.type }),
       props.item.id
     )
 

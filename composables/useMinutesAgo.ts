@@ -1,4 +1,4 @@
-export const minutesAgo = (minutes, time) => {
+export const useMinutesAgo = (minutes: number, time: number): boolean => {
   if (!time) {
     return false
   }

@@ -1,6 +1,4 @@
 <script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -41,7 +39,7 @@ const campaignOptions = computed(() => {
 })
 
 function changeColor () {
-  form.value.background = randomColor()
+  form.value.background = useRandomColor()
 }
 
 async function addEncounter ({ __init, ...formData }) {
@@ -60,7 +58,7 @@ async function addEncounter ({ __init, ...formData }) {
       rows: [],
       created_by: user.value.id,
       admins: [user.value.id],
-      color: contrastColor(formData.background),
+      color: useContrastColor(formData.background),
       activeIndex: 0
     })
     emit('added', encounter)

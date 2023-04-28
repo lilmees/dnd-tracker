@@ -1,6 +1,5 @@
 <script setup>
 import { useTimeout, useDraggable } from '@vueuse/core'
-import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
 
 const { ready, start } = useTimeout(5000, { controls: true })
 
@@ -19,31 +18,12 @@ function rollDice (dice) {
   }
   rolled.value = {
     dice,
-    result: generateDiceRoll(dice),
+    result: useDiceRoll(+dice.replace('d', ''), amount.value),
     max: +dice.replace('d', ''),
     amount: amount.value
   }
   amount.value = 1
   start()
-}
-
-function generateDiceRoll (type) {
-  switch (type) {
-    case 'd100':
-      return rollD100(amount.value)
-    case 'd20':
-      return rollD20(amount.value)
-    case 'd12':
-      return rollD12(amount.value)
-    case 'd10':
-      return rollD10(amount.value)
-    case 'd8':
-      return rollD8(amount.value)
-    case 'd6':
-      return rollD6(amount.value)
-    case 'd4':
-      return rollD4(amount.value)
-  }
 }
 </script>
 
