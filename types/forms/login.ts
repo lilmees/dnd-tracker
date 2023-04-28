@@ -1,4 +1,4 @@
-interface Credentials {
+interface Login {
   email: string
   password: string
 }

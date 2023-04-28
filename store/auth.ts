@@ -5,7 +5,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   const { auth } = useSupabaseClient()
   const localePath = useLocalePath()
 
-  async function register (credentails: Credentials, data: Register): Promise<void> {
+  async function register (credentails: Login, data: Register): Promise<void> {
     const { error, data: userData } = await auth.signUp(credentails)
 
     if (error) {
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     }
   }
 
-  async function login (credentials: Credentials): Promise<void> {
+  async function login (credentials: Login): Promise<void> {
     const { error } = await auth.signInWithPassword(credentials)
 
     if (error) {
