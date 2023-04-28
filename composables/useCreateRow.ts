@@ -1,11 +1,9 @@
-import { calculateRowIndex } from '@/util/calculateRowIndex'
-
-export const useCreateRow = (formData: Row, type: string, encounters: Encounter[]): Row => {
+export const useCreateRow = (formData: Row, type: string, encounterRows: Row[]): Row => {
   const initiative = Number(formData.initiative) || null
   const health = Number(formData.health || formData.hit_points) || null
   const ac = Number(formData.ac || formData.armor_class) || null
 
-  const index = calculateRowIndex(encounters, initiative)
+  const index = useCalculateIndex(encounterRows, initiative)
   const id = Date.now() + Math.floor(Math.random() * 100)
 
   let row = { ...formData, id, conditions: [], type, index, initiative: initiative || -1, note: '' }

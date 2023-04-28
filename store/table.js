@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { calculateRowIndex } from '@/util/calculateRowIndex'
 import { useToastStore } from '@/store/toast'
 
 export const useTableStore = defineStore('useTableStore', () => {
@@ -108,7 +107,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     if (key === 'initiative') {
-      const calculatedIndex = calculateRowIndex(rows, value)
+      const calculatedIndex = useCalculateIndex(rows, value)
       rows[index].initiative = value
       rows[index].index = calculatedIndex
     } else {
