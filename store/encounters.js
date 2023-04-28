@@ -78,19 +78,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function deleteEncounterByCampaign (campaign) {
-    const { data: sheets, error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .eq('campaign', `${campaign}`)
-      .select('*')
-    if (err) {
-      throw err
-    } else {
-      return sheets
-    }
-  }
-
   async function updateEncounter (encounter, id) {
     const { data: sheets, error: err } = await supabase.from('initiative_sheets').update(encounter).eq('id', id).select('*')
     if (err) {
@@ -116,7 +103,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     getEncountersByCampaign,
     addEncounter,
     deleteEncounter,
-    deleteEncounterByCampaign,
     updateEncounter
   }
 })
