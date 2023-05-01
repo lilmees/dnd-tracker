@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
 
-  async function getHomebrewByCampaignId (id) {
+  async function getHomebrewByCampaignId (id: number): Promise<Homebrew[]> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('campaign', id)
@@ -15,7 +15,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function getHomebrewById (id) {
+  async function getHomebrewById (id: number): Promise<Homebrew> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('id', id)
@@ -28,7 +28,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function getHomebrewByType (type) {
+  async function getHomebrewByType (type: HomebrewType): Promise<Homebrew[]> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('type', type)
@@ -40,20 +40,20 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function addHomebrew (homebrew) {
+  async function addHomebrew (homebrew: Homebrew): Promise<Homebrew> {
     const { data, error } = await supabase.from('homebrew_items')
-      .insert([homebrew])
+      .insert([homebrew as never])
       .select('*')
 
     if (error) {
       throw error
+    } else {
+      return data[0] as Homebrew
     }
-
-    return data
   }
 
-  async function deleteHomebrew (id) {
-    const { data, error } = await supabase.from('homebrew_items')
+  async function deleteHomebrew (id: number): Promise<void> {
+    const { error } = await supabase.from('homebrew_items')
       .delete()
       .eq('id', id)
       .select('*')
@@ -61,15 +61,14 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     if (error) {
       throw error
     }
-
-    return data
   }
 
-  async function updateHomebrew (homebrew, id) {
+  async function updateHomebrew (homebrew: Homebrew, id: number): Promise<Homebrew> {
     const { data, error } = await supabase.from('homebrew_items')
-      .update(homebrew)
+      .update(homebrew as never)
       .eq('id', id)
       .select('*')
+
     if (error) {
       throw error
     }

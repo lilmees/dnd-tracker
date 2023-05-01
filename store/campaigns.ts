@@ -8,7 +8,6 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const campaigns: Ref<Campaign[] | null> = ref(null)
   const currentCampaign: Ref<Campaign | null> = ref(null)
   const currentCampaignEncounters: Ref<Encounter[]> = ref([])
-  const lastFetched: Ref<number | null> = ref(null)
 
   const sortedCampaigns: ComputedRef<Campaign[] | null> = computed(() => {
     return campaigns.value
@@ -18,17 +17,10 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   })
 
   async function fetch (): Promise<void> {
+    loading.value = true
+    error.value = null
+
     try {
-      // check if there is data that is older then 1 minutes old otherwise refetch the data
-      if ((lastFetched.value && !useMinutesAgo(1, lastFetched.value) && campaigns.value) || loading.value) {
-        return
-      } else {
-        lastFetched.value = Date.now()
-      }
-
-      loading.value = true
-      error.value = null
-
       const { data, error: errorMessage } = await supabase
         .from('campaigns')
         .select('*, initiative_sheets(title)')
@@ -47,7 +39,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function getCampaignById (id: string): Promise<Campaign> {
+  async function getCampaignById (id: number): Promise<Campaign> {
     const { data, error } = await supabase
       .from('campaigns')
       .select('*, homebrew_items(*), notes(*)')
@@ -88,10 +80,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       throw error
     }
     if (data) {
-      // check if the data is older than 1 minutes if so filter the campaigns otherwise fetch data
-      lastFetched.value && !useMinutesAgo(1, lastFetched.value) && campaigns.value
-        ? campaigns.value = campaigns.value.filter(d => d.id !== id)
-        : fetch()
+      fetch()
     }
   }
 
