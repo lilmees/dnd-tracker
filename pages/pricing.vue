@@ -2,7 +2,6 @@
 import { useStripeStore } from '@/store/stripe'
 
 const stripe = useStripeStore()
-const user = useSupabaseUser()
 
 const isYearly = ref(false)
 </script>
@@ -29,7 +28,6 @@ const isYearly = ref(false)
           v-for="product in stripe.products"
           :key="product.title"
           :product="product"
-          :user="user"
           :yearly="isYearly"
         />
       </div>
