@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
 const store = useTableStore()
@@ -12,7 +12,7 @@ const store = useTableStore()
       {{ $t('encounter.actions') }}
     </p>
     <AddInitiativeMonster />
-    <template v-if="store.encounter.campaign || store.isSandbox">
+    <template v-if="store?.encounter?.campaign || store.isSandbox">
       <AddInitiativeCampaignHomebrew />
     </template>
     <AddInitiativeModal />

@@ -3,6 +3,7 @@ interface Row {
   campaign?: number
   concentration: boolean
   conditions: Condition[]
+  actions: Action[]
   created_at: string
   deathSaves: {
     fail: boolean[],
