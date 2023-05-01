@@ -22,4 +22,5 @@ interface Row {
   type: string
   armor_class?: string
   hit_points?: string
+  summoner?: string
 }
