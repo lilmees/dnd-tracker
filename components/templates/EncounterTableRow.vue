@@ -1,33 +1,38 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
-const props = defineProps({
-  row: { type: Object, required: true },
-  index: { type: Number, required: true }
-})
+const props = defineProps<{
+  row: Row,
+  index: number,
+}>()
 
 const store = useTableStore()
 
-const note = ref(props.row.note)
+const note: Ref<string> = ref(props.row.note || '')
 
-const summoner = computed(() => {
-  const sum = store.encounter.rows.filter(r => r.id === props.row.summoner?.id)
-  return sum.length ? sum[0].name : null
+const summoner: ComputedRef<string | null> = computed(() => {
+  if (store.encounter) {
+    const sum = store.encounter.rows.filter(r => r.id === props.row.summoner?.id)
+    return sum.length ? sum[0].name : null
+  } else {
+    return null
+  }
 })
 
 watchDebounced(
   note,
-  () => store.updateRow('note', note.value, props.row, props.index),
+  () => store.updateRow('note', note.value as never, props.row, props.index),
   { debounce: 500, maxWait: 1000 }
 )
 </script>
 
 <template>
   <tr
+    v-if="store.encounter"
     class="border-b last:border-b-0 border-slate-700"
     :class="{
       '!bg-primary/10 tracker-shadow': index === store.encounter.activeIndex,
-      'bg-danger/10': row.health !== null && row.health < 1,
+      'bg-danger/10': row.health && row.health !== null && row.health < 1,
     }"
   >
     <td class="px-2 py-1 border-r border-slate-700 text-primary text-center max-w-[30px]">
@@ -37,7 +42,7 @@ watchDebounced(
       <Name
         :name="row.name"
         :type="row.type"
-        @update="store.updateRow('name', $event, row, index)"
+        @update="store.updateRow('name', $event as never, row, index)"
       />
     </td>
     <td
@@ -52,7 +57,7 @@ watchDebounced(
       <Initiative
         :initiative="row.initiative || null"
         :index="row.index"
-        @update="store.updateRow('initiative', $event, row, index)"
+        @update="store.updateRow('initiative', $event as never, row, index)"
       />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
@@ -60,7 +65,7 @@ watchDebounced(
         :ac="row.ac || null"
         :temp-ac="row.tempAc || null"
         :type="row.type"
-        @update="store.updateRow('ac', $event, row, index)"
+        @update="store.updateRow('ac', $event as never, row, index)"
       />
     </td>
     <td class="p-2 border-r border-slate-700">
@@ -68,7 +73,7 @@ watchDebounced(
         :health="typeof row.health === 'number' ? row.health : null"
         :temp-health="row.tempHealth || null"
         :type="row.type"
-        @update="store.updateRow('health', $event, row, index)"
+        @update="store.updateRow('health', $event as never, row, index)"
       />
     </td>
     <td class="p-2 border-r border-slate-700">
@@ -77,7 +82,7 @@ watchDebounced(
     <td class="px-2 py-1 border-r border-slate-700">
       <Effects
         :conditions="row.conditions"
-        @update="store.updateRow($event.type, $event.value, row, index)"
+        @update="store.updateRow($event.type, $event.value as never, row, index)"
       />
     </td>
     <td class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative">
@@ -91,14 +96,14 @@ watchDebounced(
       <DeathSaves
         v-if="row.deathSaves"
         :death-saves="row.deathSaves"
-        @update="store.updateRow('deathSaves', $event, row, index)"
+        @update="store.updateRow('deathSaves', $event as never, row, index)"
       />
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Concentration
         v-if="typeof row.concentration === 'boolean'"
         :concentration="row.concentration"
-        @toggle="store.updateRow('concentration', !row.concentration, row, index)"
+        @toggle="store.updateRow('concentration', !row.concentration as never, row, index)"
       />
     </td>
     <td class="px-2 py-1">

@@ -3,7 +3,7 @@ interface Encounter {
   created_at: string
   created_by: string
   title: string
-  rows: string | Row[]
+  rows: Row[]
   campaign: number | Campaign
   admins: string[]
   round: number
