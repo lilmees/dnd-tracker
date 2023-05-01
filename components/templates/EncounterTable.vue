@@ -37,12 +37,6 @@ const headers = computed(() => {
             <th
               v-for="header in headers"
               :key="header"
-              v-tippy="{
-                content: header === 'con'
-                  ? $t('encounter.headers.concentration')
-                  : '',
-                animation: 'shift-away'
-              }"
               class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ header }}
