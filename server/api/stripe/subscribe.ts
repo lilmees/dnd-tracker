@@ -3,7 +3,9 @@ import { serverSupabaseClient } from '#supabase/server'
 
 const config = useRuntimeConfig()
 
-const stripe = new Stripe(config.stripeSk, null)
+const stripe = new Stripe(config.stripeSk, {
+  apiVersion: '2022-11-15'
+})
 
 export default defineEventHandler(async (event) => {
   const client = serverSupabaseClient(event)
@@ -15,7 +17,9 @@ export default defineEventHandler(async (event) => {
 
   if (!body.customer) {
     customer = await stripe.customers.create({ email: body.user.email })
-    await client.from('profiles').update({ stripe_id: customer.id }).eq('id', body.user.id)
+    await client.from('profiles')
+      .update({ stripe_id: customer.id } as never)
+      .eq('id', body.user.id)
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -24,7 +28,7 @@ export default defineEventHandler(async (event) => {
     mode: 'subscription',
     success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
-    customer: body.customer || customer.id
+    customer: body.customer || customer?.id
   })
 
   return { url: session.url }
