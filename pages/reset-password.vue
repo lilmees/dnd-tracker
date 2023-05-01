@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useAuthStore } from '@/store/auth'
 import { useToastStore } from '@/store/toast'
 
@@ -7,18 +7,18 @@ const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-const form = ref({ password: '' })
-const isLoading = ref(false)
-const error = ref()
+const form: Ref<{ password: string }> = ref({ password: '' })
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
 
-async function resetPassword ({ __init, password }) {
+async function resetPassword ({ __init, password }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
     await store.updateUser({ password })
     toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
     toast.error()
@@ -45,7 +45,13 @@ async function resetPassword ({ __init, password }) {
       <p v-if="error" class="text-danger text-center">
         {{ error }}
       </p>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="resetPassword">
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        message-class="error-message"
+        @submit="resetPassword"
+      >
         <Input
           focus
           name="password"
