@@ -1,0 +1,113 @@
+import { defineStore } from 'pinia'
+
+export const useEncountersStore = defineStore('useEncountersStore', () => {
+  const supabase = useSupabaseClient()
+
+  const loading: Ref<boolean> = ref(false)
+  const error: Ref<string | null> = ref(null)
+  const data: Ref<Encounter[]> = ref([])
+
+  const sortedEncounters: ComputedRef<{ [key: string]: Encounter[] } | null> = computed(() => data.value
+    ? useEncountersByTeam(data.value)
+    : null
+  )
+
+  async function fetch (): Promise<void> {
+    loading.value = true
+    error.value = null
+
+    try {
+      const { data: sheets, error: err } = await supabase
+        .from('initiative_sheets')
+        .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
+
+      if (err) {
+        throw err
+      }
+      if (sheets) {
+        data.value = sheets
+      }
+    } catch (err) {
+      useBugsnag().notify(`Handeld in catch: ${err}`)
+      error.value = err as string
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
+    const { data: sheets, error: err } = await supabase
+      .from('initiative_sheets')
+      .select('*, profiles(id, name, username, avatar)')
+      .eq('campaign', `${id}`)
+
+    if (err) {
+      throw err
+    } else {
+      return sheets
+    }
+  }
+
+  async function addEncounter (encounter: Encounter): Promise<Encounter> {
+    const { data: sheets, error: err } = await supabase
+      .from('initiative_sheets')
+      .insert([encounter as never])
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      data.value && data.value.length
+        ? data.value.push(sheets[0])
+        : (data.value = [sheets[0]])
+
+      return sheets[0]
+    }
+  }
+
+  async function deleteEncounter (id: number): Promise<void> {
+    const { error: err } = await supabase
+      .from('initiative_sheets')
+      .delete()
+      .eq('id', id)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      fetch()
+    }
+  }
+
+  async function updateEncounter (encounter: Encounter, id: number): Promise<Encounter> {
+    const { data: sheets, error: err } = await supabase
+      .from('initiative_sheets')
+      .update(encounter as never)
+      .eq('id', id)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      if (data.value) {
+        data.value = data.value.filter(e => e.id !== id)
+        data.value.push(sheets[0])
+      } else {
+        data.value = [sheets[0]]
+      }
+      return sheets[0]
+    }
+  }
+
+  return {
+    loading,
+    error,
+    data,
+    sortedEncounters,
+    fetch,
+    getEncountersByCampaign,
+    addEncounter,
+    deleteEncounter,
+    updateEncounter
+  }
+})

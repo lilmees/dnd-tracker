@@ -4,11 +4,11 @@ import { useOpen5eStore } from '@/store/open5e'
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
 
-  const loading = ref(false)
-  const error = ref(null)
-  const data = ref(null)
+  const loading: Ref<boolean> = ref(false)
+  const error: Ref<string | null> = ref(null)
+  const data: Ref<Condition[]> = ref([])
 
-  async function fetch () {
+  async function fetch (): Promise<void> {
     if (data.value || loading.value) {
       return
     }
@@ -20,11 +20,12 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
       const { results } = await open5e.getData({
         limit: 100,
         type: 'conditions'
-      })
+      }) as { results: Condition[] }
+
       data.value = results
     } catch (err) {
       useBugsnag().notify(`Handeld in catch: ${err}`)
-      error.value = err
+      error.value = err as string
     } finally {
       loading.value = false
     }

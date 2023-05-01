@@ -4,8 +4,7 @@ import { useStripeStore } from '@/store/stripe'
 const props = defineProps({
   product: { type: Object, required: true },
   current: { type: Boolean, default: false },
-  yearly: { type: Boolean, default: false },
-  user: { type: Object, default: () => {} }
+  yearly: { type: Boolean, default: false }
 })
 
 const { locale } = useI18n({ useScope: 'global' })
@@ -13,7 +12,6 @@ const stripe = useStripeStore()
 
 async function subscribe () {
   await stripe.subscribe(
-    props.user,
     props.yearly ? props.product.yearId : props.product.monthId,
     locale.value
   )

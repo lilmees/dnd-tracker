@@ -40,7 +40,10 @@ function updateConditions () {
         }}
       </h2>
       <div v-if="store.loading" class="loader" />
-      <div v-else-if="!store.error && store.data" class="space-y-3">
+      <div
+        v-else-if="!store.error && store.data?.length"
+        class="space-y-3"
+      >
         <div class="flex flex-wrap gap-2">
           <Tag
             v-for="condition in store.data"

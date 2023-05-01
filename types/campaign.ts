@@ -3,6 +3,7 @@ interface Campaign {
   created_at: string
   created_by: string
   admins: string[]
+  homebrew_items?: Homebrew[]
   title: string
   background: string
   color: string
