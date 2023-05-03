@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "check": "tsc",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "prod": "nuxt build && nuxt start",

@@ -4,7 +4,7 @@ withDefaults(
   defineProps<{
     label: string,
     name: string,
-    modelValue?: string | number,
+    modelValue?: string | number | boolean,
     validation?: string,
     disabled?: boolean
     type?: string
