@@ -4,6 +4,7 @@ export const content = [
   './components/**/*.{vue,js}',
   './plugins/**/*.{js,ts}'
 ]
+
 export const theme = {
   extend: {
     fontFamily: {
@@ -40,4 +41,5 @@ export const theme = {
     xl: '1920px'
   }
 }
+
 export const plugins = []

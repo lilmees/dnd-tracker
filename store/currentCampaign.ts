@@ -41,7 +41,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addHomebrew (hb: Homebrew): Promise<void> {
+  async function addHomebrew (hb: AddHomebrew): Promise<void> {
     try {
       const data = await homebrew.addHomebrew(hb)
 

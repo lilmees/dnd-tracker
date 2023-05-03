@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({
-  health: { type: [Number, null, String], required: true },
-  tempHealth: { type: [Number, null, String], required: true }
-})
+defineProps<{
+  health: number | undefined,
+  tempHealth: number | undefined
+}>()
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const type = ref()
-const form = ref({ health: null })
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice : Ref<boolean> = ref(false)
+const type: Ref<string | null> = ref(null)
+const form: Ref<{ health: number | null }> = ref({ health: null })
 
-function diceResult (amount) {
+function diceResult (amount: number): void {
   form.value.health = amount
 }
 
-function updateHealth ({ __init, health }) {
+function updateHealth ({ __init, health }: Obj): void {
   emit('update', { type: type.value, amount: Number(health) })
   isOpen.value = false
   isRollingDice.value = false

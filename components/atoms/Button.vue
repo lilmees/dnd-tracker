@@ -1,21 +1,24 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['click'])
-const props = defineProps({
-  type: { type: String, default: 'button' },
-  disabled: { type: Boolean, default: false },
-  label: { type: String, default: 'button' },
-  loading: { type: Boolean, default: false },
-  inline: { type: Boolean, default: false },
-  color: {
-    type: String,
-    default: 'black',
-    validator (value) {
-      return ['black', 'primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
-    }
+const props = withDefaults(
+  defineProps<{
+  type?: string,
+  disabled?: boolean,
+  label?: string,
+  loading?: boolean,
+  inline?: boolean,
+  color?: Color
+}>(), {
+    type: 'button',
+    disabled: false,
+    label: 'button',
+    loading: false,
+    inline: false,
+    color: 'black'
   }
-})
+)
 
-const background = computed(() => {
+const background: ComputedRef<string> = computed(() => {
   switch (props.color) {
     case 'black':
       return '#000000'
@@ -33,6 +36,7 @@ const background = computed(() => {
       return '#b09ce5'
     case 'danger':
       return '#e693a9'
+    default: return '#000000'
   }
 })
 </script>

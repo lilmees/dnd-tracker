@@ -1,12 +1,19 @@
-<script setup>
-defineProps({
-  label: { type: String, required: true },
-  name: { type: String, required: true },
-  modelValue: { type: [String, Number], default: '' },
-  validation: { type: String, default: '' },
-  disabled: { type: Boolean, default: false },
-  required: { type: Boolean, default: false }
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    label: string,
+    name: string,
+    modelValue?: string | number,
+    validation?: string,
+    disabled?: boolean,
+    required?: boolean
+  }>(), {
+    modelValue: '',
+    validation: '',
+    disabled: false,
+    required: false
+  }
+)
 </script>
 
 <template>

@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['close'])
-defineProps({ open: { type: Boolean, required: true } })
+defineProps<{ open: boolean }>()
 </script>
 
 <template>

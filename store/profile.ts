@@ -44,7 +44,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     }
   }
 
-  async function updateProfile (prof: Profile): Promise<void> {
+  async function updateProfile (prof: ProfileUpdate): Promise<void> {
     const { error: err } = await supabase
       .from('profiles')
       .update(prof as never)
@@ -58,7 +58,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     }
   }
 
-  async function updateCredentialsProfile (credentials: Login, prof: Profile): Promise<void> {
+  async function updateCredentialsProfile (credentials: Login, prof: ProfileUpdate): Promise<void> {
     const { error: err } = await supabase.auth.updateUser(credentials)
 
     if (err) {

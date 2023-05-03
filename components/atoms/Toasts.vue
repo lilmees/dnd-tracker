@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useToastStore } from '@/store/toast'
 
 const store = useToastStore()

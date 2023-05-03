@@ -1,13 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
 const store = useTableStore()
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4 items-center justify-between container-max">
+  <div
+    v-if="store.encounter"
+    class="flex flex-wrap gap-4 items-center justify-between container-max"
+  >
     <div class="flex gap-2 font-bold">
-      <p>{{ $t('encounter.round') }}: {{ store.encounter.round }}</p>
+      <p>
+        {{ $t('encounter.round') }}: {{ store.encounter.round }}
+      </p>
       <button
         v-tippy="{ content: $t('actions.reset'), animation: 'shift-away' }"
         :disabled="!store.encounter.rows.length"

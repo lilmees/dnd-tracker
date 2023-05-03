@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useProfileStore } from '@/store/profile'
 import { useToastStore } from '@/store/toast'
 
@@ -7,19 +7,19 @@ definePageMeta({ middleware: ['auth'] })
 const profile = useProfileStore()
 const toast = useToastStore()
 
-const image = ref(profile.data?.avatar || null)
-const isUpdating = ref(false)
-const isLoading = ref(false)
-const needConfirmation = ref(false)
-const error = ref()
-const form = ref({
+const image : Ref<string | null> = ref(profile.data?.avatar || null)
+const isUpdating: Ref<boolean> = ref(false)
+const isLoading: Ref<boolean> = ref(false)
+const needConfirmation: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const form: Ref<Register> = ref({
   email: profile.data?.email || '',
   password: '',
   name: profile.data?.name || '',
   username: profile.data?.username || ''
 })
 
-watch(isUpdating, (v) => {
+watch(isUpdating, (v: boolean) => {
   if (v) {
     form.value = {
       email: profile.data?.email || '',
@@ -28,18 +28,21 @@ watch(isUpdating, (v) => {
       username: profile.data?.username || ''
     }
   }
-  if (profile.data.avatar) {
+  if (profile?.data?.avatar) {
     image.value = profile.data.avatar
   }
 })
 
-async function updateProfile ({ __init, username, name, ...credentials }) {
+async function updateProfile ({ __init, username, name, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    await profile.updateCredentialsProfile(credentials, { username, name, avatar: image.value, role: 'User' })
+    await profile.updateCredentialsProfile(
+      credentials as Login,
+      { username, name, avatar: image.value as string, role: 'User' }
+    )
     isUpdating.value = false
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
     toast.error()
@@ -48,16 +51,17 @@ async function updateProfile ({ __init, username, name, ...credentials }) {
   }
 }
 
-function randomAvatar () {
+function randomAvatar (): void {
   image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
     .toString(36)
     .substring(7)}.svg?size=100`
 }
 
-async function deleteUser () {
+async function deleteUser (): Promise<void> {
+  needConfirmation.value = false
+  isLoading.value = true
+
   try {
-    needConfirmation.value = false
-    isLoading.value = true
     await profile.deleteProfile()
   } catch (err) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
@@ -88,8 +92,17 @@ async function deleteUser () {
           <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
         </p>
         <div class="flex flex-wrap gap-x-4 gap-y-2">
-          <Button :label="$t('profile.update')" :loading="isLoading" @click="isUpdating = true" />
-          <Button :label="$t('profile.delete')" color="danger" :loading="isLoading" @click="needConfirmation = true" />
+          <Button
+            :label="$t('profile.update')"
+            :loading="isLoading"
+            @click="isUpdating = true"
+          />
+          <Button
+            :label="$t('profile.delete')"
+            color="danger"
+            :loading="isLoading"
+            @click="needConfirmation = true"
+          />
         </div>
         <ConfirmationModal
           :open="needConfirmation"
@@ -104,7 +117,12 @@ async function deleteUser () {
         </h1>
         <div class="flex flex-col gap-2 items-center">
           <div class="w-[100px] h-[100px]">
-            <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" />
+            <NuxtImg
+              v-if="image"
+              :src="image"
+              alt="avatar"
+              sizes="sm:100px md:100px lg:100px"
+            />
           </div>
           <TextButton @click="randomAvatar">
             {{ $t('register.random') }}
@@ -113,7 +131,13 @@ async function deleteUser () {
         <p v-if="error" class="text-danger text-center">
           {{ error }}
         </p>
-        <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="updateProfile">
+        <FormKit
+          v-model="form"
+          type="form"
+          :actions="false"
+          message-class="error-message"
+          @submit="updateProfile"
+        >
           <Input
             focus
             name="name"
@@ -127,7 +151,12 @@ async function deleteUser () {
             validation="required|length:3,15|alpha_spaces"
             required
           />
-          <Input name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
+          <Input
+            name="email"
+            :label="$t('inputs.emailLabel')"
+            validation="required|length:5,50|email"
+            required
+          />
           <Input
             name="password"
             type="password"

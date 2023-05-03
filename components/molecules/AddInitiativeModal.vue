@@ -1,8 +1,8 @@
-<script setup>
-const type = ref('player')
-const isOpen = ref(false)
+<script setup lang="ts">
+const type: Ref<string> = ref('player')
+const isOpen: Ref<boolean> = ref(false)
 
-function closeModal () {
+function closeModal (): void {
   type.value = 'player'
   isOpen.value = false
 }

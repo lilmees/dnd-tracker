@@ -1,52 +1,50 @@
-<script setup>
+<script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
 
-const props = defineProps({ item: { type: Object, required: true } })
+const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
-const { $i18n } = useNuxtApp()
+const formSchema = useI18nForm(schema)
 
-const isOpen = ref(false)
-const form = ref({ name: null, initiative: null, link: null })
-const data = reactive({ isLoading: false, update: true, type: 'player', error: null })
+const isOpen: Ref<boolean> = ref(false)
 
-const formSchema = computed(() => {
-  const form = []
-  schema.forEach((cmp) => {
-    if (cmp?.props?.label) {
-      cmp.props.label = $i18n.t(cmp.props.label)
-    }
-    form.push(cmp)
-  })
-  return form
+const form: Ref<{ name: string, link: string | null}> = ref({
+  name: '',
+  link: null
+})
+
+const data: { isLoading: boolean, update: boolean, type: HomebrewType, error: string| null} = reactive({
+  isLoading: false,
+  update: true,
+  type: 'player',
+  error: null
 })
 
 onMounted(() => {
-  data.type = props.item.type
+  data.type = props.item.type as HomebrewType
 
   form.value = {
     name: props.item.name,
-    initiative: props.item.initiative,
-    link: props.item.link
+    link: props.item.link as string
   }
 })
 
-function updateHomebrew ({ __init, ...formData }) {
+function updateHomebrew ({ __init, ...formData }: Obj): void {
   data.error = null
-  try {
-    data.isLoading = true
+  data.isLoading = true
 
+  try {
     store.updateHomebrew(
-      useEmptyKeyRemover({ ...formData, type: data.type }),
-      props.item.id
+      useEmptyKeyRemover({ ...formData, type: data.type }) as Homebrew,
+      props.item.id as number
     )
 
     reset('form')
     closeModal()
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     data.error = err.message
   } finally {

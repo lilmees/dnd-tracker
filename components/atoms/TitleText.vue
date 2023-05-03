@@ -1,21 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
 import { gsap, Power3 } from 'gsap'
 
-defineProps({
-  title: { type: String, default: '' },
-  text: { type: String, default: '' },
-  buttonLabel: { type: String, default: '' },
-  buttonLink: { type: String, default: '' },
-  center: { type: Boolean, default: false }
-})
+withDefaults(
+  defineProps<{
+  title: string,
+  text: string,
+  buttonLabel?: string,
+  buttonLink?: string,
+  center?: boolean
+  }>(), {
+    center: false,
+    buttonLabel: '',
+    buttonLink: ''
+  }
+)
 
 const localePath = useLocalePath()
 
 const el = ref()
 const isVisible = useElementVisibility(el)
 
-watch(isVisible, (v) => {
+watch(isVisible, (v: boolean) => {
   if (v) {
     gsap.fromTo(
       el.value,
@@ -31,12 +37,27 @@ watch(isVisible, (v) => {
     <h2 v-if="title" class="pb-4">
       {{ title }}
     </h2>
-    <p v-if="text" class="max-w-prose" :class="{ 'mx-auto': center }">
+    <p
+      v-if="text"
+      class="max-w-prose"
+      :class="{ 'mx-auto': center }"
+    >
       {{ text }}
     </p>
-    <div v-if="buttonLink && buttonLabel" class="flex" :class="[center ? 'justify-center' : 'justify-start']">
-      <NuxtLink :to="localePath(`/${buttonLink}`)" class="max-w-max">
-        <Button :label="buttonLabel" color="primary" class="mt-6 w-fit tracker-shadow-pulse" />
+    <div
+      v-if="buttonLink && buttonLabel"
+      class="flex"
+      :class="[center ? 'justify-center' : 'justify-start']"
+    >
+      <NuxtLink
+        :to="localePath(`/${buttonLink}`)"
+        class="max-w-max"
+      >
+        <Button
+          :label="buttonLabel"
+          color="primary"
+          class="mt-6 w-fit tracker-shadow-pulse"
+        />
       </NuxtLink>
     </div>
   </div>

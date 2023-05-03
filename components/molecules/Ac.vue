@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({
-  ac: { type: [Number, null, String], required: true },
-  tempAc: { type: [Number, null, String], required: true },
-  type: { type: String, required: true }
-})
+defineProps<{
+  ac: number | null,
+  tempAc: number | null
+  type: string
+}>()
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const form = ref({ ac: null })
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice: Ref<boolean> = ref(false)
+const form : Ref<{ ac: number | null }> = ref({ ac: null })
 
-function diceResult (amount) {
+function diceResult (amount: number): void {
   form.value.ac = amount
 }
 
-function updateAc ({ __init, ac }) {
+function updateAc ({ __init, ac }: Obj): void {
   emit('update', Number(ac))
   isOpen.value = false
   isRollingDice.value = false

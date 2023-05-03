@@ -3,11 +3,9 @@ interface Row {
   campaign?: number
   concentration: boolean
   conditions: Condition[]
+  actions: Action[]
   created_at: string
-  deathSaves: {
-    fail: boolean[],
-    save: boolean[]
-  },
+  deathSaves: DeathSaves,
   health?: number
   id: string | number
   index: number
@@ -22,5 +20,5 @@ interface Row {
   type: string
   armor_class?: string
   hit_points?: string
-  summoner?: string
+  summoner?: Summoner
 }

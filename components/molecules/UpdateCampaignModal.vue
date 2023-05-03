@@ -1,24 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  campaign: { type: Object, required: true }
-})
+const props = defineProps<{ open: boolean, campaign: Campaign }>()
 
 const store = useCampaignsStore()
 
-const isLoading = ref(false)
-const error = ref()
-const form = ref({
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const form: Ref<{ title: string, background: string }> = ref({
   title: props.campaign.title,
   background: props.campaign.background
 })
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (v) {
       form.value = {
         title: props.campaign.title,
@@ -28,14 +25,15 @@ watch(
   }
 )
 
-function changeColor () {
+function changeColor ():void {
   form.value.background = useRandomColor()
 }
 
-async function updateCampaign ({ __init, ...formData }) {
+async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
     await store.updateCampaign(
       {
         ...formData,
@@ -44,7 +42,7 @@ async function updateCampaign ({ __init, ...formData }) {
       props.campaign.id
     )
     emit('close')
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {

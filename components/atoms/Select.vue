@@ -1,17 +1,25 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['selected'])
-defineProps({
-  inputLabel: { type: String, default: '' },
-  label: { type: String, required: true },
-  bold: { type: Boolean, default: false },
-  required: { type: Boolean, default: false },
-  absolute: { type: Boolean, default: true },
-  options: { type: Array, default: () => [] }
-})
+withDefaults(
+  defineProps<{
+  inputLabel?: string,
+  label: string,
+  bold?: boolean,
+  required?: boolean,
+  absolute?: boolean,
+  options?: Option[]
+}>(), {
+    inputLabel: '',
+    bold: false,
+    required: false,
+    absolute: true,
+    options: () => []
+  }
+)
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 
-function selectedOption (option) {
+function selectedOption (option: Option): void {
   isOpen.value = false
   emit('selected', option.id)
 }
@@ -44,7 +52,7 @@ function selectedOption (option) {
       >
         <div
           v-for="option in options"
-          :key="option"
+          :key="option.id"
           class="cursor-pointer p-2 hover:text-primary"
           @click="selectedOption(option)"
         >

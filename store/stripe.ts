@@ -29,7 +29,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     }
   }
 
-  async function createPortalSession (id: number): Promise<void> {
+  async function createPortalSession (id: string): Promise<void> {
     const { data } = await useFetch('/api/stripe/create_portal_session', {
       method: 'POST',
       body: { session_id: id }
@@ -84,6 +84,6 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         monthId: config.public.stripeProMonthly,
         yearId: config.public.stripeProYearly
       }
-    ]
+    ] as Pricing[]
   }
 })

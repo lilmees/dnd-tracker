@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useToastStore } from '@/store/toast'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -7,7 +7,8 @@ useHead({ title: 'Campaigns' })
 
 const toast = useToastStore()
 const store = useCampaignsStore()
-const isOpen = ref(false)
+
+const isOpen: Ref<boolean> = ref(false)
 
 onMounted(() => store.fetch())
 

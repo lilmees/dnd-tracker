@@ -53,7 +53,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function addCampaign (campaign: Campaign): Promise<void> {
+  async function addCampaign (campaign: AddCampaign): Promise<void> {
     const { data, error } = await supabase
       .from('campaigns')
       .insert([campaign as never])
@@ -84,7 +84,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function updateCampaign (campaign: Campaign, id: number): Promise<void> {
+  async function updateCampaign (campaign: CampaignUpdate, id: number): Promise<void> {
     const { data, error } = await supabase
       .from('campaigns')
       .update(campaign as never)

@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { useStripeStore } from '@/store/stripe'
 
 const stripe = useStripeStore()
 
-const isYearly = ref(false)
+const isYearly: Ref<boolean> = ref(false)
 </script>
 
 <template>

@@ -1,36 +1,39 @@
-<script setup>
+<script setup lang="ts">
 import { reset } from '@formkit/core'
 import { useNotesStore } from '@/store/notes'
 
 const emit = defineEmits(['close', 'updated'])
-const props = defineProps({
-  note: { type: Object, required: true },
-  open: { type: Boolean, required: true }
-})
+const props = defineProps<{ note: Note, open: boolean }>()
 
 const store = useNotesStore()
 
-const error = ref()
-const isLoading = ref(false)
-const form = ref({ title: props.note.title, text: props.note.text })
+const error: Ref<string | null> = ref(null)
+const isLoading: Ref<boolean> = ref(false)
+const form: Ref<{ title: string, text: string}> = ref({
+  title: props.note.title,
+  text: props.note.text
+})
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (v) {
       form.value = { title: props.note.title, text: props.note.text }
     }
   }
 )
 
-async function updateNote ({ __init, ...formData }) {
+async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    const note = await store.updateNote({ ...formData, campaign: props.note.campaign }, props.note.id)
+    const note = await store.updateNote(
+      { ...formData, campaign: props.note.campaign } as Note,
+      props.note.id
+    )
     emit('updated', note)
     reset('form')
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {

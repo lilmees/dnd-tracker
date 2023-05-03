@@ -1,14 +1,11 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['close', 'delete'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  title: { type: String, required: true }
-})
+const props = defineProps<{ open: boolean, title: string }>()
 
-const form = ref({ title: '' })
-const same = computed(() => props.title === form.value.title)
+const form: Ref<{ title: string }> = ref({ title: '' })
+const same: ComputedRef<boolean> = computed(() => props.title === form.value.title)
 
-function deleteConfirmation () {
+function deleteConfirmation (): void {
   if (form.value.title.trim() === props.title.trim()) {
     emit('delete')
   }

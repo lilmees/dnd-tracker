@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const subscription = body.data.object
   const typeId = subscription.items.data[0].plan.id
   let productName
-  let stripeData = {
+  let stripeData: Stripe = {
     stripe_last_event: body.created,
     stripe_status: subscription.status,
     stripe_trail_ends_at: subscription.trail_end,
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     .from('profiles')
     .select('stripe_last_event')
     .eq('stripe_id', subscription.customer)
-    .single()
+    .single() as { data: { stripe_last_event: number }}
 
   if (data?.stripe_last_event > body.created) {
     return `Did not handle ${body.type} because it was an old event`
@@ -53,7 +53,10 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  await client.from('profiles').update(stripeData).eq('stripe_id', subscription.customer)
+  await client
+    .from('profiles')
+    .update(stripeData as never)
+    .eq('stripe_id', subscription.customer)
 
   return `handled ${body.type}`
 })

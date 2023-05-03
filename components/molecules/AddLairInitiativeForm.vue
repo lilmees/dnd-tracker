@@ -26,9 +26,7 @@ async function addInitiative ({ __init, ...formData }) {
     isLoading.value = true
     const row = useCreateRow(formData, props.type, store.encounter.rows)
     await store.encounterUpdate({
-      rows: store.encounter.rows.includes('[')
-        ? [row]
-        : [...store.encounter.rows, row]
+      rows: [...store.encounter.rows, row]
     })
     reset('form')
     emit('close')

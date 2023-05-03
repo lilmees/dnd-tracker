@@ -2,8 +2,8 @@ interface SupabaseRealTime {
   commit_timestamp: string
   errors: any
   eventType: string
-  new: { [key: string]: any }
-  old: { [key: string]: any }
+  new: Obj
+  old: Obj
   schema: string
   table: string
 }

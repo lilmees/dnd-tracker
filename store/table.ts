@@ -18,7 +18,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       : false
   })
 
-  async function getEncounter (id: number): Promise<void> {
+  async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
 

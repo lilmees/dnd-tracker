@@ -1,16 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
 const emit = defineEmits(['update'])
-defineProps({ url: { type: [null, String], default: null } })
+withDefaults(
+  defineProps<{ url?: null | string }>(), {
+    url: null
+  }
+)
 
 const store = useTableStore()
 
-const isOpen = ref(false)
-const isUpdating = ref(false)
-const form = ref({ link: null })
+const isOpen: Ref<boolean> = ref(false)
+const isUpdating: Ref<boolean> = ref(false)
+const form: Ref<{ link: string }> = ref({ link: '' })
 
-function updateLink ({ __init, link }) {
+function updateLink ({ __init, link }: Obj): void {
   emit('update', link)
   isOpen.value = false
   isUpdating.value = false

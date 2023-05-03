@@ -1,28 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '@/formkit/addHomebrew.json'
 
-const { $i18n } = useNuxtApp()
 const store = useCurrentCampaignStore()
+const formSchema = useI18nForm(schema)
 
-const isOpen = ref(false)
-const form = ref({ name: null, initiative: null, link: null })
-const data = reactive({ isLoading: false, update: false, type: 'player', error: null })
+const isOpen: Ref<boolean> = ref(false)
 
-const formSchema = computed(() => {
-  const form = []
-  schema.forEach((cmp) => {
-    if (cmp?.props?.label) {
-      cmp.props.label = $i18n.t(cmp.props.label)
-    }
-    form.push(cmp)
-  })
-  return form
+const form: Ref<AddHomebrewForm> = ref({
+  name: '',
+  initiative: null,
+  link: ''
 })
 
-function addHomebrew ({ __init, ...formData }) {
+const data: HomebrewSchemaOptions = reactive({
+  isLoading: false,
+  update: false,
+  type: 'player',
+  error: null
+})
+
+function addHomebrew ({ __init, ...formData }: Obj): void {
   data.error = null
   try {
     data.isLoading = true
@@ -30,14 +30,14 @@ function addHomebrew ({ __init, ...formData }) {
     store.addHomebrew(
       useEmptyKeyRemover({
         ...formData,
-        campaign: store.campaign.id,
+        campaign: store?.campaign?.id,
         type: data.type
-      })
+      }) as Homebrew
     )
 
     reset('form')
     closeModal()
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     data.error = err.message
   } finally {
@@ -45,7 +45,7 @@ function addHomebrew ({ __init, ...formData }) {
   }
 }
 
-function closeModal () {
+function closeModal (): void {
   data.type = 'player'
   isOpen.value = false
 }

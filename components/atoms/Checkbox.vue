@@ -1,14 +1,20 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['update:modelValue'])
-defineProps({
-  label: { type: String, required: true },
-  modelValue: { type: Boolean },
-  disabled: { type: Boolean, default: false },
-  help: { type: String, default: null },
-  validation: { type: String, default: '' },
-  name: { type: String, required: true },
-  type: { type: String, default: 'text' }
-})
+withDefaults(
+  defineProps<{
+    label: string,
+    name: string,
+    modelValue?: string | number | boolean,
+    validation?: string,
+    disabled?: boolean
+    type?: string
+  }>(), {
+    modelValue: '',
+    validation: '',
+    disabled: false,
+    type: 'text'
+  }
+)
 </script>
 
 <template>
@@ -20,7 +26,6 @@ defineProps({
       :value="modelValue"
       type="checkbox"
       :name="name"
-      :help="help"
       :validation="validation"
       input-class="w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer"
       help-class="help-message"

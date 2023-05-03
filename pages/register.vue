@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useAuthStore } from '@/store/auth'
 import { useToastStore } from '@/store/toast'
 
@@ -9,24 +9,27 @@ const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-const form = ref({ email: '', password: '', name: '', username: '' })
-const isLoading = ref(false)
-const error = ref()
-const image = ref(
+const form: Ref<Register> = ref({ email: '', password: '', name: '', username: '' })
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const image: Ref<string> = ref(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 
-async function register ({ __init, username, name, ...credentials }) {
+async function register ({ __init, username, name, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    await store.register(credentials, { username, name, avatar: image.value, role: 'User' })
+    await store.register(
+      credentials as Login,
+      { username, name, avatar: image.value, role: 'User' }
+    )
     toast.success({
       title: $i18n.t('register.toast.success.title'),
       text: $i18n.t('register.toast.success.text')
     })
     navigateTo(localePath('/login'))
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
     toast.error()
@@ -35,7 +38,7 @@ async function register ({ __init, username, name, ...credentials }) {
   }
 }
 
-function randomAvatar () {
+function randomAvatar (): void {
   image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
     .toString(36)
     .substring(7)}.svg?size=100`

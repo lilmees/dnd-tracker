@@ -1,24 +1,26 @@
-<script setup>
+<script setup lang="ts">
 import { useProfileStore } from '@/store/profile'
 import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
 
 defineEmits(['logout'])
-defineProps({ routes: { type: Array, required: true } })
+defineProps<{ routes: Route[] }>()
 
 const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const user = useSupabaseUser()
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 
 onBeforeMount(() => profile.fetch())
 
 async function manageSubscription () {
+  isOpen.value = false
   try {
-    isOpen.value = false
-    await stripe.createPortalSession(profile.data.stripe_session_id)
+    if (profile?.data?.stripe_session_id) {
+      await stripe.createPortalSession(profile.data.stripe_session_id)
+    }
   } catch (err) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()

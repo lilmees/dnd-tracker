@@ -1,13 +1,17 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['result'])
-defineProps({ result: { type: Boolean, default: false } })
+withDefaults(
+  defineProps<{ result?: boolean }>(), {
+    result: false
+  }
+)
 
-const form = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
-const results = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const form: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const results: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
 
-function rollDice ({ __init, ...dices }) {
+function rollDice ({ __init, ...dices }: Obj): void {
   Object.keys(dices).forEach((dice) => {
-    results.value[dice] = !dices[dice]
+    results.value[dice as keyof Dices] = !dices[dice]
       ? null
       : useDiceRoll(Number(dice.replace('d', '')), dices[dice])
   })
@@ -21,7 +25,7 @@ function rollDice ({ __init, ...dices }) {
   }
 }
 
-function reset () {
+function reset (): void {
   form.value = { d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null }
   results.value = { d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null }
 }
@@ -104,7 +108,7 @@ function reset () {
           <template v-if="result && results.d8 && Array.isArray(results.d8)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d100" :key="amount">
-                {{ results.d8.length === index + 1 ? amount : `${amount},` }}
+                {{ results.d8.length === Number(index + 1) ? amount : `${amount},` }}
               </p>
             </div>
             <p class="mb-3">

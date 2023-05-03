@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 import { useRouteStore } from '@/store/route'
 import { useToastStore } from '@/store/toast'
@@ -13,21 +13,21 @@ const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 
-const visibleRoutes = computed(() =>
+const visibleRoutes: ComputedRef<Route[]> = computed(() =>
   user.value
     ? route.routes
     : route.routes.filter(r => !r.requiredLogIn)
 )
 
-watch(isSmall, (v) => {
+watch(isSmall, (v: boolean) => {
   if (!v && isOpen.value) {
     isOpen.value = false
   }
 })
 
-async function logout () {
+async function logout (): Promise<void> {
   try {
     await auth.logout()
     profile.data = null

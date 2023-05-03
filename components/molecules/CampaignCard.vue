@@ -1,19 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { useCampaignsStore } from '@/store/campaigns'
 import { useToastStore } from '@/store/toast'
 
-const props = defineProps({ campaign: { type: Object, required: true } })
+const props = defineProps<{ campaign: Campaign }>()
 
 const user = useSupabaseUser()
 const store = useCampaignsStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-const needConfirmation = ref(false)
-const isUpdating = ref(false)
-const isSettings = ref(false)
+const needConfirmation: Ref<boolean> = ref(false)
+const isUpdating: Ref<boolean> = ref(false)
+const isSettings: Ref<boolean> = ref(false)
 
-async function deleteCampaign () {
+async function deleteCampaign (): Promise<void> {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (err) {
@@ -35,7 +35,7 @@ async function deleteCampaign () {
 //   }
 // }
 
-function closeSettings () {
+function closeSettings (): void {
   isUpdating.value = false
   needConfirmation.value = false
   isSettings.value = false
@@ -88,7 +88,7 @@ function closeSettings () {
         <p>{{ $t('actions.copy') }}</p>
       </div> -->
       <div
-        v-if="campaign.created_by === user.id"
+        v-if="user && campaign.created_by === user.id"
         class="flex gap-2 cursor-pointer max-w-max"
         @click="needConfirmation = true"
       >
