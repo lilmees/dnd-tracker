@@ -84,6 +84,6 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         monthId: config.public.stripeProMonthly,
         yearId: config.public.stripeProYearly
       }
-    ]
+    ] as Pricing[]
   }
 })

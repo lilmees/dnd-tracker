@@ -120,8 +120,8 @@ function updateRow () {
     <AcModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
-      :ac="row.ac"
-      :temp-ac="row.tempAc"
+      :ac="row?.ac || null"
+      :temp-ac="row?.tempAc|| null"
       @update="updateAc"
     />
     <ConditionModal

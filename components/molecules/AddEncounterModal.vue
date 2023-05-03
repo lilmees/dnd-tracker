@@ -4,7 +4,7 @@ import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close', 'added'])
 const props = withDefaults(
-  defineProps<{ open: boolean, campaignId: number | null }>(), {
+  defineProps<{ open: boolean, campaignId?: number | null }>(), {
     campaignId: null
   }
 )

@@ -3,7 +3,7 @@ import { useConditionsStore } from '@/store/conditions'
 
 const emit = defineEmits(['update'])
 const props = withDefaults(
-  defineProps<{ conditions: Condition[] }>(), {
+  defineProps<{ conditions?: Condition[] }>(), {
     conditions: () => []
   }
 )

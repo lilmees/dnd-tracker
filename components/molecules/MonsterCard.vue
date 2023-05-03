@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineEmits(['add'])
 withDefaults(
-  defineProps<{ monster: Monster, addable: boolean}>(), {
+  defineProps<{ monster: Monster, addable?: boolean}>(), {
     addable: false
   }
 )

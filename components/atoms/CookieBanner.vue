@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const acceptedCookie = useCookie('accepted')
 const localePath = useLocalePath()
 </script>
@@ -19,7 +19,7 @@ const localePath = useLocalePath()
         <NuxtLink :to="localePath('/cookie-policy')" class="underline whitespace-pre underline-offset-2">
           {{ $t('cookie.policy') }}
         </NuxtLink>
-        <button class="underline underline-offset-4" @click="acceptedCookie = true">
+        <button class="underline underline-offset-4" @click="acceptedCookie = 'true'">
           {{ $t('cookie.button') }}
         </button>
       </div>

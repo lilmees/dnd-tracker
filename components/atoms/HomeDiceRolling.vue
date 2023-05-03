@@ -1,12 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { useTimeout } from '@vueuse/core'
 
 const { ready, start } = useTimeout(5000, { controls: true })
 
-const amount = ref(1)
-const rolled = ref()
+const amount: Ref<number> = ref(1)
+const rolled: Ref<{
+    dice: string
+    result: number | number[],
+    max: number,
+    amount: number
+  } | null> = ref(null)
 
-function rollDice (dice) {
+function rollDice (dice: string): void {
   if (amount.value < 1 || amount.value > 50) {
     amount.value = 1
   }

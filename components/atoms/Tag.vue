@@ -1,18 +1,19 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['remove', 'add'])
-const props = defineProps({
-  condition: { type: Object, required: true },
-  removable: { type: Boolean, default: false },
-  addable: { type: Boolean, default: false },
-  selected: { type: Boolean, default: true },
-  color: {
-    type: String,
-    default: 'danger',
-    validator (value) {
-      return ['primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger'].includes(value)
-    }
+withDefaults(
+  defineProps<{
+    condition: Condition,
+    removable?: boolean,
+    addable?: boolean,
+    selected?: boolean,
+    color?: Color
+  }>(), {
+    removable: false,
+    addable: false,
+    selected: true,
+    color: 'danger'
   }
-})
+)
 </script>
 
 <template>

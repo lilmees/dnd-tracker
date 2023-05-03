@@ -1,18 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { useToastStore } from '@/store/toast'
 import { useNotesStore } from '@/store/notes'
 
 const emit = defineEmits(['deleted', 'updated'])
-const props = defineProps({ note: { type: Object, required: true } })
+const props = defineProps<{ note: Note }>()
 
 const toast = useToastStore()
 const store = useNotesStore()
 
-const isSettings = ref(false)
-const isUpdating = ref(false)
-const needConfirmation = ref(false)
+const isSettings: Ref<boolean> = ref(false)
+const isUpdating: Ref<boolean> = ref(false)
+const needConfirmation: Ref<boolean> = ref(false)
 
-async function deleteNote () {
+async function deleteNote (): Promise<void> {
   try {
     await store.deleteNote(props.note.id)
     emit('deleted', props.note.id)
@@ -22,7 +22,7 @@ async function deleteNote () {
   }
 }
 
-function updateNote (note) {
+function updateNote (note: Note): void {
   emit('updated', note)
   isSettings.value = false
   isUpdating.value = false

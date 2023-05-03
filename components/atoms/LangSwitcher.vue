@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 const { locale, availableLocales } = useI18n({ useScope: 'global' })
 const cookieLang = useCookie('lang')
 const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
-const config = inject(Symbol.for('FormKitConfig'))
+const config: { locale: string } | undefined = inject(Symbol.for('FormKitConfig'))
 
-const localeLang = computed(() => cookieLang.value || locale.value)
+const localeLang: ComputedRef<string> = computed(() => cookieLang.value || locale.value)
 
 // set the language when mounted if there's a cookie for it
 onMounted(() => {
@@ -16,10 +16,12 @@ onMounted(() => {
   }
 })
 
-function setLang (lang) {
+function setLang (lang: string): void {
   cookieLang.value = lang
   locale.value = lang
-  config.locale = lang
+  if (config) {
+    config.locale = lang
+  }
 }
 </script>
 

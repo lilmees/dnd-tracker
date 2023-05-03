@@ -3,7 +3,7 @@ import { useTableStore } from '@/store/table'
 
 const emit = defineEmits(['update'])
 withDefaults(
-  defineProps<{ url: null | string }>(), {
+  defineProps<{ url?: null | string }>(), {
     url: null
   }
 )

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 withDefaults(
-  defineProps<{ name: string, type: string}>(), {
+  defineProps<{ name: string, type?: string}>(), {
     type: 'player'
   }
 )

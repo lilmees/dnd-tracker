@@ -1,6 +1,6 @@
 <script setup lang="ts">
 withDefaults(
-  defineProps<{ label: string, routes: Route[] }>(), {
+  defineProps<{ label?: string, routes?: Route[] }>(), {
     label: '',
     routes: () => []
   }

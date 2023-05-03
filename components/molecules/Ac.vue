@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 defineProps<{
-  ac: number | undefined,
-  tempAc: number | undefined
+  ac: number | null,
+  tempAc: number | null
   type: string
 }>()
 
