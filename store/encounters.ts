@@ -48,7 +48,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function addEncounter (encounter: Encounter): Promise<Encounter> {
+  async function addEncounter (encounter: AddEncounter): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .insert([encounter as never])
@@ -79,7 +79,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function updateEncounter (encounter: Encounter, id: number): Promise<Encounter> {
+  async function updateEncounter (encounter: EncounterUpdate, id: number): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .update(encounter as never)

@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-defineProps({
-  health: { type: [Number, null, String], required: true },
-  tempHealth: { type: [Number, null, String], required: true },
-  type: { type: String, required: true }
-})
+defineProps<{
+  health: number | null | string,
+  tempHealth: number | null | string,
+  type: string
+}>()
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const form = ref({ health: null })
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice: Ref<boolean> = ref(false)
+const form: Ref<{ health: number | null }> = ref({ health: null })
 
-function diceResult (amount) {
+function diceResult (amount: number): void {
   form.value.health = amount
 }
 
-function updateHealth ({ __init, health }) {
+function updateHealth ({ __init, health }: Obj): void {
   emit('update', Number(health))
   isOpen.value = false
   isRollingDice.value = false
@@ -25,7 +25,7 @@ function updateHealth ({ __init, health }) {
   <div>
     <div class="flex gap-2 items-center">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
-        <p v-if="health !== null" :class="{ 'text-danger font-bold': health < 1 }">
+        <p v-if="health !== null" :class="{ 'text-danger font-bold': +health < 1 }">
           {{ health }}
         </p>
         <p v-else-if="type !== 'lair'" class="text-slate-600">

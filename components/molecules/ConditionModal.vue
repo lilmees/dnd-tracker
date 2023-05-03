@@ -1,17 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { useConditionsStore } from '@/store/conditions'
 
 const emit = defineEmits(['update'])
-const props = defineProps({
-  conditions: { type: Array, required: true, default: () => [] }
-})
+const props = withDefaults(
+  defineProps<{ conditions: Condition[] }>(), {
+    conditions: () => []
+  }
+)
 
 const store = useConditionsStore()
-const isOpen = ref(false)
-const selected = ref(props.conditions || [])
+
+const isOpen: Ref<boolean> = ref(false)
+const selected: Ref<Condition[]> = ref(props.conditions || [])
 
 // reset selected and info when modal is closed
-watch(isOpen, (v) => {
+watch(isOpen, (v: boolean) => {
   if (v) {
     selected.value = props.conditions || []
   } else {
@@ -19,7 +22,7 @@ watch(isOpen, (v) => {
   }
 })
 
-function updateConditions () {
+function updateConditions (): void {
   emit('update', selected.value)
   isOpen.value = false
 }

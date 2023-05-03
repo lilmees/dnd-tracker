@@ -1,4 +1,4 @@
-interface Contact {
+interface ContactForm {
   name: string
   email: string
   question: string

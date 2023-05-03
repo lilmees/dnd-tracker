@@ -1,23 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import { useProfileStore } from '@/store/profile'
 import { useStripeStore } from '@/store/stripe'
 import { useToastStore } from '@/store/toast'
 
 defineEmits(['logout', 'close'])
-defineProps({
-  routes: { type: Array, required: true },
-  dropDownRoutes: { type: Array, required: true },
-  loggedIn: { type: Boolean, required: true }
-})
+defineProps<{
+  routes: Route[],
+  dropDownRoutes: Route[],
+  loggedIn: boolean
+}>()
 
 const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-async function manageSubscription () {
+async function manageSubscription (): Promise<void> {
   try {
-    await stripe.createPortalSession(profile.data.stripe_session_id)
+    if (profile?.data?.stripe_session_id) {
+      await stripe.createPortalSession(profile.data.stripe_session_id)
+    }
   } catch (err) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     toast.error()

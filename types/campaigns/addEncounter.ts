@@ -1,13 +1,13 @@
-interface Encounter {
-  id: number
-  created_at: string
+interface AddEncounter {
   created_by: string
   title: string
   rows: Row[]
-  campaign: number | Campaign
+  campaign: number | undefined
   admins: string[]
   round: number
-  owner: string
+  owner?: string
   info?: string
   activeIndex: number
+  color: string
+  background: string
 }

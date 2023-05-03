@@ -6,7 +6,7 @@ const toast = useToastStore()
 const localePath = useLocalePath()
 const mail = useMail()
 
-const form: Ref<Contact> = ref({ name: '', email: '', question: '' })
+const form: Ref<ContactForm> = ref({ name: '', email: '', question: '' })
 
 function sendContactMail (form: Obj): void {
   mail.send({

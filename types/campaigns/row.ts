@@ -5,10 +5,7 @@ interface Row {
   conditions: Condition[]
   actions: Action[]
   created_at: string
-  deathSaves: {
-    fail: boolean[],
-    save: boolean[]
-  },
+  deathSaves: DeathSaves,
   health?: number
   id: string | number
   index: number

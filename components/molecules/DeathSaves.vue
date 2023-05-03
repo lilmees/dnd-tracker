@@ -1,13 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { useToastStore } from '@/store/toast'
 
 const emit = defineEmits(['update'])
-const props = defineProps({ deathSaves: { type: Object, required: true } })
+const props = defineProps<{ deathSaves: DeathSaves }>()
 
 const toast = useToastStore()
 const { $i18n } = useNuxtApp()
 
-function updateDeathSave (index, save) {
+function updateDeathSave (index: number, save: boolean): void {
   if (save) {
     props.deathSaves.save[index] = !props.deathSaves.save[index]
   } else {
@@ -29,7 +29,7 @@ function updateDeathSave (index, save) {
     <div class="flex gap-1">
       <div
         v-for="(save, i) in deathSaves.save"
-        :key="save"
+        :key="`${save}-${i}`"
         class="w-4 h-4 rounded border-success border-2 cursor-pointer"
         :class="{ 'bg-success': save }"
         @click="updateDeathSave(i, true)"
@@ -38,7 +38,7 @@ function updateDeathSave (index, save) {
     <div class="flex gap-1">
       <div
         v-for="(fail, i) in deathSaves.fail"
-        :key="fail"
+        :key="`${fail}-${i}`"
         class="w-4 h-4 rounded border-danger border-2 cursor-pointer"
         :class="{ 'bg-danger': fail }"
         @click="updateDeathSave(i, false)"

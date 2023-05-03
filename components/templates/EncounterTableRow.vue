@@ -62,8 +62,8 @@ watchDebounced(
     </td>
     <td class="px-2 py-1 border-r border-slate-700">
       <Ac
-        :ac="row.ac || null"
-        :temp-ac="row.tempAc || null"
+        :ac="row.ac || undefined"
+        :temp-ac="row.tempAc || undefined"
         :type="row.type"
         @update="store.updateRow('ac', $event as never, row, index)"
       />

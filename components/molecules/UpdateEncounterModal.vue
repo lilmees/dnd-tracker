@@ -1,21 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
 
 const emit = defineEmits(['close', 'updated'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  encounter: { type: Object, required: true }
-})
+const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
 
-const form = ref({ title: props.encounter.title, background: props.encounter.background })
-const isLoading = ref(false)
-const error = ref()
+const form: Ref<{ title: string, background: string}> = ref({
+  title: props.encounter.title,
+  background: props.encounter.background
+})
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (v) {
       form.value = {
         title: props.encounter.title,
@@ -25,11 +25,11 @@ watch(
   }
 )
 
-function changeColor () {
+function changeColor (): void {
   form.value.background = useRandomColor()
 }
 
-async function updateEncounter ({ __init, ...formData }) {
+async function updateEncounter ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
@@ -38,7 +38,7 @@ async function updateEncounter ({ __init, ...formData }) {
       props.encounter.id
     )
     emit('updated', enc)
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {

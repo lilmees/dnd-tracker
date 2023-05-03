@@ -1,22 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 import { useHomebrewStore } from '@/store/homebrew'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
 
-const isOpen = ref(false)
-const isLoading = ref(false)
-const homebrews = ref()
-const selected = ref([])
-const summoner = ref()
+const isOpen: Ref<boolean> = ref(false)
+const isLoading: Ref<boolean> = ref(false)
+const homebrews: Ref<Homebrew[] | null> = ref(null)
+const selected: Ref<Homebrew[]> = ref([])
+const summoner: Ref<Option | null> = ref(null)
 
-const id = computed(() => store.encounter.campaign?.id || store.encounter.campaign)
-const summon = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
-const summonOptions = computed(() => {
+const id: ComputedRef<number> = computed(() => typeof store.encounter!.campaign === 'object'
+  ? store.encounter!.campaign.id
+  : store.encounter!.campaign
+)
+const summon: ComputedRef<boolean> = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
+const summonOptions: ComputedRef<Option[]> = computed(() => {
   return [
-    ...store.encounter.rows.map((r) => {
-      return { label: r.name, id: r.id }
+    ...store.encounter!.rows.map((r: Row) => {
+      return { label: r.name, id: +r.id }
     })
   ]
 })
@@ -34,7 +37,7 @@ onMounted(async () => {
   }
 })
 
-function selectHomebrew (homebrew) {
+function selectHomebrew (homebrew: Homebrew): void {
   const index = selected.value.findIndex(h => h.id === homebrew.id)
   if (index > -1) {
     selected.value = selected.value.filter(h => h.id !== homebrew.id)
@@ -43,45 +46,46 @@ function selectHomebrew (homebrew) {
   }
 }
 
-async function addHomebrews (homebrews) {
+async function addHomebrews (homebrews: RowUpdate[]): Promise<void> {
   try {
     isLoading.value = true
-    const homebrewRows = []
+    const homebrewRows: Row[] = []
 
-    homebrews.forEach((hb) => {
-      if (summon.value && summoner.value && hb.type === 'summon') {
+    homebrews.forEach((hb: RowUpdate) => {
+      if (summoner.value && summoner.value && hb.type === 'summon') {
         hb.summoner = {
           name: summoner.value.label,
-          id: summoner.value.id
+          id: +summoner.value.id
         }
       }
 
-      homebrewRows.push(useCreateRow(hb, hb.type, store.encounter.rows))
+      if (store?.encounter?.rows) {
+        homebrewRows.push(useCreateRow(hb as Row, hb.type, store.encounter.rows))
+      }
     })
 
-    await store.encounterUpdate({
-      rows: store.encounter.rows.includes('[')
-        ? homebrewRows
-        : [...store.encounter.rows, ...homebrewRows]
-    })
+    if (store?.encounter?.rows) {
+      await store.encounterUpdate({
+        rows: [...store.encounter.rows, ...homebrewRows]
+      })
+    }
 
     closeModal()
   } catch (err) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
-    console.error(err)
   } finally {
     isLoading.value = false
   }
 }
 
-function closeModal () {
+function closeModal (): void {
   isOpen.value = false
   summoner.value = null
   selected.value = []
 }
 
-function selectedSummoner (id) {
-  const filtered = summonOptions.value.filter(s => s.id === id && s.id !== 'none')
+function selectedSummoner (id: number): void {
+  const filtered = summonOptions.value.filter(s => s.id === id)
   summoner.value = filtered[0] || null
 }
 </script>

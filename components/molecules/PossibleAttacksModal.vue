@@ -1,7 +1,7 @@
-<script setup>
-defineProps({ monster: { type: Object, required: true } })
+<script setup lang="ts">
+defineProps<{ row: Row }>()
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const isOpen = ref(false)
       @click="isOpen = true"
     />
     <Modal v-if="isOpen" big @close="isOpen = false">
-      <ActionsTable :monster="monster" />
+      <ActionsTable :monster="row" />
     </Modal>
   </div>
 </template>

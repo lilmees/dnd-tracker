@@ -1,12 +1,14 @@
-<script setup>
-defineProps({
-  label: { type: String, default: '' },
-  routes: { type: Array, default: () => [] }
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{ label: string, routes: Route[] }>(), {
+    label: '',
+    routes: () => []
+  }
+)
 
 const localePath = useLocalePath()
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -25,13 +27,16 @@ const isOpen = ref(false)
         name="tabler:chevron-down"
       />
     </button>
-    <div class="absolute z-[1] block w-max right-0" :class="{ 'invisible top-0': !isOpen }">
+    <div
+      class="absolute z-[1] block w-max right-0"
+      :class="{ 'invisible top-0': !isOpen }"
+    >
       <div
         class="bg-tracker flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b rounded-tl box-border text-slate-300"
       >
         <NuxtLink
           v-for="route in routes"
-          :key="route"
+          :key="route.label"
           :to="localePath(`/${route.url}`)"
           class="hover:text-white"
           active-class="active-link"

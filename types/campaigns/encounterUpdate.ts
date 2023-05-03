@@ -1,5 +1,6 @@
 interface EncounterUpdate {
-  name?: string
+  created_by?: string
+  title?: string
   rows?: string | Row[]
   campaign?: number
   admins?: string[]
@@ -7,4 +8,6 @@ interface EncounterUpdate {
   owner?: string
   info?: string
   activeIndex?: number
+  color?: string
+  background?: string
 }

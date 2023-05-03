@@ -1,14 +1,15 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({
-  name: { type: String, required: true },
-  type: { type: String, default: 'player' }
-})
+withDefaults(
+  defineProps<{ name: string, type: string}>(), {
+    type: 'player'
+  }
+)
 
-const isOpen = ref(false)
-const form = ref({ name: null })
+const isOpen: Ref<boolean> = ref(false)
+const form: Ref<{ name: string }> = ref({ name: '' })
 
-function updateName ({ __init, name }) {
+function updateName ({ __init, name }: Obj): void {
   emit('update', name.trim())
   isOpen.value = false
 }

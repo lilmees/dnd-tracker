@@ -1,10 +1,12 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({ conditions: { type: Array, default: () => [] } })
+const props = withDefaults(
+  defineProps<{ conditions: Condition[] }>(), {
+    conditions: () => []
+  }
+)
 
-const info = ref()
-
-function removeEffect (slug, type) {
+function removeEffect (slug: string, type: string): void {
   emit('update', {
     value: props.conditions.filter(s => s.slug !== slug),
     type
@@ -17,20 +19,11 @@ function removeEffect (slug, type) {
     <div class="flex flex-wrap gap-2 justify-center md:justify-start">
       <Tag
         v-for="condition in conditions"
-        :key="condition"
+        :key="condition.slug"
         removable
         :condition="condition"
         @remove="removeEffect($event, 'conditions')"
-        @info="info = $event"
       />
     </div>
-    <Modal v-if="info" @close="info = null">
-      <h2>{{ $t('encounter.conditionInfo') }}</h2>
-      <div>
-        <p v-for="desc in info" :key="desc">
-          {{ desc }}
-        </p>
-      </div>
-    </Modal>
   </div>
 </template>

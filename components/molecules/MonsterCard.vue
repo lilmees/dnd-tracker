@@ -1,14 +1,15 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['add'])
-defineProps({
-  monster: { type: Object, required: true },
-  addable: { type: Boolean, default: false }
-})
+withDefaults(
+  defineProps<{ monster: Monster, addable: boolean}>(), {
+    addable: false
+  }
+)
 
-const abilities = ref(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
-const abilitiesNames = ref(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'])
-const stats = ref(['type', 'subtype', 'size', 'alignment', 'xp'])
-const isOpen = ref(false)
+const abilities: Ref<string[]> = ref(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
+const abilitiesNames: Ref<string[]> = ref(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'])
+const stats: Ref<string[]> = ref(['type', 'subtype', 'size', 'alignment', 'xp'])
+const isOpen: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -58,18 +59,18 @@ const isOpen = ref(false)
       <div v-for="(ability, index) in abilities" :key="ability" class="flex gap-1">
         <p>{{ ability }}:</p>
         <p class="font-bold">
-          {{ monster[abilitiesNames[index]] || '_' }}
+          {{ monster[abilitiesNames[index] as keyof Monster] || '_' }}
         </p>
       </div>
     </div>
     <div class="flex gap-x-4 gap-y-1 flex-wrap">
       <template v-for="stat in stats" :key="stat">
-        <div v-if="monster[stat]" class="flex gap-1">
+        <div v-if="monster[stat as keyof Monster]" class="flex gap-1">
           <p>
             {{ stat }}:
           </p>
           <p class="lowercase">
-            {{ monster[stat] || '_' }}
+            {{ monster[stat as keyof Monster] || '_' }}
           </p>
         </div>
       </template>

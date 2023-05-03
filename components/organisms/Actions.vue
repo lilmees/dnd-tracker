@@ -133,7 +133,7 @@ function updateRow () {
     <PossibleAttacksModal
       v-if="row.actions"
       v-tippy="{ content: $t('encounter.tooltip.attacks'), animation: 'shift-away' }"
-      :monster="row"
+      :row="row"
     />
   </div>
 </template>

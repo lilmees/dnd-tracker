@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['toggle'])
-defineProps({ concentration: { type: Boolean, required: true } })
+defineProps<{ concentration: boolean }>()
 </script>
 
 <template>

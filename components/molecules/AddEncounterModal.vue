@@ -1,68 +1,80 @@
-<script setup>
+<script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close', 'added'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  campaignId: { type: [Number, String], default: null }
-})
+const props = withDefaults(
+  defineProps<{ open: boolean, campaignId: number | null }>(), {
+    campaignId: null
+  }
+)
 
 const { $i18n } = useNuxtApp()
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
 
-const form = ref({ title: null, campaign: null, background: '#0073A1' })
-const isLoading = ref(false)
-const error = ref()
-const chosenCampaign = ref()
+const form: Ref<AddEncounterForm> = ref({ title: '', campaign: null, background: '#0073A1' })
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const chosenCampaign: Ref<Option | null> = ref(null)
 
 onMounted(() => {
-  if (!props.campaignId) { campaigns.fetch() }
+  if (!props.campaignId) {
+    campaigns.fetch()
+  }
 })
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (!v) { chosenCampaign.value = null }
   }
 )
 
-const campaignOptions = computed(() => {
-  return [
-    { label: $i18n.t('campaigns.no'), id: 'none' },
-    ...campaigns.data.map((c) => {
-      return { label: c.title, id: c.id }
-    })
-  ]
+const campaignOptions: ComputedRef<Option[]> = computed(() => {
+  let options : Option[] = [{ label: $i18n.t('campaigns.no'), id: -1 }]
+
+  if (campaigns.campaigns) {
+    options = [
+      ...options,
+      ...campaigns.campaigns.map((c) => {
+        return { label: c.title, id: c.id }
+      })
+    ]
+  }
+
+  return options
 })
 
-function changeColor () {
+function changeColor (): void {
   form.value.background = useRandomColor()
 }
 
-async function addEncounter ({ __init, ...formData }) {
+async function addEncounter ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
+  const campaign: number | undefined =
+  chosenCampaign.value && chosenCampaign.value.id > -1
+    ? chosenCampaign.value.id
+    : undefined
+
   try {
-    isLoading.value = true
-    const campaign =
-      props.campaignId || (chosenCampaign.value && chosenCampaign.value.id !== 'none'
-        ? chosenCampaign.value.id
-        : null
-      )
-    const encounter = await store.addEncounter({
-      ...formData,
-      campaign,
-      round: 1,
-      rows: [],
-      created_by: user.value.id,
-      admins: [user.value.id],
-      color: useContrastColor(formData.background),
-      activeIndex: 0
-    })
-    emit('added', encounter)
-  } catch (err) {
+    if (user.value) {
+      const encounter = await store.addEncounter({
+        ...formData as AddEncounterForm,
+        campaign,
+        round: 1,
+        rows: [],
+        created_by: user.value.id,
+        admins: [user.value.id],
+        color: useContrastColor(formData.background),
+        activeIndex: 0
+      })
+      emit('added', encounter)
+    }
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
@@ -70,9 +82,11 @@ async function addEncounter ({ __init, ...formData }) {
   }
 }
 
-function selectedCampaign (id) {
-  const filtered = campaignOptions.value.filter(c => c.id === id && c.id !== 'none')
-  chosenCampaign.value = filtered[0] || null
+function selectedCampaign (id: number): void {
+  const filtered = campaignOptions.value.filter(c => c.id === id && c.id !== -1)
+  if (chosenCampaign.value) {
+    chosenCampaign.value = filtered[0] || null
+  }
 }
 </script>
 
@@ -83,14 +97,20 @@ function selectedCampaign (id) {
       {{ error }}
     </p>
     <FormKit
-      v-if="campaignId || campaigns.data"
+      v-if="campaignId || campaigns.campaigns"
       v-model="form"
       type="form"
       :actions="false"
       message-class="error-message"
       @submit="addEncounter"
     >
-      <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
+      <Input
+        focus
+        name="title"
+        :label="$t('inputs.titleLabel')"
+        validation="required|length:3,30"
+        required
+      />
       <Select
         v-if="!campaignId"
         :input-label="$t('inputs.campaignLabel')"
@@ -100,7 +120,12 @@ function selectedCampaign (id) {
         @selected="selectedCampaign"
       />
       <div class="flex gap-2 items-end">
-        <ColorPicker name="background" :label="$t('inputs.backgroundLabel')" validation="required" required />
+        <ColorPicker
+          name="background"
+          :label="$t('inputs.backgroundLabel')"
+          validation="required"
+          required
+        />
         <div class="mb-[14px]">
           <Button :label="$t('actions.random')" @click="changeColor" />
         </div>

@@ -1,28 +1,39 @@
-<script setup>
+<script setup lang="ts">
 import { reset } from '@formkit/core'
 import { useHomebrewStore } from '@/store/homebrew'
 
 const emit = defineEmits(['close', 'homebrews'])
-const props = defineProps({
-  homebrews: { type: Array, required: true },
-  open: { type: Boolean, required: true },
-  id: { type: Number, required: true }
-})
+const props = defineProps<{
+  homebrews: Homebrew[],
+  open: boolean,
+  id: number
+}>()
 
 const store = useHomebrewStore()
 
-const error = ref()
-const isLoading = ref(false)
-const form = ref({ type: 'player', name: null, ac: null, health: null, link: null })
+const error: Ref<string | null> = ref(null)
+const isLoading: Ref<boolean> = ref(false)
+const form: Ref<AddCampaignHomebrewForm> = ref({
+  type: 'player' as HomebrewType,
+  name: '',
+  ac: null,
+  health: null,
+  link: ''
+})
 
-async function addHomebrew ({ __init, ...formData }) {
+async function addHomebrew ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
-    const homebrew = await store.addHomebrew({ ...formData, campaign: props.id }, props.id)
+    const homebrew = await store.addHomebrew({
+      ...formData,
+      campaign: props.id
+    } as AddHomebrew)
+
     emit('homebrews', [...props.homebrews, homebrew])
     reset('form')
-  } catch (err) {
+  } catch (err: any) {
     useBugsnag().notify(`Handeld in catch: ${err}`)
     error.value = err.message
   } finally {
