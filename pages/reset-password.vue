@@ -19,7 +19,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
     toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
     toast.error()
   } finally {

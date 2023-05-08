@@ -38,7 +38,7 @@ function addHomebrew ({ __init, ...formData }: Obj): void {
     reset('form')
     closeModal()
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     data.error = err.message
   } finally {
     data.isLoading = false

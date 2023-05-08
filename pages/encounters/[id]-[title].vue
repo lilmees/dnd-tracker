@@ -19,7 +19,7 @@ if (route?.params?.id) {
       info.value = store.encounter.info as string
     }
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     toast.error()
   }
 }

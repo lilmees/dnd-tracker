@@ -30,7 +30,7 @@ async function register ({ __init, username, name, ...credentials }: Obj): Promi
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
     toast.error()
   } finally {

@@ -33,7 +33,7 @@ async function logout (): Promise<void> {
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     toast.error()
   }
 }

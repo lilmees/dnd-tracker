@@ -1,4 +1,4 @@
-export const useError = (error: unknown): string => {
+export const useErrorMessage = (error: unknown): string => {
   let e = ''
 
   if (typeof error === 'string') {

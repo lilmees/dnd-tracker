@@ -18,7 +18,7 @@ async function deleteNote (): Promise<void> {
 
     emit('deleted', props.note.id)
   } catch (err: unknown) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     toast.error()
   }
 }
