@@ -24,7 +24,7 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     error.value = err.message
     toast.error()
   } finally {

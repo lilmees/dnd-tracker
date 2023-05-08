@@ -34,7 +34,7 @@ async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
     emit('updated', note)
     reset('form')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false

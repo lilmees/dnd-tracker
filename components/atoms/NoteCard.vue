@@ -15,9 +15,10 @@ const needConfirmation: Ref<boolean> = ref(false)
 async function deleteNote (): Promise<void> {
   try {
     await store.deleteNote(props.note.id)
+
     emit('deleted', props.note.id)
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: unknown) {
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     toast.error()
   }
 }

@@ -72,7 +72,7 @@ async function addHomebrews (homebrews: RowUpdate[]): Promise<void> {
 
     closeModal()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
   } finally {
     isLoading.value = false
   }

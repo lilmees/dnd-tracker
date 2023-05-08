@@ -28,7 +28,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         data.value = sheets
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${err}`)
+      useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
       error.value = err as string
     } finally {
       loading.value = false

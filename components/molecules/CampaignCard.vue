@@ -17,7 +17,7 @@ async function deleteCampaign (): Promise<void> {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     toast.error()
   }
 }
@@ -28,7 +28,7 @@ async function deleteCampaign (): Promise<void> {
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
-// useBugsnag().notify(`Handeld in catch: ${err}`)
+// useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
 //     toast.error()
 //   } finally {
 //     isSettings.value = false

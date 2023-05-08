@@ -43,7 +43,7 @@ async function updateProfile ({ __init, username, name, ...credentials }: Obj): 
     )
     isUpdating.value = false
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     error.value = err.message
     toast.error()
   } finally {
@@ -64,7 +64,7 @@ async function deleteUser (): Promise<void> {
   try {
     await profile.deleteProfile()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     toast.error()
   } finally {
     isLoading.value = false

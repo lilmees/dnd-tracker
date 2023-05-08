@@ -16,7 +16,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
     isLoading.value = true
     await store.login(credentials as Login)
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false
