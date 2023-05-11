@@ -45,7 +45,6 @@ function resetState (): void {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
         @submit="updateAc"
       >
         <div class="flex gap-2 items-end">

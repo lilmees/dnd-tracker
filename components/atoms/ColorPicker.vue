@@ -26,7 +26,6 @@ withDefaults(
     label-class="font-bold body-small"
     input-class="w-full border-2 border-slate-400 focus-within:border-white h-9 rounded"
     outer-class="mb-3 w-full"
-    message-class="error-message"
     :disabled="disabled"
   />
 </template>

@@ -65,6 +65,8 @@
     "questionLabel": "Your question?",
     "challengeLabel": "Challenge rating",
     "nothing": "Nothing selected"
+  }, "placeholder": {
+    "type": "Choose your type"
   },
   "campaigns": {
     "campaign": "Campaign",

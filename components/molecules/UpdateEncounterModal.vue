@@ -57,7 +57,7 @@ async function updateEncounter ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="updateEncounter"
     >
       <Input

@@ -93,7 +93,7 @@ async function moveRow (up: boolean): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateInitiative"
       >
         <div class="flex gap-2 items-end">

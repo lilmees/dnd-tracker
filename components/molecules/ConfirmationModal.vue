@@ -25,7 +25,7 @@ function deleteConfirmation (): void {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="deleteConfirmation"
       >
         <Input

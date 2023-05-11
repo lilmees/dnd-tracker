@@ -45,7 +45,7 @@ function updateHealth ({ __init, health }: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateHealth"
       >
         <div class="flex gap-2 items-end">

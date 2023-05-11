@@ -54,7 +54,7 @@ function updateLink ({ __init, link }: Obj): void {
           v-model="form"
           type="form"
           :actions="false"
-          message-class="error-message"
+
           @submit="updateLink"
         >
           <Input

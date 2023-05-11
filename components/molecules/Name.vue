@@ -42,7 +42,7 @@ function updateName ({ __init, name }: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateName"
       >
         <Input

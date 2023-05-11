@@ -28,8 +28,6 @@ withDefaults(
       :name="name"
       :validation="validation"
       input-class="w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer"
-      help-class="help-message"
-      message-class="error-message"
       :disabled="disabled"
       @input="$emit('update:modelValue', $event)"
     />

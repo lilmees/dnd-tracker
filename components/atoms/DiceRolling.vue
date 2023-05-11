@@ -33,7 +33,7 @@ function reset (): void {
 
 <template>
   <div class="bg-primary/10 rounded-xl p-2" :class="{ 'mb-3': !result }">
-    <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="rollDice">
+    <FormKit v-model="form" type="form" :actions="false" @submit="rollDice">
       <div class="flex gap-2 flex-wrap sm:flex-nowrap">
         <div>
           <Input name="d100" type="number" label="D100" validation="between:1,20|number" />

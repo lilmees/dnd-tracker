@@ -101,7 +101,7 @@ function selectedCampaign (id: number): void {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="addEncounter"
     >
       <Input

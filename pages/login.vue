@@ -45,7 +45,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="login"
       >
         <Input

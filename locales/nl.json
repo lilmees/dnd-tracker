@@ -66,6 +66,9 @@
     "challengeLabel": "Challenge rating",
     "nothing": "Nog niets geselecteerd"
   },
+  "placeholder": {
+    "type": "Kies je type"
+  },
   "campaigns": {
     "campaign": "Campagne",
     "no": "Geen campagne",

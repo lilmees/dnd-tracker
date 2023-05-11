@@ -62,7 +62,7 @@ function randomAvatar (): void {
       <p v-if="error" class="text-danger text-center">
         {{ error }}
       </p>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="register">
+      <FormKit v-model="form" type="form" :actions="false" @submit="register">
         <Input
           focus
           name="name"

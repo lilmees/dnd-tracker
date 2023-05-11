@@ -1,4 +1,4 @@
 interface Option {
   label: string
-  id: number
+  value: number | string
 }

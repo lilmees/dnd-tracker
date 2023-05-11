@@ -49,7 +49,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="resetPassword"
       >
         <Input
