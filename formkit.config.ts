@@ -18,27 +18,33 @@ const config: DefaultConfigOptions = {
       },
       text: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       password: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       number: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       textarea: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       select: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       date: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
-        input: 'input'
+        input: 'input',
+        wrapper: 'input-wrapper'
       },
       checkbox: {
         input: 'w-5 h-5 disabled:pointer-events-none disabled:bg-slate-100',
@@ -46,7 +52,9 @@ const config: DefaultConfigOptions = {
         wrapper: 'flex flex-row gap-2 items-center'
       },
       color: {
-        label: 'block font-normal text-base mb-1 text-primary formkit-invalid:text-danger'
+        inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
+        input: 'input p-0 h-9',
+        wrapper: 'input-wrapper'
       },
       radio: {
         input: 'h-5 w-5 ml-1',
@@ -59,10 +67,10 @@ const config: DefaultConfigOptions = {
         message: 'text-danger text-xs'
       },
       submit: {
-        input: 'btn bg-black w-full mt-3'
+        input: 'btn bg-black w-full mt-4'
       },
       button: {
-        input: 'btn bg-black w-full mt-3',
+        input: 'btn bg-black w-full mt-4',
         outer: 'grow'
       }
     })

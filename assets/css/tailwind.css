@@ -16,6 +16,10 @@
     @apply flex ring ring-slate-400 rounded overflow-hidden my-1;
     @apply focus-within:ring-white;
   }
+
+  .input-wrapper {
+    @apply my-3;
+  }
 }
 
 @layer base {
