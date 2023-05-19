@@ -47,7 +47,7 @@ const config: DefaultConfigOptions = {
         wrapper: 'input-wrapper'
       },
       checkbox: {
-        input: 'w-5 h-5 disabled:pointer-events-none disabled:bg-slate-100',
+        input: 'w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer',
         label: 'block text-lg mb-1',
         wrapper: 'flex flex-row gap-2 items-center'
       },
