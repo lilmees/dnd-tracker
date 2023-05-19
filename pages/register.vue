@@ -8,6 +8,7 @@ const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 const form: Ref<Register> = ref({ email: '', password: '', name: '', username: '' })
 const isLoading: Ref<boolean> = ref(false)
@@ -30,7 +31,7 @@ async function register ({ __init, username, name, ...credentials }: Obj): Promi
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {

@@ -6,6 +6,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const auth = useAuthStore()
+  const { $logRocket } = useNuxtApp()
 
   const loading: Ref<boolean> = ref(false)
   const error: Ref<string | null> = ref(null)
@@ -37,7 +38,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
         }
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

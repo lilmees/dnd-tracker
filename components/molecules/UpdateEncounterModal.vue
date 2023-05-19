@@ -6,6 +6,7 @@ const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
+const { $logRocket } = useNuxtApp()
 
 const form: Ref<UpdateEncounterForm> = ref({
   title: props.encounter.title,
@@ -33,7 +34,7 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
     )
     emit('updated', enc)
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

@@ -14,6 +14,7 @@ const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 async function manageSubscription (): Promise<void> {
   try {
@@ -21,7 +22,7 @@ async function manageSubscription (): Promise<void> {
       await stripe.createPortalSession(profile.data.stripe_session_id)
     }
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }

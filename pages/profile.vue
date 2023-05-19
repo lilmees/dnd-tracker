@@ -6,6 +6,7 @@ definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
+const { $logRocket } = useNuxtApp()
 
 const image : Ref<string | null> = ref(profile.data?.avatar || null)
 const isUpdating: Ref<boolean> = ref(false)
@@ -43,7 +44,7 @@ async function updateProfile ({ __init, username, name, ...credentials }: Obj): 
     )
     isUpdating.value = false
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {
@@ -64,7 +65,7 @@ async function deleteUser (): Promise<void> {
   try {
     await profile.deleteProfile()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isLoading.value = false

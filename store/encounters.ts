@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
+  const { $logRocket } = useNuxtApp()
 
   const loading: Ref<boolean> = ref(false)
   const error: Ref<string | null> = ref(null)
@@ -28,7 +29,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         data.value = sheets
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

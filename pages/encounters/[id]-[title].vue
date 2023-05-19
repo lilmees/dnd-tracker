@@ -8,6 +8,7 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const toast = useToastStore()
 const store = useTableStore()
+const { $logRocket } = useNuxtApp()
 
 const info: Ref<string> = ref('')
 
@@ -19,7 +20,7 @@ if (route?.params?.id) {
       info.value = store.encounter.info as string
     }
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }

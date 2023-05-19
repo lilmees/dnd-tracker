@@ -10,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const store = useHomebrewStore()
+const { $logRocket } = useNuxtApp()
 
 const error: Ref<string | null> = ref(null)
 const isLoading: Ref<boolean> = ref(false)
@@ -34,7 +35,7 @@ async function addHomebrew ({ __init, ...formData }: Obj): Promise<void> {
     emit('homebrews', [...props.homebrews, homebrew])
     reset('form')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

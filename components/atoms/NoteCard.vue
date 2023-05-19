@@ -7,6 +7,7 @@ const props = defineProps<{ note: Note }>()
 
 const toast = useToastStore()
 const store = useNotesStore()
+const { $logRocket } = useNuxtApp()
 
 const isSettings: Ref<boolean> = ref(false)
 const isUpdating: Ref<boolean> = ref(false)
@@ -18,7 +19,7 @@ async function deleteNote (): Promise<void> {
 
     emit('deleted', props.note.id)
   } catch (err: unknown) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }

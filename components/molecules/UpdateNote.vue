@@ -6,6 +6,7 @@ const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ note: Note, open: boolean }>()
 
 const store = useNotesStore()
+const { $logRocket } = useNuxtApp()
 
 const error: Ref<string | null> = ref(null)
 const isLoading: Ref<boolean> = ref(false)
@@ -34,7 +35,7 @@ async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
     emit('updated', note)
     reset('form')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
