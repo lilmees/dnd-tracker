@@ -16,7 +16,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
     isLoading.value = true
     await store.login(credentials as Login)
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -45,7 +45,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="login"
       >
         <Input

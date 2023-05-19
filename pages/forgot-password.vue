@@ -24,7 +24,7 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
     toast.error()
   } finally {
@@ -54,7 +54,7 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="forgotPassword"
       >
         <Input

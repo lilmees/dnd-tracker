@@ -23,7 +23,7 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
     emit('notes', [...props.notes, note])
     reset('form')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -41,7 +41,7 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="addNote"
     >
       <Input

@@ -1,48 +1,42 @@
 <script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
+import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
 
-const form: Ref<{ title: string, background: string}> = ref({
+const form: Ref<UpdateEncounterForm> = ref({
   title: props.encounter.title,
-  background: props.encounter.background
-})
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-
-watch(
-  () => props.open,
-  (v: boolean) => {
-    if (v) {
-      form.value = {
-        title: props.encounter.title,
-        background: props.encounter.background
-      }
+  background: props.encounter.background,
+  data: {
+    isLoading: false,
+    campaign: false,
+    update: true,
+    error: null,
+    options: [],
+    changeColor: () => {
+      form.value.background = useRandomColor()
     }
   }
-)
+})
 
-function changeColor (): void {
-  form.value.background = useRandomColor()
-}
+async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Promise<void> {
+  form.value.data.error = null
+  form.value.data.isLoading = true
 
-async function updateEncounter ({ __init, ...formData }: Obj): Promise<void> {
-  error.value = null
   try {
-    isLoading.value = true
     const enc = await store.updateEncounter(
       { ...formData, color: useContrastColor(formData.background) },
       props.encounter.id
     )
     emit('updated', enc)
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
-    error.value = err.message
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    form.value.data.error = err.message
   } finally {
-    isLoading.value = false
+    form.value.data.isLoading = false
   }
 }
 </script>
@@ -50,40 +44,16 @@ async function updateEncounter ({ __init, ...formData }: Obj): Promise<void> {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <h2>{{ $t('encounters.update') }}</h2>
-    <p v-if="error" class="text-danger text-center">
-      {{ error }}
+    <p v-if="form.data.error" class="text-danger text-center">
+      {{ form.data.error }}
     </p>
     <FormKit
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
       @submit="updateEncounter"
     >
-      <Input
-        focus
-        name="title"
-        :label="$t('inputs.titleLabel')"
-        validation="required|length:3,30"
-        required
-      />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
-      </div>
-      <Button
-        type="submit"
-        :label="$t('actions.update')"
-        :loading="store.loading"
-        inline
-      />
+      <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
     </FormKit>
   </Modal>
 </template>

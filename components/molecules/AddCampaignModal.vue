@@ -33,7 +33,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       emit('close')
     }
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -51,7 +51,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="addCampaign"
     >
       <Input

@@ -19,7 +19,7 @@ async function deleteEncounter (): Promise<void> {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     toast.error()
   }
 }
@@ -40,7 +40,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): 
     const enc = await store.addEncounter(encounter as AddEncounter)
     emit('copied', enc)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     toast.error()
   } finally {
     isSettings.value = false

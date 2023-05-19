@@ -38,7 +38,7 @@ function sendContactMail (form: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="sendContactMail"
       >
         <Input

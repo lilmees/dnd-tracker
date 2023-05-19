@@ -37,7 +37,11 @@ watch(error, (v) => {
         >
           <CampaignHeader
             v-if="Object.keys(store.sortedEncounters)[index] !== '0'"
-            :campaign="group[0].campaign"
+            :campaign="
+              typeof group[0].campaign === 'object'
+                ? (group[0].campaign as Campaign).id
+                : group[0].campaign
+            "
           />
           <div class="flex flex-wrap gap-4 items-start">
             <EncounterCard

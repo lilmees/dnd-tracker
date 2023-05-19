@@ -45,7 +45,7 @@ async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
     emit('updated', hb)
     reset('form')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -63,7 +63,7 @@ async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="updateHomebrew"
     >
       <Input

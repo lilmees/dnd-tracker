@@ -63,6 +63,7 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' }
     ],
     vueI18n: {
+      missingWarn: false,
       legacy: false,
       locale: 'nl',
       fallbackLocale: 'nl',

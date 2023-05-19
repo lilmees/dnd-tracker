@@ -1,0 +1,140 @@
+[
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "type": "select",
+      "name": "type",
+      "label": "inputs.typeLabel",
+      "placeholder": "placeholder.type",
+      "validation": "required",
+      "options": "$data.options"
+    }
+  },
+  {
+    "$el": "div",
+    "if": "$type === 'summon' && $data.encounter",
+    "children": [
+      {
+        "$cmp": "FormKit",
+        "props": {
+          "type": "select",
+          "name": "summoner",
+          "label": "inputs.summonerLabel",
+          "placeholder": "inputs.nothing",
+          "validation": "required",
+          "options": "$data.summoners"
+        }
+      }
+    ]
+  },
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "name": "name",
+      "label": "inputs.nameLabel",
+      "validation": "required|length:3,30"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "if": "($type === 'monster' || $type === 'summon') && $data.encounter",
+    "props": {
+      "name": "amount",
+      "type": "number",
+      "label": "inputs.amountLabel",
+      "validation": "between:1,15|number|required"
+    }
+  },
+  {
+    "$el": "div",
+    "if": "$data.encounter",
+    "children": [
+      {
+        "$cmp": "FormKit",
+        "props": {
+          "name": "initiative",
+          "type": "number",
+          "label": "inputs.initiativeLabel",
+          "validation": "between:1,50|number"
+        }
+      },
+      {
+        "$el": "div",
+        "attrs": {
+          "class": "flex flex-wrap gap-4 mt-3"
+        },
+        "children": [
+          {
+            "$el": "button",
+            "attrs": {
+              "onClick": "$data.rollDice",
+              "class": "btn bg-black grow",
+              "type": "button"
+            },
+            "children": [
+              "actions.roll"
+            ]
+          }
+        ]
+      }
+    ],
+    "attrs": {
+      "class": "mb-3"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "if": "$type !== 'lair'",
+    "props": {
+      "name": "ac",
+      "type": "number",
+      "label": "inputs.acLabel",
+      "validation": "between:1,100|number"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "if": "$type !== 'lair'",
+    "props": {
+      "name": "health",
+      "type": "number",
+      "label": "inputs.hpLabel",
+      "validation": "between:1,1000|number"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "name": "link",
+      "label": "inputs.linkLabel",
+      "validation": "length:10,200|url"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "label": {
+        "if": "$data.encounter",
+        "then": "encounter.addInInitiative",
+        "else": {
+          "if": "$data.encounter === false && $data.update === false",
+          "then": "encounter.addHomebrew",
+          "else": {
+            "if": "$data.update",
+            "then": "encounter.updateHomebrew"
+          }
+        }
+      },
+      "type": "submit",
+      "disabled": "$data.isLoading"
+    }
+  },
+  {
+    "$el": "p",
+    "if": "$data.error",
+    "attrs": {
+      "class": "text-danger body-small mt-1"
+    },
+    "children": "$data.error"
+  }
+]

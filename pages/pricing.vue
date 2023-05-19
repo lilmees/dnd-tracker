@@ -16,12 +16,18 @@ const isYearly: Ref<boolean> = ref(false)
         <p class="mb-5 max-w-3xl mx-auto">
           {{ $t('pricing.text') }}
         </p>
-        <Checkbox
-          v-model="isYearly"
-          label="Show yearly prices"
-          name="yearly"
-          class="w-fit mx-auto pt-5"
-        />
+        <div
+          class="flex flex-row items-center gap-2 mb-3 w-fit mx-auto pt-5"
+        >
+          <div class="block font-bold text-lg mb-1">
+            Show yearly prices
+          </div>
+          <FormKit
+            :value="isYearly"
+            type="checkbox"
+            name="yearly"
+          />
+        </div>
       </div>
       <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         <PricingCard

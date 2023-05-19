@@ -17,11 +17,11 @@ const id: ComputedRef<number> = computed(() => typeof store.encounter!.campaign 
 )
 const summon: ComputedRef<boolean> = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
 const summonOptions: ComputedRef<Option[]> = computed(() => {
-  return [
-    ...store.encounter!.rows.map((r: Row) => {
-      return { label: r.name, id: +r.id }
+  return store.encounter?.rows
+    ? store.encounter.rows.map((r: Row) => {
+      return { label: r.name, value: `${r.id}` }
     })
-  ]
+    : []
 })
 
 // delete selections that are not from the summon type when a summon is selected
@@ -46,16 +46,16 @@ function selectHomebrew (homebrew: Homebrew): void {
   }
 }
 
-async function addHomebrews (homebrews: RowUpdate[]): Promise<void> {
+async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void> {
   try {
     isLoading.value = true
     const homebrewRows: Row[] = []
 
     homebrews.forEach((hb: RowUpdate) => {
-      if (summoner.value && summoner.value && hb.type === 'summon') {
+      if (summoner.value && hb.type === 'summon') {
         hb.summoner = {
           name: summoner.value.label,
-          id: +summoner.value.id
+          id: +summoner.value.value
         }
       }
 
@@ -72,7 +72,7 @@ async function addHomebrews (homebrews: RowUpdate[]): Promise<void> {
 
     closeModal()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
   } finally {
     isLoading.value = false
   }
@@ -84,9 +84,9 @@ function closeModal (): void {
   selected.value = []
 }
 
-function selectedSummoner (id: number): void {
-  const filtered = summonOptions.value.filter(s => s.id === id)
-  summoner.value = filtered[0] || null
+function selectedSummoner (value: number): void {
+  const filtered = summonOptions.value.find(s => s.value === value)
+  summoner.value = filtered || null
 }
 </script>
 
@@ -118,12 +118,12 @@ function selectedSummoner (id: number): void {
           <p>
             {{ $t('homebrews.initiative.selectSummoner') }}
           </p>
-          <Select
-            :input-label="$t('inputs.summonerLabel')"
-            :label="summoner?.label || $t('homebrews.initiative.select')"
-            bold
+          <FormKit
+            type="select"
+            :label="$t('inputs.summonerLabel')"
+            :placeholder="$t('homebrews.initiative.select')"
             :options="summonOptions"
-            @selected="selectedSummoner"
+            @input="selectedSummoner"
           />
         </template>
         <div class="flex flex-col">
@@ -181,7 +181,7 @@ function selectedSummoner (id: number): void {
               :label="$t('actions.addAll')"
               color="success"
               :disabled="isLoading"
-              @click="addHomebrews(homebrews)"
+              @click="addHomebrews(homebrews as Homebrew[])"
             />
           </template>
           <Button

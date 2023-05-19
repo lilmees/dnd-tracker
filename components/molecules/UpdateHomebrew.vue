@@ -2,58 +2,63 @@
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import schema from '@/formkit/addHomebrew.json'
+import schema from '~~/formkit/homebrew.json'
 
 const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
-const formSchema = useI18nForm(schema)
 
 const isOpen: Ref<boolean> = ref(false)
 
-const form: Ref<{ name: string, link: string | null}> = ref({
+const form: Ref<UpdateHomebrewForm> = ref({
   name: '',
-  link: null
-})
-
-const data: { isLoading: boolean, update: boolean, type: HomebrewType, error: string| null} = reactive({
-  isLoading: false,
-  update: true,
-  type: 'player',
-  error: null
-})
-
-onMounted(() => {
-  data.type = props.item.type as HomebrewType
-
-  form.value = {
-    name: props.item.name,
-    link: props.item.link as string
+  link: null,
+  type: 'player' as HomebrewType,
+  data: {
+    isLoading: false,
+    encounter: false,
+    update: true,
+    error: null,
+    options: [
+      { label: 'Player', value: 'player' },
+      { label: 'Summon', value: 'summon' },
+      { label: 'Npc', value: 'npc' },
+      { label: 'Monster', value: 'monster' },
+      { label: 'Lair', value: 'lair' }
+    ]
   }
 })
 
-function updateHomebrew ({ __init, ...formData }: Obj): void {
-  data.error = null
-  data.isLoading = true
+watch(() => isOpen.value, (v) => {
+  if (v) {
+    form.value.type = props.item.type as HomebrewType
+    form.value.name = props.item.name
+    form.value.link = props.item.link as string
+  }
+})
+
+function updateHomebrew ({ __init, data, slots, ...formData }: Obj): void {
+  form.value.data.error = null
+  form.value.data.isLoading = true
 
   try {
     store.updateHomebrew(
-      useEmptyKeyRemover({ ...formData, type: data.type }) as Homebrew,
+      useEmptyKeyRemover(formData) as Homebrew,
       props.item.id as number
     )
 
     reset('form')
     closeModal()
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useError(err)}`)
-    data.error = err.message
+    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    form.value.data.error = err.message
   } finally {
-    data.isLoading = false
+    form.value.data.isLoading = false
   }
 }
 
 function closeModal () {
-  data.type = 'player'
+  form.value.type = 'player'
   isOpen.value = false
 }
 </script>
@@ -71,29 +76,15 @@ function closeModal () {
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.updateHomebrew') }}</h2>
-      <Select
-        :absolute="false"
-        :input-label="$t('inputs.typeLabel')"
-        :label="data.type"
-        bold
-        :options="[
-          { label: 'Player', id: 'player' },
-          { label: 'Summon', id: 'summon' },
-          { label: 'Npc', id: 'npc' },
-          { label: 'Monster', id: 'monster' },
-          { label: 'Lair', id: 'lair' },
-        ]"
-        @selected="v => (data.type = v)"
-      />
       <FormKit
         id="form"
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateHomebrew"
       >
-        <FormKitSchema :data="data" :schema="formSchema" />
+        <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
       </FormKit>
     </Modal>
   </section>
