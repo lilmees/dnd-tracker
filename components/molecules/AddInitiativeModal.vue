@@ -5,6 +5,7 @@ import { useTableStore } from '@/store/table'
 import schema from '~~/formkit/homebrew.json'
 
 const store = useTableStore()
+const { $logRocket } = useNuxtApp()
 
 const isOpen: Ref<boolean> = ref(false)
 
@@ -80,7 +81,7 @@ async function addInitiative ({ __init, amount, data, slots, ...formData }: Obj)
 
     closeModal()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     form.value.data!.error = useErrorMessage(err)
   } finally {
     form.value.data!.isLoading = false

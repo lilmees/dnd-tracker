@@ -7,6 +7,7 @@ import schema from '~~/formkit/homebrew.json'
 const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
+const { $logRocket } = useNuxtApp()
 
 const isOpen: Ref<boolean> = ref(false)
 
@@ -50,7 +51,7 @@ function updateHomebrew ({ __init, data, slots, ...formData }: Obj): void {
     reset('form')
     closeModal()
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

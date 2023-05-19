@@ -10,6 +10,7 @@ const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const user = useSupabaseUser()
+const { $logRocket } = useNuxtApp()
 
 const isOpen: Ref<boolean> = ref(false)
 
@@ -22,7 +23,7 @@ async function manageSubscription () {
       await stripe.createPortalSession(profile.data.stripe_session_id)
     }
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }

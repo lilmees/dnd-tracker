@@ -6,7 +6,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const user = useSupabaseUser()
   const localePath = useLocalePath()
   const toast = useToastStore()
-  const { $i18n } = useNuxtApp()
+  const { $i18n, $logRocket } = useNuxtApp()
 
   const encounter: Ref<Encounter | null> = ref(null)
   const isLoading: Ref<boolean> = ref(true)
@@ -110,7 +110,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
         encounter.value = { ...encounter.value, ...enc } as Encounter
       } catch (err) {
-        useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+        $logRocket.captureException(err as Error)
         toast.error()
       }
     } else {

@@ -9,6 +9,7 @@ const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 const needConfirmation: Ref<boolean> = ref(false)
 const isUpdating: Ref<boolean> = ref(false)
@@ -19,7 +20,7 @@ async function deleteEncounter (): Promise<void> {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }
@@ -40,7 +41,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): 
     const enc = await store.addEncounter(encounter as AddEncounter)
     emit('copied', enc)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isSettings.value = false

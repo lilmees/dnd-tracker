@@ -5,6 +5,7 @@ definePageMeta({ middleware: ['loggedin'] })
 
 const store = useAuthStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 const form: Ref<Login> = ref({ email: '', password: '' })
 const isLoading: Ref<boolean> = ref(false)
@@ -16,7 +17,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
     isLoading.value = true
     await store.login(credentials as Login)
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

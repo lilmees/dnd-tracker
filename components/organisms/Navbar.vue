@@ -12,6 +12,7 @@ const profile = useProfileStore()
 const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 const isOpen: Ref<boolean> = ref(false)
 
@@ -33,7 +34,7 @@ async function logout (): Promise<void> {
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }

@@ -7,6 +7,7 @@ const props = defineProps<{ campaign: Campaign }>()
 const user = useSupabaseUser()
 const store = useCampaignsStore()
 const toast = useToastStore()
+const { $logRocket } = useNuxtApp()
 const localePath = useLocalePath()
 
 const needConfirmation: Ref<boolean> = ref(false)
@@ -17,7 +18,7 @@ async function deleteCampaign (): Promise<void> {
   try {
     await store.deleteCampaign(props.campaign.id)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }
@@ -28,7 +29,7 @@ async function deleteCampaign (): Promise<void> {
 //   try {
 //     await store.addCampaign(campaign)
 //   } catch (err) {
-// useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+// $logRocket.captureException(err as Error)
 //     toast.error()
 //   } finally {
 //     isSettings.value = false

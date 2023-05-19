@@ -12,6 +12,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const encounterStore = useEncountersStore()
   const toast = useToastStore()
   const localePath = useLocalePath()
+  const { $logRocket } = useNuxtApp()
 
   const loading: Ref<boolean> = ref(false)
   const error: Ref<string | null> = ref(null)
@@ -32,7 +33,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       useHead({ title: campaign.value.title })
       encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       error.value = err as string
       toast.error()
       navigateTo(localePath('/campaigns'))
@@ -49,7 +50,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         campaign.value.homebrew_items = [...campaign.value.homebrew_items, data]
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       toast.error()
     }
   }
@@ -66,7 +67,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         }
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       toast.error()
     }
   }
@@ -79,7 +80,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
       }
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       toast.error()
     }
   }

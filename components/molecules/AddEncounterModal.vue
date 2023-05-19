@@ -13,6 +13,7 @@ const props = withDefaults(
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
+const { $logRocket } = useNuxtApp()
 
 const form: Ref<AddEncounterForm> = ref({
   title: '',
@@ -63,7 +64,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
       emit('added', encounter)
     }
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

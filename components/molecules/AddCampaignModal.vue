@@ -6,6 +6,7 @@ defineProps<{ open: boolean }>()
 
 const store = useCampaignsStore()
 const user = useSupabaseUser()
+const { $logRocket } = useNuxtApp()
 
 const isLoading: Ref<boolean> = ref(false)
 const error: Ref<string | null> = ref(null)
@@ -33,7 +34,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       emit('close')
     }
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

@@ -25,8 +25,12 @@ watch(() => store.error, (v) => {
     <div v-else-if="!store.error">
       <div class="py-5 flex justify-between items-center">
         <h1>{{ $t('campaigns.campaigns') }}</h1>
-        <div class="tracker-shadow-pulse">
-          <Button :label="$t('campaigns.add')" @click="isOpen = true" />
+        <div>
+          <Button
+            :label="$t('campaigns.add')"
+            class="tracker-shadow-pulse"
+            @click="isOpen = true"
+          />
         </div>
       </div>
       <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4 items-start">

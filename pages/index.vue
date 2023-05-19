@@ -6,6 +6,7 @@ import { useToastStore } from '@/store/toast'
 
 const store = useTableStore()
 const toast = useToastStore()
+const { $logRocket } = useNuxtApp()
 
 const hoard: Ref = ref()
 const table : Ref = ref()
@@ -15,7 +16,7 @@ const tableVisible: Ref<boolean> = useElementVisibility(table)
 try {
   await store.getSandboxEncounter()
 } catch (err) {
-  useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+  $logRocket.captureException(err as Error)
   toast.error()
 }
 

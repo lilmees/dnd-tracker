@@ -4,6 +4,7 @@ import { useHomebrewStore } from '@/store/homebrew'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
+const { $logRocket } = useNuxtApp()
 
 const isOpen: Ref<boolean> = ref(false)
 const isLoading: Ref<boolean> = ref(false)
@@ -72,7 +73,7 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
 
     closeModal()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
   } finally {
     isLoading.value = false
   }

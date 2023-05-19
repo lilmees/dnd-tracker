@@ -5,6 +5,7 @@ const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, campaign: Campaign }>()
 
 const store = useCampaignsStore()
+const { $logRocket } = useNuxtApp()
 
 const isLoading: Ref<boolean> = ref(false)
 const error: Ref<string | null> = ref(null)
@@ -43,7 +44,7 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
     )
     emit('close')
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

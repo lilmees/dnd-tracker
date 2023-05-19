@@ -6,6 +6,7 @@ const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
 const form: Ref<{ password: string }> = ref({ password: '' })
 const isLoading: Ref<boolean> = ref(false)
@@ -19,7 +20,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
     toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err: any) {
-    useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+    $logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {

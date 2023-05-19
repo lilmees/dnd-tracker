@@ -3,6 +3,7 @@ import { useOpen5eStore } from '@/store/open5e'
 
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
+  const { $logRocket } = useNuxtApp()
 
   const loading: Ref<boolean> = ref(false)
   const error: Ref<string | null> = ref(null)
@@ -24,7 +25,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
 
       data.value = results
     } catch (err) {
-      useBugsnag().notify(`Handeld in catch: ${useErrorMessage(err)}`)
+      $logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false
