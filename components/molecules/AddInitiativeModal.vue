@@ -2,7 +2,7 @@
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
 import { useTableStore } from '@/store/table'
-import schema from '@/formkit/addHomebrew.json'
+import schema from '~~/formkit/homebrew.json'
 
 const store = useTableStore()
 

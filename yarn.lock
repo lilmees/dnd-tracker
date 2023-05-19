@@ -880,13 +880,6 @@
   resolved "https://registry.yarnpkg.com/@formkit/auto-animate/-/auto-animate-1.0.0-beta.6.tgz#ed7f8bc47d774a7764756646e9e3432e8be51cb3"
   integrity sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w==
 
-"@formkit/core@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@formkit/core/-/core-0.17.0.tgz#a9f186a12fb8321b4ce0e7360913150c0a5e7bda"
-  integrity sha512-g+OkGsA96Sfb/BctsU5bqz7jfXsk9PZGpxHp2jWGVA8GEHadV4XDp6VH2fXdIkYJXO7+legYMbTggGM3pUE6UA==
-  dependencies:
-    "@formkit/utils" "0.17.0"
-
 "@formkit/core@1.0.0-beta.9-f64c966":
   version "1.0.0-beta.9-f64c966"
   resolved "https://registry.yarnpkg.com/@formkit/core/-/core-1.0.0-beta.9-f64c966.tgz#170ebbe7f88eed30934b957d8adccdebb303ac62"
@@ -910,13 +903,6 @@
     "@formkit/core" "1.0.0-beta.9-f64c966"
     "@formkit/utils" "1.0.0-beta.9-f64c966"
     "@formkit/validation" "1.0.0-beta.9-f64c966"
-
-"@formkit/icons@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@formkit/icons/-/icons-0.17.0.tgz#9d614780b76037af3a935063db59e4a18b225a5c"
-  integrity sha512-zHL3xrUjbaZPbZQLhh/rpYhlTkI/hp6pbI0n1npFsaGW7KwAFOlQu3B+zQEsm9PnlEQX3S8NMUd2GtOQe8QQhQ==
-  dependencies:
-    "@formkit/core" "0.17.0"
 
 "@formkit/inputs@1.0.0-beta.9-f64c966":
   version "1.0.0-beta.9-f64c966"
@@ -956,11 +942,6 @@
   integrity sha512-Iy/9KoNAZfB/MI6HUfsuxSg8+Ys2veuXoyJNr5AaNDRfzihrv3wIIv1nZuonXgQm3X7+mnfrSybBcXPtqnKU7Q==
   dependencies:
     "@formkit/core" "1.0.0-beta.9-f64c966"
-
-"@formkit/utils@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-0.17.0.tgz#9efdd9b419d78aefecb1168b3ee6df00114aa72e"
-  integrity sha512-Un6xIVaM8mHHJKdHX0UhC0C0YnfHc4/C2w3NS29UhqvPT8WBc1Jyi1BR9UY0q9bZhVULg+XLL6XXyEnvzheNMQ==
 
 "@formkit/utils@1.0.0-beta.9-f64c966":
   version "1.0.0-beta.9-f64c966"
