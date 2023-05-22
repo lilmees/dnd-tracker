@@ -43,7 +43,13 @@ function updatedNote (note: Note): void {
       <p class="text-center">
         {{ $t('notes.none') }}
       </p>
-      <Button :label="$t('notes.add')" color="primary" class="mx-auto w-fit" @click="isOpen = true" />
+      <button
+        class="btn-primary w-fit mx-auto"
+        :aria-label="$t('notes.add')"
+        @click="isOpen = true"
+      >
+        {{ $t('notes.add') }}
+      </button>
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
       <NoteCard

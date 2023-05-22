@@ -51,13 +51,14 @@ watch(isVisible, (v: boolean) => {
     >
       <NuxtLink
         :to="localePath(`/${buttonLink}`)"
-        class="max-w-max"
+        class="max-w-max mt-6"
       >
-        <Button
-          :label="buttonLabel"
-          color="primary"
-          class="mt-6 w-fit tracker-shadow-pulse"
-        />
+        <button
+          class="w-fit btn-primary tracker-shadow-pulse"
+          :aria-label="buttonLabel"
+        >
+          {{ buttonLabel }}
+        </button>
       </NuxtLink>
     </div>
   </div>

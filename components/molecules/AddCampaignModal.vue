@@ -69,16 +69,22 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
           validation="required"
           required
         />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
+        <button
+          class="btn-black mb-[14px]"
+          :aria-label="$t('actions.random')"
+          @click="changeColor"
+        >
+          {{ $t('actions.random') }}
+        </button>
       </div>
-      <Button
+      <button
         type="submit"
-        :label="$t('campaigns.add')"
-        :loading="store.loading"
-        inline
-      />
+        class="btn-black w-full"
+        :aria-label="$t('campaigns.add')"
+        :disabled="store.loading"
+      >
+        {{ $t('campaigns.add') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

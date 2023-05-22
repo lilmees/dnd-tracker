@@ -61,7 +61,14 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
           validation="required|length:6,50"
           required
         />
-        <Button type="submit" :label="$t('resetPassword.reset')" :loading="isLoading" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('resetPassword.reset')"
+          :disabled="isLoading"
+        >
+          {{ $t('resetPassword.reset') }}
+        </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/')">

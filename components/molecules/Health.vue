@@ -59,16 +59,22 @@ function updateHealth ({ __init, health }: Obj): void {
               required
             />
           </div>
-          <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
-              @click="isRollingDice = !isRollingDice"
-            />
-          </div>
+          <button
+            class="btn-black mb-3"
+            :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
+            @click="isRollingDice = !isRollingDice"
+          >
+            {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+          </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

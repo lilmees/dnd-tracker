@@ -68,7 +68,7 @@
             "$el": "button",
             "attrs": {
               "onClick": "$data.rollDice",
-              "class": "btn bg-black grow",
+              "class": "btn-black grow",
               "type": "button"
             },
             "children": [

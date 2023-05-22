@@ -93,17 +93,22 @@ async function deleteUser (): Promise<void> {
           <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
         </p>
         <div class="flex flex-wrap gap-x-4 gap-y-2">
-          <Button
-            :label="$t('profile.update')"
-            :loading="isLoading"
+          <button
+            class="btn-black"
+            :aria-label="$t('profile.update')"
+            :disabled="isLoading"
             @click="isUpdating = true"
-          />
-          <Button
-            :label="$t('profile.delete')"
-            color="danger"
-            :loading="isLoading"
+          >
+            {{ $t('profile.update') }}
+          </button>
+          <button
+            class="btn-danger"
+            :aria-label="$t('profile.delete')"
+            :disabled="isLoading"
             @click="needConfirmation = true"
-          />
+          >
+            {{ $t('profile.delete') }}
+          </button>
         </div>
         <ConfirmationModal
           :open="needConfirmation"
@@ -166,15 +171,21 @@ async function deleteUser (): Promise<void> {
             required
           />
           <div class="flex flex-wrap gap-2">
-            <Button
+            <button
               type="submit"
-              :label="$t('actions.update')"
-              :loading="isLoading"
-              inline
-              class="grow"
-              color="primary"
-            />
-            <Button :label="$t('actions.cancel')" inline class="grow" @click="isUpdating = false" />
+              class="btn-primary grow"
+              :aria-label="$t('actions.update')"
+              :disabled="isLoading"
+            >
+              {{ $t('actions.update') }}
+            </button>
+            <button
+              class="btn-black grow"
+              :aria-label="$t('actions.cancel')"
+              @click="isUpdating = false"
+            >
+              {{ $t('actions.cancel') }}
+            </button>
           </div>
         </FormKit>
       </template>

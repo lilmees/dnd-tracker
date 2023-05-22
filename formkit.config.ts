@@ -67,10 +67,10 @@ const config: DefaultConfigOptions = {
         message: 'text-danger text-xs'
       },
       submit: {
-        input: 'btn bg-black w-full mt-4'
+        input: 'btn-black w-full mt-4'
       },
       button: {
-        input: 'btn bg-black w-full mt-4',
+        input: 'btn-black w-full mt-4',
         outer: 'grow'
       }
     })

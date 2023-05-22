@@ -70,12 +70,14 @@ async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
         required
         validation="required|length:10,1000"
       />
-      <Button
+      <button
         type="submit"
-        :label="$t('notes.update')"
-        :loading="isLoading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('notes.update')"
+        :disabled="isLoading"
+      >
+        {{ $t('notes.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

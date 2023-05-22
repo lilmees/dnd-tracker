@@ -85,7 +85,14 @@ function randomAvatar (): void {
           validation="required|length:6,50"
           required
         />
-        <Button type="submit" :label="$t('register.register')" :loading="isLoading" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('register.register')"
+          :disabled="isLoading"
+        >
+          {{ $t('register.register') }}
+        </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">

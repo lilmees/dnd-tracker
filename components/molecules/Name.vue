@@ -52,11 +52,13 @@ function updateName ({ __init, name }: Obj): void {
           validation="required|length:3,30"
           required
         />
-        <Button
+        <button
           type="submit"
-          :label="$t('actions.update')"
-          inline
-        />
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

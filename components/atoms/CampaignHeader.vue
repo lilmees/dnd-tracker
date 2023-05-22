@@ -51,7 +51,12 @@ if (props.campaign) {
           )
         "
       >
-        <Button :label="$t('campaign.goCampaign')" />
+        <button
+          class="btn-primary"
+          :aria-label="$t('campaign.goCampaign')"
+        >
+          {{ $t('campaign.goCampaign') }}
+        </button>
       </NuxtLink>
     </div>
   </div>

@@ -25,9 +25,17 @@ watch(error, (v) => {
   <NuxtLayout>
     <div v-if="store.loading || !store.sortedEncounters" class="loader" />
     <div v-else-if="!store.error">
-      <div class="py-5 flex justify-between items-center">
-        <h1>{{ $t('encounters.encounters') }}</h1>
-        <Button :label="$t('encounters.add')" @click="isOpen = true" />
+      <div class="pt-5 pb-10 flex justify-between items-center">
+        <h1 class="grow">
+          {{ $t('encounters.encounters') }}
+        </h1>
+        <button
+          class="btn-primary tracker-shadow-pulse"
+          :aria-label="$t('encounters.add')"
+          @click="isOpen = true"
+        >
+          {{ $t('encounters.add') }}
+        </button>
       </div>
       <div v-if="store.sortedEncounters">
         <div
@@ -58,7 +66,13 @@ watch(error, (v) => {
       >
         <h2>{{ $t('encounters.noData.title') }}</h2>
         <p>{{ $t('encounters.noData.text') }}</p>
-        <Button :label="$t('encounters.add')" @click="isOpen = true" />
+        <button
+          class="btn-primary"
+          :aria-label="$t('encounters.add')"
+          @click="isOpen = true"
+        >
+          {{ $t('encounters.add') }}
+        </button>
       </div>
       <AddEncounterModal
         :open="isOpen"
@@ -70,11 +84,13 @@ watch(error, (v) => {
       <h2 class="text-center text-danger">
         {{ $t('error.general.text') }}
       </h2>
-      <Button
-        :label="$t('actions.tryAgain')"
-        inline
+      <button
+        class="btn-black w-full"
+        :aria-label="$t('actions.tryAgain')"
         @click="store.fetch()"
-      />
+      >
+        {{ $t('actions.tryAgain') }}
+      </button>
     </div>
   </NuxtLayout>
 </template>

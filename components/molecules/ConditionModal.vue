@@ -59,11 +59,22 @@ function updateConditions (): void {
             @remove="selected = selected.filter(s => s.slug !== $event)"
           />
         </div>
-        <Button :label="$t('actions.update')" inline @click="updateConditions" />
+        <button
+          class="btn-black w-full"
+          :aria-label="$t('actions.update')"
+          @click="updateConditions"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </div>
-      <div v-else>
-        <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
-      </div>
+      <button
+        v-else
+        class="btn-black w-full"
+        :aria-label="$t('actions.tryAgain')"
+        @click="store.fetch()"
+      >
+        {{ $t('actions.tryAgain') }}
+      </button>
     </Modal>
   </div>
 </template>

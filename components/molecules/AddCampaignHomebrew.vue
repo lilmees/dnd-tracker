@@ -79,7 +79,14 @@ async function addHomebrew ({ __init, ...formData }: Obj): Promise<void> {
         :label="$t('inputs.linkLabel')"
         validation="length10,200|url"
       />
-      <Button type="submit" :label="$t('homebrews.add')" :loading="isLoading" inline />
+      <button
+        type="submit"
+        class="btn-black w-full"
+        :aria-label="$t('homebrews.add')"
+        :disabled="isLoading"
+      >
+        {{ $t('homebrews.add') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

@@ -91,12 +91,14 @@ async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
         :label="$t('inputs.linkLabel')"
         validation="length10,200|url"
       />
-      <Button
+      <button
         type="submit"
-        :label="$t('homebrews.update')"
-        :loading="isLoading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('homebrews.update')"
+        :disabled="isLoading"
+      >
+        {{ $t('homebrews.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

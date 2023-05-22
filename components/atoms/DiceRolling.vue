@@ -172,8 +172,22 @@ function reset (): void {
         }}
       </h3>
       <div class="flex flex-wrap gap-2">
-        <Button type="submit" :label="$t('actions.roll')" inline class="grow" />
-        <Button v-if="result" type="submit" color="danger" :label="$t('actions.reset')" @click="reset" />
+        <button
+          type="submit"
+          class="btn-black grow"
+          :aria-label="$t('actions.roll')"
+        >
+          {{ $t('actions.roll') }}
+        </button>
+        <button
+          v-if="result"
+          type="submit"
+          class="btn-danger grow"
+          :aria-label="$t('actions.reset')"
+          @click="reset"
+        >
+          {{ $t('actions.reset') }}
+        </button>
       </div>
     </FormKit>
   </div>

@@ -172,26 +172,32 @@ function selectedSummoner (value: number): void {
         </div>
         <div class="flex gap-2 flex-wrap">
           <template v-if="!summon">
-            <Button
-              :label="$t('actions.addSelected')"
-              color="primary"
+            <button
+              class="btn-primary"
+              :aria-label="$t('actions.addSelected')"
               :disabled="isLoading || !selected.length"
               @click="addHomebrews(selected)"
-            />
-            <Button
-              :label="$t('actions.addAll')"
-              color="success"
-              :disabled="isLoading"
+            >
+              {{ $t('actions.addSelected') }}
+            </button>
+            <button
+              class="btn-success"
+              :aria-label="$t('actions.addAll')"
+              :disabled="isLoading || !selected.length"
               @click="addHomebrews(homebrews as Homebrew[])"
-            />
+            >
+              {{ $t('actions.addAll') }}
+            </button>
           </template>
-          <Button
+          <button
             v-else
-            :label="$t('homebrews.initiative.add')"
-            color="primary"
+            class="btn-primary"
+            :aria-label="$t('homebrews.initiative.add')"
             :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
-          />
+          >
+            {{ $t('homebrews.initiative.add') }}
+          </button>
         </div>
       </div>
       <div v-else-if="homebrews && !homebrews.length">
