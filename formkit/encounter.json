@@ -44,7 +44,7 @@
       {
         "$el": "button",
         "attrs": {
-          "class": "btn bg-black relative bottom-[10px]",
+          "class": " btn-black relative bottom-[10px]",
           "onClick": "$data.changeColor",
           "type": "button"
         },

@@ -4,7 +4,7 @@
 
 @layer components {
   .btn {
-    @apply py-2 px-6 shadow rounded-md outline-none ring-white duration-200 ease-in-out;
+    @apply py-2 px-6 shadow rounded-md outline-none ring-white duration-200 ease-in-out font-bold;
     @apply focus-within:ring active:scale-95 disabled:cursor-not-allowed;
   }
 
@@ -77,6 +77,38 @@
 
   .body-extra-small {
     @apply font-text text-[0.5rem] leading-[0.75rem];
+  }
+
+  .btn-black {
+    @apply btn bg-black hover:bg-black/90 text-white;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary hover:bg-primary/90 text-black;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary hover:bg-secondary/90 text-black;
+  }
+
+  .btn-success {
+    @apply btn bg-success hover:bg-success/90 text-black;
+  }
+
+  .btn-info {
+    @apply btn bg-info hover:bg-info/90 text-black;
+  }
+
+  .btn-warning {
+    @apply btn bg-warning hover:bg-warning/90 text-black;
+  }
+
+  .btn-help {
+    @apply btn bg-help hover:bg-help/90 text-black;
+  }
+
+  .btn-danger {
+    @apply btn bg-danger hover:bg-danger/90 text-black;
   }
 
   .tracker-shadow {

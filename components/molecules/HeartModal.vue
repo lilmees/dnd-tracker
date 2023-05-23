@@ -38,7 +38,7 @@ function updateHealth ({ __init, health }: Obj): void {
 
         @submit="updateHealth"
       >
-        <div class="flex gap-2 items-end">
+        <div class="flex gap-2 items-end mb-3">
           <div class="grow">
             <Input
               focus
@@ -49,48 +49,48 @@ function updateHealth ({ __init, health }: Obj): void {
               required
             />
           </div>
-          <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
-              @click="isRollingDice = !isRollingDice"
-            />
-          </div>
+          <button
+            class="btn-black mb-3"
+            :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
+            @click="isRollingDice = !isRollingDice"
+          >
+            {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+          </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <div class="flex gap-2 flex-wrap">
-          <div class="grow" @click="type = 'heal'">
-            <Button
-              type="submit"
-              :label="$t('actions.heal')"
-              inline
-              color="success"
-            />
-          </div>
-          <div class="grow" @click="type = 'temp'">
-            <Button
-              type="submit"
-              :label="$t('actions.temp')"
-              inline
-              color="primary"
-            />
-          </div>
-          <div class="grow" @click="type = 'damage'">
-            <Button
-              type="submit"
-              :label="$t('actions.damage')"
-              inline
-              color="danger"
-            />
-          </div>
-          <div class="grow" @click="type = 'base'">
-            <Button
-              type="submit"
-              :label="$t('actions.baseHealth')"
-              inline
-              color="warning"
-            />
-          </div>
+        <div class="flex gap-2 flex-wrap pt-3">
+          <button
+            type="submit"
+            class="btn-success grow"
+            :aria-label="$t('actions.heal')"
+            @click="type = 'heal'"
+          >
+            {{ $t('actions.heal') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary grow"
+            :aria-label="$t('actions.temp')"
+            @click="type = 'temp'"
+          >
+            {{ $t('actions.temp') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger grow"
+            :aria-label="$t('actions.damage')"
+            @click="type = 'damage'"
+          >
+            {{ $t('actions.damage') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-warning grow"
+            :aria-label="$t('actions.baseHealth')"
+            @click="type = 'base'"
+          >
+            {{ $t('actions.baseHealth') }}
+          </button>
         </div>
       </FormKit>
     </Modal>

@@ -78,16 +78,22 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
           validation="required"
           required
         />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
+        <button
+          class="btn-black mb-[14px]"
+          :aria-label="$t('actions.random')"
+          @click="changeColor"
+        >
+          {{ $t('actions.random') }}
+        </button>
       </div>
-      <Button
+      <button
         type="submit"
-        :label="$t('actions.update')"
-        :loading="store.loading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('homebrews.update')"
+        :disabled="store.loading"
+      >
+        {{ $t('homebrews.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

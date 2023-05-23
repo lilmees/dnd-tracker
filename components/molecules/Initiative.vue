@@ -107,11 +107,21 @@ async function moveRow (up: boolean): Promise<void> {
               required
             />
           </div>
-          <div class="mb-3">
-            <Button :label="$t('actions.roll')" bold @click="diceRoll" />
-          </div>
+          <button
+            class="btn-black mb-3"
+            :aria-label="$t('actions.roll')"
+            @click="diceRoll"
+          >
+            {{ $t('actions.roll') }}
+          </button>
         </div>
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+          type="submit"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

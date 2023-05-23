@@ -77,13 +77,13 @@ function updatedEncounter (encounter: Encounter): void {
             <p class="text-center">
               {{ $t('encounters.noData.title') }}
             </p>
-            <Button
-              :label="$t('encounters.add')"
-              color="primary"
-              bold
-              class="mx-auto w-fit"
+            <button
+              class="btn-primary mx-auto w-fit"
+              :aria-label="$t('encounters.add')"
               @click="isCreatingEncounter = true"
-            />
+            >
+              {{ $t('encounters.add') }}
+            </button>
           </div>
         </div>
       </div>

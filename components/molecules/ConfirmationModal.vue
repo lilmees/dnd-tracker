@@ -36,13 +36,14 @@ function deleteConfirmation (): void {
           required
           :placeholder="title"
         />
-        <Button
+        <button
           type="submit"
-          :label="$t('actions.delete')"
-          color="danger"
-          inline
+          class="btn-danger w-full"
+          :aria-label="$t('actions.delete')"
           :disabled="!same"
-        />
+        >
+          {{ $t('actions.delete') }}
+        </button>
       </FormKit>
     </div>
   </Modal>

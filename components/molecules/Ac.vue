@@ -65,15 +65,23 @@ function updateAc ({ __init, ac }: Obj): void {
             />
           </div>
           <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
+            <button
+              class="btn-black"
+              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               @click="isRollingDice = !isRollingDice"
-            />
+            >
+              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+            </button>
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

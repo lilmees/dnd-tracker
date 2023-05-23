@@ -60,11 +60,12 @@ async function subscribe () {
         </li>
       </ul>
     </div>
-    <Button
-      :label="current ? $t('pricing.current') : $t('pricing.start')"
-      inline
-      color="primary"
+    <button
+      class="btn-primary w-full"
+      :aria-label="current ? $t('pricing.current') : $t('pricing.start')"
       :disabled="current"
-    />
+    >
+      {{ current ? $t('pricing.current') : $t('pricing.start') }}
+    </button>
   </div>
 </template>

@@ -59,7 +59,14 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
         required
         validation="required|length:10,1000"
       />
-      <Button type="submit" :label="$t('notes.add')" :loading="isLoading" inline />
+      <button
+        type="submit"
+        class="btn-black w-full"
+        :aria-label="$t('notes.add')"
+        :disabled="isLoading"
+      >
+        {{ $t('notes.add') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

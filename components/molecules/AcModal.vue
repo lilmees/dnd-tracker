@@ -59,46 +59,49 @@ function resetState (): void {
             />
           </div>
           <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
+            <button
+              class="btn-black w-full"
+              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               @click="isRollingDice = !isRollingDice"
-            />
+            >
+              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+            </button>
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <div class="flex gap-2 flex-wrap">
-          <div class="grow" @click="resetAc">
-            <Button
-              :label="$t('actions.reset')"
-              inline
-              color="success"
-            />
-          </div>
-          <div class="grow" @click="type = 'temp'">
-            <Button
-              type="submit"
-              :label="$t('actions.temp')"
-              inline
-              color="primary"
-            />
-          </div>
-          <div class="grow" @click="type = 'remove'">
-            <Button
-              type="submit"
-              :label="$t('actions.remove')"
-              inline
-              color="danger"
-            />
-          </div>
-          <div class="grow" @click="type = 'base'">
-            <Button
-              type="submit"
-              :label="$t('actions.baseAc')"
-              inline
-              color="warning"
-            />
-          </div>
+        <div class="flex gap-2 flex-wrap py-2">
+          <button
+            type="submit"
+            class="btn-success grow"
+            :aria-label="$t('actions.reset')"
+            @click="resetAc"
+          >
+            {{ $t('actions.reset') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary grow"
+            :aria-label="$t('actions.temp')"
+            @click="type = 'temp'"
+          >
+            {{ $t('actions.temp') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger grow"
+            :aria-label="$t('actions.remove')"
+            @click="type = 'remove'"
+          >
+            {{ $t('actions.remove') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-warning grow"
+            :aria-label="$t('actions.baseAc')"
+            @click="type = 'base'"
+          >
+            {{ $t('actions.baseAc') }}
+          </button>
         </div>
       </FormKit>
     </Modal>

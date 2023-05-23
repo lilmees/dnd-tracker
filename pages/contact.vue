@@ -60,7 +60,13 @@ function sendContactMail (form: Obj): void {
           validation="required|length:3,1000|"
           required
         />
-        <Button :label="$t('contact.send')" type="submit" />
+        <button
+          type="submit"
+          class="btn-black mt-3"
+          :aria-label="$t('contact.send')"
+        >
+          {{ $t('contact.send') }}
+        </button>
       </FormKit>
     </section>
   </NuxtLayout>
