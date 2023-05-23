@@ -138,7 +138,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   function nextInitiative (): void {
-    if (encounter.value?.activeIndex) {
+    if (encounter.value && encounter.value.activeIndex >= 0) {
       encounter.value.activeIndex + 1 < encounter.value.rows.length
         ? encounterUpdate({ activeIndex: encounter.value.activeIndex + 1 })
         : encounterUpdate({ activeIndex: 0, round: encounter.value.round + 1 })
@@ -146,7 +146,10 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   function prevInitiative (): void {
-    if (encounter.value?.activeIndex && encounter.value.activeIndex !== 0 && encounter.value.round !== 1) {
+    if (encounter.value) {
+      if (encounter.value.activeIndex === 0 && encounter.value.round === 1) {
+        return
+      }
       encounter.value.activeIndex === 0
         ? encounterUpdate({ activeIndex: encounter.value.rows.length - 1, round: encounter.value.round - 1 })
         : encounterUpdate({ activeIndex: encounter.value.activeIndex - 1 })
