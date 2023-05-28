@@ -10,7 +10,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
   const data: Ref<Condition[]> = ref([])
 
   async function fetch (): Promise<void> {
-    if (data.value || loading.value) {
+    if (data.value?.length || loading.value) {
       return
     }
 
