@@ -1,25 +1,29 @@
-<script setup>
+<script setup lang="ts">
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-
-const emit = defineEmits(['update:modelValue'])
 
 const store = useCurrentCampaignStore()
 
-const isOpen = ref(false)
+const isOpen: Ref<boolean> = ref(false)
 
-function addedNote (notes) {
-  store.campaign.notes = notes
+function addedNote (notes: Note[]): void {
+  if (store.campaign) {
+    store.campaign.notes = notes
+  }
   isOpen.value = false
 }
 
-function removedNote (id) {
-  store.campaign.notes = store.campaign.notes.filter(p => p.id !== id)
+function removedNote (id: number): void {
+  if (store?.campaign?.notes) {
+    store.campaign.notes = store.campaign.notes.filter(p => p.id !== id)
+  }
   isOpen.value = false
 }
 
-function updatedNote (note) {
-  const index = store.campaign.notes.findIndex(p => p.id === note.id)
-  store.campaign.notes[index] = note
+function updatedNote (note: Note): void {
+  if (store?.campaign?.notes) {
+    const index = store.campaign.notes.findIndex(p => p.id === note.id)
+    store.campaign.notes[index] = note
+  }
   isOpen.value = false
 }
 </script>
@@ -35,11 +39,17 @@ function updatedNote (note) {
         @click="isOpen = true"
       />
     </div>
-    <div v-if="!store.campaign.notes.length" class="space-y-2">
+    <div v-if="!store?.campaign?.notes?.length" class="space-y-2">
       <p class="text-center">
         {{ $t('notes.none') }}
       </p>
-      <Button :label="$t('notes.add')" color="primary" class="mx-auto w-fit" @click="isOpen = true" />
+      <button
+        class="btn-primary w-fit mx-auto"
+        :aria-label="$t('notes.add')"
+        @click="isOpen = true"
+      >
+        {{ $t('notes.add') }}
+      </button>
     </div>
     <div v-else class="flex gap-2 flex-wrap items-start">
       <NoteCard
@@ -51,9 +61,10 @@ function updatedNote (note) {
       />
     </div>
     <AddCampaignNote
+      v-if="store.campaign"
       :id="store.campaign.id"
       :open="isOpen"
-      :notes="store.campaign.notes"
+      :notes="store?.campaign?.notes || []"
       @close="isOpen = false"
       @notes="addedNote"
     />

@@ -1,16 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
 const emit = defineEmits(['update'])
-defineProps({ url: { type: [null, String], default: null } })
+withDefaults(
+  defineProps<{ url?: null | string }>(), {
+    url: null
+  }
+)
 
 const store = useTableStore()
 
-const isOpen = ref(false)
-const isUpdating = ref(false)
-const form = ref({ link: null })
+const isOpen: Ref<boolean> = ref(false)
+const isUpdating: Ref<boolean> = ref(false)
+const form: Ref<{ link: string }> = ref({ link: '' })
 
-function updateLink ({ __init, link }) {
+function updateLink ({ __init, link }: Obj): void {
   emit('update', link)
   isOpen.value = false
   isUpdating.value = false
@@ -34,13 +38,29 @@ function updateLink ({ __init, link }) {
         </h2>
         <div v-if="url" class="flex gap-2 flex-wrap">
           <NuxtLink :to="url" target="_blank" rel="noreferrer noopener" class="grow">
-            <Button :label="$t('actions.link')" inline />
+            <button
+              class="btn-black w-full"
+              :aria-label="$t('actions.link')"
+            >
+              {{ $t('actions.link') }}
+            </button>
           </NuxtLink>
-          <div class="grow" @click="isUpdating = true">
-            <Button :label="$t('actions.update')" inline />
-          </div>
+          <button
+            class="btn-black grow"
+            :aria-label="$t('actions.update')"
+            @click="isUpdating = true"
+          >
+            {{ $t('actions.update') }}
+          </button>
         </div>
-        <Button v-else :label="$t('actions.add')" inline @click="isUpdating = true" />
+        <button
+          v-else
+          class="btn-black w-full"
+          :aria-label="$t('actions.add')"
+          @click="isUpdating = true"
+        >
+          {{ $t('actions.add') }}
+        </button>
       </div>
       <div v-else>
         <h2 class="mb-10">
@@ -50,7 +70,7 @@ function updateLink ({ __init, link }) {
           v-model="form"
           type="form"
           :actions="false"
-          message-class="error-message"
+
           @submit="updateLink"
         >
           <Input
@@ -60,11 +80,13 @@ function updateLink ({ __init, link }) {
             validation="required|length10,200|url"
             required
           />
-          <Button
+          <button
             type="submit"
-            :label="url ? $t('actions.update') : $t('actions.add')"
-            inline
-          />
+            class="btn-black w-full mt-3"
+            :aria-label="url ? $t('actions.update') : $t('actions.add')"
+          >
+            {{ url ? $t('actions.update') : $t('actions.add') }}
+          </button>
         </FormKit>
       </div>
     </Modal>

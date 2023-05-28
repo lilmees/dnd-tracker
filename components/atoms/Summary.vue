@@ -1,17 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
 import { gsap, Power3 } from 'gsap'
 
-defineProps({
-  title: { type: String, default: '' },
-  items: { type: Array, default: () => [] }
-})
+withDefaults(
+  defineProps<{ title?: string, items?: string[]}>(),
+  { title: '', items: () => [] }
+)
 
-const el = ref()
-const isVisible = useElementVisibility(el)
+const el: Ref<HTMLDivElement | undefined> = ref()
+const isVisible: Ref<boolean> = useElementVisibility(el)
 
-watch(isVisible, (v) => {
-  if (v) {
+watch(isVisible, (v: boolean) => {
+  if (v && el.value) {
     gsap.fromTo(
       el.value,
       { scale: 0.85 },

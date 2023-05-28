@@ -1,44 +1,42 @@
-<script setup>
+<script setup lang="ts">
 import { reset } from '@formkit/core'
 import { useHomebrewStore } from '@/store/homebrew'
 
 const emit = defineEmits(['close', 'updated'])
-const props = defineProps({
-  homebrew: { type: Object, required: true },
-  open: { type: Boolean, required: true }
-})
+const props = defineProps<{ homebrew: Homebrew, open: boolean }>()
 
 const store = useHomebrewStore()
+const { $logRocket } = useNuxtApp()
 
-const error = ref()
-const isLoading = ref(false)
-const form = ref({
-  link: props.homebrew.link || null,
-  name: props.homebrew.name,
+const error: Ref<string | null> = ref(null)
+const isLoading: Ref<boolean> = ref(false)
+const form: Ref<HomebrewUpdate> = ref({
+  link: props.homebrew.link || '',
+  name: props.homebrew.name || '',
   ac: props.homebrew.ac || null,
   health: props.homebrew.health || null,
-  type: props.homebrew.link || null
+  type: props.homebrew.type || ''
 })
 
 watch(
   () => props.open,
-  (v) => {
+  (v : boolean) => {
     if (v) {
       form.value = {
-        type: props.homebrew.type || null,
+        type: props.homebrew.type || '',
         name: props.homebrew.name,
         ac: props.homebrew.ac || null,
         health: props.homebrew.health || null,
-        link: props.homebrew.link || null
+        link: props.homebrew.link || ''
       }
     }
   }
 )
 
-async function updateHomebrew ({ __init, ...formData }) {
+async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
   try {
-    isLoading.value = true
     const hb = await store.updateHomebrew({
       ...formData,
       campaign: props.homebrew.campaign
@@ -47,8 +45,8 @@ async function updateHomebrew ({ __init, ...formData }) {
     )
     emit('updated', hb)
     reset('form')
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -66,7 +64,7 @@ async function updateHomebrew ({ __init, ...formData }) {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="updateHomebrew"
     >
       <Input
@@ -93,12 +91,14 @@ async function updateHomebrew ({ __init, ...formData }) {
         :label="$t('inputs.linkLabel')"
         validation="length10,200|url"
       />
-      <Button
+      <button
         type="submit"
-        :label="$t('homebrews.update')"
-        :loading="isLoading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('homebrews.update')"
+        :disabled="isLoading"
+      >
+        {{ $t('homebrews.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

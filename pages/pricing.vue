@@ -1,10 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { useStripeStore } from '@/store/stripe'
 
 const stripe = useStripeStore()
-const user = useSupabaseUser()
 
-const isYearly = ref(false)
+const isYearly: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -17,19 +16,24 @@ const isYearly = ref(false)
         <p class="mb-5 max-w-3xl mx-auto">
           {{ $t('pricing.text') }}
         </p>
-        <Checkbox
-          v-model="isYearly"
-          label="Show yearly prices"
-          name="yearly"
-          class="w-fit mx-auto pt-5"
-        />
+        <div
+          class="flex flex-row items-center gap-2 mb-3 w-fit mx-auto pt-5"
+        >
+          <div class="block font-bold text-lg mb-1">
+            Show yearly prices
+          </div>
+          <FormKit
+            :value="isYearly"
+            type="checkbox"
+            name="yearly"
+          />
+        </div>
       </div>
       <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         <PricingCard
           v-for="product in stripe.products"
           :key="product.title"
           :product="product"
-          :user="user"
           :yearly="isYearly"
         />
       </div>

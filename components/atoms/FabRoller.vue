@@ -1,49 +1,34 @@
-<script setup>
+<script setup lang="ts">
 import { useTimeout, useDraggable } from '@vueuse/core'
-import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
 
 const { ready, start } = useTimeout(5000, { controls: true })
 
-const amount = ref(1)
-const roller = ref()
-const rolled = ref()
-const isOpen = ref(false)
+const amount: Ref<number> = ref(1)
+const roller: Ref<HTMLElement | undefined> = ref()
+const isOpen: Ref<boolean> = ref(false)
+const rolled: Ref<{
+    dice: string
+    result: number | number[],
+    max: number,
+    amount: number
+  } | null> = ref(null)
 
 const { style } = useDraggable(roller, {
   initialValue: { x: 0, y: 400 }
 })
 
-function rollDice (dice) {
+function rollDice (dice: string): void {
   if (amount.value < 1 || amount.value > 50) {
     amount.value = 1
   }
   rolled.value = {
     dice,
-    result: generateDiceRoll(dice),
+    result: useDiceRoll(+dice.replace('d', ''), amount.value),
     max: +dice.replace('d', ''),
     amount: amount.value
   }
   amount.value = 1
   start()
-}
-
-function generateDiceRoll (type) {
-  switch (type) {
-    case 'd100':
-      return rollD100(amount.value)
-    case 'd20':
-      return rollD20(amount.value)
-    case 'd12':
-      return rollD12(amount.value)
-    case 'd10':
-      return rollD10(amount.value)
-    case 'd8':
-      return rollD8(amount.value)
-    case 'd6':
-      return rollD6(amount.value)
-    case 'd4':
-      return rollD4(amount.value)
-  }
 }
 </script>
 

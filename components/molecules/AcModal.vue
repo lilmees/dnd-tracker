@@ -1,30 +1,31 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({
-  ac: { type: [Number, null, String], required: true },
-  tempAc: { type: [Number, null, String], required: true }
-})
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const type = ref()
-const form = ref({ ac: null })
+defineProps<{
+  ac: number | null,
+  tempAc: number | null
+}>()
 
-function diceResult (amount) {
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice: Ref<boolean> = ref(false)
+const type: Ref<string | null> = ref(null)
+const form: Ref<{ ac: number | null }> = ref({ ac: null })
+
+function diceResult (amount: number): void {
   form.value.ac = amount
 }
 
-function updateAc ({ __init, ac }) {
+function updateAc ({ __init, ac }: Obj): void {
   emit('update', { type: type.value, amount: Number(ac) })
   resetState()
 }
 
-function resetAc () {
+function resetAc (): void {
   emit('update', { type: 'reset' })
   resetState()
 }
 
-function resetState () {
+function resetState (): void {
   isOpen.value = false
   isRollingDice.value = false
   type.value = null
@@ -44,7 +45,6 @@ function resetState () {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
         @submit="updateAc"
       >
         <div class="flex gap-2 items-end">
@@ -59,46 +59,49 @@ function resetState () {
             />
           </div>
           <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
+            <button
+              class="btn-black w-full"
+              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               @click="isRollingDice = !isRollingDice"
-            />
+            >
+              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+            </button>
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <div class="flex gap-2 flex-wrap">
-          <div class="grow" @click="resetAc">
-            <Button
-              :label="$t('actions.reset')"
-              inline
-              color="success"
-            />
-          </div>
-          <div class="grow" @click="type = 'temp'">
-            <Button
-              type="submit"
-              :label="$t('actions.temp')"
-              inline
-              color="primary"
-            />
-          </div>
-          <div class="grow" @click="type = 'remove'">
-            <Button
-              type="submit"
-              :label="$t('actions.remove')"
-              inline
-              color="danger"
-            />
-          </div>
-          <div class="grow" @click="type = 'base'">
-            <Button
-              type="submit"
-              :label="$t('actions.baseAc')"
-              inline
-              color="warning"
-            />
-          </div>
+        <div class="flex gap-2 flex-wrap py-2">
+          <button
+            type="submit"
+            class="btn-success grow"
+            :aria-label="$t('actions.reset')"
+            @click="resetAc"
+          >
+            {{ $t('actions.reset') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary grow"
+            :aria-label="$t('actions.temp')"
+            @click="type = 'temp'"
+          >
+            {{ $t('actions.temp') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger grow"
+            :aria-label="$t('actions.remove')"
+            @click="type = 'remove'"
+          >
+            {{ $t('actions.remove') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-warning grow"
+            :aria-label="$t('actions.baseAc')"
+            @click="type = 'base'"
+          >
+            {{ $t('actions.baseAc') }}
+          </button>
         </div>
       </FormKit>
     </Modal>

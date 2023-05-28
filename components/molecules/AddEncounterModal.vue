@@ -1,113 +1,91 @@
-<script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
+<script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
 import { useCampaignsStore } from '@/store/campaigns'
+import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'added'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  campaignId: { type: [Number, String], default: null }
-})
-
-const { $i18n } = useNuxtApp()
-const store = useEncountersStore()
-const campaigns = useCampaignsStore()
-const user = useSupabaseUser()
-
-const form = ref({ title: null, campaign: null, background: '#0073A1' })
-const isLoading = ref(false)
-const error = ref()
-const chosenCampaign = ref()
-
-onMounted(() => {
-  if (!props.campaignId) { campaigns.fetch() }
-})
-
-watch(
-  () => props.open,
-  (v) => {
-    if (!v) { chosenCampaign.value = null }
+const props = withDefaults(
+  defineProps<{ open: boolean, campaignId?: number | null }>(), {
+    campaignId: null
   }
 )
 
-const campaignOptions = computed(() => {
-  return [
-    { label: $i18n.t('campaigns.no'), id: 'none' },
-    ...campaigns.data.map((c) => {
-      return { label: c.title, id: c.id }
-    })
-  ]
+const store = useEncountersStore()
+const campaigns = useCampaignsStore()
+const user = useSupabaseUser()
+const { $logRocket } = useNuxtApp()
+
+const form: Ref<AddEncounterForm> = ref({
+  title: '',
+  campaign: undefined,
+  background: '#0073A1',
+  data: {
+    isLoading: false,
+    campaign: false,
+    update: false,
+    error: null,
+    options: [],
+    changeColor: () => {
+      form.value.background = useRandomColor()
+    }
+  }
 })
 
-function changeColor () {
-  form.value.background = randomColor()
-}
-
-async function addEncounter ({ __init, ...formData }) {
-  error.value = null
-  try {
-    isLoading.value = true
-    const campaign =
-      props.campaignId || (chosenCampaign.value && chosenCampaign.value.id !== 'none'
-        ? chosenCampaign.value.id
-        : null
-      )
-    const encounter = await store.addEncounter({
-      ...formData,
-      campaign,
-      round: 1,
-      rows: [],
-      created_by: user.value.id,
-      admins: [user.value.id],
-      color: contrastColor(formData.background),
-      activeIndex: 0
-    })
-    emit('added', encounter)
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
-    error.value = err.message
-  } finally {
-    isLoading.value = false
+onMounted(() => {
+  if (!props.campaignId) {
+    campaigns.fetch()
   }
-}
+})
 
-function selectedCampaign (id) {
-  const filtered = campaignOptions.value.filter(c => c.id === id && c.id !== 'none')
-  chosenCampaign.value = filtered[0] || null
+watch(() => campaigns.campaigns, (v) => {
+  form.value.data.campaign = !!v?.length || false
+  if (v) {
+    form.value.data.options = v.map((c) => {
+      return { label: c.title, value: c.id }
+    })
+  }
+}, { immediate: true })
+
+async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise<void> {
+  form.value.data.error = null
+  form.value.data.isLoading = true
+
+  try {
+    if (user.value) {
+      const encounter = await store.addEncounter({
+        ...formData as AddEncounterForm,
+        round: 1,
+        rows: [],
+        created_by: user.value.id,
+        admins: [user.value.id],
+        color: useContrastColor(formData.background),
+        activeIndex: 0
+      })
+      emit('added', encounter)
+    }
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
+    form.value.data.error = err.message
+  } finally {
+    form.value.data.isLoading = false
+  }
 }
 </script>
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <h2>{{ $t('encounters.title') }}</h2>
-    <p v-if="error" class="text-danger text-center">
-      {{ error }}
+    <p v-if="form.data.error" class="text-danger text-center">
+      {{ form.data.error }}
     </p>
     <FormKit
-      v-if="campaignId || campaigns.data"
+      v-if="campaignId || campaigns.campaigns"
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
       @submit="addEncounter"
     >
-      <Input focus name="title" :label="$t('inputs.titleLabel')" validation="required|length:3,30" required />
-      <Select
-        v-if="!campaignId"
-        :input-label="$t('inputs.campaignLabel')"
-        :label="chosenCampaign?.label || $t('campaigns.no')"
-        bold
-        :options="campaignOptions"
-        @selected="selectedCampaign"
-      />
-      <div class="flex gap-2 items-end">
-        <ColorPicker name="background" :label="$t('inputs.backgroundLabel')" validation="required" required />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
-      </div>
-      <Button type="submit" :label="$t('encounters.add')" :loading="store.loading" inline />
+      <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
     </FormKit>
     <div v-else class="loader" />
   </Modal>

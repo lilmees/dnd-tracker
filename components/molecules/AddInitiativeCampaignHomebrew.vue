@@ -1,25 +1,28 @@
-<script setup>
-import { createRowObject } from '@/util/createRowObject'
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 import { useHomebrewStore } from '@/store/homebrew'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
+const { $logRocket } = useNuxtApp()
 
-const isOpen = ref(false)
-const isLoading = ref(false)
-const homebrews = ref()
-const selected = ref([])
-const summoner = ref()
+const isOpen: Ref<boolean> = ref(false)
+const isLoading: Ref<boolean> = ref(false)
+const homebrews: Ref<Homebrew[] | null> = ref(null)
+const selected: Ref<Homebrew[]> = ref([])
+const summoner: Ref<Option | null> = ref(null)
 
-const id = computed(() => store.encounter.campaign?.id || store.encounter.campaign)
-const summon = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
-const summonOptions = computed(() => {
-  return [
-    ...store.encounter.rows.map((r) => {
-      return { label: r.name, id: r.id }
+const id: ComputedRef<number> = computed(() => typeof store.encounter!.campaign === 'object'
+  ? store.encounter!.campaign.id
+  : store.encounter!.campaign
+)
+const summon: ComputedRef<boolean> = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
+const summonOptions: ComputedRef<Option[]> = computed(() => {
+  return store.encounter?.rows
+    ? store.encounter.rows.map((r: Row) => {
+      return { label: r.name, value: `${r.id}` }
     })
-  ]
+    : []
 })
 
 // delete selections that are not from the summon type when a summon is selected
@@ -35,7 +38,7 @@ onMounted(async () => {
   }
 })
 
-function selectHomebrew (homebrew) {
+function selectHomebrew (homebrew: Homebrew): void {
   const index = selected.value.findIndex(h => h.id === homebrew.id)
   if (index > -1) {
     selected.value = selected.value.filter(h => h.id !== homebrew.id)
@@ -44,46 +47,47 @@ function selectHomebrew (homebrew) {
   }
 }
 
-async function addHomebrews (homebrews) {
+async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void> {
   try {
     isLoading.value = true
-    const homebrewRows = []
+    const homebrewRows: Row[] = []
 
-    homebrews.forEach((hb) => {
-      if (summon.value && summoner.value && hb.type === 'summon') {
+    homebrews.forEach((hb: RowUpdate) => {
+      if (summoner.value && hb.type === 'summon') {
         hb.summoner = {
           name: summoner.value.label,
-          id: summoner.value.id
+          id: +summoner.value.value
         }
       }
 
-      homebrewRows.push(createRowObject(hb, hb.type, store.encounter.rows))
+      if (store?.encounter?.rows) {
+        homebrewRows.push(useCreateRow(hb as Row, hb.type, store.encounter.rows))
+      }
     })
 
-    await store.encounterUpdate({
-      rows: store.encounter.rows.includes('[')
-        ? homebrewRows
-        : [...store.encounter.rows, ...homebrewRows]
-    })
+    if (store?.encounter?.rows) {
+      await store.encounterUpdate({
+        rows: [...store.encounter.rows, ...homebrewRows]
+      })
+    }
 
     closeModal()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
-    console.error(err)
+    $logRocket.captureException(err as Error)
   } finally {
     isLoading.value = false
   }
 }
 
-function closeModal () {
+function closeModal (): void {
   isOpen.value = false
   summoner.value = null
   selected.value = []
 }
 
-function selectedSummoner (id) {
-  const filtered = summonOptions.value.filter(s => s.id === id && s.id !== 'none')
-  summoner.value = filtered[0] || null
+function selectedSummoner (value: number): void {
+  const filtered = summonOptions.value.find(s => s.value === value)
+  summoner.value = filtered || null
 }
 </script>
 
@@ -115,12 +119,12 @@ function selectedSummoner (id) {
           <p>
             {{ $t('homebrews.initiative.selectSummoner') }}
           </p>
-          <Select
-            :input-label="$t('inputs.summonerLabel')"
-            :label="summoner?.label || $t('homebrews.initiative.select')"
-            bold
+          <FormKit
+            type="select"
+            :label="$t('inputs.summonerLabel')"
+            :placeholder="$t('homebrews.initiative.select')"
             :options="summonOptions"
-            @selected="selectedSummoner"
+            @input="selectedSummoner"
           />
         </template>
         <div class="flex flex-col">
@@ -168,26 +172,32 @@ function selectedSummoner (id) {
         </div>
         <div class="flex gap-2 flex-wrap">
           <template v-if="!summon">
-            <Button
-              :label="$t('actions.addSelected')"
-              color="primary"
+            <button
+              class="btn-primary"
+              :aria-label="$t('actions.addSelected')"
               :disabled="isLoading || !selected.length"
               @click="addHomebrews(selected)"
-            />
-            <Button
-              :label="$t('actions.addAll')"
-              color="success"
-              :disabled="isLoading"
-              @click="addHomebrews(homebrews)"
-            />
+            >
+              {{ $t('actions.addSelected') }}
+            </button>
+            <button
+              class="btn-success"
+              :aria-label="$t('actions.addAll')"
+              :disabled="isLoading || !selected.length"
+              @click="addHomebrews(homebrews as Homebrew[])"
+            >
+              {{ $t('actions.addAll') }}
+            </button>
           </template>
-          <Button
+          <button
             v-else
-            :label="$t('homebrews.initiative.add')"
-            color="primary"
+            class="btn-primary"
+            :aria-label="$t('homebrews.initiative.add')"
             :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
-          />
+          >
+            {{ $t('homebrews.initiative.add') }}
+          </button>
         </div>
       </div>
       <div v-else-if="homebrews && !homebrews.length">

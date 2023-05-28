@@ -1,6 +1,4 @@
 <script setup>
-import { removeEmptyKeys } from '@/util/removeEmptyKeys'
-import { createRowObject } from '@/util/createRowObject'
 import { useToastStore } from '@/store/toast'
 import { useTableStore } from '@/store/table'
 import { useOpen5eStore } from '@/store/open5e'
@@ -8,6 +6,7 @@ import { useOpen5eStore } from '@/store/open5e'
 const store = useTableStore()
 const toast = useToastStore()
 const open5e = useOpen5eStore()
+const { $logRocket } = useNuxtApp()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
@@ -20,7 +19,7 @@ watchDebounced(
   form,
   (v) => {
     if (v) {
-      fetchMonsters(removeEmptyKeys(form.value), page.value)
+      fetchMonsters(useEmptyKeyRemover(form.value), page.value)
       page.value = 0
     } else {
       hits.value = []
@@ -38,7 +37,7 @@ async function fetchMonsters (query, page) {
     pages.value = Math.ceil(count / 20)
     hits.value = results
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    $logRocket.captureException(err)
     toast.error()
   }
 }
@@ -55,15 +54,13 @@ function paginate (newPage) {
 async function addMonster (monster) {
   try {
     isLoading.value = true
-    const row = createRowObject(monster, 'monster', store.encounter.rows)
+    const row = useCreateRow(monster, 'monster', store.encounter.rows)
     await store.encounterUpdate({
-      rows: store.encounter.rows.includes('[')
-        ? [row]
-        : [...store.encounter.rows, row]
+      rows: [...store.encounter.rows, row]
     })
     reset()
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    $logRocket.captureException(err)
     toast.error(err)
   } finally {
     isLoading.value = false

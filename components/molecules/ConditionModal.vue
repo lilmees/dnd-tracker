@@ -1,17 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { useConditionsStore } from '@/store/conditions'
 
 const emit = defineEmits(['update'])
-const props = defineProps({
-  conditions: { type: Array, required: true, default: () => [] }
-})
+const props = withDefaults(
+  defineProps<{ conditions?: Condition[] }>(), {
+    conditions: () => []
+  }
+)
 
 const store = useConditionsStore()
-const isOpen = ref(false)
-const selected = ref(props.conditions || [])
+
+const isOpen: Ref<boolean> = ref(false)
+const selected: Ref<Condition[]> = ref(props.conditions || [])
 
 // reset selected and info when modal is closed
-watch(isOpen, (v) => {
+watch(isOpen, (v: boolean) => {
   if (v) {
     selected.value = props.conditions || []
   } else {
@@ -19,7 +22,7 @@ watch(isOpen, (v) => {
   }
 })
 
-function updateConditions () {
+function updateConditions (): void {
   emit('update', selected.value)
   isOpen.value = false
 }
@@ -40,7 +43,10 @@ function updateConditions () {
         }}
       </h2>
       <div v-if="store.loading" class="loader" />
-      <div v-else-if="!store.error && store.data" class="space-y-3">
+      <div
+        v-else-if="!store.error && store.data?.length"
+        class="space-y-3"
+      >
         <div class="flex flex-wrap gap-2">
           <Tag
             v-for="condition in store.data"
@@ -53,11 +59,22 @@ function updateConditions () {
             @remove="selected = selected.filter(s => s.slug !== $event)"
           />
         </div>
-        <Button :label="$t('actions.update')" inline @click="updateConditions" />
+        <button
+          class="btn-black w-full"
+          :aria-label="$t('actions.update')"
+          @click="updateConditions"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </div>
-      <div v-else>
-        <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
-      </div>
+      <button
+        v-else
+        class="btn-black w-full"
+        :aria-label="$t('actions.tryAgain')"
+        @click="store.fetch()"
+      >
+        {{ $t('actions.tryAgain') }}
+      </button>
     </Modal>
   </div>
 </template>

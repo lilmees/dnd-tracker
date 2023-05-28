@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
 import { Power3, gsap } from 'gsap'
 import { useTableStore } from '@/store/table'
@@ -6,20 +6,21 @@ import { useToastStore } from '@/store/toast'
 
 const store = useTableStore()
 const toast = useToastStore()
+const { $logRocket } = useNuxtApp()
 
-const hoard = ref()
-const table = ref()
-const hoardVisible = useElementVisibility(hoard)
-const tableVisible = useElementVisibility(table)
+const hoard: Ref = ref()
+const table : Ref = ref()
+const hoardVisible: Ref<boolean> = useElementVisibility(hoard)
+const tableVisible: Ref<boolean> = useElementVisibility(table)
 
 try {
   await store.getSandboxEncounter()
 } catch (err) {
-  useBugsnag().notify(`Handeld in catch: ${err}`)
+  $logRocket.captureException(err as Error)
   toast.error()
 }
 
-watch(hoardVisible, (v) => {
+watch(hoardVisible, (v: boolean) => {
   if (v) {
     gsap.fromTo(
       hoard.value,
@@ -29,7 +30,7 @@ watch(hoardVisible, (v) => {
   }
 })
 
-watch(tableVisible, (v) => {
+watch(tableVisible, (v: boolean) => {
   if (v) {
     gsap.fromTo(
       table.value,
@@ -66,7 +67,11 @@ watch(tableVisible, (v) => {
             />
           </div>
         </div>
-        <div v-if="store.encounter" ref="table" class="rounded-xl px-4 py-2 bg-tracker tracker-shadow">
+        <div
+          v-if="store.encounter"
+          ref="table"
+          class="rounded-xl px-4 py-2 bg-tracker tracker-shadow"
+        >
           <EncounterHeader class="w-full pb-4" />
           <EncounterTable />
           <EncounterOptions class="pt-4" />
@@ -82,7 +87,11 @@ watch(tableVisible, (v) => {
             class="mx-auto"
           />
         </div>
-        <TitleText center :title="$t('home.textBlock2.title')" :text="$t('home.textBlock2.text')" />
+        <TitleText
+          center
+          :title="$t('home.textBlock2.title')"
+          :text="$t('home.textBlock2.text')"
+        />
       </div>
     </div>
   </NuxtLayout>

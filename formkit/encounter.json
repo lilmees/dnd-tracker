@@ -1,0 +1,78 @@
+[
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "name": "title",
+      "label": "inputs.titleLabel",
+      "validation": "required|length:3,30"
+    }
+  },
+  {
+    "$cmp": "FormKit",
+    "if": "$data.campaign",
+    "props": {
+      "type": "select",
+      "name": "campaign",
+      "label": "inputs.campaignLabel",
+      "placeholder": "campaigns.no",
+      "options": "$data.options"
+    }
+  },
+  {
+    "$el": "div",
+    "attrs": {
+      "class": "flex gap-4 items-end"
+    },
+    "children": [
+      {
+        "$el": "div",
+        "attrs": {
+          "class": "flex-1"
+        },
+        "children": [
+          {
+            "$cmp": "FormKit",
+            "props": {
+              "name": "background",
+              "type": "color",
+              "label": "inputs.backgroundLabel",
+              "validation": "required"
+            }
+          }
+        ]
+      },
+      {
+        "$el": "button",
+        "attrs": {
+          "class": " btn-black relative bottom-[10px]",
+          "onClick": "$data.changeColor",
+          "type": "button"
+        },
+        "children": [
+          {
+            "$cmp": "Icon",
+            "props": {
+              "size": "20",
+              "name": "ps:random"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "$cmp": "FormKit",
+    "props": {
+      "label": {
+        "if": "$data.update === false",
+        "then": "encounters.add",
+        "else": {
+          "if": "$data.update",
+          "then": "actions.update"
+        }
+      },
+      "type": "submit",
+      "disabled": "$data.isLoading"
+    }
+  }
+]

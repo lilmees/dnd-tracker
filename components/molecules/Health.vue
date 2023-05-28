@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-defineProps({
-  health: { type: [Number, null, String], required: true },
-  tempHealth: { type: [Number, null, String], required: true },
-  type: { type: String, required: true }
-})
+defineProps<{
+  health: number | null | string,
+  tempHealth: number | null | string,
+  type: string
+}>()
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const form = ref({ health: null })
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice: Ref<boolean> = ref(false)
+const form: Ref<{ health: number | null }> = ref({ health: null })
 
-function diceResult (amount) {
+function diceResult (amount: number): void {
   form.value.health = amount
 }
 
-function updateHealth ({ __init, health }) {
+function updateHealth ({ __init, health }: Obj): void {
   emit('update', Number(health))
   isOpen.value = false
   isRollingDice.value = false
@@ -25,7 +25,7 @@ function updateHealth ({ __init, health }) {
   <div>
     <div class="flex gap-2 items-center">
       <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
-        <p v-if="health !== null" :class="{ 'text-danger font-bold': health < 1 }">
+        <p v-if="health !== null" :class="{ 'text-danger font-bold': +health < 1 }">
           {{ health }}
         </p>
         <p v-else-if="type !== 'lair'" class="text-slate-600">
@@ -45,7 +45,7 @@ function updateHealth ({ __init, health }) {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateHealth"
       >
         <div class="flex gap-2 items-end">
@@ -59,16 +59,22 @@ function updateHealth ({ __init, health }) {
               required
             />
           </div>
-          <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
-              @click="isRollingDice = !isRollingDice"
-            />
-          </div>
+          <button
+            class="btn-black mb-3"
+            :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
+            @click="isRollingDice = !isRollingDice"
+          >
+            {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+          </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

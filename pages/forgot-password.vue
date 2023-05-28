@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useAuthStore } from '@/store/auth'
 import { useToastStore } from '@/store/toast'
 
@@ -8,12 +8,13 @@ const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
-const form = ref({ email: '' })
-const isLoading = ref(false)
-const error = ref()
+const form: Ref<{ email: string }> = ref({ email: '' })
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
 
-async function forgotPassword ({ __init, email }) {
+async function forgotPassword ({ __init, email }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
@@ -23,8 +24,8 @@ async function forgotPassword ({ __init, email }) {
       text: $i18n.t('forgotPassword.toast.success.text')
     })
     navigateTo(localePath('/login'))
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {
@@ -50,9 +51,28 @@ async function forgotPassword ({ __init, email }) {
       <p v-if="error" class="text-danger text-center">
         {{ error }}
       </p>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="forgotPassword">
-        <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
-        <Button type="submit" :label="$t('forgotPassword.reset')" :loading="isLoading" inline />
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+
+        @submit="forgotPassword"
+      >
+        <Input
+          focus
+          name="email"
+          :label="$t('inputs.emailLabel')"
+          validation="required|length:5,50|email"
+          required
+        />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('forgotPassword.reset')"
+          :disabled="isLoading"
+        >
+          {{ $t('forgotPassword.reset') }}
+        </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">

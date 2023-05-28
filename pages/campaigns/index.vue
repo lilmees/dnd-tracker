@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useToastStore } from '@/store/toast'
 import { useCampaignsStore } from '@/store/campaigns'
 
@@ -7,7 +7,8 @@ useHead({ title: 'Campaigns' })
 
 const toast = useToastStore()
 const store = useCampaignsStore()
-const isOpen = ref(false)
+
+const isOpen: Ref<boolean> = ref(false)
 
 onMounted(() => store.fetch())
 
@@ -22,11 +23,18 @@ watch(() => store.error, (v) => {
   <NuxtLayout>
     <div v-if="store.loading || !store.sortedCampaigns" class="loader" />
     <div v-else-if="!store.error">
-      <div class="py-5 flex justify-between items-center">
-        <h1>{{ $t('campaigns.campaigns') }}</h1>
-        <div class="tracker-shadow-pulse">
-          <Button :label="$t('campaigns.add')" @click="isOpen = true" />
-        </div>
+      <div class="pt-5 pb-10 flex justify-between items-center">
+        <h1 class="grow">
+          {{ $t('campaigns.campaigns') }}
+        </h1>
+        <button
+          class="btn-primary tracker-shadow-pulse"
+          :aria-label="$t('campaigns.add')"
+          @click="isOpen = true"
+        >
+          {{ $t('campaigns.add') }}
+        </button>
+        <div />
       </div>
       <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4 items-start">
         <CampaignCard v-for="campaign in store.sortedCampaigns" :key="campaign.id" :campaign="campaign" />
@@ -34,7 +42,13 @@ watch(() => store.error, (v) => {
       <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4">
         <h2>{{ $t('campaigns.noData.title') }}</h2>
         <p>{{ $t('campaigns.noData.text') }}</p>
-        <Button :label="$t('campaigns.add')" @click="isOpen = true" />
+        <button
+          class="btn-black"
+          :aria-label="$t('campaigns.add')"
+          @click="isOpen = true"
+        >
+          {{ $t('campaigns.add') }}
+        </button>
       </div>
       <AddCampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
@@ -42,7 +56,13 @@ watch(() => store.error, (v) => {
       <h2 class="text-center text-danger">
         {{ $t('error.general.text') }}
       </h2>
-      <Button :label="$t('actions.tryAgain')" inline @click="store.fetch()" />
+      <button
+        class="btn-black w-full"
+        :aria-label="$t('actions.tryAgain')"
+        @click="store.fetch()"
+      >
+        {{ $t('actions.tryAgain') }}
+      </button>
     </div>
   </NuxtLayout>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 
 const store = useCurrentCampaignStore()
@@ -20,7 +20,7 @@ const store = useCurrentCampaignStore()
       <AddHomebrew />
     </div>
     <div
-      v-if="store.campaign.homebrew_items.length"
+      v-if="store?.campaign?.homebrew_items?.length"
       class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
     >
       <table class="min-w-full bg-tracker">

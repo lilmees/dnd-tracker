@@ -1,15 +1,19 @@
-<script setup>
-import { rollD100, rollD20, rollD12, rollD10, rollD8, rollD6, rollD4 } from '@/util/rollDice'
-
+<script setup lang="ts">
 const emit = defineEmits(['result'])
-defineProps({ result: { type: Boolean, default: false } })
+withDefaults(
+  defineProps<{ result?: boolean }>(), {
+    result: false
+  }
+)
 
-const form = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
-const results = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const form: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const results: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
 
-function rollDice ({ __init, ...dices }) {
+function rollDice ({ __init, ...dices }: Obj): void {
   Object.keys(dices).forEach((dice) => {
-    results.value[dice] = !dices[dice] ? null : generateDiceRoll(dice, dices[dice])
+    results.value[dice as keyof Dices] = !dices[dice]
+      ? null
+      : useDiceRoll(Number(dice.replace('d', '')), dices[dice])
   })
   if (Object.keys(results.value).length) {
     emit(
@@ -21,26 +25,7 @@ function rollDice ({ __init, ...dices }) {
   }
 }
 
-function generateDiceRoll (type, amount) {
-  switch (type) {
-    case 'd100':
-      return rollD100(amount)
-    case 'd20':
-      return rollD20(amount)
-    case 'd12':
-      return rollD12(amount)
-    case 'd10':
-      return rollD10(amount)
-    case 'd8':
-      return rollD8(amount)
-    case 'd6':
-      return rollD6(amount)
-    case 'd4':
-      return rollD4(amount)
-  }
-}
-
-function reset () {
+function reset (): void {
   form.value = { d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null }
   results.value = { d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null }
 }
@@ -48,7 +33,7 @@ function reset () {
 
 <template>
   <div class="bg-primary/10 rounded-xl p-2" :class="{ 'mb-3': !result }">
-    <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="rollDice">
+    <FormKit v-model="form" type="form" :actions="false" @submit="rollDice">
       <div class="flex gap-2 flex-wrap sm:flex-nowrap">
         <div>
           <Input name="d100" type="number" label="D100" validation="between:1,20|number" />
@@ -123,7 +108,7 @@ function reset () {
           <template v-if="result && results.d8 && Array.isArray(results.d8)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d100" :key="amount">
-                {{ results.d8.length === index + 1 ? amount : `${amount},` }}
+                {{ results.d8.length === Number(index + 1) ? amount : `${amount},` }}
               </p>
             </div>
             <p class="mb-3">
@@ -187,8 +172,22 @@ function reset () {
         }}
       </h3>
       <div class="flex flex-wrap gap-2">
-        <Button type="submit" :label="$t('actions.roll')" inline class="grow" />
-        <Button v-if="result" type="submit" color="danger" :label="$t('actions.reset')" @click="reset" />
+        <button
+          type="submit"
+          class="btn-black grow"
+          :aria-label="$t('actions.roll')"
+        >
+          {{ $t('actions.roll') }}
+        </button>
+        <button
+          v-if="result"
+          type="submit"
+          class="btn-danger grow"
+          :aria-label="$t('actions.reset')"
+          @click="reset"
+        >
+          {{ $t('actions.reset') }}
+        </button>
       </div>
     </FormKit>
   </div>

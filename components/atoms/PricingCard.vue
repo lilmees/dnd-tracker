@@ -1,22 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { useStripeStore } from '@/store/stripe'
 
-const props = defineProps({
-  product: { type: Object, required: true },
-  current: { type: Boolean, default: false },
-  yearly: { type: Boolean, default: false },
-  user: { type: Object, default: () => {} }
-})
+const props = withDefaults(
+  defineProps<{
+  product: Pricing,
+  current?: boolean,
+  yearly?: boolean
+}>(), {
+    current: false,
+    yearly: false
+  }
+)
 
 const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
 
 async function subscribe () {
-  await stripe.subscribe(
-    props.user,
-    props.yearly ? props.product.yearId : props.product.monthId,
-    locale.value
-  )
+  if (props.product.yearId && props.product.monthId) {
+    await stripe.subscribe(
+      props.yearly ? props.product.yearId : props.product.monthId,
+      locale.value
+    )
+  }
 }
 </script>
 
@@ -40,7 +45,11 @@ async function subscribe () {
         <span>/{{ $t(yearly ? 'pricing.year' : 'pricing.month') }}</span>
       </div>
       <ul class="mb-8 space-y-4 text-left">
-        <li v-for="item in product.items" :key="item" class="flex items-center space-x-3">
+        <li
+          v-for="item in product.items"
+          :key="item.label"
+          class="flex items-center space-x-3"
+        >
           <icon
             v-if="item.icon === 'check'"
             name="material-symbols:check-small-rounded"
@@ -51,6 +60,12 @@ async function subscribe () {
         </li>
       </ul>
     </div>
-    <Button :label="current ? $t('pricing.current') : $t('pricing.start')" inline color="primary" :disabled="current" />
+    <button
+      class="btn-primary w-full"
+      :aria-label="current ? $t('pricing.current') : $t('pricing.start')"
+      :disabled="current"
+    >
+      {{ current ? $t('pricing.current') : $t('pricing.start') }}
+    </button>
   </div>
 </template>

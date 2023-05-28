@@ -1,55 +1,59 @@
-<script setup>
+<script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
 import { useToastStore } from '@/store/toast'
 
 const emit = defineEmits(['deleted', 'copied', 'updated'])
-const props = defineProps({ encounter: { type: Object, required: true } })
+const props = defineProps<{ encounter: Encounter }>()
 
 const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
-const needConfirmation = ref(false)
-const isUpdating = ref(false)
-const isSettings = ref(false)
+const needConfirmation: Ref<boolean> = ref(false)
+const isUpdating: Ref<boolean> = ref(false)
+const isSettings: Ref<boolean> = ref(false)
 
-async function deleteEncounter () {
+async function deleteEncounter (): Promise<void> {
   try {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   }
 }
 
-async function copyEncounter ({ created_at, id, profiles, ...enc }) {
-  const encounter = {
+async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<void> {
+  if (!enc.campaign || !user.value) {
+    return
+  }
+
+  const encounter: EncounterUpdate = {
     ...enc,
+    campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign,
     title: `copy ${enc.title}`.slice(0, 30),
     created_by: user.value.id
   }
-  if (typeof encounter.campaign === 'object') {
-    encounter.campaign = encounter.campaign.id
-  }
+
   try {
-    const enc = await store.addEncounter(encounter)
+    const enc = await store.addEncounter(encounter as AddEncounter)
     emit('copied', enc)
   } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    $logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isSettings.value = false
   }
 }
 
-function updatedEncounter (encounter) {
+function updatedEncounter (encounter: EncounterUpdate): void {
   emit('updated', encounter)
   closeSettings()
 }
 
-function closeSettings () {
+function closeSettings (): void {
   isUpdating.value = false
   needConfirmation.value = false
   isSettings.value = false
@@ -104,7 +108,7 @@ function closeSettings () {
         <p>{{ $t('actions.copy') }}</p>
       </div>
       <div
-        v-if="encounter.created_by === user.id"
+        v-if="user && encounter.created_by === user.id"
         class="flex gap-2 cursor-pointer max-w-max"
         @click="needConfirmation = true"
       >

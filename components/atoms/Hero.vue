@@ -1,11 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { Power3, gsap } from 'gsap'
 
-const anchor = ref()
-const eyeLeft = ref()
-const eyeRight = ref()
+const anchor: Ref<HTMLElement | undefined> = ref()
+const eyeLeft: Ref<HTMLElement | undefined> = ref()
+const eyeRight: Ref<HTMLElement | undefined> = ref()
 
-function calculateEyes (e) {
+function calculateEyes (e: MouseEvent) {
+  if (!anchor.value || !eyeLeft.value || !eyeRight.value) {
+    return
+  }
   const mouseX = e.clientX
   const mouseY = e.clientY
   const rekt = anchor.value.getBoundingClientRect()
@@ -16,7 +19,7 @@ function calculateEyes (e) {
   eyeRight.value.style.transform = `rotate(${90 + angleDeg}deg)`
 }
 
-function angle (cx, cy, ex, ey) {
+function angle (cx: number, cy: number, ex: number, ey: number): number {
   return (Math.atan2(ey - cy, ex - cx) * 180) / Math.PI
 }
 

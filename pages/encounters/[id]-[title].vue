@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import { useTableStore } from '@/store/table'
 import { useToastStore } from '@/store/toast'
@@ -8,21 +8,26 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const toast = useToastStore()
 const store = useTableStore()
+const { $logRocket } = useNuxtApp()
 
-const info = ref('')
+const info: Ref<string> = ref('')
 
-try {
-  await store.getEncounter(route.params.id)
-  useHead({ title: store.encounter.title })
-  info.value = store.encounter.info
-} catch (err) {
-  useBugsnag().notify(`Handeld in catch: ${err}`)
-  toast.error()
+if (route?.params?.id) {
+  try {
+    await store.getEncounter(route.params.id as string)
+    if (store?.encounter?.title) {
+      useHead({ title: store.encounter.title })
+      info.value = store.encounter.info as string
+    }
+  } catch (err) {
+    $logRocket.captureException(err as Error)
+    toast.error()
+  }
 }
 
 watchDebounced(
   info,
-  (v) => {
+  (v: string) => {
     if (v) {
       store.encounterUpdate({ info: v })
     }
@@ -35,7 +40,7 @@ watchDebounced(
   <NuxtLayout name="wide">
     <ClientOnly>
       <div v-if="store.isLoading" class="loader" />
-      <div v-else class="py-4 space-y-4">
+      <div v-else-if="store.encounter" class="py-4 space-y-4">
         <Back
           :url="store.encounter.campaign
             ? `campaigns/${typeof store.encounter.campaign === 'object'

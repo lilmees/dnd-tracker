@@ -1,29 +1,30 @@
-<script setup>
+<script setup lang="ts">
 import { reset } from '@formkit/core'
 import { useNotesStore } from '@/store/notes'
 
 const emit = defineEmits(['close', 'notes'])
-const props = defineProps({
-  notes: { type: Array, required: true },
-  open: { type: Boolean, required: true },
-  id: { type: Number, required: true }
-})
+const props = defineProps<{
+  notes: Note[],
+  open: boolean,
+  id: number
+}>()
 
 const store = useNotesStore()
+const { $logRocket } = useNuxtApp()
 
-const error = ref()
-const isLoading = ref(false)
-const form = ref({ title: null, text: null })
+const error: Ref<string | null> = ref(null)
+const isLoading: Ref<boolean> = ref(false)
+const form: Ref<{ title: string, text: string }> = ref({ title: '', text: '' })
 
-async function addNote ({ __init, ...formData }) {
+async function addNote ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    const note = await store.addNote({ ...formData, campaign: props.id }, props.id)
+    const note: Note = await store.addNote({ ...formData, campaign: props.id } as Note)
     emit('notes', [...props.notes, note])
     reset('form')
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -41,7 +42,7 @@ async function addNote ({ __init, ...formData }) {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="addNote"
     >
       <Input
@@ -58,7 +59,14 @@ async function addNote ({ __init, ...formData }) {
         required
         validation="required|length:10,1000"
       />
-      <Button type="submit" :label="$t('notes.add')" :loading="isLoading" inline />
+      <button
+        type="submit"
+        class="btn-black w-full"
+        :aria-label="$t('notes.add')"
+        :disabled="isLoading"
+      >
+        {{ $t('notes.add') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 
 definePageMeta({ middleware: ['auth'] })
@@ -6,21 +6,25 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const store = useCurrentCampaignStore()
 
-const isCreatingEncounter = ref(false)
+const isCreatingEncounter: Ref<boolean> = ref(false)
 
-onMounted(() => store.getCampaignInfo(route.params.id))
+onMounted(() => {
+  if (route?.params?.id) {
+    store.getCampaignInfo(+route.params.id)
+  }
+})
 
-function addedEncounter (encounter) {
+function addedEncounter (encounter: Encounter): void {
   store.encounters.push(encounter)
   isCreatingEncounter.value = false
 }
 
-function deletedEncounter (id) {
+function deletedEncounter (id: number): void {
   store.encounters = store.encounters.filter(e => e.id !== id)
   isCreatingEncounter.value = false
 }
 
-function updatedEncounter (encounter) {
+function updatedEncounter (encounter: Encounter): void {
   const index = store.encounters.findIndex(e => e.id === encounter.id)
   store.encounters[index] = encounter
 }
@@ -73,18 +77,22 @@ function updatedEncounter (encounter) {
             <p class="text-center">
               {{ $t('encounters.noData.title') }}
             </p>
-            <Button
-              :label="$t('encounters.add')"
-              color="primary"
-              bold
-              class="mx-auto w-fit"
+            <button
+              class="btn-primary mx-auto w-fit"
+              :aria-label="$t('encounters.add')"
               @click="isCreatingEncounter = true"
-            />
+            >
+              {{ $t('encounters.add') }}
+            </button>
           </div>
         </div>
       </div>
       <HomebrewTable class="py-10" />
-      <CampaignNotes :id="store.campaign.id" v-model="store.campaign.notes" />
+      <CampaignNotes
+        v-if="store.campaign?.notes"
+        :id="store.campaign.id"
+        v-model="store.campaign.notes"
+      />
       <AddEncounterModal
         :open="isCreatingEncounter"
         :campaign-id="store.campaign.id"

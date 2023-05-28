@@ -1,53 +1,57 @@
-<script setup>
+<script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
-import { removeEmptyKeys } from '@/util/removeEmptyKeys'
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
-import schema from '@/formkit/addHomebrew.json'
+import schema from '~~/formkit/homebrew.json'
 
-const { $i18n } = useNuxtApp()
 const store = useCurrentCampaignStore()
+const { $logRocket } = useNuxtApp()
 
-const isOpen = ref(false)
-const form = ref({ name: null, initiative: null, link: null })
-const data = reactive({ isLoading: false, update: false, type: 'player', error: null })
+const isOpen: Ref<boolean> = ref(false)
 
-const formSchema = computed(() => {
-  const form = []
-  schema.forEach((cmp) => {
-    if (cmp?.props?.label) {
-      cmp.props.label = $i18n.t(cmp.props.label)
-    }
-    form.push(cmp)
-  })
-  return form
+const form: Ref<AddHomebrewForm> = ref({
+  name: '',
+  link: null,
+  type: 'player' as HomebrewType,
+  data: {
+    isLoading: false,
+    encounter: false,
+    update: true,
+    error: null,
+    options: [
+      { label: 'Player', value: 'player' },
+      { label: 'Summon', value: 'summon' },
+      { label: 'Npc', value: 'npc' },
+      { label: 'Monster', value: 'monster' },
+      { label: 'Lair', value: 'lair' }
+    ]
+  }
 })
 
-function addHomebrew ({ __init, ...formData }) {
-  data.error = null
-  try {
-    data.isLoading = true
+function addHomebrew ({ __init, data, slots, ...formData }: Obj): void {
+  form.value.data.error = null
+  form.value.data.isLoading = true
 
+  try {
     store.addHomebrew(
-      removeEmptyKeys({
+      useEmptyKeyRemover({
         ...formData,
-        campaign: store.campaign.id,
-        type: data.type
-      })
+        campaign: store?.campaign?.id
+      }) as AddHomebrew
     )
 
     reset('form')
     closeModal()
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
-    data.error = err.message
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
+    form.value.data.error = err.message
   } finally {
-    data.isLoading = false
+    form.value.data.isLoading = false
   }
 }
 
-function closeModal () {
-  data.type = 'player'
+function closeModal (): void {
+  form.value.type = 'player'
   isOpen.value = false
 }
 </script>
@@ -62,29 +66,14 @@ function closeModal () {
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>{{ $t('encounter.newHomebrew') }}</h2>
-      <Select
-        :absolute="false"
-        :input-label="$t('inputs.typeLabel')"
-        :label="data.type"
-        bold
-        :options="[
-          { label: 'Player', id: 'player' },
-          { label: 'Summon', id: 'summon' },
-          { label: 'Npc', id: 'npc' },
-          { label: 'Monster', id: 'monster' },
-          { label: 'Lair', id: 'lair' },
-        ]"
-        @selected="v => (data.type = v)"
-      />
       <FormKit
         id="form"
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
         @submit="addHomebrew"
       >
-        <FormKitSchema :data="data" :schema="formSchema" />
+        <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
       </FormKit>
     </Modal>
   </section>

@@ -1,14 +1,11 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['close', 'delete'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  title: { type: String, required: true }
-})
+const props = defineProps<{ open: boolean, title: string }>()
 
-const form = ref({ title: '' })
-const same = computed(() => props.title === form.value.title)
+const form: Ref<{ title: string }> = ref({ title: '' })
+const same: ComputedRef<boolean> = computed(() => props.title === form.value.title)
 
-function deleteConfirmation () {
+function deleteConfirmation (): void {
   if (form.value.title.trim() === props.title.trim()) {
     emit('delete')
   }
@@ -28,7 +25,7 @@ function deleteConfirmation () {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="deleteConfirmation"
       >
         <Input
@@ -39,13 +36,14 @@ function deleteConfirmation () {
           required
           :placeholder="title"
         />
-        <Button
+        <button
           type="submit"
-          :label="$t('actions.delete')"
-          color="danger"
-          inline
+          class="btn-danger w-full"
+          :aria-label="$t('actions.delete')"
           :disabled="!same"
-        />
+        >
+          {{ $t('actions.delete') }}
+        </button>
       </FormKit>
     </div>
   </Modal>

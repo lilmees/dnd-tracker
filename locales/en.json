@@ -30,6 +30,15 @@
       "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
     }
   },
+  "about": {
+    "story": "Our story 📖",
+    "text1": "Welcome to DND-TRACKER, your go-to destination for effortlessly managing your Dungeon and Dragons encounters! Our website was made with passion and dedication in Belgium, where we believe that playing D&D should be all about fun and adventure.",
+    "text2": "At DND-TRACKER, we understand how hard it can be for Dungeon Masters to manage all the moving parts of an encounter. That's why we created a tool that makes it easy for them to focus on the adventure, while we do the heavy lifting for them.",
+    "text3": "Our story began when a friend, who happened to be a Dungeon Master, asked us to make some macros for him in Excel. Unfortunately, we weren't very proficient with Excel, but we were determined to find a better solution. That's when we decided to create a website that would offer a more intuitive and user-friendly way to manage encounters.",
+    "text4": "Our goal is to make the Dungeon Master's life as easy as possible, so they can spend more time creating engaging adventures and less time dealing with the logistics. With DND-TRACKER, you can effortlessly manage all aspects of your encounters, from initiative tracking to monster stats and more.",
+    "text5": "We are constantly striving to improve our website and make it the best possible tool for Dungeon Masters everywhere. Whether you're a seasoned veteran or a new player just getting started, DND-TRACKER has everything you need to make your D&D experience even more enjoyable.",
+    "end": "Thank you for choosing DND-TRACKER, and we hope you have a great time playing D&D!"
+  },
   "error": {
     "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
     "meme": "I want another meme",
@@ -66,6 +75,9 @@
     "challengeLabel": "Challenge rating",
     "nothing": "Nothing selected"
   },
+  "placeholder": {
+    "type": "Choose your type"
+  },
   "campaigns": {
     "campaign": "Campaign",
     "no": "No campaign",
@@ -83,7 +95,8 @@
     "goCampaign": "Go to campaign",
     "homebrew": {
       "title": "Ready to unleash your creativity?",
-      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"    }
+      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
+    }
   },
   "encounters": {
     "encounter": "Encounter",
@@ -200,6 +213,7 @@
     "register": "Register",
     "home": "Home",
     "contact": "Contact",
+    "about": "About us",
     "collections": "Collections",
     "encounters": "Encounters",
     "campaigns": "Campaignes",
@@ -272,7 +286,7 @@
     "add": "Create homebrew",
     "update": "Update homebrew",
     "initiative": {
-      "selectSummoner" : "hen selecting a summon, you must also choose a character that will summon it.",
+      "selectSummoner": "hen selecting a summon, you must also choose a character that will summon it.",
       "add": "Add summon",
       "select": "Select summoner"
     }

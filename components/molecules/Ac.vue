@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps({
-  ac: { type: [Number, null, String], required: true },
-  tempAc: { type: [Number, null, String], required: true },
-  type: { type: String, required: true }
-})
+defineProps<{
+  ac: number | null,
+  tempAc: number | null
+  type: string
+}>()
 
-const isOpen = ref(false)
-const isRollingDice = ref(false)
-const form = ref({ ac: null })
+const isOpen: Ref<boolean> = ref(false)
+const isRollingDice: Ref<boolean> = ref(false)
+const form : Ref<{ ac: number | null }> = ref({ ac: null })
 
-function diceResult (amount) {
+function diceResult (amount: number): void {
   form.value.ac = amount
 }
 
-function updateAc ({ __init, ac }) {
+function updateAc ({ __init, ac }: Obj): void {
   emit('update', Number(ac))
   isOpen.value = false
   isRollingDice.value = false
@@ -51,7 +51,6 @@ function updateAc ({ __init, ac }) {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
         @submit="updateAc"
       >
         <div class="flex gap-2 items-end">
@@ -66,15 +65,23 @@ function updateAc ({ __init, ac }) {
             />
           </div>
           <div class="mb-3">
-            <Button
-              :label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              bold
+            <button
+              class="btn-black"
+              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               @click="isRollingDice = !isRollingDice"
-            />
+            >
+              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+            </button>
           </div>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

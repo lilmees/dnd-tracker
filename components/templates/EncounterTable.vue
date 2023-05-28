@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
 
 const store = useTableStore()
 const { $i18n } = useNuxtApp()
 
-const headers = computed(() => {
+const headers: ComputedRef<string[]> = computed(() => {
   const headers = [
     '',
     $i18n.t('encounter.headers.name'),
@@ -37,29 +37,26 @@ const headers = computed(() => {
             <th
               v-for="header in headers"
               :key="header"
-              v-tippy="{
-                content: header === 'con'
-                  ? $t('encounter.headers.concentration')
-                  : '',
-                animation: 'shift-away'
-              }"
               class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ header }}
             </th>
           </tr>
         </thead>
-        <tbody v-if="store.encounter.rows.length > 0" v-auto-animate>
+        <tbody
+          v-if="store?.encounter?.rows?.length"
+          v-auto-animate
+        >
           <EncounterTableRow
             v-for="(row, index) in store.encounter.rows"
-            :key="row.id"
+            :key="row!.id"
             :row="row"
             :index="index"
           />
         </tbody>
       </table>
       <div
-        v-if="!store.encounter.rows.length"
+        v-if="!store?.encounter?.rows.length"
         class="bg-tracker w-full px-8 py-4"
       >
         {{ $t('encounter.empty') }}

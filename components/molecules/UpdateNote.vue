@@ -1,37 +1,41 @@
-<script setup>
+<script setup lang="ts">
 import { reset } from '@formkit/core'
 import { useNotesStore } from '@/store/notes'
 
 const emit = defineEmits(['close', 'updated'])
-const props = defineProps({
-  note: { type: Object, required: true },
-  open: { type: Boolean, required: true }
-})
+const props = defineProps<{ note: Note, open: boolean }>()
 
 const store = useNotesStore()
+const { $logRocket } = useNuxtApp()
 
-const error = ref()
-const isLoading = ref(false)
-const form = ref({ title: props.note.title, text: props.note.text })
+const error: Ref<string | null> = ref(null)
+const isLoading: Ref<boolean> = ref(false)
+const form: Ref<{ title: string, text: string}> = ref({
+  title: props.note.title,
+  text: props.note.text
+})
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (v) {
       form.value = { title: props.note.title, text: props.note.text }
     }
   }
 )
 
-async function updateNote ({ __init, ...formData }) {
+async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    const note = await store.updateNote({ ...formData, campaign: props.note.campaign }, props.note.id)
+    const note = await store.updateNote(
+      { ...formData, campaign: props.note.campaign } as Note,
+      props.note.id
+    )
     emit('updated', note)
     reset('form')
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -49,7 +53,7 @@ async function updateNote ({ __init, ...formData }) {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="updateNote"
     >
       <Input
@@ -66,12 +70,14 @@ async function updateNote ({ __init, ...formData }) {
         required
         validation="required|length:10,1000"
       />
-      <Button
+      <button
         type="submit"
-        :label="$t('notes.update')"
-        :loading="isLoading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('notes.update')"
+        :disabled="isLoading"
+      >
+        {{ $t('notes.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

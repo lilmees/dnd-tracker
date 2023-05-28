@@ -1,26 +1,22 @@
-<script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
+<script setup lang="ts">
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  campaign: { type: Object, required: true }
-})
+const props = defineProps<{ open: boolean, campaign: Campaign }>()
 
 const store = useCampaignsStore()
+const { $logRocket } = useNuxtApp()
 
-const isLoading = ref(false)
-const error = ref()
-const form = ref({
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const form: Ref<{ title: string, background: string }> = ref({
   title: props.campaign.title,
   background: props.campaign.background
 })
 
 watch(
   () => props.open,
-  (v) => {
+  (v: boolean) => {
     if (v) {
       form.value = {
         title: props.campaign.title,
@@ -30,24 +26,25 @@ watch(
   }
 )
 
-function changeColor () {
-  form.value.background = randomColor()
+function changeColor ():void {
+  form.value.background = useRandomColor()
 }
 
-async function updateCampaign ({ __init, ...formData }) {
+async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
     await store.updateCampaign(
       {
         ...formData,
-        color: contrastColor(formData.background)
+        color: useContrastColor(formData.background)
       },
       props.campaign.id
     )
     emit('close')
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -65,7 +62,7 @@ async function updateCampaign ({ __init, ...formData }) {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="updateCampaign"
     >
       <Input
@@ -81,16 +78,22 @@ async function updateCampaign ({ __init, ...formData }) {
           validation="required"
           required
         />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
+        <button
+          class="btn-black mb-[14px]"
+          :aria-label="$t('actions.random')"
+          @click="changeColor"
+        >
+          {{ $t('actions.random') }}
+        </button>
       </div>
-      <Button
+      <button
         type="submit"
-        :label="$t('actions.update')"
-        :loading="store.loading"
-        inline
-      />
+        class="btn-black w-full mt-3"
+        :aria-label="$t('homebrews.update')"
+        :disabled="store.loading"
+      >
+        {{ $t('homebrews.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

@@ -15,7 +15,6 @@ export default defineNuxtConfig({
   css: ['@/assets/css/global.css'],
   modules: [
     'nuxt-icon',
-    'nuxt-bugsnag',
     'nuxt-schema-org',
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
@@ -46,7 +45,8 @@ export default defineNuxtConfig({
       stripeMediorMonthly: process.env.STRIPE_MEDIOR_MONTHLY,
       stripeMediorYearly: process.env.STRIPE_MEDIOR_YEARLY,
       stripeProMonthly: process.env.STRIPE_PRO_MONTHLY,
-      stripeProYearly: process.env.STRIPE_PRO_YEARLY
+      stripeProYearly: process.env.STRIPE_PRO_YEARLY,
+      logRocket: process.env.LOGROCKET_ID
     },
     stripeSk: process.env.STRIPE_SK
   },
@@ -63,6 +63,7 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' }
     ],
     vueI18n: {
+      missingWarn: false,
       legacy: false,
       locale: 'nl',
       fallbackLocale: 'nl',
@@ -77,17 +78,9 @@ export default defineNuxtConfig({
       baseURL: 'https://ik.imagekit.io/c2es1qasw'
     }
   },
-  bugsnag: {
-    publishRelease: true,
-    config: {
-      apiKey: '859a62cc4ade4a1b5ec65c5f1a08c2d8',
-      enabledReleaseStages: ['staging', 'production'],
-      releaseStage: process.env.NODE_ENV
-    }
-  },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
-    configPath: '~/tailwind.config.js',
+    configPath: '~/tailwind.config.ts',
     injectPosition: 0,
     viewer: false,
     exposeConfig: true

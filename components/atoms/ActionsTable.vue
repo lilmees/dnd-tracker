@@ -1,12 +1,12 @@
-<script setup>
-defineProps({ monster: { type: Object, required: true } })
+<script setup lang="ts">
+defineProps<{ monster: Monster }>()
 
-const headers = [
+const headers: Ref<{ label: string, key: string }[]> = ref([
   { label: 'Actions', key: 'actions' },
   { label: 'Legendary actions', key: 'legendary_actions' },
   { label: 'Reactions', key: 'reactions' },
   { label: 'Special abilities', key: 'special_abilities' }
-]
+])
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const headers = [
       :key="item.key"
       class="first:border-t border-x border-slate-700 first:rounded-t-md last:rounded-b-md"
     >
-      <template v-if="monster[item.key]?.length">
+      <template v-if="Array.isArray(monster[item.key as keyof Monster])">
         <p
           class="font-bold text-center py-1"
         >
@@ -24,7 +24,7 @@ const headers = [
         </p>
         <div class="px-2 border-y border-slate-700">
           <div
-            v-for="action in monster[item.key]"
+            v-for="action in monster[item.key as keyof Monster] as Action[]"
             :key="action.name"
             class="flex flex-wrap gap-x-4 items-center border-b border-slate-700 last:border-b-0 py-1"
           >

@@ -1,44 +1,45 @@
-<script setup>
+<script setup lang="ts">
 import { useTableStore } from '@/store/table'
-import { rollD20 } from '@/util/rollDice'
 
 const emit = defineEmits(['update'])
-const props = defineProps({
-  initiative: { type: [Number, null], required: true },
-  index: { type: Number, required: true }
-})
+const props = defineProps<{
+  initiative: number | null,
+  index: number
+}>()
 
 const store = useTableStore()
 
-const isOpen = ref(false)
-const form = ref({ initiative: null })
+const isOpen: Ref<boolean> = ref(false)
+const form: Ref<{ initiative: number | null }> = ref({ initiative: null })
 
 function diceRoll () {
-  form.value.initiative = rollD20()
+  form.value.initiative = useDiceRoll(20) as number
 }
 
-function updateInitiative ({ __init, initiative }) {
+function updateInitiative ({ __init, initiative }: Obj): void {
   emit('update', Number(initiative) || -1)
   isOpen.value = false
 }
 
-async function moveRow (up) {
-  const rows = store.encounter.rows
-  const lowestIndex = rows.findIndex(r => r.index === props.index)
-  if (up) {
-    rows[lowestIndex].index = lowestIndex - 1
-    rows[lowestIndex - 1].index = lowestIndex
-    // update the follwing indexes
-    for (let i = lowestIndex + 1; i < rows.length; i++) {
-      rows[i].index = i
+async function moveRow (up: boolean): Promise<void> {
+  if (store?.encounter) {
+    const rows = store.encounter.rows
+    const lowestIndex = rows.findIndex(r => r.index === props.index)
+    if (up) {
+      rows[lowestIndex].index = lowestIndex - 1
+      rows[lowestIndex - 1].index = lowestIndex
+      // update the follwing indexes
+      for (let i = lowestIndex + 1; i < rows.length; i++) {
+        rows[i].index = i
+      }
+    } else {
+      rows[lowestIndex].index = lowestIndex + 1
+      rows[lowestIndex + 1].index = lowestIndex
     }
-  } else {
-    rows[lowestIndex].index = lowestIndex + 1
-    rows[lowestIndex + 1].index = lowestIndex
+    await store.encounterUpdate({
+      rows: rows.sort((a, b) => a.index - b.index)
+    })
   }
-  await store.encounterUpdate({
-    rows: rows.sort((a, b) => a.index - b.index)
-  })
 }
 </script>
 
@@ -46,7 +47,11 @@ async function moveRow (up) {
   <div>
     <div class="flex justify-between gap-2">
       <div class="flex gap-2 items-center">
-        <p v-if="initiative >= 0" class="peer cursor-pointer" @click="isOpen = true">
+        <p
+          v-if="initiative !== null && initiative >= 0"
+          class="peer cursor-pointer"
+          @click="isOpen = true"
+        >
           {{ initiative }}
         </p>
         <p v-else class="text-slate-600 cursor-pointer" @click="isOpen = true">
@@ -58,15 +63,24 @@ async function moveRow (up) {
           :class="{ hidden: !initiative }"
         />
       </div>
-      <div v-if="initiative >= 0" class="flex gap-1 items-center">
+      <div
+        v-if="initiative !== null && initiative >= 0"
+        class="flex gap-1 items-center"
+      >
         <Icon
-          v-if="store.encounter.rows.length !== index + 1 && store.encounter.rows[index + 1].initiative === initiative"
+          v-if="
+            store.encounter
+              && store.encounter.rows.length !== index + 1
+              && store.encounter.rows[index + 1].initiative === initiative
+          "
           name="ph:arrow-down"
           class="w-6 h-6 cursor-pointer text-primary"
           @click="moveRow(false)"
         />
         <Icon
-          v-if="index > 0 && store.encounter.rows[index - 1]?.initiative === initiative"
+          v-if="store.encounter
+            && index > 0
+            && store.encounter.rows[index - 1]?.initiative === initiative"
           name="ph:arrow-up"
           class="w-6 h-6 cursor-pointer text-primary"
           @click="moveRow(true)"
@@ -79,7 +93,7 @@ async function moveRow (up) {
         v-model="form"
         type="form"
         :actions="false"
-        message-class="error-message"
+
         @submit="updateInitiative"
       >
         <div class="flex gap-2 items-end">
@@ -93,11 +107,21 @@ async function moveRow (up) {
               required
             />
           </div>
-          <div class="mb-3">
-            <Button :label="$t('actions.roll')" bold @click="diceRoll" />
-          </div>
+          <button
+            class="btn-black mb-3"
+            :aria-label="$t('actions.roll')"
+            @click="diceRoll"
+          >
+            {{ $t('actions.roll') }}
+          </button>
         </div>
-        <Button type="submit" :label="$t('actions.update')" inline />
+        <button
+          class="btn-black w-full mt-3"
+          :aria-label="$t('actions.update')"
+          type="submit"
+        >
+          {{ $t('actions.update') }}
+        </button>
       </FormKit>
     </Modal>
   </div>

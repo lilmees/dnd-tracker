@@ -1,6 +1,10 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['close'])
-defineProps({ big: { type: Boolean, default: false } })
+withDefaults(
+  defineProps<{ big?: boolean }>(), {
+    big: false
+  }
+)
 </script>
 
 <template>

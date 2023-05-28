@@ -1,22 +1,23 @@
-<script setup>
+<script setup lang="ts">
 import { useAuthStore } from '@/store/auth'
 
 definePageMeta({ middleware: ['loggedin'] })
 
 const store = useAuthStore()
 const localePath = useLocalePath()
+const { $logRocket } = useNuxtApp()
 
-const form = ref({ email: '', password: '' })
-const isLoading = ref(false)
-const error = ref()
+const form: Ref<Login> = ref({ email: '', password: '' })
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
 
-async function login ({ __init, ...credentials }) {
+async function login ({ __init, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
-    await store.login(credentials)
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    await store.login(credentials as Login)
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -41,8 +42,20 @@ async function login ({ __init, ...credentials }) {
       <p v-if="error" class="text-danger text-center">
         {{ error }}
       </p>
-      <FormKit v-model="form" type="form" :actions="false" message-class="error-message" @submit="login">
-        <Input focus name="email" :label="$t('inputs.emailLabel')" validation="required|length:5,50|email" required />
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+
+        @submit="login"
+      >
+        <Input
+          focus
+          name="email"
+          :label="$t('inputs.emailLabel')"
+          validation="required|length:5,50|email"
+          required
+        />
         <Input
           name="password"
           type="password"
@@ -50,7 +63,14 @@ async function login ({ __init, ...credentials }) {
           validation="required|length:6,50"
           required
         />
-        <Button type="submit" :label="$t('login.signIn')" :loading="isLoading" inline />
+        <button
+          type="submit"
+          class="btn-black w-full mt-3"
+          :aria-label="$t('login.signIn')"
+          :disabled="isLoading"
+        >
+          {{ $t('login.signIn') }}
+        </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">

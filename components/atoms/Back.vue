@@ -1,9 +1,12 @@
-<script setup>
-defineProps({
-  url: { type: String, required: true },
-  label: { type: String, required: true },
-  color: { type: String, default: '#fff' }
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+  url: string,
+  label: string,
+  color?: string
+}>(), {
+    color: '#fff'
+  })
 
 const localePath = useLocalePath()
 </script>

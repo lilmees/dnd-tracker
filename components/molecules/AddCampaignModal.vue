@@ -1,34 +1,40 @@
-<script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
+<script setup lang="ts">
 import { useCampaignsStore } from '@/store/campaigns'
 
 const emit = defineEmits(['close'])
-defineProps({ open: { type: Boolean, required: true } })
+defineProps<{ open: boolean }>()
 
 const store = useCampaignsStore()
 const user = useSupabaseUser()
-const form = ref({ title: null, background: '#0073A1' })
-const isLoading = ref(false)
-const error = ref()
+const { $logRocket } = useNuxtApp()
 
-function changeColor () {
-  form.value.background = randomColor()
+const isLoading: Ref<boolean> = ref(false)
+const error: Ref<string | null> = ref(null)
+const form: Ref<AddCampaignForm> = ref({
+  title: '',
+  background: '#0073A1'
+})
+
+function changeColor (): void {
+  form.value.background = useRandomColor()
 }
 
-async function addCampaign ({ __init, ...formData }) {
+async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
-    await store.addCampaign({
-      ...formData,
-      created_by: user.value.id,
-      admins: [user.value.id],
-      color: contrastColor(formData.background)
-    })
-    emit('close')
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
+    if (user.value) {
+      await store.addCampaign({
+        ...formData as AddCampaignForm,
+        created_by: user.value.id,
+        admins: [user.value.id],
+        color: useContrastColor(formData.background)
+      })
+      emit('close')
+    }
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -46,7 +52,7 @@ async function addCampaign ({ __init, ...formData }) {
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
+
       @submit="addCampaign"
     >
       <Input
@@ -63,16 +69,22 @@ async function addCampaign ({ __init, ...formData }) {
           validation="required"
           required
         />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
+        <button
+          class="btn-black mb-[14px]"
+          :aria-label="$t('actions.random')"
+          @click="changeColor"
+        >
+          {{ $t('actions.random') }}
+        </button>
       </div>
-      <Button
+      <button
         type="submit"
-        :label="$t('campaigns.add')"
-        :loading="store.loading"
-        inline
-      />
+        class="btn-black w-full"
+        :aria-label="$t('campaigns.add')"
+        :disabled="store.loading"
+      >
+        {{ $t('campaigns.add') }}
+      </button>
     </FormKit>
   </Modal>
 </template>

@@ -1,50 +1,43 @@
-<script setup>
-import { contrastColor } from '@/util/contrastColor'
-import { randomColor } from '@/util/randomColor'
+<script setup lang="ts">
 import { useEncountersStore } from '@/store/encounters'
+import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'updated'])
-const props = defineProps({
-  open: { type: Boolean, required: true },
-  encounter: { type: Object, required: true }
-})
+const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
+const { $logRocket } = useNuxtApp()
 
-const form = ref({ title: props.encounter.title, background: props.encounter.background })
-const isLoading = ref(false)
-const error = ref()
-
-watch(
-  () => props.open,
-  (v) => {
-    if (v) {
-      form.value = {
-        title: props.encounter.title,
-        background: props.encounter.background
-      }
+const form: Ref<UpdateEncounterForm> = ref({
+  title: props.encounter.title,
+  background: props.encounter.background,
+  data: {
+    isLoading: false,
+    campaign: false,
+    update: true,
+    error: null,
+    options: [],
+    changeColor: () => {
+      form.value.background = useRandomColor()
     }
   }
-)
+})
 
-function changeColor () {
-  form.value.background = randomColor()
-}
+async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Promise<void> {
+  form.value.data.error = null
+  form.value.data.isLoading = true
 
-async function updateEncounter ({ __init, ...formData }) {
-  error.value = null
   try {
-    isLoading.value = true
     const enc = await store.updateEncounter(
-      { ...formData, color: contrastColor(formData.background) },
+      { ...formData, color: useContrastColor(formData.background) },
       props.encounter.id
     )
     emit('updated', enc)
-  } catch (err) {
-    useBugsnag().notify(`Handeld in catch: ${err}`)
-    error.value = err.message
+  } catch (err: any) {
+    $logRocket.captureException(err as Error)
+    form.value.data.error = err.message
   } finally {
-    isLoading.value = false
+    form.value.data.isLoading = false
   }
 }
 </script>
@@ -52,40 +45,16 @@ async function updateEncounter ({ __init, ...formData }) {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <h2>{{ $t('encounters.update') }}</h2>
-    <p v-if="error" class="text-danger text-center">
-      {{ error }}
+    <p v-if="form.data.error" class="text-danger text-center">
+      {{ form.data.error }}
     </p>
     <FormKit
       v-model="form"
       type="form"
       :actions="false"
-      message-class="error-message"
       @submit="updateEncounter"
     >
-      <Input
-        focus
-        name="title"
-        :label="$t('inputs.titleLabel')"
-        validation="required|length:3,30"
-        required
-      />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <div class="mb-[14px]">
-          <Button :label="$t('actions.random')" @click="changeColor" />
-        </div>
-      </div>
-      <Button
-        type="submit"
-        :label="$t('actions.update')"
-        :loading="store.loading"
-        inline
-      />
+      <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
     </FormKit>
   </Modal>
 </template>
