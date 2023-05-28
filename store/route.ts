@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useRouteStore = defineStore('useRouteStore', () => {
   const routes: Ref<Route[]> = ref([
-    { label: 'navigation.home', url: '', requiredLogIn: false, requiredLogOut: false },
+    { label: 'navigation.about', url: 'about', requiredLogIn: false, requiredLogOut: false },
     { label: 'navigation.contact', url: 'contact', requiredLogIn: false, requiredLogOut: false }
     // { label: 'navigation.pricing', url: 'pricing', requiredLogIn: false, requiredLogOut: false },
   ])
