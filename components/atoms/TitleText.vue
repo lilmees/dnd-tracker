@@ -4,12 +4,14 @@ import { gsap, Power3 } from 'gsap'
 
 withDefaults(
   defineProps<{
-  title: string,
-  text: string,
+  title?: string,
+  text?: string,
   buttonLabel?: string,
   buttonLink?: string,
   center?: boolean
   }>(), {
+    text: '',
+    title: '',
     center: false,
     buttonLabel: '',
     buttonLink: ''
