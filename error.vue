@@ -12,9 +12,13 @@ const { data, refresh } = useFetch('https://meme-api.com/gimme')
       </h1>
       <div class="flex flex-wrap gap-x-4 pb-10">
         <NuxtLink :to="localePath('/')" class="w-fit">
-          <Button :label="$t('error.goHome')" color="primary" />
+          <button class="btn-primary">
+            {{ $t('error.goHome') }}
+          </button>
         </NuxtLink>
-        <Button :label="$t('error.meme')" @click="refresh" />
+        <button class="btn-secondary" @click="refresh">
+          {{ $t('error.meme') }}
+        </button>
       </div>
       <NuxtImg
         v-if="data"
