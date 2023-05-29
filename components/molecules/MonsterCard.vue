@@ -13,7 +13,7 @@ const isOpen: Ref<boolean> = ref(false)
 </script>
 
 <template>
-  <div class="rounded-xl w-full bg-black p-3 relative space-y-1">
+  <div class="rounded-lg w-full bg-background p-3 relative space-y-1">
     <Icon
       v-if="addable"
       v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"

@@ -41,7 +41,7 @@ async function logout (): Promise<void> {
 </script>
 
 <template>
-  <nav class="bg-black tracker-shadow">
+  <nav class="bg-tracker tracker-shadow">
     <div class="dnd-container py-4 flex justify-between items-center gap-4">
       <NuxtLink :to="localePath('/')">
         <h1 class="font-logo">

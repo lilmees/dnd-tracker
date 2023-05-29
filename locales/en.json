@@ -120,6 +120,7 @@
     "addHomebrew": "Create homebrew",
     "updateHomebrew": "Update homebrew",
     "monsterManual": "Monster manual",
+    "monsterNotFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!",
     "addCampaignHomebrew": "Add campaign homebrew",
     "newHomebrew": "Make a new homebrew",
     "link": "Link",

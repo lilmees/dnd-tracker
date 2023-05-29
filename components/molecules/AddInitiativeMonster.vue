@@ -29,6 +29,7 @@ watchDebounced(
 )
 
 async function fetchMonsters (query, page) {
+  isLoading.value = true
   try {
     const { results, count } = await open5e.getData({
       query: { ...query, page: page + 1 },
@@ -39,6 +40,8 @@ async function fetchMonsters (query, page) {
   } catch (err) {
     $logRocket.captureException(err)
     toast.error()
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -52,8 +55,8 @@ function paginate (newPage) {
 }
 
 async function addMonster (monster) {
+  isLoading.value = true
   try {
-    isLoading.value = true
     const row = useCreateRow(monster, 'monster', store.encounter.rows)
     await store.encounterUpdate({
       rows: [...store.encounter.rows, row]
@@ -90,7 +93,7 @@ function reset () {
       <h1 class="pb-4 text-center">
         {{ $t('encounter.monsterManual') }}
       </h1>
-      <div id="el" class="flex gap-6 max-w-md mx-auto">
+      <div id="el" class="flex gap-6 items-end max-w-xl mx-auto">
         <div class="grow">
           <Input
             v-model="form.search"
@@ -114,19 +117,30 @@ function reset () {
         </div>
       </div>
       <div class="overflow-y-auto max-h-full space-y-2">
-        <MonsterCard
-          v-for="hit in hits"
-          :key="hit.id"
-          :monster="hit"
-          addable
-          @add="addMonster"
-        />
-        <Pagination
-          v-if="pages > 1"
-          v-model="page"
-          :total-pages="pages"
-          @paginate="paginate"
-        />
+        <div v-if="isLoading" class="relative w-20 h-20 mx-auto">
+          <div class="loader" />
+        </div>
+        <template v-else-if="hits.length">
+          <MonsterCard
+            v-for="hit in hits"
+            :key="hit.id"
+            :monster="hit"
+            addable
+            @add="addMonster"
+          />
+          <Pagination
+            v-if="pages > 1"
+            v-model="page"
+            :total-pages="pages"
+            @paginate="paginate"
+          />
+        </template>
+        <p
+          v-else-if="!isLoading && (form.search || form.challenge_rating)"
+          class="text-center max-w-prose mx-auto"
+        >
+          {{ $t('encounter.monsterNotFound') }}
+        </p>
       </div>
     </Modal>
   </section>

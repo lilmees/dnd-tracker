@@ -24,7 +24,7 @@ if (props.campaign) {
   <div class="flex justify-between w-full gap-2 border-b border-primary">
     <div v-if="cam && cam.title" class="flex items-end gap-2 mb-1">
       <div
-        class="rounded w-10 h-10 tracker-shadow relative"
+        class="rounded-lg w-10 h-10 tracker-shadow relative"
         :style="{
           'background-color': cam?.background || '#000',
           color: cam?.color || '#fff'

@@ -39,7 +39,7 @@ watch(() => store.error, (v) => {
       <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4 items-start">
         <CampaignCard v-for="campaign in store.sortedCampaigns" :key="campaign.id" :campaign="campaign" />
       </div>
-      <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4">
+      <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-lg space-y-4">
         <h2>{{ $t('campaigns.noData.title') }}</h2>
         <p>{{ $t('campaigns.noData.text') }}</p>
         <button

@@ -74,7 +74,7 @@ async function moveRow (up: boolean): Promise<void> {
               && store.encounter.rows[index + 1].initiative === initiative
           "
           name="ph:arrow-down"
-          class="w-6 h-6 cursor-pointer text-primary"
+          class="w-6 h-6 cursor-pointer text-secondary"
           @click="moveRow(false)"
         />
         <Icon
@@ -82,7 +82,7 @@ async function moveRow (up: boolean): Promise<void> {
             && index > 0
             && store.encounter.rows[index - 1]?.initiative === initiative"
           name="ph:arrow-up"
-          class="w-6 h-6 cursor-pointer text-primary"
+          class="w-6 h-6 cursor-pointer text-secondary"
           @click="moveRow(true)"
         />
       </div>

@@ -21,7 +21,7 @@ const store = useCurrentCampaignStore()
     </div>
     <div
       v-if="store?.campaign?.homebrew_items?.length"
-      class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
+      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
     >
       <table class="min-w-full bg-tracker">
         <thead>
@@ -45,16 +45,16 @@ const store = useCurrentCampaignStore()
               {{ item.name }}
             </td>
             <td
-              class="px-2 py-1 border-r border-slate-700"
-              :class="{
-                'text-white': item.type === 'player',
-                'text-primary': item.type === 'summon',
-                'text-success': item.type === 'npc',
-                'text-danger': item.type === 'monster',
-                'text-warning': item.type === 'lair',
-              }"
+              class="flex gap-2 items-center px-2 py-1 border-r border-slate-700"
             >
-              {{ item.type || '' }}
+              <Icon
+                :name="useHomebrewIcon(item.type)"
+                :class="useHomebrewColor(item.type)"
+                size="20"
+              />
+              <p>
+                {{ item.type || '' }}
+              </p>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.health || '' }}

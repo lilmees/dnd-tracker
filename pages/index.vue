@@ -70,7 +70,7 @@ watch(tableVisible, (v: boolean) => {
         <div
           v-if="store.encounter"
           ref="table"
-          class="rounded-xl px-4 py-2 bg-tracker tracker-shadow"
+          class="rounded-lg p-4 bg-tracker tracker-shadow"
         >
           <EncounterHeader class="w-full pb-4" />
           <EncounterTable />

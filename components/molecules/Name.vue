@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
-withDefaults(
+const props = withDefaults(
   defineProps<{ name: string, type?: string}>(), {
     type: 'player'
   }
@@ -18,15 +18,13 @@ function updateName ({ __init, name }: Obj): void {
 <template>
   <div>
     <div class="flex gap-2 items-center pl-4">
+      <Icon
+        :name="useHomebrewIcon(type)"
+        :class="useHomebrewColor(type)"
+        size="20"
+      />
       <p
         class="peer cursor-pointer"
-        :class="{
-          'text-white': type === 'player',
-          'text-primary': type === 'summon',
-          'text-success': type === 'npc',
-          'text-danger': type === 'monster',
-          'text-warning': type === 'lair',
-        }"
         @click="isOpen = true"
       >
         {{ name }}

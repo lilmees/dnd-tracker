@@ -58,9 +58,11 @@ watchDebounced(
           :label="$t(store.encounter.campaign ? 'encounter.campaignBack' : 'encounter.back')"
           class="container-max"
         />
-        <EncounterHeader />
-        <EncounterTable />
-        <EncounterOptions class="pb-10" />
+        <div class="rounded-lg p-4 bg-tracker tracker-shadow space-y-4 mb-10">
+          <EncounterHeader class="w-full" />
+          <EncounterTable />
+          <EncounterOptions />
+        </div>
         <Input
           v-model="info"
           type="textarea"

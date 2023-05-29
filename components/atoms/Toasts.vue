@@ -18,7 +18,7 @@ const store = useToastStore()
         <div
           v-for="toast in store.sortedToasts"
           :key="toast.key"
-          class="w-full mb-1 bg-tracker tracker-shadow pointer-events-auto rounded-2xl"
+          class="w-full mb-1 bg-tracker tracker-shadow pointer-events-auto rounded-lg"
         >
           <div
             class="flex p-2 items-start gap-2"

@@ -117,19 +117,19 @@ function updateRow () {
       :url="row.link"
       @update="updateLink"
     />
-    <HeartModal
-      v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
-      :health="row.health"
-      :temp-health="row.tempHealth"
-      @update="updateHealth"
-    />
     <AcModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
       :ac="row?.ac || null"
       :temp-ac="row?.tempAc|| null"
       @update="updateAc"
+    />
+    <HeartModal
+      v-if="!['lair'].includes(row.type)"
+      v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
+      :health="row.health"
+      :temp-health="row.tempHealth"
+      @update="updateHealth"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
