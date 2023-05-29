@@ -56,7 +56,9 @@ export default defineNuxtConfig({
     manifest: {
       name: 'DND-TRACKER',
       short_name: 'DND-TRACKER',
+      description: 'Effortless Battle Management',
       theme_color: '#2A303C',
+      lang: 'en',
       icons: [
         {
           src: 'pwa-192.png',
