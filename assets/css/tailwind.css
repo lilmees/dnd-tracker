@@ -4,16 +4,16 @@
 
 @layer components {
   .btn {
-    @apply py-2 px-6 shadow rounded-md outline-none ring-white duration-200 ease-in-out font-bold;
+    @apply py-2 px-6 tracker-shadow rounded-lg outline-none ring-white duration-200 ease-in-out font-bold;
     @apply focus-within:ring active:scale-95 disabled:cursor-not-allowed;
   }
 
   .input {
-    @apply w-full py-2 px-3 border-none rounded text-white body-small placeholder-slate-400 bg-transparent;
+    @apply w-full py-2 px-3 border-none rounded-lg text-white body-small placeholder-slate-400 bg-transparent;
   }
 
   .input-inner {
-    @apply flex ring ring-slate-400 rounded overflow-hidden my-1;
+    @apply flex ring ring-slate-400 rounded-lg overflow-hidden my-1;
     @apply focus-within:ring-white;
   }
 
@@ -84,7 +84,7 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary hover:bg-primary/90 text-black;
+    @apply btn bg-primary hover:bg-primary/90 text-white;
   }
 
   .btn-secondary {
@@ -112,7 +112,7 @@
   }
 
   .tracker-shadow {
-    box-shadow: rgba(40, 53, 147, 0.3) 0px 0px 38px, rgba(40, 53, 147, 0.22) 0px 0px 12px;
+    box-shadow: rgba(79, 25, 170 , 0.3) 0px 0px 38px, rgba(79, 25, 170 , 0.22) 0px 0px 12px;
   }
 
   .tracker-shadow-pulse {
@@ -191,13 +191,13 @@
 
   @keyframes pulsate-shadow {
     0% {
-      box-shadow: 0 0 38px #283593;
+      box-shadow: 0 0 38px #4F19AA;
     }
     50% {
-      box-shadow: 0 0 70px #283593;
+      box-shadow: 0 0 70px #4F19AA;
     }
     100% {
-      box-shadow: 0 0 38px #283593;
+      box-shadow: 0 0 38px #4F19AA;
     }
   }
 

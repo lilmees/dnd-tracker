@@ -50,7 +50,7 @@ function rollDice (dice: string): void {
       <template v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']" :key="dice">
         <button
           v-tippy="{content: dice.toUpperCase(), placement: 'bottom', animation: 'shift-away'}"
-          class="bg-black tracker-shadow rounded-xl p-2 border-4 w-14 h-14"
+          class="bg-black tracker-shadow rounded-lg p-2 border-4 w-14 h-14"
           :class="{
             'border-secondary': dice === 'd100',
             'border-primary': dice === 'd20',
@@ -83,7 +83,7 @@ function rollDice (dice: string): void {
     >
       <section
         v-if="rolled && !ready"
-        class="bg-black border-4 rounded-xl py-2 px-6 w-fit mt-4"
+        class="bg-black border-4 rounded-lg py-2 px-6 w-fit mt-4"
         :class="{
           'border-secondary': rolled.dice === 'd100',
           'border-primary': rolled.dice === 'd20',

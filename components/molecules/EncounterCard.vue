@@ -62,7 +62,7 @@ function closeSettings (): void {
 
 <template>
   <div
-    class="rounded-xl tracker-shadow min-w-[250px] max-w-md relative group"
+    class="rounded-lg tracker-shadow min-w-[250px] max-w-md relative group"
     :style="{ 'background-color': encounter.background, color: encounter.color }"
   >
     <Icon

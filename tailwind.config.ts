@@ -15,15 +15,15 @@ export const theme = {
       logo: ['Logo', 'sans-serif']
     },
     colors: {
-      background: '#0e1315',
-      tracker: '#161d21',
-      primary: '#9eade6',
-      secondary: '#b4bfcd',
-      success: '#cede9c',
-      info: '#35a4cc',
-      warning: '#ffdf8a',
-      help: '#b09ce5',
-      danger: '#e693a9'
+      background: '#2A303C',
+      tracker: '#21252E',
+      primary: '#7333E0',
+      secondary: '#D926AA',
+      success: '#36D399',
+      info: '#3ABFF8',
+      warning: '#FBBD23',
+      help: '#1FB2A5',
+      danger: '#F87272'
     }
   },
   container: {

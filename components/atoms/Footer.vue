@@ -3,7 +3,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <div class="bg-black py-8 tracker-shadow">
+  <div class="bg-tracker py-8 tracker-shadow">
     <div class="dnd-container flex flex-col gap-4">
       <div class="flex flex-col md:flex-row justify-between">
         <NuxtLink :to="localePath('/')" class="mt-2">

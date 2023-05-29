@@ -14,7 +14,7 @@ const headers: Ref<{ label: string, key: string }[]> = ref([
     <div
       v-for="item in headers"
       :key="item.key"
-      class="first:border-t border-x border-slate-700 first:rounded-t-md last:rounded-b-md"
+      class="first:border-t border-x border-slate-700 first:rounded-t-lg last:rounded-b-lg"
     >
       <template v-if="Array.isArray(monster[item.key as keyof Monster])">
         <p

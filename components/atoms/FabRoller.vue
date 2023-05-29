@@ -44,7 +44,7 @@ function rollDice (dice: string): void {
     >
       <section
         v-if="rolled && !ready"
-        class="bg-black border-4 rounded-xl py-2 px-6 w-fit absolute bottom-20 left-1/2 -translate-x-1/2"
+        class="bg-black border-4 rounded-lg py-2 px-6 w-fit absolute bottom-20 left-1/2 -translate-x-1/2"
         :class="{
           'border-secondary': rolled.dice === 'd100',
           'border-primary': rolled.dice === 'd20',
@@ -94,7 +94,7 @@ function rollDice (dice: string): void {
       @mouseenter="isOpen = true"
     >
       <div
-        class="bg-transparent duration-500 ease-in-out rounded-xl p-2"
+        class="bg-transparent duration-500 ease-in-out rounded-lg p-2"
         :class="{'!bg-black tracker-shadow': isOpen}"
       >
         <template v-if="isOpen">
@@ -122,7 +122,7 @@ function rollDice (dice: string): void {
         <button
           v-if="!isOpen"
           v-tippy="{ content: $t('actions.roll'), animation: 'shift-away' }"
-          class="w-14 h-14 border-4 border-primary rounded-xl p-2 bg-black"
+          class="w-14 h-14 border-4 border-primary rounded-lg p-2 bg-black"
         >
           <NuxtImg
             src="/d20.webp"
@@ -149,7 +149,7 @@ function rollDice (dice: string): void {
               <button
                 v-if="isOpen"
                 v-tippy="{ content: dice.toUpperCase(), placement: 'left', animation: 'shift-away' }"
-                class="bg-black tracker-shadow rounded-xl p-2 border-4 w-14 h-14 z-0"
+                class="bg-black tracker-shadow rounded-lg p-2 border-4 w-14 h-14 z-0"
                 :class="{
                   'border-secondary': dice === 'd100',
                   'border-primary': dice === 'd20',

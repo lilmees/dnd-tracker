@@ -70,7 +70,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
           required
         />
         <button
-          class="btn-black mb-[14px]"
+          class="btn-black mb-[24px]"
           :aria-label="$t('actions.random')"
           @click="changeColor"
         >
