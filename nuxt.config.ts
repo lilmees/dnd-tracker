@@ -57,7 +57,9 @@ export default defineNuxtConfig({
       name: 'DND-TRACKER',
       short_name: 'DND-TRACKER',
       description: 'Effortless Battle Management',
-      theme_color: '#2A303C',
+      background_color: '#2A303C',
+      theme_color: '#21252E',
+      start_url: 'https://dnd-tracker.com',
       lang: 'en',
       icons: [
         {
