@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image-edge',
     'nuxt-simple-sitemap',
+    '@vite-pwa/nuxt',
     ['nuxt-mail', {
       message: {
         to: 'jeremy@dnd-tracker.com' // default fallback
@@ -49,6 +50,35 @@ export default defineNuxtConfig({
       logRocket: process.env.LOGROCKET_ID
     },
     stripeSk: process.env.STRIPE_SK
+  },
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'DND-TRACKER',
+      short_name: 'DND-TRACKER',
+      theme_color: '#2A303C',
+      icons: [
+        {
+          src: 'pwa-192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: 'pwa-512.png',
+          sizes: '512x512',
+          type: 'image/png'
+        },
+        {
+          src: 'pwa-512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable'
+        }
+      ]
+    },
+    client: {
+      installPrompt: true
+    }
   },
   vite: {
     plugins: [UnheadVite()]

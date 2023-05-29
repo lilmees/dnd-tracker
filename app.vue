@@ -26,6 +26,7 @@ onBeforeMount(() => profile.fetch())
 
 <template>
   <div>
+    <VitePwaManifest />
     <Toasts />
     <NuxtPage />
     <ClientOnly>
