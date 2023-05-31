@@ -96,8 +96,10 @@ function selectedSummoner (value: number): void {
     <button
       v-tippy="{
         content: $t('encounter.addCampaignHomebrew'),
-        animation: 'shift-away'
+        animation: 'shift-away',
+        touch: false
       }"
+      :aria-label="$t('encounter.addCampaignHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
       @click="isOpen = true"
@@ -133,7 +135,7 @@ function selectedSummoner (value: number): void {
             :key="hb.id"
           >
             <div
-              class="first:rounded-t-xl last:rounded-b-xl w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
+              class="first:rounded-t-lg last:rounded-b-lg w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
               :class="{
                 'border-2 border-b-2 border-primary': selected.filter(p => p.id === hb.id).length
               }"

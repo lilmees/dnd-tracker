@@ -35,7 +35,7 @@ watchDebounced(
       'bg-danger/10': row.health && row.health !== null && row.health < 1,
     }"
   >
-    <td class="px-2 py-1 border-r border-slate-700 text-primary text-center max-w-[30px]">
+    <td class="px-2 py-1 border-r border-slate-700 text-info text-center max-w-[30px]">
       {{ row.index + 1 }}
     </td>
     <td class="px-2 py-1 border-r border-slate-700">

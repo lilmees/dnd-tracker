@@ -33,22 +33,22 @@ function updatedEncounter (encounter: Encounter): void {
 <template>
   <NuxtLayout>
     <div v-if="store.loading" class="loader" />
-    <div v-else-if="store.campaign" class="py-4 space-y-4 mt-10 mb-20">
+    <div v-else-if="store.campaign" class="py-4 space-y-4 mb-20">
       <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
       <div
-        class="rounded w-full tracker-shadow relative p-2 flex"
+        class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
         :style="{
           'background-color': store.campaign.background || '#000',
           color: store.campaign.color || '#fff'
         }"
       >
-        <h1 class="grow text-center">
+        <h1 class="capitalize">
           {{ store.campaign.title }}
         </h1>
         <Back
           url="campaigns"
           :label="$t('campaign.back')"
-          class="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2"
+          class="hidden sm:block"
           :color="store.campaign.color || '#fff'"
         />
       </div>
@@ -73,17 +73,19 @@ function updatedEncounter (encounter: Encounter): void {
               @updated="updatedEncounter"
             />
           </div>
-          <div v-else class="space-y-2">
+          <div v-else class="space-y-4 pt-4">
             <p class="text-center">
               {{ $t('encounters.noData.title') }}
             </p>
-            <button
-              class="btn-primary mx-auto w-fit"
-              :aria-label="$t('encounters.add')"
-              @click="isCreatingEncounter = true"
-            >
-              {{ $t('encounters.add') }}
-            </button>
+            <div class="flex justify-center">
+              <button
+                class="btn-primary w-fit"
+                :aria-label="$t('encounters.add')"
+                @click="isCreatingEncounter = true"
+              >
+                {{ $t('encounters.add') }}
+              </button>
+            </div>
           </div>
         </div>
       </div>

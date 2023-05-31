@@ -4,7 +4,7 @@ import logRocket from 'logrocket'
 export default defineNuxtPlugin(({ pinia }) => {
   const id = useRuntimeConfig()?.public?.logRocket
 
-  if (!id || process.env.NODE_ENV === 'production') {
+  if (!id || process.env.NODE_ENV !== 'production') {
     return
   }
 

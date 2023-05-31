@@ -35,6 +35,8 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         src="/classes.png"
         alt="D20 logo dice"
         sizes="sm:250px md:250px lg:250px"
+        :width="250"
+        :height="250"
         format="webp"
         provider="imagekit"
         class="mx-auto visibility-pulse"

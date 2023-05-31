@@ -28,8 +28,7 @@ const headers: ComputedRef<string[]> = computed(() => {
 <template>
   <section>
     <div
-      class="inline-block rounded-xl overflow-x-auto overflow-y-hidden w-full"
-      :class="{'tracker-shadow': !store.isSandbox}"
+      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
     >
       <table class="min-w-full">
         <thead>

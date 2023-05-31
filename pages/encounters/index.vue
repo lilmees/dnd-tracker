@@ -62,7 +62,7 @@ watch(error, (v) => {
       </div>
       <div
         v-else
-        class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-xl space-y-4"
+        class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-lg space-y-4"
       >
         <h2>{{ $t('encounters.noData.title') }}</h2>
         <p>{{ $t('encounters.noData.text') }}</p>

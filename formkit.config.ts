@@ -47,7 +47,7 @@ const config: DefaultConfigOptions = {
         wrapper: 'input-wrapper'
       },
       checkbox: {
-        input: 'w-5 h-5 rounded border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer',
+        input: 'w-5 h-5 rounded-lg border-slate-400 disabled:pointer-events-none disabled:bg-slate-100 bg-transparent cursor-pointer',
         label: 'block text-lg mb-1',
         wrapper: 'flex flex-row gap-2 items-center'
       },
@@ -63,7 +63,7 @@ const config: DefaultConfigOptions = {
         options: 'flex flex-row'
       },
       form: {
-        messages: 'list-none p-0 mt-4 mb-0 bg-danger/10 border border-danger rounded px-3 py-2',
+        messages: 'list-none p-0 mt-4 mb-0 bg-danger/10 border border-danger rounded-lg px-3 py-2',
         message: 'text-danger text-xs'
       },
       submit: {

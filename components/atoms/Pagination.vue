@@ -55,7 +55,7 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
 <template>
   <div class="flex gap-6 justify-center items-center py-3">
     <button
-      class="flex items-center justify-center w-8 h-8 rounded-full bg-primary"
+      class="flex items-center justify-center w-8 h-8 rounded-full bg-primary tracker-shadow"
       :class="{ 'bg-slate-700': modelValue === 0 }"
       :disabled="modelValue === 0"
       @click="handlePrevious"
@@ -67,14 +67,14 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
         v-for="pageNumber in limitedNumbersList"
         :key="pageNumber"
         class="flex items-center justify-center w-8 h-8 rounded-full hover:font-bold focus:font-bold"
-        :class="{ 'font-bold': modelValue === pageNumber - 1 }"
+        :class="{ 'font-bold text-secondary': modelValue === pageNumber - 1 }"
         @click="handleSelect(pageNumber - 1)"
       >
         {{ pageNumber }}
       </button>
     </div>
     <button
-      class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary"
+      class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary tracker-shadow"
       :class="{ 'bg-slate-700': modelValue === totalPages - 1 }"
       :disabled="modelValue === totalPages - 1"
       @click="handleNext"

@@ -32,7 +32,7 @@ function updateNote (note: Note): void {
 </script>
 
 <template>
-  <section class="rounded-xl w-fit bg-black p-3 relative space-y-1 tracker-shadow group min-w-[250px]">
+  <section class="rounded-lg w-fit bg-tracker p-3 relative space-y-1 tracker-shadow group min-w-[250px]">
     <div class="flex gap-2 items-center justify-between">
       <h3 v-if="note.title">
         {{ note.title }}

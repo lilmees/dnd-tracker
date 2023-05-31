@@ -32,7 +32,7 @@ function reset (): void {
 </script>
 
 <template>
-  <div class="bg-primary/10 rounded-xl p-2" :class="{ 'mb-3': !result }">
+  <div class="bg-primary/10 rounded-lg p-2" :class="{ 'mb-3': !result }">
     <FormKit v-model="form" type="form" :actions="false" @submit="rollDice">
       <div class="flex gap-2 flex-wrap sm:flex-nowrap">
         <div>

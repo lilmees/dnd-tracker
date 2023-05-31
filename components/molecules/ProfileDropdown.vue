@@ -32,7 +32,7 @@ async function manageSubscription () {
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="bg-tracker p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
+      class="border-2 border-secondary bg-black p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -58,7 +58,7 @@ async function manageSubscription () {
     </button>
     <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div
-        class="bg-tracker flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b rounded-tl box-border text-slate-300"
+        class="border-2 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
       >
         <RouteLink
           v-for="route in routes"
@@ -69,13 +69,13 @@ async function manageSubscription () {
         />
         <template v-if="user">
           <ClientOnly>
-            <button
+            <!-- <button
               v-if="profile?.data?.stripe_session_id"
               class="text-slate-300 hover:text-white max-w-max font-bold"
               @click="manageSubscription"
             >
               {{ $t('navigation.subscription') }}
-            </button>
+            </button> -->
           </ClientOnly>
           <button
             class="text-danger hover:text-white max-w-max font-bold"
