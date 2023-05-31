@@ -1,6 +1,7 @@
 import meta from '@/seo/meta.json'
 
 export const useSeo = (): void => {
+  const { locale } = useI18n({ useScope: 'global' })
   const appName = 'DND TRACKER'
 
   useLocaleHead({
@@ -11,6 +12,9 @@ export const useSeo = (): void => {
 
   useHead({
     titleTemplate: title => (title ? `${title} | ${appName}` : appName),
+    htmlAttrs: {
+      lang: locale.value
+    },
     meta: [
       { hid: 'description', name: 'description', content: meta.description },
       { hid: 'robots', name: 'robots', content: 'index,follow' },
