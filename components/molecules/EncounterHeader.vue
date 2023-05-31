@@ -27,10 +27,10 @@ const store = useTableStore()
       <button
         v-tippy="{ content: $t('encounter.prev'), animation: 'shift-away' }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
-        class="disabled:opacity-40 disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-tracker"
+        class="group disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-tracker"
         @click="store.prevInitiative"
       >
-        <Icon name="tabler:chevron-left" class="w-6 h-6" />
+        <Icon name="tabler:chevron-left" class="group-disabled:opacity-40 w-6 h-6" />
       </button>
       <p class="uppercase font-bold px-2">
         {{ $t('inputs.initiativeLabel') }}

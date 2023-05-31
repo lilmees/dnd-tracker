@@ -8,9 +8,7 @@ const store = useTableStore()
   <div
     class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2"
   >
-    <p class="hidden md:block pr-2 text-slate-400">
-      {{ $t('encounter.actions') }}
-    </p>
+    <FabRoller />
     <AddInitiativeMonster />
     <template v-if="store?.encounter?.campaign || store.isSandbox">
       <AddInitiativeCampaignHomebrew />

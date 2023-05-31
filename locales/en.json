@@ -262,6 +262,7 @@
     "reset": "Reset",
     "remove": "Remove",
     "temp": "Temporary",
+    "rollShow": "Show dice roller",
     "rollHide": "Hide dice roller",
     "tryAgain": "Try again",
     "info": "Show information",

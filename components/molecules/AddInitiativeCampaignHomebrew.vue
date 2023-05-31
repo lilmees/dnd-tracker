@@ -96,7 +96,8 @@ function selectedSummoner (value: number): void {
     <button
       v-tippy="{
         content: $t('encounter.addCampaignHomebrew'),
-        animation: 'shift-away'
+        animation: 'shift-away',
+        touch: false
       }"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
