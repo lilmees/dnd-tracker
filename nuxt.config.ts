@@ -55,7 +55,7 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     manifest: {
       name: 'DND-TRACKER',
-      short_name: 'DND-TRACKER',
+      short_name: 'TRACKER',
       description: 'Effortless Battle Management',
       background_color: '#2A303C',
       theme_color: '#21252E',
