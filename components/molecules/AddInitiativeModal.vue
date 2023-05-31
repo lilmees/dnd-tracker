@@ -106,7 +106,7 @@ function closeModal (): void {
         animation: 'shift-away',
         touch: false
       }"
-      :aria-label=" $t('encounter.addHomebrew')"
+      :aria-label="$t('encounter.addHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >

@@ -85,6 +85,7 @@ function reset () {
         animation: 'shift-away',
         touch: false
       }"
+      :aria-label="$t('encounter.monsterManual')"
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >
