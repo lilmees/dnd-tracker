@@ -13,9 +13,9 @@ const localePath = useLocalePath()
         </NuxtLink>
         <div class="flex flex-row gap-y-4 gap-x-20 mt-3">
           <div class="mt-4 md:mt-0">
-            <h3 class="mb-4">
+            <p class="mb-4 head-3">
               Contact
-            </h3>
+            </p>
             <div class="flex flex-col gap-4">
               <NuxtLink to="mailto:jeremy@dnd-tracker.com" class="flex">
                 <Icon
@@ -35,9 +35,9 @@ const localePath = useLocalePath()
             </div>
           </div>
           <div class="mt-4 md:mt-0">
-            <h3 class="mb-4">
+            <p class="mb-4 head-3">
               Policies
-            </h3>
+            </p>
             <div class="flex flex-col gap-4">
               <NuxtLink :to="localePath('/cookie-policy')" class="flex">
                 <Icon name="material-symbols:cookie-outline-rounded" class="w-6 h-6 mr-2" />

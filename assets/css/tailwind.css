@@ -55,15 +55,15 @@
     @apply font-text scroll-smooth text-white bg-background accent-black;
   }
 
-  h1 {
+  h1, .head-1 {
     @apply font-bold font-title text-[1.5rem] leading-[1.75rem] md:text-[1.75rem] md:leading-[2rem] lg:text-[2rem] lg:leading-[2.25rem];
   }
 
-  h2 {
+  h2, .head-2 {
     @apply font-bold font-title text-[1.25rem] leading-[1.5rem] md:text-[1.5rem] md:leading-[1.5rem];
   }
 
-  h3 {
+  h3, .head-3 {
     @apply font-bold font-title text-[1rem] leading-[1.25rem] sm:text-[1.125rem] sm:leading-[1.25rem] md:text-[1.25rem] md:leading-[1.5rem];
   }
 

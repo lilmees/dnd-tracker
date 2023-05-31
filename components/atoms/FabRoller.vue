@@ -40,6 +40,7 @@ function rollDice (dice: string): void {
           animation: 'shift-away',
           touch: false
         }"
+        :aria-label=" $t(isShown ? 'actions.rollHide' : 'actions.rollShow')"
         class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
         @click="isShown = !isShown"
       >

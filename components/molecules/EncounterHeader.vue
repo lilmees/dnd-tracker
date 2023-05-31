@@ -16,6 +16,7 @@ const store = useTableStore()
       <button
         v-tippy="{ content: $t('actions.reset'), animation: 'shift-away' }"
         :disabled="!store.encounter.rows.length"
+        aria-label="Reset rounds"
         class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="store.encounterUpdate({ round: 1, activeIndex: 0 })"
       >
@@ -27,6 +28,7 @@ const store = useTableStore()
       <button
         v-tippy="{ content: $t('encounter.prev'), animation: 'shift-away' }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
+        :aria-label="$t('encounter.prev')"
         class="group disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-tracker"
         @click="store.prevInitiative"
       >
@@ -38,6 +40,7 @@ const store = useTableStore()
       <button
         v-tippy="{ content: $t('encounter.next'), animation: 'shift-away' }"
         :disabled="!store.encounter.rows.length"
+        :aria-label="$t('encounter.next')"
         class="p-2 border-l-2 border-tracker"
         @click="store.nextInitiative"
       >
