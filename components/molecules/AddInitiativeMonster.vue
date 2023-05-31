@@ -80,7 +80,11 @@ function reset () {
 <template>
   <section>
     <button
-      v-tippy="{ content: $t('encounter.monsterManual'), animation: 'shift-away' }"
+      v-tippy="{
+        content: $t('encounter.monsterManual'),
+        animation: 'shift-away',
+        touch: false
+      }"
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >

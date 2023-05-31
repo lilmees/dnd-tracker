@@ -69,13 +69,13 @@ async function manageSubscription () {
         />
         <template v-if="user">
           <ClientOnly>
-            <button
+            <!-- <button
               v-if="profile?.data?.stripe_session_id"
               class="text-slate-300 hover:text-white max-w-max font-bold"
               @click="manageSubscription"
             >
               {{ $t('navigation.subscription') }}
-            </button>
+            </button> -->
           </ClientOnly>
           <button
             class="text-danger hover:text-white max-w-max font-bold"

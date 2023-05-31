@@ -69,7 +69,6 @@ watchDebounced(
           name="info"
           :label="$t('encounter.info')"
         />
-        <FabRoller />
       </div>
     </ClientOnly>
   </NuxtLayout>
