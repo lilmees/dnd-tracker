@@ -123,6 +123,10 @@
     animation: pulsate-opacity 2s ease-in-out infinite;
   }
 
+  select, option {
+    @apply !text-white !bg-background
+  }
+
   .container-max {
     @apply max-w-[1800px] mx-auto;
   }
