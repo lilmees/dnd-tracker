@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useTimeout, useDraggable, useWindowSize } from '@vueuse/core'
 
+const props = withDefaults(defineProps<{ sandbox: boolean }>(), {
+  sandbox: false
+})
+
 const { ready, start } = useTimeout(5000, { controls: true })
 const { width } = useWindowSize()
 
@@ -10,11 +14,16 @@ const isOpen = ref<boolean>(false)
 const isShown = ref<boolean>(false)
 const rolled = ref<Rolled>()
 
-const xAxis = computed<number>(() => width.value - 75)
+const xAxis = computed<number>(() => width.value - (props.sandbox ? 150 : 75))
 const { style, x } = useDraggable(roller, { initialValue: { x: xAxis.value, y: 400 } })
 
 // watch if the window resizes and update the fabroller x axis
 watch(() => xAxis.value, (v: number) => { x.value = v })
+
+function toggleFab (): void {
+  isShown.value = !isShown.value
+  isOpen.value = false
+}
 
 function rollDice (dice: string): void {
   if (amount.value < 1 || amount.value > 50) {
@@ -42,7 +51,7 @@ function rollDice (dice: string): void {
         }"
         :aria-label=" $t(isShown ? 'actions.rollHide' : 'actions.rollShow')"
         class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
-        @click="isShown = !isShown"
+        @click="toggleFab"
       >
         <span class="md:hidden">
           {{ $t(isShown ? 'actions.rollHide' : 'actions.rollShow') }}
@@ -113,7 +122,7 @@ function rollDice (dice: string): void {
           v-if="isShown"
           ref="roller"
           v-click-outside="() => (isOpen = false)"
-          class="fixed group min-w-[72px]"
+          class="fixed z-10 group min-w-[72px]"
           :style="style"
           @mouseenter="isOpen = true"
         >
