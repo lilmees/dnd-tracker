@@ -61,6 +61,7 @@ function updateHealth ({ __init, health }: Obj): void {
           </div>
           <button
             class="btn-black mb-3"
+            type="button"
             :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
             @click="isRollingDice = !isRollingDice"
           >
