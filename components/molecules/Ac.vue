@@ -66,6 +66,7 @@ function updateAc ({ __init, ac }: Obj): void {
           </div>
           <div class="mb-3">
             <button
+              type="button"
               class="btn-black"
               :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
               @click="isRollingDice = !isRollingDice"
