@@ -109,6 +109,7 @@ async function moveRow (up: boolean): Promise<void> {
           </div>
           <button
             class="btn-black mb-3"
+            type="button"
             :aria-label="$t('actions.roll')"
             @click="diceRoll"
           >
