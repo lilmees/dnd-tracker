@@ -14,9 +14,9 @@ const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const visibleRoutes: ComputedRef<Route[]> = computed(() =>
+const visibleRoutes = computed<Route[]>(() =>
   user.value
     ? route.routes
     : route.routes.filter(r => !r.requiredLogIn)
@@ -43,11 +43,19 @@ async function logout (): Promise<void> {
 <template>
   <nav class="bg-tracker tracker-shadow">
     <div class="dnd-container py-4 flex justify-between items-center gap-4">
-      <NuxtLink :to="localePath('/')">
-        <h1 class="font-logo">
-          DND-TRACKER
-        </h1>
-      </NuxtLink>
+      <div class="flex gap-4">
+        <NuxtLink :to="localePath('/')">
+          <h1 class="font-logo">
+            DND-TRACKER
+          </h1>
+        </NuxtLink>
+        <p
+          v-if="$config.public.beta === 'true'"
+          class="text-secondary text-xs"
+        >
+          BETA
+        </p>
+      </div>
       <div class="hidden sm:flex justify-end items-center gap-4">
         <RouteLink
           v-for="link in visibleRoutes"

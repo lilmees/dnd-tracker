@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
+      beta: process.env.BETA,
       appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       stripePk: process.env.STRIPE_PK,
