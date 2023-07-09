@@ -24,14 +24,23 @@ function updateHealth ({ __init, health }: Obj): void {
 <template>
   <div>
     <div class="flex gap-2 items-center">
-      <div class="peer cursor-pointer flex gap-1" @click="isOpen = true">
-        <p v-if="health !== null" :class="{ 'text-danger font-bold': +health < 1 }">
+      <div
+        class="peer cursor-pointer flex gap-1"
+        @click="isOpen = true"
+      >
+        <p
+          v-if="health !== null"
+          :class="{ 'text-danger font-bold': +health < 1 }"
+        >
           {{ health }}
         </p>
         <p v-else-if="type !== 'lair'" class="text-slate-600">
           Add
         </p>
-        <span v-if="health !== null && tempHealth" class="text-primary">+{{ tempHealth }}</span>
+        <span
+          v-if="health !== null && tempHealth"
+          class="text-warning"
+        >+{{ tempHealth }}</span>
       </div>
       <Icon
         name="lucide:wrench"

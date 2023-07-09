@@ -170,6 +170,10 @@
         "title": "Speler is gestorven",
         "textMinHP": "De speler heeft te veel negatieve hp en is dood",
         "textDeathSaves": "De speler heeft 3 keer gefaald bij death saves en is dood"
+      },
+      "stable": {
+        "title": "Speler is gestabiliseerd",
+        "textDeathSaves": "De speler heeft 3 keer gesaved bij death saves en is gestabiliseerd"
       }
     }
   },

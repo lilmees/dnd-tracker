@@ -40,35 +40,38 @@ watchDebounced(
   <NuxtLayout name="wide">
     <ClientOnly>
       <div v-if="store.isLoading" class="loader" />
-      <div v-else-if="store.encounter" class="py-4 space-y-4">
-        <Back
-          :url="store.encounter.campaign
-            ? `campaigns/${typeof store.encounter.campaign === 'object'
-              ? store.encounter.campaign.id
-              : store.encounter.campaign
-            }-${
-              typeof store.encounter.campaign === 'object'
-                ? store.encounter.campaign.title.replace(/[\W]/g, '') === ''
-                  ? 'campaign'
-                  : store.encounter.campaign.title.replace(/[\W]/g, '')
-                : 'campaign'
-            }`
-            : 'encounters'
-          "
-          :label="$t(store.encounter.campaign ? 'encounter.campaignBack' : 'encounter.back')"
-          class="container-max"
-        />
-        <div class="rounded-lg p-4 bg-tracker tracker-shadow space-y-4 mb-10">
+      <div v-else-if="store.encounter" class="pt-20 pb-[100px]">
+        <div class="container-max flex justify-end pb-4">
+          <Back
+            :url="store.encounter.campaign
+              ? `campaigns/${typeof store.encounter.campaign === 'object'
+                ? store.encounter.campaign.id
+                : store.encounter.campaign
+              }-${
+                typeof store.encounter.campaign === 'object'
+                  ? store.encounter.campaign.title.replace(/[\W]/g, '') === ''
+                    ? 'campaign'
+                    : store.encounter.campaign.title.replace(/[\W]/g, '')
+                  : 'campaign'
+              }`
+              : 'encounters'
+            "
+            :label="$t(store.encounter.campaign ? 'encounter.campaignBack' : 'encounter.back')"
+          />
+        </div>
+        <div class="rounded-lg p-4 bg-tracker space-y-4">
           <EncounterHeader class="w-full" />
           <EncounterTable />
           <EncounterOptions />
         </div>
-        <Input
-          v-model="info"
-          type="textarea"
-          name="info"
-          :label="$t('encounter.info')"
-        />
+        <div class="pt-10">
+          <Input
+            v-model="info"
+            type="textarea"
+            name="info"
+            :label="$t('encounter.info')"
+          />
+        </div>
       </div>
     </ClientOnly>
   </NuxtLayout>

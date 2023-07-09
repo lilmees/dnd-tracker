@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
+      beta: process.env.BETA,
       appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       stripePk: process.env.STRIPE_PK,
@@ -55,7 +56,7 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     manifest: {
       name: 'DND-TRACKER',
-      short_name: 'DND-TRACKER',
+      short_name: 'TRACKER',
       description: 'Effortless Battle Management',
       background_color: '#2A303C',
       theme_color: '#21252E',

@@ -34,7 +34,9 @@ function updatedEncounter (encounter: Encounter): void {
   <NuxtLayout>
     <div v-if="store.loading" class="loader" />
     <div v-else-if="store.campaign" class="py-4 space-y-4 mb-20">
-      <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
+      <div class="flex justify-end">
+        <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
+      </div>
       <div
         class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
         :style="{
@@ -45,12 +47,14 @@ function updatedEncounter (encounter: Encounter): void {
         <h1 class="capitalize">
           {{ store.campaign.title }}
         </h1>
-        <Back
-          url="campaigns"
-          :label="$t('campaign.back')"
-          class="hidden sm:block"
-          :color="store.campaign.color || '#fff'"
-        />
+        <div class="flex justify-end">
+          <Back
+            url="campaigns"
+            :label="$t('campaign.back')"
+            class="hidden sm:block"
+            :color="store.campaign.color || '#fff'"
+          />
+        </div>
       </div>
       <div class="space-y-8 pt-10">
         <div class="space-y-4">
