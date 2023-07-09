@@ -4,29 +4,25 @@ export const useToastStore = defineStore('useToastStore', () => {
   const { $i18n } = useNuxtApp()
 
   const toasts: Ref<Toast[]> = ref([])
-  const sortedToasts: ComputedRef<Toast[]> = computed(() =>
-    [...toasts.value].sort((a: Toast, b: Toast) => b.key - a.key)
-  )
 
   function remove (key: number): void {
     toasts.value = toasts.value.filter(obj => obj.key !== key)
   }
 
   function add (toast: Toast): number {
-    const key: number = toasts.value.length
+    const key: number = Date.now()
     const timeout: number = toast.timeout || 5000
     const titleExists: boolean = toasts.value
       .findIndex(({ title }) => title === toast.title) > -1
 
     if (!titleExists) {
-      toasts.value = [...toasts.value, { ...toast, key }]
+      if (toasts.value.length > 4) {
+        toasts.value.shift()
+      }
+
+      toasts.value = [...toasts.value, { ...toast, key, timeout }]
     }
 
-    if (toast.timed) {
-      setTimeout(() => {
-        toasts.value = toasts.value.filter(obj => obj.key !== key)
-      }, timeout)
-    }
     return key
   }
 
@@ -70,7 +66,6 @@ export const useToastStore = defineStore('useToastStore', () => {
 
   return {
     toasts,
-    sortedToasts,
     remove,
     add,
     success,
