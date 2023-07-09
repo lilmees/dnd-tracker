@@ -12,7 +12,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <NuxtLink :to="localePath(`/${url}`)" class="flex justify-end">
+  <NuxtLink :to="localePath(`/${url}`)" class="w-fit">
     <div
       class="flex gap-2 items-center hover:text-primary duration-200 ease-in-out"
       :style="{ color: color || '#fff' }"

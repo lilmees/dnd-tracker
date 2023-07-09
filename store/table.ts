@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useToastStore } from '@/store/toast'
+import { DeathSaves } from '~/.nuxt/components'
 
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
@@ -8,11 +9,11 @@ export const useTableStore = defineStore('useTableStore', () => {
   const toast = useToastStore()
   const { $i18n, $logRocket } = useNuxtApp()
 
-  const encounter: Ref<Encounter | null> = ref(null)
-  const isLoading: Ref<boolean> = ref(true)
-  const isSandbox: Ref<boolean> = ref(false)
+  const encounter = ref<Encounter | null>(null)
+  const isLoading = ref<boolean>(true)
+  const isSandbox = ref<boolean>(false)
 
-  const includesSummond: ComputedRef<boolean> = computed(() => {
+  const includesSummond = computed<boolean>(() => {
     return encounter?.value?.rows && Array.isArray(encounter.value.rows)
       ? !!encounter.value.rows.flat().filter((r: Row) => r.summoner).length
       : false
@@ -134,6 +135,10 @@ export const useTableStore = defineStore('useTableStore', () => {
       rows[index] = row
     }
 
+    checkDeathSaves(row.deathSaves)
+
+    row.deathSaves.stable = row.deathSaves.save.every(v => v === true)
+
     await encounterUpdate({ rows })
   }
 
@@ -156,6 +161,21 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
+  function checkDeathSaves (saves: DeathSaves): void {
+    if (saves.fail.every(v => v === true)) {
+      toast.info({
+        title: $i18n.t('encounter.toast.died.title'),
+        text: $i18n.t('encounter.toast.died.textDeathSaves')
+      })
+    }
+    if (saves.save.every(v => v === true) && !saves.stable) {
+      toast.info({
+        title: $i18n.t('encounter.toast.stable.title'),
+        text: $i18n.t('encounter.toast.stable.textDeathSaves')
+      })
+    }
+  }
+
   return {
     encounter,
     isLoading,
@@ -167,6 +187,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     encounterUpdate,
     updateRow,
     nextInitiative,
-    prevInitiative
+    prevInitiative,
+    checkDeathSaves
   }
 })

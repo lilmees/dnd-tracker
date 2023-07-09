@@ -14,16 +14,18 @@ function updateLink (link: string): void {
 }
 
 function updateHealth (update: { type: string, amount: number }): void {
+  handleDeathSaves(update)
+
   switch (update.type) {
     case 'heal':
-      if (props.row.health && props.row.maxHealth) {
+      if (typeof props.row.health === 'number' && typeof props.row.maxHealth === 'number') {
         props.row.health + update.amount > props.row.maxHealth
           ? (props.row.health = props.row.maxHealth)
           : (props.row.health = props.row.health + update.amount)
       }
       break
     case 'damage':
-      if (props.row.tempHealth) {
+      if (typeof props.row.tempHealth === 'number') {
         if (props.row.tempHealth >= update.amount) {
           props.row.tempHealth = props.row.tempHealth - update.amount
         } else if (props.row.health) {
@@ -32,6 +34,9 @@ function updateHealth (update: { type: string, amount: number }): void {
         }
       } else if (props.row.health) {
         props.row.health = props.row.health - update.amount
+      }
+      if (typeof props.row.health === 'number' && props.row.health <= 0) {
+        resetDeathSaves()
       }
       break
     case 'temp':
@@ -42,18 +47,21 @@ function updateHealth (update: { type: string, amount: number }): void {
       props.row.maxHealth = update.amount
       break
   }
+
   // when user is dies because of going to much in the negative hp
   if (
     props.row.health &&
     props.row.maxHealth &&
     props.row.health < 0 &&
-    Math.abs(props.row.health) >= props.row.maxHealth
+    Math.abs(props.row.health) >= props.row.maxHealth &&
+    props.row.deathSaves.fail.every(v => v === true)
   ) {
     toast.info({
       title: $i18n.t('encounter.toast.died.title'),
       text: $i18n.t('encounter.toast.died.textMinHP')
     })
   }
+
   // when health is an negative number change it to 0
   if (props.row.health && props.row.health < 0) {
     props.row.health = 0
@@ -94,6 +102,29 @@ function updateAc (update: { type: string, amount: number }): void {
   }
 
   updateRow()
+}
+
+function handleDeathSaves (update: { type: string, amount: number }): void {
+  if (props.row.health === 0) {
+    props.row.deathSaves.stable = false
+    if (update.type !== 'heal' && update.type !== 'base') {
+      let updatedFails = 0
+      props.row.deathSaves.fail.forEach((s, i) => {
+        if (!s && updatedFails < 2) {
+          props.row.deathSaves.fail[i] = true
+          updatedFails++
+        }
+      })
+      store.checkDeathSaves(props.row.deathSaves)
+    } else {
+      resetDeathSaves()
+    }
+  }
+}
+
+function resetDeathSaves (): void {
+  props.row.deathSaves.fail = [false, false, false]
+  props.row.deathSaves.save = [false, false, false]
 }
 
 function updateCondition (conditions: Condition[]): void {
