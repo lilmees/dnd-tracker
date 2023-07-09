@@ -36,7 +36,7 @@ function updateAc ({ __init, ac }: Obj): void {
         </p>
         <span
           v-if="ac !== null && tempAc"
-          class="text-primary"
+          class="text-warning"
         >+{{ tempAc }}</span>
       </div>
       <Icon

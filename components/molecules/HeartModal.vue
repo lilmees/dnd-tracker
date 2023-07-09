@@ -15,7 +15,7 @@ function diceResult (amount: number): void {
 }
 
 function updateHealth ({ __init, health }: Obj): void {
-  emit('update', { type: type.value, amount: Number(health) })
+  emit('update', { type: type.value || 'heal', amount: Number(health) })
   isOpen.value = false
   isRollingDice.value = false
   type.value = null
