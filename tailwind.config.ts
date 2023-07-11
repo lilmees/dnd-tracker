@@ -11,8 +11,7 @@ export const theme = {
   extend: {
     fontFamily: {
       title: ['Lato', 'sans-serif'],
-      text: ['Inter', 'sans-serif'],
-      logo: ['Logo', 'sans-serif']
+      text: ['Inter', 'sans-serif']
     },
     colors: {
       background: '#2A303C',

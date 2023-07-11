@@ -37,6 +37,6 @@ export const useSeo = (): void => {
       url: 'https://dnd-tracker.com',
       logo: 'https://dnd-tracker.com/socials.png'
     }),
-    defineWebSite({ name: 'DND TRACKER: Effortless Battle Management' })
+    defineWebSite({ name: 'DnD Tracker: Effortless Encounter Management' })
   ])
 }

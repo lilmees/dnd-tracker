@@ -34,9 +34,13 @@ async function manageSubscription (): Promise<void> {
   >
     <div class="flex justify-between items-center gap-4 pb-10">
       <NuxtLink :to="localePath('/')">
-        <h1 class="font-logo">
-          DND-TRACKER
-        </h1>
+        <NuxtImg
+          src="/logo.svg"
+          alt="DnD Tracker logo"
+          sizes="sm:500px md:500px lg:500px"
+          class="h-16"
+          provider="imagekit"
+        />
       </NuxtLink>
       <Icon
         name="ic:round-clear"
