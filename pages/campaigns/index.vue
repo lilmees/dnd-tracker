@@ -22,7 +22,7 @@ watch(() => store.error, (v) => {
 <template>
   <NuxtLayout>
     <div v-if="store.loading || !store.sortedCampaigns" class="loader" />
-    <div v-else-if="!store.error">
+    <div v-else-if="!store.error" class="my-10">
       <div class="pt-5 pb-10 flex justify-between items-center">
         <h1 class="grow">
           {{ $t('campaigns.campaigns') }}

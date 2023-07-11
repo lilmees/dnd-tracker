@@ -55,9 +55,9 @@ export default defineNuxtConfig({
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
-      name: 'DND-TRACKER',
-      short_name: 'TRACKER',
-      description: 'Effortless Battle Management',
+      name: 'DnD-Tracker',
+      short_name: 'Tracker',
+      description: 'Effortless Encounter Management',
       background_color: '#2A303C',
       theme_color: '#21252E',
       start_url: 'https://dnd-tracker.com',

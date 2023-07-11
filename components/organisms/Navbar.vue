@@ -45,13 +45,17 @@ async function logout (): Promise<void> {
     <div class="dnd-container py-4 flex justify-between items-center gap-4">
       <div class="flex gap-4">
         <NuxtLink :to="localePath('/')">
-          <h1 class="font-logo">
-            DND-TRACKER
-          </h1>
+          <NuxtImg
+            src="/logo.svg"
+            alt="DnD Tracker logo"
+            sizes="sm:500px md:500px lg:500px"
+            class="h-16"
+            provider="imagekit"
+          />
         </NuxtLink>
         <p
           v-if="$config.public.beta === 'true'"
-          class="text-secondary text-xs"
+          class="text-secondary font-bold text-xs hidden sm:block relative top-4"
         >
           BETA
         </p>

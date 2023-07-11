@@ -7,9 +7,13 @@ const localePath = useLocalePath()
     <div class="dnd-container flex flex-col gap-4">
       <div class="flex flex-col md:flex-row justify-between">
         <NuxtLink :to="localePath('/')" class="mt-2">
-          <h1 class="font-logo">
-            DND-TRACKER
-          </h1>
+          <NuxtImg
+            src="/logo.svg"
+            alt="DnD Tracker logo"
+            sizes="sm:500px md:500px lg:500px"
+            class="h-16"
+            provider="imagekit"
+          />
         </NuxtLink>
         <div class="flex flex-row gap-y-4 gap-x-20 mt-3">
           <div class="mt-4 md:mt-0">

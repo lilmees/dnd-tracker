@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { _padding } from '#tailwind-config/theme'
-
 const emit = defineEmits(['remove'])
 const props = defineProps<{ toast: Toast }>()
 
-const { isActive, pause, resume } = useTimeoutPoll(() => {
+const { pause, resume } = useTimeoutPoll(() => {
   loading.value -= 1
 
   if (!loading.value) {
