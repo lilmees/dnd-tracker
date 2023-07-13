@@ -74,7 +74,7 @@ async function manageSubscription () {
               class="text-slate-300 hover:text-white max-w-max font-bold"
               @click="manageSubscription"
             >
-              {{ $t('navigation.subscription') }}
+              {{ $t('components.navbar.subscription') }}
             </button> -->
           </ClientOnly>
           <button
@@ -86,7 +86,7 @@ async function manageSubscription () {
               }
             "
           >
-            {{ $t('navigation.logout') }}
+            {{ $t('components.navbar.logout') }}
           </button>
         </template>
         <LangSwitcher class="pt-4" @click="isOpen = false" />

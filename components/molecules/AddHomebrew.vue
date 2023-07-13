@@ -65,7 +65,7 @@ function closeModal (): void {
       <Icon name="material-symbols:add" class="w-6 h-6 text-success" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.newHomebrew') }}</h2>
+      <h2>{{ $t('components.addHomebrew.newHomebrew') }}</h2>
       <FormKit
         id="form"
         v-model="form"

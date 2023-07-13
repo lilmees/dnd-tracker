@@ -81,22 +81,22 @@ function reset () {
   <section>
     <button
       v-tippy="{
-        content: $t('encounter.monsterManual'),
+        content: $t('components.addInitiativeMonster.manual'),
         animation: 'shift-away',
         touch: false
       }"
-      :aria-label="$t('encounter.monsterManual')"
+      :aria-label="$t('components.addInitiativeMonster.manual')"
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >
       <span class="md:hidden">
-        {{ $t('encounter.monsterManual') }}
+        {{ $t('components.addInitiativeMonster.manual') }}
       </span>
       <Icon name="solar:book-bookmark-linear" class="text-info w-10 h-10" />
     </button>
     <Modal v-if="isOpen" big @close="reset">
       <h1 class="pb-4 text-center">
-        {{ $t('encounter.monsterManual') }}
+        {{ $t('components.addInitiativeMonster.manual') }}
       </h1>
       <div id="el" class="flex gap-6 items-end max-w-xl mx-auto">
         <div class="grow">
@@ -104,7 +104,7 @@ function reset () {
             v-model="form.search"
             focus
             name="search"
-            :label="$t('inputs.nameLabel')"
+            :label="$t('components.inputs.nameLabel')"
             validation="length:0,50"
             placeholder="Copper dragon"
           />
@@ -114,7 +114,7 @@ function reset () {
             v-model="form.challenge_rating"
             name="challenge_rating"
             type="number"
-            :label="$t('inputs.challengeLabel')"
+            :label="$t('components.inputs.challengeLabel')"
             validation="number|between:0,30"
             min="0"
             max="30"
@@ -144,7 +144,7 @@ function reset () {
           v-else-if="!isLoading && (form.search || form.challenge_rating)"
           class="text-center max-w-prose mx-auto"
         >
-          {{ $t('encounter.monsterNotFound') }}
+          {{ $t('components.addInitiativeMonster.notFound') }}
         </p>
       </div>
     </Modal>

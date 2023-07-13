@@ -76,7 +76,7 @@ function closeModal () {
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.updateHomebrew') }}</h2>
+      <h2>{{ $t('components.updateInitiativeModal.updateHomebrew') }}</h2>
       <FormKit
         id="form"
         v-model="form"

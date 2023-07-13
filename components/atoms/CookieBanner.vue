@@ -12,15 +12,15 @@ const localePath = useLocalePath()
       <Icon name="material-symbols:cookie-outline-rounded" class="w-12 h-12" />
       <div class="flex flex-col items-center text-center gap-y-6 md:flex-row md:inline-flex md:gap-x-7">
         <h2>
-          {{ $t('cookie.text') }}
+          {{ $t('components.cookieBanner.text') }}
         </h2>
       </div>
       <div class="inline-flex gap-x-24 text-lg md:gap-x-8">
         <NuxtLink :to="localePath('/cookie-policy')" class="underline whitespace-pre underline-offset-2">
-          {{ $t('cookie.policy') }}
+          {{ $t('components.cookieBanner.policy') }}
         </NuxtLink>
         <button class="underline underline-offset-4" @click="acceptedCookie = 'true'">
-          {{ $t('cookie.button') }}
+          {{ $t('components.cookieBanner.button') }}
         </button>
       </div>
     </div>

@@ -47,8 +47,8 @@ export const useToastStore = defineStore('useToastStore', () => {
   function error (error: ToastSet = {}): number {
     return add({
       ...error,
-      title: error.title || $i18n.t('error.general.title'),
-      text: error.text || $i18n.t('error.general.text'),
+      title: error.title || $i18n.t('general.error.title'),
+      text: error.text || $i18n.t('general.error.text'),
       actions: error.actions || [],
       timed: error.timed || true,
       type: 'error'

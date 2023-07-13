@@ -50,8 +50,8 @@ async function manageSubscription (): Promise<void> {
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
       <template v-if="!loggedIn">
-        <RouteLink :label="$t('navigation.login')" url="login" />
-        <RouteLink :label="$t('navigation.register')" url="register" />
+        <RouteLink :label="$t('components.navbar.login')" url="login" />
+        <RouteLink :label="$t('components.navbar.register')" url="register" />
       </template>
       <RouteLink
         v-for="route in routes"
@@ -74,14 +74,14 @@ async function manageSubscription (): Promise<void> {
             class="text-slate-300 hover:text-white max-w-max font-bold"
             @click="manageSubscription"
           >
-            {{ $t('navigation.subscription') }}
+            {{ $t('components.navbar.subscription') }}
           </button>
         </ClientOnly>
         <div
           class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold pt-4"
           @click="$emit('logout')"
         >
-          {{ $t('navigation.logout') }}
+          {{ $t('components.navbar.logout') }}
         </div>
       </template>
     </div>

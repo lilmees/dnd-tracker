@@ -54,7 +54,7 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('campaigns.update') }}</h2>
+    <h2>{{ $t('components.updateCammpaignModal.update') }}</h2>
     <p v-if="error" class="text-danger text-center">
       {{ error }}
     </p>
@@ -68,13 +68,13 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       <Input
         focus
         name="title"
-        :label="$t('inputs.campaignLabel')"
+        :label="$t('components.inputs.campaignLabel')"
         validation="length:3,30"
       />
       <div class="flex gap-2 items-end">
         <ColorPicker
           name="background"
-          :label="$t('inputs.backgroundLabel')"
+          :label="$t('components.inputs.backgroundLabel')"
           validation="required"
           required
         />
@@ -89,10 +89,10 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       <button
         type="submit"
         class="btn-black w-full mt-3"
-        :aria-label="$t('homebrews.update')"
+        :aria-label="$t('components.updateCammpaignHomebrew.update')"
         :disabled="store.loading"
       >
-        {{ $t('homebrews.update') }}
+        {{ $t('components.updateCammpaignHomebrew.update') }}
       </button>
     </FormKit>
   </Modal>

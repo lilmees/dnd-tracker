@@ -56,7 +56,7 @@ watchDebounced(
               }`
               : 'encounters'
             "
-            :label="$t(store.encounter.campaign ? 'encounter.campaignBack' : 'encounter.back')"
+            :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
           />
         </div>
         <div class="rounded-lg p-4 bg-tracker space-y-4">
@@ -69,7 +69,7 @@ watchDebounced(
             v-model="info"
             type="textarea"
             name="info"
-            :label="$t('encounter.info')"
+            :label="$t('pages.encounter.info')"
           />
         </div>
       </div>

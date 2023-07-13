@@ -4,7 +4,7 @@
     "props": {
       "type": "select",
       "name": "type",
-      "label": "inputs.typeLabel",
+      "label": "components.inputs.typeLabel",
       "placeholder": "placeholder.type",
       "validation": "required",
       "options": "$data.options"
@@ -19,8 +19,8 @@
         "props": {
           "type": "select",
           "name": "summoner",
-          "label": "inputs.summonerLabel",
-          "placeholder": "inputs.nothing",
+          "label": "components.inputs.summonerLabel",
+          "placeholder": "components.inputs.nothing",
           "validation": "required",
           "options": "$data.summoners"
         }
@@ -31,7 +31,7 @@
     "$cmp": "FormKit",
     "props": {
       "name": "name",
-      "label": "inputs.nameLabel",
+      "label": "components.inputs.nameLabel",
       "validation": "required|length:3,30"
     }
   },
@@ -41,7 +41,7 @@
     "props": {
       "name": "amount",
       "type": "number",
-      "label": "inputs.amountLabel",
+      "label": "components.inputs.amountLabel",
       "validation": "between:1,15|number|required"
     }
   },
@@ -54,7 +54,7 @@
         "props": {
           "name": "initiative",
           "type": "number",
-          "label": "inputs.initiativeLabel",
+          "label": "components.inputs.initiativeLabel",
           "validation": "between:1,50|number"
         }
       },
@@ -88,7 +88,7 @@
     "props": {
       "name": "ac",
       "type": "number",
-      "label": "inputs.acLabel",
+      "label": "components.inputs.acLabel",
       "validation": "between:1,100|number"
     }
   },
@@ -98,7 +98,7 @@
     "props": {
       "name": "health",
       "type": "number",
-      "label": "inputs.hpLabel",
+      "label": "components.inputs.hpLabel",
       "validation": "between:1,1000|number"
     }
   },
@@ -106,7 +106,7 @@
     "$cmp": "FormKit",
     "props": {
       "name": "link",
-      "label": "inputs.linkLabel",
+      "label": "components.inputs.linkLabel",
       "validation": "length:10,200|url"
     }
   },
@@ -118,10 +118,10 @@
         "then": "encounter.addInInitiative",
         "else": {
           "if": "$data.encounter === false && $data.update === false",
-          "then": "encounter.addHomebrew",
+          "then": "components.addInitiativeModal.addHomeBrew",
           "else": {
             "if": "$data.update",
-            "then": "encounter.updateHomebrew"
+            "then": "components.updateInitiativeModal.updateHomebrew"
           }
         }
       },

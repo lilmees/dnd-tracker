@@ -38,8 +38,8 @@ function updateConditions (): void {
     <Modal v-if="isOpen" @close="isOpen = false">
       <h2>
         {{ !store.error
-          ? $t('encounter.update.conditions')
-          : $t('encounter.conditions.fetchErrorTitle')
+          ? $t('pages.encounter.update.conditions')
+          : $t('components.conditionModal.conditions.fetchErrorTitle')
         }}
       </h2>
       <div v-if="store.loading" class="loader" />

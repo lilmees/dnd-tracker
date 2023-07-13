@@ -21,17 +21,17 @@ watch(catVisible, (v: boolean) => {
     <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 container-max">
       <div class="container grid gap-10 lg:grid-cols-2">
         <TitleText
-          :title="$t('about.story')"
-          :text="$t('about.text1')"
+          :title="$t('pages.about.story')"
+          :text="$t('pages.about.text1')"
         />
         <div class="mt-20 lg:mt-32 flex md:justify-end">
-          <TitleText :text="$t('about.text2')" />
+          <TitleText :text="$t('pages.about.text2')" />
         </div>
       </div>
       <div ref="cat" class="container grid md:grid-cols-2 gap-10">
         <div class="space-y-6">
-          <TitleText :text="$t('about.text3')" />
-          <TitleText :text="$t('about.text4')" />
+          <TitleText :text="$t('pages.about.text3')" />
+          <TitleText :text="$t('pages.about.text4')" />
         </div>
         <NuxtImg
           src="/cat.webp"
@@ -42,9 +42,9 @@ watch(catVisible, (v: boolean) => {
           provider="imagekit"
         />
       </div>
-      <TitleText class="container" :text="$t('about.text5')" />
+      <TitleText class="container" :text="$t('pages.about.text5')" />
       <p class="max-w-prose text-center mx-auto">
-        {{ $t('about.end') }}
+        {{ $t('pages.about.end') }}
       </p>
     </div>
   </NuxtLayout>

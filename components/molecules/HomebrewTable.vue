@@ -102,10 +102,10 @@ const store = useCurrentCampaignStore()
     <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
       <div class="flex flex-col justify-center gap-4">
         <h2 class="pb-2">
-          {{ $t('campaign.homebrew.title') }}
+          {{ $t('components.homebrewTable.title') }}
         </h2>
         <p class="max-w-prose">
-          {{ $t('campaign.homebrew.text') }}
+          {{ $t('components.homebrewTable.text') }}
         </p>
       </div>
       <NuxtImg

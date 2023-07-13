@@ -68,12 +68,12 @@ async function logout (): Promise<void> {
           :url="link.url"
         />
         <template v-if="!user">
-          <RouteLink :label="$t('navigation.login')" url="login" />
-          <RouteLink :label="$t('navigation.register')" url="register" />
+          <RouteLink :label="$t('components.navbar.login')" url="login" />
+          <RouteLink :label="$t('components.navbar.register')" url="register" />
           <LangSwitcher />
         </template>
         <template v-else>
-          <NavDropdown :routes="route.playRoutes" :label="$t('navigation.play')" />
+          <NavDropdown :routes="route.playRoutes" :label="$t('components.navbar.play')" />
           <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
         </template>
       </div>

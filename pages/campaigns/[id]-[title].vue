@@ -35,7 +35,7 @@ function updatedEncounter (encounter: Encounter): void {
     <div v-if="store.loading" class="loader" />
     <div v-else-if="store.campaign" class="py-4 space-y-4 mb-20">
       <div class="flex justify-end">
-        <Back url="campaigns" :label="$t('campaign.back')" class="sm:hidden" />
+        <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>
       <div
         class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
@@ -50,7 +50,7 @@ function updatedEncounter (encounter: Encounter): void {
         <div class="flex justify-end">
           <Back
             url="campaigns"
-            :label="$t('campaign.back')"
+            :label="$t('pages.campaign.back')"
             class="hidden sm:block"
             :color="store.campaign.color || '#fff'"
           />
@@ -79,15 +79,15 @@ function updatedEncounter (encounter: Encounter): void {
           </div>
           <div v-else class="space-y-4 pt-4">
             <p class="text-center">
-              {{ $t('encounters.noData.title') }}
+              {{ $t('pages.encounters.noData.title') }}
             </p>
             <div class="flex justify-center">
               <button
                 class="btn-primary w-fit"
-                :aria-label="$t('encounters.add')"
+                :aria-label="$t('pages.encounters.add')"
                 @click="isCreatingEncounter = true"
               >
-                {{ $t('encounters.add') }}
+                {{ $t('pages.encounters.add') }}
               </button>
             </div>
           </div>

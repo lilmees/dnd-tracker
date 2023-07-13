@@ -7,19 +7,19 @@ const { $i18n } = useNuxtApp()
 const headers: ComputedRef<string[]> = computed(() => {
   const headers = [
     '',
-    $i18n.t('encounter.headers.name'),
-    $i18n.t('encounter.headers.init'),
-    $i18n.t('encounter.headers.ac'),
-    $i18n.t('encounter.headers.hp'),
-    $i18n.t('encounter.headers.actions'),
-    $i18n.t('encounter.headers.conditions'),
-    $i18n.t('encounter.headers.note'),
-    $i18n.t('encounter.headers.deathSaves'),
+    $i18n.t('components.encounterTable.headers.name'),
+    $i18n.t('components.encounterTable.headers.init'),
+    $i18n.t('components.encounterTable.headers.ac'),
+    $i18n.t('components.encounterTable.headers.hp'),
+    $i18n.t('components.encounterTable.headers.actions'),
+    $i18n.t('components.encounterTable.headers.conditions'),
+    $i18n.t('components.encounterTable.headers.note'),
+    $i18n.t('components.encounterTable.headers.deathSaves'),
     'con',
-    $i18n.t('encounter.headers.modify')
+    $i18n.t('components.encounterTable.headers.modify')
   ]
   if (store.includesSummond) {
-    headers.splice(2, 0, $i18n.t('encounter.headers.summond'))
+    headers.splice(2, 0, $i18n.t('components.encounterTable.headers.summond'))
   }
   return headers
 })
@@ -58,7 +58,7 @@ const headers: ComputedRef<string[]> = computed(() => {
         v-if="!store?.encounter?.rows.length"
         class="bg-tracker w-full px-8 py-4"
       >
-        {{ $t('encounter.empty') }}
+        {{ $t('components.encounterTable.empty') }}
       </div>
     </div>
   </section>

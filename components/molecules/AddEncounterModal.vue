@@ -74,7 +74,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('encounters.title') }}</h2>
+    <h2>{{ $t('components.addEncounterModal.title') }}</h2>
     <p v-if="form.data.error" class="text-danger text-center">
       {{ form.data.error }}
     </p>

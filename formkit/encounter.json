@@ -3,7 +3,7 @@
     "$cmp": "FormKit",
     "props": {
       "name": "title",
-      "label": "inputs.titleLabel",
+      "label": "components.inputs.titleLabel",
       "validation": "required|length:3,30"
     }
   },
@@ -13,8 +13,8 @@
     "props": {
       "type": "select",
       "name": "campaign",
-      "label": "inputs.campaignLabel",
-      "placeholder": "campaigns.no",
+      "label": "components.inputs.campaignLabel",
+      "placeholder": "general.noSelected",
       "options": "$data.options"
     }
   },
@@ -35,7 +35,7 @@
             "props": {
               "name": "background",
               "type": "color",
-              "label": "inputs.backgroundLabel",
+              "label": "components.inputs.backgroundLabel",
               "validation": "required"
             }
           }
@@ -65,7 +65,7 @@
     "props": {
       "label": {
         "if": "$data.update === false",
-        "then": "encounters.add",
+        "then": "pages.encounters.add",
         "else": {
           "if": "$data.update",
           "then": "actions.update"

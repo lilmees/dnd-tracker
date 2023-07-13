@@ -58,34 +58,34 @@ async function addHomebrew ({ __init, ...formData }: Obj): Promise<void> {
       <Input
         focus
         name="name"
-        :label="$t('inputs.nameLabel')"
+        :label="$t('components.inputs.nameLabel')"
         validation="required|length:3,30"
         required
       />
       <Input
         name="ac"
         type="number"
-        :label="$t('inputs.acLabel')"
+        :label="$t('components.inputs.acLabel')"
         validation="between:1,100|number"
       />
       <Input
         name="health"
         type="number"
-        :label="$t('inputs.hpLabel')"
+        :label="$t('components.inputs.hpLabel')"
         validation="between:1,1000|number"
       />
       <Input
         name="link"
-        :label="$t('inputs.linkLabel')"
+        :label="$t('components.inputs.linkLabel')"
         validation="length10,200|url"
       />
       <button
         type="submit"
         class="btn-black w-full"
-        :aria-label="$t('homebrews.add')"
+        :aria-label="$t('components.addCammpaignHomebrew.add')"
         :disabled="isLoading"
       >
-        {{ $t('homebrews.add') }}
+        {{ $t('components.addCammpaignHomebrew.add') }}
       </button>
     </FormKit>
   </Modal>

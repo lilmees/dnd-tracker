@@ -88,7 +88,7 @@ async function moveRow (up: boolean): Promise<void> {
       </div>
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('encounter.update.initiative') }}</h2>
+      <h2>{{ $t('pages.encounter.update.initiative') }}</h2>
       <FormKit
         v-model="form"
         type="form"
@@ -101,7 +101,7 @@ async function moveRow (up: boolean): Promise<void> {
             <Input
               focus
               name="initiative"
-              :label="$t('inputs.initiativeLabel')"
+              :label="$t('components.inputs.initiativeLabel')"
               validation="required|between:1,50|number"
               type="number"
               required

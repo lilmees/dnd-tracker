@@ -42,7 +42,7 @@ async function subscribe () {
         <span class="mr-2 text-5xl font-extrabold">
           {{ product.prices[yearly && product.prices.length > 1 ? 1 : 0] }}€
         </span>
-        <span>/{{ $t(yearly ? 'pricing.year' : 'pricing.month') }}</span>
+        <span>/{{ $t(yearly ? 'general.year' : 'general.month') }}</span>
       </div>
       <ul class="mb-8 space-y-4 text-left">
         <li
@@ -62,10 +62,10 @@ async function subscribe () {
     </div>
     <button
       class="btn-primary w-full"
-      :aria-label="current ? $t('pricing.current') : $t('pricing.start')"
+      :aria-label="current ? $t('components.pricingCard.current') : $t('components.pricingCard.start')"
       :disabled="current"
     >
-      {{ current ? $t('pricing.current') : $t('pricing.start') }}
+      {{ current ? $t('components.pricingCard.current') : $t('components.pricingCard.start') }}
     </button>
   </div>
 </template>

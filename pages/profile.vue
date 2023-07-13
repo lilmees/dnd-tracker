@@ -84,30 +84,30 @@ async function deleteUser (): Promise<void> {
           <h1>{{ profile.data.username }}</h1>
         </div>
         <p>
-          <span class="font-bold">{{ $t('inputs.nameLabel') }}:</span> {{ profile.data.name }}
+          <span class="font-bold">{{ $t('components.inputs.nameLabel') }}:</span> {{ profile.data.name }}
         </p>
         <p>
-          <span class="font-bold">{{ $t('inputs.emailLabel') }}:</span> {{ profile.data.email }}
+          <span class="font-bold">{{ $t('components.inputs.emailLabel') }}:</span> {{ profile.data.email }}
         </p>
         <p>
-          <span class="font-bold">{{ $t('inputs.passwordLabel') }}: 🤫</span>
+          <span class="font-bold">{{ $t('components.inputs.passwordLabel') }}: 🤫</span>
         </p>
         <div class="flex flex-wrap gap-x-4 gap-y-2">
           <button
             class="btn-black"
-            :aria-label="$t('profile.update')"
+            :aria-label="$t('pages.profile.update')"
             :disabled="isLoading"
             @click="isUpdating = true"
           >
-            {{ $t('profile.update') }}
+            {{ $t('pages.profile.update') }}
           </button>
           <button
             class="btn-danger"
-            :aria-label="$t('profile.delete')"
+            :aria-label="$t('pages.profile.delete')"
             :disabled="isLoading"
             @click="needConfirmation = true"
           >
-            {{ $t('profile.delete') }}
+            {{ $t('pages.profile.delete') }}
           </button>
         </div>
         <ConfirmationModal
@@ -119,7 +119,7 @@ async function deleteUser (): Promise<void> {
       </template>
       <template v-else>
         <h1 class="text-center">
-          {{ $t('profile.update') }}
+          {{ $t('pages.profile.update') }}
         </h1>
         <div class="flex flex-col gap-2 items-center">
           <div class="w-[100px] h-[100px]">
@@ -131,7 +131,7 @@ async function deleteUser (): Promise<void> {
             />
           </div>
           <TextButton @click="randomAvatar">
-            {{ $t('register.random') }}
+            {{ $t('pages.register.random') }}
           </TextButton>
         </div>
         <p v-if="error" class="text-danger text-center">
@@ -147,26 +147,26 @@ async function deleteUser (): Promise<void> {
           <Input
             focus
             name="name"
-            :label="$t('inputs.fullNameLabel')"
+            :label="$t('components.inputs.fullNameLabel')"
             validation="required|length:3,30|alpha_spaces"
             required
           />
           <Input
             name="username"
-            :label="$t('inputs.usernameLabel')"
+            :label="$t('components.inputs.usernameLabel')"
             validation="required|length:3,15|alpha_spaces"
             required
           />
           <Input
             name="email"
-            :label="$t('inputs.emailLabel')"
+            :label="$t('components.inputs.emailLabel')"
             validation="required|length:5,50|email"
             required
           />
           <Input
             name="password"
             type="password"
-            :label="$t('inputs.passwordLabel')"
+            :label="$t('components.inputs.passwordLabel')"
             validation="required|length:6,50"
             required
           />

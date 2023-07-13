@@ -20,8 +20,8 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
     isLoading.value = true
     await store.forgotPassword(email)
     toast.success({
-      title: $i18n.t('forgotPassword.toast.success.title'),
-      text: $i18n.t('forgotPassword.toast.success.text')
+      title: $i18n.t('pages.forgotPassword.toast.success.title'),
+      text: $i18n.t('pages.forgotPassword.toast.success.text')
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
@@ -38,7 +38,7 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
-        {{ $t('forgotPassword.title') }}
+        {{ $t('pages.forgotPassword.title') }}
       </h1>
       <NuxtImg
         src="/dice.webp"
@@ -61,25 +61,25 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
         <Input
           focus
           name="email"
-          :label="$t('inputs.emailLabel')"
+          :label="$t('components.inputs.emailLabel')"
           validation="required|length:5,50|email"
           required
         />
         <button
           type="submit"
           class="btn-black w-full mt-3"
-          :aria-label="$t('forgotPassword.reset')"
+          :aria-label="$t('pages.forgotPassword.reset')"
           :disabled="isLoading"
         >
-          {{ $t('forgotPassword.reset') }}
+          {{ $t('pages.forgotPassword.reset') }}
         </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">
-          <TextButton>{{ $t('login.new') }}</TextButton>
+          <TextButton>{{ $t('pages.login.new') }}</TextButton>
         </NuxtLink>
         <NuxtLink :to="localePath('/login')">
-          <TextButton>{{ $t('login.signIn') }}</TextButton>
+          <TextButton>{{ $t('pages.login.signIn') }}</TextButton>
         </NuxtLink>
       </div>
     </section>

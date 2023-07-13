@@ -48,21 +48,21 @@ watch(tableVisible, (v: boolean) => {
       <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
         <div class="container grid gap-10 lg:grid-cols-2">
           <TitleText
-            :title="$t('home.textBlock1.title')"
-            :text="$t('home.textBlock1.text')"
+            :title="$t('pages.home.textBlock1.title')"
+            :text="$t('pages.home.textBlock1.text')"
             button-link="roadmap"
-            :button-label="'Go to the roadmap'"
+            :button-label="$t('pages.home.textBlock1.button')"
           />
           <div class="mt-20 lg:mt-32 flex md:justify-end">
             <Summary
-              :title="$t('home.summary.title')"
+              :title="$t('pages.home.summary.title')"
               :items="[
-                $t('home.summary.item1'),
-                $t('home.summary.item2'),
-                $t('home.summary.item3'),
-                $t('home.summary.item4'),
-                $t('home.summary.item5'),
-                $t('home.summary.item6'),
+                $t('pages.home.summary.item1'),
+                $t('pages.home.summary.item2'),
+                $t('pages.home.summary.item3'),
+                $t('pages.home.summary.item4'),
+                $t('pages.home.summary.item5'),
+                $t('pages.home.summary.item6'),
               ]"
             />
           </div>
@@ -89,8 +89,8 @@ watch(tableVisible, (v: boolean) => {
         </div>
         <TitleText
           center
-          :title="$t('home.textBlock2.title')"
-          :text="$t('home.textBlock2.text')"
+          :title="$t('pages.home.textBlock2.title')"
+          :text="$t('pages.home.textBlock2.text')"
         />
       </div>
     </div>

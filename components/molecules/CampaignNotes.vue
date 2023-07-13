@@ -41,15 +41,15 @@ function updatedNote (note: Note): void {
     </div>
     <div v-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
       <p class="text-center">
-        {{ $t('notes.none') }}
+        {{ $t('components.campaignNotes.none') }}
       </p>
       <div class="flex justify-center">
         <button
           class="btn-primary w-fit mx-auto"
-          :aria-label="$t('notes.add')"
+          :aria-label="$t('components.addCampaignNotes.add')"
           @click="isOpen = true"
         >
-          {{ $t('notes.add') }}
+          {{ $t('components.addCampaignNotes.add') }}
         </button>
       </div>
     </div>

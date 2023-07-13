@@ -1,253 +1,4 @@
 {
-  "cookie": {
-    "text": "When u use this website you accept that we only use functionel cookies.",
-    "policy": "Cookie policy",
-    "button": "OK"
-  },
-  "home": {
-    "start": "Let the session start",
-    "demo": "This isn't available in the demo",
-    "textBlock1": {
-      "title": "Made with love 💜",
-      "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
-      "button": "Go to the roadmap"
-    },
-    "summary": {
-      "title": "Why choose dnd-tracker for your encounters 🤔",
-      "item1": "Live updating between different devices",
-      "item2": "We are constantly working to optimize the product",
-      "item3": "Everything in 1 convenient place for the DM",
-      "item4": "Integrated dice roller",
-      "item5": "Plenty of information you can get your hands on",
-      "item6": "Attractive dark mode design for all vampires among us"
-    },
-    "textBlock2": {
-      "title": "Weird stuff 🐛",
-      "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
-    },
-    "diceRoller": {
-      "title": "Roll with ease",
-      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
-    }
-  },
-  "about": {
-    "story": "Our story 📖",
-    "text1": "Welcome to DnD-Tracker, your go-to destination for effortlessly managing your Dungeon and Dragons encounters! Our website was made with passion and dedication in Belgium, where we believe that playing D&D should be all about fun and adventure.",
-    "text2": "At DnD-Tracker, we understand how hard it can be for Dungeon Masters to manage all the moving parts of an encounter. That's why we created a tool that makes it easy for them to focus on the adventure, while we do the heavy lifting for them.",
-    "text3": "Our story began when a friend, who happened to be a Dungeon Master, asked us to make some macros for him in Excel. Unfortunately, we weren't very proficient with Excel, but we were determined to find a better solution. That's when we decided to create a website that would offer a more intuitive and user-friendly way to manage encounters.",
-    "text4": "Our goal is to make the Dungeon Master's life as easy as possible, so they can spend more time creating engaging adventures and less time dealing with the logistics. With DnD-Tracker, you can effortlessly manage all aspects of your encounters, from initiative tracking to monster stats and more.",
-    "text5": "We are constantly striving to improve our website and make it the best possible tool for Dungeon Masters everywhere. Whether you're a seasoned veteran or a new player just getting started, DnD-Tracker has everything you need to make your D&D experience even more enjoyable.",
-    "end": "Thank you for choosing DnD-Tracker, and we hope you have a great time playing D&D!"
-  },
-  "error": {
-    "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
-    "meme": "I want another meme",
-    "goHome": "Go to homepage",
-    "general": {
-      "title": "Error",
-      "text": "Something went wrong"
-    }
-  },
-  "success": {
-    "general": {
-      "title": "Success",
-      "text": "Your changes have been successfully saved!"
-    }
-  },
-  "inputs": {
-    "emailLabel": "Email address",
-    "passwordLabel": "Password",
-    "usernameLabel": "Username",
-    "nameLabel": "Name",
-    "fullNameLabel": "Full name",
-    "titleLabel": "Title",
-    "backgroundLabel": "Background",
-    "campaignLabel": "Campaign",
-    "initiativeLabel": "Initiative",
-    "acLabel": "AC",
-    "hpLabel": "HP",
-    "linkLabel": "Url link",
-    "typeLabel": "Type",
-    "amountLabel": "Amount",
-    "summonerLabel": "Summoner",
-    "textLabel": "Text",
-    "questionLabel": "Your question?",
-    "challengeLabel": "Challenge rating",
-    "nothing": "Nothing selected"
-  },
-  "placeholder": {
-    "type": "Choose your type"
-  },
-  "campaigns": {
-    "campaign": "Campaign",
-    "no": "No campaign",
-    "campaigns": "Campaigns",
-    "title": "Create a new campaign",
-    "update": "Update campaign {title}",
-    "add": "Create campaign",
-    "noData": {
-      "title": "You have no created campaigns",
-      "text": "Create a campaign and start playing around witth all the posibilities"
-    }
-  },
-  "campaign": {
-    "back": "Back to campaigns",
-    "goCampaign": "Go to campaign",
-    "homebrew": {
-      "title": "Ready to unleash your creativity?",
-      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
-    }
-  },
-  "encounters": {
-    "encounter": "Encounter",
-    "encounters": "Encounters",
-    "title": "Create a new encounter",
-    "update": "Update encounter {title}",
-    "add": "Create encounter",
-    "noData": {
-      "title": "You have no created encounters",
-      "text": "Create a encounter and start playing around witth all the posibilities"
-    }
-  },
-  "encounter": {
-    "next": "Next",
-    "prev": "Previous",
-    "back": "Back to encounters",
-    "campaignBack": "Back to campaign",
-    "round": "Round",
-    "addInitiative": "Add initiative",
-    "addInInitiative": "Add in initiative",
-    "addHomebrew": "Create homebrew",
-    "updateHomebrew": "Update homebrew",
-    "monsterManual": "Monster manual",
-    "monsterNotFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!",
-    "addCampaignHomebrew": "Add campaign homebrew",
-    "newHomebrew": "Make a new homebrew",
-    "link": "Link",
-    "conditionInfo": "Effect information",
-    "confirmDelete": "Are you sure you want to delete the current row",
-    "copyPlayerInit": "Use summoner initiative",
-    "info": "You can jot something down here",
-    "empty": "Add a row to your encounter to get started!",
-    "actions": "Actions:",
-    "update": {
-      "name": "Update name",
-      "initiative": "Update initiative",
-      "ac": "Update AC",
-      "hp": "Update HP",
-      "link": "Update link",
-      "conditions": "Update conditions"
-    },
-    "tooltip": {
-      "link": "Link",
-      "hp": "HP actions",
-      "ac": "AC actions",
-      "condition": "Conditions",
-      "attacks": "Possible attacks"
-    },
-    "headers": {
-      "name": "Name",
-      "init": "Init",
-      "ac": "AC",
-      "hp": "HP",
-      "actions": "Actions",
-      "conditions": "Conditions",
-      "note": "Notes",
-      "deathSaves": "Death saves",
-      "concentration": "Concentration",
-      "modify": "Modify",
-      "summond": "Summoner"
-    },
-    "conditions": {
-      "fetchErrorTitle": "Error while getting conditions"
-    },
-    "toast": {
-      "removed": {
-        "title": "Encounter is removed",
-        "text": "Someone removed the encounter so it can't be used anymore"
-      },
-      "died": {
-        "title": "Player died",
-        "textMinHP": "The player has too many negative hp and is dead",
-        "textDeathSaves": "The player failed his death saves three times and is dead"
-      },
-      "stable": {
-        "title": "Player stabilized",
-        "textDeathSaves": "The player saved his death saves three times and is stabilized"
-      }
-    }
-  },
-  "register": {
-    "register": "Register",
-    "random": "Random avatar",
-    "toast": {
-      "success": {
-        "title": "Successfully registrerd",
-        "text": "Confirm your email address with the email we have sent you and afterwards you can login."
-      }
-    }
-  },
-  "login": {
-    "title": "Sign in to your account",
-    "signIn": "Sign in",
-    "new": "New user",
-    "forgot": "Forgot password"
-  },
-  "resetPassword": {
-    "title": "Reset password",
-    "reset": "Reset password",
-    "toast": {
-      "success": {
-        "title": "Password successfully resetted"
-      }
-    }
-  },
-  "forgotPassword": {
-    "title": "Reset password",
-    "reset": "Send reset email",
-    "toast": {
-      "success": {
-        "title": "Email is sent",
-        "text": "The email is sent to your mailbox."
-      }
-    }
-  },
-  "navigation": {
-    "logout": "Log out",
-    "login": "Log in",
-    "register": "Register",
-    "home": "Home",
-    "contact": "Contact",
-    "about": "About us",
-    "collections": "Collections",
-    "encounters": "Encounters",
-    "campaigns": "Campaignes",
-    "profile": "Profile",
-    "pricing": "Pricing",
-    "play": "Play",
-    "subscription": "Subscription"
-  },
-  "profile": {
-    "password": "Update password",
-    "update": "Update profile",
-    "delete": "Delete profile"
-  },
-  "account": {
-    "general": {
-      "username": "Username",
-      "name": "Name",
-      "role": "Role",
-      "profile": "Profile",
-      "avatar": "Avatar",
-      "encounters": "Encounters",
-      "players": "Players",
-      "monsters": "Monsters"
-    }
-  },
-  "confirmation": {
-    "title": "Delete confirmation",
-    "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
-  },
   "actions": {
     "add": "Add",
     "addSelected": "Add selected",
@@ -276,7 +27,9 @@
     "openSettings": "Settings",
     "closeSettings": "Close settings",
     "drag": "Drag me",
-    "close": "Close"
+    "close": "Close",
+    "next": "Next",
+    "prev": "Previous"
   },
   "general": {
     "encounters": "Encounters",
@@ -285,42 +38,298 @@
     "notes": "Notes",
     "total": "Total",
     "grandTotal": "Grand total",
-    "homebrew": "Homebrew"
-  },
-  "homebrews": {
-    "none": "No homebrews added",
-    "add": "Create homebrew",
-    "update": "Update homebrew",
-    "initiative": {
-      "selectSummoner": "hen selecting a summon, you must also choose a character that will summon it.",
-      "add": "Add summon",
-      "select": "Select summoner"
-    }
-  },
-  "notes": {
-    "none": "No notes added",
-    "add": "Create note",
-    "update": "Update note"
-  },
-  "pricing": {
-    "title": "Designed for the best dungeon masters, like you.",
-    "text": "Affordable Prices, Quality Service. At DnD-Tracker, we believe in delivering high-quality service at a fair price. Our pricing plans are designed to fit your needs and budget. Choose the best option for you and enjoy a seamless experience with us. Get in touch with us today to learn more.",
-    "starter": "Best option for getting to know the product. Best for dungeon masters with 1-3 running campaigns.",
-    "medior": "Best option for the dungeon master with multiple active campaigns running at the same time.",
-    "pro": "Best option for the professional dungeon masters and when you work with multiple DM's on the same campaigns.",
-    "encounters": "Encounters: {number}",
-    "campaigns": "Campaigns: {number}",
-    "multiple": "Multiple campaign admins",
-    "setup": "No setup, or hidden fees",
-    "update": "Updates: always free",
+    "homebrew": "Homebrew",
+    "round": "Round",
     "month": "month",
     "year": "year",
-    "start": "Get started",
-    "current": "Current"
+    "link": "Link",
+    "noSelected": "Nothing selected",
+    "error": {
+      "title": "Error",
+      "text": "Something went wrong"
+    },
+    "success": {
+      "title": "Success",
+      "text": "Your changes have been successfully saved!"
+    }
   },
-  "contact": {
-    "title": "Love to hear from you, Get in touch 👋",
-    "send": "Send your question",
-    "success": "Contact email was successfully sent"
+  "pages": {
+    "home": {
+      "textBlock1": {
+        "title": "Made with love 💜",
+        "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
+        "button": "Go to the roadmap"
+      },
+      "summary": {
+        "title": "Why choose dnd-tracker for your encounters 🤔",
+        "item1": "Live updating between different devices",
+        "item2": "We are constantly working to optimize the product",
+        "item3": "Everything in 1 convenient place for the DM",
+        "item4": "Integrated dice roller",
+        "item5": "Plenty of information you can get your hands on",
+        "item6": "Attractive dark mode design for all vampires among us"
+      },
+      "textBlock2": {
+        "title": "Weird stuff 🐛",
+        "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
+      }
+    },
+    "about": {
+      "story": "Our story 📖",
+      "text1": "Welcome to DnD-Tracker, your go-to destination for effortlessly managing your Dungeon and Dragons encounters! Our website was made with passion and dedication in Belgium, where we believe that playing D&D should be all about fun and adventure.",
+      "text2": "At DnD-Tracker, we understand how hard it can be for Dungeon Masters to manage all the moving parts of an encounter. That's why we created a tool that makes it easy for them to focus on the adventure, while we do the heavy lifting for them.",
+      "text3": "Our story began when a friend, who happened to be a Dungeon Master, asked us to make some macros for him in Excel. Unfortunately, we weren't very proficient with Excel, but we were determined to find a better solution. That's when we decided to create a website that would offer a more intuitive and user-friendly way to manage encounters.",
+      "text4": "Our goal is to make the Dungeon Master's life as easy as possible, so they can spend more time creating engaging adventures and less time dealing with the logistics. With DnD-Tracker, you can effortlessly manage all aspects of your encounters, from initiative tracking to monster stats and more.",
+      "text5": "We are constantly striving to improve our website and make it the best possible tool for Dungeon Masters everywhere. Whether you're a seasoned veteran or a new player just getting started, DnD-Tracker has everything you need to make your D&D experience even more enjoyable.",
+      "end": "Thank you for choosing DnD-Tracker, and we hope you have a great time playing D&D!"
+    },
+    "error": {
+      "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
+      "meme": "I want another meme",
+      "goHome": "Go to homepage"
+    },
+    "campaigns": {
+      "campaigns": "Campaigns",
+      "add": "Create campaign",
+      "noData": {
+        "title": "You have no created campaigns",
+        "text": "Create a campaign and start playing around witth all the posibilities"
+      }
+    },
+    "campaign": {
+      "back": "Back to campaigns",
+      "goCampaign": "Go to campaign"
+    },
+    "encounters": {
+      "encounters": "Encounters",
+      "add": "Create encounter",
+      "noData": {
+        "title": "You have no created encounters",
+        "text": "Create a encounter and start playing around witth all the posibilities"
+      }
+    },
+    "encounter": {
+      "back": "Back to encounters",
+      "campaignBack": "Back to campaign",
+      "info": "You can jot something down here",
+      "update": {
+        "name": "Update name",
+        "initiative": "Update initiative",
+        "ac": "Update AC",
+        "hp": "Update HP",
+        "link": "Update link",
+        "conditions": "Update conditions"
+      },
+      "toasts": {
+        "removed": {
+          "title": "Encounter is removed",
+          "text": "Someone removed the encounter so it can't be used anymore"
+        },
+        "died": {
+          "title": "Player died",
+          "textMinHP": "The player has too many negative hp and is dead",
+          "textDeathSaves": "The player failed his death saves three times and is dead"
+        },
+        "stable": {
+          "title": "Player stabilized",
+          "textDeathSaves": "The player saved his death saves three times and is stabilized"
+        }
+      }
+    },
+    "register": {
+      "register": "Register",
+      "random": "Random avatar",
+      "toast": {
+        "success": {
+          "title": "Successfully registrerd",
+          "text": "Confirm your email address with the email we have sent you and afterwards you can login."
+        }
+      }
+    },
+    "login": {
+      "title": "Sign in to your account",
+      "signIn": "Sign in",
+      "new": "New user",
+      "forgot": "Forgot password"
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "reset": "Reset password",
+      "toast": {
+        "success": {
+          "title": "Password successfully resetted"
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "reset": "Send reset email",
+      "toast": {
+        "success": {
+          "title": "Email is sent",
+          "text": "The email is sent to your mailbox."
+        }
+      }
+    },
+    "profile": {
+      "update": "Update profile",
+      "delete": "Delete profile"
+    },
+    "pricing": {
+      "title": "Designed for the best dungeon masters, like you.",
+      "text": "Affordable Prices, Quality Service. At DnD-Tracker, we believe in delivering high-quality service at a fair price. Our pricing plans are designed to fit your needs and budget. Choose the best option for you and enjoy a seamless experience with us. Get in touch with us today to learn more.",
+      "starter": "Best option for getting to know the product. Best for dungeon masters with 1-3 running campaigns.",
+      "medior": "Best option for the dungeon master with multiple active campaigns running at the same time.",
+      "pro": "Best option for the professional dungeon masters and when you work with multiple DM's on the same campaigns.",
+      "encounters": "Encounters: {number}",
+      "campaigns": "Campaigns: {number}",
+      "multiple": "Multiple campaign admins",
+      "setup": "No setup, or hidden fees",
+      "update": "Updates: always free"
+    },
+    "contact": {
+      "title": "Love to hear from you, Get in touch 👋",
+      "send": "Send your question",
+      "success": "Contact email was successfully sent"
+    }
+  },
+  "components": {
+    "cookieBanner": {
+      "text": "When u use this website you accept that we only use functionel cookies.",
+      "policy": "Cookie policy",
+      "button": "OK"
+    },
+    "hero": {
+      "start": "Let the session start"
+    },
+    "linkModal": {
+      "demo": "This isn't available in the demo"
+    },
+    "homeDiceRolling": {
+      "title": "Roll with ease",
+      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
+    },
+    "inputs": {
+      "emailLabel": "Email address",
+      "passwordLabel": "Password",
+      "usernameLabel": "Username",
+      "nameLabel": "Name",
+      "fullNameLabel": "Full name",
+      "titleLabel": "Title",
+      "backgroundLabel": "Background",
+      "campaignLabel": "Campaign",
+      "initiativeLabel": "Initiative",
+      "acLabel": "AC",
+      "hpLabel": "HP",
+      "linkLabel": "Url link",
+      "typeLabel": "Type",
+      "amountLabel": "Amount",
+      "summonerLabel": "Summoner",
+      "textLabel": "Text",
+      "questionLabel": "Your question?",
+      "challengeLabel": "Challenge rating",
+      "nothing": "Nothing selected"
+    },
+    "addCammpaignModal": {
+      "title": "Create a new campaign"
+    },
+    "updateCammpaignModal": {
+      "update": "Update campaign {title}"
+    },
+    "homebrewTable": {
+      "title": "Ready to unleash your creativity?",
+      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
+    },
+    "addEncounterModal": {
+      "title": "Create a new encounter"
+    },
+    "updateEncounterModal": {
+      "update": "Update encounter {title}"
+    },
+    "addInitiativeModal": {
+      "addHomebrew": "Create homebrew"
+    },
+    "updateInitiativeModal": {
+      "updateHomebrew": "Update homebrew"
+    },
+    "addInitiativeMonster": {
+      "manual": "Monster manual",
+      "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!"
+    },
+    "addInitiativeCampaignHomebrew": {
+      "addCampaignHomebrew": "Add campaign homebrew",
+      "summoner": {
+        "info": "when selecting a summon, you must also choose a character that will summon it.",
+        "add": "Add summon",
+        "select": "Select summoner"
+      }
+    },
+    "addHomebrew": {
+      "newHomebrew": "Make a new homebrew"
+    },
+    "encounterTable": {
+      "empty": "Add a row to your encounter to get started!",
+      "headers": {
+        "name": "Name",
+        "init": "Init",
+        "ac": "AC",
+        "hp": "HP",
+        "actions": "Actions",
+        "conditions": "Conditions",
+        "note": "Notes",
+        "deathSaves": "Death saves",
+        "concentration": "Concentration",
+        "modify": "Modify",
+        "summond": "Summoner"
+      }
+    },
+    "actions": {
+      "link": "Link",
+      "hp": "HP actions",
+      "ac": "AC actions",
+      "condition": "Conditions",
+      "attacks": "Possible attacks"
+    },
+    "conditionModal": {
+      "fetchErrorTitle": "Error while getting conditions"
+    },
+    "navbar": {
+      "logout": "Log out",
+      "login": "Log in",
+      "register": "Register",
+      "home": "Home",
+      "contact": "Contact",
+      "about": "About us",
+      "collections": "Collections",
+      "encounters": "Encounters",
+      "campaigns": "Campaignes",
+      "profile": "Profile",
+      "pricing": "Pricing",
+      "play": "Play",
+      "subscription": "Subscription"
+    },
+    "confirmationModal": {
+      "title": "Delete confirmation",
+      "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
+    },
+    "addCammpaignHomebrew": {
+      "add": "Create homebrew"
+    },
+    "updateCammpaignHomebrew": {
+      "update": "Update homebrew"
+    },
+    "campaignNotes": {
+      "none": "No notes added"
+    },
+    "addCampaignNotes": {
+      "add": "Create note"
+    },
+    "updateNote": {
+      "update": "Update note"
+    },
+    "pricingCard": {
+      "start": "Get started",
+      "current": "Current"
+    }
   }
 }

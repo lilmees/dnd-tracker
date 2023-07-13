@@ -30,11 +30,11 @@ function updateLink ({ __init, link }: Obj): void {
     />
     <Modal v-if="isOpen" @close="isOpen = false">
       <div v-if="store.isSandbox">
-        <h3>{{ $t('home.demo') }}</h3>
+        <h3>{{ $t('components.linkModal.demo') }}</h3>
       </div>
       <div v-else-if="!isUpdating">
         <h2 class="mb-10">
-          {{ $t('encounter.link') }}
+          {{ $t('general.link') }}
         </h2>
         <div v-if="url" class="flex gap-2 flex-wrap">
           <NuxtLink :to="url" target="_blank" rel="noreferrer noopener" class="grow">
@@ -64,7 +64,7 @@ function updateLink ({ __init, link }: Obj): void {
       </div>
       <div v-else>
         <h2 class="mb-10">
-          {{ $t('encounter.update.link') }}
+          {{ $t('pages.encounter.update.link') }}
         </h2>
         <FormKit
           v-model="form"
@@ -76,7 +76,7 @@ function updateLink ({ __init, link }: Obj): void {
           <Input
             focus
             name="link"
-            :label="$t('inputs.linkLabel')"
+            :label="$t('components.inputs.linkLabel')"
             validation="required|length10,200|url"
             required
           />
