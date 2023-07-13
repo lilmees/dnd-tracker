@@ -17,7 +17,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
   try {
     isLoading.value = true
     await store.updateUser({ password })
-    toast.success({ title: $i18n.t('resetPassword.toast.success.title') })
+    toast.success({ title: $i18n.t('pages.resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err: any) {
     $logRocket.captureException(err as Error)
@@ -33,7 +33,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
-        {{ $t('resetPassword.title') }}
+        {{ $t('pages.resetPassword.title') }}
       </h1>
       <NuxtImg
         src="/dice.webp"
@@ -57,17 +57,17 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
           focus
           name="password"
           type="password"
-          :label="$t('inputs.passwordLabel')"
+          :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50"
           required
         />
         <button
           type="submit"
           class="btn-black w-full mt-3"
-          :aria-label="$t('resetPassword.reset')"
+          :aria-label="$t('pages.resetPassword.reset')"
           :disabled="isLoading"
         >
-          {{ $t('resetPassword.reset') }}
+          {{ $t('pages.resetPassword.reset') }}
         </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">

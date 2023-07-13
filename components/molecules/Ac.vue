@@ -46,7 +46,7 @@ function updateAc ({ __init, ac }: Obj): void {
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('encounter.update.ac') }}</h2>
+      <h2>{{ $t('pages.encounter.update.ac') }}</h2>
       <FormKit
         v-model="form"
         type="form"
@@ -59,7 +59,7 @@ function updateAc ({ __init, ac }: Obj): void {
               focus
               name="ac"
               type="number"
-              :label="$t('inputs.acLabel')"
+              :label="$t('components.inputs.acLabel')"
               validation="required|between:1,100|number"
               required
             />

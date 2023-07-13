@@ -29,14 +29,14 @@ function rollDice (dice: string): void {
 <template>
   <section>
     <h2 class="pb-4">
-      {{ $t('home.diceRoller.title') }}
+      {{ $t('components.homeDiceRolling.title') }}
     </h2>
     <p class="pb-10">
-      {{ $t('home.diceRoller.text') }}
+      {{ $t('components.homeDiceRolling.text') }}
     </p>
     <div class="flex gap-1 mb-4">
       <p>
-        {{ $t('inputs.amountLabel') }}:
+        {{ $t('components.inputs.amountLabel') }}:
       </p>
       <input
         v-model="amount"

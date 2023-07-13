@@ -15,7 +15,7 @@ function updateDeathSave (index: number, save: boolean): void {
   <div class="flex flex-wrap gap-1 justify-center items-center">
     <p
       v-if="deathSaves.stable"
-      v-tippy="{ content: $t('encounter.toast.stable.title'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('pages.encounter.toasts.stable.title'), animation: 'shift-away' }"
       class="font-bold"
     >
       S

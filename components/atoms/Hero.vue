@@ -85,7 +85,7 @@ onMounted(() => {
           data-title
           class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
         >
-          {{ $t('home.start') }}
+          {{ $t('components.hero.start') }}
         </h1>
       </div>
       <div

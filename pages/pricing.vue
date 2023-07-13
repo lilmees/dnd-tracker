@@ -11,10 +11,10 @@ const isYearly: Ref<boolean> = ref(false)
     <section class="mt-10">
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         <h1 class="mb-4">
-          {{ $t('pricing.title') }}
+          {{ $t('pages.pricing.title') }}
         </h1>
         <p class="mb-5 max-w-3xl mx-auto">
-          {{ $t('pricing.text') }}
+          {{ $t('pages.pricing.text') }}
         </p>
         <div
           class="flex flex-row items-center gap-2 mb-3 w-fit mx-auto pt-5"

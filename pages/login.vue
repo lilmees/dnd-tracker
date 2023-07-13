@@ -29,7 +29,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
   <NuxtLayout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
-        {{ $t('login.title') }}
+        {{ $t('pages.login.title') }}
       </h1>
       <NuxtImg
         src="/classes.png"
@@ -54,32 +54,32 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         <Input
           focus
           name="email"
-          :label="$t('inputs.emailLabel')"
+          :label="$t('components.inputs.emailLabel')"
           validation="required|length:5,50|email"
           required
         />
         <Input
           name="password"
           type="password"
-          :label="$t('inputs.passwordLabel')"
+          :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50"
           required
         />
         <button
           type="submit"
           class="btn-black w-full mt-3"
-          :aria-label="$t('login.signIn')"
+          :aria-label="$t('pages.login.signIn')"
           :disabled="isLoading"
         >
-          {{ $t('login.signIn') }}
+          {{ $t('pages.login.signIn') }}
         </button>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">
-          <TextButton>{{ $t('login.new') }}</TextButton>
+          <TextButton>{{ $t('pages.login.new') }}</TextButton>
         </NuxtLink>
         <NuxtLink :to="localePath('/forgot-password')">
-          <TextButton>{{ $t('login.forgot') }}</TextButton>
+          <TextButton>{{ $t('pages.login.forgot') }}</TextButton>
         </NuxtLink>
       </div>
     </section>

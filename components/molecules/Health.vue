@@ -49,7 +49,7 @@ function updateHealth ({ __init, health }: Obj): void {
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('encounter.update.hp') }}</h2>
+      <h2>{{ $t('pages.encounter.update.hp') }}</h2>
       <FormKit
         v-model="form"
         type="form"
@@ -63,7 +63,7 @@ function updateHealth ({ __init, health }: Obj): void {
               focus
               name="health"
               type="number"
-              :label="$t('inputs.hpLabel')"
+              :label="$t('components.inputs.hpLabel')"
               validation="required|between:1,1000|number"
               required
             />

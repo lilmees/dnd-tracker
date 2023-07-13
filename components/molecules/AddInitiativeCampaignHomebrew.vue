@@ -95,17 +95,17 @@ function selectedSummoner (value: number): void {
   <section>
     <button
       v-tippy="{
-        content: $t('encounter.addCampaignHomebrew'),
+        content: $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew'),
         animation: 'shift-away',
         touch: false
       }"
-      :aria-label="$t('encounter.addCampaignHomebrew')"
+      :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!id && !store.isSandbox"
       @click="isOpen = true"
     >
       <span class="md:hidden">
-        {{ $t('encounter.addCampaignHomebrew') }}
+        {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
       </span>
       <Icon
         name="material-symbols:table-chart-outline"
@@ -114,17 +114,17 @@ function selectedSummoner (value: number): void {
     </button>
     <Modal v-if="isOpen" @close="closeModal">
       <h2>
-        {{ $t('encounter.addCampaignHomebrew') }}
+        {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
       </h2>
       <div v-if="homebrews?.length" class="space-y-4">
         <template v-if="summon">
           <p>
-            {{ $t('homebrews.initiative.selectSummoner') }}
+            {{ $t('components.addInitiativeCampaignHomebrew.summoner.info') }}
           </p>
           <FormKit
             type="select"
-            :label="$t('inputs.summonerLabel')"
-            :placeholder="$t('homebrews.initiative.select')"
+            :label="$t('components.inputs.summonerLabel')"
+            :placeholder="$t('components.addInitiativeCampaignHomebrew.summoner.select')"
             :options="summonOptions"
             @input="selectedSummoner"
           />
@@ -194,11 +194,11 @@ function selectedSummoner (value: number): void {
           <button
             v-else
             class="btn-primary"
-            :aria-label="$t('homebrews.initiative.add')"
+            :aria-label="$t('components.addInitiativeCampaignHomebrew.summoner.add')"
             :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
           >
-            {{ $t('homebrews.initiative.add') }}
+            {{ $t('components.addInitiativeCampaignHomebrew.summoner.add') }}
           </button>
         </div>
       </div>

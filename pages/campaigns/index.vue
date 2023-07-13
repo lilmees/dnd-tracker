@@ -25,14 +25,14 @@ watch(() => store.error, (v) => {
     <div v-else-if="!store.error" class="my-10">
       <div class="pt-5 pb-10 flex justify-between items-center">
         <h1 class="grow">
-          {{ $t('campaigns.campaigns') }}
+          {{ $t('pages.campaigns.campaigns') }}
         </h1>
         <button
           class="btn-primary tracker-shadow-pulse"
-          :aria-label="$t('campaigns.add')"
+          :aria-label="$t('pages.campaigns.add')"
           @click="isOpen = true"
         >
-          {{ $t('campaigns.add') }}
+          {{ $t('pages.campaigns.add') }}
         </button>
         <div />
       </div>
@@ -40,21 +40,21 @@ watch(() => store.error, (v) => {
         <CampaignCard v-for="campaign in store.sortedCampaigns" :key="campaign.id" :campaign="campaign" />
       </div>
       <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-lg space-y-4">
-        <h2>{{ $t('campaigns.noData.title') }}</h2>
-        <p>{{ $t('campaigns.noData.text') }}</p>
+        <h2>{{ $t('pages.campaigns.noData.title') }}</h2>
+        <p>{{ $t('pages.campaigns.noData.text') }}</p>
         <button
           class="btn-black"
-          :aria-label="$t('campaigns.add')"
+          :aria-label="$t('pages.campaigns.add')"
           @click="isOpen = true"
         >
-          {{ $t('campaigns.add') }}
+          {{ $t('pages.campaigns.add') }}
         </button>
       </div>
       <AddCampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">
-        {{ $t('error.general.text') }}
+        {{ $t('general.error.text') }}
       </h2>
       <button
         class="btn-black w-full"

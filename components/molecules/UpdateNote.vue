@@ -59,24 +59,24 @@ async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
       <Input
         focus
         name="title"
-        :label="$t('inputs.titleLabel')"
+        :label="$t('components.inputs.titleLabel')"
         required
         validation="required|length:3,50"
       />
       <Input
         name="text"
         type="textarea"
-        :label="$t('inputs.textLabel')"
+        :label="$t('components.inputs.textLabel')"
         required
         validation="required|length:10,1000"
       />
       <button
         type="submit"
         class="btn-black w-full mt-3"
-        :aria-label="$t('notes.update')"
+        :aria-label="$t('components.updateNote.update')"
         :disabled="isLoading"
       >
-        {{ $t('notes.update') }}
+        {{ $t('components.updateNote.update') }}
       </button>
     </FormKit>
   </Modal>

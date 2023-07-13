@@ -6,7 +6,7 @@ defineProps<{ concentration: boolean }>()
 <template>
   <div
     v-tippy="{
-      content: $t('encounter.headers.concentration'),
+      content: $t('components.encounterTable.headers.concentration'),
       animation: 'shift-away'
     }"
     class="flex justify-center"

@@ -16,10 +16,10 @@ function deleteConfirmation (): void {
   <Modal v-if="open" @close="$emit('close')">
     <div class="text-white space-y-4">
       <h2 class="text-danger">
-        {{ $t('confirmation.title') }}
+        {{ $t('components.confirmationModal.title') }}
       </h2>
       <p class="pb-4">
-        {{ $t('confirmation.text', { title }) }}
+        {{ $t('components.confirmationModal.text', { title }) }}
       </p>
       <FormKit
         v-model="form"
@@ -31,7 +31,7 @@ function deleteConfirmation (): void {
         <Input
           focus
           name="title"
-          :label="$t('inputs.titleLabel')"
+          :label="$t('components.inputs.titleLabel')"
           validation="required"
           required
           :placeholder="title"

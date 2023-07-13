@@ -44,7 +44,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('campaigns.title') }}</h2>
+    <h2>{{ $t('components.addCammpaignModal.title') }}</h2>
     <p v-if="error" class="text-danger text-center">
       {{ error }}
     </p>
@@ -58,14 +58,14 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       <Input
         focus
         name="title"
-        :label="$t('inputs.titleLabel')"
+        :label="$t('components.inputs.titleLabel')"
         validation="required|length:3,30"
         required
       />
       <div class="flex gap-2 items-end">
         <ColorPicker
           name="background"
-          :label="$t('inputs.backgroundLabel')"
+          :label="$t('components.inputs.backgroundLabel')"
           validation="required"
           required
         />
@@ -80,10 +80,10 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       <button
         type="submit"
         class="btn-black w-full"
-        :aria-label="$t('campaigns.add')"
+        :aria-label="$t('pages.campaigns.add')"
         :disabled="store.loading"
       >
-        {{ $t('campaigns.add') }}
+        {{ $t('pages.campaigns.add') }}
       </button>
     </FormKit>
   </Modal>

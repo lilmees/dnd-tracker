@@ -102,21 +102,21 @@ function closeModal (): void {
   <section>
     <button
       v-tippy="{
-        content: $t('encounter.addHomebrew'),
+        content: $t('components.addInitiativeModal.addHomebrew'),
         animation: 'shift-away',
         touch: false
       }"
-      :aria-label="$t('encounter.addHomebrew')"
+      :aria-label="$t('components.addInitiativeModal.addHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >
       <span class="md:hidden">
-        {{ $t('encounter.addHomebrew') }}
+        {{ $t('components.addInitiativeModal.addHomebrew') }}
       </span>
       <Icon name="ph:beer-stein" class="text-warning w-10 h-10" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('encounter.newHomebrew') }}</h2>
+      <h2>{{ $t('components.addHomebrew.newHomebrew') }}</h2>
       <FormKit
         id="form"
         v-model="form"

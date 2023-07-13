@@ -57,8 +57,8 @@ function updateHealth (update: { type: string, amount: number }): void {
     props.row.deathSaves.fail.every(v => v === true)
   ) {
     toast.info({
-      title: $i18n.t('encounter.toast.died.title'),
-      text: $i18n.t('encounter.toast.died.textMinHP')
+      title: $i18n.t('pages.encounter.toasts.died.title'),
+      text: $i18n.t('pages.encounter.toasts.died.textMinHP')
     })
   }
 
@@ -144,33 +144,33 @@ function updateRow () {
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      v-tippy="{ content: $t('encounter.tooltip.link'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.link'), animation: 'shift-away' }"
       :url="row.link"
       @update="updateLink"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('encounter.tooltip.ac'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.ac'), animation: 'shift-away' }"
       :ac="row?.ac || null"
       :temp-ac="row?.tempAc|| null"
       @update="updateAc"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('encounter.tooltip.hp'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.hp'), animation: 'shift-away' }"
       :health="row.health"
       :temp-health="row.tempHealth"
       @update="updateHealth"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('encounter.tooltip.condition'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.condition'), animation: 'shift-away' }"
       :conditions="row.conditions"
       @update="updateCondition"
     />
     <PossibleAttacksModal
       v-if="row.actions"
-      v-tippy="{ content: $t('encounter.tooltip.attacks'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.attacks'), animation: 'shift-away' }"
       :row="row"
     />
   </div>
