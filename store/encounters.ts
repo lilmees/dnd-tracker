@@ -4,11 +4,11 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
   const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const data: Ref<Encounter[]> = ref([])
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const data = ref<Encounter[]>([])
 
-  const sortedEncounters: ComputedRef<{ [key: string]: Encounter[] } | null> = computed(() => data.value
+  const sortedEncounters = computed<{ [key: string]: Encounter[] } | null>(() => data.value
     ? useEncountersByTeam(data.value)
     : null
   )
@@ -29,7 +29,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         data.value = sheets
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      ($logRocket as any).captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false
@@ -56,6 +56,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       .select('*')
 
     if (err) {
+      console.log(err)
       throw err
     } else {
       data.value && data.value.length
