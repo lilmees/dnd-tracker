@@ -11,16 +11,16 @@ const toast = useToastStore()
 const localePath = useLocalePath()
 const { $logRocket } = useNuxtApp()
 
-const needConfirmation: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const isSettings: Ref<boolean> = ref(false)
+const needConfirmation = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const isSettings = ref<boolean>(false)
 
 async function deleteEncounter (): Promise<void> {
   try {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    ($logRocket as any).captureException(err as Error)
     toast.error()
   }
 }
@@ -41,7 +41,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): 
     const enc = await store.addEncounter(encounter as AddEncounter)
     emit('copied', enc)
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    ($logRocket as any).captureException(err as Error)
     toast.error()
   } finally {
     isSettings.value = false

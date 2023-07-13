@@ -46,34 +46,34 @@ watch(() => isHover.value, (v: boolean) => {
       <Icon
         v-if="toast.type === 'info'"
         name="material-symbols:info-outline-rounded"
-        class="icon text-info"
+        class="min-w-[25px] min-h-[25px] text-info"
       />
       <Icon
         v-if="toast.type === 'warn'"
         name="material-symbols:warning-outline-rounded"
-        class="icon text-warning"
+        class="min-w-[25px] min-h-[25px] text-warning"
       />
       <Icon
         v-if="toast.type === 'success'"
         name="material-symbols:check-small-rounded"
-        class="icon text-success"
+        class="min-w-[25px] min-h-[25px] text-success"
       />
       <Icon
         v-if="toast.type === 'error'"
         name="material-symbols:error-outline-rounded"
-        class="icon text-danger"
+        class="min-w-[25px] min-h-[25px] text-danger"
       />
       <div class="grow">
-        <h1 v-if="toast.title" class="pb-2">
+        <p v-if="toast.title" class="pb-2 font-bold">
           {{ toast.title }}
-        </h1>
-        <p v-if="toast.text">
+        </p>
+        <p v-if="toast.text" class="body-small">
           {{ toast.text }}
         </p>
       </div>
       <Icon
         name="ic:round-clear"
-        class="icon self-start text-danger cursor-pointer"
+        class="min-w-[25px] min-h-[25px] self-start text-danger cursor-pointer"
         @click="$emit('remove', toast.key)"
       />
     </div>
@@ -89,9 +89,3 @@ watch(() => isHover.value, (v: boolean) => {
     />
   </div>
 </template>
-
-<style scoped>
-.icon {
-  @apply min-w-[35px] min-h-[35px];
-}
-</style>

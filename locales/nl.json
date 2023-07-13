@@ -167,13 +167,21 @@
       "toast": {
         "success": {
           "title": "Email is verstuurd",
-          "text": "De email is verstuurd naar jouw mailbox."
+          "text": "De email is verstuurd naar jouw mailbox"
         }
       }
     },
     "profile": {
       "update": "Profiel bijwerken",
-      "delete": "Profiel Verwijderen"
+      "delete": "Profiel Verwijderen",
+      "toast": {
+        "success": {
+          "text": "Je profiel is succesvol bijgewerkt"
+        },
+        "delete": {
+          "text": "Je profiel is succesvol verwijderd"
+        }
+      }
     },
     "pricing": {
       "title": "Gemaakt voor de beste dungeon masters, zoals jij.",
