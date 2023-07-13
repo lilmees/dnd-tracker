@@ -167,13 +167,21 @@
       "toast": {
         "success": {
           "title": "Email is sent",
-          "text": "The email is sent to your mailbox."
+          "text": "The email is sent to your mailbox"
         }
       }
     },
     "profile": {
       "update": "Update profile",
-      "delete": "Delete profile"
+      "delete": "Delete profile",
+      "toast": {
+        "success": {
+          "text": "Updated your profile successfully"
+        },
+        "delete": {
+          "text": "Removed your profile successfully"
+        }
+      }
     },
     "pricing": {
       "title": "Designed for the best dungeon masters, like you.",
