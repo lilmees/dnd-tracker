@@ -7,11 +7,19 @@ const sortedBy = ref<string>('name')
 const sortACS = ref<boolean>(true)
 const sortedHomebrew = ref<Homebrew[]>([])
 
-onMounted(() => {
-  if (store.campaign?.homebrew_items) {
-    sortedHomebrew.value = sortByString(store.campaign.homebrew_items, 'name')
+const pages = ref<number>(0)
+const page = ref<number>(0)
+const perPage = ref<number>(20)
+const shownHomebrew = ref<Homebrew[]>([])
+
+watch(() => store.campaign?.homebrew_items, (v) => {
+  if (v) {
+    sortACS.value = true
+    sortedHomebrew.value = sortByString(v, 'name')
+    pages.value = Math.ceil(sortedHomebrew.value.length / perPage.value)
+    paginate(0)
   }
-})
+}, { immediate: true })
 
 function sortItems (key: string): void {
   if (!store.campaign?.homebrew_items) {
@@ -33,6 +41,8 @@ function sortItems (key: string): void {
   }
 
   sortedHomebrew.value = sorted
+  pages.value = Math.ceil(sorted.length / perPage.value)
+  paginate(0)
 }
 
 function sortByNumber (arr: Homebrew[], key: string): Homebrew[] {
@@ -65,6 +75,14 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
 
     return sortACS.value ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
   })
+}
+
+function paginate (pageNumber: number): void {
+  page.value = pageNumber
+  shownHomebrew.value = sortedHomebrew.value.slice(
+    pageNumber * perPage.value,
+    (pageNumber * perPage.value) + perPage.value
+  )
 }
 </script>
 
@@ -115,9 +133,9 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
             </th>
           </tr>
         </thead>
-        <tbody v-auto-animate>
+        <tbody>
           <tr
-            v-for="item in sortedHomebrew"
+            v-for="item in shownHomebrew"
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
@@ -165,21 +183,29 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
                 coming soon
               </p>
             </td>
-            <td class="px-2 py-1 flex justify-center gap-1">
-              <UpdateHomebrew :item="item" />
-              <button
-                v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
-                @click="store.removeHomebrew(item.id)"
-              >
-                <Icon
-                  name="material-symbols:delete-outline-rounded"
-                  class="w-6 h-6 text-danger outline-none"
-                />
-              </button>
+            <td class="px-2 py-1">
+              <div class="flex justify-center items-center gap-1">
+                <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
+                <button
+                  v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
+                  @click="store.removeHomebrew(item.id)"
+                >
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="w-6 h-6 text-danger outline-none"
+                  />
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <Pagination
+        v-if="pages > 1"
+        v-model="page"
+        :total-pages="pages"
+        @paginate="paginate"
+      />
     </div>
     <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
       <div class="flex flex-col justify-center gap-4">
