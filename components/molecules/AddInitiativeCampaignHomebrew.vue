@@ -6,23 +6,47 @@ const homebrew = useHomebrewStore()
 const store = useTableStore()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
-const isLoading: Ref<boolean> = ref(false)
-const homebrews: Ref<Homebrew[] | null> = ref(null)
-const selected: Ref<Homebrew[]> = ref([])
-const summoner: Ref<Option | null> = ref(null)
+const logRocket: any = $logRocket
 
-const id: ComputedRef<number> = computed(() => typeof store.encounter!.campaign === 'object'
+const isOpen = ref<boolean>(false)
+const isLoading = ref<boolean>(false)
+const homebrews = ref<Homebrew[] | null>(null)
+const selected = ref<Homebrew[]>([])
+const summoner = ref<Option | null>(null)
+const search = ref<string>('')
+
+const id = computed<number>(() => typeof store.encounter!.campaign === 'object'
   ? store.encounter!.campaign.id
   : store.encounter!.campaign
 )
-const summon: ComputedRef<boolean> = computed(() => !!selected.value.filter(s => s.type === 'summon').length)
-const summonOptions: ComputedRef<Option[]> = computed(() => {
+
+const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
+
+const summonOptions = computed<Option[]>(() => {
   return store.encounter?.rows
     ? store.encounter.rows.map((r: Row) => {
       return { label: r.name, value: `${r.id}` }
     })
     : []
+})
+
+const filteredHomebrews = computed<Homebrew[]>(() => {
+  let hbs: Homebrew[] = []
+  if (!homebrews.value) {
+    return hbs
+  } else {
+    hbs = homebrews.value
+  }
+
+  if (summon.value) {
+    hbs = hbs.filter((h: Homebrew) => h.type === 'summon')
+  }
+
+  if (search.value) {
+    hbs = hbs.filter((h: Homebrew) => h.name.toLowerCase().includes(search.value.toLowerCase()))
+  }
+
+  return hbs
 })
 
 // delete selections that are not from the summon type when a summon is selected
@@ -73,7 +97,7 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
 
     closeModal()
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
   } finally {
     isLoading.value = false
   }
@@ -117,58 +141,73 @@ function selectedSummoner (value: number): void {
         {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
       </h2>
       <div v-if="homebrews?.length" class="space-y-4">
+        <div class="flex items-end gap-4">
+          <div class="grow">
+            <FormKit
+              v-model="search"
+              type="text"
+              :label="$t('components.inputs.nameLabel')"
+            />
+          </div>
+          <button
+            v-if="search"
+            class="btn-black mb-2"
+            @click="search = ''"
+          >
+            <Icon name="ic:round-clear" size="25" />
+          </button>
+        </div>
         <template v-if="summon">
           <p>
-            {{ $t('components.addInitiativeCampaignHomebrew.summoner.info') }}
+            {{ $t('components.addInitiativeCampaignHomebrew.initiative.info') }}
           </p>
           <FormKit
             type="select"
             :label="$t('components.inputs.summonerLabel')"
-            :placeholder="$t('components.addInitiativeCampaignHomebrew.summoner.select')"
+            :placeholder="$t('components.addInitiativeCampaignHomebrew.initiative.select')"
             :options="summonOptions"
             @input="selectedSummoner"
           />
         </template>
         <div class="flex flex-col">
           <template
-            v-for="hb in summon ? homebrews.filter(h => h.type === 'summon') : homebrews"
+            v-for="hb in filteredHomebrews"
             :key="hb.id"
           >
             <div
               class="first:rounded-t-lg last:rounded-b-lg w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
               :class="{
-                'border-2 border-b-2 border-primary': selected.filter(p => p.id === hb.id).length
+                'border-2 border-b-2 !border-primary': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >
-              <h3>
+              <div class="flex gap-2 items-center">
+                <Icon
+                  :name="useHomebrewIcon(hb.type)"
+                  :class="useHomebrewColor(hb.type)"
+                  size="20"
+                />
+                <p class="capitalize">
+                  {{ hb.type || '' }}
+                </p>
+              </div>
+              <p>
                 {{ hb.name }}
-              </h3>
+              </p>
               <div class="flex gap-4">
-                <div class="flex gap-1">
-                  <p class="font-bold">
-                    {{ hb.health || '_' }}
+                <div v-if="hb.health" class="flex gap-1">
+                  <p>
+                    {{ hb.health }}
                   </p>
                   <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
                 </div>
-                <div class="flex gap-1">
-                  <p class="font-bold">
-                    {{ hb.ac || '_' }}
+                <div v-if="hb.ac" class="flex gap-1">
+                  <p>
+                    {{ hb.ac }}
                   </p>
                   <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
                 </div>
               </div>
-              <p
-                :class="{
-                  'text-white': hb.type === 'player',
-                  'text-primary': hb.type === 'summon',
-                  'text-success': hb.type === 'npc',
-                  'text-danger': hb.type === 'monster',
-                  'text-warning': hb.type === 'lair',
-                }"
-              >
-                {{ hb.type }}
-              </p>
             </div>
           </template>
         </div>
@@ -194,11 +233,11 @@ function selectedSummoner (value: number): void {
           <button
             v-else
             class="btn-primary"
-            :aria-label="$t('components.addInitiativeCampaignHomebrew.summoner.add')"
+            :aria-label="$t('components.addInitiativeCampaignHomebrew.initiative.add')"
             :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
           >
-            {{ $t('components.addInitiativeCampaignHomebrew.summoner.add') }}
+            {{ $t('components.addInitiativeCampaignHomebrew.initiative.add') }}
           </button>
         </div>
       </div>
