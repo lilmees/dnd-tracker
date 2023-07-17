@@ -338,6 +338,10 @@
     "pricingCard": {
       "start": "Start nu",
       "current": "Huidig"
+    },
+    "fullScreenSearch": {
+      "tooltip": "Informatie opzoeken",
+      "notFound": "Helaas, ons avontuurlijk speurwerk in de diepten van onze DnD-archieven heeft geen enkel spoor opgeleverd. De mystieke boeken vol met eeuwenoude kennis en regels lijken tijdelijk hun geheimen voor ons verborgen te houden. Maar we geven de moed niet op! Blijf gerust rondsnuffelen in onze magische wereld, want wie weet wat voor epische vondsten je nog kunt ontdekken."
     }
   }
 }
