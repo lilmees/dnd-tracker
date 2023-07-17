@@ -104,6 +104,7 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
 }
 
 function closeModal (): void {
+  search.value = ''
   isOpen.value = false
   summoner.value = null
   selected.value = []

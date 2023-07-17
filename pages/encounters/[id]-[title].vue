@@ -64,7 +64,7 @@ watchDebounced(
           <EncounterTable />
           <EncounterOptions />
         </div>
-        <div class="pt-10">
+        <div class="container pt-10 items-start grid md:grid-cols-2 gap-8">
           <Input
             v-model="info"
             type="textarea"

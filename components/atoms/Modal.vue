@@ -13,6 +13,8 @@ withDefaults(
     <div
       class="tracker-shadow-pulse fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-tracker rounded-lg p-8 w-full max-h-[90vh] overflow-y-auto z-20"
       :class="[big ? 'max-w-[1000px]' : 'max-w-2xl']"
+      tabindex="0"
+      @keydown.esc="$emit('close')"
     >
       <div class="relative">
         <button class="absolute -top-7 -right-7 group">
