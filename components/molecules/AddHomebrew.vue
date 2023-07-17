@@ -16,7 +16,7 @@ const form: Ref<AddHomebrewForm> = ref({
   data: {
     isLoading: false,
     encounter: false,
-    update: true,
+    update: false,
     error: null,
     options: [
       { label: 'Player', value: 'player' },

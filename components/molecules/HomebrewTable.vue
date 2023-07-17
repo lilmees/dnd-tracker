@@ -2,6 +2,88 @@
 import { useCurrentCampaignStore } from '@/store/currentCampaign'
 
 const store = useCurrentCampaignStore()
+
+const sortedBy = ref<string>('name')
+const sortACS = ref<boolean>(true)
+const sortedHomebrew = ref<Homebrew[]>([])
+
+const pages = ref<number>(0)
+const page = ref<number>(0)
+const perPage = ref<number>(20)
+const shownHomebrew = ref<Homebrew[]>([])
+
+watch(() => store.campaign?.homebrew_items, (v) => {
+  if (v) {
+    sortACS.value = true
+    sortedHomebrew.value = sortByString(v, 'name')
+    pages.value = Math.ceil(sortedHomebrew.value.length / perPage.value)
+    paginate(0)
+  }
+}, { immediate: true })
+
+function sortItems (key: string): void {
+  if (!store.campaign?.homebrew_items) {
+    return
+  }
+
+  if (key === sortedBy.value) {
+    sortACS.value = !sortACS.value
+  }
+
+  sortedBy.value = key
+
+  let sorted: Homebrew[] = []
+
+  if (key === 'health' || key === 'ac') {
+    sorted = sortByNumber(store.campaign.homebrew_items, key)
+  } else if (key === 'name' || key === 'type') {
+    sorted = sortByString(store.campaign.homebrew_items, key)
+  }
+
+  sortedHomebrew.value = sorted
+  pages.value = Math.ceil(sorted.length / perPage.value)
+  paginate(0)
+}
+
+function sortByNumber (arr: Homebrew[], key: string): Homebrew[] {
+  return arr.sort((a: Homebrew, b: Homebrew) => {
+    const aValue = a[key as keyof Homebrew]
+    const bValue = b[key as keyof Homebrew]
+
+    if (aValue === null || aValue === undefined) {
+      return 1
+    } else if (bValue === null || bValue === undefined) {
+      return -1
+    } else if (sortACS.value) {
+      return aValue < bValue ? -1 : 1
+    } else if (!sortACS.value) {
+      return aValue < bValue ? 1 : -1
+    } else {
+      return 0
+    }
+  })
+}
+
+function sortByString (arr: Homebrew[], key: string): Homebrew[] {
+  return arr.sort((a: Homebrew, b: Homebrew) => {
+    const aValue: string = a[key as keyof Homebrew] as string
+    const bValue: string = b[key as keyof Homebrew] as string
+
+    if (!aValue || !bValue) {
+      return 0
+    }
+
+    return sortACS.value ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+  })
+}
+
+function paginate (pageNumber: number): void {
+  page.value = pageNumber
+  shownHomebrew.value = sortedHomebrew.value.slice(
+    pageNumber * perPage.value,
+    (pageNumber * perPage.value) + perPage.value
+  )
+}
 </script>
 
 <template>
@@ -29,15 +111,31 @@ const store = useCurrentCampaignStore()
             <th
               v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']"
               :key="header"
-              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
+              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
+              :class="{
+                'cursor-pointer': ['name', 'type', 'health', 'ac'].includes(header)
+              }"
+              @click="sortItems(header)"
             >
-              {{ header }}
+              <div class="flex gap-2 justify-center items-center">
+                <p class="uppercase">
+                  {{ header }}
+                </p>
+                <Icon
+                  name="ph:arrows-down-up-bold"
+                  class="w-5 h-5 cursor-pointer text-secondary/50"
+                  :class="{
+                    '!hidden': ['link', 'actions', 'modify'].includes(header),
+                    '!text-secondary': sortedBy === header
+                  }"
+                />
+              </div>
             </th>
           </tr>
         </thead>
-        <tbody v-auto-animate>
+        <tbody>
           <tr
-            v-for="item in store.campaign.homebrew_items"
+            v-for="item in shownHomebrew"
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
@@ -45,16 +143,18 @@ const store = useCurrentCampaignStore()
               {{ item.name }}
             </td>
             <td
-              class="flex gap-2 items-center px-2 py-1 border-r border-slate-700"
+              class="px-2 py-1 border-r border-slate-700"
             >
-              <Icon
-                :name="useHomebrewIcon(item.type)"
-                :class="useHomebrewColor(item.type)"
-                size="20"
-              />
-              <p>
-                {{ item.type || '' }}
-              </p>
+              <div class="flex gap-2 items-center">
+                <Icon
+                  :name="useHomebrewIcon(item.type)"
+                  :class="useHomebrewColor(item.type)"
+                  size="20"
+                />
+                <p>
+                  {{ item.type || '' }}
+                </p>
+              </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.health || '' }}
@@ -83,21 +183,29 @@ const store = useCurrentCampaignStore()
                 coming soon
               </p>
             </td>
-            <td class="px-2 py-1 flex justify-center gap-1">
-              <UpdateHomebrew :item="item" />
-              <button
-                v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
-                @click="store.removeHomebrew(item.id)"
-              >
-                <Icon
-                  name="material-symbols:delete-outline-rounded"
-                  class="w-6 h-6 text-danger outline-none"
-                />
-              </button>
+            <td class="px-2 py-1">
+              <div class="flex justify-center items-center gap-1">
+                <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
+                <button
+                  v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
+                  @click="store.removeHomebrew(item.id)"
+                >
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="w-6 h-6 text-danger outline-none"
+                  />
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <Pagination
+        v-if="pages > 1"
+        v-model="page"
+        :total-pages="pages"
+        @paginate="paginate"
+      />
     </div>
     <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
       <div class="flex flex-col justify-center gap-4">
