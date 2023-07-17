@@ -241,7 +241,7 @@
     "addCammpaignModal": {
       "title": "Maak een nieuwe campagne"
     },
-    "updateCammpaignModal": {
+    "updateCampaignModal": {
       "update": "Update campagne {title}"
     },
     "homebrewTable": {
@@ -320,10 +320,10 @@
       "title": "Verwijder bevestiging",
       "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
     },
-    "addCammpaignHomebrew": {
+    "addCampaignHomebrew": {
       "add": "Homebrew creëren"
     },
-    "updateCammpaignHomebrew": {
+    "updateCampaignHomebrew": {
       "update": "Homebrew bijwerken"
     },
     "campaignNotes": {

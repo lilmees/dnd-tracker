@@ -241,7 +241,7 @@
     "addCammpaignModal": {
       "title": "Create a new campaign"
     },
-    "updateCammpaignModal": {
+    "updateCampaignModal": {
       "update": "Update campaign {title}"
     },
     "homebrewTable": {
@@ -320,10 +320,10 @@
       "title": "Delete confirmation",
       "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
     },
-    "addCammpaignHomebrew": {
+    "addCampaignHomebrew": {
       "add": "Create homebrew"
     },
-    "updateCammpaignHomebrew": {
+    "updateCampaignHomebrew": {
       "update": "Update homebrew"
     },
     "campaignNotes": {
