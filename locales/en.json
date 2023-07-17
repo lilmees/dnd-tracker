@@ -167,7 +167,7 @@
       "toast": {
         "success": {
           "title": "Email is sent",
-          "text": "The email is sent to your mailbox"
+          "text": "The email is sent to your mailbox."
         }
       }
     },
