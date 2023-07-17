@@ -94,10 +94,10 @@ async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
       <button
         type="submit"
         class="btn-black w-full mt-3"
-        :aria-label="$t('components.updateCammpaignHomebrew.update')"
+        :aria-label="$t('components.updateCampaignHomebrew.update')"
         :disabled="isLoading"
       >
-        {{ $t('components.updateCammpaignHomebrew.update') }}
+        {{ $t('components.updateCampaignHomebrew.update') }}
       </button>
     </FormKit>
   </Modal>
