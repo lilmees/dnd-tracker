@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useCampaignsStore } from '@/store/campaigns'
-
 const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, campaign: Campaign }>()
 

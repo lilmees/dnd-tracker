@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import { useNotesStore } from '@/store/notes'
 
 const emit = defineEmits(['close', 'notes'])
 const props = defineProps<{

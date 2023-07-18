@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useToastStore } from '@/store/toast'
-import { useTableStore } from '@/store/table'
-
 const props = defineProps<{ row: Row, index: number }>()
 
 const toast = useToastStore()

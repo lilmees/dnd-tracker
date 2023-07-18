@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/store/auth'
-import { useToastStore } from '@/store/toast'
-
 definePageMeta({ middleware: ['loggedin'] })
 
 const { $i18n } = useNuxtApp()

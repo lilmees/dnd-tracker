@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useProfileStore } from '@/store/profile'
-
 definePageMeta({ middleware: ['session-id'] })
 
 const route = useRoute()

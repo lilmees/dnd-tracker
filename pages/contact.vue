@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToastStore } from '@/store/toast'
-
 const { $i18n } = useNuxtApp()
 const toast = useToastStore()
 const localePath = useLocalePath()

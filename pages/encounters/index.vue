@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useToastStore } from '@/store/toast'
-import { useEncountersStore } from '@/store/encounters'
-
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Encounters' })
 

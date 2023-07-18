@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTimeout } from '@vueuse/core'
-
 const { ready, start } = useTimeout(5000, { controls: true })
 
 const amount: Ref<number> = ref(1)

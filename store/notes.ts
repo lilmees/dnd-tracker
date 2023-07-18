@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useNotesStore = defineStore('useNotesStore', () => {
   const supabase = useSupabaseClient()
 

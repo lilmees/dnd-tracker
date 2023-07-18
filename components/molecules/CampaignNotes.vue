@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useCurrentCampaignStore } from '@/store/currentCampaign'
-
 const store = useCurrentCampaignStore()
 
 const isOpen: Ref<boolean> = ref(false)

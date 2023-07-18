@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useProfileStore } from '@/store/profile'
-import { useStripeStore } from '@/store/stripe'
-import { useToastStore } from '@/store/toast'
-
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 

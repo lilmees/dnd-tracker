@@ -120,6 +120,16 @@ export default defineNuxtConfig({
     viewer: false,
     exposeConfig: true
   },
+  pinia: {
+    autoImports: [
+      'defineStore',
+      ['defineStore', 'definePiniaStore'],
+      'storeToRefs'
+    ]
+  },
+  imports: {
+    dirs: ['store']
+  },
   nitro: {
     compressPublicAssets: true
   }

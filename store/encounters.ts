@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
   const { $logRocket } = useNuxtApp()

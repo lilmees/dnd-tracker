@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useCurrentCampaignStore } from '@/store/currentCampaign'
-
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()

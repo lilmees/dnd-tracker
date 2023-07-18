@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useOpen5eStore = defineStore('useOpen5eStore', () => {
   async function getData (filters: Open5eFilters): Promise<any> {
     let url = `https://api.open5e.com/${filters.type ? filters.type + '/' : ''}?limit=${filters.limit || '20'}`

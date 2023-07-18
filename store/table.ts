@@ -1,7 +1,3 @@
-import { defineStore } from 'pinia'
-import { useToastStore } from '@/store/toast'
-import { DeathSaves } from '~/.nuxt/components'
-
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()

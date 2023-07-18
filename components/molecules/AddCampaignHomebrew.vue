@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import { useHomebrewStore } from '@/store/homebrew'
 
 const emit = defineEmits(['close', 'homebrews'])
 const props = defineProps<{

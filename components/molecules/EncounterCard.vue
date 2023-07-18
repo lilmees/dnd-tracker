@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useEncountersStore } from '@/store/encounters'
-import { useToastStore } from '@/store/toast'
-
 const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps<{ encounter: Encounter }>()
 
