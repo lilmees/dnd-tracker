@@ -1,14 +1,12 @@
 <script setup lang="ts">
-defineEmits(['close'])
+const emit = defineEmits(['close'])
+
+onKeyStroke('Escape', () => emit('close'))
 </script>
 
 <template>
   <Teleport to="body">
-    <div
-      class="fixed inset-0 bg-black/70 z-10 backdrop-blur"
-      tabindex="0"
-      @keydown.esc="$emit('close')"
-    >
+    <div class="fixed inset-0 bg-black/70 z-10 backdrop-blur">
       <div class="container">
         <button class="absolute top-4 right-4 group">
           <Icon

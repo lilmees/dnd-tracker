@@ -109,7 +109,6 @@ function reset (): void {
               v-model="form.search"
               type="text"
               :label="$t('components.inputs.nameLabel')"
-              @keydown.esc="reset"
             />
           </div>
           <button
