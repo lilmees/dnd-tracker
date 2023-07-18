@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const store = useTableStore()
 const { $i18n } = useNuxtApp()
+const keys = useMagicKeys()
+
+whenever(keys.shift_arrowleft, () => store.prevInitiative())
+whenever(keys.shift_arrowRight, () => store.nextInitiative())
 
 const headers: ComputedRef<string[]> = computed(() => {
   const headers = [
@@ -21,10 +25,6 @@ const headers: ComputedRef<string[]> = computed(() => {
   }
   return headers
 })
-
-onKeyStroke('ArrowLeft', () => store.prevInitiative())
-
-onKeyStroke('ArrowRight', () => store.nextInitiative())
 </script>
 
 <template>
