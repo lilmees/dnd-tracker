@@ -21,6 +21,10 @@ const headers: ComputedRef<string[]> = computed(() => {
   }
   return headers
 })
+
+onKeyStroke('ArrowLeft', () => store.prevInitiative())
+
+onKeyStroke('ArrowRight', () => store.nextInitiative())
 </script>
 
 <template>
