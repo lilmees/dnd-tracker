@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useTableStore } from '@/store/table'
-import { useHomebrewStore } from '@/store/homebrew'
-
 const homebrew = useHomebrewStore()
 const store = useTableStore()
 const { $logRocket } = useNuxtApp()

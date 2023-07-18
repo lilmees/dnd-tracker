@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/store/auth'
-import { useToastStore } from '@/store/toast'
-
 const { $i18n } = useNuxtApp()
 const store = useAuthStore()
 const toast = useToastStore()

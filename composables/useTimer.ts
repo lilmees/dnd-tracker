@@ -1,4 +1,3 @@
-import { useTimestamp } from '@vueuse/core'
 import type { UseTimestampOptions } from '@vueuse/core'
 
 export function useTimer (cb: (...args: unknown[]) => any, interval: number, options?: UseTimestampOptions<true>) {

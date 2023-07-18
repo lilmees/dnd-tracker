@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTableStore } from '@/store/table'
-
 const props = defineProps<{
   row: Row,
   index: number,

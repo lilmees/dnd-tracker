@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useConditionsStore } from '@/store/conditions'
-
 const emit = defineEmits(['update'])
 const props = withDefaults(
   defineProps<{ conditions?: Condition[] }>(), {

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useOpen5eStore } from '@/store/open5e'
-import { useToastStore } from '@/store/toast'
-
 const open5e = useOpen5eStore()
 const toast = useToastStore()
 const { $logRocket } = useNuxtApp()

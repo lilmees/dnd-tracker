@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useCampaignsStore } from '@/store/campaigns'
-import { useToastStore } from '@/store/toast'
-
 const props = defineProps<{ campaign: Campaign }>()
 
 const user = useSupabaseUser()

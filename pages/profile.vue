@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useProfileStore } from '@/store/profile'
-import { useToastStore } from '@/store/toast'
-
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()

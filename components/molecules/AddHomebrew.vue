@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
-import { useCurrentCampaignStore } from '@/store/currentCampaign'
 import schema from '~~/formkit/homebrew.json'
 
 const store = useCurrentCampaignStore()

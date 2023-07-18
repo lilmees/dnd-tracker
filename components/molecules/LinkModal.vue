@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTableStore } from '@/store/table'
-
 const emit = defineEmits(['update'])
 withDefaults(
   defineProps<{ url?: null | string }>(), {

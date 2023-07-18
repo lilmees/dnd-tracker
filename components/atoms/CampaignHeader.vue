@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useCampaignsStore } from '@/store/campaigns'
-
 const props = defineProps<{ campaign: Campaign | number }>()
 
 const store = useCampaignsStore()

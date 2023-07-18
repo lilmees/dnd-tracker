@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
-import { useTableStore } from '@/store/table'
-import { useToastStore } from '@/store/toast'
-
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()

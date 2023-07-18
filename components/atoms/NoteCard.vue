@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useToastStore } from '@/store/toast'
-import { useNotesStore } from '@/store/notes'
-
 const emit = defineEmits(['deleted', 'updated'])
 const props = defineProps<{ note: Note }>()
 
