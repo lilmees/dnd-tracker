@@ -105,6 +105,10 @@
     @apply btn bg-danger hover:bg-danger/90 text-black;
   }
 
+  kbd {
+    @apply border-2 rounded px-1 py-px;
+  }
+
   .tracker-shadow {
     box-shadow: rgba(79, 25, 170 , 0.3) 0px 0px 38px, rgba(79, 25, 170 , 0.22) 0px 0px 12px;
   }

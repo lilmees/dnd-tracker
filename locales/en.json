@@ -44,6 +44,7 @@
     "year": "year",
     "link": "Link",
     "noSelected": "Nothing selected",
+    "or": "of",
     "error": {
       "title": "Error",
       "text": "Something went wrong"

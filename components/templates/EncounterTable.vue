@@ -3,8 +3,13 @@ const store = useTableStore()
 const { $i18n } = useNuxtApp()
 const keys = useMagicKeys()
 
+// Initiative down
 whenever(keys.shift_arrowleft, () => store.prevInitiative())
+whenever(keys.pageUp, () => store.prevInitiative())
+
+// Initiative down
 whenever(keys.shift_arrowRight, () => store.nextInitiative())
+whenever(keys.PageDown, () => store.nextInitiative())
 
 const headers: ComputedRef<string[]> = computed(() => {
   const headers = [
