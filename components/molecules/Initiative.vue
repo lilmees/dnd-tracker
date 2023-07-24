@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTableStore } from '@/store/table'
-
 const emit = defineEmits(['update'])
 const props = defineProps<{
   initiative: number | null,

@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia'
-
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
   const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const data: Ref<Encounter[]> = ref([])
+  const logRocket: any = $logRocket
 
-  const sortedEncounters: ComputedRef<{ [key: string]: Encounter[] } | null> = computed(() => data.value
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const data = ref<Encounter[]>([])
+
+  const sortedEncounters = computed<{ [key: string]: Encounter[] } | null>(() => data.value
     ? useEncountersByTeam(data.value)
     : null
   )
@@ -29,7 +29,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         data.value = sheets
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

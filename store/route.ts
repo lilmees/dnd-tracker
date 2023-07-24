@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useRouteStore = defineStore('useRouteStore', () => {
   const routes: Ref<Route[]> = ref([
     { label: 'components.navbar.about', url: 'about', requiredLogIn: false, requiredLogOut: false },

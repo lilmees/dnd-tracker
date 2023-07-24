@@ -1,7 +1,7 @@
 {
   "actions": {
     "add": "Toevoegen",
-    "addSelected": "Geselecteerden toevoegen",
+    "addSelected": "Selectie toevoegen",
     "addAll": "Alles toevoegen",
     "selectOption": "Selecteer een optie",
     "delete": "Verwijderen",
@@ -14,14 +14,14 @@
     "damage": "Schade",
     "reset": "Reset",
     "remove": "Verwijderen",
-    "baseHealth": "Zet basis leven",
+    "baseHealth": "Zet basis HP",
     "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
-    "rollShow": "Toon dobbelsteen roller",
-    "rollHide": "Verberg dobbelsteen roller",
+    "rollShow": "Toon dobbelsteenroller",
+    "rollHide": "Verberg dobbelsteenroller",
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
-    "copy": "kopiëren",
+    "copy": "Kopiëren",
     "random": "Willekeurig",
     "create": "Creëren",
     "openSettings": "Instelling",
@@ -44,34 +44,35 @@
     "month": "maand",
     "year": "jaar",
     "noSelected": "Niets geselecteerd",
+    "or": "of",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
     },
     "success": {
       "title": "Succes",
-      "text": "Uw wijzigingen werden opgeslagen!"
+      "text": "De wijzigingen zijn opgeslagen"
     }
   },
   "pages": {
     "home": {
       "textBlock1": {
-        "title": "Gemaakt met liefde 💜",
-        "text": "Bij dnd-tracker zijn we niet van veel woorden. We laten het product voor zijn eigen spreken. Wat als hoofdidee een encounter tracker was, draaide al snel uit tot een veel groter gegeven. Door steeds meerdere ideeën die naar voren komen, zijn we momenteel bezig met het uitbreiden van de dnd-tracker. Zo wordt het spelen nog spannender, mysterieuzer, makkelijker én fijner.",
+        "title": "Met liefde gemaakt 💜",
+        "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campaigns. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
         "button": "Ga naar de roadmap"
       },
       "summary": {
-        "title": "Waarom kiezen voor de dnd-tracker voor jouw encounters 🤔",
-        "item1": "Live updaten tussen verschillende toestellen",
-        "item2": "We zijn continu bezig om het product te optimaliseren",
-        "item3": "Alles op 1 handige plaats voor de DM",
-        "item4": "Geïntegreerde dobbelsteen roller",
-        "item5": "Overvloed van informatie die je kan bemachtigen",
-        "item6": "Aantrekkelijk dark mode design voor alle vampieren onder ons"
+        "title": "Een tracker met unieke skills 🤝",
+        "item1": "Live synchronisatie tussen verschillende toestellen",
+        "item2": "Regelmatige optimalisaties en nieuwe functies",
+        "item3": "Alles op één handige plaats voor de GM",
+        "item4": "Inclusief een dobbelsteenroller",
+        "item5": "Integratie van official content met de mogelijkheid om je eigen homebrew toe te voegen",
+        "item6": "Aantrekkelijk dark mode design"
       },
       "textBlock2": {
-        "title": "Vreemde dingen 🐛",
-        "text": "Doordat we nog in de startfase zitten van deze dnd-tracker  kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet en laat zeker iets weten, zodat we deze snel kunnen oplossen."
+        "title": "Vreemde gebeurtenissen 🐛",
+        "text": "Doordat deze DnD Tracker nog in zijn kinderschoenen staat, kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet om ons iets te laten weten, zodat we deze snel kunnen oplossen."
       }
     },
     "about": {
@@ -173,7 +174,15 @@
     },
     "profile": {
       "update": "Profiel bijwerken",
-      "delete": "Profiel Verwijderen"
+      "delete": "Profiel Verwijderen",
+      "toast": {
+        "success": {
+          "text": "Je profiel is succesvol bijgewerkt"
+        },
+        "delete": {
+          "text": "Je profiel is succesvol verwijderd"
+        }
+      }
     },
     "pricing": {
       "title": "Gemaakt voor de beste dungeon masters, zoals jij.",
@@ -233,7 +242,7 @@
     "addCammpaignModal": {
       "title": "Maak een nieuwe campagne"
     },
-    "updateCammpaignModal": {
+    "updateCampaignModal": {
       "update": "Update campagne {title}"
     },
     "homebrewTable": {
@@ -312,10 +321,10 @@
       "title": "Verwijder bevestiging",
       "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
     },
-    "addCammpaignHomebrew": {
+    "addCampaignHomebrew": {
       "add": "Homebrew creëren"
     },
-    "updateCammpaignHomebrew": {
+    "updateCampaignHomebrew": {
       "update": "Homebrew bijwerken"
     },
     "campaignNotes": {
@@ -330,6 +339,26 @@
     "pricingCard": {
       "start": "Start nu",
       "current": "Huidig"
+    },
+    "fullScreenSearch": {
+      "tooltip": "Informatie opzoeken",
+      "notFound": "Helaas, ons avontuurlijk speurwerk in de diepten van onze DnD-archieven heeft geen enkel spoor opgeleverd. De mystieke boeken vol met eeuwenoude kennis en regels lijken tijdelijk hun geheimen voor ons verborgen te houden. Maar we geven de moed niet op! Blijf gerust rondsnuffelen in onze magische wereld, want wie weet wat voor epische vondsten je nog kunt ontdekken."
+    },
+    "infoSearch": {
+      "show": "Toon gepinde items",
+      "hide": "Verberg gepinde items",
+      "remove": "Verwijder gepinde items",
+      "toast": {
+        "maxTitle": "Je hebt je vastpin limiet bereikt",
+        "maxText": "Het maximum van gepinde infokaarten is 10"
+      }
+    },
+    "infoCard": {
+      "add": "Pin toevoegen",
+      "remove": "Verwijder pin"
+    },
+    "infoDropdown": {
+      "title": "Gepinde informatie kaarten"
     }
   }
 }

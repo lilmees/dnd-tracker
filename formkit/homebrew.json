@@ -5,7 +5,7 @@
       "type": "select",
       "name": "type",
       "label": "components.inputs.typeLabel",
-      "placeholder": "placeholder.type",
+      "placeholder": "components.inputs.nothing",
       "validation": "required",
       "options": "$data.options"
     }
@@ -118,7 +118,7 @@
         "then": "encounter.addInInitiative",
         "else": {
           "if": "$data.encounter === false && $data.update === false",
-          "then": "components.addInitiativeModal.addHomeBrew",
+          "then": "components.addInitiativeModal.addHomebrew",
           "else": {
             "if": "$data.update",
             "then": "components.updateInitiativeModal.updateHomebrew"

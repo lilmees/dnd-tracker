@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useElementVisibility } from '@vueuse/core'
 import { gsap, Power3 } from 'gsap'
 
 withDefaults(

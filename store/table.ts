@@ -1,7 +1,3 @@
-import { defineStore } from 'pinia'
-import { useToastStore } from '@/store/toast'
-import { DeathSaves } from '~/.nuxt/components'
-
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
@@ -162,13 +158,12 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   function checkDeathSaves (saves: DeathSaves): void {
-    if (saves.fail.every(v => v === true)) {
+    if (saves.fail.every(v => v === true) && !saves.save.every(v => v === true)) {
       toast.info({
         title: $i18n.t('pages.encounter.toasts.died.title'),
         text: $i18n.t('pages.encounter.toasts.died.textDeathSaves')
       })
-    }
-    if (saves.save.every(v => v === true) && !saves.stable) {
+    } else if (saves.save.every(v => v === true) && !saves.fail.every(v => v === true) && !saves.stable) {
       toast.info({
         title: $i18n.t('pages.encounter.toasts.stable.title'),
         text: $i18n.t('pages.encounter.toasts.stable.textDeathSaves')

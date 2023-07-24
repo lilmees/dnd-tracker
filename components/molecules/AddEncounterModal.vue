@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useEncountersStore } from '@/store/encounters'
-import { useCampaignsStore } from '@/store/campaigns'
 import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'added'])

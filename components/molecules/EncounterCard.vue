@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useEncountersStore } from '@/store/encounters'
-import { useToastStore } from '@/store/toast'
-
 const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps<{ encounter: Encounter }>()
 
@@ -11,37 +8,46 @@ const toast = useToastStore()
 const localePath = useLocalePath()
 const { $logRocket } = useNuxtApp()
 
-const needConfirmation: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const isSettings: Ref<boolean> = ref(false)
+const logRocket: any = $logRocket
+
+const needConfirmation = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const isSettings = ref<boolean>(false)
 
 async function deleteEncounter (): Promise<void> {
   try {
     await store.deleteEncounter(props.encounter.id)
     emit('deleted', props.encounter.id)
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }
 
 async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<void> {
-  if (!enc.campaign || !user.value) {
+  if (!user.value) {
     return
   }
 
-  const encounter: EncounterUpdate = {
+  let encounter: Partial<EncounterUpdate> = {
     ...enc,
-    campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign,
     title: `copy ${enc.title}`.slice(0, 30),
-    created_by: user.value.id
+    created_by: user.value.id,
+    campaign: undefined
+  }
+
+  if (enc.campaign) {
+    encounter = {
+      ...encounter,
+      campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign as number
+    }
   }
 
   try {
     const enc = await store.addEncounter(encounter as AddEncounter)
     emit('copied', enc)
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isSettings.value = false

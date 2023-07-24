@@ -1,8 +1,4 @@
 <script setup>
-import { useToastStore } from '@/store/toast'
-import { useTableStore } from '@/store/table'
-import { useOpen5eStore } from '@/store/open5e'
-
 const store = useTableStore()
 const toast = useToastStore()
 const open5e = useOpen5eStore()

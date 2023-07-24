@@ -10,4 +10,5 @@ interface EncounterUpdate {
   activeIndex?: number
   color?: string
   background?: string
+  info_cards?: InfoCard[]
 }
