@@ -1,6 +1,7 @@
+import logRocket from 'logrocket'
+
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
-  const { $logRocket } = useNuxtApp()
 
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
@@ -31,7 +32,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
         campaigns.value = data
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

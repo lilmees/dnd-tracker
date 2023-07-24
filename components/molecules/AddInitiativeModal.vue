@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'
 
 const store = useTableStore()
-const { $logRocket } = useNuxtApp()
 
 const isOpen = ref<boolean>(false)
 
@@ -80,7 +80,7 @@ async function addInitiative ({ __init, amount, data, slots, ...formData }: Obj)
 
     closeModal()
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data!.error = useErrorMessage(err)
   } finally {
     form.value.data!.isLoading = false

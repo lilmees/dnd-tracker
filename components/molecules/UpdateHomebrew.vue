@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'
 
 const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
-const { $logRocket } = useNuxtApp()
 
 const isOpen = ref<boolean>(false)
 
@@ -50,7 +50,7 @@ function updateHomebrew ({ __init, data, slots, ...formData }: Obj): void {
     reset('form')
     closeModal()
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

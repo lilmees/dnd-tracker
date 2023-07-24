@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['loggedin'] })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<{ email: string }>({ email: '' })
 const isLoading = ref<boolean>(false)
@@ -17,12 +18,12 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
     isLoading.value = true
     await store.forgotPassword(email)
     toast.success({
-      title: $i18n.t('pages.forgotPassword.toast.success.title'),
-      text: $i18n.t('pages.forgotPassword.toast.success.text')
+      title: t('pages.forgotPassword.toast.success.title'),
+      text: t('pages.forgotPassword.toast.success.text')
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {

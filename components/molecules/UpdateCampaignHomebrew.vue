@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 
 const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ homebrew: Homebrew, open: boolean }>()
 
 const store = useHomebrewStore()
-const { $logRocket } = useNuxtApp()
 
 const error = ref<string | null>(null)
 const isLoading = ref<boolean>(false)
@@ -45,7 +45,7 @@ async function updateHomebrew ({ __init, ...formData }: Obj): Promise<void> {
     emit('updated', hb)
     reset('form')
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

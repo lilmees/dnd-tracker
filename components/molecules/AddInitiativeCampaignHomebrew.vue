@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const homebrew = useHomebrewStore()
 const store = useTableStore()
-const { $logRocket } = useNuxtApp()
-
-const logRocket: any = $logRocket
 
 const isOpen = ref<boolean>(false)
 const isLoading = ref<boolean>(false)

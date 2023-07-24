@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const { $i18n } = useNuxtApp()
+import logRocket from 'logrocket'
+
+const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<{ password: string }>({ password: '' })
 const isLoading = ref<boolean>(false)
@@ -14,10 +15,10 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
   try {
     isLoading.value = true
     await store.updateUser({ password })
-    toast.success({ title: $i18n.t('pages.resetPassword.toast.success.title') })
+    toast.success({ title: t('pages.resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {

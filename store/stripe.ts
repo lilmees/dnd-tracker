@@ -1,5 +1,5 @@
 export const useStripeStore = defineStore('useStripeStore', () => {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const config = useRuntimeConfig()
   const localePath = useLocalePath()
   const profile = useProfileStore()
@@ -42,40 +42,40 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     products: [
       {
         title: 'Starter',
-        description: $i18n.t('pages.pricing.starter'),
+        description: t('pages.pricing.starter'),
         prices: [0],
         items: [
-          { label: $i18n.t('pages.pricing.encounters', { number: 10 }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.campaigns', { number: 3 }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.multiple'), icon: 'cross' },
-          { label: $i18n.t('pages.pricing.setup'), icon: 'check' },
-          { label: $i18n.t('pages.pricing.update'), icon: 'check' }
+          { label: t('pages.pricing.encounters', { number: 10 }), icon: 'check' },
+          { label: t('pages.pricing.campaigns', { number: 3 }), icon: 'check' },
+          { label: t('pages.pricing.multiple'), icon: 'cross' },
+          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.update'), icon: 'check' }
         ]
       },
       {
         title: 'Medior',
-        description: $i18n.t('pages.pricing.medior'),
+        description: t('pages.pricing.medior'),
         prices: [3, 32.50],
         items: [
-          { label: $i18n.t('pages.pricing.encounters', { number: 50 }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.campaigns', { number: 10 }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.multiple'), icon: 'cross' },
-          { label: $i18n.t('pages.pricing.setup'), icon: 'check' },
-          { label: $i18n.t('pages.pricing.update'), icon: 'check' }
+          { label: t('pages.pricing.encounters', { number: 50 }), icon: 'check' },
+          { label: t('pages.pricing.campaigns', { number: 10 }), icon: 'check' },
+          { label: t('pages.pricing.multiple'), icon: 'cross' },
+          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.update'), icon: 'check' }
         ],
         monthId: config.public.stripeMediorMonthly,
         yearId: config.public.stripeMediorYearly
       },
       {
         title: 'Pro',
-        description: $i18n.t('pages.pricing.pro'),
+        description: t('pages.pricing.pro'),
         prices: [5, 50],
         items: [
-          { label: $i18n.t('pages.pricing.encounters', { number: 'infinite' }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.campaigns', { number: 'infinite' }), icon: 'check' },
-          { label: $i18n.t('pages.pricing.multiple'), icon: 'check' },
-          { label: $i18n.t('pages.pricing.setup'), icon: 'check' },
-          { label: $i18n.t('pages.pricing.update'), icon: 'check' }
+          { label: t('pages.pricing.encounters', { number: 'infinite' }), icon: 'check' },
+          { label: t('pages.pricing.campaigns', { number: 'infinite' }), icon: 'check' },
+          { label: t('pages.pricing.multiple'), icon: 'check' },
+          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.update'), icon: 'check' }
         ],
         monthId: config.public.stripeProMonthly,
         yearId: config.public.stripeProYearly

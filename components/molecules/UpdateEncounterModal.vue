@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<UpdateEncounterForm>({
   title: props.encounter.title,
@@ -33,7 +33,7 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
     )
     emit('updated', enc)
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

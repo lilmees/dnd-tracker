@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const store = useTableStore()
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const keys = useMagicKeys()
 
 // Initiative down
@@ -14,19 +14,19 @@ whenever(keys.PageDown, () => store.nextInitiative())
 const headers = computed<string[]>(() => {
   const headers = [
     '',
-    $i18n.t('components.encounterTable.headers.name'),
-    $i18n.t('components.encounterTable.headers.init'),
-    $i18n.t('components.encounterTable.headers.ac'),
-    $i18n.t('components.encounterTable.headers.hp'),
-    $i18n.t('components.encounterTable.headers.actions'),
-    $i18n.t('components.encounterTable.headers.conditions'),
-    $i18n.t('components.encounterTable.headers.note'),
-    $i18n.t('components.encounterTable.headers.deathSaves'),
+    t('components.encounterTable.headers.name'),
+    t('components.encounterTable.headers.init'),
+    t('components.encounterTable.headers.ac'),
+    t('components.encounterTable.headers.hp'),
+    t('components.encounterTable.headers.actions'),
+    t('components.encounterTable.headers.conditions'),
+    t('components.encounterTable.headers.note'),
+    t('components.encounterTable.headers.deathSaves'),
     'con',
-    $i18n.t('components.encounterTable.headers.modify')
+    t('components.encounterTable.headers.modify')
   ]
   if (store.includesSummond) {
-    headers.splice(2, 0, $i18n.t('components.encounterTable.headers.summond'))
+    headers.splice(2, 0, t('components.encounterTable.headers.summond'))
   }
   return headers
 })

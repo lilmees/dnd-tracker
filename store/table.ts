@@ -1,9 +1,11 @@
+import logRocket from 'logrocket'
+
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const localePath = useLocalePath()
   const toast = useToastStore()
-  const { $i18n, $logRocket } = useNuxtApp()
+  const { t } = useI18n()
 
   const encounter = ref<Encounter | null>(null)
   const isLoading = ref<boolean>(true)
@@ -72,8 +74,8 @@ export const useTableStore = defineStore('useTableStore', () => {
         (payload: SupabaseRealTime) => {
           if (payload.eventType === 'DELETE') {
             toast.info({
-              title: $i18n.t('pages.encounter.toasts.removed.title'),
-              text: $i18n.t('pages.encounter.toasts.removed.text')
+              title: t('pages.encounter.toasts.removed.title'),
+              text: t('pages.encounter.toasts.removed.text')
             })
             navigateTo(localePath('/encounters'))
           } else {
@@ -107,7 +109,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
         encounter.value = { ...encounter.value, ...enc } as Encounter
       } catch (err) {
-        $logRocket.captureException(err as Error)
+        logRocket.captureException(err as Error)
         toast.error()
       }
     } else {
@@ -160,13 +162,13 @@ export const useTableStore = defineStore('useTableStore', () => {
   function checkDeathSaves (saves: DeathSaves): void {
     if (saves.fail.every(v => v === true) && !saves.save.every(v => v === true)) {
       toast.info({
-        title: $i18n.t('pages.encounter.toasts.died.title'),
-        text: $i18n.t('pages.encounter.toasts.died.textDeathSaves')
+        title: t('pages.encounter.toasts.died.title'),
+        text: t('pages.encounter.toasts.died.textDeathSaves')
       })
     } else if (saves.save.every(v => v === true) && !saves.fail.every(v => v === true) && !saves.stable) {
       toast.info({
-        title: $i18n.t('pages.encounter.toasts.stable.title'),
-        text: $i18n.t('pages.encounter.toasts.stable.textDeathSaves')
+        title: t('pages.encounter.toasts.stable.title'),
+        text: t('pages.encounter.toasts.stable.textDeathSaves')
       })
     }
   }

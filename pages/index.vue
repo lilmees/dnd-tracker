@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Power3, gsap } from 'gsap'
+import logRocket from 'logrocket'
 
 const store = useTableStore()
 const toast = useToastStore()
-const { $logRocket } = useNuxtApp()
 
 const hoard = ref<HTMLElement>()
 const table = ref<HTMLElement>()
@@ -13,7 +13,7 @@ const tableVisible: Ref<boolean> = useElementVisibility(table)
 try {
   await store.getSandboxEncounter()
 } catch (err) {
-  $logRocket.captureException(err as Error)
+  logRocket.captureException(err as Error)
   toast.error()
 }
 

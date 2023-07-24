@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const open5e = useOpen5eStore()
 const toast = useToastStore()
 const table = useTableStore()
-const { $logRocket, $i18n } = useNuxtApp()
+const { t } = useI18n()
 
 interface Form { search: string, type: Open5eType}
 
@@ -55,7 +57,7 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
 
     hits.value = unique
   } catch (err) {
-    $logRocket.captureException(err)
+    logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isLoading.value = false
@@ -86,8 +88,8 @@ async function handlePinToggle (data: { info: InfoCard, remove: boolean }): Prom
     update = update.filter((i: InfoCard) => i.slug !== data.info.slug)
   } else if (table.encounter.info_cards.length >= 10) {
     toast.error({
-      title: $i18n.t('components.infoSearch.toast.maxTitle'),
-      text: $i18n.t('components.infoSearch.toast.maxText')
+      title: t('components.infoSearch.toast.maxTitle'),
+      text: t('components.infoSearch.toast.maxText')
     })
   } else {
     update.push(data.info)

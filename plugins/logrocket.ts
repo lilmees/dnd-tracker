@@ -15,8 +15,4 @@ export default defineNuxtPlugin(({ pinia }) => {
       store.$subscribe(m => logRocket.log('mutation', m))
     })
   }
-
-  return {
-    provide: { logRocket }
-  }
 })
