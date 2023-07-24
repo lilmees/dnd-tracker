@@ -1,6 +1,3 @@
-import { defineStore } from 'pinia'
-import { useOpen5eStore } from '@/store/open5e'
-
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
   const { $logRocket } = useNuxtApp()

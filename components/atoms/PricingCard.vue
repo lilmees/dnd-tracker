@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useStripeStore } from '@/store/stripe'
-
 const props = withDefaults(
   defineProps<{
   product: Pricing,

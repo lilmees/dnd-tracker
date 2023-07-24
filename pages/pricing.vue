@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useStripeStore } from '@/store/stripe'
-
 const stripe = useStripeStore()
 
 const isYearly: Ref<boolean> = ref(false)

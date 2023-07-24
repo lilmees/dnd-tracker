@@ -1,10 +1,3 @@
-
-import { defineStore } from 'pinia'
-import { useEncountersStore } from '@/store/encounters'
-import { useCampaignsStore } from '@/store/campaigns'
-import { useHomebrewStore } from '@/store/homebrew'
-import { useToastStore } from '@/store/toast'
-
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const user = useSupabaseUser()
   const store = useCampaignsStore()
@@ -14,10 +7,12 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const localePath = useLocalePath()
   const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const campaign: Ref<Campaign | null> = ref(null)
-  const encounters: Ref<Encounter[]> = ref([])
+  const logRocket: any = $logRocket
+
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const campaign = ref<Campaign | null>(null)
+  const encounters = ref<Encounter[]>([])
 
   async function getCampaignInfo (id: number): Promise<void> {
     loading.value = true
@@ -33,7 +28,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       useHead({ title: campaign.value.title })
       encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
       toast.error()
       navigateTo(localePath('/campaigns'))
@@ -50,7 +45,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         campaign.value.homebrew_items = [...campaign.value.homebrew_items, data]
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       toast.error()
     }
   }
@@ -67,7 +62,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         }
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       toast.error()
     }
   }
@@ -80,7 +75,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
         campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       toast.error()
     }
   }

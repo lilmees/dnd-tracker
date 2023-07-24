@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useProfileStore } from '@/store/profile'
 
 const localePath = useLocalePath()
 const profile = useProfileStore()

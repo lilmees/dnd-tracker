@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
 

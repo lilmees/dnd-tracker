@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useElementVisibility } from '@vueuse/core'
 import { Power3, gsap } from 'gsap'
-import { useTableStore } from '@/store/table'
-import { useToastStore } from '@/store/toast'
 
 const store = useTableStore()
 const toast = useToastStore()

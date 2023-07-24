@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
-import { useTableStore } from '@/store/table'
-import { useToastStore } from '@/store/toast'
-
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
@@ -64,12 +60,16 @@ watchDebounced(
           <EncounterTable />
           <EncounterOptions />
         </div>
-        <div class="pt-10">
+        <div class="container pt-10 items-start grid md:grid-cols-2 gap-8">
           <Input
             v-model="info"
             type="textarea"
             name="info"
             :label="$t('pages.encounter.info')"
+          />
+          <InfoDropdown
+            v-if="store.encounter?.info_cards?.length"
+            :cards="store.encounter.info_cards"
           />
         </div>
       </div>

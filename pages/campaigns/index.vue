@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useToastStore } from '@/store/toast'
-import { useCampaignsStore } from '@/store/campaigns'
-
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
 

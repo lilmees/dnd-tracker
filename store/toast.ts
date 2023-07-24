@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useToastStore = defineStore('useToastStore', () => {
   const { $i18n } = useNuxtApp()
 

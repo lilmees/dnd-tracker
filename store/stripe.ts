@@ -1,7 +1,3 @@
-
-import { defineStore } from 'pinia'
-import { useProfileStore } from '@/store/profile'
-
 export const useStripeStore = defineStore('useStripeStore', () => {
   const { $i18n } = useNuxtApp()
   const config = useRuntimeConfig()

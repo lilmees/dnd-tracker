@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useElementVisibility } from '@vueuse/core'
 import { Power3, gsap } from 'gsap'
 
 const cat: Ref = ref()

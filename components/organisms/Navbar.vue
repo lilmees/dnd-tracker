@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
-import { useRouteStore } from '@/store/route'
-import { useToastStore } from '@/store/toast'
-import { useAuthStore } from '@/store/auth'
-import { useProfileStore } from '@/store/profile'
-
 const toast = useToastStore()
 const route = useRouteStore()
 const auth = useAuthStore()

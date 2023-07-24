@@ -1,10 +1,12 @@
 <script setup lang="ts">
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 withDefaults(
   defineProps<{ big?: boolean }>(), {
     big: false
   }
 )
+
+onKeyStroke('Escape', () => emit('close'))
 </script>
 
 <template>

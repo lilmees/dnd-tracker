@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import { useHomebrewStore } from '@/store/homebrew'
 
 const emit = defineEmits(['close', 'homebrews'])
 const props = defineProps<{
@@ -82,10 +81,10 @@ async function addHomebrew ({ __init, ...formData }: Obj): Promise<void> {
       <button
         type="submit"
         class="btn-black w-full"
-        :aria-label="$t('components.addCammpaignHomebrew.add')"
+        :aria-label="$t('components.addCampaignHomebrew.add')"
         :disabled="isLoading"
       >
-        {{ $t('components.addCammpaignHomebrew.add') }}
+        {{ $t('components.addCampaignHomebrew.add') }}
       </button>
     </FormKit>
   </Modal>
