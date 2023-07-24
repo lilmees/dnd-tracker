@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const open5e = useOpen5eStore()
 const toast = useToastStore()
-const { $logRocket } = useNuxtApp()
+const table = useTableStore()
+const { $logRocket, $i18n } = useNuxtApp()
 
 interface Form { search: string, type: Open5eType}
 
@@ -9,7 +10,8 @@ const form = ref<Form>({ search: '', type: 'spells' })
 const isLoading = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
 const isInit = ref<boolean>(true)
-const hits = ref<any[]>([])
+const showPinned = ref<boolean>(false)
+const hits = ref<InfoCard[]>([])
 const page = ref<number>(0)
 const pages = ref<number>(0)
 
@@ -45,7 +47,7 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
     pages.value = Math.ceil(count / 20)
 
     // Filter out objects with the same name
-    const unique: any[] = results.reduce((arr: any[], r: any) => {
+    const unique: InfoCard[] = results.reduce((arr: InfoCard[], r: InfoCard) => {
       return !arr.find(item => item.name === r.name)
         ? arr.concat(r)
         : arr
@@ -64,16 +66,52 @@ function paginate (newPage: number): void {
   isLoading.value = true
   page.value = newPage
   fetchInfo(form.value)
-  const el = document.getElementById('el')
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  }
+  scrollToTop()
 }
 
 function reset (): void {
   form.value = { search: '', type: 'spells' }
   hits.value = []
   isOpen.value = false
+}
+
+async function handlePinToggle (data: { info: InfoCard, remove: boolean }): Promise<void> {
+  if (!table.encounter) {
+    return
+  }
+
+  let update = table.encounter.info_cards
+
+  if (data.remove) {
+    update = update.filter((i: InfoCard) => i.slug !== data.info.slug)
+  } else if (table.encounter.info_cards.length >= 10) {
+    toast.error({
+      title: $i18n.t('components.infoSearch.toast.maxTitle'),
+      text: $i18n.t('components.infoSearch.toast.maxText')
+    })
+  } else {
+    update.push(data.info)
+  }
+
+  await table.encounterUpdate({ info_cards: update })
+}
+
+function showToggle (): void {
+  showPinned.value = !showPinned.value
+  scrollToTop()
+}
+
+async function removePins (): Promise<void> {
+  await table.encounterUpdate({ info_cards: [] })
+  showPinned.value = false
+  scrollToTop()
+}
+
+function scrollToTop (): void {
+  const el = document.getElementById('el')
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }
 }
 </script>
 
@@ -96,7 +134,10 @@ function reset (): void {
     </button>
     <FullScreenSearch v-if="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen max-w-prose mx-auto pt-20 pb-6">
-        <div class="flex items-end gap-4 px-1 pb-10">
+        <div
+          class="flex items-end gap-4 px-1"
+          :class="{ 'pb-10': !table.encounter?.info_cards?.length || false }"
+        >
           <FormKit
             v-model="form.type"
             type="select"
@@ -119,23 +160,36 @@ function reset (): void {
             <Icon name="ic:round-clear" size="25" />
           </button>
         </div>
+        <div
+          v-if="table.encounter?.info_cards?.length"
+          class="flex gap-4 pt-2 pb-8"
+        >
+          <button class="btn-primary" @click="showToggle">
+            {{ $t(`components.infoSearch.${ showPinned ? 'hide' : 'show' }`) }}
+          </button>
+          <button class="btn-danger" @click="removePins">
+            {{ $t('components.infoSearch.remove') }}
+          </button>
+        </div>
         <div v-if="isLoading" class="relative w-20 h-20 mx-auto">
           <div class="loader" />
         </div>
         <div
-          v-else-if="!isLoading && hits.length"
+          v-else-if="!isLoading && (hits.length || showPinned)"
           class="flex flex-col gap-4 overflow-y-auto"
         >
           <InfoCard
-            v-for="(hit, index) in hits"
+            v-for="(hit, index) in showPinned ? table.encounter?.info_cards : hits"
             :id="index === 0 ? 'el' : ''"
-            :key="hit.id"
+            :key="hit.slug"
             :hit="hit"
-            :type="form.type"
+            :sandbox="table.isSandbox"
+            :pinned="table.encounter?.info_cards?.some(info => info.slug === hit.slug) || false"
+            @pin="handlePinToggle"
           />
         </div>
         <Pagination
-          v-if="pages > 1 && !isLoading && hits.length"
+          v-if="pages > 1 && !isLoading && hits.length && !showPinned"
           v-model="page"
           :total-pages="pages"
           class="mt-2"
