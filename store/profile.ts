@@ -5,9 +5,9 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   const auth = useAuthStore()
   const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const data: Ref<Profile | null> = ref(null)
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const data = ref<Profile | null>(null)
 
   async function fetch (): Promise<void> {
     error.value = null

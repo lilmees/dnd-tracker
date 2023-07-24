@@ -1,28 +1,41 @@
-<script setup>
+<script setup lang="ts">
 defineEmits(['update:modelValue'])
-const props = defineProps({
-  label: { type: String, required: true },
-  help: { type: String, default: '' },
-  placeholder: { type: String, default: '' },
-  type: { type: String, default: 'text' },
-  name: { type: String, required: true },
-  modelValue: { type: [String, Number], default: '' },
-  validation: { type: String, default: '' },
-  disabled: { type: Boolean, default: false },
-  required: { type: Boolean, default: false },
-  focus: { type: Boolean, default: false },
-  size: { type: String, default: 'large' },
-  options: { type: Array, default: () => [] },
-  validationRules: { type: Object, default: () => {} }
-})
+const props = withDefaults(defineProps<{
+  label: string,
+  help?: string,
+  placeholder?: string,
+  type?: string,
+  name: string,
+  modelValue: string | number,
+  validation: string,
+  disabled?: boolean,
+  required?: boolean,
+  focus?: boolean,
+  size?: string,
+  options: Option[],
+  validationRules: Obj
+}>(), {
+  help: '',
+  placeholder: '',
+  type: 'text',
+  modelValue: '',
+  validation: '',
+  disabled: false,
+  required: false,
+  focus: false,
+  size: 'large',
+  options: () => [],
+  validationRules: () => { return {} }
+}
+)
 
 onMounted(() => {
   if (props.focus) {
-    document.querySelector(`#${props.name}`)?.focus()
+    (document.querySelector(`#${props.name}`) as HTMLInputElement).focus()
   }
 })
 
-function handleIconClick (node) {
+function handleIconClick (node: any) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }

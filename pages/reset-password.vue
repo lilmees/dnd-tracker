@@ -5,9 +5,9 @@ const toast = useToastStore()
 const localePath = useLocalePath()
 const { $logRocket } = useNuxtApp()
 
-const form: Ref<{ password: string }> = ref({ password: '' })
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
+const form = ref<{ password: string }>({ password: '' })
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
 
 async function resetPassword ({ __init, password }: Obj): Promise<void> {
   error.value = null

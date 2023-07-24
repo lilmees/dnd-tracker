@@ -29,7 +29,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): 
     return
   }
 
-  let encounter: Partial<EncounterUpdate> = {
+  let encounter: UpdateEncounter = {
     ...enc,
     title: `copy ${enc.title}`.slice(0, 30),
     created_by: user.value.id,
@@ -54,7 +54,7 @@ async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): 
   }
 }
 
-function updatedEncounter (encounter: EncounterUpdate): void {
+function updatedEncounter (encounter: UpdateEncounter): void {
   emit('updated', encounter)
   closeSettings()
 }

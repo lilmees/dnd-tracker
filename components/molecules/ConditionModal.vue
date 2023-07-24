@@ -8,8 +8,8 @@ const props = withDefaults(
 
 const store = useConditionsStore()
 
-const isOpen: Ref<boolean> = ref(false)
-const selected: Ref<Condition[]> = ref(props.conditions || [])
+const isOpen = ref<boolean>(false)
+const selected = ref<Condition[]>(props.conditions || [])
 
 // reset selected and info when modal is closed
 watch(isOpen, (v: boolean) => {

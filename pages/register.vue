@@ -7,10 +7,10 @@ const toast = useToastStore()
 const localePath = useLocalePath()
 const { $logRocket } = useNuxtApp()
 
-const form: Ref<Register> = ref({ email: '', password: '', name: '', username: '' })
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const image: Ref<string> = ref(
+const form = ref<Register>({ email: '', password: '', name: '', username: '' })
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const image = ref<string>(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 

@@ -4,7 +4,7 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const store = useCurrentCampaignStore()
 
-const isCreatingEncounter: Ref<boolean> = ref(false)
+const isCreatingEncounter = ref<boolean>(false)
 
 onMounted(() => {
   if (route?.params?.id) {

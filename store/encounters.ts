@@ -80,7 +80,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function updateEncounter (encounter: EncounterUpdate, id: number): Promise<Encounter> {
+  async function updateEncounter (encounter: UpdateEncounter, id: number): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .update(encounter as never)

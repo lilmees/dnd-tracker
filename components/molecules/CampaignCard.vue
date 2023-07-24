@@ -7,9 +7,9 @@ const toast = useToastStore()
 const { $logRocket } = useNuxtApp()
 const localePath = useLocalePath()
 
-const needConfirmation: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const isSettings: Ref<boolean> = ref(false)
+const needConfirmation = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const isSettings = ref<boolean>(false)
 
 async function deleteCampaign (): Promise<void> {
   try {

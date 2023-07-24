@@ -8,12 +8,12 @@ const props = defineProps<{ item: Homebrew }>()
 const store = useCurrentCampaignStore()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const form: Ref<UpdateHomebrewForm> = ref({
+const form = ref<UpdateHomebrewForm>({
   name: '',
   link: null,
-  type: 'player' as HomebrewType,
+  type: 'player' as RowType,
   data: {
     isLoading: false,
     encounter: false,
@@ -31,7 +31,7 @@ const form: Ref<UpdateHomebrewForm> = ref({
 
 watch(() => isOpen.value, (v) => {
   if (v) {
-    form.value.type = props.item.type as HomebrewType
+    form.value.type = props.item.type as RowType
     form.value.name = props.item.name
     form.value.link = props.item.link as string
   }

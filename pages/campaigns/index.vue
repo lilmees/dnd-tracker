@@ -5,7 +5,7 @@ useHead({ title: 'Campaigns' })
 const toast = useToastStore()
 const store = useCampaignsStore()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
 onMounted(() => store.fetch())
 

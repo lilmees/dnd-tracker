@@ -6,10 +6,10 @@ import schema from '~~/formkit/homebrew.json'
 const store = useTableStore()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const form: Ref<AddInitiativeForm> = ref({
-  type: 'player' as HomebrewType,
+const form = ref<AddInitiativeForm>({
+  type: 'player' as RowType,
   name: '',
   initiative: null,
   ac: null,
@@ -71,12 +71,12 @@ async function addInitiative ({ __init, amount, data, slots, ...formData }: Obj)
     }
 
     for (let i = 0; i < amount; i++) {
-      rows.push(useCreateRow(formData as Row, form.value.type as string, store.encounter.rows))
+      rows.push(useCreateRow(formData as Row, form.value.type as RowType, store.encounter.rows))
     }
 
     await store.encounterUpdate({
       rows: [...store.encounter.rows, ...rows]
-    } as EncounterUpdate)
+    } as UpdateEncounter)
 
     closeModal()
   } catch (err) {

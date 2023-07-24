@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Power3, gsap } from 'gsap'
 
-const cat: Ref = ref()
+const cat = ref<HTMLElement>()
 const catVisible: Ref<boolean> = useElementVisibility(cat)
 
 watch(catVisible, (v: boolean) => {
-  if (v) {
+  if (v && cat.value) {
     gsap.fromTo(
       cat.value,
       { scale: 0.85 },

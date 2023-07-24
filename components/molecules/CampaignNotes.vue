@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const store = useCurrentCampaignStore()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
 function addedNote (notes: Note[]): void {
   if (store.campaign) {

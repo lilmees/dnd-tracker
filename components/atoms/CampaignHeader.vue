@@ -5,7 +5,7 @@ const store = useCampaignsStore()
 const route = useRoute()
 const localePath = useLocalePath()
 
-const cam: Ref<Campaign | null> = ref(null)
+const cam = ref<Campaign | null>(null)
 
 // if there is only the id of the campaign then fetch the information
 if (props.campaign) {

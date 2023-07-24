@@ -6,9 +6,9 @@ const toast = useToastStore()
 const store = useNotesStore()
 const { $logRocket } = useNuxtApp()
 
-const isSettings: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const needConfirmation: Ref<boolean> = ref(false)
+const isSettings = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
 
 async function deleteNote (): Promise<void> {
   try {

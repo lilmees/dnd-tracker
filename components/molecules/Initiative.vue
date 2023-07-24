@@ -7,8 +7,8 @@ const props = defineProps<{
 
 const store = useTableStore()
 
-const isOpen: Ref<boolean> = ref(false)
-const form: Ref<{ initiative: number | null }> = ref({ initiative: null })
+const isOpen = ref<boolean>(false)
+const form = ref<{ initiative: number | null }>({ initiative: null })
 
 function diceRoll () {
   form.value.initiative = useDiceRoll(20) as number

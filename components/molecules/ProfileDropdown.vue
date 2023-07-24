@@ -8,7 +8,7 @@ const toast = useToastStore()
 const user = useSupabaseUser()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
 onBeforeMount(() => profile.fetch())
 

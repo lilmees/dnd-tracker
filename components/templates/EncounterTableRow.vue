@@ -6,9 +6,9 @@ const props = defineProps<{
 
 const store = useTableStore()
 
-const note: Ref<string> = ref(props.row.note || '')
+const note = ref<string>(props.row.note || '')
 
-const summoner: ComputedRef<string | null> = computed(() => {
+const summoner = computed<string | null>(() => {
   if (store.encounter) {
     const sum = store.encounter.rows.filter(r => r.id === props.row.summoner?.id)
     return sum.length ? sum[0].name : null

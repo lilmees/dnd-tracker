@@ -115,7 +115,7 @@
     "props": {
       "label": {
         "if": "$data.encounter",
-        "then": "encounter.addInInitiative",
+        "then": "components.addInitiativeModal.addHomebrew",
         "else": {
           "if": "$data.encounter === false && $data.update === false",
           "then": "components.addInitiativeModal.addHomebrew",

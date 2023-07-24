@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ monster: Monster }>()
 
-const headers: Ref<{ label: string, key: string }[]> = ref([
+const headers = ref<{ label: string, key: string }[]>([
   { label: 'Actions', key: 'actions' },
   { label: 'Legendary actions', key: 'legendary_actions' },
   { label: 'Reactions', key: 'reactions' },

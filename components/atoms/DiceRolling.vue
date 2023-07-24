@@ -6,8 +6,8 @@ withDefaults(
   }
 )
 
-const form: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
-const results: Ref<Dices> = ref({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const form = ref<Dices>({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
+const results = ref<Dices>({ d100: null, d20: null, d12: null, d10: null, d8: null, d6: null, d4: null })
 
 function rollDice ({ __init, ...dices }: Obj): void {
   Object.keys(dices).forEach((dice) => {
@@ -20,7 +20,7 @@ function rollDice ({ __init, ...dices }: Obj): void {
       'result',
       Object.values(results.value)
         .flat()
-        .reduce((t, c) => t + c, 0)
+        .reduce((t, c) => (t || 0) + (c || 0), 0)
     )
   }
 }
@@ -156,19 +156,14 @@ function reset (): void {
         </div>
       </div>
       <h3
-        v-if="
-          result &&
-            Object.values(results)
-              .flat()
-              .reduce((s, a) => s + a, 0) > 0
-        "
+        v-if="result && Object.values(results).some((r) => r !== null)"
         class="font-bold mb-3"
       >
         {{ $t('general.grandTotal') }}
         {{
           Object.values(results)
             .flat()
-            .reduce((s, a) => s + a, 0)
+            .reduce((s, a) => (s || 0) + (a || 0), 0)
         }}
       </h3>
       <div class="flex flex-wrap gap-2">

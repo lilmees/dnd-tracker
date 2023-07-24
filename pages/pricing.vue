@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const stripe = useStripeStore()
 
-const isYearly: Ref<boolean> = ref(false)
+const isYearly = ref<boolean>(false)
 </script>
 
 <template>

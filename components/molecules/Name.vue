@@ -6,8 +6,8 @@ const props = withDefaults(
   }
 )
 
-const isOpen: Ref<boolean> = ref(false)
-const form: Ref<{ name: string }> = ref({ name: '' })
+const isOpen = ref<boolean>(false)
+const form = ref<{ name: string }>({ name: '' })
 
 function updateName ({ __init, name }: Obj): void {
   emit('update', name.trim())

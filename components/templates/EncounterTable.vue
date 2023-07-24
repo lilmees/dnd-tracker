@@ -11,7 +11,7 @@ whenever(keys.pageUp, () => store.prevInitiative())
 whenever(keys.shift_arrowRight, () => store.nextInitiative())
 whenever(keys.PageDown, () => store.nextInitiative())
 
-const headers: ComputedRef<string[]> = computed(() => {
+const headers = computed<string[]>(() => {
   const headers = [
     '',
     $i18n.t('components.encounterTable.headers.name'),

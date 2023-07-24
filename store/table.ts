@@ -83,7 +83,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       .subscribe()
   }
 
-  async function encounterUpdate (enc: EncounterUpdate): Promise<void> {
+  async function encounterUpdate (enc: UpdateEncounter): Promise<void> {
     if (enc.rows?.length) {
       enc.rows = useIndexCorrecter(enc.rows as Row[])
     }

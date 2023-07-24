@@ -13,7 +13,7 @@ const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
 const { $logRocket } = useNuxtApp()
 
-const form: Ref<AddEncounterForm> = ref({
+const form = ref<AddEncounterForm>({
   title: '',
   campaign: undefined,
   background: '#0073A1',
