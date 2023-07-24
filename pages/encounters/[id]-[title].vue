@@ -67,6 +67,10 @@ watchDebounced(
             name="info"
             :label="$t('pages.encounter.info')"
           />
+          <InfoDropdown
+            v-if="store.encounter?.info_cards?.length"
+            :cards="store.encounter.info_cards"
+          />
         </div>
       </div>
     </ClientOnly>

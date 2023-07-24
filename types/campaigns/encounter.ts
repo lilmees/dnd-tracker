@@ -13,4 +13,5 @@ interface Encounter {
   activeIndex: number
   color: string
   background: string
+  info_cards: InfoCard[]
 }

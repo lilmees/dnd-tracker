@@ -343,6 +343,22 @@
     "fullScreenSearch": {
       "tooltip": "Search information",
       "notFound": "Alas, our adventurous quest through the depths of our DnD archives has yielded no trace. The mystical tomes brimming with ancient lore and rules seem to temporarily withhold their secrets from us. But fear not! We shall not surrender! Feel free to continue your exploration in our magical realm, for who knows what epic discoveries await you."
+    },
+    "infoSearch": {
+      "show": "Show pinned items",
+      "hide": "Hide pinned items",
+      "remove": "Remove pinned items",
+      "toast": {
+        "maxTitle": "You hit your pinned limit",
+        "maxText": "The maximum of pinned info cards is 10"
+      }
+    },
+    "infoCard": {
+      "add": "Add pin",
+      "remove": "Remove pin"
+    },
+    "infoDropdown": {
+      "title": "Pinned information cards"
     }
   }
 }
