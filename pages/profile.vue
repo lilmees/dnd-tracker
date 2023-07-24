@@ -5,12 +5,12 @@ const profile = useProfileStore()
 const toast = useToastStore()
 const { $logRocket, $i18n } = useNuxtApp()
 
-const image : Ref<string | null> = ref(profile.data?.avatar || null)
-const isUpdating: Ref<boolean> = ref(false)
-const isLoading: Ref<boolean> = ref(false)
-const needConfirmation: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<Register> = ref({
+const image = ref<string | null>(profile.data?.avatar || null)
+const isUpdating = ref<boolean>(false)
+const isLoading = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+const error = ref<string | null>(null)
+const form = ref<Register>({
   email: profile.data?.email || '',
   password: '',
   name: profile.data?.name || '',

@@ -5,7 +5,7 @@ useHead({ title: 'Encounters' })
 const toast = useToastStore()
 const store = useEncountersStore()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())

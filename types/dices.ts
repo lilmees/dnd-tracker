@@ -1,9 +1,11 @@
+type DiceRoll = null | number | number[]
+
 interface Dices {
-  d100: null | number | number[]
-  d20: null | number | number[]
-  d12: null | number | number[]
-  d10: null | number | number[]
-  d8: null | number | number[]
-  d6: null | number | number[]
-  d4: null | number | number[]
+  d100: DiceRoll
+  d20: DiceRoll
+  d12: DiceRoll
+  d10: DiceRoll
+  d8: DiceRoll
+  d6: DiceRoll
+  d4: DiceRoll
 }

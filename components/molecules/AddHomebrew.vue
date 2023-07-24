@@ -6,12 +6,12 @@ import schema from '~~/formkit/homebrew.json'
 const store = useCurrentCampaignStore()
 const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const form: Ref<AddHomebrewForm> = ref({
+const form = ref<AddHomebrewForm>({
   name: '',
   link: null,
-  type: 'player' as HomebrewType,
+  type: 'player' as RowType,
   data: {
     isLoading: false,
     encounter: false,

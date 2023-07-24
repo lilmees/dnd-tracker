@@ -6,7 +6,7 @@ const toast = useToastStore()
 const store = useTableStore()
 const { $logRocket } = useNuxtApp()
 
-const info: Ref<string> = ref('')
+const info = ref<string>('')
 
 if (route?.params?.id) {
   try {

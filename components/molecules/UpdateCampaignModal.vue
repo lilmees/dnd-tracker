@@ -5,9 +5,9 @@ const props = defineProps<{ open: boolean, campaign: Campaign }>()
 const store = useCampaignsStore()
 const { $logRocket } = useNuxtApp()
 
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<{ title: string, background: string }> = ref({
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const form = ref<{ title: string, background: string }>({
   title: props.campaign.title,
   background: props.campaign.background
 })

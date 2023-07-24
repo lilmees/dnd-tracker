@@ -2,13 +2,13 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
   const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const campaigns: Ref<Campaign[] | null> = ref(null)
-  const currentCampaign: Ref<Campaign | null> = ref(null)
-  const currentCampaignEncounters: Ref<Encounter[]> = ref([])
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const campaigns = ref<Campaign[] | null>(null)
+  const currentCampaign = ref<Campaign | null>(null)
+  const currentCampaignEncounters = ref<Encounter[]>([])
 
-  const sortedCampaigns: ComputedRef<Campaign[] | null> = computed(() => {
+  const sortedCampaigns = computed<Campaign[] | null>(() => {
     return campaigns.value
       ? campaigns.value
         .sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
@@ -83,7 +83,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function updateCampaign (campaign: CampaignUpdate, id: number): Promise<void> {
+  async function updateCampaign (campaign: UpdateCampaign, id: number): Promise<void> {
     const { data, error } = await supabase
       .from('campaigns')
       .update(campaign as never)

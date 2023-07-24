@@ -7,13 +7,13 @@ const props = defineProps<{ homebrew: Homebrew, open: boolean }>()
 const store = useHomebrewStore()
 const { $logRocket } = useNuxtApp()
 
-const error: Ref<string | null> = ref(null)
-const isLoading: Ref<boolean> = ref(false)
-const form: Ref<HomebrewUpdate> = ref({
+const error = ref<string | null>(null)
+const isLoading = ref<boolean>(false)
+const form = ref<UpdateHomebrew>({
   link: props.homebrew.link || '',
   name: props.homebrew.name || '',
-  ac: props.homebrew.ac || null,
-  health: props.homebrew.health || null,
+  ac: props.homebrew.ac || undefined,
+  health: props.homebrew.health || undefined,
   type: props.homebrew.type || ''
 })
 
@@ -24,8 +24,8 @@ watch(
       form.value = {
         type: props.homebrew.type || '',
         name: props.homebrew.name,
-        ac: props.homebrew.ac || null,
-        health: props.homebrew.health || null,
+        ac: props.homebrew.ac || undefined,
+        health: props.homebrew.health || undefined,
         link: props.homebrew.link || ''
       }
     }

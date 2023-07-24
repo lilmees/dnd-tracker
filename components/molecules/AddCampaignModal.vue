@@ -6,9 +6,9 @@ const store = useCampaignsStore()
 const user = useSupabaseUser()
 const { $logRocket } = useNuxtApp()
 
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<AddCampaignForm> = ref({
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const form = ref<AddCampaignForm>({
   title: '',
   background: '#0073A1'
 })

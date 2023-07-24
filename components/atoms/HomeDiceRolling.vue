@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const { ready, start } = useTimeout(5000, { controls: true })
 
-const amount: Ref<number> = ref(1)
-const rolled: Ref<{
+const amount = ref<number>(1)
+const rolled = ref<{
     dice: string
     result: number | number[],
     max: number,
     amount: number
-  } | null> = ref(null)
+  } | null>(null)
 
 function rollDice (dice: string): void {
   if (amount.value < 1 || amount.value > 50) {

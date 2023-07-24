@@ -7,9 +7,9 @@ const props = defineProps<{ note: Note, open: boolean }>()
 const store = useNotesStore()
 const { $logRocket } = useNuxtApp()
 
-const error: Ref<string | null> = ref(null)
-const isLoading: Ref<boolean> = ref(false)
-const form: Ref<{ title: string, text: string}> = ref({
+const error = ref<string | null>(null)
+const isLoading = ref<boolean>(false)
+const form = ref<{ title: string, text: string}>({
   title: props.note.title,
   text: props.note.text
 })

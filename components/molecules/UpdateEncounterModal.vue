@@ -7,7 +7,7 @@ const props = defineProps<{ open: boolean, encounter: Encounter }>()
 const store = useEncountersStore()
 const { $logRocket } = useNuxtApp()
 
-const form: Ref<UpdateEncounterForm> = ref({
+const form = ref<UpdateEncounterForm>({
   title: props.encounter.title,
   background: props.encounter.background,
   data: {

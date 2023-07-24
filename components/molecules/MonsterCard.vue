@@ -6,10 +6,10 @@ withDefaults(
   }
 )
 
-const abilities: Ref<string[]> = ref(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
-const abilitiesNames: Ref<string[]> = ref(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'])
-const stats: Ref<string[]> = ref(['type', 'subtype', 'size', 'alignment', 'xp'])
-const isOpen: Ref<boolean> = ref(false)
+const abilities = ref<string[]>(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
+const abilitiesNames = ref<string[]>(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'])
+const stats = ref<string[]>(['type', 'subtype', 'size', 'alignment', 'xp'])
+const isOpen = ref<boolean>(false)
 </script>
 
 <template>

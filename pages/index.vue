@@ -5,8 +5,8 @@ const store = useTableStore()
 const toast = useToastStore()
 const { $logRocket } = useNuxtApp()
 
-const hoard: Ref = ref()
-const table : Ref = ref()
+const hoard = ref<HTMLElement>()
+const table = ref<HTMLElement>()
 const hoardVisible: Ref<boolean> = useElementVisibility(hoard)
 const tableVisible: Ref<boolean> = useElementVisibility(table)
 
@@ -18,7 +18,7 @@ try {
 }
 
 watch(hoardVisible, (v: boolean) => {
-  if (v) {
+  if (v && hoard.value) {
     gsap.fromTo(
       hoard.value,
       { scale: 0.85 },
@@ -28,7 +28,7 @@ watch(hoardVisible, (v: boolean) => {
 })
 
 watch(tableVisible, (v: boolean) => {
-  if (v) {
+  if (v && table.value) {
     gsap.fromTo(
       table.value,
       { scale: 0.85 },

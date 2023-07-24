@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Power3, gsap } from 'gsap'
 
-const anchor: Ref<HTMLElement | undefined> = ref()
-const eyeLeft: Ref<HTMLElement | undefined> = ref()
-const eyeRight: Ref<HTMLElement | undefined> = ref()
+const anchor = ref<HTMLElement>()
+const eyeLeft = ref<HTMLElement>()
+const eyeRight = ref<HTMLElement>()
 
 function calculateEyes (e: MouseEvent) {
   if (!anchor.value || !eyeLeft.value || !eyeRight.value) {

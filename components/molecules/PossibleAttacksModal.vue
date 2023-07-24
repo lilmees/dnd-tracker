@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ row: Row }>()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 </script>
 
 <template>

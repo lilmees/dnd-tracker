@@ -26,7 +26,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function getHomebrewByType (type: HomebrewType): Promise<Homebrew[]> {
+  async function getHomebrewByType (type: RowType): Promise<Homebrew[]> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('type', type)
@@ -61,7 +61,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }
 
-  async function updateHomebrew (homebrew: HomebrewUpdate, id: number): Promise<Homebrew> {
+  async function updateHomebrew (homebrew: UpdateHomebrew, id: number): Promise<Homebrew> {
     const { data, error } = await supabase.from('homebrew_items')
       .update(homebrew as never)
       .eq('id', id)

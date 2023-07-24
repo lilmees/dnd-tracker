@@ -8,9 +8,9 @@ withDefaults(
 
 const store = useTableStore()
 
-const isOpen: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const form: Ref<{ link: string }> = ref({ link: '' })
+const isOpen = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const form = ref<{ link: string }>({ link: '' })
 
 function updateLink ({ __init, link }: Obj): void {
   emit('update', link)

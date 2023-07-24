@@ -8,7 +8,7 @@ withDefaults(
 
 const localePath = useLocalePath()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 </script>
 
 <template>
