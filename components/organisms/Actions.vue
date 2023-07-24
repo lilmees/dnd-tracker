@@ -3,7 +3,7 @@ const props = defineProps<{ row: Row, index: number }>()
 
 const toast = useToastStore()
 const store = useTableStore()
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 
 function updateLink (link: string): void {
   props.row.link = link
@@ -54,8 +54,8 @@ function updateHealth (update: { type: string, amount: number }): void {
     props.row.deathSaves.fail.every(v => v === true)
   ) {
     toast.info({
-      title: $i18n.t('pages.encounter.toasts.died.title'),
-      text: $i18n.t('pages.encounter.toasts.died.textMinHP')
+      title: t('pages.encounter.toasts.died.title'),
+      text: t('pages.encounter.toasts.died.textMinHP')
     })
   }
 

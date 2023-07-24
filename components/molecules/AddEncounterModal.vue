@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'added'])
@@ -11,7 +12,6 @@ const props = withDefaults(
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<AddEncounterForm>({
   title: '',
@@ -62,7 +62,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
       emit('added', encounter)
     }
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

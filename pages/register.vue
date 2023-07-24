@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['loggedin'] })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<Register>({ email: '', password: '', name: '', username: '' })
 const isLoading = ref<boolean>(false)
@@ -23,12 +24,12 @@ async function register ({ __init, username, name, ...credentials }: Obj): Promi
       { username, name, avatar: image.value, role: 'User' }
     )
     toast.success({
-      title: $i18n.t('pages.register.toast.success.title'),
-      text: $i18n.t('pages.register.toast.success.text')
+      title: t('pages.register.toast.success.title'),
+      text: t('pages.register.toast.success.text')
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {

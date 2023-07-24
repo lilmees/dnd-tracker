@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()
 const mail = useMail()
@@ -21,7 +21,7 @@ function sendContactMail (form: Obj): void {
     <p>${form.question} </p>
     `
   })
-  toast.success({ title: $i18n.t('pages.contact.success') })
+  toast.success({ title: t('pages.contact.success') })
   navigateTo(localePath('/'))
 }
 </script>

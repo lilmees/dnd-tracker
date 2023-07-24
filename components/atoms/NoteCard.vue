@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['deleted', 'updated'])
 const props = defineProps<{ note: Note }>()
 
 const toast = useToastStore()
 const store = useNotesStore()
-const { $logRocket } = useNuxtApp()
 
 const isSettings = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
@@ -16,7 +17,7 @@ async function deleteNote (): Promise<void> {
 
     emit('deleted', props.note.id)
   } catch (err: unknown) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }

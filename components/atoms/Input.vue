@@ -6,14 +6,14 @@ const props = withDefaults(defineProps<{
   placeholder?: string,
   type?: string,
   name: string,
-  modelValue: string | number,
-  validation: string,
+  modelValue?: string | number,
+  validation?: string,
   disabled?: boolean,
   required?: boolean,
   focus?: boolean,
   size?: string,
-  options: Option[],
-  validationRules: Obj
+  options?: Option[],
+  validationRules?: Obj
 }>(), {
   help: '',
   placeholder: '',

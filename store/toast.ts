@@ -1,5 +1,5 @@
 export const useToastStore = defineStore('useToastStore', () => {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
 
   const toasts = ref<Toast[]>([])
 
@@ -45,8 +45,8 @@ export const useToastStore = defineStore('useToastStore', () => {
   function error (error: Partial<Omit<Toast, 'key'>> = {}): number {
     return add({
       ...error,
-      title: error.title || $i18n.t('general.error.title'),
-      text: error.text || $i18n.t('general.error.text'),
+      title: error.title || t('general.error.title'),
+      text: error.text || t('general.error.text'),
       actions: error.actions || [],
       timed: error.timed || true,
       type: 'error'

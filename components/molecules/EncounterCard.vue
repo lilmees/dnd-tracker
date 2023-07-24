@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps<{ encounter: Encounter }>()
 
@@ -6,9 +8,6 @@ const user = useSupabaseUser()
 const store = useEncountersStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
-
-const logRocket: any = $logRocket
 
 const needConfirmation = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)

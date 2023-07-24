@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
 const toast = useToastStore()
 const store = useTableStore()
-const { $logRocket } = useNuxtApp()
 
 const info = ref<string>('')
 
@@ -16,7 +17,7 @@ if (route?.params?.id) {
       info.value = store.encounter.info as string
     }
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }

@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['close'])
 defineProps<{ open: boolean }>()
 
 const store = useCampaignsStore()
 const user = useSupabaseUser()
-const { $logRocket } = useNuxtApp()
 
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
@@ -32,7 +33,7 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       emit('close')
     }
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

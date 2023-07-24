@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['loggedin'] })
 
 const store = useAuthStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 const form = ref<Login>({ email: '', password: '' })
 const isLoading = ref<boolean>(false)
@@ -15,7 +16,7 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
     isLoading.value = true
     await store.login(credentials as Login)
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

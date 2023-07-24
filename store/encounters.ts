@@ -1,8 +1,7 @@
+import logRocket from 'logrocket'
+
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
-  const { $logRocket } = useNuxtApp()
-
-  const logRocket: any = $logRocket
 
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)

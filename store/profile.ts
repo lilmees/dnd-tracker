@@ -1,9 +1,10 @@
+import logRocket from 'logrocket'
+
 export const useProfileStore = defineStore('useProfileStore', () => {
   const supabaseAuth = useSupabaseAuthClient()
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const auth = useAuthStore()
-  const { $logRocket } = useNuxtApp()
 
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
@@ -35,7 +36,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
         }
       }
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

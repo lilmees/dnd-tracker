@@ -1,6 +1,7 @@
+import logRocket from 'logrocket'
+
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
-  const { $logRocket } = useNuxtApp()
 
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
@@ -22,7 +23,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
 
       data.value = results
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const toast = useToastStore()
 const route = useRouteStore()
 const auth = useAuthStore()
@@ -6,7 +8,6 @@ const profile = useProfileStore()
 const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 const isOpen = ref<boolean>(false)
 
@@ -28,7 +29,7 @@ async function logout (): Promise<void> {
     profile.data = null
     isOpen.value = false
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }

@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
-const { $logRocket, $i18n } = useNuxtApp()
+const { t } = useI18n()
 
 const image = ref<string | null>(profile.data?.avatar || null)
 const isUpdating = ref<boolean>(false)
@@ -40,9 +42,9 @@ async function updateProfile ({ __init, username, name, ...credentials }: Obj): 
       { username, name, avatar: image.value as string, role: 'User' }
     )
     isUpdating.value = false
-    toast.success({ text: $i18n.t('pages.profile.toast.success.text') })
+    toast.success({ text: t('pages.profile.toast.success.text') })
   } catch (err: any) {
-    ($logRocket as any).captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {
@@ -62,9 +64,9 @@ async function deleteUser (): Promise<void> {
 
   try {
     await profile.deleteProfile()
-    toast.success({ text: $i18n.t('pages.profile.toast.delete.text') })
+    toast.success({ text: t('pages.profile.toast.delete.text') })
   } catch (err) {
-    ($logRocket as any).captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isLoading.value = false

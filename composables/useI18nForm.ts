@@ -16,14 +16,14 @@ export const useI18nForm = (schema: FormKitSchemaNode[]): FormKitSchemaNode[] =>
 }
 
 function translateLabels (cmp: FormKitSchemaNode): FormKitSchemaNode {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
 
   if (isSchemaComponent(cmp as Obj)) {
     const component = cmp as FormKitSchemaComponent
 
     if (component.props?.label) {
       if (typeof component.props.label !== 'object' && !component.props.label?.includes('$')) {
-        component.props.label = $i18n.t(component.props.label)
+        component.props.label = t(component.props.label)
       } else {
         component.props.label = translateConditional(component.props.label)
       }
@@ -31,7 +31,7 @@ function translateLabels (cmp: FormKitSchemaNode): FormKitSchemaNode {
 
     if (component.props?.placeholder) {
       if (typeof component.props.label !== 'object' && !component.props.placeholder?.includes('$')) {
-        component.props.placeholder = $i18n.t(component.props.placeholder)
+        component.props.placeholder = t(component.props.placeholder)
       } else {
         component.props.placeholder = translateConditional(component.props.placeholder)
       }
@@ -44,7 +44,7 @@ function translateLabels (cmp: FormKitSchemaNode): FormKitSchemaNode {
 
       component.children.forEach((child: FormKitSchemaNode) => {
         if (typeof child === 'string') {
-          children.push($i18n.t(child))
+          children.push(t(child))
         } else {
           children.push(translateLabels(child))
         }
@@ -58,10 +58,10 @@ function translateLabels (cmp: FormKitSchemaNode): FormKitSchemaNode {
 }
 
 function translateConditional (obj: FormKitSchemaCondition): FormKitSchemaCondition {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
 
   if (obj.then) {
-    obj.then = $i18n.t(obj.then as string)
+    obj.then = t(obj.then as string)
   }
 
   if (obj.else) {
