@@ -9,17 +9,12 @@ const isOpen = ref<boolean>(false)
 
 onMounted(() => store.fetch())
 
-watch(() => store.error, (v) => {
-  if (v) {
-    toast.error()
-  }
-})
+whenever(() => store.error, () => { toast.error() })
 </script>
 
 <template>
   <NuxtLayout>
-    <div v-if="store.loading || !store.sortedCampaigns" class="loader" />
-    <div v-else-if="!store.error" class="my-10">
+    <div v-if="!store.error" class="my-10">
       <div class="pt-5 pb-10 flex justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
@@ -33,10 +28,26 @@ watch(() => store.error, (v) => {
         </button>
         <div />
       </div>
-      <div v-if="store.sortedCampaigns.length" class="flex flex-wrap gap-4 items-start">
-        <CampaignCard v-for="campaign in store.sortedCampaigns" :key="campaign.id" :campaign="campaign" />
+      <div
+        v-if="store.loading && !store.sortedCampaigns"
+        class="flex flex-wrap gap-4 items-start"
+      >
+        <SkeletonEncounterCard v-for="i in 10" :key="i" />
       </div>
-      <div v-else class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-lg space-y-4">
+      <div
+        v-else-if="store.sortedCampaigns?.length"
+        class="flex flex-wrap gap-4 items-start"
+      >
+        <CampaignCard
+          v-for="campaign in store.sortedCampaigns"
+          :key="campaign.id"
+          :campaign="campaign"
+        />
+      </div>
+      <div
+        v-else
+        class="mx-auto max-w-lg border-2 border-primary p-2 sm:p-10 rounded-lg space-y-4"
+      >
         <h2>{{ $t('pages.campaigns.noData.title') }}</h2>
         <p>{{ $t('pages.campaigns.noData.text') }}</p>
         <button

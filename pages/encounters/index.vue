@@ -10,18 +10,13 @@ const { error } = storeToRefs(store)
 
 onMounted(() => store.fetch())
 
-watch(error, (v) => {
-  if (v) {
-    toast.error()
-  }
-})
+whenever(error, () => { toast.error() })
 </script>
 
 <template>
   <NuxtLayout>
-    <div v-if="store.loading || !store.sortedEncounters" class="loader" />
-    <div v-else-if="!store.error" class="my-10">
-      <div class="pt-5 pb-10 flex justify-between items-center">
+    <div v-if="!store.error" class="my-10">
+      <div class="pt-5 pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
         </h1>
@@ -33,7 +28,13 @@ watch(error, (v) => {
           {{ $t('pages.encounters.add') }}
         </button>
       </div>
-      <div v-if="store.sortedEncounters">
+      <div
+        v-if="store.loading"
+        class="flex flex-wrap gap-4 items-start"
+      >
+        <SkeletonEncounterCard v-for="i in 10" :key="i" />
+      </div>
+      <div v-else-if="store.sortedEncounters">
         <div
           v-for="(group, index) in Object.values(store.sortedEncounters)"
           :key="index"
@@ -58,7 +59,7 @@ watch(error, (v) => {
       </div>
       <div
         v-else
-        class="mx-auto max-w-lg tracker-shadow-pulse p-2 sm:p-10 rounded-lg space-y-4"
+        class="mx-auto max-w-lg border-2 border-primary p-2 sm:p-10 rounded-lg space-y-4"
       >
         <h2>{{ $t('pages.encounters.noData.title') }}</h2>
         <p>{{ $t('pages.encounters.noData.text') }}</p>

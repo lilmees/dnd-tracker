@@ -37,7 +37,10 @@ function updatedNote (note: Note): void {
         @click="isOpen = true"
       />
     </div>
-    <div v-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
+    <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
+      <SkeletonNoteCard v-for="i in 4" :key="i" />
+    </div>
+    <div v-else-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
       <p class="text-center">
         {{ $t('components.campaignNotes.none') }}
       </p>

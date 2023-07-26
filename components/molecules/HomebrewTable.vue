@@ -4,7 +4,6 @@ const store = useCurrentCampaignStore()
 const sortedBy = ref<string>('name')
 const sortACS = ref<boolean>(true)
 const sortedHomebrew = ref<Homebrew[]>([])
-
 const pages = ref<number>(0)
 const page = ref<number>(0)
 const perPage = ref<number>(20)
@@ -99,8 +98,9 @@ function paginate (pageNumber: number): void {
       </div>
       <AddHomebrew />
     </div>
+    <SkeletonHomebrewTable v-if="store.loading" />
     <div
-      v-if="store?.campaign?.homebrew_items?.length"
+      v-else-if="store?.campaign?.homebrew_items?.length"
       class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
     >
       <table class="min-w-full bg-tracker">

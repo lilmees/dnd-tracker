@@ -8,7 +8,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const toast = useToastStore()
   const localePath = useLocalePath()
 
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const campaign = ref<Campaign | null>(null)
   const encounters = ref<Encounter[]>([])

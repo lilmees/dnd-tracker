@@ -3,7 +3,7 @@ import logRocket from 'logrocket'
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
 
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
 
