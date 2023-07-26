@@ -9,7 +9,8 @@ export default defineNuxtConfig({
       '~/components/atoms',
       '~/components/molecules',
       '~/components/organisms',
-      '~/components/templates'
+      '~/components/templates',
+      '~/components/skeletons'
     ]
   },
   css: ['@/assets/css/global.css'],

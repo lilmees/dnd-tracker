@@ -30,27 +30,30 @@ function updatedEncounter (encounter: Encounter): void {
 
 <template>
   <NuxtLayout>
-    <div v-if="store.loading" class="loader" />
-    <div v-else-if="store.campaign" class="py-4 space-y-4 mb-20">
+    <div class="py-4 space-y-4 mb-20">
       <div class="flex justify-end">
         <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>
       <div
         class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
         :style="{
-          'background-color': store.campaign.background || '#000',
-          color: store.campaign.color || '#fff'
+          'background-color': store.campaign?.background || '#000',
+          color: store.campaign?.color || '#fff'
         }"
       >
-        <h1 class="capitalize">
+        <h1 v-if="store.campaign" class="capitalize">
           {{ store.campaign.title }}
         </h1>
+        <div
+          v-else
+          class="bg-background rounded-full w-[250px] h-9"
+        />
         <div class="flex justify-end">
           <Back
             url="campaigns"
             :label="$t('pages.campaign.back')"
             class="hidden sm:block"
-            :color="store.campaign.color || '#fff'"
+            :color="store.campaign?.color || '#fff'"
           />
         </div>
       </div>
@@ -65,7 +68,16 @@ function updatedEncounter (encounter: Encounter): void {
               @click="isCreatingEncounter = true"
             />
           </div>
-          <div v-if="store.encounters.length" class="flex flex-wrap gap-4 items-start">
+          <div
+            v-if="store.loading"
+            class="flex flex-wrap gap-4 items-start"
+          >
+            <SkeletonEncounterCard v-for="i in 4" :key="i" />
+          </div>
+          <div
+            v-else-if="store.encounters.length"
+            class="flex flex-wrap gap-4 items-start"
+          >
             <EncounterCard
               v-for="encounter in store.encounters"
               :key="encounter.id"
@@ -92,12 +104,9 @@ function updatedEncounter (encounter: Encounter): void {
         </div>
       </div>
       <HomebrewTable class="py-10" />
-      <CampaignNotes
-        v-if="store.campaign?.notes"
-        :id="store.campaign.id"
-        v-model="store.campaign.notes"
-      />
+      <CampaignNotes />
       <AddEncounterModal
+        v-if="store.campaign"
         :open="isCreatingEncounter"
         :campaign-id="store.campaign.id"
         @close="isCreatingEncounter = false"

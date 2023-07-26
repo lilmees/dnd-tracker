@@ -69,7 +69,7 @@ function closeSettings (): void {
           }`
         )
       "
-      class="flex flex-col gap-2 justify-between p-4 cursor-pointer"
+      class="flex flex-col gap-2 justify-between px-6 py-8 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>
       <div>

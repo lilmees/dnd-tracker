@@ -3,7 +3,7 @@ import logRocket from 'logrocket'
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
 
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const campaigns = ref<Campaign[] | null>(null)
   const currentCampaign = ref<Campaign | null>(null)
