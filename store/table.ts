@@ -160,16 +160,18 @@ export const useTableStore = defineStore('useTableStore', () => {
   }
 
   function checkDeathSaves (saves: DeathSaves): void {
-    if (saves.fail.every(v => v === true) && !saves.save.every(v => v === true)) {
-      toast.info({
-        title: t('pages.encounter.toasts.died.title'),
-        text: t('pages.encounter.toasts.died.textDeathSaves')
-      })
-    } else if (saves.save.every(v => v === true) && !saves.fail.every(v => v === true) && !saves.stable) {
-      toast.info({
-        title: t('pages.encounter.toasts.stable.title'),
-        text: t('pages.encounter.toasts.stable.textDeathSaves')
-      })
+    if (!saves.stable) {
+      if (saves.fail.every(v => v === true)) {
+        toast.info({
+          title: t('pages.encounter.toasts.died.title'),
+          text: t('pages.encounter.toasts.died.textDeathSaves')
+        })
+      } else if (saves.save.every(v => v === true)) {
+        toast.info({
+          title: t('pages.encounter.toasts.stable.title'),
+          text: t('pages.encounter.toasts.stable.textDeathSaves')
+        })
+      }
     }
   }
 
