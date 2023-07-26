@@ -12,9 +12,7 @@ const localePath = useLocalePath()
 const isOpen = ref<boolean>(false)
 
 const visibleRoutes = computed<Route[]>(() =>
-  user.value
-    ? route.routes
-    : route.routes.filter(r => !r.requiredLogIn)
+  user.value ? route.routes : route.routes.filter(r => !r.requiredLogIn)
 )
 
 watch(isSmall, (v: boolean) => {
@@ -62,15 +60,17 @@ async function logout (): Promise<void> {
           :label="$t(link.label)"
           :url="link.url"
         />
-        <template v-if="!user">
-          <RouteLink :label="$t('components.navbar.login')" url="login" />
-          <RouteLink :label="$t('components.navbar.register')" url="register" />
-          <LangSwitcher />
-        </template>
-        <template v-else>
-          <NavDropdown :routes="route.playRoutes" :label="$t('components.navbar.play')" />
-          <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
-        </template>
+        <ClientOnly>
+          <template v-if="!user">
+            <RouteLink :label="$t('components.navbar.login')" url="login" />
+            <RouteLink :label="$t('components.navbar.register')" url="register" />
+            <LangSwitcher />
+          </template>
+          <template v-else>
+            <NavDropdown :routes="route.playRoutes" :label="$t('components.navbar.play')" />
+            <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
+          </template>
+        </ClientOnly>
       </div>
       <Icon
         v-if="isSmall"
