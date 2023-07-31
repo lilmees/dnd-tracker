@@ -1,10 +1,18 @@
 <script setup lang="ts">
-const acceptedCookie = useCookie('accepted')
+import { useStorage } from '@vueuse/core'
+
 const localePath = useLocalePath()
+const cookiesConsent = useStorage('_dndtracker_cookies_consent', false)
+const cookiesSet = useStorage('_dndtracker_cookies_set', false)
+
+function handleConsent (): void {
+  cookiesSet.value = true
+  cookiesConsent.value = true
+}
 </script>
 
 <template>
-  <div v-if="!acceptedCookie">
+  <div v-if="!cookiesSet">
     <div class="bg-black/50 inset-0 fixed" />
     <div
       class="fixed z-50 flex flex-col items-center justify-center p-6 bg-primary rounded-lg gap-y-10 bottom-4 left-4 right-4 md:flex-row md:justify-between md:px-10 md:py-8 md:bottom-10 md:left-10 md:right-10"
@@ -19,7 +27,7 @@ const localePath = useLocalePath()
         <NuxtLink :to="localePath('/cookie-policy')" class="underline whitespace-pre underline-offset-2">
           {{ $t('components.cookieBanner.policy') }}
         </NuxtLink>
-        <button class="underline underline-offset-4" @click="acceptedCookie = 'true'">
+        <button class="underline underline-offset-4" @click="handleConsent">
           {{ $t('components.cookieBanner.button') }}
         </button>
       </div>
