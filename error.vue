@@ -1,35 +1,36 @@
 <script setup>
 const localePath = useLocalePath()
-
-const { data, refresh } = useFetch('https://meme-api.com/gimme')
 </script>
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="flex flex-col space-y-6">
-      <h1 class="text-primary max-w-2xl">
+    <div class="flex flex-col gap-y-6 items-center max-w-prose px-8">
+      <NuxtImg
+        src="/logo.svg"
+        alt="DnD Tracker logo"
+        sizes="sm:500px md:500px lg:500px"
+        provider="imagekit"
+        class="max-w-[300px]"
+      />
+      <h1 class="text-primary text-5xl">
         {{ $t('pages.error.404') }}
       </h1>
+      <div>
+        <p
+          v-for="text in $t('pages.error.text').split('.')"
+          :key="text"
+          class="sm:text-center"
+        >
+          {{ text }}
+        </p>
+      </div>
       <div class="flex flex-wrap gap-x-4 pb-10">
         <NuxtLink :to="localePath('/')" class="w-fit">
           <button class="btn-primary">
             {{ $t('pages.error.goHome') }}
           </button>
         </NuxtLink>
-        <button class="btn-secondary" @click="refresh">
-          {{ $t('pages.error.meme') }}
-        </button>
       </div>
-      <NuxtImg
-        v-if="data"
-        :src="data.url"
-        :alt="data.title"
-        sizes="sm:100vw md:50vw lg:50vw"
-        class="max-w-md mx-auto tracker-shadow-pulse"
-      />
-      <NuxtLink v-if="data" :to="data.postLink" target="_blank" rel="noreferrer noopener" class="w-fit mx-auto">
-        <TextButton> Visit the meme on reddit </TextButton>
-      </NuxtLink>
     </div>
   </div>
 </template>

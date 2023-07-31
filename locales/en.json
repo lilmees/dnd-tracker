@@ -85,9 +85,9 @@
       "end": "Thank you for choosing DnD-Tracker, and we hope you have a great time playing D&D!"
     },
     "error": {
-      "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
-      "meme": "I want another meme",
-      "goHome": "Go to homepage"
+      "404": "Oh no.. We lost this page",
+      "text": "We searched everywhere but couldn't find what you're looking for. Let's find a better place for you to go.",
+      "goHome": "Back to home"
     },
     "campaigns": {
       "campaigns": "Campaigns",
