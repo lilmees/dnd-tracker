@@ -30,7 +30,7 @@ function updatedEncounter (encounter: Encounter): void {
 
 <template>
   <NuxtLayout>
-    <div class="py-4 space-y-4 mb-20">
+    <div class="py-4 space-y-4">
       <div class="flex justify-end">
         <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>

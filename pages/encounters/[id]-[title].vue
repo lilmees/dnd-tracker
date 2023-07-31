@@ -36,9 +36,9 @@ watchDebounced(
 </script>
 
 <template>
-  <NuxtLayout name="wide">
-    <SkeletonEncounterTable v-if="store.isLoading" class="pt-[200px]" />
-    <div v-else-if="store.encounter" class="pt-[200px] pb-[100px]">
+  <NuxtLayout name="wide" padding>
+    <SkeletonEncounterTable v-if="store.isLoading" />
+    <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
         <Back
           :url="store.encounter.campaign

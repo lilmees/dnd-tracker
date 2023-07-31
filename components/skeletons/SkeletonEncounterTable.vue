@@ -2,11 +2,11 @@
 </script>
 
 <template>
-  <div class="pt-20 pb-[100px] animate-pulse">
+  <div class="pb-[100px] animate-pulse">
     <div class="flex justify-end">
       <div class="w-[220px] h-8 bg-tracker rounded-full" />
     </div>
-    <div class="rounded-lg p-4 bg-tracker/50 space-y-4 mt-4 border-4 border-tracker">
+    <div class="rounded-lg p-4 bg-tracker/50 space-y-4 mt-4 border-4 border-tracker max-w-full  overflow-hidden">
       <div
         class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
       >

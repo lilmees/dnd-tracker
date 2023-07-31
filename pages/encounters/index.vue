@@ -15,7 +15,7 @@ whenever(error, () => { toast.error() })
 
 <template>
   <NuxtLayout>
-    <div v-if="!store.error" class="my-10">
+    <div v-if="!store.error">
       <div class="pt-5 pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
