@@ -101,9 +101,9 @@ function paginate (pageNumber: number): void {
     <SkeletonHomebrewTable v-if="store.loading" />
     <div
       v-else-if="store?.campaign?.homebrew_items?.length"
-      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
+      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full border-4 border-tracker"
     >
-      <table class="min-w-full bg-tracker">
+      <table class="min-w-full bg-tracker/50">
         <thead>
           <tr>
             <th

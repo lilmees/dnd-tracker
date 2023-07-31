@@ -46,7 +46,7 @@ whenever(() => store.error, () => { toast.error() })
       </div>
       <div
         v-else
-        class="mx-auto max-w-lg border-2 border-primary p-2 sm:p-10 rounded-lg space-y-4"
+        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
       >
         <h2>{{ $t('pages.campaigns.noData.title') }}</h2>
         <p>{{ $t('pages.campaigns.noData.text') }}</p>

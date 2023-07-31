@@ -43,7 +43,7 @@ const headers = computed<string[]>(() => {
             <th
               v-for="header in headers"
               :key="header"
-              class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
+              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ header }}
             </th>
@@ -63,7 +63,7 @@ const headers = computed<string[]>(() => {
       </table>
       <div
         v-if="!store?.encounter?.rows.length"
-        class="bg-tracker w-full px-8 py-4"
+        class="w-full px-8 py-4 text-center font-bold"
       >
         {{ $t('components.encounterTable.empty') }}
       </div>

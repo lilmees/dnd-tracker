@@ -15,15 +15,9 @@ const localePath = useLocalePath()
       <h1 class="text-primary text-5xl">
         {{ $t('pages.error.404') }}
       </h1>
-      <div>
-        <p
-          v-for="text in $t('pages.error.text').split('.')"
-          :key="text"
-          class="sm:text-center"
-        >
-          {{ text }}
-        </p>
-      </div>
+      <p class="sm:text-center">
+        {{ $t('pages.error.text') }}
+      </p>
       <div class="flex flex-wrap gap-x-4 pb-10">
         <NuxtLink :to="localePath('/')" class="w-fit">
           <button class="btn-primary">

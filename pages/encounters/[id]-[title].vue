@@ -57,8 +57,8 @@ watchDebounced(
           :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
         />
       </div>
-      <div class="rounded-lg p-4 bg-tracker space-y-4">
-        <EncounterHeader class="w-full" />
+      <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4">
+        <EncounterHeader />
         <EncounterTable />
         <EncounterOptions />
       </div>

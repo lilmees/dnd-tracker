@@ -35,10 +35,11 @@ function updatedEncounter (encounter: Encounter): void {
         <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>
       <div
-        class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
+        class="rounded-lg w-full shadow p-6 flex flex-wrap justify-between items-center gap-4 border-4 bg-slate-700"
         :style="{
-          'background-color': store.campaign?.background || '#000',
-          color: store.campaign?.color || '#fff'
+          'background-color': `${store.campaign?.background || '#21252E' }80`,
+          color: store.campaign?.color || '#fff',
+          'border-color': store.campaign?.background || '#21252E',
         }"
       >
         <h1 v-if="store.campaign" class="capitalize">

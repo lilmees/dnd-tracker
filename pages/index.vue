@@ -67,11 +67,11 @@ watch(tableVisible, (v: boolean) => {
         <div
           v-if="store.encounter"
           ref="table"
-          class="rounded-lg p-4 bg-tracker tracker-shadow"
+          class="rounded-lg bg-tracker/50 border-4 border-tracker"
         >
-          <EncounterHeader class="w-full pb-4" />
+          <EncounterHeader />
           <EncounterTable />
-          <EncounterOptions class="pt-4" />
+          <EncounterOptions />
         </div>
         <div ref="hoard" class="container grid md:grid-cols-2 gap-10">
           <HomeDiceRolling />

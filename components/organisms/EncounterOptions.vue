@@ -4,7 +4,7 @@ const store = useTableStore()
 
 <template>
   <div
-    class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2"
+    class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2 p-4"
   >
     <Hotkeys class="hidden md:block" />
     <InfoSearch />

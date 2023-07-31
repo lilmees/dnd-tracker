@@ -10,7 +10,7 @@ const { $md } = useNuxtApp()
 </script>
 
 <template>
-  <div class="border-2 border-primary rounded-lg p-4 sm:p-8 relative">
+  <div class="border-4 border-primary rounded-lg p-4 sm:p-8 relative">
     <button
       v-if="!sandbox"
       v-tippy="{

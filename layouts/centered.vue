@@ -12,7 +12,7 @@ const localePath = useLocalePath()
       class="container absolute w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
     >
       <div
-        class="bg-tracker px-2 py-6 sm:p-8 rounded-lg relative tracker-shadow"
+        class="bg-tracker px-2 py-6 sm:p-8 rounded-lg relative border-4 border-primary tracker-shadow-pulse"
       >
         <NuxtLink :to="localePath('/')" class="group">
           <Icon

@@ -1,5 +1,5 @@
 <template>
-  <table class="min-w-full bg-tracker">
+  <table class="min-w-full bg-tracker/50 border-4 border-tracker">
     <thead>
       <tr>
         <th

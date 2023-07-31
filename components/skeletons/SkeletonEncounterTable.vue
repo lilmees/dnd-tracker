@@ -6,13 +6,13 @@
     <div class="flex justify-end">
       <div class="w-[220px] h-8 bg-tracker rounded-full" />
     </div>
-    <div class="rounded-lg p-4 bg-tracker space-y-4 mt-4">
+    <div class="rounded-lg p-4 bg-tracker/50 space-y-4 mt-4 border-4 border-tracker">
       <div
-        class="flex flex-col md:flex-row gap-4 items-center justify-between container-max bg-tracker"
+        class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
       >
-        <div class="w-[100px] h-6 bg-background rounded-full" />
-        <div class="w-[250px] h-10 bg-background rounded-full" />
-        <div class="w-[200px] h-10 bg-background rounded-full" />
+        <div class="w-[100px] h-6 bg-tracker rounded-full" />
+        <div class="w-[250px] h-10 bg-tracker rounded-full" />
+        <div class="w-[200px] h-10 bg-backtrackerground rounded-full" />
       </div>
 
       <table class="min-w-full">
@@ -33,7 +33,7 @@
                 'components.encounterTable.headers.modify'
               ]"
               :key="header"
-              class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
+              class="py-3 px-2 bg-background border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ $t(header) }}
             </th>
@@ -102,13 +102,13 @@
       </table>
 
       <div
-        class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2 bg-tracker"
+        class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2"
       >
-        <div class="h-10 w-10 bg-background rounded-full" />
-        <div class="h-10 w-10 bg-background rounded-full" />
-        <div class="h-10 w-10 bg-background rounded-full" />
-        <div class="h-10 w-10 bg-background rounded-full" />
-        <div class="h-10 w-10 bg-background rounded-full" />
+        <div class="h-10 w-10 bg-tracker rounded-full" />
+        <div class="h-10 w-10 bg-tracker rounded-full" />
+        <div class="h-10 w-10 bg-tracker rounded-full" />
+        <div class="h-10 w-10 bg-tracker rounded-full" />
+        <div class="h-10 w-10 bg-tracker rounded-full" />
       </div>
     </div>
   </div>

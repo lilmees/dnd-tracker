@@ -32,7 +32,7 @@ watch(() => isHover.value, (v: boolean) => {
 
 <template>
   <div
-    class="w-full mb-2 tracker-shadow pointer-events-auto rounded-lg bg-background border-2 cursor-pointer"
+    class="w-full mb-2 pointer-events-auto rounded-lg bg-background border-4 cursor-pointer overflow-auto"
     :class="{
       'border-danger': toast.type === 'error',
       'border-warning': toast.type === 'warn',

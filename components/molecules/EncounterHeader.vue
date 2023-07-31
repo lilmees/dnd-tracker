@@ -5,7 +5,7 @@ const store = useTableStore()
 <template>
   <div
     v-if="store.encounter"
-    class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
+    class="flex flex-col md:flex-row gap-4 items-center justify-between container-max w-full p-4"
   >
     <div class="flex gap-2 items-center">
       <p>
@@ -22,7 +22,7 @@ const store = useTableStore()
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
-    <div class="flex gap-2 items-center bg-black rounded-lg border-2 border-secondary">
+    <div class="flex gap-2 items-center bg-black rounded-lg border-4 border-secondary">
       <button
         v-tippy="{ content: $t('actions.prev'), animation: 'shift-away' }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
