@@ -29,7 +29,7 @@ async function manageSubscription () {
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-2 border-secondary bg-black p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
+      class="border-4 border-secondary bg-black p-2 rounded-full shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -55,7 +55,7 @@ async function manageSubscription () {
     </button>
     <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div
-        class="border-2 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        class="border-4 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
       >
         <RouteLink
           v-for="route in routes"

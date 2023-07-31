@@ -1,6 +1,6 @@
 export const useRouteStore = defineStore('useRouteStore', () => {
   const routes = ref<Route[]>([
-    { label: 'components.navbar.about', url: 'about', requiredLogIn: false, requiredLogOut: false },
+    // { label: 'components.navbar.about', url: 'about', requiredLogIn: false, requiredLogOut: false },
     { label: 'components.navbar.contact', url: 'contact', requiredLogIn: false, requiredLogOut: false }
     // { label: 'components.navbar.pricing', url: 'pricing', requiredLogIn: false, requiredLogOut: false },
   ])

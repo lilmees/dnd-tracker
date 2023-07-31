@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <div class="space-y-4 my-20">
+    <div class="space-y-4">
       <h1>Cookie Policy for DnD-Tracker</h1>
       <p>This is the Cookie Policy for DnD-Tracker, accessible from https://dnd-tracker.com</p>
       <h2>What Are Cookies</h2>

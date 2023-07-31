@@ -28,7 +28,7 @@ async function removePin (info: InfoCard): Promise<void> {
     <div
       v-for="(card, index) in cards"
       :key="card.slug"
-      class="rounded-lg p-4 bg-tracker space-y-4 border-b last:border-b-0 border-slate-700"
+      class="rounded-lg p-4 bg-tracker/50 space-y-4 border-4 border-tracker mb-1"
     >
       <button
         class="flex w-full justify-between items-center outline-none"

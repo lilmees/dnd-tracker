@@ -36,9 +36,9 @@ watchDebounced(
 </script>
 
 <template>
-  <NuxtLayout name="wide">
+  <NuxtLayout name="wide" padding>
     <SkeletonEncounterTable v-if="store.isLoading" />
-    <div v-else-if="store.encounter" class="pt-20 pb-[100px]">
+    <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
         <Back
           :url="store.encounter.campaign
@@ -57,8 +57,8 @@ watchDebounced(
           :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
         />
       </div>
-      <div class="rounded-lg p-4 bg-tracker space-y-4">
-        <EncounterHeader class="w-full" />
+      <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4">
+        <EncounterHeader />
         <EncounterTable />
         <EncounterOptions />
       </div>

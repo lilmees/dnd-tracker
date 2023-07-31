@@ -55,7 +55,7 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
 <template>
   <div class="flex gap-6 justify-center items-center py-3">
     <button
-      class="flex items-center justify-center w-8 h-8 rounded-full bg-primary tracker-shadow"
+      class="flex items-center justify-center w-8 h-8 rounded-full bg-primary shadow shadow-primary"
       :class="{ 'bg-slate-700': modelValue === 0 }"
       :disabled="modelValue === 0"
       @click="handlePrevious"
@@ -74,7 +74,7 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
       </button>
     </div>
     <button
-      class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary tracker-shadow"
+      class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary shadow shadow-primary"
       :class="{ 'bg-slate-700': modelValue === totalPages - 1 }"
       :disabled="modelValue === totalPages - 1"
       @click="handleNext"

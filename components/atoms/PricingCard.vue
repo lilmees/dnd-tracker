@@ -25,7 +25,7 @@ async function subscribe () {
 
 <template>
   <div
-    class="flex flex-col p-6 text-center bg-tracker rounded-lg justify-between tracker-shadow cursor-pointer hover:scale-105 duration-200 ease-in-out"
+    class="flex flex-col p-6 text-center bg-tracker rounded-lg justify-between shadow shadow-primary cursor-pointer hover:scale-105 duration-200 ease-in-out"
     :class="{ 'ring-primary ring': current }"
     @click="subscribe"
   >

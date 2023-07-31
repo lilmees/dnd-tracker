@@ -29,7 +29,7 @@ watchDebounced(
     v-if="store.encounter"
     class="border-b last:border-b-0 border-slate-700"
     :class="{
-      '!bg-primary/10 tracker-shadow': index === store.encounter.activeIndex,
+      '!bg-primary/10': index === store.encounter.activeIndex,
       'bg-danger/10': row.health && row.health !== null && row.health < 1,
     }"
   >

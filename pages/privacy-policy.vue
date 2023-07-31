@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <div class="space-y-4 my-20">
+    <div class="space-y-4">
       <h1>
         Privacy Policy for DnD-Tracker
       </h1>

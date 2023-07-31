@@ -17,7 +17,7 @@ watch(catVisible, (v: boolean) => {
 
 <template>
   <NuxtLayout>
-    <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 container-max">
+    <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] container-max">
       <div class="container grid gap-10 lg:grid-cols-2">
         <TitleText
           :title="$t('pages.about.story')"

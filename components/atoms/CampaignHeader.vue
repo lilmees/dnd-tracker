@@ -19,13 +19,14 @@ if (props.campaign) {
 </script>
 
 <template>
-  <div class="flex justify-between w-full gap-2 border-b border-primary">
+  <div class="flex justify-between w-full gap-2 border-b-2 border-slate-700">
     <div v-if="cam && cam.title" class="flex items-end gap-2 mb-1">
       <div
-        class="rounded-lg w-10 h-10 tracker-shadow relative"
+        class="rounded-lg w-10 h-10 border-4 relative"
         :style="{
           'background-color': cam?.background || '#000',
-          color: cam?.color || '#fff'
+          color: cam?.color || '#fff',
+          'border-color': cam?.color || '#000'
         }"
       >
         <h3 class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 uppercase">

@@ -55,7 +55,7 @@ watch(isVisible, (v: boolean) => {
         class="max-w-max mt-6"
       >
         <button
-          class="w-fit btn-primary tracker-shadow-pulse"
+          class="w-fit btn-primary"
           :aria-label="buttonLabel"
         >
           {{ buttonLabel }}

@@ -180,7 +180,7 @@ function selectedSummoner (value: number): void {
             <div
               class="first:rounded-t-lg last:rounded-b-lg w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
               :class="{
-                'border-2 border-b-2 !border-primary': selected.filter(p => p.id === hb.id).length
+                'border-4 border-b-4 !border-primary': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >

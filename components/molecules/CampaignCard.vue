@@ -43,8 +43,12 @@ function closeSettings (): void {
 
 <template>
   <div
-    class="rounded-lg tracker-shadow min-w-[250px] max-w-md relative group"
-    :style="{ 'background-color': campaign.background, color: campaign.color }"
+    class="rounded-lg min-w-[250px] max-w-md relative group border-4"
+    :style="{
+      'background-color': `${campaign.background}80`,
+      'border-color': campaign.background,
+      color: campaign.color
+    }"
   >
     <Icon
       v-if="!isSettings"

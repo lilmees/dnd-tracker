@@ -15,7 +15,7 @@ whenever(error, () => { toast.error() })
 
 <template>
   <NuxtLayout>
-    <div v-if="!store.error" class="my-10">
+    <div v-if="!store.error">
       <div class="pt-5 pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
@@ -59,7 +59,7 @@ whenever(error, () => { toast.error() })
       </div>
       <div
         v-else
-        class="mx-auto max-w-lg border-2 border-primary p-2 sm:p-10 rounded-lg space-y-4"
+        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
       >
         <h2>{{ $t('pages.encounters.noData.title') }}</h2>
         <p>{{ $t('pages.encounters.noData.text') }}</p>
