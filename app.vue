@@ -33,6 +33,9 @@ onBeforeMount(() => profile.fetch())
       <Navbar class="fixed z-10 left-0 right-0 backdrop-blur" />
       <NuxtPage />
       <Footer />
+      <ClientOnly>
+        <YbugButton />
+      </ClientOnly>
     </div>
 
     <ClientOnly>

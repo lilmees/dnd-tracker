@@ -42,6 +42,7 @@
     "nuxt-mail": "^3.1.5",
     "nuxt-simple-sitemap": "^2.4.11",
     "stripe": "^11.12.0",
-    "vue-tippy": "v6"
+    "vue-tippy": "v6",
+    "ybug-vue": "^1.2.0"
   }
 }
