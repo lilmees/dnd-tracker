@@ -34,7 +34,7 @@ async function logout (): Promise<void> {
 </script>
 
 <template>
-  <nav class="bg-tracker">
+  <nav class="bg-tracker/70 border-4 border-tracker m-4 rounded-lg">
     <div class="dnd-container py-4 flex justify-between items-center gap-4">
       <div class="flex gap-4">
         <NuxtLink :to="localePath('/')">
@@ -79,23 +79,24 @@ async function logout (): Promise<void> {
         @click="isOpen = true"
       />
     </div>
-
-    <transition
-      enter-active-class="duration-300 ease-in-out"
-      enter-from-class="!-translate-y-full"
-      enter-to-class="!translate-y-0"
-      leave-active-class="duration-200 ease-in-out"
-      leave-from-class="!translate-y-0"
-      leave-to-class="!-translate-y-full"
-    >
-      <NavbarPopup
-        v-if="isOpen"
-        :routes="visibleRoutes"
-        :drop-down-routes="[...route.playRoutes, ...route.profileRoutes]"
-        :logged-in="user ? true : false"
-        @logout="logout"
-        @close="isOpen = false"
-      />
-    </transition>
+    <Teleport to="body">
+      <transition
+        enter-active-class="duration-300 ease-in-out"
+        enter-from-class="!-translate-y-full"
+        enter-to-class="!translate-y-0"
+        leave-active-class="duration-200 ease-in-out"
+        leave-from-class="!translate-y-0"
+        leave-to-class="!-translate-y-full"
+      >
+        <NavbarPopup
+          v-if="isOpen"
+          :routes="visibleRoutes"
+          :drop-down-routes="[...route.playRoutes, ...route.profileRoutes]"
+          :logged-in="user ? true : false"
+          @logout="logout"
+          @close="isOpen = false"
+        />
+      </transition>
+    </Teleport>
   </nav>
 </template>

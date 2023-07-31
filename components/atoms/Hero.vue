@@ -67,7 +67,7 @@ onMounted(() => {
   <div data-container class="relative" @mousemove="calculateEyes">
     <div
       data-wrapper
-      class="w-full h-[90vh] lg:h-[70vh] md:h-[50vh] rounded-lg blur-md pt-6 overflow-hidden"
+      class="w-full h-screen md:h-[70vh] rounded-lg blur-md pt-6 overflow-hidden"
     >
       <NuxtImg
         data-image
@@ -83,7 +83,7 @@ onMounted(() => {
       <div class="flex flex-col items-start gap-4">
         <h1
           data-title
-          class="mt-4 sm:mt-16 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
+          class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
         >
           {{ $t('components.hero.start') }}
         </h1>
