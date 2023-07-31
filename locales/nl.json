@@ -85,9 +85,9 @@
       "end": "Bedankt voor het kiezen van DnD-Tracker, en we hopen dat u een geweldige tijd heeft met het spelen van D&D!"
     },
     "error": {
-      "404": "Oeps. We kunnen deze pagina niet vinden maar hier heb je een radom meme van reddit.",
-      "meme": "Ik wil nog een meme",
-      "goHome": "Ga naar de thuispagina"
+      "404": "Oh nee... We hebben deze pagina verloren.",
+      "text": "We hebben overal gezocht maar konden niet vinden waar je naar op zoek bent. Laten we een betere plek voor je vinden om naartoe te gaan.",
+      "goHome": "Terug naar huis"
     },
     "campaigns": {
       "campaigns": "Campagnes",
