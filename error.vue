@@ -4,12 +4,13 @@ const localePath = useLocalePath()
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="flex flex-col gap-y-6 items-center max-w-prose">
+    <div class="flex flex-col gap-y-6 items-center max-w-prose px-8">
       <NuxtImg
         src="/logo.svg"
         alt="DnD Tracker logo"
         sizes="sm:500px md:500px lg:500px"
         provider="imagekit"
+        class="max-w-[300px]"
       />
       <h1 class="text-primary text-5xl">
         {{ $t('pages.error.404') }}
@@ -18,7 +19,7 @@ const localePath = useLocalePath()
         <p
           v-for="text in $t('pages.error.text').split('.')"
           :key="text"
-          class="text-center"
+          class="sm:text-center"
         >
           {{ text }}
         </p>
