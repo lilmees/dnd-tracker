@@ -133,9 +133,10 @@ export const useTableStore = defineStore('useTableStore', () => {
       rows[index] = row
     }
 
-    checkDeathSaves(row.deathSaves)
-
-    row.deathSaves.stable = row.deathSaves.save.every(v => v === true)
+    if (row.deathSaves) {
+      checkDeathSaves(row.deathSaves)
+      row.deathSaves.stable = row.deathSaves.save.every(v => v === true)
+    }
 
     await encounterUpdate({ rows })
   }
