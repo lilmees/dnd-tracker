@@ -24,43 +24,65 @@ function angle (cx: number, cy: number, ex: number, ey: number): number {
 }
 
 onMounted(() => {
-  const wrapper = document.querySelector('[data-wrapper]')
+  if (process.client) {
+    animate()
+  }
+})
+
+function animate (): void {
   const image = document.querySelector('[data-image]')
   const container = document.querySelector('[data-container]')
   const title = document.querySelector('[data-title]')
   const dragon = document.querySelector('[data-dragon]')
 
-  gsap.from(
-    wrapper,
-    { duration: 1.5, scale: 1.5, x: '25vw', ease: Power3.easeOut }
+  gsap.fromTo(
+    image,
+    { scale: 1.5 },
+    { duration: 1.5, scale: 1, ease: Power3.easeOut }
   )
 
-  gsap.to(image, {
-    scrollTrigger: {
-      trigger: container,
-      toggleActions: 'restart none none none',
-      start: 'top 5%',
-      end: 'bottom 0%',
-      scrub: 2
-    },
-    scale: 1.3
-  })
+  gsap.fromTo(image,
+    { scale: 1 },
+    {
+      scrollTrigger: {
+        trigger: container,
+        toggleActions: 'restart none none none',
+        start: 'top 5%',
+        end: 'bottom 0%',
+        scrub: 2
+      },
+      ease: Power3.easeOut,
+      scale: 1.5
+    })
 
-  gsap.from(
+  gsap.fromTo(
     title,
-    { duration: 0.6, delay: 0.2, y: 100, opacity: 0, ease: Power3.easeOut }
+    { y: 100, opacity: 0 },
+    { duration: 0.6, delay: 0.2, y: 0, opacity: 100, ease: Power3.easeOut }
+  )
+
+  gsap.fromTo(
+    dragon,
+    { y: '100%', scale: 0.5, opacity: 0 },
+    { y: '0%', scale: 1, opacity: 1, ease: Power3.easeOut }
   )
 
   gsap.fromTo(dragon,
-    { y: '100%', scale: 0.5, opacity: 0.5 },
+    { y: '150%', scale: 0.5, opacity: 0.5 },
     {
-      scrollTrigger: { trigger: container, toggleActions: 'restart none none none', scrub: 2 },
-      y: '-20%',
+      scrollTrigger: {
+        trigger: container,
+        toggleActions: 'restart none none none',
+        scrub: 2
+      },
+      y: '0%',
       scale: 1,
-      opacity: 1
+      opacity: 1,
+      duration: 1.5,
+      ease: Power3.easeOut
     }
   )
-})
+}
 </script>
 
 <template>
@@ -74,7 +96,7 @@ onMounted(() => {
         src="/background.webp"
         alt="Background image"
         sizes="sm:500px md:1000px lg:1500px"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover scale-150"
         format="webp"
         provider="imagekit"
       />
@@ -83,14 +105,14 @@ onMounted(() => {
       <div class="flex flex-col items-start gap-4">
         <h1
           data-title
-          class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left"
+          class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left opacity-0"
         >
           {{ $t('components.hero.start') }}
         </h1>
       </div>
       <div
         data-dragon
-        class="max-w-[500px] relative"
+        class="max-w-[500px] relative opacity-0"
       >
         <div ref="eyeLeft" class="absolute top-[55%] left-[54%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />

@@ -3,7 +3,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <div class="w-screen min-h-screen relative">
+  <div class="min-h-screen relative overflow-hidden">
     <div
       class="absolute inset-0 bg-background cursor-pointer"
       @click="navigateTo(localePath('/'))"
