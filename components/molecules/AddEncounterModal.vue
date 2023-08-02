@@ -15,7 +15,7 @@ const user = useSupabaseUser()
 
 const form = ref<AddEncounterForm>({
   title: '',
-  campaign: undefined,
+  campaign: props.campaignId || undefined,
   background: '#0073A1',
   data: {
     isLoading: false,

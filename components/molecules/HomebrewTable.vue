@@ -85,7 +85,7 @@ function paginate (pageNumber: number): void {
 
 <template>
   <section class="space-y-4">
-    <div class="flex justify-between border-b border-slate-700 pb-1">
+    <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <div class="flex gap-4 items-end">
         <h2>{{ $t('general.homebrew') }}</h2>
         <div class="hidden md:flex gap-1 text-[10px]">
