@@ -28,7 +28,7 @@ function updatedNote (note: Note): void {
 
 <template>
   <section class="space-y-4">
-    <div class="flex justify-between border-b border-slate-700 pb-1">
+    <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <h2>{{ $t('general.notes') }}</h2>
       <Icon
         v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
