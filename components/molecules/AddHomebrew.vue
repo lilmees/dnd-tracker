@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'

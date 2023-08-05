@@ -12,9 +12,7 @@ const config: DefaultConfigOptions = {
         label: 'font-bold body-small',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-danger body-small mt-1',
-        actions: 'mt-4',
-        prefixIcon: 'h-12 pl-4 flex self-stretch grow-0 shrink-0 [&>svg]:m-auto',
-        suffixIcon: 'h-12 pr-4 flex self-stretch grow-0 shrink-0 [&>svg]:m-auto'
+        actions: 'mt-4'
       },
       text: {
         inner: 'input-inner formkit-invalid:ring-danger formkit-errors:ring-danger',
