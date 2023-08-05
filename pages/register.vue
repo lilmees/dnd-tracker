@@ -80,7 +80,7 @@ function randomAvatar (): void {
           name="password"
           type="password"
           :label="$t('components.inputs.passwordLabel')"
-          validation="required|length:6,50"
+          validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
           required
         />
         <button

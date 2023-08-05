@@ -44,37 +44,28 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   }
 
   async function updateProfile (prof: ProfileUpdate): Promise<void> {
-    const { error: err } = await supabase
-      .from('profiles')
-      .update(prof as never)
-      .eq('id', user.value!.id)
-      .select('*')
+    if (!prof.password) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update(prof as never)
+        .eq('id', user.value!.id)
+        .select('*')
 
-    if (err) {
-      throw err
-    } else {
-      fetch()
-    }
-  }
-
-  async function updateCredentialsProfile (credentials: Login, prof: ProfileUpdate): Promise<void> {
-    const { error: err } = await supabase.auth.updateUser(credentials)
-
-    if (err) {
-      throw err
+      if (profileError) {
+        throw profileError
+      }
     }
 
-    const { error: profileError } = await supabaseAuth
-      .from('profiles')
-      .update({ ...prof, email: credentials.email } as never)
-      .eq('id', user.value!.id)
-      .select('*')
+    if (prof.email || prof.password) {
+      const { email, password } = prof
+      const { error: userErr } = await supabase.auth.updateUser(useEmptyKeyRemover({ email, password }))
 
-    if (profileError) {
-      throw profileError
-    } else {
-      fetch()
+      if (userErr) {
+        throw userErr
+      }
     }
+
+    fetch()
   }
 
   async function deleteProfile (): Promise<void> {
@@ -109,7 +100,6 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     data,
     fetch,
     updateProfile,
-    updateCredentialsProfile,
     deleteProfile
   }
 })

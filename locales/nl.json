@@ -164,7 +164,15 @@
       }
     },
     "profile": {
-      "update": "Profiel bijwerken",
+      "data": {
+        "title": "Persoonlijke data",
+        "subtitle": "Data Metamorfose: Ontketen de Magie!"
+      },
+      "password": {
+        "title": "Wachtwoord wijzigende Magie",
+        "subtitle": "Betoverende Beveiliging"
+      },
+      "updateImage": "Foto updaten",
       "delete": "Profiel Verwijderen",
       "toast": {
         "success": {
