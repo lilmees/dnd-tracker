@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { encounterUrl } from '@/utils/url-genarators'
 
 const emit = defineEmits(['deleted', 'copied', 'updated'])
 const props = defineProps<{ encounter: Encounter }>()
@@ -92,13 +93,7 @@ function closeSettings (): void {
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="
-        localePath(
-          `/encounters/${encounter.id}-${
-            encounter.title.replace(/[\W]/g, '') === '' ? 'encounter' : encounter.title.replace(/[\W]/g, '')
-          }`
-        )
-      "
+      :to="localePath(encounterUrl(encounter))"
       class="flex flex-col gap-2 justify-between px-6 py-8 cursor-pointer"
     >
       <h2>{{ encounter.title }}</h2>

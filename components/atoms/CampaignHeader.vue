@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { campaignUrl } from '@/utils/url-genarators'
+
 const props = defineProps<{ campaign: Campaign | number }>()
 
 const store = useCampaignsStore()
@@ -40,15 +42,7 @@ if (props.campaign) {
     <div class="mb-1">
       <NuxtLink
         v-if="!route.path.includes('/campaigns/') && cam?.title"
-        :to="
-          localePath(
-            `/campaigns/${cam.id}-${
-              cam.title.replace(/[\W]/g, '') === ''
-                ? 'encounter'
-                : cam.title.replace(/[\W]/g, '')
-            }`
-          )
-        "
+        :to="localePath(campaignUrl(cam))"
       >
         <button
           class="btn-primary"
