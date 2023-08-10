@@ -34,6 +34,7 @@
     "@pinia/nuxt": "^0.4.6",
     "@unhead/addons": "^1.0.20",
     "@vite-pwa/nuxt": "^0.0.9",
+    "@vueup/vue-quill": "^1.2.0",
     "click-outside-vue3": "^4.0.1",
     "gsap": "^3.11.4",
     "logrocket": "^4.0.1",
