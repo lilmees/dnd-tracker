@@ -7,15 +7,12 @@ const route = useRoute()
 const toast = useToastStore()
 const store = useTableStore()
 
-const info = ref<string>('')
-
 onMounted(async () => {
   if (route?.params?.id) {
     try {
       await store.getEncounter(route.params.id as string)
       if (store?.encounter?.title) {
         useHead({ title: store.encounter.title })
-        info.value = store.encounter.info as string
       }
     } catch (err) {
       logRocket.captureException(err as Error)
@@ -23,16 +20,6 @@ onMounted(async () => {
     }
   }
 })
-
-watchDebounced(
-  info,
-  (v: string) => {
-    if (v) {
-      store.encounterUpdate({ info: v })
-    }
-  },
-  { debounce: 500, maxWait: 1000 }
-)
 </script>
 
 <template>
@@ -66,12 +53,14 @@ watchDebounced(
         v-if="!store.isLoading"
         class="container pt-10 items-start grid md:grid-cols-2 gap-8"
       >
-        <Input
-          v-model="info"
-          type="textarea"
-          name="info"
-          :label="$t('pages.encounter.info')"
-        />
+        <ClientOnly>
+          <RichText
+            class="pt-2"
+            :content="store.encounter.info || ''"
+            :label="$t('pages.encounter.info')"
+            @update="store.encounterUpdate({ info: $event })"
+          />
+        </ClientOnly>
         <InfoDropdown
           v-if="store.encounter?.info_cards?.length"
           :cards="store.encounter.info_cards"

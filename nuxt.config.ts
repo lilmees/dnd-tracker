@@ -13,7 +13,10 @@ export default defineNuxtConfig({
       '~/components/skeletons'
     ]
   },
-  css: ['@/assets/css/global.css'],
+  css: [
+    '@/assets/css/global.css',
+    '@/assets/css/quill.css'
+  ],
   modules: [
     'nuxt-icon',
     'nuxt-schema-org',
