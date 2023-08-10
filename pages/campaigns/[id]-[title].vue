@@ -32,7 +32,7 @@ function updatedEncounter (encounter: Encounter): void {
   <NuxtLayout>
     <div class="py-4 space-y-4">
       <div class="flex justify-end">
-        <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
+        <Back url="/campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>
       <div
         class="rounded-lg w-full shadow p-6 flex flex-wrap justify-between items-center gap-4 border-4 bg-slate-700"
@@ -51,7 +51,7 @@ function updatedEncounter (encounter: Encounter): void {
         />
         <div class="flex justify-end">
           <Back
-            url="campaigns"
+            url="/campaigns"
             :label="$t('pages.campaign.back')"
             class="hidden sm:block"
             :color="store.campaign?.color || '#fff'"

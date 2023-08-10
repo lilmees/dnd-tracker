@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { backUrl } from '@/utils/url-genarators'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -28,19 +29,7 @@ onMounted(async () => {
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
         <Back
-          :url="store.encounter.campaign
-            ? `campaigns/${typeof store.encounter.campaign === 'object'
-              ? store.encounter.campaign.id
-              : store.encounter.campaign
-            }-${
-              typeof store.encounter.campaign === 'object'
-                ? store.encounter.campaign.title.replace(/[\W]/g, '') === ''
-                  ? 'campaign'
-                  : store.encounter.campaign.title.replace(/[\W]/g, '')
-                : 'campaign'
-            }`
-            : 'encounters'
-          "
+          :url="backUrl(store.encounter.campaign)"
           :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
         />
       </div>

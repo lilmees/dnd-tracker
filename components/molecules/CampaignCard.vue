@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { campaignUrl } from '@/utils/url-genarators'
 
 const props = defineProps<{ campaign: Campaign }>()
 
@@ -66,13 +67,7 @@ function closeSettings (): void {
     />
     <NuxtLink
       v-if="!isSettings"
-      :to="
-        localePath(
-          `/campaigns/${campaign.id}-${
-            campaign.title.replace(/[\W]/g, '') === '' ? 'campaign' : campaign.title.replace(/[\W]/g, '')
-          }`
-        )
-      "
+      :to="localePath(localePath(campaignUrl(campaign)))"
       class="flex flex-col gap-2 justify-between px-6 py-8 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>
