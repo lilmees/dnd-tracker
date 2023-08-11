@@ -227,7 +227,7 @@ function selectedSummoner (value: number): void {
             <button
               class="btn-success"
               :aria-label="$t('actions.addAll')"
-              :disabled="isLoading || !selected.length"
+              :disabled="isLoading"
               @click="addHomebrews(homebrews as Homebrew[])"
             >
               {{ $t('actions.addAll') }}
