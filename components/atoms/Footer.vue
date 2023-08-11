@@ -1,9 +1,13 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const showNav = useState<boolean>('showNavigation', () => true)
 </script>
 
 <template>
-  <div class="bg-tracker/60 border-4 border-tracker m-4 rounded-lg py-8">
+  <div
+    v-if="showNav"
+    class="bg-tracker/60 border-4 border-tracker m-4 rounded-lg py-8"
+  >
     <div class="dnd-container flex flex-col gap-4">
       <div class="flex flex-col md:flex-row justify-between">
         <NuxtLink :to="localePath('/')" class="mt-2">

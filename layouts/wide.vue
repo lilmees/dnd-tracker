@@ -4,6 +4,10 @@ withDefaults(
     padding: false
   }
 )
+
+const showNav = useState<boolean>('showNavigation', () => true)
+
+onBeforeMount(() => { showNav.value = true })
 </script>
 
 <template>

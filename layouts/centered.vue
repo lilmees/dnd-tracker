@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const showNav = useState<boolean>('showNavigation', () => true)
+
+onBeforeMount(() => { showNav.value = false })
 </script>
 
 <template>

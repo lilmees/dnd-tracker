@@ -89,7 +89,7 @@ function animate (): void {
   <div data-container class="relative" @mousemove="calculateEyes">
     <div
       data-wrapper
-      class="w-full h-screen md:h-[70vh] rounded-lg blur-md pt-6 overflow-hidden"
+      class="w-full h-screen md:h-[80vh] md:min-h-[800px] rounded-lg blur-md pt-6 overflow-hidden"
     >
       <NuxtImg
         data-image

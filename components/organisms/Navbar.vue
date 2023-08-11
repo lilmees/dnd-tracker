@@ -9,6 +9,8 @@ const user = useSupabaseUser()
 const isSmall = useMediaQuery('(max-width: 768px)')
 const localePath = useLocalePath()
 
+const showNav = useState<boolean>('showNavigation', () => true)
+
 const isOpen = ref<boolean>(false)
 const navbar = ref<HTMLElement>()
 
@@ -54,6 +56,7 @@ async function logout (): Promise<void> {
 
 <template>
   <nav
+    v-if="showNav"
     ref="navbar"
     class="bg-tracker/70 border-4 border-tracker m-4 rounded-lg duration-500 ease-in-out"
   >
