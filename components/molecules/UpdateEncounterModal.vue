@@ -15,10 +15,7 @@ const form = ref<UpdateEncounterForm>({
     campaign: false,
     update: true,
     error: null,
-    options: [],
-    changeColor: () => {
-      form.value.background = useRandomColor()
-    }
+    options: []
   }
 })
 

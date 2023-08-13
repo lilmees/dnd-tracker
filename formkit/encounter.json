@@ -19,46 +19,13 @@
     }
   },
   {
-    "$el": "div",
-    "attrs": {
-      "class": "flex gap-4 items-end"
-    },
-    "children": [
-      {
-        "$el": "div",
-        "attrs": {
-          "class": "flex-1"
-        },
-        "children": [
-          {
-            "$cmp": "FormKit",
-            "props": {
-              "name": "background",
-              "type": "color",
-              "label": "components.inputs.backgroundLabel",
-              "validation": "required"
-            }
-          }
-        ]
-      },
-      {
-        "$el": "button",
-        "attrs": {
-          "class": " btn-black relative bottom-[10px]",
-          "onClick": "$data.changeColor",
-          "type": "button"
-        },
-        "children": [
-          {
-            "$cmp": "Icon",
-            "props": {
-              "size": "20",
-              "name": "ps:random"
-            }
-          }
-        ]
-      }
-    ]
+    "$cmp": "FormKit",
+    "props": {
+      "name": "background",
+      "type": "color",
+      "label": "components.inputs.backgroundLabel",
+      "validation": "required"
+    }
   },
   {
     "$cmp": "FormKit",

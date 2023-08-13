@@ -17,16 +17,13 @@ const user = useSupabaseUser()
 const form = ref<AddEncounterForm>({
   title: '',
   campaign: props.campaignId || undefined,
-  background: '#0073A1',
+  background: '#7333E0',
   data: {
     isLoading: false,
     campaign: false,
     update: false,
     error: null,
-    options: [],
-    changeColor: () => {
-      form.value.background = useRandomColor()
-    }
+    options: []
   }
 })
 
@@ -60,9 +57,12 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
         color: useContrastColor(formData.background),
         activeIndex: 0
       })
+
+      reset('form')
+      form.value.background = '#7333E0'
+
       emit('added', encounter)
     }
-    reset('form')
   } catch (err: any) {
     logRocket.captureException(err as Error)
     form.value.data.error = err.message

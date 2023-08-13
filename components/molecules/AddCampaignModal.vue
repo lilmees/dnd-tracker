@@ -11,7 +11,7 @@ const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 const form = ref<AddCampaignForm>({
   title: '',
-  background: '#0073A1'
+  background: '#7333E0'
 })
 
 function changeColor (): void {
