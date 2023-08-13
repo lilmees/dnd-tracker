@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 
 const emit = defineEmits(['close'])
@@ -14,10 +15,6 @@ const form = ref<AddCampaignForm>({
   background: '#7333E0'
 })
 
-function changeColor (): void {
-  form.value.background = useRandomColor()
-}
-
 async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
@@ -30,6 +27,10 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
         admins: [user.value.id],
         color: useContrastColor(formData.background)
       })
+
+      reset('form')
+      form.value.background = '#7333E0'
+
       emit('close')
     }
   } catch (err: any) {
@@ -48,10 +49,10 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       {{ error }}
     </p>
     <FormKit
+      id="form"
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="addCampaign"
     >
       <Input
@@ -61,22 +62,12 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
         validation="required|length:3,30"
         required
       />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('components.inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <button
-          type="button"
-          class="btn-black mb-[24px]"
-          :aria-label="$t('actions.random')"
-          @click="changeColor"
-        >
-          {{ $t('actions.random') }}
-        </button>
-      </div>
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
       <button
         type="submit"
         class="btn-black w-full"

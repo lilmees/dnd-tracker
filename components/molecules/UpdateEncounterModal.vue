@@ -28,6 +28,7 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
       { ...formData, color: useContrastColor(formData.background) },
       props.encounter.id
     )
+
     emit('updated', enc)
   } catch (err: any) {
     logRocket.captureException(err as Error)

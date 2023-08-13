@@ -25,10 +25,6 @@ watch(
   }
 )
 
-function changeColor ():void {
-  form.value.background = useRandomColor()
-}
-
 async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
@@ -41,6 +37,7 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       },
       props.campaign.id
     )
+
     emit('close')
   } catch (err: any) {
     logRocket.captureException(err as Error)
@@ -61,7 +58,6 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="updateCampaign"
     >
       <Input
@@ -70,21 +66,12 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
         :label="$t('components.inputs.campaignLabel')"
         validation="length:3,30"
       />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('components.inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <button
-          class="btn-black mb-[14px]"
-          :aria-label="$t('actions.random')"
-          @click="changeColor"
-        >
-          {{ $t('actions.random') }}
-        </button>
-      </div>
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
       <button
         type="submit"
         class="btn-black w-full mt-3"
