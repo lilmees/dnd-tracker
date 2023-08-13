@@ -41,7 +41,6 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="addNote"
     >
       <Input

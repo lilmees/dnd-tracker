@@ -37,7 +37,6 @@ interface EncounterSchemaOptions {
   update: boolean
   error: null | string
   options?: Option[]
-  changeColor?: () => void
 }
 
 interface AddEncounterForm {
