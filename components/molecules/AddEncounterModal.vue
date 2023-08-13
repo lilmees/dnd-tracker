@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
@@ -61,6 +62,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
       })
       emit('added', encounter)
     }
+    reset('form')
   } catch (err: any) {
     logRocket.captureException(err as Error)
     form.value.data.error = err.message
@@ -78,6 +80,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
     </p>
     <FormKit
       v-if="campaignId || campaigns.campaigns"
+      id="form"
       v-model="form"
       type="form"
       :actions="false"
