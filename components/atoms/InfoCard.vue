@@ -15,8 +15,7 @@ const { $md } = useNuxtApp()
       v-if="!sandbox"
       v-tippy="{
         content: $t(`components.infoCard.${pinned ? 'remove' : 'add'}`),
-        placement: 'left',
-        animation: 'shift-away'
+        placement: 'left'
       }"
       class="absolute right-2 top-2"
       @click="$emit('pin', { info: hit, remove: pinned })"

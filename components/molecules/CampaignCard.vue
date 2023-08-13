@@ -22,19 +22,6 @@ async function deleteCampaign (): Promise<void> {
   }
 }
 
-// async function copyCampaign({ created_at, id, profiles, ...enc }) {
-//   const campaign = { ...enc, title: `copy ${enc.title}`.slice(0, 30), created_by: user.value.id }
-//   delete campaign.initiative_sheets
-//   try {
-//     await store.addCampaign(campaign)
-//   } catch (err) {
-//  logRocket.captureException(err as Error)
-//     toast.error()
-//   } finally {
-//     isSettings.value = false
-//   }
-// }
-
 function closeSettings (): void {
   isUpdating.value = false
   needConfirmation.value = false
@@ -51,40 +38,38 @@ function closeSettings (): void {
       color: campaign.color
     }"
   >
-    <Icon
-      v-if="!isSettings"
-      name="material-symbols:settings-outline-rounded"
-      class="w-6 h-6 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
-      :style="{ color: campaign.color }"
-      @click="isSettings = true"
-    />
-    <Icon
-      v-else
-      name="ic:round-clear"
-      class="w-6 h-6 cursor-pointer float-right mt-1 mr-1"
-      :style="{ color: campaign.color }"
-      @click="isSettings = false"
-    />
+    <div class="flex justify-end mr-2">
+      <tippy interactive trigger="click">
+        <Icon
+          name="tabler:dots"
+          class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+          :style="{ color: campaign.color }"
+        />
+        <template #content>
+          <div class="p-4 space-y-2 overflow-auto">
+            <h3>
+              opties
+            </h3>
+          </div>
+        </template>
+      </tippy>
+    </div>
+
     <NuxtLink
-      v-if="!isSettings"
-      :to="localePath(localePath(campaignUrl(campaign)))"
-      class="flex flex-col gap-2 justify-between px-6 py-8 cursor-pointer"
+      :to="localePath(campaignUrl(campaign))"
+      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>
       <div>
         <p>Encounters: {{ campaign.initiative_sheets?.length || 0 }}</p>
       </div>
     </NuxtLink>
-    <div v-else class="flex flex-col gap-2 justify-between p-4">
+    <!-- <div v-else class="flex flex-col gap-2 justify-between p-4">
       <h2>{{ campaign.title }}</h2>
       <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
         <Icon name="lucide:wrench" class="h-6 w-6" />
         <p>{{ $t('actions.update') }}</p>
       </div>
-      <!-- <div class="flex gap-2 cursor-pointer max-w-max" @click="copyCampaign(campaign)">
-        <Icon name="material-symbols:content-copy-outline-rounded" class="h-6 w-6" />
-        <p>{{ $t('actions.copy') }}</p>
-      </div> -->
       <div
         v-if="user && campaign.created_by === user.id"
         class="flex gap-2 cursor-pointer max-w-max"
@@ -93,7 +78,7 @@ function closeSettings (): void {
         <Icon name="material-symbols:delete-outline-rounded" class="h-6 w-6" />
         <p>{{ $t('actions.delete') }}</p>
       </div>
-    </div>
+    </div> -->
     <div class="absolute z-[1]">
       <ConfirmationModal
         :open="needConfirmation"

@@ -77,7 +77,7 @@ function closeSettings (): void {
   >
     <Icon
       v-if="!isSettings"
-      v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.openSettings') }"
       name="material-symbols:settings-outline-rounded"
       class="w-6 h-6 cursor-pointer absolute top-1 right-1 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
       :style="{ color: encounter.color }"
@@ -85,7 +85,7 @@ function closeSettings (): void {
     />
     <Icon
       v-else
-      v-tippy="{ content: $t('actions.closeSettings'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.closeSettings') }"
       name="ic:round-clear"
       class="w-6 h-6 cursor-pointer float-right mt-1 mr-1"
       :style="{ color: encounter.color }"

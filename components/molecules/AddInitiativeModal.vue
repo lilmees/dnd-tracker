@@ -102,7 +102,6 @@ function closeModal (): void {
     <button
       v-tippy="{
         content: $t('components.addInitiativeModal.addHomebrew'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.addInitiativeModal.addHomebrew')"

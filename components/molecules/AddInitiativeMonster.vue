@@ -79,7 +79,6 @@ function reset () {
     <button
       v-tippy="{
         content: $t('components.addInitiativeMonster.manual'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.addInitiativeMonster.manual')"

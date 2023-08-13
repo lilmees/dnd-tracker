@@ -2,7 +2,6 @@
   <tippy
     v-tippy="{
       content: 'Hotkeys',
-      animation: 'shift-away',
       touch: false
     }"
     animation="shift-away"

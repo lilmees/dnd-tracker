@@ -63,7 +63,7 @@ function updatedEncounter (encounter: Encounter): void {
           <div class="flex justify-between border-b-2 border-slate-700 pb-1">
             <h2>{{ $t('general.encounters') }}</h2>
             <Icon
-              v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+              v-tippy="{ content: $t('actions.add') }"
               name="material-symbols:add"
               class="w-6 h-6 cursor-pointer text-success"
               @click="isCreatingEncounter = true"
