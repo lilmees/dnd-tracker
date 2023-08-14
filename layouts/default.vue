@@ -5,7 +5,7 @@ onBeforeMount(() => { showNav.value = true })
 </script>
 
 <template>
-  <main class="mt-[150px] mb-20 dnd-container no-scrollbar overflow-y-auto grow">
+  <main class="pt-[150px] pb-20 dnd-container no-scrollbar overflow-y-auto grow">
     <slot />
   </main>
 </template>

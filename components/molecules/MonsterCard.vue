@@ -16,7 +16,7 @@ const isOpen = ref<boolean>(false)
   <div class="rounded-lg w-full bg-background p-3 relative space-y-1">
     <Icon
       v-if="addable"
-      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.add') }"
       name="material-symbols:add"
       class="absolute top-1 right-1 text-success cursor-pointer w-8 h-8"
       @click="$emit('add', monster)"
@@ -27,7 +27,7 @@ const isOpen = ref<boolean>(false)
       </h3>
       <div class="flex gap-4">
         <div
-          v-tippy="{ content: 'CR', animation: 'shift-away' }"
+          v-tippy="{ content: 'CR' }"
           class="flex gap-1"
         >
           <Icon name="lucide:skull" class="w-6 h-6 text-warning" />
@@ -36,7 +36,7 @@ const isOpen = ref<boolean>(false)
           </p>
         </div>
         <div
-          v-tippy="{ content: 'AC', animation: 'shift-away' }"
+          v-tippy="{ content: 'AC' }"
           class="flex gap-1"
         >
           <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
@@ -45,7 +45,7 @@ const isOpen = ref<boolean>(false)
           </p>
         </div>
         <div
-          v-tippy="{ content: 'HP', animation: 'shift-away' }"
+          v-tippy="{ content: 'HP' }"
           class="flex gap-1"
         >
           <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />

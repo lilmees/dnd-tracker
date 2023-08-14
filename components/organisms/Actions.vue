@@ -141,33 +141,33 @@ function updateRow () {
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      v-tippy="{ content: $t('components.actions.link'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.link') }"
       :url="row.link"
       @update="updateLink"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.ac'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.ac') }"
       :ac="row?.ac || null"
       :temp-ac="row?.tempAc|| null"
       @update="updateAc"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.hp'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.hp') }"
       :health="row.health"
       :temp-health="row.tempHealth"
       @update="updateHealth"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.condition'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.condition') }"
       :conditions="row.conditions"
       @update="updateCondition"
     />
     <PossibleAttacksModal
       v-if="row.actions"
-      v-tippy="{ content: $t('components.actions.attacks'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.attacks') }"
       :row="row"
     />
   </div>

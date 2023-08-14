@@ -84,6 +84,21 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
+  async function bulkDeleteCampaigns (ids: number[]): Promise<void> {
+    const { data, error } = await supabase
+      .from('campaigns')
+      .delete()
+      .in('id', ids)
+      .select('*')
+
+    if (error) {
+      throw error
+    }
+    if (data) {
+      fetch()
+    }
+  }
+
   async function updateCampaign (campaign: UpdateCampaign, id: number): Promise<void> {
     const { data, error } = await supabase
       .from('campaigns')
@@ -112,6 +127,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     getCampaignById,
     addCampaign,
     deleteCampaign,
+    bulkDeleteCampaigns,
     updateCampaign
   }
 })

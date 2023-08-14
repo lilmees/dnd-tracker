@@ -32,14 +32,14 @@ withDefaults(
   >
     <Icon
       v-if="removable"
-      v-tippy="{ content: $t('actions.remove'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.remove') }"
       name="ic:round-clear"
       class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
       @click="$emit('remove', condition.slug)"
     />
     <Icon
       v-if="addable && !removable"
-      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.add') }"
       name="material-symbols:add"
       class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
       @click="$emit('add', condition)"
@@ -47,7 +47,7 @@ withDefaults(
     <div>
       {{ condition.name }}
     </div>
-    <tippy animation="shift-away">
+    <tippy>
       <Icon
         name="material-symbols:info-outline-rounded"
         class="w-6 h-6 hover:scale-110 cursor-pointer outline-none"

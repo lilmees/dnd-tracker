@@ -65,7 +65,7 @@ function closeModal () {
 <template>
   <section>
     <button
-      v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.update') }"
       @click="isOpen = true"
     >
       <Icon

@@ -39,14 +39,14 @@ function updateNote (note: Note): void {
       </h3>
       <Icon
         v-if="!isSettings"
-        v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.openSettings') }"
         name="material-symbols:settings-outline-rounded"
         class="w-6 h-6 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
         @click="isSettings = !isSettings"
       />
       <Icon
         v-else
-        v-tippy="{ content: $t('actions.closeSettings'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.closeSettings') }"
         name="ic:round-clear"
         class="w-6 h-6 cursor-pointer text-primary"
         @click="isSettings = false"

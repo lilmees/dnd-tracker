@@ -12,7 +12,7 @@ onBeforeMount(() => { showNav.value = true })
 
 <template>
   <main
-    class="max-w-[3000px] mb-20 mx-auto w-full px-4 no-scrollbar overflow-y-auto grow flex flex-col"
+    class="max-w-[3000px] pb-20 mx-auto w-full px-4 no-scrollbar overflow-y-auto grow flex flex-col"
     :class="{ 'pt-[170px]': padding }"
   >
     <slot />

@@ -122,7 +122,6 @@ function scrollToTop (): void {
     <button
       v-tippy="{
         content: $t('components.fullScreenSearch.tooltip'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.fullScreenSearch.tooltip')"

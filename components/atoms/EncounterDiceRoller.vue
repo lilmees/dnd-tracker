@@ -59,7 +59,7 @@ function rollDice (dice: string): void {
                   v-tippy="{
                     content: dice.toUpperCase(),
                     placement: 'left',
-                    animation: 'shift-away'
+
                   }"
                   class="bg-black rounded-lg p-2 border-2 w-10 h-10 z-0"
                   :class="{

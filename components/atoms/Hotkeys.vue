@@ -2,10 +2,8 @@
   <tippy
     v-tippy="{
       content: 'Hotkeys',
-      animation: 'shift-away',
       touch: false
     }"
-    animation="shift-away"
     trigger="click"
   >
     <Icon name="mingcute:hotkey-line" class="w-10 h-10 cursor-pointer" />

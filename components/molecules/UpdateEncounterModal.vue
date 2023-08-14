@@ -2,7 +2,7 @@
 import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
-const emit = defineEmits(['close', 'updated'])
+const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
@@ -29,7 +29,7 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
       props.encounter.id
     )
 
-    emit('updated', enc)
+    emit('close')
   } catch (err: any) {
     logRocket.captureException(err as Error)
     form.value.data.error = err.message

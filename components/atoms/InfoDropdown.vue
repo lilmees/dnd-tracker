@@ -170,8 +170,7 @@ async function removePin (info: InfoCard): Promise<void> {
           <button
             v-tippy="{
               content: $t('components.infoCard.remove'),
-              placement: 'left',
-              animation: 'shift-away'
+              placement: 'left'
             }"
             @click="removePin(card)"
           >

@@ -79,6 +79,20 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
+  async function bulkDeleteEncounters (ids: number[]): Promise<void> {
+    const { error: err } = await supabase
+      .from('initiative_sheets')
+      .delete()
+      .in('id', ids)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      fetch()
+    }
+  }
+
   async function updateEncounter (encounter: UpdateEncounter, id: number): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
@@ -108,6 +122,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     getEncountersByCampaign,
     addEncounter,
     deleteEncounter,
+    bulkDeleteEncounters,
     updateEncounter
   }
 })

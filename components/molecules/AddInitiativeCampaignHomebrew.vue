@@ -123,7 +123,6 @@ function selectedSummoner (value: number): void {
     <button
       v-tippy="{
         content: $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"

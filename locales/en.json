@@ -16,6 +16,7 @@
     "baseAc": "Set base AC",
     "reset": "Reset",
     "remove": "Remove",
+    "bulkRemove": "Bulk remove",
     "temp": "Temporary",
     "rollShow": "Show dice roller",
     "rollHide": "Hide dice roller",
@@ -45,6 +46,7 @@
     "link": "Link",
     "noSelected": "Nothing selected",
     "or": "of",
+    "options": "Options",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -83,6 +85,12 @@
     "campaigns": {
       "campaigns": "Campaigns",
       "add": "Create campaign",
+      "remove": {
+        "title": "Bulk removing campaigns",
+        "subtitle": "Select campaigns to remove by clicking on them.",
+        "amount": "Remove {number} campaigns",
+        "multiple": "{number} campaigns"
+      },
       "noData": {
         "title": "You have no created campaigns",
         "text": "Create a campaign and start playing around witth all the posibilities"
@@ -95,6 +103,12 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Create encounter",
+      "remove": {
+        "title": "Bulk removing encounters",
+        "subtitle": "Select encounters to remove by clicking on them.",
+        "amount": "Remove {number} encounters",
+        "multiple": "{number} encounters"
+      },
       "noData": {
         "title": "You have no created encounters",
         "text": "Create a encounter and start playing around witth all the posibilities"

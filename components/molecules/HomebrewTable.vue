@@ -185,7 +185,7 @@ function paginate (pageNumber: number): void {
               <div class="flex justify-center items-center gap-1">
                 <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
                 <button
-                  v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
+                  v-tippy="{ content: $t('actions.delete') }"
                   @click="store.removeHomebrew(item.id)"
                 >
                   <Icon
