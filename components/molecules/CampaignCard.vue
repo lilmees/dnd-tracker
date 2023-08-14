@@ -21,7 +21,6 @@ const localePath = useLocalePath()
       <tippy
         v-if="user && campaign.created_by === user.id"
         interactive
-        trigger="click"
         :z-index="2"
       >
         <Icon

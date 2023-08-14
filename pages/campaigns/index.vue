@@ -103,6 +103,23 @@ function reset (): void {
           <p class="pt-2 pb-6">
             {{ $t('pages.campaigns.remove.subtitle') }}
           </p>
+          <div class="flex gap-2 mb-12">
+            <button
+              class="btn-danger"
+              :disabled="!selectedCampaigns.length"
+              :aria-label="$t('pages.campaigns.remove.amount', {number: selectedCampaigns.length})"
+              @click="needConfirmation = true"
+            >
+              {{ $t('pages.campaigns.remove.amount', {number: selectedCampaigns.length}) }}
+            </button>
+            <button
+              class="btn-success"
+              :aria-label="$t('actions.cancel')"
+              @click="isBulk = false, selectedCampaigns = []"
+            >
+              {{ $t('actions.cancel') }}
+            </button>
+          </div>
         </template>
         <div class="flex flex-wrap gap-4 items-start">
           <div
@@ -132,23 +149,6 @@ function reset (): void {
               }"
             />
           </div>
-        </div>
-        <div v-if="isBulk" class="flex gap-2 mt-8 mb-2">
-          <button
-            class="btn-danger"
-            :disabled="!selectedCampaigns.length"
-            :aria-label="$t('pages.campaigns.remove.amount', {number: selectedCampaigns.length})"
-            @click="needConfirmation = true"
-          >
-            {{ $t('pages.campaigns.remove.amount', {number: selectedCampaigns.length}) }}
-          </button>
-          <button
-            class="btn-success"
-            :aria-label="$t('actions.cancel')"
-            @click="isBulk = false, selectedCampaigns = []"
-          >
-            {{ $t('actions.cancel') }}
-          </button>
         </div>
       </template>
       <div

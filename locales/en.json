@@ -103,6 +103,12 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Create encounter",
+      "remove": {
+        "title": "Bulk removing encounters",
+        "subtitle": "Select encounters to remove by clicking on them.",
+        "amount": "Remove {number} encounters",
+        "multiple": "{number} encounters"
+      },
       "noData": {
         "title": "You have no created encounters",
         "text": "Create a encounter and start playing around witth all the posibilities"

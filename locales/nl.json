@@ -103,6 +103,12 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
+      "remove": {
+        "title": "Bulk verwijderen encounters",
+        "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
+        "amount": "Verwijder {number} encounters",
+        "multiple": "{number} encounters"
+      },
       "noData": {
         "title": "Je hebt nog geen encounter gemaakt",
         "text": "Maak een encounter en begin te spelen met alle mogelijkheden"
