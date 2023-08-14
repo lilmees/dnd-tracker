@@ -14,6 +14,7 @@
     "damage": "Schade",
     "reset": "Reset",
     "remove": "Verwijderen",
+    "bulkRemove": "Bulk verwijderen",
     "baseHealth": "Zet basis HP",
     "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
@@ -45,6 +46,7 @@
     "year": "jaar",
     "noSelected": "Niets geselecteerd",
     "or": "of",
+    "options": "Opties",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -83,6 +85,12 @@
     "campaigns": {
       "campaigns": "Campagnes",
       "add": "campagne creëren",
+      "remove": {
+        "title": "Bulk verwijderen campagnes",
+        "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
+        "amount": "Verwijder {number} campagnes",
+        "multiple": "{number} campagnes"
+      },
       "noData": {
         "title": "Je hebt nog geen campagne gemaakt",
         "text": "Maak een campagne en begin te spelen met alle mogelijkheden"

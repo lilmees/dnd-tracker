@@ -4,7 +4,6 @@
       content: 'Hotkeys',
       touch: false
     }"
-    animation="shift-away"
     trigger="click"
   >
     <Icon name="mingcute:hotkey-line" class="w-10 h-10 cursor-pointer" />

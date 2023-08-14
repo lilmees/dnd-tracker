@@ -47,7 +47,7 @@ withDefaults(
     <div>
       {{ condition.name }}
     </div>
-    <tippy animation="shift-away">
+    <tippy>
       <Icon
         name="material-symbols:info-outline-rounded"
         class="w-6 h-6 hover:scale-110 cursor-pointer outline-none"
