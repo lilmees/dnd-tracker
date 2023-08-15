@@ -7,4 +7,5 @@ components.d.ts
 
 dist
 .output
+.DS_Store
 node_modules
