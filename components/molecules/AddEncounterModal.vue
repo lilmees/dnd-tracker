@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
-import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'added'])
 const props = withDefaults(
-  defineProps<{ open: boolean, campaignId?: number | null }>(), {
-    campaignId: null
+  defineProps<{ open: boolean, campaignId?: number | undefined }>(), {
+    campaignId: undefined
   }
 )
 
@@ -22,8 +21,17 @@ const form = ref<AddEncounterForm>({
     isLoading: false,
     campaign: false,
     update: false,
-    error: null,
-    options: []
+    error: null
+  }
+})
+
+const campaignOptions = computed<Option[]>(() => {
+  if (campaigns.campaigns) {
+    return campaigns.campaigns.map((c: Campaign) => {
+      return { label: c.title, value: c.id }
+    })
+  } else {
+    return []
   }
 })
 
@@ -35,11 +43,6 @@ onMounted(() => {
 
 watch(() => campaigns.campaigns, (v) => {
   form.value.data.campaign = !!v?.length || false
-  if (v) {
-    form.value.data.options = v.map((c) => {
-      return { label: c.title, value: c.id }
-    })
-  }
 }, { immediate: true })
 
 async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise<void> {
@@ -79,15 +82,40 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
       {{ form.data.error }}
     </p>
     <FormKit
-      v-if="campaignId || campaigns.campaigns"
       id="form"
       v-model="form"
       type="form"
       :actions="false"
       @submit="addEncounter"
     >
-      <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
+      <Input
+        focus
+        name="title"
+        :label="$t('components.inputs.titleLabel')"
+        validation="required|length:3,30"
+        required
+      />
+      <Input
+        v-if="!campaignId"
+        name="campaign"
+        type="select"
+        :label="$t('components.inputs.campaignLabel')"
+        :placeholder="$t('general.noSelected')"
+        :options="campaignOptions"
+      />
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
+      <button
+        type="submit"
+        class="btn-black w-full"
+        :aria-label="$t('pages.encounters.add')"
+      >
+        {{ $t('pages.encounters.add') }}
+      </button>
     </FormKit>
-    <div v-else class="loader" />
   </Modal>
 </template>

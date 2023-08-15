@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
@@ -51,7 +50,35 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
       :actions="false"
       @submit="updateEncounter"
     >
-      <FormKitSchema :data="form" :schema="useI18nForm(schema)" />
+      <Input
+        focus
+        name="title"
+        :label="$t('components.inputs.titleLabel')"
+        validation="required|length:3,30"
+        required
+      />
+      <FormKit
+        v-if="form.data.campaign"
+        name="campaign"
+        type="select"
+        :label="$t('components.inputs.campaignLabel')"
+        :placeholder="$t('general.noSelected')"
+        :options="form.data.options"
+      />
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
+      <button
+        type="submit"
+        class="btn-black w-full"
+        :aria-label="$t('components.updateEncounterModal.update')"
+        :disabled="store.loading"
+      >
+        {{ $t('components.updateEncounterModal.update') }}
+      </button>
     </FormKit>
   </Modal>
 </template>
