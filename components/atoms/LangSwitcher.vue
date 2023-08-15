@@ -5,7 +5,7 @@ const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
 const config: { locale: string } | undefined = inject(Symbol.for('FormKitConfig'))
 
-const localeLang: ComputedRef<string> = computed(() => cookieLang.value || locale.value)
+const localeLang = computed<string>(() => cookieLang.value || locale.value)
 
 // set the language when mounted if there's a cookie for it
 onMounted(() => {

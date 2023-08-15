@@ -1,7 +1,7 @@
 export const useToastStore = defineStore('useToastStore', () => {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
 
-  const toasts: Ref<Toast[]> = ref([])
+  const toasts = ref<Toast[]>([])
 
   function remove (key: number): void {
     toasts.value = toasts.value.filter(obj => obj.key !== key)
@@ -24,7 +24,7 @@ export const useToastStore = defineStore('useToastStore', () => {
     return key
   }
 
-  function success (success: ToastSet): number {
+  function success (success: Partial<Omit<Toast, 'key'>>): number {
     return add({
       ...success,
       actions: success.actions || [],
@@ -33,7 +33,7 @@ export const useToastStore = defineStore('useToastStore', () => {
     } as Toast)
   }
 
-  function warn (warn: ToastSet): number {
+  function warn (warn: Partial<Omit<Toast, 'key'>>): number {
     return add({
       ...warn,
       actions: warn.actions || [],
@@ -42,18 +42,18 @@ export const useToastStore = defineStore('useToastStore', () => {
     } as Toast)
   }
 
-  function error (error: ToastSet = {}): number {
+  function error (error: Partial<Omit<Toast, 'key'>> = {}): number {
     return add({
       ...error,
-      title: error.title || $i18n.t('general.error.title'),
-      text: error.text || $i18n.t('general.error.text'),
+      title: error.title || t('general.error.title'),
+      text: error.text || t('general.error.text'),
       actions: error.actions || [],
       timed: error.timed || true,
       type: 'error'
     } as Toast)
   }
 
-  function info (info: ToastSet): number {
+  function info (info: Partial<Omit<Toast, 'key'>>): number {
     return add({
       ...info,
       actions: info.actions || [],

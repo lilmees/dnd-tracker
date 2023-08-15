@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, campaign: Campaign }>()
 
 const store = useCampaignsStore()
-const { $logRocket } = useNuxtApp()
 
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<{ title: string, background: string }> = ref({
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const form = ref<{ title: string, background: string }>({
   title: props.campaign.title,
   background: props.campaign.background
 })
@@ -24,10 +25,6 @@ watch(
   }
 )
 
-function changeColor ():void {
-  form.value.background = useRandomColor()
-}
-
 async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
@@ -40,9 +37,10 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       },
       props.campaign.id
     )
+
     emit('close')
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -60,7 +58,6 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="updateCampaign"
     >
       <Input
@@ -69,21 +66,12 @@ async function updateCampaign ({ __init, ...formData }: Obj): Promise<void> {
         :label="$t('components.inputs.campaignLabel')"
         validation="length:3,30"
       />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('components.inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <button
-          class="btn-black mb-[14px]"
-          :aria-label="$t('actions.random')"
-          @click="changeColor"
-        >
-          {{ $t('actions.random') }}
-        </button>
-      </div>
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
       <button
         type="submit"
         class="btn-black w-full mt-3"

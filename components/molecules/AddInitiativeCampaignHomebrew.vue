@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const homebrew = useHomebrewStore()
 const store = useTableStore()
-const { $logRocket } = useNuxtApp()
-
-const logRocket: any = $logRocket
 
 const isOpen = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
@@ -124,7 +123,6 @@ function selectedSummoner (value: number): void {
     <button
       v-tippy="{
         content: $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"
@@ -181,7 +179,7 @@ function selectedSummoner (value: number): void {
             <div
               class="first:rounded-t-lg last:rounded-b-lg w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
               :class="{
-                'border-2 border-b-2 !border-primary': selected.filter(p => p.id === hb.id).length
+                'border-4 border-b-4 !border-primary': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >
@@ -228,7 +226,7 @@ function selectedSummoner (value: number): void {
             <button
               class="btn-success"
               :aria-label="$t('actions.addAll')"
-              :disabled="isLoading || !selected.length"
+              :disabled="isLoading"
               @click="addHomebrews(homebrews as Homebrew[])"
             >
               {{ $t('actions.addAll') }}

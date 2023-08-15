@@ -1,10 +1,9 @@
+import logRocket from 'logrocket'
+
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
-  const { $logRocket } = useNuxtApp()
 
-  const logRocket: any = $logRocket
-
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
 
@@ -80,7 +79,21 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function updateEncounter (encounter: EncounterUpdate, id: number): Promise<Encounter> {
+  async function bulkDeleteEncounters (ids: number[]): Promise<void> {
+    const { error: err } = await supabase
+      .from('initiative_sheets')
+      .delete()
+      .in('id', ids)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      fetch()
+    }
+  }
+
+  async function updateEncounter (encounter: UpdateEncounter, id: number): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .update(encounter as never)
@@ -109,6 +122,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     getEncountersByCampaign,
     addEncounter,
     deleteEncounter,
+    bulkDeleteEncounters,
     updateEncounter
   }
 })

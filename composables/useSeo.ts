@@ -2,7 +2,7 @@ import meta from '@/seo/meta.json'
 
 export const useSeo = (): void => {
   const { locale } = useI18n({ useScope: 'global' })
-  const appName = 'DND TRACKER'
+  const appName = 'DnD Tracker'
 
   useLocaleHead({
     addDirAttribute: true,

@@ -6,7 +6,7 @@ withDefaults(
   { title: '', items: () => [] }
 )
 
-const el: Ref<HTMLDivElement | undefined> = ref()
+const el = ref<HTMLDivElement>()
 const isVisible: Ref<boolean> = useElementVisibility(el)
 
 watch(isVisible, (v: boolean) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const store = useTableStore()
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const keys = useMagicKeys()
 
 // Initiative down
@@ -11,22 +11,22 @@ whenever(keys.pageUp, () => store.prevInitiative())
 whenever(keys.shift_arrowRight, () => store.nextInitiative())
 whenever(keys.PageDown, () => store.nextInitiative())
 
-const headers: ComputedRef<string[]> = computed(() => {
+const headers = computed<string[]>(() => {
   const headers = [
     '',
-    $i18n.t('components.encounterTable.headers.name'),
-    $i18n.t('components.encounterTable.headers.init'),
-    $i18n.t('components.encounterTable.headers.ac'),
-    $i18n.t('components.encounterTable.headers.hp'),
-    $i18n.t('components.encounterTable.headers.actions'),
-    $i18n.t('components.encounterTable.headers.conditions'),
-    $i18n.t('components.encounterTable.headers.note'),
-    $i18n.t('components.encounterTable.headers.deathSaves'),
+    t('components.encounterTable.headers.name'),
+    t('components.encounterTable.headers.init'),
+    t('components.encounterTable.headers.ac'),
+    t('components.encounterTable.headers.hp'),
+    t('components.encounterTable.headers.actions'),
+    t('components.encounterTable.headers.conditions'),
+    t('components.encounterTable.headers.note'),
+    t('components.encounterTable.headers.deathSaves'),
     'con',
-    $i18n.t('components.encounterTable.headers.modify')
+    t('components.encounterTable.headers.modify')
   ]
   if (store.includesSummond) {
-    headers.splice(2, 0, $i18n.t('components.encounterTable.headers.summond'))
+    headers.splice(2, 0, t('components.encounterTable.headers.summond'))
   }
   return headers
 })
@@ -43,7 +43,7 @@ const headers: ComputedRef<string[]> = computed(() => {
             <th
               v-for="header in headers"
               :key="header"
-              class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
+              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ header }}
             </th>
@@ -63,7 +63,7 @@ const headers: ComputedRef<string[]> = computed(() => {
       </table>
       <div
         v-if="!store?.encounter?.rows.length"
-        class="bg-tracker w-full px-8 py-4"
+        class="w-full px-8 py-4 text-center font-bold"
       >
         {{ $t('components.encounterTable.empty') }}
       </div>

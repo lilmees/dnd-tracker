@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'
 
 const store = useCurrentCampaignStore()
-const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const form: Ref<AddHomebrewForm> = ref({
+const form = ref<AddHomebrewForm>({
   name: '',
   link: null,
-  type: 'player' as HomebrewType,
+  type: 'player' as RowType,
   data: {
     isLoading: false,
     encounter: false,
@@ -42,7 +41,7 @@ function addHomebrew ({ __init, data, slots, ...formData }: Obj): void {
     reset('form')
     closeModal()
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false
@@ -58,7 +57,7 @@ function closeModal (): void {
 <template>
   <section>
     <button
-      v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.add') }"
       @click="isOpen = true"
     >
       <Icon name="material-symbols:add" class="w-6 h-6 text-success" />

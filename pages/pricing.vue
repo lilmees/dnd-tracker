@@ -1,12 +1,12 @@
 <script setup lang="ts">
 const stripe = useStripeStore()
 
-const isYearly: Ref<boolean> = ref(false)
+const isYearly = ref<boolean>(false)
 </script>
 
 <template>
   <NuxtLayout>
-    <section class="mt-10">
+    <section>
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         <h1 class="mb-4">
           {{ $t('pages.pricing.title') }}

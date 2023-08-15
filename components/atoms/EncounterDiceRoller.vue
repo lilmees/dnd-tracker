@@ -49,7 +49,7 @@ function rollDice (dice: string): void {
           v-if="isOpen"
           class="absolute bottom-0 right-0 z-10"
         >
-          <div class="bg-black tracker-shadow rounded-lg p-2">
+          <div class="bg-black border-4 border-primary rounded-lg p-2">
             <div class="flex flex-col gap-1">
               <template
                 v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']"
@@ -59,9 +59,9 @@ function rollDice (dice: string): void {
                   v-tippy="{
                     content: dice.toUpperCase(),
                     placement: 'left',
-                    animation: 'shift-away'
+
                   }"
-                  class="bg-black tracker-shadow rounded-lg p-2 border-2 w-10 h-10 z-0"
+                  class="bg-black rounded-lg p-2 border-2 w-10 h-10 z-0"
                   :class="{
                     'border-secondary': dice === 'd100',
                     'border-primary': dice === 'd20',

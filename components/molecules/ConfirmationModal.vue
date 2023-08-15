@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { reset } from '@formkit/core'
+
 const emit = defineEmits(['close', 'delete'])
 const props = defineProps<{ open: boolean, title: string }>()
 
-const form: Ref<{ title: string }> = ref({ title: '' })
-const same: ComputedRef<boolean> = computed(() => props.title === form.value.title)
+const form = ref<{ title: string }>({ title: '' })
+const same = computed<boolean>(() => props.title === form.value.title)
 
 function deleteConfirmation (): void {
   if (form.value.title.trim() === props.title.trim()) {
+    reset('form')
     emit('delete')
   }
 }
@@ -22,10 +25,10 @@ function deleteConfirmation (): void {
         {{ $t('components.confirmationModal.text', { title }) }}
       </p>
       <FormKit
+        id="form"
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="deleteConfirmation"
       >
         <Input

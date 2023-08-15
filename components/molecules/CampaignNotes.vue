@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const store = useCurrentCampaignStore()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
 function addedNote (notes: Note[]): void {
   if (store.campaign) {
@@ -28,16 +28,19 @@ function updatedNote (note: Note): void {
 
 <template>
   <section class="space-y-4">
-    <div class="flex justify-between border-b border-slate-700 pb-1">
+    <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <h2>{{ $t('general.notes') }}</h2>
       <Icon
-        v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.add') }"
         name="material-symbols:add"
         class="w-6 h-6 cursor-pointer text-success"
         @click="isOpen = true"
       />
     </div>
-    <div v-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
+    <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
+      <SkeletonNoteCard v-for="i in 4" :key="i" />
+    </div>
+    <div v-else-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
       <p class="text-center">
         {{ $t('components.campaignNotes.none') }}
       </p>

@@ -3,7 +3,7 @@ const props = defineProps<{ row: Row, index: number }>()
 
 const toast = useToastStore()
 const store = useTableStore()
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 
 function updateLink (link: string): void {
   props.row.link = link
@@ -54,8 +54,8 @@ function updateHealth (update: { type: string, amount: number }): void {
     props.row.deathSaves.fail.every(v => v === true)
   ) {
     toast.info({
-      title: $i18n.t('pages.encounter.toasts.died.title'),
-      text: $i18n.t('pages.encounter.toasts.died.textMinHP')
+      title: t('pages.encounter.toasts.died.title'),
+      text: t('pages.encounter.toasts.died.textMinHP')
     })
   }
 
@@ -141,33 +141,33 @@ function updateRow () {
 <template>
   <div class="flex gap-1 justify-center">
     <LinkModal
-      v-tippy="{ content: $t('components.actions.link'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.link') }"
       :url="row.link"
       @update="updateLink"
     />
     <AcModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.ac'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.ac') }"
       :ac="row?.ac || null"
       :temp-ac="row?.tempAc|| null"
       @update="updateAc"
     />
     <HeartModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.hp'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.hp') }"
       :health="row.health"
       :temp-health="row.tempHealth"
       @update="updateHealth"
     />
     <ConditionModal
       v-if="!['lair'].includes(row.type)"
-      v-tippy="{ content: $t('components.actions.condition'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.condition') }"
       :conditions="row.conditions"
       @update="updateCondition"
     />
     <PossibleAttacksModal
       v-if="row.actions"
-      v-tippy="{ content: $t('components.actions.attacks'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('components.actions.attacks') }"
       :row="row"
     />
   </div>

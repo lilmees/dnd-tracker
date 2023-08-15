@@ -1,21 +1,19 @@
 <script setup lang="ts">
+import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['close'])
 defineProps<{ open: boolean }>()
 
 const store = useCampaignsStore()
 const user = useSupabaseUser()
-const { $logRocket } = useNuxtApp()
 
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<AddCampaignForm> = ref({
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const form = ref<AddCampaignForm>({
   title: '',
-  background: '#0073A1'
+  background: '#7333E0'
 })
-
-function changeColor (): void {
-  form.value.background = useRandomColor()
-}
 
 async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
@@ -29,10 +27,14 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
         admins: [user.value.id],
         color: useContrastColor(formData.background)
       })
+
+      reset('form')
+      form.value.background = '#7333E0'
+
       emit('close')
     }
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -47,10 +49,10 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
       {{ error }}
     </p>
     <FormKit
+      id="form"
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="addCampaign"
     >
       <Input
@@ -60,21 +62,12 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
         validation="required|length:3,30"
         required
       />
-      <div class="flex gap-2 items-end">
-        <ColorPicker
-          name="background"
-          :label="$t('components.inputs.backgroundLabel')"
-          validation="required"
-          required
-        />
-        <button
-          class="btn-black mb-[24px]"
-          :aria-label="$t('actions.random')"
-          @click="changeColor"
-        >
-          {{ $t('actions.random') }}
-        </button>
-      </div>
+      <ColorPicker
+        name="background"
+        :label="$t('components.inputs.backgroundLabel')"
+        validation="required"
+        required
+      />
       <button
         type="submit"
         class="btn-black w-full"

@@ -1,57 +1,70 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+import profileSchema from '@/formkit/updateProfile.json'
+import passwordSchema from '@/formkit/updatePassword.json'
+
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const toast = useToastStore()
-const { $logRocket, $i18n } = useNuxtApp()
+const { t } = useI18n()
 
-const image : Ref<string | null> = ref(profile.data?.avatar || null)
-const isUpdating: Ref<boolean> = ref(false)
-const isLoading: Ref<boolean> = ref(false)
-const needConfirmation: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const form: Ref<Register> = ref({
-  email: profile.data?.email || '',
+const image = ref<string>(profile.data?.avatar || randomAvatar())
+const isLoading = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+
+const formInfo = ref<ProfileUpdateForm>({
+  email: '',
+  name: '',
+  username: '',
+  data: {
+    error: null
+  }
+})
+
+const formPassword = ref<UpdatePasswordForm>({
   password: '',
-  name: profile.data?.name || '',
-  username: profile.data?.username || ''
-})
-
-watch(isUpdating, (v: boolean) => {
-  if (v) {
-    form.value = {
-      email: profile.data?.email || '',
-      password: '',
-      name: profile.data?.name || '',
-      username: profile.data?.username || ''
-    }
-  }
-  if (profile?.data?.avatar) {
-    image.value = profile.data.avatar
+  data: {
+    error: null
   }
 })
 
-async function updateProfile ({ __init, username, name, ...credentials }: Obj): Promise<void> {
-  error.value = null
+if (profile.data) {
+  setUserData()
+} else {
+  whenever(() => profile.data, () => setUserData())
+}
+
+function setUserData (): void {
+  image.value = profile.data?.avatar || randomAvatar()
+  formInfo.value.email = profile.data?.email || ''
+  formInfo.value.name = profile.data?.name || ''
+  formInfo.value.username = profile.data?.username || ''
+}
+
+const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): Promise<void> => {
+  formInfo.value.data.error = null
+  formPassword.value.data.error = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
-    await profile.updateCredentialsProfile(
-      credentials as Login,
-      { username, name, avatar: image.value as string, role: 'User' }
-    )
-    isUpdating.value = false
-    toast.success({ text: $i18n.t('pages.profile.toast.success.text') })
+    await profile.updateProfile(formData)
+    toast.success({ title: t('pages.profile.toast.success.text') })
   } catch (err: any) {
-    ($logRocket as any).captureException(err as Error)
-    error.value = err.message
-    toast.error()
+    logRocket.captureException(err as Error)
+    if (formData.password) {
+      formPassword.value.data.error = err.message
+    } else if (!formData.avatar) {
+      formInfo.value.data.error = err.message
+    }
+    toast.error({ text: err.message })
   } finally {
     isLoading.value = false
   }
-}
+}, 1000)
 
-function randomAvatar (): void {
-  image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
+function randomAvatar (): string {
+  return `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
     .toString(36)
     .substring(7)}.svg?size=100`
 }
@@ -62,9 +75,9 @@ async function deleteUser (): Promise<void> {
 
   try {
     await profile.deleteProfile()
-    toast.success({ text: $i18n.t('pages.profile.toast.delete.text') })
+    toast.success({ text: t('pages.profile.toast.delete.text') })
   } catch (err) {
-    ($logRocket as any).captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   } finally {
     isLoading.value = false
@@ -73,121 +86,107 @@ async function deleteUser (): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout name="centered">
+  <NuxtLayout>
     <section v-if="profile.data" class="space-y-2">
-      <template v-if="!isUpdating">
-        <div class="flex flex-wrap gap-y-2 gap-x-8 items-center pb-4">
-          <div class="w-[100px] h-[100px]">
-            <NuxtImg :src="profile.data.avatar" alt="avatar" sizes="sm:100px md:100px lg:100px" />
-          </div>
-          <h1>{{ profile.data.username }}</h1>
+      <div
+        class="flex flex-wrap gap-y-2 gap-x-4 items-end pb-4 border-b-2 border-slate-700"
+      >
+        <div
+          class="w-[100px] h-[100px] bg-primary/50 rounded-lg border-4 border-primary overflow-hidden"
+        >
+          <NuxtImg
+            :src="image"
+            alt="avatar"
+            sizes="sm:150px md:150px lg:150px"
+            class="w-full h-full object-cover p-2"
+          />
         </div>
-        <p>
-          <span class="font-bold">{{ $t('components.inputs.nameLabel') }}:</span> {{ profile.data.name }}
-        </p>
-        <p>
-          <span class="font-bold">{{ $t('components.inputs.emailLabel') }}:</span> {{ profile.data.email }}
-        </p>
-        <p>
-          <span class="font-bold">{{ $t('components.inputs.passwordLabel') }}: 🤫</span>
-        </p>
-        <div class="flex flex-wrap gap-x-4 gap-y-2">
-          <button
-            class="btn-black"
-            :aria-label="$t('pages.profile.update')"
-            :disabled="isLoading"
-            @click="isUpdating = true"
-          >
-            {{ $t('pages.profile.update') }}
-          </button>
-          <button
-            class="btn-danger"
-            :aria-label="$t('pages.profile.delete')"
-            :disabled="isLoading"
-            @click="needConfirmation = true"
-          >
-            {{ $t('pages.profile.delete') }}
-          </button>
-        </div>
-        <ConfirmationModal
-          :open="needConfirmation"
-          :title="profile.data.username"
-          @close="needConfirmation = false"
-          @delete="deleteUser"
-        />
-      </template>
-      <template v-else>
-        <h1 class="text-center">
-          {{ $t('pages.profile.update') }}
-        </h1>
-        <div class="flex flex-col gap-2 items-center">
-          <div class="w-[100px] h-[100px]">
-            <NuxtImg
-              v-if="image"
-              :src="image"
-              alt="avatar"
-              sizes="sm:100px md:100px lg:100px"
-            />
-          </div>
-          <TextButton @click="randomAvatar">
+        <div class="flex flex-col gap-2">
+          <TextButton class="w-fit" @click="image = randomAvatar()">
             {{ $t('pages.register.random') }}
           </TextButton>
-        </div>
-        <p v-if="error" class="text-danger text-center">
-          {{ error }}
-        </p>
-        <FormKit
-          v-model="form"
-          type="form"
-          :actions="false"
-
-          @submit="updateProfile"
-        >
-          <Input
-            focus
-            name="name"
-            :label="$t('components.inputs.fullNameLabel')"
-            validation="required|length:3,30|alpha_spaces"
-            required
-          />
-          <Input
-            name="username"
-            :label="$t('components.inputs.usernameLabel')"
-            validation="required|length:3,15|alpha_spaces"
-            required
-          />
-          <Input
-            name="email"
-            :label="$t('components.inputs.emailLabel')"
-            validation="required|length:5,50|email"
-            required
-          />
-          <Input
-            name="password"
-            type="password"
-            :label="$t('components.inputs.passwordLabel')"
-            validation="required|length:6,50"
-            required
-          />
-          <div class="flex flex-wrap gap-2">
+          <div v-if="image !== profile.data.avatar" class="flex gap-2">
             <button
-              type="submit"
-              class="btn-primary grow"
-              :aria-label="$t('actions.update')"
-              :disabled="isLoading"
+              class="btn-black"
+              @click="updateProfile({ avatar: image })"
             >
-              {{ $t('actions.update') }}
+              {{ $t('pages.profile.updateImage') }}
             </button>
             <button
-              class="btn-black grow"
-              :aria-label="$t('actions.cancel')"
-              @click="isUpdating = false"
+              class="btn-danger"
+              @click="image = profile.data.avatar || ''"
             >
               {{ $t('actions.cancel') }}
             </button>
           </div>
-        </FormKit>
-      </template>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
+      >
+        <div class="md:min-w-[300px]">
+          <h2>
+            {{ $t('pages.profile.data.title') }}
+          </h2>
+          <p class="pt-2">
+            {{ $t('pages.profile.data.subtitle') }}
+          </p>
+        </div>
+        <div class="grow max-w-4xl">
+          <FormKit
+            v-model="formInfo"
+            type="form"
+            :actions="false"
+            @submit="updateProfile"
+          >
+            <FormKitSchema
+              :data="{...formInfo, data: { ...formInfo.data, isLoading }}"
+              :schema="useI18nForm(profileSchema)"
+            />
+          </FormKit>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
+      >
+        <div class="md:min-w-[300px]">
+          <h2>
+            {{ $t('pages.profile.password.title') }}
+          </h2>
+          <p class="pt-2">
+            {{ $t('pages.profile.password.subtitle') }}
+          </p>
+        </div>
+        <div class="grow max-w-4xl">
+          <FormKit
+            v-model="formPassword"
+            type="form"
+            :actions="false"
+            @submit="updateProfile"
+          >
+            <FormKitSchema
+              :data="{...formPassword, data: { ...formPassword.data, isLoading }}"
+              :schema="useI18nForm(passwordSchema)"
+            />
+          </FormKit>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-2 pt-4 justify-end">
+        <button
+          class="btn-danger"
+          :aria-label="$t('pages.profile.delete')"
+          :disabled="isLoading"
+          @click="needConfirmation = true"
+        >
+          {{ $t('pages.profile.delete') }}
+        </button>
+      </div>
+      <ConfirmationModal
+        :open="needConfirmation"
+        :title="profile.data.username"
+        @close="needConfirmation = false"
+        @delete="deleteUser"
+      />
     </section>
   </NuxtLayout>
 </template>

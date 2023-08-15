@@ -6,9 +6,9 @@ const props = defineProps<{
 
 const store = useTableStore()
 
-const note: Ref<string> = ref(props.row.note || '')
+const note = ref<string>(props.row.note || '')
 
-const summoner: ComputedRef<string | null> = computed(() => {
+const summoner = computed<string | null>(() => {
   if (store.encounter) {
     const sum = store.encounter.rows.filter(r => r.id === props.row.summoner?.id)
     return sum.length ? sum[0].name : null
@@ -29,8 +29,8 @@ watchDebounced(
     v-if="store.encounter"
     class="border-b last:border-b-0 border-slate-700"
     :class="{
-      '!bg-primary/10 tracker-shadow': index === store.encounter.activeIndex,
-      'bg-danger/10': row.health && row.health !== null && row.health < 1,
+      'bg-primary/10': index === store.encounter.activeIndex,
+      'bg-danger/10': row.health !== null && row.health === 0,
     }"
   >
     <td class="px-2 py-1 border-r border-slate-700 text-info text-center max-w-[30px]">

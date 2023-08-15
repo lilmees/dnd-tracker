@@ -9,10 +9,14 @@ export default defineNuxtConfig({
       '~/components/atoms',
       '~/components/molecules',
       '~/components/organisms',
-      '~/components/templates'
+      '~/components/templates',
+      '~/components/skeletons'
     ]
   },
-  css: ['@/assets/css/global.css'],
+  css: [
+    '@/assets/css/global.css',
+    '@/assets/css/quill.css'
+  ],
   modules: [
     'nuxt-icon',
     'nuxt-schema-org',

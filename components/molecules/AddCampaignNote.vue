@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 
 const emit = defineEmits(['close', 'notes'])
 const props = defineProps<{
@@ -9,11 +10,10 @@ const props = defineProps<{
 }>()
 
 const store = useNotesStore()
-const { $logRocket } = useNuxtApp()
 
-const error: Ref<string | null> = ref(null)
-const isLoading: Ref<boolean> = ref(false)
-const form: Ref<{ title: string, text: string }> = ref({ title: '', text: '' })
+const error = ref<string | null>(null)
+const isLoading = ref<boolean>(false)
+const form = ref<{ title: string, text: string }>({ title: '', text: '' })
 
 async function addNote ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
@@ -23,7 +23,7 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
     emit('notes', [...props.notes, note])
     reset('form')
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false
@@ -41,7 +41,6 @@ async function addNote ({ __init, ...formData }: Obj): Promise<void> {
       v-model="form"
       type="form"
       :actions="false"
-
       @submit="addNote"
     >
       <Input

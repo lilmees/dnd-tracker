@@ -14,6 +14,7 @@
     "damage": "Schade",
     "reset": "Reset",
     "remove": "Verwijderen",
+    "bulkRemove": "Bulk verwijderen",
     "baseHealth": "Zet basis HP",
     "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
@@ -45,6 +46,7 @@
     "year": "jaar",
     "noSelected": "Niets geselecteerd",
     "or": "of",
+    "options": "Opties",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -75,23 +77,20 @@
         "text": "Doordat deze DnD Tracker nog in zijn kinderschoenen staat, kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet om ons iets te laten weten, zodat we deze snel kunnen oplossen."
       }
     },
-    "about": {
-      "story": "Ons Verhaal 📖",
-      "text1": "Welkom bij DnD-Tracker, uw go-to bestemming voor het moeiteloos beheren van uw Dungeon and Dragons encounters! Onze website is met passie en toewijding gemaakt in België, waar we geloven dat het spelen van D&D om plezier en avontuur moet draaien.",
-      "text2": "Bij DnD-Tracker begrijpen we hoe moeilijk het kan zijn voor Dungeon Masters om alle bewegende delen van een encounter te beheren. Daarom hebben ik een tool gemaakt die het makkelijk maakt voor de DM om zich te concentreren op het avontuur, terwijl wij het zware werk doen.",
-      "text3": "Ons verhaal begon toen een vriend die een Dungeon Master was, mij vroeg om wat macro's voor hem te maken in Excel. Helaas ben ik niet erg bedreven met Excel, maar ik was vastbesloten een betere oplossing te vinden. Toen besloot ik een website te maken die een meer intuïtieve en gebruiksvriendelijke manier zou bieden om encounters te beheren.",
-      "text4": "Mijn doel is om het leven van de Dungeon Master zo gemakkelijk mogelijk te maken, zodat ze meer tijd kunnen besteden aan het creëren van boeiende avonturen en minder tijd aan het omgaan met de logistiek. Met DnD-Tracker kunt u moeiteloos alle aspecten van uw encounters beheren, van initiatief volgen tot monster statistieken en meer.",
-      "text5": "We streven er voortdurend naar om onze website te verbeteren en het de best mogelijke tool te maken voor Dungeon Masters overal. Of je nu een doorgewinterde veteraan bent of een nieuwe speler die net begint, DnD-Tracker heeft alles wat je nodig hebt om je D&D-ervaring nog leuker te maken.",
-      "end": "Bedankt voor het kiezen van DnD-Tracker, en we hopen dat u een geweldige tijd heeft met het spelen van D&D!"
-    },
     "error": {
-      "404": "Oeps. We kunnen deze pagina niet vinden maar hier heb je een radom meme van reddit.",
-      "meme": "Ik wil nog een meme",
-      "goHome": "Ga naar de thuispagina"
+      "404": "Oh nee... We hebben deze pagina verloren.",
+      "text": "We hebben overal gezocht maar konden niet vinden waar je naar op zoek bent. Laten we een betere plek voor je vinden om naartoe te gaan.",
+      "goHome": "Terug naar huis"
     },
     "campaigns": {
       "campaigns": "Campagnes",
       "add": "campagne creëren",
+      "remove": {
+        "title": "Bulk verwijderen campagnes",
+        "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
+        "amount": "Verwijder {number} campagnes",
+        "multiple": "{number} campagnes"
+      },
       "noData": {
         "title": "Je hebt nog geen campagne gemaakt",
         "text": "Maak een campagne en begin te spelen met alle mogelijkheden"
@@ -104,6 +103,12 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
+      "remove": {
+        "title": "Bulk verwijderen encounters",
+        "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
+        "amount": "Verwijder {number} encounters",
+        "multiple": "{number} encounters"
+      },
       "noData": {
         "title": "Je hebt nog geen encounter gemaakt",
         "text": "Maak een encounter en begin te spelen met alle mogelijkheden"
@@ -173,7 +178,15 @@
       }
     },
     "profile": {
-      "update": "Profiel bijwerken",
+      "data": {
+        "title": "Persoonlijke data",
+        "subtitle": "Data Metamorfose: Ontketen de Magie!"
+      },
+      "password": {
+        "title": "Wachtwoord wijzigende Magie",
+        "subtitle": "Betoverende Beveiliging"
+      },
+      "updateImage": "Foto updaten",
       "delete": "Profiel Verwijderen",
       "toast": {
         "success": {

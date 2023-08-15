@@ -16,6 +16,7 @@
     "baseAc": "Set base AC",
     "reset": "Reset",
     "remove": "Remove",
+    "bulkRemove": "Bulk remove",
     "temp": "Temporary",
     "rollShow": "Show dice roller",
     "rollHide": "Hide dice roller",
@@ -45,6 +46,7 @@
     "link": "Link",
     "noSelected": "Nothing selected",
     "or": "of",
+    "options": "Options",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -75,23 +77,20 @@
         "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
       }
     },
-    "about": {
-      "story": "Our story 📖",
-      "text1": "Welcome to DnD-Tracker, your go-to destination for effortlessly managing your Dungeon and Dragons encounters! Our website was made with passion and dedication in Belgium, where we believe that playing D&D should be all about fun and adventure.",
-      "text2": "At DnD-Tracker, we understand how hard it can be for Dungeon Masters to manage all the moving parts of an encounter. That's why we created a tool that makes it easy for them to focus on the adventure, while we do the heavy lifting for them.",
-      "text3": "Our story began when a friend, who happened to be a Dungeon Master, asked us to make some macros for him in Excel. Unfortunately, we weren't very proficient with Excel, but we were determined to find a better solution. That's when we decided to create a website that would offer a more intuitive and user-friendly way to manage encounters.",
-      "text4": "Our goal is to make the Dungeon Master's life as easy as possible, so they can spend more time creating engaging adventures and less time dealing with the logistics. With DnD-Tracker, you can effortlessly manage all aspects of your encounters, from initiative tracking to monster stats and more.",
-      "text5": "We are constantly striving to improve our website and make it the best possible tool for Dungeon Masters everywhere. Whether you're a seasoned veteran or a new player just getting started, DnD-Tracker has everything you need to make your D&D experience even more enjoyable.",
-      "end": "Thank you for choosing DnD-Tracker, and we hope you have a great time playing D&D!"
-    },
     "error": {
-      "404": "We could not find the page you were looking for but here's a radom meme from reddit.",
-      "meme": "I want another meme",
-      "goHome": "Go to homepage"
+      "404": "Oh no.. We lost this page",
+      "text": "We searched everywhere but couldn't find what you're looking for. Let's find a better place for you to go.",
+      "goHome": "Back to home"
     },
     "campaigns": {
       "campaigns": "Campaigns",
       "add": "Create campaign",
+      "remove": {
+        "title": "Bulk removing campaigns",
+        "subtitle": "Select campaigns to remove by clicking on them.",
+        "amount": "Remove {number} campaigns",
+        "multiple": "{number} campaigns"
+      },
       "noData": {
         "title": "You have no created campaigns",
         "text": "Create a campaign and start playing around witth all the posibilities"
@@ -104,6 +103,12 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Create encounter",
+      "remove": {
+        "title": "Bulk removing encounters",
+        "subtitle": "Select encounters to remove by clicking on them.",
+        "amount": "Remove {number} encounters",
+        "multiple": "{number} encounters"
+      },
       "noData": {
         "title": "You have no created encounters",
         "text": "Create a encounter and start playing around witth all the posibilities"
@@ -173,7 +178,15 @@
       }
     },
     "profile": {
-      "update": "Update profile",
+      "data": {
+        "title": "Personal data",
+        "subtitle": "Data Metamorphosis: Unleash the Magic!"
+      },
+      "password": {
+        "title": "Password changing Sorcery",
+        "subtitle": "Spellbound Security"
+      },
+      "updateImage": "Update image",
       "delete": "Delete profile",
       "toast": {
         "success": {

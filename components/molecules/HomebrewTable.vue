@@ -4,7 +4,6 @@ const store = useCurrentCampaignStore()
 const sortedBy = ref<string>('name')
 const sortACS = ref<boolean>(true)
 const sortedHomebrew = ref<Homebrew[]>([])
-
 const pages = ref<number>(0)
 const page = ref<number>(0)
 const perPage = ref<number>(20)
@@ -86,7 +85,7 @@ function paginate (pageNumber: number): void {
 
 <template>
   <section class="space-y-4">
-    <div class="flex justify-between border-b border-slate-700 pb-1">
+    <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <div class="flex gap-4 items-end">
         <h2>{{ $t('general.homebrew') }}</h2>
         <div class="hidden md:flex gap-1 text-[10px]">
@@ -99,11 +98,12 @@ function paginate (pageNumber: number): void {
       </div>
       <AddHomebrew />
     </div>
+    <SkeletonHomebrewTable v-if="store.loading" />
     <div
-      v-if="store?.campaign?.homebrew_items?.length"
-      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
+      v-else-if="store?.campaign?.homebrew_items?.length"
+      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full border-4 border-tracker"
     >
-      <table class="min-w-full bg-tracker">
+      <table class="min-w-full bg-tracker/50">
         <thead>
           <tr>
             <th
@@ -185,7 +185,7 @@ function paginate (pageNumber: number): void {
               <div class="flex justify-center items-center gap-1">
                 <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
                 <button
-                  v-tippy="{ content: $t('actions.delete'), animation: 'shift-away' }"
+                  v-tippy="{ content: $t('actions.delete') }"
                   @click="store.removeHomebrew(item.id)"
                 >
                   <Icon

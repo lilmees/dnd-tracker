@@ -1,11 +1,20 @@
+<script setup lang="ts">
+withDefaults(
+  defineProps<{ padding?: boolean }>(), {
+    padding: false
+  }
+)
+
+const showNav = useState<boolean>('showNavigation', () => true)
+
+onBeforeMount(() => { showNav.value = true })
+</script>
+
 <template>
-  <div class="flex flex-col min-h-screen">
-    <Navbar />
-    <main
-      class="max-w-[3000px] mx-auto w-full px-4 no-scrollbar overflow-y-auto grow flex flex-col"
-    >
-      <slot />
-    </main>
-    <Footer />
-  </div>
+  <main
+    class="max-w-[3000px] pb-20 mx-auto w-full px-4 no-scrollbar overflow-y-auto grow flex flex-col"
+    :class="{ 'pt-[170px]': padding }"
+  >
+    <slot />
+  </main>
 </template>

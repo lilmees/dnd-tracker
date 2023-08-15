@@ -5,14 +5,14 @@ const store = useTableStore()
 <template>
   <div
     v-if="store.encounter"
-    class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
+    class="flex flex-col md:flex-row gap-4 items-center justify-between container-max w-full p-4"
   >
     <div class="flex gap-2 items-center">
       <p>
         {{ $t('general.round') }}: {{ store.encounter.round }}
       </p>
       <button
-        v-tippy="{ content: $t('actions.reset'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.reset') }"
         :disabled="!store.encounter.rows.length"
         aria-label="Reset rounds"
         class="disabled:opacity-40 disabled:cursor-not-allowed"
@@ -22,9 +22,9 @@ const store = useTableStore()
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
-    <div class="flex gap-2 items-center bg-black rounded-lg border-2 border-secondary">
+    <div class="flex gap-2 items-center bg-black rounded-lg border-4 border-secondary">
       <button
-        v-tippy="{ content: $t('actions.prev'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.prev') }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
         :aria-label="$t('actions.prev')"
         class="group disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-tracker"
@@ -36,7 +36,7 @@ const store = useTableStore()
         {{ $t('components.inputs.initiativeLabel') }}
       </p>
       <button
-        v-tippy="{ content: $t('actions.next'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.next') }"
         :disabled="!store.encounter.rows.length"
         :aria-label="$t('actions.next')"
         class="p-2 border-l-2 border-tracker"

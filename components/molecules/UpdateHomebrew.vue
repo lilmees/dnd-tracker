@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { FormKitSchema } from '@formkit/vue'
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'
 
 const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
-const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
-const form: Ref<UpdateHomebrewForm> = ref({
+const form = ref<UpdateHomebrewForm>({
   name: '',
   link: null,
-  type: 'player' as HomebrewType,
+  type: 'player' as RowType,
   data: {
     isLoading: false,
     encounter: false,
@@ -31,7 +30,7 @@ const form: Ref<UpdateHomebrewForm> = ref({
 
 watch(() => isOpen.value, (v) => {
   if (v) {
-    form.value.type = props.item.type as HomebrewType
+    form.value.type = props.item.type as RowType
     form.value.name = props.item.name
     form.value.link = props.item.link as string
   }
@@ -50,7 +49,7 @@ function updateHomebrew ({ __init, data, slots, ...formData }: Obj): void {
     reset('form')
     closeModal()
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false
@@ -66,7 +65,7 @@ function closeModal () {
 <template>
   <section>
     <button
-      v-tippy="{ content: $t('actions.update'), animation: 'shift-away' }"
+      v-tippy="{ content: $t('actions.update') }"
       @click="isOpen = true"
     >
       <Icon

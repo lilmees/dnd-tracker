@@ -1,3 +1,5 @@
+type ToastType = 'error'|'warn'|'info'|'success'
+
 interface Toast {
   key: number
   timeout: number
@@ -5,5 +7,5 @@ interface Toast {
   text: string
   actions: any[]
   timed: boolean
-  type: 'error'|'warn'|'info'|'success'
+  type: ToastType
 }

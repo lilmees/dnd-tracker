@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { campaignUrl } from '@/utils/url-genarators'
+
 const props = defineProps<{ campaign: Campaign | number }>()
 
 const store = useCampaignsStore()
 const route = useRoute()
 const localePath = useLocalePath()
 
-const cam: Ref<Campaign | null> = ref(null)
+const cam = ref<Campaign | null>(null)
 
 // if there is only the id of the campaign then fetch the information
 if (props.campaign) {
@@ -19,13 +21,14 @@ if (props.campaign) {
 </script>
 
 <template>
-  <div class="flex justify-between w-full gap-2 border-b border-primary">
+  <div class="flex justify-between w-full gap-2 border-b-2 border-slate-700">
     <div v-if="cam && cam.title" class="flex items-end gap-2 mb-1">
       <div
-        class="rounded-lg w-10 h-10 tracker-shadow relative"
+        class="rounded-lg w-10 h-10 border-4 relative"
         :style="{
           'background-color': cam?.background || '#000',
-          color: cam?.color || '#fff'
+          color: cam?.color || '#fff',
+          'border-color': cam?.color || '#000'
         }"
       >
         <h3 class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 uppercase">
@@ -39,15 +42,7 @@ if (props.campaign) {
     <div class="mb-1">
       <NuxtLink
         v-if="!route.path.includes('/campaigns/') && cam?.title"
-        :to="
-          localePath(
-            `/campaigns/${cam.id}-${
-              cam.title.replace(/[\W]/g, '') === ''
-                ? 'encounter'
-                : cam.title.replace(/[\W]/g, '')
-            }`
-          )
-        "
+        :to="localePath(campaignUrl(cam))"
       >
         <button
           class="btn-primary"

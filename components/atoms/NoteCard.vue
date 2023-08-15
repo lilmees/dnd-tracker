@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const emit = defineEmits(['deleted', 'updated'])
 const props = defineProps<{ note: Note }>()
 
 const toast = useToastStore()
 const store = useNotesStore()
-const { $logRocket } = useNuxtApp()
 
-const isSettings: Ref<boolean> = ref(false)
-const isUpdating: Ref<boolean> = ref(false)
-const needConfirmation: Ref<boolean> = ref(false)
+const isSettings = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
 
 async function deleteNote (): Promise<void> {
   try {
@@ -16,7 +17,7 @@ async function deleteNote (): Promise<void> {
 
     emit('deleted', props.note.id)
   } catch (err: unknown) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }
@@ -29,21 +30,23 @@ function updateNote (note: Note): void {
 </script>
 
 <template>
-  <section class="rounded-lg w-fit bg-tracker p-3 relative space-y-1 tracker-shadow group min-w-[250px]">
+  <section
+    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker p-3 relative space-y-1 group min-w-[250px] max-w-prose"
+  >
     <div class="flex gap-2 items-center justify-between">
       <h3 v-if="note.title">
         {{ note.title }}
       </h3>
       <Icon
         v-if="!isSettings"
-        v-tippy="{ content: $t('actions.openSettings'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.openSettings') }"
         name="material-symbols:settings-outline-rounded"
         class="w-6 h-6 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
         @click="isSettings = !isSettings"
       />
       <Icon
         v-else
-        v-tippy="{ content: $t('actions.closeSettings'), animation: 'shift-away' }"
+        v-tippy="{ content: $t('actions.closeSettings') }"
         name="ic:round-clear"
         class="w-6 h-6 cursor-pointer text-primary"
         @click="isSettings = false"

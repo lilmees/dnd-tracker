@@ -4,7 +4,7 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const store = useCurrentCampaignStore()
 
-const isCreatingEncounter: Ref<boolean> = ref(false)
+const isCreatingEncounter = ref<boolean>(false)
 
 onMounted(() => {
   if (route?.params?.id) {
@@ -30,42 +30,55 @@ function updatedEncounter (encounter: Encounter): void {
 
 <template>
   <NuxtLayout>
-    <div v-if="store.loading" class="loader" />
-    <div v-else-if="store.campaign" class="py-4 space-y-4 mb-20">
+    <div class="py-4 space-y-4">
       <div class="flex justify-end">
-        <Back url="campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
+        <Back url="/campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
       </div>
       <div
-        class="rounded-lg w-full tracker-shadow p-6 flex flex-wrap justify-between items-center gap-4"
+        class="rounded-lg w-full shadow p-6 flex flex-wrap justify-between items-center gap-4 border-4 bg-slate-700"
         :style="{
-          'background-color': store.campaign.background || '#000',
-          color: store.campaign.color || '#fff'
+          'background-color': `${store.campaign?.background || '#21252E' }80`,
+          color: store.campaign?.color || '#fff',
+          'border-color': store.campaign?.background || '#21252E',
         }"
       >
-        <h1 class="capitalize">
+        <h1 v-if="store.campaign" class="capitalize">
           {{ store.campaign.title }}
         </h1>
+        <div
+          v-else
+          class="bg-background rounded-full w-[250px] h-9"
+        />
         <div class="flex justify-end">
           <Back
-            url="campaigns"
+            url="/campaigns"
             :label="$t('pages.campaign.back')"
             class="hidden sm:block"
-            :color="store.campaign.color || '#fff'"
+            :color="store.campaign?.color || '#fff'"
           />
         </div>
       </div>
       <div class="space-y-8 pt-10">
         <div class="space-y-4">
-          <div class="flex justify-between border-b border-slate-700 pb-1">
+          <div class="flex justify-between border-b-2 border-slate-700 pb-1">
             <h2>{{ $t('general.encounters') }}</h2>
             <Icon
-              v-tippy="{ content: $t('actions.add'), animation: 'shift-away' }"
+              v-tippy="{ content: $t('actions.add') }"
               name="material-symbols:add"
               class="w-6 h-6 cursor-pointer text-success"
               @click="isCreatingEncounter = true"
             />
           </div>
-          <div v-if="store.encounters.length" class="flex flex-wrap gap-4 items-start">
+          <div
+            v-if="store.loading"
+            class="flex flex-wrap gap-4 items-start"
+          >
+            <SkeletonEncounterCard v-for="i in 4" :key="i" />
+          </div>
+          <div
+            v-else-if="store.encounters.length"
+            class="flex flex-wrap gap-4 items-start"
+          >
             <EncounterCard
               v-for="encounter in store.encounters"
               :key="encounter.id"
@@ -92,12 +105,9 @@ function updatedEncounter (encounter: Encounter): void {
         </div>
       </div>
       <HomebrewTable class="py-10" />
-      <CampaignNotes
-        v-if="store.campaign?.notes"
-        :id="store.campaign.id"
-        v-model="store.campaign.notes"
-      />
+      <CampaignNotes />
       <AddEncounterModal
+        v-if="store.campaign"
         :open="isCreatingEncounter"
         :campaign-id="store.campaign.id"
         @close="isCreatingEncounter = false"

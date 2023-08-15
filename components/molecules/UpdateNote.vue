@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 
 const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ note: Note, open: boolean }>()
 
 const store = useNotesStore()
-const { $logRocket } = useNuxtApp()
 
-const error: Ref<string | null> = ref(null)
-const isLoading: Ref<boolean> = ref(false)
-const form: Ref<{ title: string, text: string}> = ref({
+const error = ref<string | null>(null)
+const isLoading = ref<boolean>(false)
+const form = ref<{ title: string, text: string}>({
   title: props.note.title,
   text: props.note.text
 })
@@ -34,7 +34,7 @@ async function updateNote ({ __init, ...formData }: Obj): Promise<void> {
     emit('updated', note)
     reset('form')
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     isLoading.value = false

@@ -1,10 +1,11 @@
+import logRocket from 'logrocket'
+
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
-  const { $logRocket } = useNuxtApp()
 
-  const loading: Ref<boolean> = ref(false)
-  const error: Ref<string | null> = ref(null)
-  const data: Ref<Condition[]> = ref([])
+  const loading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const data = ref<Condition[]>([])
 
   async function fetch (): Promise<void> {
     if (data.value?.length || loading.value) {
@@ -22,7 +23,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
 
       data.value = results
     } catch (err) {
-      $logRocket.captureException(err as Error)
+      logRocket.captureException(err as Error)
       error.value = err as string
     } finally {
       loading.value = false

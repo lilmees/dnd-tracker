@@ -1,8 +1,9 @@
 <script setup>
+import logRocket from 'logrocket'
+
 const store = useTableStore()
 const toast = useToastStore()
 const open5e = useOpen5eStore()
-const { $logRocket } = useNuxtApp()
 
 const isOpen = ref(false)
 const isLoading = ref(false)
@@ -34,7 +35,7 @@ async function fetchMonsters (query, page) {
     pages.value = Math.ceil(count / 20)
     hits.value = results
   } catch (err) {
-    $logRocket.captureException(err)
+    logRocket.captureException(err)
     toast.error()
   } finally {
     isLoading.value = false
@@ -59,7 +60,7 @@ async function addMonster (monster) {
     })
     reset()
   } catch (err) {
-    $logRocket.captureException(err)
+    logRocket.captureException(err)
     toast.error(err)
   } finally {
     isLoading.value = false
@@ -78,7 +79,6 @@ function reset () {
     <button
       v-tippy="{
         content: $t('components.addInitiativeMonster.manual'),
-        animation: 'shift-away',
         touch: false
       }"
       :aria-label="$t('components.addInitiativeMonster.manual')"

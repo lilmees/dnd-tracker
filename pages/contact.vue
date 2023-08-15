@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()
 const mail = useMail()
 
-const form: Ref<ContactForm> = ref({ name: '', email: '', question: '' })
+const form = ref<ContactForm>({ name: '', email: '', question: '' })
 
 function sendContactMail (form: Obj): void {
   mail.send({
@@ -21,7 +21,7 @@ function sendContactMail (form: Obj): void {
     <p>${form.question} </p>
     `
   })
-  toast.success({ title: $i18n.t('pages.contact.success') })
+  toast.success({ title: t('pages.contact.success') })
   navigateTo(localePath('/'))
 }
 </script>

@@ -1,4 +1,4 @@
-export const useCreateRow = (formData: Row, type: string, encounterRows: Row[]): Row => {
+export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[]): Row => {
   const initiative = Number(formData.initiative) || null
   const health = Number(formData.health || formData.hit_points) || null
   const ac = Number(formData.ac || formData.armor_class) || null
@@ -26,7 +26,8 @@ export const useCreateRow = (formData: Row, type: string, encounterRows: Row[]):
       ...row,
       deathSaves: {
         save: [false, false, false],
-        fail: [false, false, false]
+        fail: [false, false, false],
+        stable: false
       }
     }
   }

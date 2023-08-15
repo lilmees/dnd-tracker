@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const { ready, start } = useTimeout(5000, { controls: true })
 
-const amount: Ref<number> = ref(1)
-const rolled: Ref<{
+const amount = ref<number>(1)
+const rolled = ref<{
     dice: string
     result: number | number[],
     max: number,
     amount: number
-  } | null> = ref(null)
+  } | null>(null)
 
 function rollDice (dice: string): void {
   if (amount.value < 1 || amount.value > 50) {
@@ -47,8 +47,8 @@ function rollDice (dice: string): void {
     <div class="flex gap-2 flex-wrap">
       <template v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']" :key="dice">
         <button
-          v-tippy="{content: dice.toUpperCase(), placement: 'bottom', animation: 'shift-away'}"
-          class="bg-black tracker-shadow rounded-lg p-2 border-4 w-14 h-14"
+          v-tippy="{content: dice.toUpperCase(), placement: 'bottom'}"
+          class="bg-black rounded-lg p-2 border-4 w-14 h-14"
           :class="{
             'border-secondary': dice === 'd100',
             'border-primary': dice === 'd20',

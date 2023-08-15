@@ -6,10 +6,10 @@ defineProps<{
   tempAc: number | null
 }>()
 
-const isOpen: Ref<boolean> = ref(false)
-const isRollingDice: Ref<boolean> = ref(false)
-const type: Ref<string | null> = ref(null)
-const form: Ref<{ ac: number | null }> = ref({ ac: null })
+const isOpen = ref<boolean>(false)
+const isRollingDice = ref<boolean>(false)
+const type = ref<string | null>(null)
+const form = ref<{ ac: number | null }>({ ac: null })
 
 function diceResult (amount: number): void {
   form.value.ac = amount

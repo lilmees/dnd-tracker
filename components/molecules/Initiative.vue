@@ -1,21 +1,29 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps<{
-  initiative: number | null,
+  initiative: number|null,
   index: number
 }>()
 
 const store = useTableStore()
 
-const isOpen: Ref<boolean> = ref(false)
-const form: Ref<{ initiative: number | null }> = ref({ initiative: null })
+const isOpen = ref<boolean>(false)
+const form = ref<{
+  initiative: number|null,
+  amount: number|null
+}>({
+  initiative: null,
+  amount: null
+})
 
 function diceRoll () {
-  form.value.initiative = useDiceRoll(20) as number
+  form.value.amount = useDiceRoll(20) as number
 }
 
-function updateInitiative ({ __init, initiative }: Obj): void {
-  emit('update', Number(initiative) || -1)
+function updateInitiative ({ __init, initiative, amount }: Obj): void {
+  if (!amount) { emit('update', -1) }
+  const init: number = +amount + +initiative
+  emit('update', init < 0 ? 0 : init)
   isOpen.value = false
 }
 
@@ -94,19 +102,27 @@ async function moveRow (up: boolean): Promise<void> {
 
         @submit="updateInitiative"
       >
-        <div class="flex gap-2 items-end">
+        <div class="flex gap-x-3 flex-wrap items-start">
           <div class="grow">
             <Input
               focus
-              name="initiative"
-              :label="$t('components.inputs.initiativeLabel')"
-              validation="required|between:1,50|number"
+              name="amount"
+              :label="$t('components.inputs.amountLabel')"
+              validation="required|between:0,50|number"
               type="number"
               required
             />
           </div>
+          <div class="w-20">
+            <Input
+              name="initiative"
+              :label="$t('components.inputs.initiativeLabel')"
+              validation="between:-10,10|number"
+              type="number"
+            />
+          </div>
           <button
-            class="btn-black mb-3"
+            class="btn-black mt-8"
             type="button"
             :aria-label="$t('actions.roll')"
             @click="diceRoll"

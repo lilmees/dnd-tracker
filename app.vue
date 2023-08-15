@@ -5,12 +5,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const localePath = useLocalePath()
 const profile = useProfileStore()
 const { auth } = useSupabaseAuthClient()
+const route = useRoute()
 
 useSeo()
 
 if (process.client) {
   gsap.registerPlugin(ScrollTrigger)
-  ScrollTrigger.getAll().forEach(t => t.kill())
+
+  // kill scrolltriggers on route change
+  watch(route, () => {
+    ScrollTrigger.getAll().forEach(t => t.kill())
+  }, { deep: true })
 }
 
 auth.onAuthStateChange((event, session) => {
@@ -28,7 +33,16 @@ onBeforeMount(() => profile.fetch())
     <VitePwaManifest />
     <Toasts />
     <DiceNotification />
-    <NuxtPage />
+
+    <div class="flex flex-col min-h-screen">
+      <Navbar class="fixed z-10 left-0 right-0 backdrop-blur" />
+      <NuxtPage />
+      <Footer />
+      <ClientOnly>
+        <YbugButton />
+      </ClientOnly>
+    </div>
+
     <ClientOnly>
       <CookieBanner />
     </ClientOnly>

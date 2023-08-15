@@ -1,23 +1,24 @@
 <script setup lang="ts">
-const { $i18n } = useNuxtApp()
+import logRocket from 'logrocket'
+
+const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
-const form: Ref<{ password: string }> = ref({ password: '' })
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
+const form = ref<{ password: string }>({ password: '' })
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
 
 async function resetPassword ({ __init, password }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
     await store.updateUser({ password })
-    toast.success({ title: $i18n.t('pages.resetPassword.toast.success.title') })
+    toast.success({ title: t('pages.resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {
@@ -55,7 +56,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
           name="password"
           type="password"
           :label="$t('components.inputs.passwordLabel')"
-          validation="required|length:6,50"
+          validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
           required
         />
         <button

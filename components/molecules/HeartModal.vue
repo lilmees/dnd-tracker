@@ -5,10 +5,10 @@ defineProps<{
   tempHealth: number | undefined
 }>()
 
-const isOpen: Ref<boolean> = ref(false)
-const isRollingDice : Ref<boolean> = ref(false)
-const type: Ref<string | null> = ref(null)
-const form: Ref<{ health: number | null }> = ref({ health: null })
+const isOpen = ref<boolean>(false)
+const isRollingDice = ref<boolean>(false)
+const type = ref<string | null>(null)
+const form = ref<{ health: number | null }>({ health: null })
 
 function diceResult (amount: number): void {
   form.value.health = amount

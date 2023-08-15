@@ -1,16 +1,17 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['loggedin'] })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
-const form: Ref<Register> = ref({ email: '', password: '', name: '', username: '' })
-const isLoading: Ref<boolean> = ref(false)
-const error: Ref<string | null> = ref(null)
-const image: Ref<string> = ref(
+const form = ref<Register>({ email: '', password: '', name: '', username: '' })
+const isLoading = ref<boolean>(false)
+const error = ref<string | null>(null)
+const image = ref<string>(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 
@@ -23,12 +24,12 @@ async function register ({ __init, username, name, ...credentials }: Obj): Promi
       { username, name, avatar: image.value, role: 'User' }
     )
     toast.success({
-      title: $i18n.t('pages.register.toast.success.title'),
-      text: $i18n.t('pages.register.toast.success.text')
+      title: t('pages.register.toast.success.title'),
+      text: t('pages.register.toast.success.text')
     })
     navigateTo(localePath('/login'))
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
   } finally {
@@ -79,7 +80,7 @@ function randomAvatar (): void {
           name="password"
           type="password"
           :label="$t('components.inputs.passwordLabel')"
-          validation="required|length:6,50"
+          validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
           required
         />
         <button

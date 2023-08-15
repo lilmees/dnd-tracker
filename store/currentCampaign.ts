@@ -1,3 +1,5 @@
+import logRocket from 'logrocket'
+
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const user = useSupabaseUser()
   const store = useCampaignsStore()
@@ -5,11 +7,8 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const encounterStore = useEncountersStore()
   const toast = useToastStore()
   const localePath = useLocalePath()
-  const { $logRocket } = useNuxtApp()
 
-  const logRocket: any = $logRocket
-
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const campaign = ref<Campaign | null>(null)
   const encounters = ref<Encounter[]>([])

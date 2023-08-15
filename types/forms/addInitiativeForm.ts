@@ -1,6 +1,6 @@
 interface AddInitiativeForm {
   name: string,
-  type: HomebrewType | null
+  type: RowType | null
   initiative: number | null
   ac: number | null
   health: number | null

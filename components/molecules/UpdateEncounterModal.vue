@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
-const emit = defineEmits(['close', 'updated'])
+const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
-const { $logRocket } = useNuxtApp()
 
-const form: Ref<UpdateEncounterForm> = ref({
+const form = ref<UpdateEncounterForm>({
   title: props.encounter.title,
   background: props.encounter.background,
   data: {
@@ -15,10 +15,7 @@ const form: Ref<UpdateEncounterForm> = ref({
     campaign: false,
     update: true,
     error: null,
-    options: [],
-    changeColor: () => {
-      form.value.background = useRandomColor()
-    }
+    options: []
   }
 })
 
@@ -31,9 +28,10 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
       { ...formData, color: useContrastColor(formData.background) },
       props.encounter.id
     )
-    emit('updated', enc)
+
+    emit('close')
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false

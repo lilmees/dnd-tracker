@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { Power3, gsap } from 'gsap'
+import logRocket from 'logrocket'
 
 const store = useTableStore()
 const toast = useToastStore()
-const { $logRocket } = useNuxtApp()
 
-const hoard: Ref = ref()
-const table : Ref = ref()
+const hoard = ref<HTMLElement>()
+const table = ref<HTMLElement>()
 const hoardVisible: Ref<boolean> = useElementVisibility(hoard)
 const tableVisible: Ref<boolean> = useElementVisibility(table)
 
 try {
   await store.getSandboxEncounter()
 } catch (err) {
-  $logRocket.captureException(err as Error)
+  logRocket.captureException(err as Error)
   toast.error()
 }
 
 watch(hoardVisible, (v: boolean) => {
-  if (v) {
+  if (v && hoard.value) {
     gsap.fromTo(
       hoard.value,
       { scale: 0.85 },
@@ -28,7 +28,7 @@ watch(hoardVisible, (v: boolean) => {
 })
 
 watch(tableVisible, (v: boolean) => {
-  if (v) {
+  if (v && table.value) {
     gsap.fromTo(
       table.value,
       { scale: 0.85 },
@@ -67,11 +67,11 @@ watch(tableVisible, (v: boolean) => {
         <div
           v-if="store.encounter"
           ref="table"
-          class="rounded-lg p-4 bg-tracker tracker-shadow"
+          class="rounded-lg bg-tracker/50 border-4 border-tracker"
         >
-          <EncounterHeader class="w-full pb-4" />
+          <EncounterHeader />
           <EncounterTable />
-          <EncounterOptions class="pt-4" />
+          <EncounterOptions />
         </div>
         <div ref="hoard" class="container grid md:grid-cols-2 gap-10">
           <HomeDiceRolling />

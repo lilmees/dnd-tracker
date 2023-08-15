@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 
@@ -6,9 +8,8 @@ const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const user = useSupabaseUser()
-const { $logRocket } = useNuxtApp()
 
-const isOpen: Ref<boolean> = ref(false)
+const isOpen = ref<boolean>(false)
 
 onBeforeMount(() => profile.fetch())
 
@@ -19,7 +20,7 @@ async function manageSubscription () {
       await stripe.createPortalSession(profile.data.stripe_session_id)
     }
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }
@@ -28,7 +29,7 @@ async function manageSubscription () {
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-2 border-secondary bg-black p-2 rounded-full tracker-shadow hover:tracker-shadow-pulse cursor-pointer w-14 h-14"
+      class="border-4 border-secondary bg-black p-2 rounded-full shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -38,7 +39,7 @@ async function manageSubscription () {
           :src="profile.data.avatar"
           alt="Avatar image"
           sizes="sm:40px md:40px lg:40px"
-          class="w-10 -scale-x-100 relative bottom-1"
+          class="w-8 -scale-x-100 relative bottom-1"
           format="webp"
         />
         <NuxtImg
@@ -46,7 +47,7 @@ async function manageSubscription () {
           src="/dice.webp"
           alt="D20 dice"
           sizes="sm:40px md:40px lg:40px"
-          class="w-10"
+          class="w-8"
           format="webp"
           provider="imagekit"
         />
@@ -54,7 +55,7 @@ async function manageSubscription () {
     </button>
     <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
       <div
-        class="border-2 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        class="border-4 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
       >
         <RouteLink
           v-for="route in routes"

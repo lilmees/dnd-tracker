@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 defineEmits(['logout', 'close'])
 defineProps<{
   routes: Route[],
@@ -10,7 +12,6 @@ const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const { $logRocket } = useNuxtApp()
 
 async function manageSubscription (): Promise<void> {
   try {
@@ -18,7 +19,7 @@ async function manageSubscription (): Promise<void> {
       await stripe.createPortalSession(profile.data.stripe_session_id)
     }
   } catch (err) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     toast.error()
   }
 }

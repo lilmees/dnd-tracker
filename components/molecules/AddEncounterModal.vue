@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { reset } from '@formkit/core'
+import logRocket from 'logrocket'
 import schema from '@/formkit/encounter.json'
 
 const emit = defineEmits(['close', 'added'])
@@ -11,21 +13,17 @@ const props = withDefaults(
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
-const { $logRocket } = useNuxtApp()
 
-const form: Ref<AddEncounterForm> = ref({
+const form = ref<AddEncounterForm>({
   title: '',
-  campaign: undefined,
-  background: '#0073A1',
+  campaign: props.campaignId || undefined,
+  background: '#7333E0',
   data: {
     isLoading: false,
     campaign: false,
     update: false,
     error: null,
-    options: [],
-    changeColor: () => {
-      form.value.background = useRandomColor()
-    }
+    options: []
   }
 })
 
@@ -59,10 +57,14 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
         color: useContrastColor(formData.background),
         activeIndex: 0
       })
+
+      reset('form')
+      form.value.background = '#7333E0'
+
       emit('added', encounter)
     }
   } catch (err: any) {
-    $logRocket.captureException(err as Error)
+    logRocket.captureException(err as Error)
     form.value.data.error = err.message
   } finally {
     form.value.data.isLoading = false
@@ -78,6 +80,7 @@ async function addEncounter ({ __init, data, slots, ...formData }: Obj): Promise
     </p>
     <FormKit
       v-if="campaignId || campaigns.campaigns"
+      id="form"
       v-model="form"
       type="form"
       :actions="false"
