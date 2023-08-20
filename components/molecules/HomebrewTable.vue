@@ -33,7 +33,7 @@ function sortItems (key: string): void {
 
   if (key === 'health' || key === 'ac') {
     sorted = sortByNumber(store.campaign.homebrew_items, key)
-  } else if (key === 'name' || key === 'type') {
+  } else if (key === 'name' || key === 'type' || key === 'player') {
     sorted = sortByString(store.campaign.homebrew_items, key)
   }
 
@@ -107,11 +107,11 @@ function paginate (pageNumber: number): void {
         <thead>
           <tr>
             <th
-              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']"
+              v-for="header in ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']"
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
               :class="{
-                'cursor-pointer': ['name', 'type', 'health', 'ac'].includes(header)
+                'cursor-pointer': ['name', 'type', 'player', 'health', 'ac'].includes(header)
               }"
               @click="sortItems(header)"
             >
@@ -153,6 +153,9 @@ function paginate (pageNumber: number): void {
                   {{ item.type || '' }}
                 </p>
               </div>
+            </td>
+            <td class="px-2 py-1 border-r border-slate-700 relative">
+              {{ item.player || '' }}
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.health || '' }}

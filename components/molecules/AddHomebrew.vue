@@ -9,6 +9,7 @@ const isOpen = ref<boolean>(false)
 
 const form = ref<AddHomebrewForm>({
   name: '',
+  player: '',
   link: null,
   type: 'player' as RowType,
   data: {

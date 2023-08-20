@@ -11,6 +11,7 @@ const isOpen = ref<boolean>(false)
 
 const form = ref<UpdateHomebrewForm>({
   name: '',
+  player: '',
   link: null,
   type: 'player' as RowType,
   data: {
@@ -31,6 +32,7 @@ const form = ref<UpdateHomebrewForm>({
 watch(() => isOpen.value, (v) => {
   if (v) {
     form.value.type = props.item.type as RowType
+    form.value.player = props.item.player || ''
     form.value.name = props.item.name
     form.value.link = props.item.link as string
   }
