@@ -360,7 +360,7 @@
     "visualOptions": {
       "tooltip": "Instellingen",
       "spacing": "Tabel stijl",
-      "rows": "Zichtbare lijnen"
+      "rows": "Zichtbare rijen"
     },
     "infoSearch": {
       "show": "Toon gepinde items",

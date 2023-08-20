@@ -31,6 +31,16 @@ const headers = computed<string[]>(() => {
 
   return headers
 })
+
+const tableSpacing = computed<string>(() => {
+  const style: Obj = {
+    compact: 'px-1 py-0',
+    normal: 'px-2 py-1',
+    cozy: 'px-3 py-2'
+  }
+
+  return style[store.encounter?.settings.spacing || 'normal']
+})
 </script>
 
 <template>
@@ -59,6 +69,7 @@ const headers = computed<string[]>(() => {
             :key="row!.id"
             :row="row"
             :index="index"
+            :table-spacing="tableSpacing"
           />
         </tbody>
       </table>
