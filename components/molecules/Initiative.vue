@@ -113,10 +113,10 @@ async function moveRow (up: boolean): Promise<void> {
               required
             />
           </div>
-          <div class="w-20">
+          <div class="w-[120px]">
             <Input
               name="initiative"
-              :label="$t('components.inputs.initiativeLabel')"
+              :label="`${$t('components.inputs.initiativeLabel')} (DEX)`"
               validation="between:-10,10|number"
               type="number"
             />
