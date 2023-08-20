@@ -78,21 +78,21 @@ function reset () {
   <section>
     <button
       v-tippy="{
-        content: $t('components.addInitiativeMonster.manual'),
+        content: $t('components.addInitiativeMonster.bestiary'),
         touch: false
       }"
-      :aria-label="$t('components.addInitiativeMonster.manual')"
+      :aria-label="$t('components.addInitiativeMonster.bestiary')"
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >
       <span class="md:hidden">
-        {{ $t('components.addInitiativeMonster.manual') }}
+        {{ $t('components.addInitiativeMonster.bestiary') }}
       </span>
-      <Icon name="solar:book-bookmark-linear" class="text-info w-10 h-10" />
+      <Icon name="la:dragon" class="text-info w-10 h-10" />
     </button>
     <Modal v-if="isOpen" big @close="reset">
       <h1 class="pb-4 text-center">
-        {{ $t('components.addInitiativeMonster.manual') }}
+        {{ $t('components.addInitiativeMonster.bestiary') }}
       </h1>
       <div id="el" class="flex gap-6 items-end max-w-xl mx-auto">
         <div class="grow">

@@ -275,7 +275,7 @@
       "updateHomebrew": "Update homebrew"
     },
     "addInitiativeMonster": {
-      "manual": "Monster manual",
+      "bestiary": "Bestiary",
       "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!"
     },
     "addInitiativeCampaignHomebrew": {
