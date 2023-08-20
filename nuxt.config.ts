@@ -136,5 +136,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true
+  },
+  devtools: {
+    enabled: true
   }
 })

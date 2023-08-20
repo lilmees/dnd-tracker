@@ -10,6 +10,10 @@ export const useSeo = (): void => {
     addSeoAttributes: true
   })
 
+  useSeoMeta({
+    ogUrl: 'https://dnd-tracker.com'
+  })
+
   useHead({
     titleTemplate: title => (title ? `${title} | ${appName}` : appName),
     htmlAttrs: {
@@ -28,6 +32,13 @@ export const useSeo = (): void => {
       { hid: 'og:image', property: 'og:image', content: meta.og_image },
       { hid: 'og:title', property: 'og:title', content: meta.og_title },
       { hid: 'og:description', property: 'og:description', content: meta.og_description }
+    ],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/pwa-192.png'
+      }
     ]
   })
 
