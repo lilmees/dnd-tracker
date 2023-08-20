@@ -3,6 +3,7 @@ interface Homebrew {
   created_at: string
   campaign: number
   name: string
+  player?: string
   ac?: number
   health?: number
   link?: string
@@ -25,6 +26,7 @@ interface HomebrewSchemaOptions {
 
 interface AddHomebrewForm {
   name: string
+  player?: string
   link: string | null
   type: RowType
   data: HomebrewSchemaOptions
@@ -32,6 +34,7 @@ interface AddHomebrewForm {
 
 interface UpdateHomebrewForm {
   name: string
+  player?: string
   link: string | null
   type: RowType
   data: HomebrewSchemaOptions

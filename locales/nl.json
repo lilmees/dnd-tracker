@@ -250,6 +250,7 @@
       "textLabel": "Tekst",
       "questionLabel": "Je vraag?",
       "challengeLabel": "Challenge rating",
+      "playerLabel": "Speler",
       "nothing": "Nog niets geselecteerd"
     },
     "addCammpaignModal": {

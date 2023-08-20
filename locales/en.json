@@ -250,6 +250,7 @@
       "textLabel": "Text",
       "questionLabel": "Your question?",
       "challengeLabel": "Challenge rating",
+      "playerLabel": "Player",
       "nothing": "Nothing selected"
     },
     "addCammpaignModal": {

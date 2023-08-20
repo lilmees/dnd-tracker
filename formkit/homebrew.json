@@ -37,6 +37,14 @@
   },
   {
     "$cmp": "FormKit",
+    "props": {
+      "name": "player",
+      "label": "components.inputs.playerLabel",
+      "validation": "length:3,30"
+    }
+  },
+  {
+    "$cmp": "FormKit",
     "if": "($type === 'monster' || $type === 'summon') && $data.encounter",
     "props": {
       "name": "amount",
