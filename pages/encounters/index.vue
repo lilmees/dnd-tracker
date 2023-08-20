@@ -4,36 +4,31 @@ import logRocket from 'logrocket'
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Encounters' })
 
-const user = useSupabaseUser()
-const toast = useToastStore()
 const store = useEncountersStore()
+const toast = useToastStore()
 const { error } = storeToRefs(store)
 
+const {
+  isBulk,
+  isUpdating,
+  needConfirmation,
+  selected,
+  toggleSelection,
+  reset
+} = useBulkEditing()
+
 const isOpen = ref<boolean>(false)
-const isBulk = ref<boolean>(false)
-const isUpdating = ref<boolean>(false)
-const needConfirmation = ref<boolean>(false)
-const selectedEncounters = ref<Encounter[]>([])
 
 onMounted(() => store.fetch())
 
 whenever(error, () => { toast.error() })
 
-function toggleSelection (enc: Encounter): void {
-  const index: number = selectedEncounters.value.findIndex(e => e.id === enc.id)
-  if (index === -1) {
-    selectedEncounters.value.push(enc)
-  } else {
-    selectedEncounters.value.splice(index, 1)
-  }
-}
-
 async function deleteEncounter (): Promise<void> {
   try {
-    if (selectedEncounters.value.length === 1) {
-      await store.deleteEncounter(selectedEncounters.value[0].id)
-    } else if (selectedEncounters.value.length > 1) {
-      await store.bulkDeleteEncounters(selectedEncounters.value.map(v => v.id))
+    if (selected.value.length === 1) {
+      await store.deleteEncounter(selected.value[0].id)
+    } else if (selected.value.length > 1) {
+      await store.bulkDeleteEncounters(selected.value.map(v => v.id))
     }
   } catch (err) {
     logRocket.captureException(err as Error)
@@ -43,40 +38,15 @@ async function deleteEncounter (): Promise<void> {
   }
 }
 
-async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<void> {
-  if (!user.value) {
-    return
-  }
-
-  let encounter: UpdateEncounter = {
-    ...enc,
-    title: `copy ${enc.title}`.slice(0, 30),
-    created_by: user.value.id,
-    campaign: undefined
-  }
-
-  if (enc.campaign) {
-    encounter = {
-      ...encounter,
-      campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign as number
-    }
-  }
-
+async function copyEncounter (enc : Encounter): Promise<void> {
   try {
-    await store.addEncounter(encounter as AddEncounter)
+    await store.copyEncounter(enc)
   } catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
     reset()
   }
-}
-
-function reset (): void {
-  needConfirmation.value = false
-  isBulk.value = false
-  isUpdating.value = false
-  selectedEncounters.value = []
 }
 </script>
 
@@ -135,16 +105,16 @@ function reset (): void {
           <div class="flex gap-2 mb-12">
             <button
               class="btn-danger"
-              :disabled="!selectedEncounters.length"
-              :aria-label="$t('pages.encounters.remove.amount', {number: selectedEncounters.length})"
+              :disabled="!selected.length"
+              :aria-label="$t('pages.encounters.remove.amount', {number: selected.length})"
               @click="needConfirmation = true"
             >
-              {{ $t('pages.encounters.remove.amount', {number: selectedEncounters.length}) }}
+              {{ $t('pages.encounters.remove.amount', {number: selected.length}) }}
             </button>
             <button
               class="btn-success"
               :aria-label="$t('actions.cancel')"
-              @click="isBulk = false, selectedEncounters = []"
+              @click="isBulk = false, selected = []"
             >
               {{ $t('actions.cancel') }}
             </button>
@@ -173,7 +143,7 @@ function reset (): void {
                 v-if="isBulk"
                 class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer"
                 :class="{
-                  '!border-danger bg-danger/50': selectedEncounters.find(e => e.id === encounter.id)
+                  '!border-danger bg-danger/50': selected.find(e => e.id === encounter.id)
                 }"
                 :style="{ 'border-color': encounter.background }"
                 @click="toggleSelection(encounter)"
@@ -181,11 +151,11 @@ function reset (): void {
               <EncounterCard
                 :encounter="encounter"
                 @update="(v: Encounter) => {
-                  selectedEncounters = [v];
+                  selected = [v];
                   isUpdating = true
                 }"
                 @remove="(v: Encounter) => {
-                  selectedEncounters = [v];
+                  selected = [v];
                   needConfirmation = true
                 }"
                 @copy="copyEncounter"
@@ -229,17 +199,18 @@ function reset (): void {
     <div class="absolute z-[1]">
       <ConfirmationModal
         :open="needConfirmation"
-        :title="selectedEncounters.length === 1
-          ? selectedEncounters[0].title
-          : $t('pages.encounters.remove.multiple', {number: selectedEncounters.length})"
+        :title="selected.length === 1
+          ? selected[0].title
+          : $t('pages.encounters.remove.multiple', {number: selected.length})"
         @close="reset"
         @delete="deleteEncounter"
       />
       <UpdateEncounterModal
-        v-if="selectedEncounters.length"
+        v-if="selected.length"
         :open="isUpdating"
-        :encounter="selectedEncounters[0]"
+        :encounter="selected[0]"
         @close="reset"
+        @updated="reset"
       />
     </div>
   </NuxtLayout>

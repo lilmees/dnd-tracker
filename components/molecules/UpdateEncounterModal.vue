@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'updated'])
 const props = defineProps<{ open: boolean, encounter: Encounter }>()
 
 const store = useEncountersStore()
+
+store.loading = false
 
 const form = ref<UpdateEncounterForm>({
   title: props.encounter.title,
@@ -28,7 +30,7 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
       props.encounter.id
     )
 
-    emit('close')
+    emit('updated', enc)
   } catch (err: any) {
     logRocket.captureException(err as Error)
     form.value.data.error = err.message

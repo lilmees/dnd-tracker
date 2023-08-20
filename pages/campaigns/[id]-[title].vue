@@ -1,8 +1,19 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
 const store = useCurrentCampaignStore()
+const encStore = useEncountersStore()
+const toast = useToastStore()
+
+const {
+  isUpdating,
+  needConfirmation,
+  selected,
+  reset
+} = useBulkEditing()
 
 const isCreatingEncounter = ref<boolean>(false)
 
@@ -15,16 +26,41 @@ onMounted(() => {
 function addedEncounter (encounter: Encounter): void {
   store.encounters.push(encounter)
   isCreatingEncounter.value = false
+  reset()
 }
 
-function deletedEncounter (id: number): void {
-  store.encounters = store.encounters.filter(e => e.id !== id)
-  isCreatingEncounter.value = false
+async function deletedEncounter (): Promise<void> {
+  try {
+    store.encounters = store.encounters.filter(e => e.id !== selected.value[0].id)
+    isCreatingEncounter.value = false
+    await encStore.deleteEncounter(selected.value[0].id)
+  } catch (err) {
+    logRocket.captureException(err as Error)
+    toast.error()
+  } finally {
+    reset()
+  }
 }
 
 function updatedEncounter (encounter: Encounter): void {
   const index = store.encounters.findIndex(e => e.id === encounter.id)
   store.encounters[index] = encounter
+  reset()
+}
+
+async function copyEncounter (enc : Encounter): Promise<void> {
+  try {
+    const copy = await encStore.copyEncounter(enc)
+
+    if (copy) {
+      store.encounters.push(copy)
+    }
+  } catch (err) {
+    logRocket.captureException(err as Error)
+    toast.error()
+  } finally {
+    reset()
+  }
 }
 </script>
 
@@ -83,9 +119,15 @@ function updatedEncounter (encounter: Encounter): void {
               v-for="encounter in store.encounters"
               :key="encounter.id"
               :encounter="encounter"
-              @deleted="deletedEncounter"
-              @copied="addedEncounter"
-              @updated="updatedEncounter"
+              @update="(v: Encounter) => {
+                selected = [v];
+                isUpdating = true
+              }"
+              @remove="(v: Encounter) => {
+                selected = [v];
+                needConfirmation = true
+              }"
+              @copy="copyEncounter"
             />
           </div>
           <div v-else class="space-y-4 pt-4">
@@ -106,13 +148,29 @@ function updatedEncounter (encounter: Encounter): void {
       </div>
       <HomebrewTable class="py-10" />
       <CampaignNotes />
-      <AddEncounterModal
-        v-if="store.campaign"
-        :open="isCreatingEncounter"
-        :campaign-id="store.campaign.id"
-        @close="isCreatingEncounter = false"
-        @added="addedEncounter"
-      />
+      <div class="absolute z-[1]">
+        <template v-if="selected.length">
+          <ConfirmationModal
+            :open="needConfirmation"
+            :title="selected[0].title"
+            @close="reset"
+            @delete="deletedEncounter"
+          />
+          <UpdateEncounterModal
+            :open="isUpdating"
+            :encounter="selected[0]"
+            @close="reset"
+            @updated="updatedEncounter"
+          />
+        </template>
+        <AddEncounterModal
+          v-if="store.campaign"
+          :open="isCreatingEncounter"
+          :campaign-id="store.campaign.id"
+          @close="isCreatingEncounter = false"
+          @added="addedEncounter"
+        />
+      </div>
     </div>
   </NuxtLayout>
 </template>

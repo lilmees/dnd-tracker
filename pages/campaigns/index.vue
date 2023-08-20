@@ -7,31 +7,27 @@ useHead({ title: 'Campaigns' })
 const toast = useToastStore()
 const store = useCampaignsStore()
 
+const {
+  isBulk,
+  isUpdating,
+  needConfirmation,
+  selected,
+  toggleSelection,
+  reset
+} = useBulkEditing()
+
 const isOpen = ref<boolean>(false)
-const isBulk = ref<boolean>(false)
-const isUpdating = ref<boolean>(false)
-const needConfirmation = ref<boolean>(false)
-const selectedCampaigns = ref<Campaign[]>([])
 
 onMounted(() => store.fetch())
 
 whenever(() => store.error, () => { toast.error() })
 
-function toggleSelection (campaign: Campaign): void {
-  const index: number = selectedCampaigns.value.findIndex(c => c.id === campaign.id)
-  if (index === -1) {
-    selectedCampaigns.value.push(campaign)
-  } else {
-    selectedCampaigns.value.splice(index, 1)
-  }
-}
-
 async function deleteCampaigns (): Promise<void> {
   try {
-    if (selectedCampaigns.value.length === 1) {
-      await store.deleteCampaign(selectedCampaigns.value[0].id)
-    } else if (selectedCampaigns.value.length > 1) {
-      await store.bulkDeleteCampaigns(selectedCampaigns.value.map(v => v.id))
+    if (selected.value.length === 1) {
+      await store.deleteCampaign(selected.value[0].id)
+    } else if (selected.value.length > 1) {
+      await store.bulkDeleteCampaigns(selected.value.map(v => v.id))
     }
   } catch (err) {
     logRocket.captureException(err as Error)
@@ -39,13 +35,6 @@ async function deleteCampaigns (): Promise<void> {
   } finally {
     reset()
   }
-}
-
-function reset (): void {
-  needConfirmation.value = false
-  isBulk.value = false
-  isUpdating.value = false
-  selectedCampaigns.value = []
 }
 </script>
 
@@ -106,16 +95,16 @@ function reset (): void {
           <div class="flex gap-2 mb-12">
             <button
               class="btn-danger"
-              :disabled="!selectedCampaigns.length"
-              :aria-label="$t('pages.campaigns.remove.amount', {number: selectedCampaigns.length})"
+              :disabled="!selected.length"
+              :aria-label="$t('pages.campaigns.remove.amount', {number: selected.length})"
               @click="needConfirmation = true"
             >
-              {{ $t('pages.campaigns.remove.amount', {number: selectedCampaigns.length}) }}
+              {{ $t('pages.campaigns.remove.amount', {number: selected.length}) }}
             </button>
             <button
               class="btn-success"
               :aria-label="$t('actions.cancel')"
-              @click="isBulk = false, selectedCampaigns = []"
+              @click="isBulk = false, selected = []"
             >
               {{ $t('actions.cancel') }}
             </button>
@@ -131,7 +120,7 @@ function reset (): void {
               v-if="isBulk"
               class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer"
               :class="{
-                '!border-danger bg-danger/50': selectedCampaigns.find(c => c.id === campaign.id)
+                '!border-danger bg-danger/50': selected.find(c => c.id === campaign.id)
               }"
               :style="{ 'border-color': campaign.background }"
               @click="toggleSelection(campaign)"
@@ -140,11 +129,11 @@ function reset (): void {
               :campaign="campaign"
               :selecting="isBulk"
               @update="(v: Campaign) => {
-                selectedCampaigns = [v];
+                selected = [v];
                 isUpdating = true
               }"
               @remove="(v: Campaign) => {
-                selectedCampaigns = [v];
+                selected = [v];
                 needConfirmation = true
               }"
             />
@@ -181,17 +170,17 @@ function reset (): void {
     </div>
     <ConfirmationModal
       :open="needConfirmation"
-      :title="selectedCampaigns.length === 1
-        ? selectedCampaigns[0].title
-        : $t('pages.campaigns.remove.multiple', {number: selectedCampaigns.length})
+      :title="selected.length === 1
+        ? selected[0].title
+        : $t('pages.campaigns.remove.multiple', {number: selected.length})
       "
       @close="reset"
       @delete="deleteCampaigns"
     />
     <UpdateCampaignModal
-      v-if="selectedCampaigns.length"
+      v-if="selected.length"
       :open="isUpdating"
-      :campaign="selectedCampaigns[0]"
+      :campaign="selected[0]"
       @close="reset"
     />
   </NuxtLayout>
