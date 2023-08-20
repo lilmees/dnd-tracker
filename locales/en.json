@@ -295,14 +295,14 @@
         "name": "Name",
         "init": "Init",
         "ac": "AC",
-        "hp": "HP",
+        "health": "HP",
         "actions": "Actions",
         "conditions": "Conditions",
         "note": "Notes",
         "deathSaves": "Death saves",
-        "concentration": "Concentration",
+        "concentration": "CON",
         "modify": "Modify",
-        "summond": "Summoner"
+        "summoner": "Summoner"
       }
     },
     "actions": {
@@ -356,6 +356,11 @@
     "fullScreenSearch": {
       "tooltip": "Search information",
       "notFound": "Alas, our adventurous quest through the depths of our DnD archives has yielded no trace. The mystical tomes brimming with ancient lore and rules seem to temporarily withhold their secrets from us. But fear not! We shall not surrender! Feel free to continue your exploration in our magical realm, for who knows what epic discoveries await you."
+    },
+    "visualOptions": {
+      "tooltip": "Settings",
+      "spacing": "Tabel style",
+      "rows": "Rows to show"
     },
     "infoSearch": {
       "show": "Show pinned items",

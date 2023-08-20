@@ -5,6 +5,14 @@ interface EncounterProfile {
   avatar: string
 }
 
+type TableSpacing = 'compact' | 'normal' | 'cozy'
+
+interface EncounterSettings {
+  spacing: TableSpacing
+  rows: string[]
+  modified: boolean
+}
+
 interface Encounter {
   id: number
   created_at: string
@@ -20,10 +28,11 @@ interface Encounter {
   activeIndex: number
   color: string
   background: string
-  info_cards: InfoCard[]
+  info_cards: InfoCard[],
+  settings: EncounterSettings
 }
 
-interface AddEncounter extends Omit<Encounter, 'id'|'created_at'|'profiles'|'info_cards'|'campaign'> {
+interface AddEncounter extends Omit<Encounter, 'id'|'created_at'|'profiles'|'info_cards'|'campaign'|'settings'> {
   campaign: undefined | number
 }
 
