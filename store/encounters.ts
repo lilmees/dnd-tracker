@@ -2,6 +2,7 @@ import logRocket from 'logrocket'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
+  const user = useSupabaseUser()
 
   const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
@@ -65,6 +66,28 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
+  async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<Encounter|undefined> {
+    if (!user.value) {
+      return
+    }
+
+    let encounter: UpdateEncounter = {
+      ...enc,
+      title: `copy ${enc.title}`.slice(0, 30),
+      created_by: user.value.id,
+      campaign: undefined
+    }
+
+    if (enc.campaign) {
+      encounter = {
+        ...encounter,
+        campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign as number
+      }
+    }
+
+    return await addEncounter(encounter as AddEncounter)
+  }
+
   async function deleteEncounter (id: number): Promise<void> {
     const { error: err } = await supabase
       .from('initiative_sheets')
@@ -121,6 +144,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     fetch,
     getEncountersByCampaign,
     addEncounter,
+    copyEncounter,
     deleteEncounter,
     bulkDeleteEncounters,
     updateEncounter
