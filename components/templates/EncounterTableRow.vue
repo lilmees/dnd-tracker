@@ -17,6 +17,16 @@ const summoner = computed<string | null>(() => {
   }
 })
 
+const tableSpacing = computed<string>(() => {
+  const style: Obj = {
+    compact: 'px-1 py-0',
+    normal: 'px-2 py-1',
+    cozy: 'px-3 py-2'
+  }
+
+  return style[store.encounter?.settings.spacing || 'normal']
+})
+
 watchDebounced(
   note,
   () => store.updateRow('note', note.value as never, props.row, props.index),
@@ -33,10 +43,16 @@ watchDebounced(
       'bg-danger/10': row.health !== null && row.health === 0,
     }"
   >
-    <td class="px-2 py-1 border-r border-slate-700 text-info text-center max-w-[30px]">
+    <td
+      class="border-r border-slate-700 text-info text-center max-w-[30px]"
+      :class="tableSpacing"
+    >
       {{ row.index + 1 }}
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Name
         :name="row.name"
         :type="row.type"
@@ -44,21 +60,29 @@ watchDebounced(
       />
     </td>
     <td
-      v-if="store.includesSummond"
-      class="px-2 py-1 border-r border-slate-700"
+      v-if="store.includesSummond && store.encounter.settings.rows.includes('summoner')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
     >
       <div v-if="row.summoner?.id && summoner">
         {{ summoner }}
       </div>
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Initiative
         :initiative="row.initiative || null"
         :index="row.index"
         @update="store.updateRow('initiative', $event as never, row, index)"
       />
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      v-if="store.encounter.settings.rows.includes('ac')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Ac
         :ac="row?.ac || null"
         :temp-ac="row?.tempAc || null"
@@ -66,7 +90,11 @@ watchDebounced(
         @update="store.updateRow('ac', $event as never, row, index)"
       />
     </td>
-    <td class="p-2 border-r border-slate-700">
+    <td
+      v-if="store.encounter.settings.rows.includes('health')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Health
         :health="typeof row.health === 'number' ? row.health : null"
         :temp-health="row.tempHealth || null"
@@ -74,37 +102,59 @@ watchDebounced(
         @update="store.updateRow('health', $event as never, row, index)"
       />
     </td>
-    <td class="p-2 border-r border-slate-700">
+    <td
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Actions :row="row" :index="index" />
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      v-if="store.encounter.settings.rows.includes('conditions')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Effects
         :conditions="row.conditions"
         @update="store.updateRow($event.type, $event.value as never, row, index)"
       />
     </td>
-    <td class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative">
+    <td
+      v-if="store.encounter.settings.rows.includes('note')"
+      class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative"
+    >
       <textarea
         v-model="note"
         placeholder="Note"
-        class="border-none outline-none text-white body-small placeholder-slate-400 bg-transparent w-full p-2 absolute inset-0 resize-none"
+        class="border-none outline-none text-white body-small placeholder-slate-400 bg-transparent w-full absolute inset-0 resize-none"
+        :class="tableSpacing"
       />
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      v-if="store.encounter.settings.rows.includes('deathSaves')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <DeathSaves
         v-if="row.deathSaves"
         :death-saves="row.deathSaves"
         @update="store.updateRow('deathSaves', $event as never, row, index)"
       />
     </td>
-    <td class="px-2 py-1 border-r border-slate-700">
+    <td
+      v-if="store.encounter.settings.rows.includes('concentration')"
+      class="border-r border-slate-700"
+      :class="tableSpacing"
+    >
       <Concentration
         v-if="typeof row.concentration === 'boolean'"
         :concentration="row.concentration"
         @toggle="store.updateRow('concentration', !row.concentration as never, row, index)"
       />
     </td>
-    <td class="px-2 py-1">
+    <td
+      v-if="store.encounter.settings.rows.includes('modify')"
+      :class="tableSpacing"
+    >
       <Modify
         @copy="store.encounterUpdate({
           rows:[
