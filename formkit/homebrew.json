@@ -37,6 +37,7 @@
   },
   {
     "$cmp": "FormKit",
+    "if": "$type === 'player'",
     "props": {
       "name": "player",
       "label": "components.inputs.playerLabel",

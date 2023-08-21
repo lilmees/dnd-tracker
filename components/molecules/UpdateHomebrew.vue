@@ -3,6 +3,7 @@ import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 import schema from '~~/formkit/homebrew.json'
 
+const emit = defineEmits(['updated'])
 const props = defineProps<{ item: Homebrew }>()
 
 const store = useCurrentCampaignStore()
@@ -43,11 +44,11 @@ function updateHomebrew ({ __init, data, slots, ...formData }: Obj): void {
   form.value.data.isLoading = true
 
   try {
-    store.updateHomebrew(
-      useEmptyKeyRemover(formData) as Homebrew,
-      props.item.id as number
-    )
+    const updated = useEmptyKeyRemover(formData) as Homebrew
 
+    store.updateHomebrew(updated, props.item.id as number)
+
+    emit('updated', updated)
     reset('form')
     closeModal()
   } catch (err: any) {

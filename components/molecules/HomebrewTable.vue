@@ -81,6 +81,15 @@ function paginate (pageNumber: number): void {
     (pageNumber * perPage.value) + perPage.value
   )
 }
+
+function updated (hb: Homebrew, id: number): void {
+  const index = shownHomebrew.value.findIndex(h => h.id === id)
+
+  shownHomebrew.value[index] = {
+    ...shownHomebrew.value[index],
+    ...hb
+  }
+}
 </script>
 
 <template>
@@ -186,7 +195,11 @@ function paginate (pageNumber: number): void {
             </td>
             <td class="px-2 py-1">
               <div class="flex justify-center items-center gap-1">
-                <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
+                <UpdateHomebrew
+                  :item="item"
+                  class="relative bottom-[2px]"
+                  @updated="updated($event, item.id)"
+                />
                 <button
                   v-tippy="{ content: $t('actions.delete') }"
                   @click="store.removeHomebrew(item.id)"
