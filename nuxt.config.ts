@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       }
     }]
   ],
+  extends: ['nuxt-umami'],
   runtimeConfig: {
     public: {
       beta: process.env.BETA,
