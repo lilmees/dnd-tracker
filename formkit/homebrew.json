@@ -122,6 +122,40 @@
   {
     "$cmp": "FormKit",
     "props": {
+      "type": "list",
+      "name": "actions"
+    },
+    "children": [
+      {
+        "$el": "div",
+        "attrs": {
+          "class": "form-list"
+        },
+        "children": [
+          {
+            "$cmp": "FormKit",
+            "props": {
+              "name": "name",
+              "label": "components.inputs.nameLabel",
+              "validation": "required|length:3,30"
+            }
+          },
+          {
+            "$cmp": "FormKit",
+            "props": {
+              "name": "desc",
+              "type": "textarea",
+              "label": "desc",
+              "validation": "required|length:3,100"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "$cmp": "FormKit",
+    "props": {
       "label": {
         "if": "$data.encounter",
         "then": "components.addInitiativeModal.addHomebrew",

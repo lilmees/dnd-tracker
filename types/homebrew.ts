@@ -1,4 +1,4 @@
-interface Homebrew {
+interface Homebrew extends Partial<PossibleAttacks> {
   id: number
   created_at: string
   campaign: number

@@ -20,6 +20,10 @@
   .input-wrapper {
     @apply my-3;
   }
+
+  .form-list {
+    @apply bg-background p-4 rounded-lg;
+  }
 }
 
 @layer base {
