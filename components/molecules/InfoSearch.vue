@@ -149,17 +149,10 @@ function scrollToTop (): void {
           <div class="grow">
             <FormKit
               v-model="form.search"
-              type="text"
+              type="search"
               :label="$t('components.inputs.nameLabel')"
             />
           </div>
-          <button
-            v-if="form.search"
-            class="btn-primary mb-2"
-            @click="form.search = ''"
-          >
-            <Icon name="ic:round-clear" size="25" />
-          </button>
         </div>
         <div
           v-if="table.encounter?.info_cards?.length"

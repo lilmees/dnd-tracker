@@ -47,7 +47,6 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="login"
       >
         <Input

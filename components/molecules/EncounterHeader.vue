@@ -5,7 +5,7 @@ const store = useTableStore()
 <template>
   <div
     v-if="store.encounter"
-    class="flex flex-col md:flex-row gap-4 items-center justify-between container-max w-full p-4"
+    class="flex flex-col sm:flex-row gap-4 items-center justify-between container-max w-full p-4"
   >
     <div class="flex gap-2 items-center">
       <p>

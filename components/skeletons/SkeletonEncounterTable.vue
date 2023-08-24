@@ -11,7 +11,7 @@
     </div>
     <div class="rounded-lg p-4 bg-tracker/50 space-y-4 mt-4 border-4 border-tracker max-w-full  overflow-hidden">
       <div
-        class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
+        class="flex flex-col sm:flex-row gap-4 items-center justify-between container-max"
       >
         <div class="w-[100px] h-6 bg-tracker rounded-full" />
         <div class="w-[250px] h-10 bg-tracker rounded-full" />
