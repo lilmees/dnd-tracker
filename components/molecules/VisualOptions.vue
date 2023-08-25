@@ -54,7 +54,9 @@ function resetState (): void {
       <Icon name="iconamoon:options" class="w-6 h-6" />
     </button>
     <Modal v-if="isOpen && table.encounter" @close="resetState">
-      <h2>{{ $t('components.visualOptions.tooltip') }}</h2>
+      <template #header>
+        <h2>{{ $t('components.visualOptions.tooltip') }}</h2>
+      </template>
       <FormKit
         id="form"
         v-model="form"

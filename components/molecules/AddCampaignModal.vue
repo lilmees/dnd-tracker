@@ -44,7 +44,9 @@ async function addCampaign ({ __init, ...formData }: Obj): Promise<void> {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('components.addCammpaignModal.title') }}</h2>
+    <template #header>
+      <h2>{{ $t('components.addCammpaignModal.title') }}</h2>
+    </template>
     <p v-if="error" class="text-danger text-center">
       {{ error }}
     </p>

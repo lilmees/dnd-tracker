@@ -42,7 +42,9 @@ async function updateEncounter ({ __init, data, slots, ...formData }: Obj): Prom
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('components.updateEncounterModal.update') }}</h2>
+    <template #header>
+      <h2>{{ $t('components.updateEncounterModal.update') }}</h2>
+    </template>
     <p v-if="form.data.error" class="text-danger text-center">
       {{ form.data.error }}
     </p>

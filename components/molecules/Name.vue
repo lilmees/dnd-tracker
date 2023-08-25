@@ -35,7 +35,9 @@ function updateName ({ __init, name }: Obj): void {
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('pages.encounter.update.name') }}</h2>
+      <template #header>
+        <h2>{{ $t('pages.encounter.update.name') }}</h2>
+      </template>
       <FormKit
         v-model="form"
         type="form"

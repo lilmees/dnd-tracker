@@ -91,9 +91,11 @@ function reset () {
       <Icon name="la:dragon" class="text-info w-10 h-10" />
     </button>
     <Modal v-if="isOpen" big @close="reset">
-      <h1 class="pb-4 text-center">
-        {{ $t('components.addInitiativeMonster.bestiary') }}
-      </h1>
+      <template #header>
+        <h1 class="pb-4 text-center">
+          {{ $t('components.addInitiativeMonster.bestiary') }}
+        </h1>
+      </template>
       <div id="el" class="flex gap-6 items-start max-w-xl mx-auto">
         <div class="grow">
           <Input

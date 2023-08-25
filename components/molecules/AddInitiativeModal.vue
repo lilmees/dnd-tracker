@@ -114,7 +114,9 @@ function closeModal (): void {
       <Icon name="ph:beer-stein" class="text-warning w-10 h-10" />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>{{ $t('components.addHomebrew.newHomebrew') }}</h2>
+      <template #header>
+        <h2>{{ $t('components.addHomebrew.newHomebrew') }}</h2>
+      </template>
       <FormKit
         id="form"
         v-model="form"

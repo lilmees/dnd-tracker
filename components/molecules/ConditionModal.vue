@@ -34,12 +34,14 @@ function updateConditions (): void {
       @click="isOpen = true"
     />
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>
-        {{ !store.error
-          ? $t('pages.encounter.update.conditions')
-          : $t('components.conditionModal.conditions.fetchErrorTitle')
-        }}
-      </h2>
+      <template #header>
+        <h2>
+          {{ !store.error
+            ? $t('pages.encounter.update.conditions')
+            : $t('components.conditionModal.conditions.fetchErrorTitle')
+          }}
+        </h2>
+      </template>
       <div v-if="store.loading" class="loader" />
       <div
         v-else-if="!store.error && store.data?.length"
