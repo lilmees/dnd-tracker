@@ -13,7 +13,7 @@ onKeyStroke('Escape', () => emit('close'))
   <Teleport to="body">
     <div class="fixed inset-0 bg-black/30 cursor-pointer z-10" @click="$emit('close')" />
     <div
-      class="tracker-shadow-pulse border-4 border-primary fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-tracker rounded-lg p-8 w-full max-h-[90vh] overflow-y-auto z-20"
+      class="tracker-shadow-pulse border-4 border-black backdrop-blur-xl fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/20 rounded-lg p-8 w-full max-h-[90vh] overflow-y-auto z-20"
       :class="[big ? 'max-w-[1000px]' : 'max-w-2xl']"
     >
       <div class="relative">

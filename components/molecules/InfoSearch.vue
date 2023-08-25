@@ -136,7 +136,7 @@ function scrollToTop (): void {
     <FullScreenSearch v-if="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen max-w-prose mx-auto pt-20 pb-6">
         <div
-          class="flex items-end gap-4 px-1"
+          class="flex items-start gap-4 px-1"
           :class="{ 'pb-10': !table.encounter?.info_cards?.length || false }"
         >
           <FormKit
