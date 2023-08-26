@@ -13,7 +13,7 @@ const isOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="rounded-lg w-full bg-background p-3 relative space-y-1">
+  <div class="rounded-lg w-full border-4 border-primary p-3 relative space-y-1">
     <Icon
       v-if="addable"
       v-tippy="{ content: $t('actions.add') }"
@@ -77,14 +77,24 @@ const isOpen = ref<boolean>(false)
     </div>
     <ActionsTable
       v-if="monster.actions && isOpen"
-      :monster="monster"
+      :row="(monster as unknown as Row)"
       :class="{ 'pb-5': isOpen }"
     />
-    <Icon
-      name="tabler:chevron-down"
-      class="cursor-pointer duration-200 h-6 w-6 stroke-2 absolute bottom-1 right-1"
-      :class="{ 'rotate-180': isOpen }"
-      @click="isOpen = !isOpen"
-    />
+    <div class="flex justify-end pt-4">
+      <button
+        class="flex gap-2 btn-black"
+        :aria-label="$t(`actions.read.${isOpen ? 'less' : 'more'}`)"
+        @click="isOpen = !isOpen"
+      >
+        <p>
+          {{ $t(`actions.read.${isOpen ? 'less' : 'more'}`) }}
+        </p>
+        <Icon
+          name="tabler:chevron-down"
+          class="duration-200 h-6 w-6 stroke-2"
+          :class="{ 'rotate-180': isOpen }"
+        />
+      </button>
+    </div>
   </div>
 </template>

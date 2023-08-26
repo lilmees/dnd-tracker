@@ -26,6 +26,7 @@ watchDebounced(
 )
 
 async function fetchMonsters (query, page) {
+  console.log(query)
   isLoading.value = true
   try {
     const { results, count } = await open5e.getData({
@@ -90,62 +91,61 @@ function reset () {
       </span>
       <Icon name="la:dragon" class="text-info w-10 h-10" />
     </button>
-    <Modal v-if="isOpen" big @close="reset">
-      <template #header>
+    <FullScreenSearch v-if="isOpen" @close="reset">
+      <div class="flex flex-col max-h-screen pt-20 pb-6">
         <h1 class="pb-4 text-center">
           {{ $t('components.addInitiativeMonster.bestiary') }}
         </h1>
-      </template>
-      <div id="el" class="flex gap-6 items-start max-w-xl mx-auto">
-        <div class="grow">
-          <Input
+        <div id="el" class="flex items-start gap-4 px-1">
+          <FormKit
             v-model="form.search"
-            focus
             type="search"
             name="search"
             :label="$t('components.inputs.nameLabel')"
             validation="length:0,50"
             placeholder="Copper dragon"
+            outer-class="grow"
           />
-        </div>
-        <div class="grow">
-          <Input
+          <FormKit
             v-model="form.challenge_rating"
             name="challenge_rating"
-            type="search"
+            type="number"
             :label="$t('components.inputs.challengeLabel')"
             validation="number|between:0,30"
             min="0"
             max="30"
+            outer-class="grow"
           />
         </div>
-      </div>
-      <div class="overflow-y-auto max-h-full space-y-2">
-        <div v-if="isLoading" class="relative w-20 h-20 mx-auto">
-          <div class="loader" />
+        <div class="overflow-y-auto max-h-full">
+          <div v-if="isLoading" class="relative w-20 h-20 mx-auto">
+            <div class="loader" />
+          </div>
+          <template v-else-if="hits.length">
+            <div class="grid lg:grid-cols-2 gap-4 items-start">
+              <MonsterCard
+                v-for="hit in hits"
+                :key="hit.id"
+                :monster="hit"
+                addable
+                @add="addMonster"
+              />
+            </div>
+            <Pagination
+              v-if="pages > 1"
+              v-model="page"
+              :total-pages="pages"
+              @paginate="paginate"
+            />
+          </template>
+          <p
+            v-else-if="!isLoading && (form.search || form.challenge_rating)"
+            class="text-center max-w-prose mx-auto"
+          >
+            {{ $t('components.addInitiativeMonster.notFound') }}
+          </p>
         </div>
-        <template v-else-if="hits.length">
-          <MonsterCard
-            v-for="hit in hits"
-            :key="hit.id"
-            :monster="hit"
-            addable
-            @add="addMonster"
-          />
-          <Pagination
-            v-if="pages > 1"
-            v-model="page"
-            :total-pages="pages"
-            @paginate="paginate"
-          />
-        </template>
-        <p
-          v-else-if="!isLoading && (form.search || form.challenge_rating)"
-          class="text-center max-w-prose mx-auto"
-        >
-          {{ $t('components.addInitiativeMonster.notFound') }}
-        </p>
       </div>
-    </Modal>
+    </FullScreenSearch>
   </section>
 </template>
