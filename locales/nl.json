@@ -30,7 +30,11 @@
     "drag": "Sleep mij",
     "close": "Sluiten",
     "next": "Volgende",
-    "prev": "Vorige"
+    "prev": "Vorige",
+    "read": {
+      "more": "Lees meer",
+      "less": "Lees minder"
+    }
   },
   "general": {
     "encounters": "Encounters",

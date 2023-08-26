@@ -30,7 +30,11 @@
     "drag": "Drag me",
     "close": "Close",
     "next": "Next",
-    "prev": "Previous"
+    "prev": "Previous",
+    "read": {
+      "more": "Read more",
+      "less": "Read less"
+    }
   },
   "general": {
     "encounters": "Encounters",
