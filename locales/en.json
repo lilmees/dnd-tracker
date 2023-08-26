@@ -300,7 +300,7 @@
         "init": "Init",
         "ac": "AC",
         "health": "HP",
-        "actions": "Actions",
+        "manage": "Manage",
         "conditions": "Conditions",
         "note": "Notes",
         "deathSaves": "Death saves",
