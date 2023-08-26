@@ -251,6 +251,13 @@
       "questionLabel": "Your question?",
       "challengeLabel": "Challenge rating",
       "playerLabel": "Player",
+      "descriptionLabel": "Description",
+      "actionsLabel": "Actions",
+      "addActionLabel": "Add action",
+      "actionTypeLabel": "Action type",
+      "attackBonusLabel": "Attack bonus",
+      "damageBonusLabel": "Damage bonus",
+      "damageDiceLabel": "Damage dice",
       "nothing": "Nothing selected"
     },
     "addCammpaignModal": {
@@ -269,12 +276,6 @@
     "updateEncounterModal": {
       "update": "Update encounter {title}"
     },
-    "addInitiativeModal": {
-      "addHomebrew": "Create homebrew"
-    },
-    "updateInitiativeModal": {
-      "updateHomebrew": "Update homebrew"
-    },
     "addInitiativeMonster": {
       "bestiary": "Bestiary",
       "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!"
@@ -287,8 +288,10 @@
         "select": "Select summoner"
       }
     },
-    "addHomebrew": {
-      "newHomebrew": "Make a new homebrew"
+    "homebrewModal": {
+      "new": "Make a new homebrew",
+      "add": "Create homebrew",
+      "update": "Update homebrew"
     },
     "encounterTable": {
       "empty": "Add a row to your encounter to get started!",

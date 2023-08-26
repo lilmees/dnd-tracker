@@ -53,7 +53,8 @@ export default defineNuxtConfig({
       stripeMediorYearly: process.env.STRIPE_MEDIOR_YEARLY,
       stripeProMonthly: process.env.STRIPE_PRO_MONTHLY,
       stripeProYearly: process.env.STRIPE_PRO_YEARLY,
-      logRocket: process.env.LOGROCKET_ID
+      logRocket: process.env.LOGROCKET_ID,
+      formkit: process.env.FORMKIT_PRO
     },
     stripeSk: process.env.STRIPE_SK
   },

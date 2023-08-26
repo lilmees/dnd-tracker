@@ -17,10 +17,12 @@ function deleteConfirmation (): void {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <div class="text-white space-y-4">
+    <template #header>
       <h2 class="text-danger">
         {{ $t('components.confirmationModal.title') }}
       </h2>
+    </template>
+    <div class="text-white space-y-4">
       <p class="pb-4">
         {{ $t('components.confirmationModal.text', { title }) }}
       </p>
@@ -39,14 +41,24 @@ function deleteConfirmation (): void {
           required
           :placeholder="title"
         />
-        <button
-          type="submit"
-          class="btn-danger w-full"
-          :aria-label="$t('actions.delete')"
-          :disabled="!same"
-        >
-          {{ $t('actions.delete') }}
-        </button>
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="btn-black"
+            :aria-label="$t('actions.cancel')"
+            @click="$emit('close')"
+          >
+            {{ $t('actions.cancel') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger"
+            :aria-label="$t('actions.delete')"
+            :disabled="!same"
+          >
+            {{ $t('actions.delete') }}
+          </button>
+        </div>
       </FormKit>
     </div>
   </Modal>

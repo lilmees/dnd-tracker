@@ -23,7 +23,7 @@ const headers = computed<string[]>(() => {
     } else if (!store.encounter?.settings.modified || store.encounter?.settings.rows.includes(option)) {
       if (store.includesSummond && option === 'summoner') {
         headers.push(t('components.encounterTable.headers.summoner'))
-      } else {
+      } else if (option !== 'summoner') {
         headers.push(t(`components.encounterTable.headers.${option}`))
       }
     }

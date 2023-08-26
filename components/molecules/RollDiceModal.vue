@@ -5,7 +5,9 @@ defineProps<{ open: boolean }>()
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <h2>{{ $t('actions.roll') }}</h2>
+    <template #header>
+      <h2>{{ $t('actions.roll') }}</h2>
+    </template>
     <DiceRolling result />
   </Modal>
 </template>

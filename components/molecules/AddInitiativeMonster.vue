@@ -91,14 +91,17 @@ function reset () {
       <Icon name="la:dragon" class="text-info w-10 h-10" />
     </button>
     <Modal v-if="isOpen" big @close="reset">
-      <h1 class="pb-4 text-center">
-        {{ $t('components.addInitiativeMonster.bestiary') }}
-      </h1>
-      <div id="el" class="flex gap-6 items-end max-w-xl mx-auto">
+      <template #header>
+        <h1 class="pb-4 text-center">
+          {{ $t('components.addInitiativeMonster.bestiary') }}
+        </h1>
+      </template>
+      <div id="el" class="flex gap-6 items-start max-w-xl mx-auto">
         <div class="grow">
           <Input
             v-model="form.search"
             focus
+            type="search"
             name="search"
             :label="$t('components.inputs.nameLabel')"
             validation="length:0,50"
@@ -109,7 +112,7 @@ function reset () {
           <Input
             v-model="form.challenge_rating"
             name="challenge_rating"
-            type="number"
+            type="search"
             :label="$t('components.inputs.challengeLabel')"
             validation="number|between:0,30"
             min="0"

@@ -1,4 +1,4 @@
-interface Homebrew {
+interface Homebrew extends PossibleAttacks {
   id: number
   created_at: string
   campaign: number
@@ -14,28 +14,15 @@ interface AddHomebrew extends Required<Omit<Homebrew, 'id'|'created_at'>> {}
 
 interface UpdateHomebrew extends Partial<Omit<Homebrew, 'id' | 'created_at'>> {}
 
-interface HomebrewSchemaOptions {
-  isLoading: boolean
-  update: boolean
-  error: null | string
-  encounter: boolean
-  options?: Option[]
-  summoners?: Option[]
-  rollDice?: () => void
-}
-
-interface AddHomebrewForm {
+interface HomebrewForm {
   name: string
   player?: string
   link: string | null
-  type: RowType
-  data: HomebrewSchemaOptions
-}
-
-interface UpdateHomebrewForm {
-  name: string
-  player?: string
-  link: string | null
-  type: RowType
-  data: HomebrewSchemaOptions
+  type: RowType,
+  actions: Action[],
+  ac?: number | undefined
+  health?: number | undefined
+  initiative?: number | undefined
+  amount?: number | undefined,
+  summoner?: Summoner | undefined | number
 }

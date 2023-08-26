@@ -30,7 +30,9 @@ function updateHealth ({ __init, health }: Obj): void {
       @click="isOpen = true"
     />
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('pages.encounter.update.hp') }}</h2>
+      <template #header>
+        <h2>{{ $t('pages.encounter.update.hp') }}</h2>
+      </template>
       <FormKit
         v-model="form"
         type="form"

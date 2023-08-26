@@ -15,7 +15,7 @@ onBeforeMount(() => { showNav.value = false })
       class="container absolute w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
     >
       <div
-        class="bg-tracker px-2 py-6 sm:p-8 rounded-lg relative border-4 border-primary tracker-shadow-pulse"
+        class="bg-primary/20 px-2 py-6 sm:p-8 rounded-lg relative border-4 border-black tracker-shadow-pulse"
       >
         <NuxtLink :to="localePath('/')" class="group">
           <Icon

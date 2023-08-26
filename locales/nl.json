@@ -251,6 +251,13 @@
       "questionLabel": "Je vraag?",
       "challengeLabel": "Challenge rating",
       "playerLabel": "Speler",
+      "descriptionLabel": "Omschrijving",
+      "actionsLabel": "Acties",
+      "addActionLabel": "Actie toevoegen",
+      "actionTypeLabel": "Actie type",
+      "attackBonusLabel": "Aanval bonus",
+      "damageBonusLabel": "Schade bonus",
+      "damageDiceLabel": "Schade dobbelsteen",
       "nothing": "Nog niets geselecteerd"
     },
     "addCammpaignModal": {
@@ -269,12 +276,6 @@
     "updateEncounterModal": {
       "update": "Update encounter {title}"
     },
-    "addInitiativeModal": {
-      "addHomebrew": "Homebrew maken"
-    },
-    "updateInitiativeModal": {
-      "updateHomebrew": "Homebrew aanpassen"
-    },
     "addInitiativeMonster": {
       "bestiary": "Bestiary",
       "notFound": "Wij hebben geen monster gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanmaken als homebrew!"
@@ -287,8 +288,10 @@
         "select": "Selecteer oproeper"
       }
     },
-    "addHomebrew": {
-      "newHomebrew": "Maak een nieuwe homebrew"
+    "homebrewModal": {
+      "new": "Maak een nieuwe homebrew",
+      "add": "Homebrew maken",
+      "update": "Homebrew aanpassen"
     },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",

@@ -139,9 +139,11 @@ function selectedSummoner (value: number): void {
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>
-        {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
-      </h2>
+      <template #header>
+        <h2>
+          {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+        </h2>
+      </template>
       <div v-if="homebrews?.length" class="space-y-4">
         <div class="flex items-end gap-4">
           <div class="grow">

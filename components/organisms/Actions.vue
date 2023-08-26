@@ -166,7 +166,12 @@ function updateRow () {
       @update="updateCondition"
     />
     <PossibleAttacksModal
-      v-if="row.actions"
+      v-if="
+        row.actions?.length
+          || row.legendary_actions?.length
+          || row.reactions?.length
+          || row.special_abilities?.length
+      "
       v-tippy="{ content: $t('components.actions.attacks') }"
       :row="row"
     />

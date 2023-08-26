@@ -4,21 +4,8 @@
 
 @layer components {
   .btn {
-    @apply py-2 px-6 rounded-lg outline-none border-4 text-white ring-white duration-200 ease-in-out font-bold;
-    @apply focus-within:ring active:scale-95 disabled:cursor-not-allowed;
-  }
-
-  .input {
-    @apply w-full py-2 px-3 border-none rounded-lg text-white body-small placeholder-slate-400 bg-transparent outline-none;
-  }
-
-  .input-inner {
-    @apply flex ring ring-slate-400 rounded-lg overflow-hidden my-1;
-    @apply focus-within:ring-white;
-  }
-
-  .input-wrapper {
-    @apply my-3;
+    @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold;
+    @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed;
   }
 }
 

@@ -94,7 +94,9 @@ async function moveRow (up: boolean): Promise<void> {
       </div>
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('pages.encounter.update.initiative') }}</h2>
+      <template #header>
+        <h2>{{ $t('pages.encounter.update.initiative') }}</h2>
+      </template>
       <FormKit
         v-model="form"
         type="form"
