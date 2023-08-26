@@ -31,7 +31,7 @@ function updateNote (note: Note): void {
 
 <template>
   <section
-    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker p-3 relative space-y-1 group min-w-[250px] max-w-prose"
+    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker px-6 py-8 relative space-y-1 group min-w-[250px] max-w-prose"
   >
     <div class="flex gap-2 items-center justify-between">
       <h3 v-if="note.title">

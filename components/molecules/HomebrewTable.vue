@@ -105,7 +105,7 @@ function updated (hb: Homebrew, id: number): void {
           <p>Lair)</p>
         </div>
       </div>
-      <AddHomebrew />
+      <HomebrewModal />
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <div
@@ -189,15 +189,32 @@ function updated (hb: Homebrew, id: number): void {
               </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <p class="text-slate-400 text-center">
-                coming soon
-              </p>
+              <div
+                v-if="
+                  item.actions?.length
+                    || item.legendary_actions?.length
+                    || item.reactions?.length
+                    || item.special_abilities?.length
+                "
+              >
+                <PossibleAttacksModal
+                  :row="(item as Row)"
+                  :label="`
+                  ${[
+                    ...item.actions || [],
+                    ...item.legendary_actions || [],
+                    ...item.reactions || [],
+                    ...item.special_abilities || [],
+                  ].length} ${$t('components.inputs.actionsLabel')}
+                  `"
+                />
+              </div>
             </td>
             <td class="px-2 py-1">
               <div class="flex justify-center items-center gap-1">
-                <UpdateHomebrew
+                <HomebrewModal
+                  update
                   :item="item"
-                  class="relative bottom-[2px]"
                   @updated="updated($event, item.id)"
                 />
                 <button
