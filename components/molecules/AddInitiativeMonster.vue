@@ -26,7 +26,6 @@ watchDebounced(
 )
 
 async function fetchMonsters (query, page) {
-  console.log(query)
   isLoading.value = true
   try {
     const { results, count } = await open5e.getData({
