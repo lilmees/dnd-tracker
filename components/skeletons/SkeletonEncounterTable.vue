@@ -28,7 +28,7 @@
                 'components.encounterTable.headers.init',
                 'components.encounterTable.headers.ac',
                 'components.encounterTable.headers.health',
-                'components.encounterTable.headers.actions',
+                'components.encounterTable.headers.manage',
                 'components.encounterTable.headers.conditions',
                 'components.encounterTable.headers.note',
                 'components.encounterTable.headers.deathSaves',

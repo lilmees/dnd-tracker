@@ -12,8 +12,8 @@ whenever(keys.shift_arrowRight, () => store.nextInitiative())
 whenever(keys.PageDown, () => store.nextInitiative())
 
 const headers = computed<string[]>(() => {
-  const always = ['name', 'init', 'actions']
-  const options = ['name', 'summoner', 'init', 'ac', 'health', 'actions', 'conditions', 'note', 'deathSaves', 'concentration', 'modify']
+  const always = ['name', 'init', 'manage']
+  const options = ['name', 'summoner', 'init', 'ac', 'health', 'manage', 'conditions', 'note', 'deathSaves', 'concentration', 'modify']
 
   const headers = ['']
 
