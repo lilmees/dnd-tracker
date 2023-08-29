@@ -32,12 +32,12 @@ watch(() => isHover.value, (v: boolean) => {
 
 <template>
   <div
-    class="w-full mb-2 pointer-events-auto rounded-lg bg-background border-4 cursor-pointer overflow-auto"
+    class="w-full mb-2 pointer-events-auto rounded-lg border-4 cursor-pointer overflow-auto backdrop-blur"
     :class="{
-      'border-danger': toast.type === 'error',
-      'border-warning': toast.type === 'warn',
-      'border-success': toast.type === 'success',
-      'border-info': toast.type === 'info',
+      'border-danger bg-danger/50': toast.type === 'error',
+      'border-warning bg-warning/50': toast.type === 'warn',
+      'border-success bg-success/50': toast.type === 'success',
+      'border-info bg-info/50': toast.type === 'info',
     }"
     @mouseenter="isHover = true"
     @mouseleave="isHover = false"
