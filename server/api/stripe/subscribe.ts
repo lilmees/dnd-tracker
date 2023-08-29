@@ -8,7 +8,7 @@ const stripe = new Stripe(config.stripeSk, {
 })
 
 export default defineEventHandler(async (event) => {
-  const client = serverSupabaseClient(event)
+  const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
   const price = await stripe.prices.retrieve(body.lookup)

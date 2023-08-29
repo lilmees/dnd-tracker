@@ -133,6 +133,9 @@ export default defineNuxtConfig({
       'storeToRefs'
     ]
   },
+  supabase: {
+    redirect: false
+  },
   imports: {
     dirs: ['store']
   },

@@ -24,6 +24,14 @@
     }
   },
   {
+    "$cmp": "FormKit",
+    "props": {
+      "name": "marketing",
+      "type": "checkbox",
+      "label": "components.inputs.marketingLabel"
+    }
+  },
+  {
     "$el": "div",
     "attrs": {
       "class": "flex justify-end"
