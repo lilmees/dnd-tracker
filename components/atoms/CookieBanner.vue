@@ -15,10 +15,10 @@ function handleConsent (): void {
   <div v-if="!cookiesSet">
     <div class="bg-black/50 inset-0 fixed" />
     <div
-      class="fixed z-50 flex flex-col items-center justify-center p-6 bg-primary rounded-lg gap-y-10 bottom-4 left-4 right-4 md:flex-row md:justify-between md:px-10 md:py-8 md:bottom-10 md:left-10 md:right-10"
+      class="fixed z-50 flex flex-col items-center justify-center p-6 bg-primary/50 border-4 border-primary backdrop-blur rounded-lg gap-y-10 bottom-4 left-4 right-4 lg:flex-row md:justify-between lg:px-10 md:py-8 md:bottom-10 md:left-10 md:right-10"
     >
       <Icon name="material-symbols:cookie-outline-rounded" class="w-12 h-12" />
-      <div class="flex flex-col items-center text-center gap-y-6 md:flex-row md:inline-flex md:gap-x-7">
+      <div class="flex flex-col items-center text-center gap-y-6 lg:flex-row lg:inline-flex lg:gap-x-7">
         <h2>
           {{ $t('components.cookieBanner.text') }}
         </h2>
