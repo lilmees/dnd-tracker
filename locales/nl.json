@@ -149,6 +149,7 @@
     "register": {
       "register": "Registreer",
       "random": "Random avatar",
+      "consent": "Door te registreren, stemt u in met onze algemene voorwaarden.",
       "toast": {
         "success": {
           "title": "Succesvol registreerd",
@@ -262,6 +263,7 @@
       "attackBonusLabel": "Aanval bonus",
       "damageBonusLabel": "Schade bonus",
       "damageDiceLabel": "Schade dobbelsteen",
+      "marketingLabel": "Ontvang meldingen over updates",
       "nothing": "Nog niets geselecteerd"
     },
     "addCammpaignModal": {

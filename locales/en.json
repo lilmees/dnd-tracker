@@ -149,6 +149,7 @@
     "register": {
       "register": "Register",
       "random": "Random avatar",
+      "consent": "By registering, you agree to our terms and conditions",
       "toast": {
         "success": {
           "title": "Successfully registrerd",
@@ -262,6 +263,7 @@
       "attackBonusLabel": "Attack bonus",
       "damageBonusLabel": "Damage bonus",
       "damageDiceLabel": "Damage dice",
+      "marketingLabel": "Get notified about updates",
       "nothing": "Nothing selected"
     },
     "addCammpaignModal": {

@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const localePath = useLocalePath()
 const profile = useProfileStore()
-const { auth } = useSupabaseAuthClient()
+const { auth } = useSupabaseClient()
 const route = useRoute()
 
 useSeo()
