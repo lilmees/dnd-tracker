@@ -10,6 +10,7 @@ export default defineNuxtConfig({
       '~/components/molecules',
       '~/components/organisms',
       '~/components/templates',
+      '~/components/tableRow',
       '~/components/skeletons'
     ]
   },

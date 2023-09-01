@@ -112,7 +112,7 @@ async function moveRow (up: boolean): Promise<void> {
             outer-class="grow"
           />
           <div class="w-[120px]">
-            <Input
+            <FormKit
               name="initiative"
               :label="`${$t('components.inputs.initiativeLabel')} (DEX)`"
               validation="between:-10,10|number"

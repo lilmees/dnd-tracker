@@ -45,6 +45,11 @@ function randomAvatar (): void {
     .toString(36)
     .substring(7)}.svg?size=100`
 }
+
+function handleIconClick (node: any) {
+  node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
+  node.props.type = node.props.type === 'password' ? 'text' : 'password'
+}
 </script>
 
 <template>
@@ -86,11 +91,13 @@ function randomAvatar (): void {
           :label="$t('components.inputs.emailLabel')"
           validation="required|length:5,50|email"
         />
-        <Input
+        <FormKit
           name="password"
           type="password"
+          suffix-icon="eye"
           :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
+          @suffix-icon-click="handleIconClick"
         />
         <FormKit
           name="marketing"
