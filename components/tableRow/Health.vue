@@ -56,22 +56,18 @@ function updateHealth ({ __init, health }: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="updateHealth"
       >
-        <div class="flex gap-2 items-end">
-          <div class="grow">
-            <Input
-              focus
-              name="health"
-              type="number"
-              :label="$t('components.inputs.hpLabel')"
-              validation="required|between:1,1000|number"
-              required
-            />
-          </div>
+        <div class="flex gap-2 items-start">
+          <FormKit
+            name="health"
+            type="number"
+            :label="$t('components.inputs.hpLabel')"
+            validation="required|between:1,1000|number"
+            outer-class="grow w-full"
+          />
           <button
-            class="btn-black mb-3"
+            class="btn-black mt-6 min-w-max"
             type="button"
             :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
             @click="isRollingDice = !isRollingDice"
@@ -80,13 +76,9 @@ function updateHealth ({ __init, health }: Obj): void {
           </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <button
-          type="submit"
-          class="btn-black w-full mt-3"
-          :aria-label="$t('actions.update')"
-        >
+        <FormKit type="submit" :aria-label="$t('actions.update')">
           {{ $t('actions.update') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </div>

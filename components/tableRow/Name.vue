@@ -22,6 +22,7 @@ function updateName ({ __init, name }: Obj): void {
         :name="useHomebrewIcon(type)"
         :class="useHomebrewColor(type)"
         size="20"
+        class="min-w-[20px]"
       />
       <p
         class="peer cursor-pointer"
@@ -42,23 +43,16 @@ function updateName ({ __init, name }: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="updateName"
       >
-        <Input
-          focus
+        <FormKit
           name="name"
           :label="$t('components.inputs.nameLabel')"
           validation="required|length:3,30"
-          required
         />
-        <button
-          type="submit"
-          class="btn-black w-full mt-3"
-          :aria-label="$t('actions.update')"
-        >
+        <FormKit type="submit" :aria-label="$t('actions.update')">
           {{ $t('actions.update') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </div>

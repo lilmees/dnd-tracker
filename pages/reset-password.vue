@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
+definePageMeta({ middleware: ['loggedin'] })
+
 const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
@@ -48,25 +50,21 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="resetPassword"
       >
-        <Input
-          focus
+        <FormKit
           name="password"
           type="password"
           :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
-          required
         />
-        <button
+        <FormKit
           type="submit"
-          class="btn-black w-full mt-3"
           :aria-label="$t('pages.resetPassword.reset')"
           :disabled="isLoading"
         >
           {{ $t('pages.resetPassword.reset') }}
-        </button>
+        </FormKit>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/')">

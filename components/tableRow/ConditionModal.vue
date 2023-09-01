@@ -59,13 +59,15 @@ function updateConditions (): void {
             @remove="selected = selected.filter(s => s.slug !== $event)"
           />
         </div>
-        <button
-          class="btn-black w-full"
-          :aria-label="$t('actions.update')"
-          @click="updateConditions"
-        >
-          {{ $t('actions.update') }}
-        </button>
+        <div class="flex justify-end">
+          <button
+            class="btn-black"
+            :aria-label="$t('actions.update')"
+            @click="updateConditions"
+          >
+            {{ $t('actions.update') }}
+          </button>
+        </div>
       </div>
       <button
         v-else

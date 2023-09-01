@@ -101,22 +101,18 @@ async function moveRow (up: boolean): Promise<void> {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="updateInitiative"
       >
         <div class="flex gap-x-3 flex-wrap items-start">
-          <div class="grow">
-            <Input
-              focus
-              name="amount"
-              :label="$t('components.inputs.amountLabel')"
-              validation="required|between:0,50|number"
-              type="number"
-              required
-            />
-          </div>
+          <FormKit
+            name="amount"
+            :label="$t('components.inputs.amountLabel')"
+            validation="required|between:0,50|number"
+            type="number"
+            outer-class="grow"
+          />
           <div class="w-[120px]">
-            <Input
+            <FormKit
               name="initiative"
               :label="`${$t('components.inputs.initiativeLabel')} (DEX)`"
               validation="between:-10,10|number"
@@ -124,7 +120,7 @@ async function moveRow (up: boolean): Promise<void> {
             />
           </div>
           <button
-            class="btn-black mt-8"
+            class="btn-black mt-6"
             type="button"
             :aria-label="$t('actions.roll')"
             @click="diceRoll"
@@ -132,13 +128,9 @@ async function moveRow (up: boolean): Promise<void> {
             {{ $t('actions.roll') }}
           </button>
         </div>
-        <button
-          class="btn-black w-full mt-3"
-          :aria-label="$t('actions.update')"
-          type="submit"
-        >
+        <FormKit :aria-label="$t('actions.update')" type="submit">
           {{ $t('actions.update') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </div>

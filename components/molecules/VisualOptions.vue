@@ -89,13 +89,9 @@ function resetState (): void {
             { label: 'Modify', value: 'modify' }
           ]"
         />
-        <button
-          type="submit"
-          class="btn-black"
-          :aria-label="$t('actions.update')"
-        >
+        <FormKit type="submit" :aria-label="$t('actions.update')">
           {{ $t('actions.save') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </section>

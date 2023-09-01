@@ -18,13 +18,21 @@ function deleteConfirmation (): void {
 <template>
   <Modal v-if="open" @close="$emit('close')">
     <template #header>
-      <h2 class="text-danger">
+      <h2>
         {{ $t('components.confirmationModal.title') }}
       </h2>
     </template>
     <div class="text-white space-y-4">
       <p class="pb-4">
-        {{ $t('components.confirmationModal.text', { title }) }}
+        <template
+          v-for="text in $t('components.confirmationModal.text', { title }).split(title)"
+          :key="text"
+        >
+          {{ text }}
+          <span class="font-bold last:hidden text-danger">
+            {{ title }}
+          </span>
+        </template>
       </p>
       <FormKit
         id="form"
@@ -33,12 +41,10 @@ function deleteConfirmation (): void {
         :actions="false"
         @submit="deleteConfirmation"
       >
-        <Input
-          focus
+        <FormKit
           name="title"
           :label="$t('components.inputs.titleLabel')"
           validation="required"
-          required
           :placeholder="title"
         />
         <div class="flex justify-end gap-2">
