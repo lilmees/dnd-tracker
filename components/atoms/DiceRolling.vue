@@ -32,11 +32,11 @@ function reset (): void {
 </script>
 
 <template>
-  <div class="bg-primary/10 rounded-lg p-2" :class="{ 'mb-3': !result }">
+  <div class="bg-primary/30 rounded-lg p-2" :class="{ 'mb-3': !result }">
     <FormKit v-model="form" type="form" :actions="false" @submit="rollDice">
       <div class="flex gap-2 flex-wrap sm:flex-nowrap">
         <div>
-          <Input name="d100" type="number" label="D100" validation="between:1,20|number" />
+          <FormKit name="d100" type="number" label="D100" validation="between:1,20|number" />
           <template v-if="result && results.d100 && Array.isArray(results.d100)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d100" :key="amount">
@@ -53,7 +53,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d20" type="number" label="D20" validation="between:1,20|number" />
+          <FormKit name="d20" type="number" label="D20" validation="between:1,20|number" />
           <template v-if="result && results.d20 && Array.isArray(results.d20)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d20" :key="amount">
@@ -70,7 +70,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d12" type="number" label="D12" validation="between:1,20|number" />
+          <FormKit name="d12" type="number" label="D12" validation="between:1,20|number" />
           <template v-if="result && results.d12 && Array.isArray(results.d12)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d12" :key="amount">
@@ -87,7 +87,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d10" type="number" label="D10" validation="between:1,20|number" />
+          <FormKit name="d10" type="number" label="D10" validation="between:1,20|number" />
           <template v-if="result && results.d10 && Array.isArray(results.d10)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d10" :key="amount">
@@ -104,7 +104,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d8" type="number" label="D8" validation="between:1,20|number" />
+          <FormKit name="d8" type="number" label="D8" validation="between:1,20|number" />
           <template v-if="result && results.d8 && Array.isArray(results.d8)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d100" :key="amount">
@@ -121,7 +121,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d6" type="number" label="D6" validation="between:1,20|number" />
+          <FormKit name="d6" type="number" label="D6" validation="between:1,20|number" />
           <template v-if="result && results.d6 && Array.isArray(results.d6)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d6" :key="amount">
@@ -138,7 +138,7 @@ function reset (): void {
           </p>
         </div>
         <div>
-          <Input name="d4" type="number" label="D4" validation="between:1,20|number" />
+          <FormKit name="d4" type="number" label="D4" validation="between:1,20|number" />
           <template v-if="result && results.d4 && Array.isArray(results.d4)">
             <div class="flex flex-wrap gap-1">
               <p v-for="(amount, index) in results.d4" :key="amount">

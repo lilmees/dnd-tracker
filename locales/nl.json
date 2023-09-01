@@ -88,7 +88,8 @@
     },
     "campaigns": {
       "campaigns": "Campagnes",
-      "add": "campagne creëren",
+      "add": "Campagne creëren",
+      "update": "Campagne bijwerken",
       "remove": {
         "title": "Bulk verwijderen campagnes",
         "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
@@ -107,6 +108,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
+      "update": "Encounter bijwerken",
       "remove": {
         "title": "Bulk verwijderen encounters",
         "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
@@ -230,7 +232,8 @@
       "start": "Laat het spelen beginnen"
     },
     "linkModal": {
-      "demo": "Dit is niet beschikbaar in de demo"
+      "demo": "Dit is niet beschikbaar in de demo",
+      "placeholder": "Te midden van het rijk der draken en kerkerdoolhoven blijft de legende van een held onverteld, omdat de gebruiker de saga van hun personage nog niet heeft gelinkt."
     },
     "homeDiceRolling": {
       "title": "Rollen met gemak",
@@ -266,20 +269,16 @@
       "marketingLabel": "Ontvang meldingen over updates",
       "nothing": "Nog niets geselecteerd"
     },
-    "addCammpaignModal": {
-      "title": "Maak een nieuwe campagne"
-    },
-    "updateCampaignModal": {
+    "cammpaignModal": {
+      "add": "Maak een nieuwe campagne",
       "update": "Update campagne {title}"
     },
     "homebrewTable": {
       "title": "Klaar om je creativiteit de vrije loop te laten?",
       "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campaign. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
     },
-    "addEncounterModal": {
-      "title": "Maak een nieuwe encounter"
-    },
-    "updateEncounterModal": {
+    "encounterModal": {
+      "add": "Maak een nieuwe encounter",
       "update": "Update encounter {title}"
     },
     "addInitiativeMonster": {
@@ -344,19 +343,11 @@
       "title": "Verwijder bevestiging",
       "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
     },
-    "addCampaignHomebrew": {
-      "add": "Homebrew creëren"
-    },
-    "updateCampaignHomebrew": {
-      "update": "Homebrew bijwerken"
-    },
     "campaignNotes": {
       "none": "Geen notities toegevoegd"
     },
-    "addCampaignNotes": {
-      "add": "Notitie creëren"
-    },
-    "updateNote": {
+    "noteModal": {
+      "add": "Notitie creëren",
       "update": "Notitie bijwerken"
     },
     "pricingCard": {

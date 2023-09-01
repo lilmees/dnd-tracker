@@ -1,20 +1,35 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 const store = useCurrentCampaignStore()
+const toast = useToastStore()
+const notes = useNotesStore()
 
 const isOpen = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+const selected = ref<Note[]>([])
 
-function addedNote (notes: Note[]): void {
+function addedNote (note: Note): void {
   if (store.campaign) {
-    store.campaign.notes = notes
+    store.campaign.notes = [...(store.campaign.notes || []), note]
   }
-  isOpen.value = false
+  resetState()
 }
 
-function removedNote (id: number): void {
-  if (store?.campaign?.notes) {
-    store.campaign.notes = store.campaign.notes.filter(p => p.id !== id)
+async function removeNote (): Promise<void> {
+  try {
+    await notes.deleteNote(selected.value[0].id)
+
+    if (store?.campaign?.notes) {
+      store.campaign.notes = store.campaign.notes.filter(p => p.id !== selected.value[0].id)
+    }
+  } catch (err: unknown) {
+    logRocket.captureException(err as Error)
+    toast.error()
+  } finally {
+    resetState()
   }
-  isOpen.value = false
 }
 
 function updatedNote (note: Note): void {
@@ -22,7 +37,14 @@ function updatedNote (note: Note): void {
     const index = store.campaign.notes.findIndex(p => p.id === note.id)
     store.campaign.notes[index] = note
   }
+  resetState()
+}
+
+function resetState (): void {
   isOpen.value = false
+  isUpdating.value = false
+  needConfirmation.value = false
+  selected.value = []
 }
 </script>
 
@@ -54,22 +76,38 @@ function updatedNote (note: Note): void {
         </button>
       </div>
     </div>
-    <div v-else class="flex gap-2 flex-wrap items-start">
+    <div v-else class="flex gap-4 flex-wrap items-start">
       <NoteCard
         v-for="note in store.campaign.notes"
         :key="note.created_at"
         :note="note"
-        @deleted="removedNote"
-        @updated="updatedNote"
+        @update="(v: Note) => {
+          selected = [v]
+          isUpdating = true
+          isOpen = true
+        }"
+        @remove="(v: Note) => {
+          selected = [v]
+          needConfirmation = true
+        }"
       />
     </div>
-    <AddCampaignNote
+    <NoteModal
       v-if="store.campaign"
       :id="store.campaign.id"
       :open="isOpen"
-      :notes="store?.campaign?.notes || []"
-      @close="isOpen = false"
-      @notes="addedNote"
+      :note="selected[0] || undefined"
+      :update="isUpdating"
+      @close="resetState"
+      @added="addedNote"
+      @updated="updatedNote"
+    />
+    <ConfirmationModal
+      v-if="selected.length"
+      :open="needConfirmation"
+      :title="selected[0].title"
+      @close="resetState"
+      @delete="removeNote"
     />
   </section>
 </template>

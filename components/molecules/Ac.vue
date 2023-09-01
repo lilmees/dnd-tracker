@@ -55,36 +55,27 @@ function updateAc ({ __init, ac }: Obj): void {
         :actions="false"
         @submit="updateAc"
       >
-        <div class="flex gap-2 items-end">
-          <div class="grow">
-            <Input
-              focus
-              name="ac"
-              type="number"
-              :label="$t('components.inputs.acLabel')"
-              validation="required|between:1,100|number"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <button
-              type="button"
-              class="btn-black"
-              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              @click="isRollingDice = !isRollingDice"
-            >
-              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
-            </button>
-          </div>
+        <div class="flex gap-2 items-start">
+          <FormKit
+            name="ac"
+            type="number"
+            :label="$t('components.inputs.acLabel')"
+            validation="required|between:1,100|number"
+            outer-class="grow w-full"
+          />
+          <button
+            type="button"
+            class="btn-black min-w-max mt-6"
+            :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
+            @click="isRollingDice = !isRollingDice"
+          >
+            {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+          </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
-        <button
-          type="submit"
-          class="btn-black w-full mt-3"
-          :aria-label="$t('actions.update')"
-        >
+        <FormKit type="submit" :aria-label="$t('actions.update')">
           {{ $t('actions.update') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </div>

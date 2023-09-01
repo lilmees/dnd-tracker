@@ -89,6 +89,7 @@
     "campaigns": {
       "campaigns": "Campaigns",
       "add": "Create campaign",
+      "update": "Update campaign",
       "remove": {
         "title": "Bulk removing campaigns",
         "subtitle": "Select campaigns to remove by clicking on them.",
@@ -107,6 +108,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Create encounter",
+      "update": "Update encounter",
       "remove": {
         "title": "Bulk removing encounters",
         "subtitle": "Select encounters to remove by clicking on them.",
@@ -230,7 +232,8 @@
       "start": "Let the session start"
     },
     "linkModal": {
-      "demo": "This isn't available in the demo"
+      "demo": "This isn't available in the demo",
+      "placeholder": "Amidst the realm of dragons and dungeons, a hero's legend remains untold, as the user has not yet linked their character's saga."
     },
     "homeDiceRolling": {
       "title": "Roll with ease",
@@ -266,20 +269,16 @@
       "marketingLabel": "Get notified about updates",
       "nothing": "Nothing selected"
     },
-    "addCammpaignModal": {
-      "title": "Create a new campaign"
-    },
-    "updateCampaignModal": {
+    "cammpaignModal": {
+      "add": "Create a new campaign",
       "update": "Update campaign {title}"
     },
     "homebrewTable": {
       "title": "Ready to unleash your creativity?",
       "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
     },
-    "addEncounterModal": {
-      "title": "Create a new encounter"
-    },
-    "updateEncounterModal": {
+    "encounterModal": {
+      "add": "Create a new encounter",
       "update": "Update encounter {title}"
     },
     "addInitiativeMonster": {
@@ -344,19 +343,11 @@
       "title": "Delete confirmation",
       "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
     },
-    "addCampaignHomebrew": {
-      "add": "Create homebrew"
-    },
-    "updateCampaignHomebrew": {
-      "update": "Update homebrew"
-    },
     "campaignNotes": {
       "none": "No notes added"
     },
-    "addCampaignNotes": {
-      "add": "Create note"
-    },
-    "updateNote": {
+    "noteModal": {
+      "add": "Create note",
       "update": "Update note"
     },
     "pricingCard": {

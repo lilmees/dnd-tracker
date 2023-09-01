@@ -49,26 +49,22 @@ function resetState (): void {
         :actions="false"
         @submit="updateAc"
       >
-        <div class="flex gap-2 items-end">
+        <div class="flex gap-2 items-start">
           <div class="grow">
-            <Input
-              focus
+            <FormKit
               name="ac"
               type="number"
               :label="$t('components.inputs.acLabel')"
               validation="required|between:1,100|number"
-              required
             />
           </div>
-          <div class="mb-3">
-            <button
-              class="btn-black w-full"
-              :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
-              @click="isRollingDice = !isRollingDice"
-            >
-              {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
-            </button>
-          </div>
+          <button
+            class="btn-black mt-6"
+            :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
+            @click="isRollingDice = !isRollingDice"
+          >
+            {{ isRollingDice ? $t('actions.rollHide') : $t('actions.roll') }}
+          </button>
         </div>
         <DiceRolling v-if="isRollingDice" @result="diceResult" />
         <div class="flex gap-2 flex-wrap py-2">

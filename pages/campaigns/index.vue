@@ -154,7 +154,7 @@ async function deleteCampaigns (): Promise<void> {
           {{ $t('pages.campaigns.add') }}
         </button>
       </div>
-      <AddCampaignModal :open="isOpen" @close="isOpen = false" />
+      <CampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">
@@ -177,10 +177,11 @@ async function deleteCampaigns (): Promise<void> {
       @close="reset"
       @delete="deleteCampaigns"
     />
-    <UpdateCampaignModal
+    <CampaignModal
       v-if="selected.length"
       :open="isUpdating"
       :campaign="selected[0]"
+      update
       @close="reset"
     />
   </NuxtLayout>

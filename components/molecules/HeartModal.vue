@@ -40,10 +40,9 @@ function updateHealth ({ __init, health }: Obj): void {
 
         @submit="updateHealth"
       >
-        <div class="flex gap-2 items-end mb-3">
+        <div class="flex gap-2 items-start mb-3">
           <div class="grow">
-            <Input
-              focus
+            <FormKit
               name="health"
               type="number"
               :label="$t('components.inputs.hpLabel')"
@@ -52,7 +51,7 @@ function updateHealth ({ __init, health }: Obj): void {
             />
           </div>
           <button
-            class="btn-black mb-3"
+            class="btn-black mt-6"
             :aria-label="isRollingDice ? $t('actions.rollHide') : $t('actions.roll')"
             @click="isRollingDice = !isRollingDice"
           >

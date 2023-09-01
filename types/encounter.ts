@@ -40,19 +40,8 @@ interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'pro
   campaign?: number
 }
 
-interface EncounterSchemaOptions {
-  isLoading: boolean
-  campaign: boolean
-  update: boolean
-  error: null | string
-  options?: Option[]
-}
-
-interface AddEncounterForm {
+interface EncounterForm {
   title: string
-  campaign: undefined | number
+  campaign?: number
   background: string
-  data: EncounterSchemaOptions
 }
-
-interface UpdateEncounterForm extends Omit<AddEncounterForm, 'campaign'> {}
