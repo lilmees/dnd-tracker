@@ -22,6 +22,7 @@ function updateName ({ __init, name }: Obj): void {
         :name="useHomebrewIcon(type)"
         :class="useHomebrewColor(type)"
         size="20"
+        class="min-w-[20px]"
       />
       <p
         class="peer cursor-pointer"

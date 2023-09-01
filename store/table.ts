@@ -101,7 +101,7 @@ export const useTableStore = defineStore('useTableStore', () => {
         const { error } = await supabase
           .from('initiative_sheets')
           .update(data as never)
-          .eq('id', id)
+          .eq('id', !id)
 
         if (error) {
           throw error
