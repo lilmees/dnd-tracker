@@ -87,6 +87,9 @@ export default defineNuxtConfig({
           purpose: 'maskable'
         }
       ]
+    },
+    client: {
+      installPrompt: true
     }
   },
   vite: {
