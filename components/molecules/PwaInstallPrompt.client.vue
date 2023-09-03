@@ -9,7 +9,7 @@ const isIos = ref<boolean>(false)
 const showPrompt = ref<boolean>(false)
 
 onMounted(() => {
-  const userAgent = window.navigator.userAgent.toLowerCase()
+  const userAgent: string = window.navigator.userAgent.toLowerCase()
   isIos.value = /iphone|ipad|ipod/.test(userAgent)
 
   if (!hidePrompt.value && cookiesSet.value && process.client) {
