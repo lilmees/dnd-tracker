@@ -86,23 +86,24 @@ async function logout (): Promise<void> {
           :url="link.url"
         />
         <ClientOnly>
-          <template v-if="!user">
+          <div v-show="!user" class="flex items-center gap-4">
             <RouteLink :label="$t('components.navbar.login')" url="login" />
             <RouteLink :label="$t('components.navbar.register')" url="register" />
             <LangSwitcher />
-          </template>
-          <template v-else>
+          </div>
+          <div v-show="user" class="flex items-center gap-4">
             <NavDropdown :routes="route.playRoutes" :label="$t('components.navbar.play')" />
             <ProfileDropdown :routes="route.profileRoutes" @logout="logout" />
-          </template>
+          </div>
         </ClientOnly>
       </div>
-      <Icon
-        v-if="isSmall"
-        name="ci:hamburger-lg"
-        class="w-8 h-8 min-w-[2rem] cursor-pointer text-white"
-        @click="isOpen = true"
-      />
+      <button v-if="isSmall" aria-label="Open menu">
+        <Icon
+          name="ci:hamburger-lg"
+          class="w-8 h-8 min-w-[2rem] cursor-pointer text-white"
+          @click="isOpen = true"
+        />
+      </button>
     </div>
     <Teleport to="body">
       <transition
@@ -114,7 +115,7 @@ async function logout (): Promise<void> {
         leave-to-class="!-translate-y-full"
       >
         <NavbarPopup
-          v-if="isOpen"
+          v-show="isOpen"
           :routes="visibleRoutes"
           :drop-down-routes="[...route.playRoutes, ...route.profileRoutes]"
           :logged-in="user ? true : false"
