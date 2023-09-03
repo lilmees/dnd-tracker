@@ -33,7 +33,6 @@ onBeforeMount(() => profile.fetch())
     <VitePwaManifest />
     <Toasts />
     <DiceNotification />
-    <PwaInstallPrompt />
 
     <div class="flex flex-col min-h-screen">
       <Navbar class="fixed z-10 left-0 right-0 backdrop-blur" />
