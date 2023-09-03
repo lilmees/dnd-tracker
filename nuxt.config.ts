@@ -66,6 +66,7 @@ export default defineNuxtConfig({
       short_name: 'Tracker',
       description: 'Effortless Encounter Management',
       theme_color: '#21252E',
+      background_color: '#2A303C',
       start_url: '/',
       lang: 'en',
       icons: [
