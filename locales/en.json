@@ -378,6 +378,11 @@
     },
     "infoDropdown": {
       "title": "Pinned information cards"
+    },
+    "appInstallBanner": {
+      "install": "DND-Tracker App: Unleash the Adventure",
+      "press": "Press",
+      "addToHome": "Then add to homescreen"
     }
   }
 }

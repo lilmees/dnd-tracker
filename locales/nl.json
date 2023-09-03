@@ -378,6 +378,11 @@
     },
     "infoDropdown": {
       "title": "Gepinde informatie kaarten"
+    },
+    "appInstallBanner": {
+      "install": "DND-Tracker App: Ontketen het Avontuur",
+      "press": "Druk op",
+      "addToHome": "Vervolgens toevoegen aan startscherm"
     }
   }
 }
