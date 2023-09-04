@@ -28,11 +28,16 @@ function updateConditions (): void {
 
 <template>
   <div>
-    <Icon
-      name="iconoir:round-flask"
-      class="w-6 h-6 cursor-pointer text-success"
+    <button
+      :aria-label="$t('actions.open')"
       @click="isOpen = true"
-    />
+    >
+      <Icon
+        name="iconoir:round-flask"
+        class="w-6 h-6 cursor-pointer text-success"
+        aria-hidden="true"
+      />
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false">
       <template #header>
         <h2>

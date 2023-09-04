@@ -51,7 +51,11 @@ function resetState (): void {
       class="btn-primary py-1 px-2 disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >
-      <Icon name="iconamoon:options" class="w-6 h-6" />
+      <Icon
+        name="iconamoon:options"
+        class="w-6 h-6"
+        aria-hidden="true"
+      />
     </button>
     <Modal v-if="isOpen && table.encounter" @close="resetState">
       <template #header>

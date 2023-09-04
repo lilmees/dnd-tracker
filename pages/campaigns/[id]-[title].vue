@@ -105,6 +105,7 @@ function resetState (): void {
               v-tippy="{ content: $t('actions.add') }"
               name="material-symbols:add"
               class="w-6 h-6 cursor-pointer text-success"
+              aria-hidden="true"
               @click="isCreatingEncounter = true"
             />
           </div>

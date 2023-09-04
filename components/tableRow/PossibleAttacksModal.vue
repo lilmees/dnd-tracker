@@ -14,6 +14,7 @@ const isOpen = ref<boolean>(false)
       <Icon
         name="iconamoon:search-bold"
         class="w-4 h-4 text-primary cursor-pointer"
+        aria-hidden="true"
       />
       <p>
         {{ label }}
@@ -23,6 +24,7 @@ const isOpen = ref<boolean>(false)
       v-else
       name="charm:sword"
       class="w-6 h-6 text-primary cursor-pointer"
+      aria-hidden="true"
       @click="isOpen = true"
     />
     <Modal v-if="isOpen" big @close="isOpen = false">

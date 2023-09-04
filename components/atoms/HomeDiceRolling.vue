@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { ready, start } = useTimeout(5000, { controls: true })
 
-const amount = ref<number>(1)
+const amount = ref<string>('1')
 const rolled = ref<{
     dice: string
     result: number | number[],
@@ -10,16 +10,16 @@ const rolled = ref<{
   } | null>(null)
 
 function rollDice (dice: string): void {
-  if (amount.value < 1 || amount.value > 50) {
-    amount.value = 1
+  if (+amount.value < 1 || +amount.value > 50) {
+    amount.value = '1'
   }
   rolled.value = {
     dice,
-    result: useDiceRoll(+dice.replace('d', ''), amount.value),
+    result: useDiceRoll(+dice.replace('d', ''), +amount.value),
     max: +dice.replace('d', ''),
-    amount: amount.value
+    amount: +amount.value
   }
-  amount.value = 1
+  amount.value = '1'
   start()
 }
 </script>
@@ -32,18 +32,13 @@ function rollDice (dice: string): void {
     <p class="pb-10">
       {{ $t('components.homeDiceRolling.text') }}
     </p>
-    <div class="flex gap-1 mb-4">
-      <p>
-        {{ $t('components.inputs.amountLabel') }}:
-      </p>
-      <input
-        v-model="amount"
-        type="number"
-        min="1"
-        max="50"
-        class="outline-none text-white font-bold w-10 bg-transparent border-b border-slate-400"
-      >
-    </div>
+    <FormKit
+      v-model="amount"
+      :label="$t('components.inputs.amountLabel')"
+      type="number"
+      :min="1"
+      :max="50"
+    />
     <div class="flex gap-2 flex-wrap">
       <template v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']" :key="dice">
         <button

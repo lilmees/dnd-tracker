@@ -23,6 +23,7 @@ function updateName ({ __init, name }: Obj): void {
         :class="useHomebrewColor(type)"
         size="20"
         class="min-w-[20px]"
+        aria-hidden="true"
       />
       <p
         class="peer cursor-pointer"
@@ -33,6 +34,7 @@ function updateName ({ __init, name }: Obj): void {
       <Icon
         name="lucide:wrench"
         class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+        aria-hidden="true"
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">

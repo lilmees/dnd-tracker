@@ -24,11 +24,15 @@ function updateHealth ({ __init, health }: Obj): void {
 
 <template>
   <div>
-    <Icon
-      name="mdi:cards-heart-outline"
-      class="w-6 h-6 cursor-pointer text-danger"
+    <button
+      :aria-label="$t('actions.open')"
       @click="isOpen = true"
-    />
+    >
+      <Icon
+        name="mdi:cards-heart-outline"
+        class="w-6 h-6 text-danger"
+      />
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false">
       <template #header>
         <h2>{{ $t('pages.encounter.update.hp') }}</h2>

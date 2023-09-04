@@ -75,7 +75,11 @@ async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise
             aria-label="Google SSO"
             @click="login"
           >
-            <Icon name="flat-color-icons:google" class="w-5 h-5" />
+            <Icon
+              name="flat-color-icons:google"
+              class="w-5 h-5"
+              aria-hidden="true"
+            />
           </button>
         </div>
       </FormKit>

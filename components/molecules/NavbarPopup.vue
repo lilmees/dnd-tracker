@@ -39,11 +39,16 @@ async function manageSubscription (): Promise<void> {
           provider="imagekit"
         />
       </NuxtLink>
-      <Icon
-        name="ic:round-clear"
-        class="w-10 h-10 cursor-pointer text-danger"
+      <button
+        :aria-label="$t('actions.close')"
         @click="$emit('close')"
-      />
+      >
+        <Icon
+          name="ic:round-clear"
+          class="w-10 h-10 text-danger"
+          aria-hidden="true"
+        />
+      </button>
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
       <div v-show="!loggedIn" class="flex flex-col gap-y-2">

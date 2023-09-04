@@ -26,6 +26,7 @@ const isOpen = ref<boolean>(false)
         :name="pinned ? 'iconoir:remove-pin' : 'iconoir:pin'"
         class="w-6 h-6"
         :class="[pinned ? 'text-danger' : 'text-warning']"
+        aria-hidden="true"
       />
     </button>
     <p class="head-2">
@@ -168,6 +169,7 @@ const isOpen = ref<boolean>(false)
           name="tabler:chevron-down"
           class="duration-200 h-6 w-6 stroke-2"
           :class="{ 'rotate-180': isOpen }"
+          aria-hidden="true"
         />
       </button>
     </div>

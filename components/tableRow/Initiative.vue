@@ -67,6 +67,7 @@ async function moveRow (up: boolean): Promise<void> {
           name="lucide:wrench"
           class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
           :class="{ hidden: !initiative }"
+          aria-hidden="true"
         />
       </div>
       <div
@@ -81,6 +82,7 @@ async function moveRow (up: boolean): Promise<void> {
           "
           name="ph:arrow-down"
           class="w-6 h-6 cursor-pointer text-secondary"
+          aria-hidden="true"
           @click="moveRow(false)"
         />
         <Icon
@@ -89,6 +91,7 @@ async function moveRow (up: boolean): Promise<void> {
             && store.encounter.rows[index - 1]?.initiative === initiative"
           name="ph:arrow-up"
           class="w-6 h-6 cursor-pointer text-secondary"
+          aria-hidden="true"
           @click="moveRow(true)"
         />
       </div>

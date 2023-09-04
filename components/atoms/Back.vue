@@ -17,7 +17,11 @@ const localePath = useLocalePath()
       class="flex gap-2 items-center hover:text-primary duration-200 ease-in-out"
       :style="{ color: color || '#fff' }"
     >
-      <Icon name="ph:arrow-left" class="h-6 w-6" />
+      <Icon
+        name="ph:arrow-left"
+        class="h-6 w-6"
+        aria-hidden="true"
+      />
       <p>{{ label }}</p>
     </div>
   </NuxtLink>

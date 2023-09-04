@@ -21,6 +21,7 @@ onBeforeMount(() => { showNav.value = false })
           <Icon
             name="ic:round-clear"
             class="w-8 h-8 text-danger cursor-pointer absolute right-4 top-4 rounded-full ring-danger group-focus-within:ring"
+            aria-hidden="true"
           />
         </NuxtLink>
         <div class="px-4 sm:px-8">

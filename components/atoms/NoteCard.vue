@@ -12,21 +12,32 @@ defineProps<{ note: Note }>()
         <Icon
           name="tabler:dots"
           class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+          aria-hidden="true"
         />
         <template #content>
           <div class="p-4 space-y-2 overflow-auto">
             <button
               class="flex gap-2 items-center max-w-max"
+              :aria-label="$t('actions.update')"
               @click="$emit('update', note)"
             >
-              <Icon name="lucide:wrench" class="h-4 w-4" />
+              <Icon
+                name="lucide:wrench"
+                class="h-4 w-4"
+                aria-hidden="true"
+              />
               <p>{{ $t('actions.update') }}</p>
             </button>
             <button
               class="flex gap-2 items-center max-w-max"
+              :aria-label="$t('actions.remove')"
               @click="$emit('remove', note)"
             >
-              <Icon name="material-symbols:delete-outline-rounded" class="h-4 w-4" />
+              <Icon
+                name="material-symbols:delete-outline-rounded"
+                class="h-4 w-4"
+                aria-hidden="true"
+              />
               <p>{{ $t('actions.delete') }}</p>
             </button>
           </div>

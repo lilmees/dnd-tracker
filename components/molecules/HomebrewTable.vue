@@ -135,6 +135,7 @@ function updated (hb: Homebrew, id: number): void {
                     '!hidden': ['link', 'actions', 'modify'].includes(header),
                     '!text-secondary': sortedBy === header
                   }"
+                  aria-hidden="true"
                 />
               </div>
             </th>
@@ -157,6 +158,7 @@ function updated (hb: Homebrew, id: number): void {
                   :name="useHomebrewIcon(item.type)"
                   :class="useHomebrewColor(item.type)"
                   size="20"
+                  aria-hidden="true"
                 />
                 <p>
                   {{ item.type || '' }}
@@ -184,6 +186,7 @@ function updated (hb: Homebrew, id: number): void {
                   <Icon
                     name="ph:link-simple-horizontal"
                     class="w-8 h-8 cursor-pointer text-info"
+                    aria-hidden="true"
                   />
                 </NuxtLink>
               </div>
@@ -219,11 +222,13 @@ function updated (hb: Homebrew, id: number): void {
                 />
                 <button
                   v-tippy="{ content: $t('actions.delete') }"
+                  :aria-label="$t('actions.delete')"
                   @click="store.removeHomebrew(item.id)"
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
                     class="w-6 h-6 text-danger outline-none"
+                    aria-hidden="true"
                   />
                 </button>
               </div>

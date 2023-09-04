@@ -173,6 +173,7 @@ function closeModal (): void {
           'text-success w-6 h-6': !update && !encounter,
           'text-warning w-10 h-10': !update && encounter
         }"
+        aria-hidden="true"
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
