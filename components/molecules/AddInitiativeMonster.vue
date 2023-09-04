@@ -88,7 +88,11 @@ function reset () {
       <span class="md:hidden">
         {{ $t('components.addInitiativeMonster.bestiary') }}
       </span>
-      <Icon name="la:dragon" class="text-info w-10 h-10" />
+      <Icon
+        name="la:dragon"
+        class="text-info w-10 h-10"
+        aria-hidden="true"
+      />
     </button>
     <FullScreenSearch v-if="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen pt-20 pb-6">

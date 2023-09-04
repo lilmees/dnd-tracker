@@ -60,7 +60,11 @@ async function deleteCampaigns (): Promise<void> {
               :aria-label="$t('general.options')"
               :disabled="store.loading"
             >
-              <Icon name="tabler:dots" class="h-6 w-6" />
+              <Icon
+                name="tabler:dots"
+                class="h-6 w-6"
+                aria-hidden="true"
+              />
             </button>
             <template #content>
               <div class="p-4 space-y-2 overflow-auto">
@@ -69,7 +73,11 @@ async function deleteCampaigns (): Promise<void> {
                   :aria-label="$t('actions.bulkRemove')"
                   @click="isBulk = true"
                 >
-                  <Icon name="material-symbols:delete-outline-rounded" class="h-4 w-4" />
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="h-4 w-4"
+                    aria-hidden="true"
+                  />
                   <p>{{ $t('actions.bulkRemove') }}</p>
                 </button>
               </div>

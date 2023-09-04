@@ -10,17 +10,22 @@ defineProps<{ concentration: boolean }>()
     }"
     class="flex justify-center"
   >
-    <Icon
-      v-if="concentration"
-      name="material-symbols:check-small-rounded"
-      class="w-8 h-8 text-success cursor-pointer"
+    <button
+      :aria-label="$t('components.encounterTable.headers.concentration')"
       @click="$emit('toggle')"
-    />
-    <Icon
-      v-else
-      name="ic:round-clear"
-      class="w-8 h-8 text-danger cursor-pointer"
-      @click="$emit('toggle')"
-    />
+    >
+      <Icon
+        v-if="concentration"
+        name="material-symbols:check-small-rounded"
+        class="w-8 h-8 text-success"
+        aria-hidden="true"
+      />
+      <Icon
+        v-else
+        name="ic:round-clear"
+        class="w-8 h-8 text-danger"
+        aria-hidden="true"
+      />
+    </button>
   </div>
 </template>

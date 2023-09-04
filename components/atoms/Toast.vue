@@ -47,21 +47,25 @@ watch(() => isHover.value, (v: boolean) => {
         v-if="toast.type === 'info'"
         name="material-symbols:info-outline-rounded"
         class="min-w-[25px] min-h-[25px] text-info"
+        aria-hidden="true"
       />
       <Icon
         v-if="toast.type === 'warn'"
         name="material-symbols:warning-outline-rounded"
         class="min-w-[25px] min-h-[25px] text-warning"
+        aria-hidden="true"
       />
       <Icon
         v-if="toast.type === 'success'"
         name="material-symbols:check-small-rounded"
         class="min-w-[25px] min-h-[25px] text-success"
+        aria-hidden="true"
       />
       <Icon
         v-if="toast.type === 'error'"
         name="material-symbols:error-outline-rounded"
         class="min-w-[25px] min-h-[25px] text-danger"
+        aria-hidden="true"
       />
       <div class="grow">
         <p v-if="toast.title" class="pb-2 font-bold">
@@ -74,6 +78,8 @@ watch(() => isHover.value, (v: boolean) => {
       <Icon
         name="ic:round-clear"
         class="min-w-[25px] min-h-[25px] self-start text-danger cursor-pointer"
+        aria-hidden="true"
+        :aria-label="$t('actions.remove')"
         @click="$emit('remove', toast.key)"
       />
     </div>

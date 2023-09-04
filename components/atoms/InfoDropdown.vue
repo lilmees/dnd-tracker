@@ -42,6 +42,7 @@ async function removePin (info: InfoCard): Promise<void> {
           name="tabler:chevron-down"
           class="duration-200 h-6 w-6 stroke-2"
           :class="{ 'rotate-180': open === index }"
+          aria-hidden="true"
         />
       </button>
       <template v-if="open === index">
@@ -177,6 +178,7 @@ async function removePin (info: InfoCard): Promise<void> {
             <Icon
               name="iconoir:remove-pin"
               class="w-6 h-6 text-danger"
+              aria-hidden="true"
             />
           </button>
         </div>

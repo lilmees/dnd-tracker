@@ -6,13 +6,20 @@ onKeyStroke('Escape', () => emit('close'))
 
 <template>
   <Teleport to="body">
-    <div class="fixed inset-0 bg-primary/20 z-10 backdrop-blur-xl">
+    <div
+      class="fixed inset-0 bg-primary/20 z-10 backdrop-blur-xl"
+      aria-modal="true"
+    >
       <div class="container container-max">
-        <button class="absolute top-4 right-4 group">
+        <button
+          class="absolute top-4 right-4 group"
+          :aria-label="$t('actions.close')"
+          @click="$emit('close')"
+        >
           <Icon
             name="ic:round-clear"
             class="text-danger w-8 h-8 rounded-full ring-danger group-focus-within:ring"
-            @click="$emit('close')"
+            aria-hidden="true"
           />
         </button>
         <slot />
