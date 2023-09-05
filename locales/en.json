@@ -51,6 +51,7 @@
     "noSelected": "Nothing selected",
     "or": "of",
     "options": "Options",
+    "alsoMax": "When you modify {field}, you also adjust the maximum",
     "error": {
       "title": "Error",
       "text": "Something went wrong"

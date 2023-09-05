@@ -96,12 +96,12 @@ export const useTableStore = defineStore('useTableStore', () => {
       data.campaign = data.campaign.id
     }
 
-    if (!isSandbox.value) {
+    if (!isSandbox.value && id) {
       try {
         const { error } = await supabase
           .from('initiative_sheets')
           .update(data as never)
-          .eq('id', !id)
+          .eq('id', id)
 
         if (error) {
           throw error

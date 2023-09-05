@@ -60,6 +60,7 @@ function updateAc ({ __init, ac }: Obj): void {
             name="ac"
             type="number"
             :label="$t('components.inputs.acLabel')"
+            :help="$t('general.alsoMax', { field: 'AC' })"
             validation="required|between:1,100|number"
             outer-class="grow w-full"
           />

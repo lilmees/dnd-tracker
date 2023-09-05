@@ -51,6 +51,7 @@
     "noSelected": "Niets geselecteerd",
     "or": "of",
     "options": "Opties",
+    "alsoMax": "Wanneer je {field} wijzigt, pas je ook het maximum aan",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"

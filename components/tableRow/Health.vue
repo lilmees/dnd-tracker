@@ -63,6 +63,7 @@ function updateHealth ({ __init, health }: Obj): void {
             name="health"
             type="number"
             :label="$t('components.inputs.hpLabel')"
+            :help="$t('general.alsoMax', { field: 'HP' })"
             validation="required|between:1,1000|number"
             outer-class="grow w-full"
           />

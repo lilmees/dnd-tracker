@@ -19,6 +19,7 @@ function updateHealth ({ __init, health }: Obj): void {
   isOpen.value = false
   isRollingDice.value = false
   type.value = null
+  form.value.health = null
 }
 </script>
 
