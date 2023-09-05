@@ -152,7 +152,7 @@ function updateRow () {
       :temp-ac="row?.tempAc|| null"
       @update="updateAc"
     />
-    <HeartModal
+    <HpModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.hp') }"
       :health="row.health"
