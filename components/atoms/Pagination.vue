@@ -58,9 +58,14 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
       class="flex items-center justify-center w-8 h-8 rounded-full bg-primary shadow shadow-primary"
       :class="{ 'bg-slate-700': modelValue === 0 }"
       :disabled="modelValue === 0"
+      :aria-label="$t('actions.prev')"
       @click="handlePrevious"
     >
-      <Icon name="ph:arrow-left" class="h-6 w-6" />
+      <Icon
+        name="ph:arrow-left"
+        class="h-6 w-6"
+        aria-hidden="true"
+      />
     </button>
     <div class="flex items-center space-x-4">
       <button
@@ -68,6 +73,7 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
         :key="pageNumber"
         class="flex items-center justify-center w-8 h-8 rounded-full hover:font-bold focus:font-bold"
         :class="{ 'font-bold text-secondary': modelValue === pageNumber - 1 }"
+        :aria-label="`Page ${pageNumber}`"
         @click="handleSelect(pageNumber - 1)"
       >
         {{ pageNumber }}
@@ -77,9 +83,14 @@ const limitedNumbersList: ComputedRef<number[]> = computed(() => {
       class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary shadow shadow-primary"
       :class="{ 'bg-slate-700': modelValue === totalPages - 1 }"
       :disabled="modelValue === totalPages - 1"
+      :aria-label="$t('actions.next')"
       @click="handleNext"
     >
-      <Icon name="ph:arrow-right" class="h-6 w-6" />
+      <Icon
+        name="ph:arrow-right"
+        class="h-6 w-6"
+        aria-hidden="true"
+      />
     </button>
   </div>
 </template>

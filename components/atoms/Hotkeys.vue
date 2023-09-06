@@ -6,7 +6,11 @@
     }"
     trigger="click"
   >
-    <Icon name="mingcute:hotkey-line" class="w-10 h-10 cursor-pointer" />
+    <Icon
+      name="mingcute:hotkey-line"
+      class="w-10 h-10 cursor-pointer"
+      aria-hidden="true"
+    />
     <template #content>
       <div class="p-4 space-y-2 overflow-auto">
         <p class="head-3 text-center pb-2">

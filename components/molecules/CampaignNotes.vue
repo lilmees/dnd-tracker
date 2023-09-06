@@ -52,12 +52,17 @@ function resetState (): void {
   <section class="space-y-4">
     <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <h2>{{ $t('general.notes') }}</h2>
-      <Icon
+      <button
         v-tippy="{ content: $t('actions.add') }"
-        name="material-symbols:add"
-        class="w-6 h-6 cursor-pointer text-success"
+        :aria-label="$t('actions.add')"
         @click="isOpen = true"
-      />
+      >
+        <Icon
+          name="material-symbols:add"
+          class="w-6 h-6 text-success"
+          aria-hidden="true"
+        />
+      </button>
     </div>
     <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
       <SkeletonNoteCard v-for="i in 4" :key="i" />

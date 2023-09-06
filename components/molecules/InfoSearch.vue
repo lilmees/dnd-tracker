@@ -131,7 +131,11 @@ function scrollToTop (): void {
       <span class="md:hidden">
         {{ $t('components.fullScreenSearch.tooltip') }}
       </span>
-      <Icon name="material-symbols:search" class="text-success w-10 h-10" />
+      <Icon
+        name="material-symbols:search"
+        class="text-success w-10 h-10"
+        aria-hidden="true"
+      />
     </button>
     <FullScreenSearch v-if="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen pt-20 pb-6">

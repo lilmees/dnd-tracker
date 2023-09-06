@@ -97,11 +97,16 @@ async function logout (): Promise<void> {
           </div>
         </ClientOnly>
       </div>
-      <button v-if="isSmall" aria-label="Open menu">
+      <button
+        v-if="isSmall"
+        aria-label="Open menu"
+        aria-haspopup="true"
+        @click="isOpen = true"
+      >
         <Icon
           name="ci:hamburger-lg"
-          class="w-8 h-8 min-w-[2rem] cursor-pointer text-white"
-          @click="isOpen = true"
+          class="w-8 h-8 min-w-[2rem] text-white"
+          aria-hidden="true"
         />
       </button>
     </div>

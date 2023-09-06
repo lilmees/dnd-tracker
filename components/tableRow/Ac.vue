@@ -41,6 +41,7 @@ function updateAc ({ __init, ac }: Obj): void {
         name="lucide:wrench"
         class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
         :class="{ hidden: !ac }"
+        aria-hidden="true"
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">

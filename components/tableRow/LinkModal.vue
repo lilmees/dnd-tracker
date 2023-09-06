@@ -21,11 +21,16 @@ function updateLink ({ __init, link }: Obj): void {
 
 <template>
   <div>
-    <Icon
-      name="ph:link-simple-horizontal"
-      class="w-6 h-6 cursor-pointer text-info"
+    <button
+      :aria-label="$t('actions.open')"
       @click="isOpen = true"
-    />
+    >
+      <Icon
+        name="ph:link-simple-horizontal"
+        class="w-6 h-6 text-info"
+        aria-hidden="true"
+      />
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false">
       <div v-if="store.isSandbox">
         <h3>{{ $t('components.linkModal.demo') }}</h3>

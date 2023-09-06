@@ -136,6 +136,7 @@ function selectedSummoner (value: number): void {
       <Icon
         name="material-symbols:table-chart-outline"
         class="text-primary w-10 h-10"
+        aria-hidden="true"
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
@@ -158,7 +159,11 @@ function selectedSummoner (value: number): void {
             class="btn-black mb-2"
             @click="search = ''"
           >
-            <Icon name="ic:round-clear" size="25" />
+            <Icon
+              name="ic:round-clear"
+              size="25"
+              aria-hidden="true"
+            />
           </button>
         </div>
         <template v-if="summon">
@@ -189,6 +194,7 @@ function selectedSummoner (value: number): void {
                 <Icon
                   :name="useHomebrewIcon(hb.type)"
                   :class="useHomebrewColor(hb.type)"
+                  aria-hidden="true"
                   size="20"
                 />
                 <p class="capitalize">
@@ -209,7 +215,11 @@ function selectedSummoner (value: number): void {
                   <p>
                     {{ hb.ac }}
                   </p>
-                  <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
+                  <Icon
+                    name="ic:outline-shield"
+                    class="w-6 h-6 text-help"
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
             </div>

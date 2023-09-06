@@ -35,7 +35,11 @@ function rollDice (dice: string): void {
         <span class="md:hidden">
           {{ $t('actions.roll') }}
         </span>
-        <Icon name="iconoir:hexagon-dice" class="text-secondary w-10 h-10" />
+        <Icon
+          name="iconoir:hexagon-dice"
+          class="text-secondary w-10 h-10"
+          aria-hidden="true"
+        />
       </button>
       <transition
         enter-active-class="duration-300 ease-in-out"
