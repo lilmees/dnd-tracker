@@ -295,7 +295,8 @@
       "summoner": {
         "info": "when selecting a summon, you must also choose a character that will summon it.",
         "add": "Add summon",
-        "select": "Select summoner"
+        "select": "Select summoner",
+        "nothing": "Unfortunately, our quest unveils no treasures that align with your search. Perhaps another name can unlock the magical portal, or you can craft your own homebrew legends."
       }
     },
     "homebrewModal": {
