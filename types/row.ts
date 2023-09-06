@@ -1,5 +1,10 @@
 type RowType = 'summon' | 'lair' | 'monster' | 'player' | 'npc'
+
 type ActionType= 'actions' | 'legendary_actions' | 'reactions' | 'special_abilities'
+
+type HPActionType= 'heal' | 'damage' | 'temp' | 'override' | 'override-reset'
+
+type ACActionType= 'temp' | 'remove' | 'reset' | 'override' | 'override-reset'
 
 interface DeathSaves {
   save: boolean[]
@@ -42,6 +47,8 @@ interface Row extends Partial<PossibleAttacks> {
   link?: string
   maxAc?: number
   maxHealth?: number
+  maxAcOld?: number
+  maxHealthOld?: number
   name: string
   note?: string
   tempAc?: number

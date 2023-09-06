@@ -10,7 +10,7 @@ function updateLink (link: string): void {
   store.updateRow('link', link as never, props.row, props.index)
 }
 
-function updateHealth (update: { type: string, amount: number }): void {
+function updateHealth (update: { type: HPActionType, amount: number }): void {
   handleDeathSaves(update)
 
   switch (update.type) {
@@ -37,20 +37,42 @@ function updateHealth (update: { type: string, amount: number }): void {
       }
       break
     case 'temp':
-      props.row.tempHealth = update.amount
+      if (props.row?.health && props.row.health > 0) {
+        props.row.tempHealth = update.amount
+      }
       break
-    case 'base':
-      props.row.health = update.amount
+    case 'override':
+      if (props.row.health && props.row.maxHealth) {
+        props.row.health = update.amount < props.row.maxHealth
+          ? update.amount
+          : update.amount - (props.row.maxHealth - props.row.health)
+      } else {
+        props.row.health = update.amount
+      }
+
+      props.row.maxHealthOld = props.row.maxHealth || update.amount
+      props.row.maxHealth = update.amount
+      break
+    case 'override-reset':
+      if (props.row.health && props.row.maxHealth && props.row.maxHealthOld) {
+        props.row.health = props.row.maxHealthOld < props.row.maxHealth
+          ? update.amount
+          : update.amount - (props.row.maxHealth - props.row.health)
+      }
+
+      props.row.maxHealthOld = undefined
       props.row.maxHealth = update.amount
       break
   }
 
   // when user is dies because of going to much in the negative hp
   if (
-    props.row.health &&
-    props.row.maxHealth &&
-    props.row.health < 0 &&
-    Math.abs(props.row.health) >= props.row.maxHealth &&
+    (
+      props.row.health &&
+      props.row.maxHealth &&
+      props.row.health < 0 &&
+      Math.abs(props.row.health) >= props.row.maxHealth
+    ) ||
     props.row.deathSaves.fail.every(v => v === true)
   ) {
     toast.info({
@@ -67,7 +89,7 @@ function updateHealth (update: { type: string, amount: number }): void {
   updateRow()
 }
 
-function updateAc (update: { type: string, amount: number }): void {
+function updateAc (update: { type: ACActionType, amount: number }): void {
   switch (update.type) {
     case 'reset':
       props.row.ac = props.row.maxAc
@@ -88,8 +110,26 @@ function updateAc (update: { type: string, amount: number }): void {
     case 'temp':
       props.row.tempAc = update.amount
       break
-    case 'base':
-      props.row.ac = update.amount
+    case 'override':
+      if (props.row.ac && props.row.maxAc) {
+        props.row.ac = update.amount < props.row.maxAc
+          ? update.amount
+          : update.amount - (props.row.maxAc - props.row.ac)
+      } else {
+        props.row.ac = update.amount
+      }
+
+      props.row.maxAcOld = props.row.maxAc || update.amount
+      props.row.maxAc = update.amount
+      break
+    case 'override-reset':
+      if (props.row.ac && props.row.maxAc && props.row.maxAcOld) {
+        props.row.ac = props.row.maxAcOld < props.row.maxAc
+          ? update.amount
+          : update.amount - (props.row.maxAc - props.row.ac)
+      }
+
+      props.row.maxAcOld = undefined
       props.row.maxAc = update.amount
       break
   }
@@ -148,15 +188,19 @@ function updateRow () {
     <AcModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.ac') }"
-      :ac="row?.ac || null"
-      :temp-ac="row?.tempAc|| null"
+      :ac="row.ac"
+      :temp="row.tempAc"
+      :max="row.maxAc"
+      :max-old="row.maxAcOld"
       @update="updateAc"
     />
     <HpModal
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.hp') }"
-      :health="row.health"
-      :temp-health="row.tempHealth"
+      :hp="row.health"
+      :temp="row.tempHealth"
+      :max="row.maxHealth"
+      :max-old="row.maxHealthOld"
       @update="updateHealth"
     />
     <ConditionModal
