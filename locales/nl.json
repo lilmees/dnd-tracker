@@ -15,8 +15,6 @@
     "reset": "Reset",
     "remove": "Verwijderen",
     "bulkRemove": "Bulk verwijderen",
-    "baseHealth": "Zet basis HP",
-    "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
     "rollShow": "Toon dobbelsteenroller",
     "rollHide": "Verberg dobbelsteenroller",
@@ -52,6 +50,10 @@
     "noSelected": "Niets geselecteerd",
     "or": "of",
     "options": "Opties",
+    "alsoMax": "Wanneer je {field} wijzigt, pas je ook het maximum aan",
+    "current": "Huidig",
+    "temp": "Tijdelijk",
+    "max": "Max",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -268,7 +270,9 @@
       "damageBonusLabel": "Schade bonus",
       "damageDiceLabel": "Schade dobbelsteen",
       "marketingLabel": "Ontvang meldingen over updates",
-      "nothing": "Nog niets geselecteerd"
+      "nothing": "Nog niets geselecteerd",
+      "overrideFieldLabel": "Max {field} overschrijven",
+      "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven"
     },
     "cammpaignModal": {
       "add": "Maak een nieuwe campagne",

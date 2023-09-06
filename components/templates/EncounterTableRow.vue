@@ -86,7 +86,7 @@ watchDebounced(
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Health
+      <Hp
         :health="typeof row.health === 'number' ? row.health : null"
         :temp-health="row.tempHealth || null"
         :type="row.type"

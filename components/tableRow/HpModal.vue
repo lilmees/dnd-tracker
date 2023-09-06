@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
-
 const props = defineProps<{
-  ac: number|undefined,
+  hp: number|undefined,
   temp: number|undefined,
   max: number|undefined,
   maxOld: number|undefined
@@ -10,7 +9,7 @@ const props = defineProps<{
 
 const isOpen = ref<boolean>(false)
 const isRollingDice = ref<boolean>(false)
-const type = ref<ACActionType>('temp')
+const type = ref<HPActionType>('heal')
 const formAmount = ref<{ amount: number|undefined}>({ amount: undefined })
 const formOverride = ref<{ amount: number|undefined}>({ amount: undefined })
 
@@ -22,25 +21,17 @@ whenever(() => props.maxOld, () => {
   }
 }, { immediate: true })
 
-function resetAc (): void {
-  emit('update', { type: 'reset' })
-
-  isOpen.value = false
-  isRollingDice.value = false
-  resetState()
-}
-
-function overrideAc (obj: Obj): void {
+function overrideHealth (obj: Obj): void {
   if (obj.reset || (!isNaN(Number(obj.amount)) && Number(obj.amount) === props.maxOld)) {
     obj.amount = props.maxOld ?? 0
     type.value = 'override-reset'
   } else {
     type.value = 'override'
   }
-  updateAc(obj)
+  updateHealth(obj)
 }
 
-function updateAc ({ __init, amount }: Obj): void {
+function updateHealth ({ __init, amount }: Obj): void {
   if (!isNaN(Number(amount))) {
     emit('update', { type: type.value, amount: Number(amount) })
 
@@ -54,36 +45,31 @@ function updateAc ({ __init, amount }: Obj): void {
 function resetState (): void {
   formAmount.value.amount = undefined
   formOverride.value.amount = undefined
-  type.value = 'temp'
+  type.value = 'heal'
 }
 </script>
 
 <template>
   <div>
-    <button
-      :aria-label="$t('actions.open')"
+    <Icon
+      name="mdi:cards-heart-outline"
+      class="w-6 h-6 cursor-pointer text-danger"
       @click="isOpen = true"
-    >
-      <Icon
-        name="ic:outline-shield"
-        class="w-6 h-6 cursor-pointer text-help"
-        aria-hidden="true"
-      />
-    </button>
+    />
     <Modal v-if="isOpen" @close="isOpen = false">
       <template #header>
-        <h2>{{ $t('pages.encounter.update.ac') }}</h2>
+        <h2>{{ $t('pages.encounter.update.hp') }}</h2>
       </template>
       <div
-        v-if="(ac === 0 || ac) && (max === 0 || max)"
+        v-if="(hp === 0 || hp) && (max === 0 || max)"
         class="flex flex-wrap gap-x-4 gap-y-2 pb-4 items-start justify-center"
       >
         <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
           <p class="font-bold">
             {{ $t('general.current') }}
           </p>
-          <p class="head-1" :class="{ 'text-danger': ac < 1 }">
-            {{ ac }}
+          <p class="head-1" :class="{ 'text-danger': hp < 1 }">
+            {{ hp }}
           </p>
         </div>
         <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
@@ -115,18 +101,18 @@ function resetState (): void {
         v-model="formOverride"
         :actions="false"
         type="form"
-        @submit="overrideAc"
+        @submit="overrideHealth"
       >
         <div class="flex gap-2 items-start">
           <FormKit
             type="number"
             name="amount"
-            :label="$t('components.inputs.overrideFieldLabel', { field: 'AC' })"
-            :help="$t('components.inputs.optionalFieldHelp', { field: 'AC' })"
+            :label="$t('components.inputs.overrideFieldLabel', { field: 'HP' })"
+            :help="$t('components.inputs.optionalFieldHelp', { field: 'HP' })"
             validation="required|between:1,1000|number"
             outer-class="grow"
             :suffix-icon="maxOld ? 'rewind' : undefined"
-            @suffix-icon-click="overrideAc({ reset: true })"
+            @suffix-icon-click="overrideHealth({ reset: true })"
           />
           <FormKit
             type="submit"
@@ -140,9 +126,9 @@ function resetState (): void {
       <div class="w-full border border-black h-px my-6" />
       <FormKit
         v-model="formAmount"
-        type="form"
         :actions="false"
-        @submit="updateAc"
+        type="form"
+        @submit="updateHealth"
       >
         <FormKit
           name="amount"
@@ -152,7 +138,6 @@ function resetState (): void {
           :suffix-icon="isRollingDice ? 'close' : dice"
           @suffix-icon-click="isRollingDice = !isRollingDice"
         />
-
         <DiceRolling
           v-if="isRollingDice"
           @result="(v) => {
@@ -160,14 +145,14 @@ function resetState (): void {
             isRollingDice = false
           }"
         />
-        <div class="flex gap-2 flex-wrap py-2 justify-end">
+        <div class="flex gap-2 flex-wrap justify-end items-center">
           <button
             type="submit"
             class="btn-success"
-            :aria-label="$t('actions.reset')"
-            @click="resetAc"
+            :aria-label="$t('actions.heal')"
+            @click="type = 'heal'"
           >
-            {{ $t('actions.reset') }}
+            {{ $t('actions.heal') }}
           </button>
           <button
             type="submit"
@@ -180,10 +165,10 @@ function resetState (): void {
           <button
             type="submit"
             class="btn-danger"
-            :aria-label="$t('actions.remove')"
-            @click="type = 'remove'"
+            :aria-label="$t('actions.damage')"
+            @click="type = 'damage'"
           >
-            {{ $t('actions.remove') }}
+            {{ $t('actions.damage') }}
           </button>
         </div>
       </FormKit>
