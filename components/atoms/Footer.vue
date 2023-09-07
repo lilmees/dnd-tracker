@@ -29,13 +29,18 @@ const showNav = useState<boolean>('showNavigation', () => true)
                 <Icon
                   name="material-symbols:mail-outline-rounded"
                   class="w-6 h-6 mr-2"
+                  aria-hidden="true"
                 />
                 <span>
                   Email
                 </span>
               </NuxtLink>
               <NuxtLink :to="localePath('/contact')" class="flex">
-                <Icon name="fluent:form-24-regular" class="w-6 h-6 mr-2" />
+                <Icon
+                  name="fluent:form-24-regular"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
                 <span>
                   Form
                 </span>
@@ -48,13 +53,21 @@ const showNav = useState<boolean>('showNavigation', () => true)
             </p>
             <div class="flex flex-col gap-4">
               <NuxtLink :to="localePath('/cookie-policy')" class="flex">
-                <Icon name="material-symbols:cookie-outline-rounded" class="w-6 h-6 mr-2" />
+                <Icon
+                  name="material-symbols:cookie-outline-rounded"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
                 <span>
                   Cookie
                 </span>
               </NuxtLink>
               <NuxtLink :to="localePath('/privacy-policy')" class="flex">
-                <Icon name="ic:outline-shield" class="w-6 h-6 mr-2" />
+                <Icon
+                  name="ic:outline-shield"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
                 <span>
                   Privacy
                 </span>
@@ -77,7 +90,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
             Illustrations by Mount Lazarus
           </p>
         </NuxtLink>
-        <p class="text-primary body-small">
+        <p class="text-secondary body-small">
           ©{{ new Date().getFullYear() }} dnd-tracker
         </p>
       </div>

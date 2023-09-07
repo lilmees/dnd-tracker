@@ -8,25 +8,28 @@ const store = useAuthStore()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-const form = ref<Register>({ email: '', password: '', name: '', username: '' })
+const form = ref<Register>({ email: '', password: '', name: '', username: '', marketing: true })
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 const image = ref<string>(
   `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
 )
 
-async function register ({ __init, username, name, ...credentials }: Obj): Promise<void> {
+async function register ({ __init, username, name, marketing, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
+
     await store.register(
       credentials as Login,
-      { username, name, avatar: image.value, role: 'User' }
+      { username, name, marketing, avatar: image.value, role: 'User' }
     )
+
     toast.success({
       title: t('pages.register.toast.success.title'),
       text: t('pages.register.toast.success.text')
     })
+
     navigateTo(localePath('/login'))
   } catch (err: any) {
     logRocket.captureException(err as Error)
@@ -42,6 +45,11 @@ function randomAvatar (): void {
     .toString(36)
     .substring(7)}.svg?size=100`
 }
+
+function handleIconClick (node: any) {
+  node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
+  node.props.type = node.props.type === 'password' ? 'text' : 'password'
+}
 </script>
 
 <template>
@@ -52,7 +60,13 @@ function randomAvatar (): void {
       </h1>
       <div class="flex flex-col gap-2 items-center">
         <div class="w-[100px] h-[100px]">
-          <NuxtImg v-if="image" :src="image" alt="avatar" sizes="sm:100px md:100px lg:100px" />
+          <NuxtImg
+            v-if="image"
+            :src="image"
+            preload
+            alt="avatar"
+            sizes="sm:100px md:100px lg:100px"
+          />
         </div>
         <TextButton @click="randomAvatar">
           {{ $t('pages.register.random') }}
@@ -62,39 +76,49 @@ function randomAvatar (): void {
         {{ error }}
       </p>
       <FormKit v-model="form" type="form" :actions="false" @submit="register">
-        <Input
-          focus
+        <FormKit
           name="name"
           :label="$t('components.inputs.fullNameLabel')"
           validation="required|length:3,30|alpha_spaces"
-          required
         />
-        <Input
+        <FormKit
           name="username"
           :label="$t('components.inputs.usernameLabel')"
           validation="required|length:3,15|alpha_spaces"
-          required
         />
-        <Input name="email" :label="$t('components.inputs.emailLabel')" validation="required|length:5,50|email" required />
-        <Input
+        <FormKit
+          name="email"
+          :label="$t('components.inputs.emailLabel')"
+          validation="required|length:5,50|email"
+        />
+        <FormKit
           name="password"
           type="password"
+          suffix-icon="eye"
           :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
-          required
+          @suffix-icon-click="handleIconClick"
         />
-        <button
+        <FormKit
+          name="marketing"
+          type="checkbox"
+          :label="$t('components.inputs.marketingLabel')"
+        />
+        <FormKit
           type="submit"
-          class="btn-black w-full mt-3"
           :aria-label="$t('pages.register.register')"
           :disabled="isLoading"
+          input-class="w-full"
         >
           {{ $t('pages.register.register') }}
-        </button>
+        </FormKit>
+        <p class="body-small text-center">
+          {{ $t('pages.register.consent') }}
+        </p>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
-        <NuxtLink :to="localePath('/register')">
-          <TextButton>{{ $t('pages.login.new') }}</TextButton>
+        <NuxtLink :to="localePath('/login')">
+          <TextButton>{{ $t('pages.login.signIn') }}</TextButton>
         </NuxtLink>
         <NuxtLink :to="localePath('/forgot-password')">
           <TextButton>{{ $t('pages.login.forgot') }}</TextButton>

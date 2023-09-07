@@ -4,11 +4,14 @@
 <template>
   <div class="pb-[100px] animate-pulse">
     <div class="flex justify-end">
-      <div class="w-[220px] h-8 bg-tracker rounded-full" />
+      <div class="flex gap-y-2 gap-x-6 items-center flex-wrap">
+        <div class="w-[200px] h-8 bg-tracker rounded-full" />
+        <div class="w-12 h-10 bg-tracker rounded-lg" />
+      </div>
     </div>
     <div class="rounded-lg p-4 bg-tracker/50 space-y-4 mt-4 border-4 border-tracker max-w-full  overflow-hidden">
       <div
-        class="flex flex-col md:flex-row gap-4 items-center justify-between container-max"
+        class="flex flex-col sm:flex-row gap-4 items-center justify-between container-max"
       >
         <div class="w-[100px] h-6 bg-tracker rounded-full" />
         <div class="w-[250px] h-10 bg-tracker rounded-full" />
@@ -24,12 +27,12 @@
                 'components.encounterTable.headers.name',
                 'components.encounterTable.headers.init',
                 'components.encounterTable.headers.ac',
-                'components.encounterTable.headers.hp',
-                'components.encounterTable.headers.actions',
+                'components.encounterTable.headers.health',
+                'components.encounterTable.headers.manage',
                 'components.encounterTable.headers.conditions',
                 'components.encounterTable.headers.note',
                 'components.encounterTable.headers.deathSaves',
-                'con',
+                'components.encounterTable.headers.concentration',
                 'components.encounterTable.headers.modify'
               ]"
               :key="header"

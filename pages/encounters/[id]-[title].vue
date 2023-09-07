@@ -28,10 +28,13 @@ onMounted(async () => {
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
-        <Back
-          :url="backUrl(store.encounter.campaign)"
-          :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
-        />
+        <div class="flex gap-y-2 gap-x-6 items-center flex-wrap">
+          <Back
+            :url="backUrl(store.encounter.campaign)"
+            :label="$t(store.encounter.campaign ? 'pages.encounter.campaignBack' : 'pages.encounter.back')"
+          />
+          <VisualOptions />
+        </div>
       </div>
       <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4">
         <EncounterHeader />

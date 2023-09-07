@@ -15,12 +15,13 @@ onBeforeMount(() => { showNav.value = false })
       class="container absolute w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
     >
       <div
-        class="bg-tracker px-2 py-6 sm:p-8 rounded-lg relative border-4 border-primary tracker-shadow-pulse"
+        class="bg-primary/20 px-2 py-6 sm:p-8 rounded-lg relative border-4 border-black tracker-shadow-pulse"
       >
         <NuxtLink :to="localePath('/')" class="group">
           <Icon
             name="ic:round-clear"
             class="w-8 h-8 text-danger cursor-pointer absolute right-4 top-4 rounded-full ring-danger group-focus-within:ring"
+            aria-hidden="true"
           />
         </NuxtLink>
         <div class="px-4 sm:px-8">

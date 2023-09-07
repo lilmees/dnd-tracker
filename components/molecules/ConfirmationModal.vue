@@ -17,12 +17,22 @@ function deleteConfirmation (): void {
 
 <template>
   <Modal v-if="open" @close="$emit('close')">
-    <div class="text-white space-y-4">
-      <h2 class="text-danger">
+    <template #header>
+      <h2>
         {{ $t('components.confirmationModal.title') }}
       </h2>
+    </template>
+    <div class="text-white space-y-4">
       <p class="pb-4">
-        {{ $t('components.confirmationModal.text', { title }) }}
+        <template
+          v-for="text in $t('components.confirmationModal.text', { title }).split(title)"
+          :key="text"
+        >
+          {{ text }}
+          <span class="font-bold last:hidden text-danger">
+            {{ title }}
+          </span>
+        </template>
       </p>
       <FormKit
         id="form"
@@ -31,22 +41,30 @@ function deleteConfirmation (): void {
         :actions="false"
         @submit="deleteConfirmation"
       >
-        <Input
-          focus
+        <FormKit
           name="title"
           :label="$t('components.inputs.titleLabel')"
           validation="required"
-          required
           :placeholder="title"
         />
-        <button
-          type="submit"
-          class="btn-danger w-full"
-          :aria-label="$t('actions.delete')"
-          :disabled="!same"
-        >
-          {{ $t('actions.delete') }}
-        </button>
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="btn-black"
+            :aria-label="$t('actions.cancel')"
+            @click="$emit('close')"
+          >
+            {{ $t('actions.cancel') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger"
+            :aria-label="$t('actions.delete')"
+            :disabled="!same"
+          >
+            {{ $t('actions.delete') }}
+          </button>
+        </div>
       </FormKit>
     </div>
   </Modal>

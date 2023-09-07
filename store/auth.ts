@@ -1,10 +1,9 @@
 export const useAuthStore = defineStore('useAuthStore', () => {
-  const supabase = useSupabaseAuthClient()
-  const { auth } = useSupabaseClient()
+  const supabase = useSupabaseClient()
   const localePath = useLocalePath()
 
   async function register (credentails: Login, data: Register): Promise<void> {
-    const { error, data: userData } = await auth.signUp(credentails)
+    const { error, data: userData } = await supabase.auth.signUp(credentails)
 
     if (error) {
       throw error
@@ -31,7 +30,9 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   }
 
   async function login (credentials: Login): Promise<void> {
-    const { error } = await auth.signInWithPassword(credentials)
+    const { error } = Object.values(credentials).length
+      ? await supabase.auth.signInWithPassword(credentials)
+      : await supabase.auth.signInWithOAuth({ provider: 'google' })
 
     if (error) {
       throw error
@@ -41,7 +42,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   }
 
   async function logout (): Promise<void> {
-    const { error } = await auth.signOut()
+    const { error } = await supabase.auth.signOut()
 
     if (error) {
       throw error
@@ -51,7 +52,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   }
 
   async function forgotPassword (email: string): Promise<void> {
-    const { error } = await auth.resetPasswordForEmail(email)
+    const { error } = await supabase.auth.resetPasswordForEmail(email)
 
     if (error) {
       throw error
@@ -59,7 +60,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   }
 
   async function updateUser (payload: { password: string }): Promise<void> {
-    const { error } = await auth.updateUser(payload)
+    const { error } = await supabase.auth.updateUser(payload)
 
     if (error) {
       throw error

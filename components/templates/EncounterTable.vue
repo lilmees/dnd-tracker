@@ -12,23 +12,34 @@ whenever(keys.shift_arrowRight, () => store.nextInitiative())
 whenever(keys.PageDown, () => store.nextInitiative())
 
 const headers = computed<string[]>(() => {
-  const headers = [
-    '',
-    t('components.encounterTable.headers.name'),
-    t('components.encounterTable.headers.init'),
-    t('components.encounterTable.headers.ac'),
-    t('components.encounterTable.headers.hp'),
-    t('components.encounterTable.headers.actions'),
-    t('components.encounterTable.headers.conditions'),
-    t('components.encounterTable.headers.note'),
-    t('components.encounterTable.headers.deathSaves'),
-    'con',
-    t('components.encounterTable.headers.modify')
-  ]
-  if (store.includesSummond) {
-    headers.splice(2, 0, t('components.encounterTable.headers.summond'))
-  }
+  const always = ['name', 'init', 'manage']
+  const options = ['name', 'summoner', 'init', 'ac', 'health', 'manage', 'conditions', 'note', 'deathSaves', 'concentration', 'modify']
+
+  const headers = ['']
+
+  options.forEach((option: string) => {
+    if (always.includes(option)) {
+      headers.push(t(`components.encounterTable.headers.${option}`))
+    } else if (!store.encounter?.settings.modified || store.encounter?.settings.rows.includes(option)) {
+      if (store.includesSummond && option === 'summoner') {
+        headers.push(t('components.encounterTable.headers.summoner'))
+      } else if (option !== 'summoner') {
+        headers.push(t(`components.encounterTable.headers.${option}`))
+      }
+    }
+  })
+
   return headers
+})
+
+const tableSpacing = computed<string>(() => {
+  const style: Obj = {
+    compact: 'px-1 py-0',
+    normal: 'px-2 py-1',
+    cozy: 'px-3 py-2'
+  }
+
+  return style[store.encounter?.settings.spacing || 'normal']
 })
 </script>
 
@@ -58,6 +69,7 @@ const headers = computed<string[]>(() => {
             :key="row!.id"
             :row="row"
             :index="index"
+            :table-spacing="tableSpacing"
           />
         </tbody>
       </table>

@@ -4,5 +4,6 @@ interface Register {
   name: string
   username: string
   avatar?: string
-  role?: 'User'|'Admin'
+  role?: 'User'|'Admin',
+  marketing: boolean
 }

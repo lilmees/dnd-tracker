@@ -25,6 +25,7 @@ const isOpen = ref<boolean>(false)
         class="duration-200 ease-in-out w-6 h-6"
         :class="{ 'rotate-180': isOpen }"
         name="tabler:chevron-down"
+        aria-hidden="true"
       />
     </button>
     <div

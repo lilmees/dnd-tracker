@@ -52,8 +52,14 @@ async function subscribe () {
             v-if="item.icon === 'check'"
             name="material-symbols:check-small-rounded"
             class="text-success w-8 h-8"
+            aria-hidden="true"
           />
-          <Icon v-else name="ic:round-clear" class="text-danger w-8 h-8" />
+          <Icon
+            v-else
+            name="ic:round-clear"
+            class="text-danger w-8 h-8"
+            aria-hidden="true"
+          />
           <span>{{ item.label }}</span>
         </li>
       </ul>

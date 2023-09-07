@@ -25,27 +25,25 @@ onMounted(() => {
 
 function addedEncounter (encounter: Encounter): void {
   store.encounters.push(encounter)
-  isCreatingEncounter.value = false
-  reset()
+  resetState()
 }
 
 async function deletedEncounter (): Promise<void> {
   try {
     store.encounters = store.encounters.filter(e => e.id !== selected.value[0].id)
-    isCreatingEncounter.value = false
     await encStore.deleteEncounter(selected.value[0].id)
   } catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
-    reset()
+    resetState()
   }
 }
 
 function updatedEncounter (encounter: Encounter): void {
   const index = store.encounters.findIndex(e => e.id === encounter.id)
   store.encounters[index] = encounter
-  reset()
+  resetState()
 }
 
 async function copyEncounter (enc : Encounter): Promise<void> {
@@ -59,8 +57,13 @@ async function copyEncounter (enc : Encounter): Promise<void> {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
-    reset()
+    resetState()
   }
+}
+
+function resetState (): void {
+  reset()
+  isCreatingEncounter.value = false
 }
 </script>
 
@@ -102,6 +105,7 @@ async function copyEncounter (enc : Encounter): Promise<void> {
               v-tippy="{ content: $t('actions.add') }"
               name="material-symbols:add"
               class="w-6 h-6 cursor-pointer text-success"
+              aria-hidden="true"
               @click="isCreatingEncounter = true"
             />
           </div>
@@ -149,26 +153,22 @@ async function copyEncounter (enc : Encounter): Promise<void> {
       <HomebrewTable class="py-10" />
       <CampaignNotes />
       <div class="absolute z-[1]">
-        <template v-if="selected.length">
-          <ConfirmationModal
-            :open="needConfirmation"
-            :title="selected[0].title"
-            @close="reset"
-            @delete="deletedEncounter"
-          />
-          <UpdateEncounterModal
-            :open="isUpdating"
-            :encounter="selected[0]"
-            @close="reset"
-            @updated="updatedEncounter"
-          />
-        </template>
-        <AddEncounterModal
+        <ConfirmationModal
+          v-if="selected.length"
+          :open="needConfirmation"
+          :title="selected[0].title"
+          @close="resetState"
+          @delete="deletedEncounter"
+        />
+        <EncounterModal
           v-if="store.campaign"
-          :open="isCreatingEncounter"
+          :open="isCreatingEncounter || isUpdating"
+          :update="isUpdating"
           :campaign-id="store.campaign.id"
-          @close="isCreatingEncounter = false"
+          :encounter="isUpdating && selected.length ? selected[0] : undefined"
           @added="addedEncounter"
+          @close="resetState"
+          @updated="updatedEncounter"
         />
       </div>
     </div>

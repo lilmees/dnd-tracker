@@ -23,4 +23,4 @@ interface AddCampaign extends Pick<Campaign, 'created_by'|'admins'|'title'|'back
 
 interface UpdateCampaign extends Partial<Omit<Campaign, 'id'|'created_at'|'created_by'|'initiative_sheets'>> {}
 
-interface AddCampaignForm extends Pick<Campaign, 'title'|'background'> {}
+interface CampaignForm extends Pick<Campaign, 'title'|'background'> {}

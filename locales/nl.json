@@ -15,8 +15,6 @@
     "reset": "Reset",
     "remove": "Verwijderen",
     "bulkRemove": "Bulk verwijderen",
-    "baseHealth": "Zet basis HP",
-    "baseAc": "Zet basis AC",
     "temp": "Tijdelijk",
     "rollShow": "Toon dobbelsteenroller",
     "rollHide": "Verberg dobbelsteenroller",
@@ -29,8 +27,13 @@
     "closeSettings": "Sluit instelling",
     "drag": "Sleep mij",
     "close": "Sluiten",
+    "open": "Openen",
     "next": "Volgende",
-    "prev": "Vorige"
+    "prev": "Vorige",
+    "read": {
+      "more": "Lees meer",
+      "less": "Lees minder"
+    }
   },
   "general": {
     "encounters": "Encounters",
@@ -47,6 +50,10 @@
     "noSelected": "Niets geselecteerd",
     "or": "of",
     "options": "Opties",
+    "alsoMax": "Wanneer je {field} wijzigt, pas je ook het maximum aan",
+    "current": "Huidig",
+    "temp": "Tijdelijk",
+    "max": "Max",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -84,7 +91,8 @@
     },
     "campaigns": {
       "campaigns": "Campagnes",
-      "add": "campagne creëren",
+      "add": "Campagne creëren",
+      "update": "Campagne bijwerken",
       "remove": {
         "title": "Bulk verwijderen campagnes",
         "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
@@ -103,6 +111,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
+      "update": "Encounter bijwerken",
       "remove": {
         "title": "Bulk verwijderen encounters",
         "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
@@ -145,6 +154,7 @@
     "register": {
       "register": "Registreer",
       "random": "Random avatar",
+      "consent": "Door te registreren, stemt u in met onze algemene voorwaarden.",
       "toast": {
         "success": {
           "title": "Succesvol registreerd",
@@ -217,7 +227,7 @@
   },
   "components": {
     "cookieBanner": {
-      "text": "Als je deze website gebruikt ga je akkoord dat wij alleen functionele cookies gebruiken.",
+      "text": "Start een Episch Avontuur: Accepteer Cookies voor Verbetering van je D&D Ervaring!",
       "policy": "Cookie policy",
       "button": "Oke"
     },
@@ -225,7 +235,8 @@
       "start": "Laat het spelen beginnen"
     },
     "linkModal": {
-      "demo": "Dit is niet beschikbaar in de demo"
+      "demo": "Dit is niet beschikbaar in de demo",
+      "placeholder": "Te midden van het rijk der draken en kerkerdoolhoven blijft de legende van een held onverteld, omdat de gebruiker de saga van hun personage nog niet heeft gelinkt."
     },
     "homeDiceRolling": {
       "title": "Rollen met gemak",
@@ -250,32 +261,33 @@
       "textLabel": "Tekst",
       "questionLabel": "Je vraag?",
       "challengeLabel": "Challenge rating",
-      "nothing": "Nog niets geselecteerd"
+      "playerLabel": "Speler",
+      "descriptionLabel": "Omschrijving",
+      "actionsLabel": "Acties",
+      "addActionLabel": "Actie toevoegen",
+      "actionTypeLabel": "Actie type",
+      "attackBonusLabel": "Aanval bonus",
+      "damageBonusLabel": "Schade bonus",
+      "damageDiceLabel": "Schade dobbelsteen",
+      "marketingLabel": "Ontvang meldingen over updates",
+      "nothing": "Nog niets geselecteerd",
+      "overrideFieldLabel": "Max {field} overschrijven",
+      "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven"
     },
-    "addCammpaignModal": {
-      "title": "Maak een nieuwe campagne"
-    },
-    "updateCampaignModal": {
+    "cammpaignModal": {
+      "add": "Maak een nieuwe campagne",
       "update": "Update campagne {title}"
     },
     "homebrewTable": {
       "title": "Klaar om je creativiteit de vrije loop te laten?",
       "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campaign. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
     },
-    "addEncounterModal": {
-      "title": "Maak een nieuwe encounter"
-    },
-    "updateEncounterModal": {
+    "encounterModal": {
+      "add": "Maak een nieuwe encounter",
       "update": "Update encounter {title}"
     },
-    "addInitiativeModal": {
-      "addHomebrew": "Homebrew maken"
-    },
-    "updateInitiativeModal": {
-      "updateHomebrew": "Homebrew aanpassen"
-    },
     "addInitiativeMonster": {
-      "manual": "Monster manual",
+      "bestiary": "Bestiary",
       "notFound": "Wij hebben geen monster gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanmaken als homebrew!"
     },
     "addInitiativeCampaignHomebrew": {
@@ -283,11 +295,14 @@
       "initiative": {
         "info": "Wanneer je een summon selecteert, dien je ook een personage te kiezen dat deze summon oproept.",
         "add": "Summon toevoegen",
-        "select": "Selecteer oproeper"
+        "select": "Selecteer oproeper",
+        "nothing": "Helaas, onze queeste onthult geen schatten die overeenkomen met jouw zoektocht. Wellicht kan een andere naam het magische portaal openen, of je kunt je eigen homebrew legendes creëren."
       }
     },
-    "addHomebrew": {
-      "newHomebrew": "Maak een nieuwe homebrew"
+    "homebrewModal": {
+      "new": "Maak een nieuwe homebrew",
+      "add": "Homebrew maken",
+      "update": "Homebrew aanpassen"
     },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",
@@ -295,14 +310,14 @@
         "name": "Naam",
         "init": "Init",
         "ac": "AC",
-        "hp": "HP",
-        "actions": "Acties",
+        "health": "HP",
+        "manage": "Beheer",
         "conditions": "Condities",
         "note": "Notitie",
         "deathSaves": "Death saves",
-        "concentration": "Concentratie",
+        "concentration": "CON",
         "modify": "Aanpassen",
-        "summond": "Oproeper"
+        "summoner": "Oproeper"
       }
     },
     "actions": {
@@ -334,19 +349,11 @@
       "title": "Verwijder bevestiging",
       "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
     },
-    "addCampaignHomebrew": {
-      "add": "Homebrew creëren"
-    },
-    "updateCampaignHomebrew": {
-      "update": "Homebrew bijwerken"
-    },
     "campaignNotes": {
       "none": "Geen notities toegevoegd"
     },
-    "addCampaignNotes": {
-      "add": "Notitie creëren"
-    },
-    "updateNote": {
+    "noteModal": {
+      "add": "Notitie creëren",
       "update": "Notitie bijwerken"
     },
     "pricingCard": {
@@ -356,6 +363,11 @@
     "fullScreenSearch": {
       "tooltip": "Informatie opzoeken",
       "notFound": "Helaas, ons avontuurlijk speurwerk in de diepten van onze DnD-archieven heeft geen enkel spoor opgeleverd. De mystieke boeken vol met eeuwenoude kennis en regels lijken tijdelijk hun geheimen voor ons verborgen te houden. Maar we geven de moed niet op! Blijf gerust rondsnuffelen in onze magische wereld, want wie weet wat voor epische vondsten je nog kunt ontdekken."
+    },
+    "visualOptions": {
+      "tooltip": "Instellingen",
+      "spacing": "Tabel stijl",
+      "rows": "Zichtbare rijen"
     },
     "infoSearch": {
       "show": "Toon gepinde items",
