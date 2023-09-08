@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { FormKitNode } from '@formkit/core'
 import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['loggedin'] })
@@ -46,7 +47,7 @@ function randomAvatar (): void {
     .substring(7)}.svg?size=100`
 }
 
-function handleIconClick (node: any) {
+function handleIconClick (node: FormKitNode) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
