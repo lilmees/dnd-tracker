@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
 const localePath = useLocalePath()
 const profile = useProfileStore()
 const { auth } = useSupabaseClient()
-const route = useRoute()
 
 useSeo()
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-
-  // kill scrolltriggers on route change
-  watch(route, () => {
-    ScrollTrigger.getAll().forEach(t => t.kill())
-  }, { deep: true })
-}
 
 auth.onAuthStateChange((event, session) => {
   profile.fetch()

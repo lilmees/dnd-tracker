@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { Power3, gsap } from 'gsap'
 import logRocket from 'logrocket'
 
 const store = useTableStore()
 const toast = useToastStore()
-
-const hoard = ref<HTMLElement>()
-const table = ref<HTMLElement>()
-const hoardVisible: Ref<boolean> = useElementVisibility(hoard)
-const tableVisible: Ref<boolean> = useElementVisibility(table)
 
 try {
   await store.getSandboxEncounter()
@@ -16,26 +10,6 @@ try {
   logRocket.captureException(err as Error)
   toast.error()
 }
-
-watch(hoardVisible, (v: boolean) => {
-  if (v && hoard.value) {
-    gsap.fromTo(
-      hoard.value,
-      { scale: 0.85 },
-      { scale: 1, duration: 0.75, ease: Power3.easeOut }
-    )
-  }
-})
-
-watch(tableVisible, (v: boolean) => {
-  if (v && table.value) {
-    gsap.fromTo(
-      table.value,
-      { scale: 0.85 },
-      { scale: 1, duration: 0.75, ease: Power3.easeOut }
-    )
-  }
-})
 </script>
 
 <template>
@@ -45,12 +19,18 @@ watch(tableVisible, (v: boolean) => {
       <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
         <div class="container grid gap-10 lg:grid-cols-2">
           <TitleText
+            data-aos="zoom-in"
+            :data-aos-once="true"
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
             button-link="roadmap"
             :button-label="$t('pages.home.textBlock1.button')"
           />
-          <div class="mt-20 lg:mt-32 flex md:justify-end">
+          <div
+            data-aos="zoom-in"
+            :data-aos-once="true"
+            class="mt-20 lg:mt-32 flex md:justify-end"
+          >
             <Summary
               :title="$t('pages.home.summary.title')"
               :items="[
@@ -66,7 +46,8 @@ watch(tableVisible, (v: boolean) => {
         </div>
         <div
           v-if="store.encounter"
-          ref="table"
+          data-aos="zoom-in"
+          :data-aos-once="true"
           class="space-y-4"
         >
           <div class="flex justify-end">
@@ -78,7 +59,11 @@ watch(tableVisible, (v: boolean) => {
             <EncounterOptions />
           </div>
         </div>
-        <div ref="hoard" class="container grid md:grid-cols-2 gap-10">
+        <div
+          data-aos="zoom-in"
+          :data-aos-once="true"
+          class="container grid md:grid-cols-2 gap-10"
+        >
           <HomeDiceRolling />
           <NuxtImg
             src="/dragon_hoard.webp"
@@ -90,6 +75,8 @@ watch(tableVisible, (v: boolean) => {
           />
         </div>
         <TitleText
+          data-aos="zoom-in"
+          :data-aos-once="true"
           center
           :title="$t('pages.home.textBlock2.title')"
           :text="$t('pages.home.textBlock2.text')"
