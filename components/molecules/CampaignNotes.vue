@@ -74,10 +74,10 @@ function resetState (): void {
       <div class="flex justify-center">
         <button
           class="btn-primary w-fit mx-auto"
-          :aria-label="$t('components.addCampaignNotes.add')"
+          :aria-label="$t('components.noteModal.add')"
           @click="isOpen = true"
         >
-          {{ $t('components.addCampaignNotes.add') }}
+          {{ $t('components.noteModal.add') }}
         </button>
       </div>
     </div>
