@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import { FormKitNode, reset } from '@formkit/core'
 import logRocket from 'logrocket'
-import profileSchema from '@/formkit/updateProfile.json'
-import passwordSchema from '@/formkit/updatePassword.json'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -12,22 +11,14 @@ const { t } = useI18n()
 const image = ref<string>(profile.data?.avatar || randomAvatar())
 const isLoading = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
+const passwordError = ref<string>('')
+const infoError = ref<string>('')
 
-const formInfo = ref<ProfileUpdateForm>({
+const formInfo = ref<ProfileUpdate>({
   email: '',
   name: '',
   username: '',
-  marketing: true,
-  data: {
-    error: null
-  }
-})
-
-const formPassword = ref<UpdatePasswordForm>({
-  password: '',
-  data: {
-    error: null
-  }
+  marketing: true
 })
 
 if (profile.data) {
@@ -38,27 +29,32 @@ if (profile.data) {
 
 function setUserData (): void {
   image.value = profile.data?.avatar || randomAvatar()
-  formInfo.value.email = profile.data?.email || ''
-  formInfo.value.name = profile.data?.name || ''
-  formInfo.value.username = profile.data?.username || ''
-  formInfo.value.marketing = profile.data?.marketing ?? true
+  formInfo.value = {
+    email: profile.data?.email || '',
+    name: profile.data?.name || '',
+    username: profile.data?.username || '',
+    marketing: profile.data?.marketing ?? true
+  }
 }
 
 const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): Promise<void> => {
-  formInfo.value.data.error = null
-  formPassword.value.data.error = null
+  infoError.value = ''
+  passwordError.value = ''
   isLoading.value = true
 
   try {
     await profile.updateProfile(formData)
+    reset('password')
     toast.success({ title: t('pages.profile.toast.success.text') })
   } catch (err: any) {
     logRocket.captureException(err as Error)
+
     if (formData.password) {
-      formPassword.value.data.error = err.message
+      passwordError.value = err.message
     } else if (!formData.avatar) {
-      formInfo.value.data.error = err.message
+      infoError.value = err.message
     }
+
     toast.error({ text: err.message })
   } finally {
     isLoading.value = false
@@ -84,6 +80,11 @@ async function deleteUser (): Promise<void> {
   } finally {
     isLoading.value = false
   }
+}
+
+function handleIconClick (node: FormKitNode) {
+  node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
+  node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
 </script>
 
@@ -124,7 +125,7 @@ async function deleteUser (): Promise<void> {
         </div>
       </div>
       <div
-        class="flex flex-col md:flex-row md:items-center justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
+        class="flex flex-col md:flex-row justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
       >
         <div class="md:min-w-[300px]">
           <h2>
@@ -141,15 +142,35 @@ async function deleteUser (): Promise<void> {
             :actions="false"
             @submit="updateProfile"
           >
-            <FormKitSchema
-              :data="{...formInfo, data: { ...formInfo.data, isLoading }}"
-              :schema="useI18nForm(profileSchema)"
+            <FormKit
+              name="name"
+              :label="$t('components.inputs.nameLabel')"
+              validation="required|length:3,30|alpha_spaces"
             />
+            <FormKit
+              name="username"
+              :label="$t('components.inputs.usernameLabel')"
+              validation="required|length:3,15|alpha_spaces"
+            />
+            <FormKit
+              name="email"
+              :label="$t('components.inputs.emailLabel')"
+              validation="required|length:5,50|email"
+            />
+            <FormKit
+              name="marketing"
+              type="checkbox"
+              :label="$t('components.inputs.marketingLabel')"
+            />
+            <FormKit type="submit" :label="$t('actions.save')" />
+            <p v-if="infoError" class="text-danger body-small mt-1">
+              {{ infoError }}
+            </p>
           </FormKit>
         </div>
       </div>
       <div
-        class="flex flex-col md:flex-row md:items-center justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
+        class="flex flex-col md:flex-row justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
       >
         <div class="md:min-w-[300px]">
           <h2>
@@ -161,15 +182,23 @@ async function deleteUser (): Promise<void> {
         </div>
         <div class="grow max-w-4xl">
           <FormKit
-            v-model="formPassword"
+            id="password"
             type="form"
             :actions="false"
             @submit="updateProfile"
           >
-            <FormKitSchema
-              :data="{...formPassword, data: { ...formPassword.data, isLoading }}"
-              :schema="useI18nForm(passwordSchema)"
+            <FormKit
+              name="password"
+              type="password"
+              suffix-icon="eye"
+              :label="$t('components.inputs.passwordLabel')"
+              validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
+              @suffix-icon-click="handleIconClick"
             />
+            <FormKit type="submit" :label="$t('actions.save')" />
+            <p v-if="passwordError" class="text-danger body-small mt-1">
+              {{ passwordError }}
+            </p>
           </FormKit>
         </div>
       </div>
