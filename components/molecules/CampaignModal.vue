@@ -41,7 +41,7 @@ function handleSubmit ({ __init, ...formData }: Obj): void {
   isLoading.value = true
 
   try {
-    user.value ? updateCampaign(formData) : addCampaign(formData)
+    props.update ? updateCampaign(formData) : addCampaign(formData)
     resetForm()
   } catch (err: any) {
     logRocket.captureException(err as Error)
@@ -52,12 +52,14 @@ function handleSubmit ({ __init, ...formData }: Obj): void {
 }
 
 async function addCampaign (data: Obj): Promise<void> {
-  await store.addCampaign({
-    ...data as CampaignForm,
-    created_by: user.value.id,
-    admins: [user.value.id],
-    color: useContrastColor(data.background)
-  })
+  if (user.value) {
+    await store.addCampaign({
+      ...data as CampaignForm,
+      created_by: user.value.id,
+      admins: [user.value.id],
+      color: useContrastColor(data.background)
+    })
+  }
 }
 
 async function updateCampaign (data: Obj): Promise<void> {
