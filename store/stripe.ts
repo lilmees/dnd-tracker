@@ -48,19 +48,19 @@ export const useStripeStore = defineStore('useStripeStore', () => {
           { label: t('pages.pricing.encounters', { number: 10 }), icon: 'check' },
           { label: t('pages.pricing.campaigns', { number: 3 }), icon: 'check' },
           { label: t('pages.pricing.multiple'), icon: 'cross' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.live'), icon: 'cross' },
           { label: t('pages.pricing.update'), icon: 'check' }
         ]
       },
       {
         title: 'Medior',
         description: t('pages.pricing.medior'),
-        prices: [3, 32.50],
+        prices: [2, 22.50],
         items: [
           { label: t('pages.pricing.encounters', { number: 50 }), icon: 'check' },
           { label: t('pages.pricing.campaigns', { number: 10 }), icon: 'check' },
           { label: t('pages.pricing.multiple'), icon: 'cross' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.live'), icon: 'check' },
           { label: t('pages.pricing.update'), icon: 'check' }
         ],
         monthId: config.public.stripeMediorMonthly,
@@ -69,12 +69,12 @@ export const useStripeStore = defineStore('useStripeStore', () => {
       {
         title: 'Pro',
         description: t('pages.pricing.pro'),
-        prices: [5, 50],
+        prices: [3, 30],
         items: [
           { label: t('pages.pricing.encounters', { number: 'infinite' }), icon: 'check' },
           { label: t('pages.pricing.campaigns', { number: 'infinite' }), icon: 'check' },
           { label: t('pages.pricing.multiple'), icon: 'check' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
+          { label: t('pages.pricing.live'), icon: 'check' },
           { label: t('pages.pricing.update'), icon: 'check' }
         ],
         monthId: config.public.stripeProMonthly,
