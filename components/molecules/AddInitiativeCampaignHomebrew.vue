@@ -112,9 +112,11 @@ function closeModal (): void {
   selected.value = []
 }
 
-function selectedSummoner (value: number): void {
-  const filtered = summonOptions.value.find(s => s.value === value)
-  summoner.value = filtered || null
+function selectedSummoner (value: unknown): void {
+  if (!isNaN(Number(value))) {
+    const filtered = summonOptions.value.find(s => s.value === value)
+    summoner.value = filtered || null
+  }
 }
 </script>
 
@@ -136,50 +138,43 @@ function selectedSummoner (value: number): void {
       <Icon
         name="material-symbols:table-chart-outline"
         class="text-primary w-10 h-10"
+        aria-hidden="true"
       />
     </button>
     <Modal v-if="isOpen" @close="closeModal">
-      <h2>
-        {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
-      </h2>
+      <template #header>
+        <h2>
+          {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+        </h2>
+      </template>
       <div v-if="homebrews?.length" class="space-y-4">
-        <div class="flex items-end gap-4">
-          <div class="grow">
-            <FormKit
-              v-model="search"
-              type="text"
-              :label="$t('components.inputs.nameLabel')"
-            />
-          </div>
-          <button
-            v-if="search"
-            class="btn-black mb-2"
-            @click="search = ''"
-          >
-            <Icon name="ic:round-clear" size="25" />
-          </button>
-        </div>
-        <template v-if="summon">
-          <p>
-            {{ $t('components.addInitiativeCampaignHomebrew.initiative.info') }}
-          </p>
-          <FormKit
-            type="select"
-            :label="$t('components.inputs.summonerLabel')"
-            :placeholder="$t('components.addInitiativeCampaignHomebrew.initiative.select')"
-            :options="summonOptions"
-            @input="selectedSummoner"
-          />
-        </template>
-        <div class="flex flex-col">
+        <FormKit
+          v-if="!summon"
+          v-model="search"
+          type="search"
+          :label="$t('components.inputs.nameLabel')"
+        />
+        <FormKit
+          v-else
+          type="select"
+          :label="$t('components.inputs.summonerLabel')"
+          :placeholder="$t('components.addInitiativeCampaignHomebrew.initiative.select')"
+          :help="$t('components.addInitiativeCampaignHomebrew.initiative.info')"
+          :options="summonOptions"
+          @input="selectedSummoner"
+        />
+        <div
+          v-if="filteredHomebrews.length"
+          class="flex flex-col border-4 border-black rounded-lg overflow-hidden"
+        >
           <template
             v-for="hb in filteredHomebrews"
             :key="hb.id"
           >
             <div
-              class="first:rounded-t-lg last:rounded-b-lg w-full bg-black p-2 border-b border-slate-700 cursor-pointer grid grid-cols-3 px-4"
+              class="w-full border-t last:border-b border-black cursor-pointer grid grid-cols-3 px-4 py-1"
               :class="{
-                'border-4 border-b-4 !border-primary': selected.filter(p => p.id === hb.id).length
+                '!bg-primary/30': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >
@@ -187,6 +182,7 @@ function selectedSummoner (value: number): void {
                 <Icon
                   :name="useHomebrewIcon(hb.type)"
                   :class="useHomebrewColor(hb.type)"
+                  aria-hidden="true"
                   size="20"
                 />
                 <p class="capitalize">
@@ -207,13 +203,20 @@ function selectedSummoner (value: number): void {
                   <p>
                     {{ hb.ac }}
                   </p>
-                  <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
+                  <Icon
+                    name="ic:outline-shield"
+                    class="w-6 h-6 text-help"
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
             </div>
           </template>
         </div>
-        <div class="flex gap-2 flex-wrap">
+        <p v-else-if="!summon" class="max-w-prose pb-4">
+          {{ $t('components.addInitiativeCampaignHomebrew.initiative.nothing') }}
+        </p>
+        <div class="flex gap-2 flex-wrap justify-end">
           <template v-if="!summon">
             <button
               class="btn-primary"

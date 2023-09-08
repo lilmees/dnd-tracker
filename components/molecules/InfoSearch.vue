@@ -131,12 +131,16 @@ function scrollToTop (): void {
       <span class="md:hidden">
         {{ $t('components.fullScreenSearch.tooltip') }}
       </span>
-      <Icon name="material-symbols:search" class="text-success w-10 h-10" />
+      <Icon
+        name="material-symbols:search"
+        class="text-success w-10 h-10"
+        aria-hidden="true"
+      />
     </button>
     <FullScreenSearch v-if="isOpen" @close="reset">
-      <div class="flex flex-col max-h-screen max-w-prose mx-auto pt-20 pb-6">
+      <div class="flex flex-col max-h-screen pt-20 pb-6">
         <div
-          class="flex items-end gap-4 px-1"
+          class="flex items-start gap-4 px-1"
           :class="{ 'pb-10': !table.encounter?.info_cards?.length || false }"
         >
           <FormKit
@@ -149,17 +153,10 @@ function scrollToTop (): void {
           <div class="grow">
             <FormKit
               v-model="form.search"
-              type="text"
+              type="search"
               :label="$t('components.inputs.nameLabel')"
             />
           </div>
-          <button
-            v-if="form.search"
-            class="btn-primary mb-2"
-            @click="form.search = ''"
-          >
-            <Icon name="ic:round-clear" size="25" />
-          </button>
         </div>
         <div
           v-if="table.encounter?.info_cards?.length"
@@ -177,7 +174,7 @@ function scrollToTop (): void {
         </div>
         <div
           v-else-if="!isLoading && (hits.length || showPinned)"
-          class="flex flex-col gap-4 overflow-y-auto"
+          class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto"
         >
           <InfoCard
             v-for="(hit, index) in showPinned ? table.encounter?.info_cards : hits"

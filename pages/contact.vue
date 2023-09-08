@@ -36,35 +36,27 @@ function sendContactMail (form: Obj): void {
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="sendContactMail"
       >
-        <Input
-          focus
+        <FormKit
           name="name"
           :label="$t('components.inputs.nameLabel')"
           validation="length:3,30|alpha_spaces"
         />
-        <Input
+        <FormKit
           name="email"
           :label="$t('components.inputs.emailLabel')"
           validation="required|length:5,50|email"
-          required
         />
-        <Input
+        <FormKit
           name="question"
           type="textarea"
           :label="$t('components.inputs.questionLabel')"
           validation="required|length:3,1000|"
-          required
         />
-        <button
-          type="submit"
-          class="btn-black mt-3"
-          :aria-label="$t('pages.contact.send')"
-        >
+        <FormKit type="submit" :aria-label="$t('pages.contact.send')">
           {{ $t('pages.contact.send') }}
-        </button>
+        </FormKit>
       </FormKit>
     </section>
   </NuxtLayout>

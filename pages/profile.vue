@@ -17,6 +17,7 @@ const formInfo = ref<ProfileUpdateForm>({
   email: '',
   name: '',
   username: '',
+  marketing: true,
   data: {
     error: null
   }
@@ -40,6 +41,7 @@ function setUserData (): void {
   formInfo.value.email = profile.data?.email || ''
   formInfo.value.name = profile.data?.name || ''
   formInfo.value.username = profile.data?.username || ''
+  formInfo.value.marketing = profile.data?.marketing ?? true
 }
 
 const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): Promise<void> => {

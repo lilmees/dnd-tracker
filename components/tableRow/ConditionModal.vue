@@ -28,18 +28,25 @@ function updateConditions (): void {
 
 <template>
   <div>
-    <Icon
-      name="iconoir:round-flask"
-      class="w-6 h-6 cursor-pointer text-success"
+    <button
+      :aria-label="$t('actions.open')"
       @click="isOpen = true"
-    />
+    >
+      <Icon
+        name="iconoir:round-flask"
+        class="w-6 h-6 cursor-pointer text-success"
+        aria-hidden="true"
+      />
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>
-        {{ !store.error
-          ? $t('pages.encounter.update.conditions')
-          : $t('components.conditionModal.conditions.fetchErrorTitle')
-        }}
-      </h2>
+      <template #header>
+        <h2>
+          {{ !store.error
+            ? $t('pages.encounter.update.conditions')
+            : $t('components.conditionModal.conditions.fetchErrorTitle')
+          }}
+        </h2>
+      </template>
       <div v-if="store.loading" class="loader" />
       <div
         v-else-if="!store.error && store.data?.length"
@@ -57,13 +64,15 @@ function updateConditions (): void {
             @remove="selected = selected.filter(s => s.slug !== $event)"
           />
         </div>
-        <button
-          class="btn-black w-full"
-          :aria-label="$t('actions.update')"
-          @click="updateConditions"
-        >
-          {{ $t('actions.update') }}
-        </button>
+        <div class="flex justify-end">
+          <button
+            class="btn-black"
+            :aria-label="$t('actions.update')"
+            @click="updateConditions"
+          >
+            {{ $t('actions.update') }}
+          </button>
+        </div>
       </div>
       <button
         v-else

@@ -1,5 +1,11 @@
 type RowType = 'summon' | 'lair' | 'monster' | 'player' | 'npc'
 
+type ActionType= 'actions' | 'legendary_actions' | 'reactions' | 'special_abilities'
+
+type HPActionType= 'heal' | 'damage' | 'temp' | 'override' | 'override-reset'
+
+type ACActionType= 'temp' | 'remove' | 'reset' | 'override' | 'override-reset'
+
 interface DeathSaves {
   save: boolean[]
   fail: boolean[]
@@ -14,6 +20,10 @@ interface Summoner {
 interface Action {
   name: string
   desc: string
+  type?: ActionType
+  attack_bonus?: number
+  damage_bonus?: number
+  damage_dice?: string
 }
 
 interface Condition {
@@ -23,12 +33,11 @@ interface Condition {
   desc: string
 }
 
-interface Row {
+interface Row extends Partial<PossibleAttacks> {
   ac?: number
   campaign?: number
   concentration: boolean
   conditions: Condition[]
-  actions: Action[]
   created_at: string
   deathSaves: DeathSaves,
   health?: number
@@ -38,6 +47,8 @@ interface Row {
   link?: string
   maxAc?: number
   maxHealth?: number
+  maxAcOld?: number
+  maxHealthOld?: number
   name: string
   note?: string
   tempAc?: number

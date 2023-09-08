@@ -22,6 +22,8 @@ function updateName ({ __init, name }: Obj): void {
         :name="useHomebrewIcon(type)"
         :class="useHomebrewColor(type)"
         size="20"
+        class="min-w-[20px]"
+        aria-hidden="true"
       />
       <p
         class="peer cursor-pointer"
@@ -32,31 +34,27 @@ function updateName ({ __init, name }: Obj): void {
       <Icon
         name="lucide:wrench"
         class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+        aria-hidden="true"
       />
     </div>
     <Modal v-if="isOpen" @close="isOpen = false">
-      <h2>{{ $t('pages.encounter.update.name') }}</h2>
+      <template #header>
+        <h2>{{ $t('pages.encounter.update.name') }}</h2>
+      </template>
       <FormKit
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="updateName"
       >
-        <Input
-          focus
+        <FormKit
           name="name"
           :label="$t('components.inputs.nameLabel')"
           validation="required|length:3,30"
-          required
         />
-        <button
-          type="submit"
-          class="btn-black w-full mt-3"
-          :aria-label="$t('actions.update')"
-        >
+        <FormKit type="submit" :aria-label="$t('actions.update')">
           {{ $t('actions.update') }}
-        </button>
+        </FormKit>
       </FormKit>
     </Modal>
   </div>

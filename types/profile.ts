@@ -6,6 +6,7 @@ interface Profile extends Stripe {
   role: string
   avatar?: string
   email: string
+  marketing: boolean
 }
 
 interface ProfileUpdate extends Partial<Omit<Profile, 'created_at' | 'id'>> {

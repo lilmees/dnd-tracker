@@ -33,7 +33,7 @@ function sortItems (key: string): void {
 
   if (key === 'health' || key === 'ac') {
     sorted = sortByNumber(store.campaign.homebrew_items, key)
-  } else if (key === 'name' || key === 'type') {
+  } else if (key === 'name' || key === 'type' || key === 'player') {
     sorted = sortByString(store.campaign.homebrew_items, key)
   }
 
@@ -81,6 +81,15 @@ function paginate (pageNumber: number): void {
     (pageNumber * perPage.value) + perPage.value
   )
 }
+
+function updated (hb: Homebrew, id: number): void {
+  const index = shownHomebrew.value.findIndex(h => h.id === id)
+
+  shownHomebrew.value[index] = {
+    ...shownHomebrew.value[index],
+    ...hb
+  }
+}
 </script>
 
 <template>
@@ -96,7 +105,7 @@ function paginate (pageNumber: number): void {
           <p>Lair)</p>
         </div>
       </div>
-      <AddHomebrew />
+      <HomebrewModal />
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <div
@@ -107,11 +116,11 @@ function paginate (pageNumber: number): void {
         <thead>
           <tr>
             <th
-              v-for="header in ['name', 'type', 'health', 'ac', 'link', 'actions', 'modify']"
+              v-for="header in ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']"
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
               :class="{
-                'cursor-pointer': ['name', 'type', 'health', 'ac'].includes(header)
+                'cursor-pointer': ['name', 'type', 'player', 'health', 'ac'].includes(header)
               }"
               @click="sortItems(header)"
             >
@@ -126,6 +135,7 @@ function paginate (pageNumber: number): void {
                     '!hidden': ['link', 'actions', 'modify'].includes(header),
                     '!text-secondary': sortedBy === header
                   }"
+                  aria-hidden="true"
                 />
               </div>
             </th>
@@ -148,11 +158,15 @@ function paginate (pageNumber: number): void {
                   :name="useHomebrewIcon(item.type)"
                   :class="useHomebrewColor(item.type)"
                   size="20"
+                  aria-hidden="true"
                 />
                 <p>
                   {{ item.type || '' }}
                 </p>
               </div>
+            </td>
+            <td class="px-2 py-1 border-r border-slate-700 relative">
+              {{ item.player || '' }}
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               {{ item.type === 'lair' ? '' : item.health || '' }}
@@ -172,25 +186,49 @@ function paginate (pageNumber: number): void {
                   <Icon
                     name="ph:link-simple-horizontal"
                     class="w-8 h-8 cursor-pointer text-info"
+                    aria-hidden="true"
                   />
                 </NuxtLink>
               </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <p class="text-slate-400 text-center">
-                coming soon
-              </p>
+              <div
+                v-if="
+                  item.actions?.length
+                    || item.legendary_actions?.length
+                    || item.reactions?.length
+                    || item.special_abilities?.length
+                "
+              >
+                <PossibleAttacksModal
+                  :row="(item as Row)"
+                  :label="`
+                  ${[
+                    ...item.actions || [],
+                    ...item.legendary_actions || [],
+                    ...item.reactions || [],
+                    ...item.special_abilities || [],
+                  ].length} ${$t('components.inputs.actionsLabel')}
+                  `"
+                />
+              </div>
             </td>
             <td class="px-2 py-1">
               <div class="flex justify-center items-center gap-1">
-                <UpdateHomebrew :item="item" class="relative bottom-[2px]" />
+                <HomebrewModal
+                  update
+                  :item="item"
+                  @updated="updated($event, item.id)"
+                />
                 <button
                   v-tippy="{ content: $t('actions.delete') }"
+                  :aria-label="$t('actions.delete')"
                   @click="store.removeHomebrew(item.id)"
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
                     class="w-6 h-6 text-danger outline-none"
+                    aria-hidden="true"
                   />
                 </button>
               </div>

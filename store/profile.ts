@@ -1,7 +1,6 @@
 import logRocket from 'logrocket'
 
 export const useProfileStore = defineStore('useProfileStore', () => {
-  const supabaseAuth = useSupabaseAuthClient()
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const auth = useAuthStore()

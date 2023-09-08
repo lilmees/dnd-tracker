@@ -96,7 +96,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       data.campaign = data.campaign.id
     }
 
-    if (!isSandbox.value) {
+    if (!isSandbox.value && id) {
       try {
         const { error } = await supabase
           .from('initiative_sheets')

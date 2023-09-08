@@ -13,6 +13,6 @@ const store = useTableStore()
     <template v-if="store?.encounter?.campaign || store.isSandbox">
       <AddInitiativeCampaignHomebrew />
     </template>
-    <AddInitiativeModal />
+    <HomebrewModal encounter />
   </div>
 </template>

@@ -1,76 +1,56 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
-const emit = defineEmits(['deleted', 'updated'])
-const props = defineProps<{ note: Note }>()
-
-const toast = useToastStore()
-const store = useNotesStore()
-
-const isSettings = ref<boolean>(false)
-const isUpdating = ref<boolean>(false)
-const needConfirmation = ref<boolean>(false)
-
-async function deleteNote (): Promise<void> {
-  try {
-    await store.deleteNote(props.note.id)
-
-    emit('deleted', props.note.id)
-  } catch (err: unknown) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  }
-}
-
-function updateNote (note: Note): void {
-  emit('updated', note)
-  isSettings.value = false
-  isUpdating.value = false
-}
+defineEmits(['remove', 'update'])
+defineProps<{ note: Note }>()
 </script>
 
 <template>
   <section
-    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker p-3 relative space-y-1 group min-w-[250px] max-w-prose"
+    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker relative group min-w-[250px] max-w-prose"
   >
-    <div class="flex gap-2 items-center justify-between">
+    <div class="flex justify-end mr-2">
+      <tippy interactive :z-index="2">
+        <Icon
+          name="tabler:dots"
+          class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+          aria-hidden="true"
+        />
+        <template #content>
+          <div class="p-4 space-y-2 overflow-auto">
+            <button
+              class="flex gap-2 items-center max-w-max"
+              :aria-label="$t('actions.update')"
+              @click="$emit('update', note)"
+            >
+              <Icon
+                name="lucide:wrench"
+                class="h-4 w-4"
+                aria-hidden="true"
+              />
+              <p>{{ $t('actions.update') }}</p>
+            </button>
+            <button
+              class="flex gap-2 items-center max-w-max"
+              :aria-label="$t('actions.remove')"
+              @click="$emit('remove', note)"
+            >
+              <Icon
+                name="material-symbols:delete-outline-rounded"
+                class="h-4 w-4"
+                aria-hidden="true"
+              />
+              <p>{{ $t('actions.delete') }}</p>
+            </button>
+          </div>
+        </template>
+      </tippy>
+    </div>
+    <div class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2">
       <h3 v-if="note.title">
         {{ note.title }}
       </h3>
-      <Icon
-        v-if="!isSettings"
-        v-tippy="{ content: $t('actions.openSettings') }"
-        name="material-symbols:settings-outline-rounded"
-        class="w-6 h-6 cursor-pointer text-primary opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
-        @click="isSettings = !isSettings"
-      />
-      <Icon
-        v-else
-        v-tippy="{ content: $t('actions.closeSettings') }"
-        name="ic:round-clear"
-        class="w-6 h-6 cursor-pointer text-primary"
-        @click="isSettings = false"
-      />
+      <p class="pt-2">
+        {{ note.text }}
+      </p>
     </div>
-    <p class="pt-2">
-      {{ note.text }}
-    </p>
-    <div v-if="isSettings" class="flex flex-col gap-2 pt-4">
-      <div class="flex gap-2 cursor-pointer max-w-max" @click="isUpdating = true">
-        <Icon name="lucide:wrench" class="h-6 w-6" />
-        <p>{{ $t('actions.update') }}</p>
-      </div>
-      <div class="flex gap-2 cursor-pointer max-w-max" @click="needConfirmation = true">
-        <Icon name="material-symbols:delete-outline-rounded" class="h-6 w-6" />
-        <p>{{ $t('actions.delete') }}</p>
-      </div>
-    </div>
-    <ConfirmationModal
-      :open="needConfirmation"
-      :title="note.title || 'Campaign note'"
-      @close="needConfirmation = false"
-      @delete="deleteNote"
-    />
-    <UpdateNote :open="isUpdating" :note="note" @close="isUpdating = false" @updated="updateNote" />
   </section>
 </template>

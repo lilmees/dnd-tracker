@@ -21,11 +21,16 @@ function updateLink ({ __init, link }: Obj): void {
 
 <template>
   <div>
-    <Icon
-      name="ph:link-simple-horizontal"
-      class="w-6 h-6 cursor-pointer text-info"
+    <button
+      :aria-label="$t('actions.open')"
       @click="isOpen = true"
-    />
+    >
+      <Icon
+        name="ph:link-simple-horizontal"
+        class="w-6 h-6 text-info"
+        aria-hidden="true"
+      />
+    </button>
     <Modal v-if="isOpen" @close="isOpen = false">
       <div v-if="store.isSandbox">
         <h3>{{ $t('components.linkModal.demo') }}</h3>
@@ -34,31 +39,42 @@ function updateLink ({ __init, link }: Obj): void {
         <h2 class="mb-10">
           {{ $t('general.link') }}
         </h2>
-        <div v-if="url" class="flex gap-2 flex-wrap">
-          <NuxtLink :to="url" target="_blank" rel="noreferrer noopener" class="grow">
+        <div v-if="url" class="flex gap-3 flex-wrap justify-end">
+          <NuxtLink
+            :to="url"
+            target="_blank"
+            rel="noreferrer noopener"
+            class=""
+          >
             <button
-              class="btn-black w-full"
+              class="btn-primary"
               :aria-label="$t('actions.link')"
             >
               {{ $t('actions.link') }}
             </button>
           </NuxtLink>
           <button
-            class="btn-black grow"
+            class="btn-black"
             :aria-label="$t('actions.update')"
             @click="isUpdating = true"
           >
             {{ $t('actions.update') }}
           </button>
         </div>
-        <button
-          v-else
-          class="btn-black w-full"
-          :aria-label="$t('actions.add')"
-          @click="isUpdating = true"
-        >
-          {{ $t('actions.add') }}
-        </button>
+        <div v-else class="space-y-3">
+          <p class="max-w-prose">
+            {{ $t('components.linkModal.placeholder') }}
+          </p>
+          <div class="flex justify-end">
+            <button
+              class="btn-primary"
+              :aria-label="$t('actions.add')"
+              @click="isUpdating = true"
+            >
+              {{ $t('actions.add') }}
+            </button>
+          </div>
+        </div>
       </div>
       <div v-else>
         <h2 class="mb-10">
@@ -68,23 +84,20 @@ function updateLink ({ __init, link }: Obj): void {
           v-model="form"
           type="form"
           :actions="false"
-
           @submit="updateLink"
         >
-          <Input
-            focus
+          <FormKit
             name="link"
             :label="$t('components.inputs.linkLabel')"
             validation="required|length10,200|url"
-            required
           />
-          <button
+          <FormKit
             type="submit"
-            class="btn-black w-full mt-3"
+            class="btn-black"
             :aria-label="url ? $t('actions.update') : $t('actions.add')"
           >
             {{ url ? $t('actions.update') : $t('actions.add') }}
-          </button>
+          </FormKit>
         </FormKit>
       </div>
     </Modal>

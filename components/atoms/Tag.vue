@@ -35,6 +35,8 @@ withDefaults(
       v-tippy="{ content: $t('actions.remove') }"
       name="ic:round-clear"
       class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
+      :aria-label="$t('actions.remove')"
+      aria-hidden="true"
       @click="$emit('remove', condition.slug)"
     />
     <Icon
@@ -42,6 +44,8 @@ withDefaults(
       v-tippy="{ content: $t('actions.add') }"
       name="material-symbols:add"
       class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
+      aria-hidden="true"
+      :aria-label="$t('actions.add')"
       @click="$emit('add', condition)"
     />
     <div>
@@ -51,6 +55,7 @@ withDefaults(
       <Icon
         name="material-symbols:info-outline-rounded"
         class="w-6 h-6 hover:scale-110 cursor-pointer outline-none"
+        aria-hidden="true"
       />
       <template #content>
         <div class="p-4 space-y-2 overflow-auto">

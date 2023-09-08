@@ -34,7 +34,7 @@ async function deleteEncounter (): Promise<void> {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
-    reset()
+    resetState()
   }
 }
 
@@ -45,8 +45,13 @@ async function copyEncounter (enc : Encounter): Promise<void> {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
-    reset()
+    resetState()
   }
+}
+
+function resetState (): void {
+  reset()
+  isOpen.value = false
 }
 </script>
 
@@ -71,7 +76,11 @@ async function copyEncounter (enc : Encounter): Promise<void> {
               :aria-label="$t('general.options')"
               :disabled="store.loading"
             >
-              <Icon name="tabler:dots" class="h-6 w-6" />
+              <Icon
+                name="tabler:dots"
+                class="h-6 w-6"
+                aria-hidden="true"
+              />
             </button>
             <template #content>
               <div class="p-4 space-y-2 overflow-auto">
@@ -80,7 +89,11 @@ async function copyEncounter (enc : Encounter): Promise<void> {
                   :aria-label="$t('actions.bulkRemove')"
                   @click="isBulk = true"
                 >
-                  <Icon name="material-symbols:delete-outline-rounded" class="h-4 w-4" />
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="h-4 w-4"
+                    aria-hidden="true"
+                  />
                   <p>{{ $t('actions.bulkRemove') }}</p>
                 </button>
               </div>
@@ -178,11 +191,6 @@ async function copyEncounter (enc : Encounter): Promise<void> {
           {{ $t('pages.encounters.add') }}
         </button>
       </div>
-      <AddEncounterModal
-        :open="isOpen"
-        @close="isOpen = false"
-        @added="isOpen = false"
-      />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">
@@ -202,15 +210,16 @@ async function copyEncounter (enc : Encounter): Promise<void> {
         :title="selected.length === 1
           ? selected[0].title
           : $t('pages.encounters.remove.multiple', {number: selected.length})"
-        @close="reset"
+        @close="resetState"
         @delete="deleteEncounter"
       />
-      <UpdateEncounterModal
-        v-if="selected.length"
-        :open="isUpdating"
-        :encounter="selected[0]"
-        @close="reset"
-        @updated="reset"
+      <EncounterModal
+        :open="isUpdating || isOpen"
+        :encounter="selected.length && isUpdating ? selected[0] : undefined"
+        :update="isUpdating"
+        @close="resetState"
+        @updated="resetState"
+        @added="resetState"
       />
     </div>
   </NuxtLayout>

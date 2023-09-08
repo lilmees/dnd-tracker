@@ -10,7 +10,7 @@ const form = ref<Login>({ email: '', password: '' })
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-async function login ({ __init, ...credentials }: Obj): Promise<void> {
+async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
@@ -40,38 +40,48 @@ async function login ({ __init, ...credentials }: Obj): Promise<void> {
         provider="imagekit"
         class="mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center">
+      <p v-if="error" class="text-danger text-center body-small">
         {{ error }}
       </p>
       <FormKit
         v-model="form"
         type="form"
         :actions="false"
-
         @submit="login"
       >
-        <Input
-          focus
+        <FormKit
           name="email"
           :label="$t('components.inputs.emailLabel')"
           validation="required|length:5,50|email"
-          required
         />
-        <Input
+        <FormKit
           name="password"
           type="password"
           :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50"
-          required
         />
-        <button
-          type="submit"
-          class="btn-black w-full mt-3"
-          :aria-label="$t('pages.login.signIn')"
-          :disabled="isLoading"
-        >
-          {{ $t('pages.login.signIn') }}
-        </button>
+        <div class="flex justify-end gap-x-3 items-start">
+          <FormKit
+            type="submit"
+            :aria-label="$t('pages.login.signIn')"
+            :label="$t('pages.login.signIn')"
+            :disabled="isLoading"
+            outer-class="$reset grow"
+            input-class="w-full"
+          />
+          <button
+            type="button"
+            class="btn-black"
+            aria-label="Google SSO"
+            @click="login"
+          >
+            <Icon
+              name="flat-color-icons:google"
+              class="w-5 h-5"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">

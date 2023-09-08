@@ -12,8 +12,6 @@
     "link": "Go to link",
     "heal": "Heal",
     "damage": "Damage",
-    "baseHealth": "Set base health",
-    "baseAc": "Set base AC",
     "reset": "Reset",
     "remove": "Remove",
     "bulkRemove": "Bulk remove",
@@ -29,8 +27,13 @@
     "closeSettings": "Close settings",
     "drag": "Drag me",
     "close": "Close",
+    "open": "Open",
     "next": "Next",
-    "prev": "Previous"
+    "prev": "Previous",
+    "read": {
+      "more": "Read more",
+      "less": "Read less"
+    }
   },
   "general": {
     "encounters": "Encounters",
@@ -47,6 +50,10 @@
     "noSelected": "Nothing selected",
     "or": "of",
     "options": "Options",
+    "alsoMax": "When you modify {field}, you also adjust the maximum",
+    "current": "Current",
+    "temp": "Temporary",
+    "max": "Max",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -85,6 +92,7 @@
     "campaigns": {
       "campaigns": "Campaigns",
       "add": "Create campaign",
+      "update": "Update campaign",
       "remove": {
         "title": "Bulk removing campaigns",
         "subtitle": "Select campaigns to remove by clicking on them.",
@@ -103,6 +111,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Create encounter",
+      "update": "Update encounter",
       "remove": {
         "title": "Bulk removing encounters",
         "subtitle": "Select encounters to remove by clicking on them.",
@@ -145,6 +154,7 @@
     "register": {
       "register": "Register",
       "random": "Random avatar",
+      "consent": "By registering, you agree to our terms and conditions",
       "toast": {
         "success": {
           "title": "Successfully registrerd",
@@ -217,7 +227,7 @@
   },
   "components": {
     "cookieBanner": {
-      "text": "When u use this website you accept that we only use functionel cookies.",
+      "text": "Embark on an Epic Adventure: Accept Cookies to Enhance Your D&D Experience!",
       "policy": "Cookie policy",
       "button": "OK"
     },
@@ -225,7 +235,8 @@
       "start": "Let the session start"
     },
     "linkModal": {
-      "demo": "This isn't available in the demo"
+      "demo": "This isn't available in the demo",
+      "placeholder": "Amidst the realm of dragons and dungeons, a hero's legend remains untold, as the user has not yet linked their character's saga."
     },
     "homeDiceRolling": {
       "title": "Roll with ease",
@@ -250,32 +261,33 @@
       "textLabel": "Text",
       "questionLabel": "Your question?",
       "challengeLabel": "Challenge rating",
-      "nothing": "Nothing selected"
+      "playerLabel": "Player",
+      "descriptionLabel": "Description",
+      "actionsLabel": "Actions",
+      "addActionLabel": "Add action",
+      "actionTypeLabel": "Action type",
+      "attackBonusLabel": "Attack bonus",
+      "damageBonusLabel": "Damage bonus",
+      "damageDiceLabel": "Damage dice",
+      "marketingLabel": "Get notified about updates",
+      "nothing": "Nothing selected",
+      "overrideFieldLabel": "Max {field} override",
+      "optionalFieldHelp": "Optional to overwrite the current {field}"
     },
-    "addCammpaignModal": {
-      "title": "Create a new campaign"
-    },
-    "updateCampaignModal": {
+    "cammpaignModal": {
+      "add": "Create a new campaign",
       "update": "Update campaign {title}"
     },
     "homebrewTable": {
       "title": "Ready to unleash your creativity?",
       "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
     },
-    "addEncounterModal": {
-      "title": "Create a new encounter"
-    },
-    "updateEncounterModal": {
+    "encounterModal": {
+      "add": "Create a new encounter",
       "update": "Update encounter {title}"
     },
-    "addInitiativeModal": {
-      "addHomebrew": "Create homebrew"
-    },
-    "updateInitiativeModal": {
-      "updateHomebrew": "Update homebrew"
-    },
     "addInitiativeMonster": {
-      "manual": "Monster manual",
+      "bestiary": "Bestiary",
       "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!"
     },
     "addInitiativeCampaignHomebrew": {
@@ -283,11 +295,14 @@
       "summoner": {
         "info": "when selecting a summon, you must also choose a character that will summon it.",
         "add": "Add summon",
-        "select": "Select summoner"
+        "select": "Select summoner",
+        "nothing": "Unfortunately, our quest unveils no treasures that align with your search. Perhaps another name can unlock the magical portal, or you can craft your own homebrew legends."
       }
     },
-    "addHomebrew": {
-      "newHomebrew": "Make a new homebrew"
+    "homebrewModal": {
+      "new": "Make a new homebrew",
+      "add": "Create homebrew",
+      "update": "Update homebrew"
     },
     "encounterTable": {
       "empty": "Add a row to your encounter to get started!",
@@ -295,14 +310,14 @@
         "name": "Name",
         "init": "Init",
         "ac": "AC",
-        "hp": "HP",
-        "actions": "Actions",
+        "health": "HP",
+        "manage": "Manage",
         "conditions": "Conditions",
         "note": "Notes",
         "deathSaves": "Death saves",
-        "concentration": "Concentration",
+        "concentration": "CON",
         "modify": "Modify",
-        "summond": "Summoner"
+        "summoner": "Summoner"
       }
     },
     "actions": {
@@ -334,19 +349,11 @@
       "title": "Delete confirmation",
       "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
     },
-    "addCampaignHomebrew": {
-      "add": "Create homebrew"
-    },
-    "updateCampaignHomebrew": {
-      "update": "Update homebrew"
-    },
     "campaignNotes": {
       "none": "No notes added"
     },
-    "addCampaignNotes": {
-      "add": "Create note"
-    },
-    "updateNote": {
+    "noteModal": {
+      "add": "Create note",
       "update": "Update note"
     },
     "pricingCard": {
@@ -356,6 +363,11 @@
     "fullScreenSearch": {
       "tooltip": "Search information",
       "notFound": "Alas, our adventurous quest through the depths of our DnD archives has yielded no trace. The mystical tomes brimming with ancient lore and rules seem to temporarily withhold their secrets from us. But fear not! We shall not surrender! Feel free to continue your exploration in our magical realm, for who knows what epic discoveries await you."
+    },
+    "visualOptions": {
+      "tooltip": "Settings",
+      "spacing": "Tabel style",
+      "rows": "Rows to show"
     },
     "infoSearch": {
       "show": "Show pinned items",

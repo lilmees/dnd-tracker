@@ -60,7 +60,11 @@ async function deleteCampaigns (): Promise<void> {
               :aria-label="$t('general.options')"
               :disabled="store.loading"
             >
-              <Icon name="tabler:dots" class="h-6 w-6" />
+              <Icon
+                name="tabler:dots"
+                class="h-6 w-6"
+                aria-hidden="true"
+              />
             </button>
             <template #content>
               <div class="p-4 space-y-2 overflow-auto">
@@ -69,7 +73,11 @@ async function deleteCampaigns (): Promise<void> {
                   :aria-label="$t('actions.bulkRemove')"
                   @click="isBulk = true"
                 >
-                  <Icon name="material-symbols:delete-outline-rounded" class="h-4 w-4" />
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="h-4 w-4"
+                    aria-hidden="true"
+                  />
                   <p>{{ $t('actions.bulkRemove') }}</p>
                 </button>
               </div>
@@ -154,7 +162,7 @@ async function deleteCampaigns (): Promise<void> {
           {{ $t('pages.campaigns.add') }}
         </button>
       </div>
-      <AddCampaignModal :open="isOpen" @close="isOpen = false" />
+      <CampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">
@@ -177,10 +185,11 @@ async function deleteCampaigns (): Promise<void> {
       @close="reset"
       @delete="deleteCampaigns"
     />
-    <UpdateCampaignModal
+    <CampaignModal
       v-if="selected.length"
       :open="isUpdating"
       :campaign="selected[0]"
+      update
       @close="reset"
     />
   </NuxtLayout>

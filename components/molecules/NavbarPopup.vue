@@ -39,17 +39,22 @@ async function manageSubscription (): Promise<void> {
           provider="imagekit"
         />
       </NuxtLink>
-      <Icon
-        name="ic:round-clear"
-        class="w-10 h-10 cursor-pointer text-danger"
+      <button
+        :aria-label="$t('actions.close')"
         @click="$emit('close')"
-      />
+      >
+        <Icon
+          name="ic:round-clear"
+          class="w-10 h-10 text-danger"
+          aria-hidden="true"
+        />
+      </button>
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
-      <template v-if="!loggedIn">
+      <div v-show="!loggedIn" class="flex flex-col gap-y-2">
         <RouteLink :label="$t('components.navbar.login')" url="login" />
         <RouteLink :label="$t('components.navbar.register')" url="register" />
-      </template>
+      </div>
       <RouteLink
         v-for="route in routes"
         :key="route.url"
@@ -57,7 +62,7 @@ async function manageSubscription (): Promise<void> {
         :url="route.url"
         @click="$emit('close')"
       />
-      <template v-if="loggedIn">
+      <div v-show="loggedIn" class="flex flex-col gap-y-2">
         <RouteLink
           v-for="route in dropDownRoutes"
           :key="route.url"
@@ -80,7 +85,7 @@ async function manageSubscription (): Promise<void> {
         >
           {{ $t('components.navbar.logout') }}
         </div>
-      </template>
+      </div>
     </div>
     <LangSwitcher class="pt-5" />
   </div>

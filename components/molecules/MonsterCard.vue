@@ -13,12 +13,13 @@ const isOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="rounded-lg w-full bg-background p-3 relative space-y-1">
+  <div class="rounded-lg w-full border-4 border-primary p-3 relative space-y-1">
     <Icon
       v-if="addable"
       v-tippy="{ content: $t('actions.add') }"
       name="material-symbols:add"
       class="absolute top-1 right-1 text-success cursor-pointer w-8 h-8"
+      aria-hidden="true"
       @click="$emit('add', monster)"
     />
     <div class="flex gap-x-10 gap-y-2 items-center flex-wrap">
@@ -30,7 +31,11 @@ const isOpen = ref<boolean>(false)
           v-tippy="{ content: 'CR' }"
           class="flex gap-1"
         >
-          <Icon name="lucide:skull" class="w-6 h-6 text-warning" />
+          <Icon
+            name="lucide:skull"
+            class="w-6 h-6 text-warning"
+            aria-hidden="true"
+          />
           <p class="font-bold">
             {{ monster.challenge_rating || '_' }}
           </p>
@@ -39,7 +44,11 @@ const isOpen = ref<boolean>(false)
           v-tippy="{ content: 'AC' }"
           class="flex gap-1"
         >
-          <Icon name="ic:outline-shield" class="w-6 h-6 text-help" />
+          <Icon
+            name="ic:outline-shield"
+            class="w-6 h-6 text-help"
+            aria-hidden="true"
+          />
           <p class="font-bold">
             {{ monster.armor_class || '_' }}
           </p>
@@ -48,7 +57,11 @@ const isOpen = ref<boolean>(false)
           v-tippy="{ content: 'HP' }"
           class="flex gap-1"
         >
-          <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
+          <Icon
+            name="mdi:cards-heart-outline"
+            class="w-6 h-6 text-danger"
+            aria-hidden="true"
+          />
           <p class="font-bold">
             {{ monster.hit_points || '_' }}
           </p>
@@ -77,14 +90,25 @@ const isOpen = ref<boolean>(false)
     </div>
     <ActionsTable
       v-if="monster.actions && isOpen"
-      :monster="monster"
+      :row="(monster as unknown as Row)"
       :class="{ 'pb-5': isOpen }"
     />
-    <Icon
-      name="tabler:chevron-down"
-      class="cursor-pointer duration-200 h-6 w-6 stroke-2 absolute bottom-1 right-1"
-      :class="{ 'rotate-180': isOpen }"
-      @click="isOpen = !isOpen"
-    />
+    <div class="flex justify-end pt-4">
+      <button
+        class="flex gap-2 btn-black"
+        :aria-label="$t(`actions.read.${isOpen ? 'less' : 'more'}`)"
+        @click="isOpen = !isOpen"
+      >
+        <p>
+          {{ $t(`actions.read.${isOpen ? 'less' : 'more'}`) }}
+        </p>
+        <Icon
+          name="tabler:chevron-down"
+          class="duration-200 h-6 w-6 stroke-2"
+          :class="{ 'rotate-180': isOpen }"
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   </div>
 </template>
