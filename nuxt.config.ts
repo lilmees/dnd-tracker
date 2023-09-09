@@ -59,6 +59,11 @@ export default defineNuxtConfig({
     },
     stripeSk: process.env.STRIPE_SK
   },
+  appConfig: {
+    umami: {
+      version: 2
+    }
+  },
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
