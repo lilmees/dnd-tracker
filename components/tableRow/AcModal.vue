@@ -74,6 +74,59 @@ function resetState (): void {
       <template #header>
         <h2>{{ $t('pages.encounter.update.ac') }}</h2>
       </template>
+      <FormKit
+        v-model="formAmount"
+        type="form"
+        :actions="false"
+        @submit="updateAc"
+      >
+        <FormKit
+          name="amount"
+          type="number"
+          :label="$t('components.inputs.amountLabel')"
+          validation="required|between:1,1000|number"
+          :suffix-icon="isRollingDice ? 'close' : dice"
+          @suffix-icon-click="isRollingDice = !isRollingDice"
+        />
+
+        <DiceRolling
+          v-if="isRollingDice"
+          @result="(v) => {
+            formAmount.amount = v
+            isRollingDice = false
+          }"
+        />
+        <div class="flex gap-2 flex-wrap py-2 justify-end">
+          <button
+            type="submit"
+            class="btn-success"
+            :aria-label="$t('actions.reset')"
+            @click="resetAc"
+          >
+            {{ $t('actions.reset') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary"
+            :aria-label="$t('actions.temp')"
+            @click="type = 'temp'"
+          >
+            {{ $t('actions.temp') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger"
+            :aria-label="$t('actions.remove')"
+            @click="type = 'remove'"
+          >
+            {{ $t('actions.remove') }}
+          </button>
+        </div>
+      </FormKit>
+      <div class="w-full border border-black h-px my-6" />
+      <h2 class="mb-6">
+        {{ $t('pages.encounter.override.ac') }}
+      </h2>
       <div
         v-if="(ac === 0 || ac) && (max === 0 || max)"
         class="flex flex-wrap gap-x-4 gap-y-2 pb-4 items-start justify-center"
@@ -124,6 +177,7 @@ function resetState (): void {
             :label="$t('components.inputs.overrideFieldLabel', { field: 'AC' })"
             :help="$t('components.inputs.optionalFieldHelp', { field: 'AC' })"
             validation="required|between:1,1000|number"
+            validation-visibility="submit"
             outer-class="grow"
             :suffix-icon="maxOld ? 'rewind' : undefined"
             @suffix-icon-click="overrideAc({ reset: true })"
@@ -135,56 +189,6 @@ function resetState (): void {
           >
             {{ $t('actions.save') }}
           </FormKit>
-        </div>
-      </FormKit>
-      <div class="w-full border border-black h-px my-6" />
-      <FormKit
-        v-model="formAmount"
-        type="form"
-        :actions="false"
-        @submit="updateAc"
-      >
-        <FormKit
-          name="amount"
-          type="number"
-          :label="$t('components.inputs.amountLabel')"
-          validation="required|between:1,1000|number"
-          :suffix-icon="isRollingDice ? 'close' : dice"
-          @suffix-icon-click="isRollingDice = !isRollingDice"
-        />
-
-        <DiceRolling
-          v-if="isRollingDice"
-          @result="(v) => {
-            formAmount.amount = v
-            isRollingDice = false
-          }"
-        />
-        <div class="flex gap-2 flex-wrap py-2 justify-end">
-          <button
-            type="submit"
-            class="btn-success"
-            :aria-label="$t('actions.reset')"
-            @click="resetAc"
-          >
-            {{ $t('actions.reset') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-primary"
-            :aria-label="$t('actions.temp')"
-            @click="type = 'temp'"
-          >
-            {{ $t('actions.temp') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-danger"
-            :aria-label="$t('actions.remove')"
-            @click="type = 'remove'"
-          >
-            {{ $t('actions.remove') }}
-          </button>
         </div>
       </FormKit>
     </Modal>

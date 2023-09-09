@@ -127,13 +127,17 @@
       "back": "Terug naar encounters",
       "campaignBack": "Terug naar campaign",
       "info": "Je kan hier wat info neerschrijven",
+      "override": {
+        "ac": "AC overschrijven",
+        "hp": "HP overschrijven"
+      },
       "update": {
-        "name": "Update naam",
-        "initiative": "Update Initiatief",
-        "ac": "Update AC",
-        "hp": "Update HP",
-        "link": "Update link",
-        "conditions": "Update condities"
+        "name": "Naam bijwerken",
+        "initiative": "Initiatief bijwerken",
+        "ac": "AC bijwerken",
+        "hp": "HP bijwerken",
+        "link": "Link bijwerken",
+        "conditions": "Condities bijwerken"
       },
       "toasts": {
         "removed": {
