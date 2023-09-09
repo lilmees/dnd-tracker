@@ -127,6 +127,10 @@
       "back": "Back to encounters",
       "campaignBack": "Back to campaign",
       "info": "You can jot something down here",
+      "override": {
+        "ac": "Override AC",
+        "hp": "Override HP"
+      },
       "update": {
         "name": "Update name",
         "initiative": "Update initiative",

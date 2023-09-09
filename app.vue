@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const localePath = useLocalePath()
+const umami = useRuntimeConfig().public.umamiId
 const profile = useProfileStore()
 const { auth } = useSupabaseClient()
 const route = useRoute()
@@ -26,6 +27,12 @@ auth.onAuthStateChange((event, session) => {
 })
 
 onBeforeMount(() => profile.fetch())
+
+useHead({
+  script: [
+    { src: 'https://analytics.umami.is/script.js', async: true, 'data-website-id': umami }
+  ]
+})
 </script>
 
 <template>
