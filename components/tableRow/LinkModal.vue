@@ -1,16 +1,23 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
-withDefaults(
+const props = withDefaults(
   defineProps<{ url?: null | string }>(), {
     url: null
   }
 )
 
-const store = useTableStore()
-
 const isOpen = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const form = ref<{ link: string }>({ link: '' })
+
+const formatUrl = computed<string>(() => {
+  if (props.url && props.url.includes('youtube') && props.url.includes('watch?v=')) {
+    const split: string[] = props.url.split('watch?v=')
+    return `${split[0]}embed/${split[1]}`
+  } else {
+    return props.url || ''
+  }
+})
 
 function updateLink ({ __init, link }: Obj): void {
   emit('update', link)
@@ -31,36 +38,45 @@ function updateLink ({ __init, link }: Obj): void {
         aria-hidden="true"
       />
     </button>
-    <Modal v-if="isOpen" @close="isOpen = false">
-      <div v-if="store.isSandbox">
-        <h3>{{ $t('components.linkModal.demo') }}</h3>
-      </div>
-      <div v-else-if="!isUpdating">
+    <Modal
+      v-if="isOpen"
+      :big="url && !isUpdating ? true : false"
+      @close="isOpen = false"
+    >
+      <div v-if="!isUpdating">
         <h2 class="mb-10">
           {{ $t('general.link') }}
         </h2>
-        <div v-if="url" class="flex gap-3 flex-wrap justify-end">
-          <NuxtLink
-            :to="url"
-            target="_blank"
-            rel="noreferrer noopener"
-            class=""
-          >
-            <button
-              class="btn-primary"
-              :aria-label="$t('actions.link')"
+        <template v-if="url">
+          <div class="relative aspect-[9/12] sm:aspect-video overflow-hidden w-full mb-6">
+            <iframe
+              :src="formatUrl"
+              class="absolute inset-0 w-full h-full border-none"
+            />
+          </div>
+          <div class="flex gap-3 flex-wrap justify-end">
+            <NuxtLink
+              :to="url"
+              target="_blank"
+              rel="noreferrer noopener"
+              class=""
             >
-              {{ $t('actions.link') }}
+              <button
+                class="btn-primary"
+                :aria-label="$t('actions.link')"
+              >
+                {{ $t('actions.link') }}
+              </button>
+            </NuxtLink>
+            <button
+              class="btn-black"
+              :aria-label="$t('actions.update')"
+              @click="isUpdating = true"
+            >
+              {{ $t('actions.update') }}
             </button>
-          </NuxtLink>
-          <button
-            class="btn-black"
-            :aria-label="$t('actions.update')"
-            @click="isUpdating = true"
-          >
-            {{ $t('actions.update') }}
-          </button>
-        </div>
+          </div>
+        </template>
         <div v-else class="space-y-3">
           <p class="max-w-prose">
             {{ $t('components.linkModal.placeholder') }}

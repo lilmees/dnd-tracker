@@ -242,7 +242,6 @@
       "start": "Let the session start"
     },
     "linkModal": {
-      "demo": "This isn't available in the demo",
       "placeholder": "Amidst the realm of dragons and dungeons, a hero's legend remains untold, as the user has not yet linked their character's saga."
     },
     "homeDiceRolling": {

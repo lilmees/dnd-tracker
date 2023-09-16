@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     '@/assets/css/quill.css'
   ],
   modules: [
+    'nuxt-security',
     'nuxt-icon',
     'nuxt-schema-org',
     '@nuxtjs/supabase',
@@ -150,5 +151,14 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': ['\'self\'', 'https:', 'data:'],
+        'frame-ancestors': ['\'self\'', 'https:', 'data:']
+      },
+      crossOriginEmbedderPolicy: false
+    }
   }
 })
