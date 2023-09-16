@@ -11,6 +11,11 @@ export const useTableStore = defineStore('useTableStore', () => {
   const isLoading = ref<boolean>(true)
   const isSandbox = ref<boolean>(false)
 
+  const activeModal = ref<EncounterModal>()
+  const activeField = ref<EncounterUpdateField>()
+  const activeRow = ref<Row>()
+  const activeIndex = ref<number>()
+
   const includesSummond = computed<boolean>(() => {
     return encounter?.value?.rows && Array.isArray(encounter.value.rows)
       ? !!encounter.value.rows.flat().filter((r: Row) => r.summoner).length
@@ -117,28 +122,39 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
-  async function updateRow (key: string, value: never, row: Row, index: number): Promise<void> {
+  async function updateRow (value: never): Promise<void> {
+    if (!activeRow.value || activeIndex.value === undefined) { return }
+
     const rows = encounter.value!.rows as Row[]
     // when updating health or ac also update the max values
-    if (key === 'health' || key === 'ac') {
-      row[`max${key.charAt(0).toUpperCase() + key.slice(1)}` as keyof Row] = value
+    if (activeField.value === 'health' || activeField.value === 'ac') {
+      activeRow.value[`max${activeField.value.charAt(0).toUpperCase() + activeField.value.slice(1)}` as keyof Row] = value
     }
 
-    if (key === 'initiative') {
+    if (activeField.value === 'initiative') {
       const calculatedIndex = useCalculateIndex(rows as Row[], value)
-      rows[index]!.initiative = value
-      rows[index]!.index = calculatedIndex
+      rows[activeIndex.value]!.initiative = value
+      rows[activeIndex.value]!.index = calculatedIndex
     } else {
-      row[key as keyof Row] = value
-      rows[index] = row
+      activeRow.value[activeField.value as keyof Row] = value
+      rows[activeIndex.value] = activeRow.value
     }
 
-    if (row.deathSaves) {
-      checkDeathSaves(row.deathSaves)
-      row.deathSaves.stable = row.deathSaves.save.every(v => v === true)
+    if (activeRow.value.deathSaves) {
+      checkDeathSaves(activeRow.value.deathSaves)
+      activeRow.value.deathSaves.stable = activeRow.value.deathSaves.save.every(v => v === true)
     }
 
     await encounterUpdate({ rows })
+
+    resetActiveState()
+  }
+
+  function resetActiveState (): void {
+    activeIndex.value = undefined
+    activeRow.value = undefined
+    activeModal.value = undefined
+    activeField.value = undefined
   }
 
   function nextInitiative (): void {
@@ -181,6 +197,10 @@ export const useTableStore = defineStore('useTableStore', () => {
     isLoading,
     isSandbox,
     includesSummond,
+    activeModal,
+    activeRow,
+    activeIndex,
+    activeField,
     getEncounter,
     getSandboxEncounter,
     subscribeEncounterChanges,
@@ -188,6 +208,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     updateRow,
     nextInitiative,
     prevInitiative,
-    checkDeathSaves
+    checkDeathSaves,
+    resetActiveState
   }
 })

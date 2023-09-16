@@ -7,6 +7,10 @@ interface EncounterProfile {
 
 type TableSpacing = 'compact' | 'normal' | 'cozy'
 
+type EncounterModal = 'name' | 'initiative' | 'ac' | 'hp' | 'link-modal' | 'ac-modal' | 'hp-modal' | 'condition-modal' | 'possible-attacks-modal'
+
+type EncounterUpdateField = 'name' | 'initiative' | 'ac' | 'health' | 'link' | 'note' | 'concentration' | 'deathSaves' | 'note' | 'conditions'
+
 interface EncounterSettings {
   spacing: TableSpacing
   rows: string[]

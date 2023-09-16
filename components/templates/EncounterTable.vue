@@ -80,5 +80,11 @@ const tableSpacing = computed<string>(() => {
         {{ $t('components.encounterTable.empty') }}
       </div>
     </div>
+    <component
+      :is="store.activeModal"
+      v-if="store.activeModal"
+      @update="store.updateRow($event as never)"
+      @close="store.resetActiveState()"
+    />
   </section>
 </template>

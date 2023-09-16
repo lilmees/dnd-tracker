@@ -26,3 +26,5 @@ interface HomebrewForm {
   amount?: number | undefined,
   summoner?: Summoner | undefined | number
 }
+
+type HomebrewModal = 'possible-attacks-modal' | 'homebrew-model'
