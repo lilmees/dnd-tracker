@@ -5,7 +5,9 @@ interface EncounterProfile {
   avatar: string
 }
 
-type TableSpacing = 'compact' | 'normal' | 'cozy'
+type EncounterModal = 'name'|'initiative'|'ac'|'hp'|'link-action'|'ac-action'|'hp-action'|'condition-action'|'attack-action'
+
+type TableSpacing = 'compact'|'normal'|'cozy'
 
 interface EncounterSettings {
   spacing: TableSpacing

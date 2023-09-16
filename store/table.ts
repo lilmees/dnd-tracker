@@ -10,6 +10,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const encounter = ref<Encounter | null>(null)
   const isLoading = ref<boolean>(true)
   const isSandbox = ref<boolean>(false)
+  const activeModal = ref<EncounterModal>()
 
   const includesSummond = computed<boolean>(() => {
     return encounter?.value?.rows && Array.isArray(encounter.value.rows)
@@ -181,6 +182,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     isLoading,
     isSandbox,
     includesSummond,
+    activeModal,
     getEncounter,
     getSandboxEncounter,
     subscribeEncounterChanges,
