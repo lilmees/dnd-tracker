@@ -13,6 +13,10 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const campaign = ref<Campaign | null>(null)
   const encounters = ref<Encounter[]>([])
 
+  const activeModal = ref<HomebrewModal>()
+  const activeHomebrew = ref<Homebrew>()
+  const activeIndex = ref<number>()
+
   async function getCampaignInfo (id: number): Promise<void> {
     loading.value = true
     error.value = null
@@ -79,14 +83,24 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
+  function resetActiveState (): void {
+    activeIndex.value = undefined
+    activeHomebrew.value = undefined
+    activeModal.value = undefined
+  }
+
   return {
     loading,
     error,
     campaign,
     encounters,
+    activeModal,
+    activeHomebrew,
+    activeIndex,
     getCampaignInfo,
     addHomebrew,
     updateHomebrew,
-    removeHomebrew
+    removeHomebrew,
+    resetActiveState
   }
 })

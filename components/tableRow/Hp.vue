@@ -1,12 +1,8 @@
 <script setup lang="ts">
-const emit = defineEmits(['update'])
-defineProps<{
-  health: number | null | string,
-  tempHealth: number | null | string,
-  type: string
-}>()
+import { reset } from '@formkit/core'
 
-const isOpen = ref<boolean>(false)
+const emit = defineEmits(['update', 'close'])
+
 const isRollingDice = ref<boolean>(false)
 const form = ref<{ health: number | null }>({ health: null })
 
@@ -14,69 +10,42 @@ const dice = '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="512" v
 
 function updateHealth ({ __init, health }: Obj): void {
   emit('update', Number(health))
-  isOpen.value = false
+  reset('form')
   isRollingDice.value = false
 }
 </script>
 
 <template>
-  <div>
-    <div class="flex gap-2 items-center">
-      <div
-        class="peer cursor-pointer flex gap-1"
-        @click="isOpen = true"
-      >
-        <p
-          v-if="health !== null"
-          :class="{ 'text-danger font-bold': +health < 1 }"
-        >
-          {{ health }}
-        </p>
-        <p v-else-if="type !== 'lair'" class="text-slate-600">
-          Add
-        </p>
-        <span
-          v-if="health !== null && tempHealth"
-          class="text-warning"
-        >+{{ tempHealth }}</span>
-      </div>
-      <Icon
-        name="lucide:wrench"
-        class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
-        :class="{ hidden: !health }"
-        aria-hidden="true"
-      />
-    </div>
-    <Modal v-if="isOpen" @close="isOpen = false">
-      <template #header>
-        <h2>{{ $t('pages.encounter.update.hp') }}</h2>
-      </template>
+  <Modal @close="$emit('close')">
+    <template #header>
+      <h2>{{ $t('pages.encounter.update.hp') }}</h2>
+    </template>
+    <FormKit
+      id="form"
+      v-model="form"
+      type="form"
+      :actions="false"
+      @submit="updateHealth"
+    >
       <FormKit
-        v-model="form"
-        type="form"
-        :actions="false"
-        @submit="updateHealth"
-      >
-        <FormKit
-          name="health"
-          type="number"
-          :label="$t('components.inputs.hpLabel')"
-          :help="$t('general.alsoMax', { field: 'HP' })"
-          validation="required|between:1,1000|number"
-          :suffix-icon="isRollingDice ? 'close' : dice"
-          @suffix-icon-click="isRollingDice = !isRollingDice"
-        />
-        <DiceRolling
-          v-if="isRollingDice"
-          @result="(v) => {
-            form.health = v
-            isRollingDice = false
-          }"
-        />
-        <FormKit type="submit" :aria-label="$t('actions.update')">
-          {{ $t('actions.update') }}
-        </FormKit>
+        name="health"
+        type="number"
+        :label="$t('components.inputs.hpLabel')"
+        :help="$t('general.alsoMax', { field: 'HP' })"
+        validation="required|between:1,1000|number"
+        :suffix-icon="isRollingDice ? 'close' : dice"
+        @suffix-icon-click="isRollingDice = !isRollingDice"
+      />
+      <DiceRolling
+        v-if="isRollingDice"
+        @result="(v) => {
+          form.health = v
+          isRollingDice = false
+        }"
+      />
+      <FormKit type="submit" :aria-label="$t('actions.update')">
+        {{ $t('actions.update') }}
       </FormKit>
-    </Modal>
-  </div>
+    </FormKit>
+  </Modal>
 </template>

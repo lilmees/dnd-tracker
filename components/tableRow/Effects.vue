@@ -6,23 +6,20 @@ const props = withDefaults(
   }
 )
 
-function removeEffect (slug: string, type: string): void {
-  emit('update', {
-    value: props.conditions.filter(s => s.slug !== slug),
-    type
-  })
+function removeEffect (slug: string): void {
+  emit('update', props.conditions.filter(s => s.slug !== slug))
 }
 </script>
 
 <template>
   <div>
-    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+    <div class="flex flex-wrap justify-center md:justify-start">
       <Tag
         v-for="condition in conditions"
         :key="condition.slug"
         removable
         :condition="condition"
-        @remove="removeEffect($event, 'conditions')"
+        @remove="removeEffect($event)"
       />
     </div>
   </div>

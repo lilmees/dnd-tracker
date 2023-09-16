@@ -143,7 +143,7 @@ function updated (hb: Homebrew, id: number): void {
         </thead>
         <tbody>
           <tr
-            v-for="item in shownHomebrew"
+            v-for="(item, index) in shownHomebrew"
             :key="item.id"
             class="border-b last:border-b-0 border-slate-700"
           >
@@ -200,17 +200,31 @@ function updated (hb: Homebrew, id: number): void {
                     || item.special_abilities?.length
                 "
               >
-                <PossibleAttacksModal
-                  :row="(item as Row)"
-                  :label="`
-                  ${[
-                    ...item.actions || [],
-                    ...item.legendary_actions || [],
-                    ...item.reactions || [],
-                    ...item.special_abilities || [],
-                  ].length} ${$t('components.inputs.actionsLabel')}
-                  `"
-                />
+                <div
+                  class="flex flex-wrap items-center gap-x-2 cursor-pointer"
+                  @click="() => {
+                    store.activeHomebrew = item
+                    store.activeIndex = index
+                    store.activeModal = 'possible-attacks-modal'
+                  }"
+                >
+                  <Icon
+                    name="iconamoon:search-bold"
+                    class="w-4 h-4 text-primary cursor-pointer"
+                    aria-hidden="true"
+                  />
+                  <p>
+                    {{
+                      `${[
+                        ...item.actions || [],
+                        ...item.legendary_actions || [],
+                        ...item.reactions || [],
+                        ...item.special_abilities || [],
+                      ].length}
+                      ${$t('components.inputs.actionsLabel')}`
+                    }}
+                  </p>
+                </div>
               </div>
             </td>
             <td class="px-2 py-1">
@@ -241,6 +255,11 @@ function updated (hb: Homebrew, id: number): void {
         v-model="page"
         :total-pages="pages"
         @paginate="paginate"
+      />
+      <component
+        :is="store.activeModal"
+        v-if="store.activeModal"
+        @close="store.resetActiveState()"
       />
     </div>
     <div v-else class="grid md:grid-cols-2 gap-4 pt-6">

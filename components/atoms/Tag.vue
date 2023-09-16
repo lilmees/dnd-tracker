@@ -18,7 +18,7 @@ withDefaults(
 
 <template>
   <div
-    class="px-3 py-1 font-semibold leading-tight rounded-lg flex gap-2 w-fit items-center text-white"
+    class="px-3 py-1 m-1 font-semibold leading-tight rounded-lg flex gap-2 w-fit items-center text-white"
     :class="{
       'bg-primary/50 ring-primary': color === 'primary',
       'bg-secondary/50 ring-secondary': color === 'secondary',
