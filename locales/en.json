@@ -129,6 +129,10 @@
       "back": "Back to encounters",
       "campaignBack": "Back to campaign",
       "info": "You can jot something down here",
+      "override": {
+        "ac": "Override AC",
+        "hp": "Override HP"
+      },
       "update": {
         "name": "Update name",
         "initiative": "Update initiative",
@@ -342,7 +346,7 @@
       "about": "About us",
       "collections": "Collections",
       "encounters": "Encounters",
-      "campaigns": "Campaignes",
+      "campaigns": "Campaigns",
       "profile": "Profile",
       "pricing": "Pricing",
       "play": "Play",

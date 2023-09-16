@@ -91,7 +91,7 @@ const isOpen = ref<boolean>(false)
     <ActionsTable
       v-if="monster.actions && isOpen"
       :row="(monster as unknown as Row)"
-      :class="{ 'pb-5': isOpen }"
+      :class="{ 'py-5': isOpen }"
     />
     <div class="flex justify-end pt-4">
       <button

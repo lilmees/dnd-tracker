@@ -60,6 +60,58 @@ function resetState (): void {
       <template #header>
         <h2>{{ $t('pages.encounter.update.hp') }}</h2>
       </template>
+      <FormKit
+        v-model="formAmount"
+        :actions="false"
+        type="form"
+        @submit="updateHealth"
+      >
+        <FormKit
+          name="amount"
+          type="number"
+          :label="$t('components.inputs.amountLabel')"
+          validation="required|between:1,1000|number"
+          :suffix-icon="isRollingDice ? 'close' : dice"
+          @suffix-icon-click="isRollingDice = !isRollingDice"
+        />
+        <DiceRolling
+          v-if="isRollingDice"
+          @result="(v) => {
+            formAmount.amount = v
+            isRollingDice = false
+          }"
+        />
+        <div class="flex gap-2 flex-wrap justify-end items-center">
+          <button
+            type="submit"
+            class="btn-success"
+            :aria-label="$t('actions.heal')"
+            @click="type = 'heal'"
+          >
+            {{ $t('actions.heal') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary"
+            :aria-label="$t('actions.temp')"
+            @click="type = 'temp'"
+          >
+            {{ $t('actions.temp') }}
+          </button>
+          <button
+            type="submit"
+            class="btn-danger"
+            :aria-label="$t('actions.damage')"
+            @click="type = 'damage'"
+          >
+            {{ $t('actions.damage') }}
+          </button>
+        </div>
+      </FormKit>
+      <div class="w-full border border-black h-px my-6" />
+      <h2 class="mb-6">
+        {{ $t('pages.encounter.override.hp') }}
+      </h2>
       <div
         v-if="(hp === 0 || hp) && (max === 0 || max)"
         class="flex flex-wrap gap-x-4 gap-y-2 pb-4 items-start justify-center"
@@ -110,6 +162,7 @@ function resetState (): void {
             :label="$t('components.inputs.overrideFieldLabel', { field: 'HP' })"
             :help="$t('components.inputs.optionalFieldHelp', { field: 'HP' })"
             validation="required|between:1,1000|number"
+            validation-visibility="submit"
             outer-class="grow"
             :suffix-icon="maxOld ? 'rewind' : undefined"
             @suffix-icon-click="overrideHealth({ reset: true })"
@@ -121,55 +174,6 @@ function resetState (): void {
           >
             {{ $t('actions.save') }}
           </FormKit>
-        </div>
-      </FormKit>
-      <div class="w-full border border-black h-px my-6" />
-      <FormKit
-        v-model="formAmount"
-        :actions="false"
-        type="form"
-        @submit="updateHealth"
-      >
-        <FormKit
-          name="amount"
-          type="number"
-          :label="$t('components.inputs.amountLabel')"
-          validation="required|between:1,1000|number"
-          :suffix-icon="isRollingDice ? 'close' : dice"
-          @suffix-icon-click="isRollingDice = !isRollingDice"
-        />
-        <DiceRolling
-          v-if="isRollingDice"
-          @result="(v) => {
-            formAmount.amount = v
-            isRollingDice = false
-          }"
-        />
-        <div class="flex gap-2 flex-wrap justify-end items-center">
-          <button
-            type="submit"
-            class="btn-success"
-            :aria-label="$t('actions.heal')"
-            @click="type = 'heal'"
-          >
-            {{ $t('actions.heal') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-primary"
-            :aria-label="$t('actions.temp')"
-            @click="type = 'temp'"
-          >
-            {{ $t('actions.temp') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-danger"
-            :aria-label="$t('actions.damage')"
-            @click="type = 'damage'"
-          >
-            {{ $t('actions.damage') }}
-          </button>
         </div>
       </FormKit>
     </Modal>

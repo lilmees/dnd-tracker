@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const umami = useRuntimeConfig().public.umamiId
 const profile = useProfileStore()
 const { auth } = useSupabaseClient()
 
@@ -13,6 +14,12 @@ auth.onAuthStateChange((event, session) => {
 })
 
 onBeforeMount(() => profile.fetch())
+
+useHead({
+  script: [
+    { src: 'https://analytics.umami.is/script.js', async: true, 'data-website-id': umami }
+  ]
+})
 </script>
 
 <template>

@@ -69,7 +69,7 @@
     "home": {
       "textBlock1": {
         "title": "Met liefde gemaakt 💜",
-        "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campaigns. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
+        "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campagnes. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
         "button": "Ga naar de roadmap"
       },
       "summary": {
@@ -127,15 +127,19 @@
     },
     "encounter": {
       "back": "Terug naar encounters",
-      "campaignBack": "Terug naar campaign",
+      "campaignBack": "Terug naar campagne",
       "info": "Je kan hier wat info neerschrijven",
+      "override": {
+        "ac": "AC overschrijven",
+        "hp": "HP overschrijven"
+      },
       "update": {
-        "name": "Update naam",
-        "initiative": "Update Initiatief",
-        "ac": "Update AC",
-        "hp": "Update HP",
-        "link": "Update link",
-        "conditions": "Update condities"
+        "name": "Naam bijwerken",
+        "initiative": "Initiatief bijwerken",
+        "ac": "AC bijwerken",
+        "hp": "HP bijwerken",
+        "link": "Link bijwerken",
+        "conditions": "Condities bijwerken"
       },
       "toasts": {
         "removed": {
@@ -283,7 +287,7 @@
     },
     "homebrewTable": {
       "title": "Klaar om je creativiteit de vrije loop te laten?",
-      "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campaign. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
+      "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campagne. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
     },
     "encounterModal": {
       "add": "Maak een nieuwe encounter",
@@ -294,7 +298,7 @@
       "notFound": "Wij hebben geen monster gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanmaken als homebrew!"
     },
     "addInitiativeCampaignHomebrew": {
-      "addCampaignHomebrew": "Campaign homebrew toevoegen",
+      "addCampaignHomebrew": "campagne homebrew toevoegen",
       "initiative": {
         "info": "Wanneer je een summon selecteert, dien je ook een personage te kiezen dat deze summon oproept.",
         "add": "Summon toevoegen",
