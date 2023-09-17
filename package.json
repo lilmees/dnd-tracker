@@ -20,6 +20,7 @@
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@types/aos": "^3.0.4",
     "@types/markdown-it": "^12.2.3",
+    "@unlok-co/nuxt-stripe": "^2.0.0",
     "@vite-pwa/nuxt": "^0.1.0",
     "@vueuse/core": "^9.4.0",
     "@vueuse/nuxt": "^9.4.0",
@@ -28,6 +29,7 @@
     "nuxt-schema-org": "^2.1.1",
     "nuxt-security": "^0.14.4",
     "postcss-custom-properties": "^12.1.11",
+    "stripe": "^13.6.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {
@@ -49,7 +51,6 @@
     "nuxt-mail": "^3.1.5",
     "nuxt-simple-sitemap": "^2.4.11",
     "nuxt-umami": "^2.5.2",
-    "stripe": "^11.12.0",
     "vue-tippy": "v6",
     "ybug-vue": "^1.2.0"
   }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const emit = defineEmits(['subscribe', 'free'])
 const props = withDefaults(
   defineProps<{
   product: Pricing,
@@ -12,15 +13,18 @@ const props = withDefaults(
   }
 )
 
-const { locale } = useI18n({ useScope: 'global' })
-const stripe = useStripeStore()
+function subscribe () {
+  if (props.current) {
+    return
+  }
 
-async function subscribe () {
   if (props.product.yearId && props.product.monthId) {
-    await stripe.subscribe(
-      props.yearly ? props.product.yearId : props.product.monthId,
-      locale.value
+    emit(
+      'subscribe',
+      props.yearly ? props.product.yearId : props.product.monthId
     )
+  } else {
+    emit('free')
   }
 }
 </script>
@@ -28,7 +32,7 @@ async function subscribe () {
 <template>
   <div
     class="flex flex-col p-6 bg-black/50 border-4 border-black rounded-lg justify-between cursor-pointer"
-    :class="{'border-primary': current }"
+    :class="[current ? 'border-secondary' : 'cursor-pointer']"
     @click="subscribe"
   >
     <div class="flex justify-between items-start">
@@ -50,6 +54,7 @@ async function subscribe () {
     </div>
     <button
       class="btn-primary w-full"
+      :class="current ? 'btn-secondary' : 'btn-primary'"
       :aria-label="current ? $t('components.pricingCard.current') : $t('components.pricingCard.start')"
       :disabled="current"
     >

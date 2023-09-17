@@ -1,4 +1,5 @@
 interface Pricing {
+  type: StripeSubscriptionType
   title: string
   description: string
   prices: number[]

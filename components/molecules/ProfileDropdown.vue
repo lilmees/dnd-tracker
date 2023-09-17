@@ -15,6 +15,7 @@ onBeforeMount(() => profile.fetch())
 
 async function manageSubscription () {
   isOpen.value = false
+
   try {
     if (profile?.data?.stripe_session_id) {
       await stripe.createPortalSession(profile.data.stripe_session_id)
@@ -66,13 +67,13 @@ async function manageSubscription () {
         />
         <template v-if="user">
           <ClientOnly>
-            <!-- <button
+            <button
               v-if="profile?.data?.stripe_session_id"
               class="text-slate-300 hover:text-white max-w-max font-bold"
               @click="manageSubscription"
             >
               {{ $t('components.navbar.subscription') }}
-            </button> -->
+            </button>
           </ClientOnly>
           <button
             class="text-danger hover:text-white max-w-max font-bold"

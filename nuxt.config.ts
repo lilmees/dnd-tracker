@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     '@/assets/css/quill.css'
   ],
   modules: [
+    '@unlok-co/nuxt-stripe',
     'nuxt-security',
     'nuxt-icon',
     'nuxt-schema-org',
@@ -50,15 +51,13 @@ export default defineNuxtConfig({
       beta: process.env.BETA,
       appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
-      stripePk: process.env.STRIPE_PK,
       stripeMediorMonthly: process.env.STRIPE_MEDIOR_MONTHLY,
       stripeMediorYearly: process.env.STRIPE_MEDIOR_YEARLY,
       stripeProMonthly: process.env.STRIPE_PRO_MONTHLY,
       stripeProYearly: process.env.STRIPE_PRO_YEARLY,
       logRocket: process.env.LOGROCKET_ID,
       formkit: process.env.FORMKIT_PRO
-    },
-    stripeSk: process.env.STRIPE_SK
+    }
   },
   appConfig: {
     umami: {
@@ -159,6 +158,20 @@ export default defineNuxtConfig({
         'frame-ancestors': ['\'self\'', 'https:', 'data:']
       },
       crossOriginEmbedderPolicy: false
+    }
+  },
+  stripe: {
+    server: {
+      key: process.env.STRIPE_SK,
+      options: {
+        apiVersion: '2022-11-15'
+      }
+    },
+    client: {
+      key: process.env.STRIPE_PK,
+      options: {
+        apiVersion: '2022-11-15'
+      }
     }
   }
 })
