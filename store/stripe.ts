@@ -41,6 +41,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     createPortalSession,
     products: [
       {
+        type: 'free',
         title: 'Starter',
         description: t('pages.pricing.starter'),
         prices: [0],
@@ -53,6 +54,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         ]
       },
       {
+        type: 'medior',
         title: 'Medior',
         description: t('pages.pricing.medior'),
         prices: [2, 22.50],
@@ -67,6 +69,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         yearId: config.public.stripeMediorYearly
       },
       {
+        type: 'pro',
         title: 'Pro',
         description: t('pages.pricing.pro'),
         prices: [3, 30],

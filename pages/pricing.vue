@@ -1,7 +1,33 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
+const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
+const profile = useProfileStore()
+const user = useSupabaseUser()
+const localePath = useLocalePath()
+const toast = useToastStore()
 
 const isYearly = ref<boolean>(false)
+
+async function subscribe (id: string): Promise<void> {
+  await stripe.subscribe(id, locale.value)
+}
+
+async function handleFreeTier (): Promise<void> {
+  if (!user.value) {
+    navigateTo(localePath('/register'))
+  } else {
+    try {
+      if (profile?.data?.stripe_session_id) {
+        await stripe.createPortalSession(profile.data.stripe_session_id)
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
+    }
+  }
+}
 </script>
 
 <template>
@@ -33,14 +59,12 @@ const isYearly = ref<boolean>(false)
         <PricingCard
           v-for="(product, i) in stripe.products"
           :key="product.title"
-          data-aos="zoom-in-up"
-          :data-aos-once="true"
-          :data-aos-duration="600"
-          :data-aos-delay="(i + 1) * 150"
           :product="product"
           :yearly="isYearly"
           :popular="i === 1 ? $t('pages.pricing.popular') : undefined"
-          class="opacity-0"
+          :current="product.type === profile?.data?.subscription_type"
+          @subscribe="subscribe"
+          @free="handleFreeTier"
         />
       </div>
     </section>
