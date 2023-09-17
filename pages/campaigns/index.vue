@@ -18,7 +18,10 @@ const {
 
 const isOpen = ref<boolean>(false)
 
-onMounted(() => store.fetch())
+onMounted(() => {
+  store.fetch()
+  reset()
+})
 
 whenever(() => store.error, () => { toast.error() })
 
@@ -54,7 +57,12 @@ async function deleteCampaigns (): Promise<void> {
           >
             {{ $t('pages.campaigns.add') }}
           </button>
-          <tippy interactive :z-index="2" placement="left">
+          <tippy
+            interactive
+            :z-index="2"
+            placement="left"
+            trigger="mouseenter click"
+          >
             <button
               class="bg-secondary/50 border-4 border-secondary rounded-lg w-12 h-12"
               :aria-label="$t('general.options')"
