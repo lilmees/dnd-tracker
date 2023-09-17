@@ -93,7 +93,10 @@ async function moveRow (up: boolean): Promise<void> {
       </div>
     </td>
     <td
-      v-if="store.includesSummond && store.encounter.settings.rows.includes('summoner')"
+      v-if="
+        store.includesSummond &&
+          (!store.encounter.settings.modified || store.encounter.settings.rows.includes('summoner'))
+      "
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -162,7 +165,7 @@ async function moveRow (up: boolean): Promise<void> {
       </div>
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('ac')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('ac')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -199,7 +202,7 @@ async function moveRow (up: boolean): Promise<void> {
       </div>
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('health')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('health')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -244,7 +247,7 @@ async function moveRow (up: boolean): Promise<void> {
       <Actions :row="row" :index="index" />
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('conditions')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('conditions')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -259,7 +262,7 @@ async function moveRow (up: boolean): Promise<void> {
       />
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('note')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('note')"
       class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative"
     >
       <textarea
@@ -270,7 +273,7 @@ async function moveRow (up: boolean): Promise<void> {
       />
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('deathSaves')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('deathSaves')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -286,7 +289,7 @@ async function moveRow (up: boolean): Promise<void> {
       />
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('concentration')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('concentration')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -302,7 +305,7 @@ async function moveRow (up: boolean): Promise<void> {
       />
     </td>
     <td
-      v-if="store.encounter.settings.rows.includes('modify')"
+      v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('modify')"
       :class="tableSpacing"
     >
       <Modify
