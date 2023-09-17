@@ -26,6 +26,7 @@
     "@vueuse/nuxt": "^9.4.0",
     "eslint": "^8.36.0",
     "nuxt": "^3.5.0",
+    "nuxt-particles": "^0.1.5",
     "nuxt-schema-org": "^2.1.1",
     "nuxt-security": "^0.14.4",
     "postcss-custom-properties": "^12.1.11",

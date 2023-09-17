@@ -89,7 +89,7 @@
     "error": {
       "404": "Oh nee... We hebben deze pagina verloren.",
       "text": "We hebben overal gezocht maar konden niet vinden waar je naar op zoek bent. Laten we een betere plek voor je vinden om naartoe te gaan.",
-      "goHome": "Terug naar huis"
+      "goHome": "Naar de startpagina"
     },
     "campaigns": {
       "campaigns": "Campagnes",
@@ -230,6 +230,14 @@
       "title": "Hoor graag van je, neem contact op 👋",
       "send": "Verstuur je vraag",
       "success": "Contact email is verstuurd"
+    },
+    "subscribeSuccess": {
+      "title": "Bedankt voor het abonneren op onze service! 🎉",
+      "text": {
+        "one": "Je bent nu officieel onderdeel van onze gemeenschap, en je bent slechts één stap verwijderd van het ontgrendelen van een wereld vol spannende updates en fantastische avonturen. We kunnen niet wachten om onze nieuwste nieuwtjes en aanbiedingen met je te delen.",
+        "two": "Intussen, pak je dobbelstenen, verzamel je party en bereid je voor op epische avonturen. Je reis met ons is net begonnen, en samen zullen we rijken verkennen die de verbeelding te boven gaan.",
+        "three": "Blijf op de hoogte, en laat de avonturen beginnen!"
+      }
     }
   },
   "components": {

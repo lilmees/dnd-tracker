@@ -230,6 +230,14 @@
       "title": "Love to hear from you, Get in touch 👋",
       "send": "Send your question",
       "success": "Contact email was successfully sent"
+    },
+    "subscribeSuccess": {
+      "title": "Thank you for subscribing to our service! 🎉",
+      "text": {
+        "one": "You're now officially part of our community, and you're one step closer to unlocking a world of exciting updates and fantastic adventures. We can't wait to share our latest news and offerings with you.",
+        "two": "In the meantime, grab your dice, gather your party, and prepare for epic adventures. Your journey with us has just begun, and together, we'll explore realms beyond imagination.",
+        "three": "Stay tuned, and let the adventures begin!"
+      }
     }
   },
   "components": {

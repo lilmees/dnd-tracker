@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     '@/assets/css/quill.css'
   ],
   modules: [
+    'nuxt-particles',
     '@unlok-co/nuxt-stripe',
     'nuxt-security',
     'nuxt-icon',
