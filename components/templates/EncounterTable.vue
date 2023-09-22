@@ -55,6 +55,7 @@ const tableSpacing = computed<string>(() => {
               v-for="header in headers"
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
+              scope="col"
             >
               {{ header }}
             </th>

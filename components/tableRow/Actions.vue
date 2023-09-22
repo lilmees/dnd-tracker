@@ -82,6 +82,7 @@ const store = useTableStore()
       "
       v-tippy="{ content: $t('components.actions.attacks') }"
       class="flex flex-wrap items-center gap-x-2"
+      :aria-label="$t('actions.open')"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
