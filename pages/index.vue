@@ -71,6 +71,7 @@ try {
             sizes="sm:500px md:500px lg:500px"
             format="webp"
             provider="imagekit"
+            width="500"
             class="mx-auto"
           />
         </div>
