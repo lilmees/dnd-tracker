@@ -284,6 +284,7 @@
       "damageBonusLabel": "Damage bonus",
       "damageDiceLabel": "Damage dice",
       "marketingLabel": "Get notified about updates",
+      "codeLabel": "Code",
       "nothing": "Nothing selected",
       "overrideFieldLabel": "Max {field} override",
       "optionalFieldHelp": "Optional to overwrite the current {field}"
@@ -356,8 +357,7 @@
       "campaigns": "Campaigns",
       "profile": "Profile",
       "pricing": "Pricing",
-      "play": "Play",
-      "subscription": "Subscription"
+      "play": "Play"
     },
     "confirmationModal": {
       "title": "Delete confirmation",
@@ -398,6 +398,13 @@
     },
     "infoDropdown": {
       "title": "Pinned information cards"
+    },
+    "badgeModal": {
+      "title": "Customize Your Profile with a Badge",
+      "add": "Add a badge",
+      "nothing": "No badge found with this code",
+      "already": "Code is already claimed",
+      "claim": "Claim badge"
     }
   }
 }
