@@ -284,6 +284,7 @@
       "damageBonusLabel": "Schade bonus",
       "damageDiceLabel": "Schade dobbelsteen",
       "marketingLabel": "Ontvang meldingen over updates",
+      "codeLabel": "Code",
       "nothing": "Nog niets geselecteerd",
       "overrideFieldLabel": "Max {field} overschrijven",
       "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven"
@@ -356,8 +357,7 @@
       "campaigns": "Campagnes",
       "profile": "Profiel",
       "pricing": "Prijzen",
-      "play": "Spelen",
-      "subscription": "Abonnement"
+      "play": "Spelen"
     },
     "confirmationModal": {
       "title": "Verwijder bevestiging",
@@ -398,6 +398,13 @@
     },
     "infoDropdown": {
       "title": "Gepinde informatie kaarten"
+    },
+    "badgeModal": {
+      "title": "Personaliseer je profiel met een badge",
+      "add": "Badge toevoegen",
+      "nothing": "Er is geen badge gevonden met deze code",
+      "already": "De code is al geclaimd",
+      "claim": "Ontvang badge"
     }
   }
 }

@@ -7,6 +7,7 @@ interface Profile extends Stripe {
   avatar?: string
   email: string
   marketing: boolean
+  badges: EarnedBadge[]
 }
 
 interface ProfileUpdate extends Partial<Omit<Profile, 'created_at' | 'id'>> {

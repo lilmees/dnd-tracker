@@ -1,30 +1,13 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 
 const profile = useProfileStore()
-const stripe = useStripeStore()
-const toast = useToastStore()
 const user = useSupabaseUser()
 
 const isOpen = ref<boolean>(false)
 
 onBeforeMount(() => profile.fetch())
-
-async function manageSubscription () {
-  isOpen.value = false
-
-  try {
-    if (profile?.data?.stripe_session_id) {
-      await stripe.createPortalSession(profile.data.stripe_session_id)
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  }
-}
 </script>
 
 <template>
@@ -66,15 +49,6 @@ async function manageSubscription () {
           @click="isOpen = false"
         />
         <template v-if="user">
-          <ClientOnly>
-            <button
-              v-if="profile?.data?.stripe_session_id"
-              class="text-slate-300 hover:text-white max-w-max font-bold"
-              @click="manageSubscription"
-            >
-              {{ $t('components.navbar.subscription') }}
-            </button>
-          </ClientOnly>
           <button
             class="text-danger hover:text-white max-w-max font-bold"
             @click="

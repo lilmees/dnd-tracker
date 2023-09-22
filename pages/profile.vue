@@ -124,6 +124,14 @@ function handleIconClick (node: FormKitNode) {
           </div>
         </div>
       </div>
+      <div class="flex flex-wrap items-end gap-4 pt-2 pb-4 border-b-2 border-slate-700">
+        <Badge
+          v-for="badge in profile.data.badges"
+          :key="badge.label.nl"
+          v-bind="badge"
+        />
+        <BadgeModal />
+      </div>
       <div
         class="flex flex-col md:flex-row justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
       >
