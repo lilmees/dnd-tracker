@@ -111,10 +111,59 @@ function resetState (): void {
 
 <template>
   <div>
-    <Modal @close="$emit('close')">
-      <template #header>
-        <h2>{{ $t('pages.encounter.update.ac') }}</h2>
-      </template>
+    <Modal :title="false" @close="$emit('close')">
+      <div
+        v-if="
+          (store.activeRow?.ac === 0 || store.activeRow?.ac)
+            && (store.activeRow?.maxAc === 0 || store.activeRow?.maxAc)
+        "
+        class="flex flex-wrap gap-x-4 gap-y-2 pb-6 items-start justify-center"
+      >
+        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+          <p class="font-bold">
+            {{ $t('general.current') }}
+          </p>
+          <p class="head-1" :class="{ 'text-danger': store.activeRow.ac < 1 }">
+            {{ store.activeRow.ac }}
+          </p>
+        </div>
+        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+          <p class="font-bold">
+            {{ $t('general.max') }}
+          </p>
+          <div class="flex gap-1 items-start justify-center">
+            <p
+              class="head-1"
+              :class="[
+                !store.activeRow?.maxAcOld
+                  ? undefined
+                  : store.activeRow.maxAcOld < store.activeRow.maxAc
+                    ? 'text-success'
+                    : 'text-danger'
+              ]"
+            >
+              {{ store.activeRow.maxAc || 0 }}
+            </p>
+            <p
+              v-if="store.activeRow.maxAcOld === 0 || store.activeRow.maxAcOld"
+              class="body-small"
+            >
+              ({{ store.activeRow.maxAcOld }})
+            </p>
+          </div>
+        </div>
+        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+          <p class="font-bold">
+            {{ $t('general.temp') }}
+          </p>
+          <p class="head-1">
+            {{ store.activeRow.tempAc || 0 }}
+          </p>
+        </div>
+      </div>
+      <h2 class="mb-6">
+        {{ $t('pages.encounter.update.ac') }}
+      </h2>
       <FormKit
         v-model="formAmount"
         type="form"
@@ -168,55 +217,6 @@ function resetState (): void {
       <h2 class="mb-6">
         {{ $t('pages.encounter.override.ac') }}
       </h2>
-      <div
-        v-if="
-          (store.activeRow?.ac === 0 || store.activeRow?.ac)
-            && (store.activeRow?.maxAc === 0 || store.activeRow?.maxAc)
-        "
-        class="flex flex-wrap gap-x-4 gap-y-2 pb-4 items-start justify-center"
-      >
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.current') }}
-          </p>
-          <p class="head-1" :class="{ 'text-danger': store.activeRow.ac < 1 }">
-            {{ store.activeRow.ac }}
-          </p>
-        </div>
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.max') }}
-          </p>
-          <div class="flex gap-1 items-start justify-center">
-            <p
-              class="head-1"
-              :class="[
-                !store.activeRow?.maxAcOld
-                  ? undefined
-                  : store.activeRow.maxAcOld < store.activeRow.maxAc
-                    ? 'text-success'
-                    : 'text-danger'
-              ]"
-            >
-              {{ store.activeRow.maxAc || 0 }}
-            </p>
-            <p
-              v-if="store.activeRow.maxAcOld === 0 || store.activeRow.maxAcOld"
-              class="body-small"
-            >
-              ({{ store.activeRow.maxAcOld }})
-            </p>
-          </div>
-        </div>
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.temp') }}
-          </p>
-          <p class="head-1">
-            {{ store.activeRow.tempAc || 0 }}
-          </p>
-        </div>
-      </div>
       <FormKit
         v-model="formOverride"
         :actions="false"

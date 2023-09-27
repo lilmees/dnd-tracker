@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const emit = defineEmits(['close'])
 withDefaults(
-  defineProps<{ big?: boolean }>(), {
-    big: false
+  defineProps<{
+    big?: boolean
+    title?: boolean
+   }>(), {
+    big: false,
+    title: true
   }
 )
 
@@ -31,7 +35,10 @@ onKeyStroke('Escape', () => emit('close'))
         </button>
         <slot name="header" />
       </div>
-      <div class="mt-6 mx-h-full overflow-auto max-h-[75vh]">
+      <div
+        class="mx-h-full overflow-auto max-h-[75vh]"
+        :class="{ 'mt-6': title }"
+      >
         <slot />
       </div>
     </div>

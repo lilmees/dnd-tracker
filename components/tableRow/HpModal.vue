@@ -157,10 +157,62 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal @close="$emit('close')">
-    <template #header>
-      <h2>{{ $t('pages.encounter.update.hp') }}</h2>
-    </template>
+  <Modal :title="false" @close="$emit('close')">
+    <div
+      v-if="
+        (store.activeRow?.health === 0 || store.activeRow?.health)
+          && (store.activeRow?.maxHealth === 0 || store.activeRow?.maxHealth)
+      "
+      class="flex flex-wrap gap-x-4 gap-y-2 pb-6 items-start justify-center"
+    >
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.current') }}
+        </p>
+        <p
+          class="head-1"
+          :class="{ 'text-danger': store.activeRow.health < 1 }"
+        >
+          {{ store.activeRow.health }}
+        </p>
+      </div>
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.max') }}
+        </p>
+        <div class="flex gap-1 items-start justify-center">
+          <p
+            class="head-1"
+            :class="[
+              !store.activeRow.maxHealthOld
+                ? undefined
+                : store.activeRow.maxHealthOld < store.activeRow.maxHealth
+                  ? 'text-success'
+                  : 'text-danger'
+            ]"
+          >
+            {{ store.activeRow.maxHealth || 0 }}
+          </p>
+          <p
+            v-if="store.activeRow.maxHealthOld === 0 || store.activeRow.maxHealthOld"
+            class="body-small"
+          >
+            ({{ store.activeRow.maxHealthOld }})
+          </p>
+        </div>
+      </div>
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.temp') }}
+        </p>
+        <p class="head-1">
+          {{ store.activeRow?.tempHealth || 0 }}
+        </p>
+      </div>
+    </div>
+    <h2 class="mb-6">
+      {{ $t('pages.encounter.update.hp') }}
+    </h2>
     <FormKit
       v-model="formAmount"
       :actions="false"
@@ -213,58 +265,6 @@ function resetState (): void {
     <h2 class="mb-6">
       {{ $t('pages.encounter.override.hp') }}
     </h2>
-    <div
-      v-if="
-        (store.activeRow?.health === 0 || store.activeRow?.health)
-          && (store.activeRow?.maxHealth === 0 || store.activeRow?.maxHealth)
-      "
-      class="flex flex-wrap gap-x-4 gap-y-2 pb-4 items-start justify-center"
-    >
-      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-        <p class="font-bold">
-          {{ $t('general.current') }}
-        </p>
-        <p
-          class="head-1"
-          :class="{ 'text-danger': store.activeRow.health < 1 }"
-        >
-          {{ store.activeRow.health }}
-        </p>
-      </div>
-      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-        <p class="font-bold">
-          {{ $t('general.max') }}
-        </p>
-        <div class="flex gap-1 items-start justify-center">
-          <p
-            class="head-1"
-            :class="[
-              !store.activeRow.maxHealthOld
-                ? undefined
-                : store.activeRow.maxHealthOld < store.activeRow.maxHealth
-                  ? 'text-success'
-                  : 'text-danger'
-            ]"
-          >
-            {{ store.activeRow.maxHealth || 0 }}
-          </p>
-          <p
-            v-if="store.activeRow.maxHealthOld === 0 || store.activeRow.maxHealthOld"
-            class="body-small"
-          >
-            ({{ store.activeRow.maxHealthOld }})
-          </p>
-        </div>
-      </div>
-      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-        <p class="font-bold">
-          {{ $t('general.temp') }}
-        </p>
-        <p class="head-1">
-          {{ store.activeRow?.tempHealth || 0 }}
-        </p>
-      </div>
-    </div>
     <FormKit
       v-model="formOverride"
       :actions="false"
