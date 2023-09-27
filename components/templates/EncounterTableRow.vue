@@ -67,7 +67,7 @@ watchDebounced(
       :class="tableSpacing"
     >
       <Initiative
-        :initiative="row.initiative || null"
+        :initiative="row.initiative"
         :index="row.index"
         @update="store.updateRow('initiative', $event as never, row, index)"
       />
