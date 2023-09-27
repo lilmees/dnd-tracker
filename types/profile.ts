@@ -13,3 +13,5 @@ interface Profile extends Stripe {
 interface ProfileUpdate extends Partial<Omit<Profile, 'created_at' | 'id'>> {
   password?: string
 }
+
+interface SocialProfile extends Required<Omit<Profile, StripeFields|'marketing'|'role'>> {}

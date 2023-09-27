@@ -38,7 +38,7 @@ function setLang (lang: string): void {
       </p>
       <p
         class="text-slate-300 hover:text-white duration-200 ease-in-out cursor-pointer"
-        :class="{ '!text-primary': localeLang === lang }"
+        :class="{ 'underline font-bold': localeLang === lang }"
         @click="setLang(lang)"
       >
         {{ lang }}

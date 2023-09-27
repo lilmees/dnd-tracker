@@ -13,7 +13,7 @@ onBeforeMount(() => profile.fetch())
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-secondary bg-black p-2 rounded-full shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer"
+      class="border-4 border-secondary bg-secondary/50 rounded-lg shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -23,7 +23,7 @@ onBeforeMount(() => profile.fetch())
           :src="profile.data.avatar"
           alt="Avatar image"
           sizes="sm:40px md:40px lg:40px"
-          class="w-8 -scale-x-100 relative bottom-1"
+          class="w-12 -scale-x-100"
           format="webp"
         />
         <NuxtImg
@@ -31,15 +31,15 @@ onBeforeMount(() => profile.fetch())
           src="/dice.webp"
           alt="D20 dice"
           sizes="sm:40px md:40px lg:40px"
-          class="w-8"
+          class="w-12"
           format="webp"
           provider="imagekit"
         />
       </ClientOnly>
     </button>
-    <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
+    <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-14">
       <div
-        class="border-4 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        class="border-4 border-secondary bg-secondary/50 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
       >
         <RouteLink
           v-for="route in routes"
