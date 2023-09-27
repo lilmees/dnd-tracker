@@ -14,7 +14,7 @@ const isOpen = ref<boolean>(false)
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-black rounded-lg group"
+      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-primary/50 rounded-lg group"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -33,7 +33,7 @@ const isOpen = ref<boolean>(false)
       :class="{ 'invisible top-0': !isOpen }"
     >
       <div
-        class="bg-black border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        class="bg-primary/50 backdrop-blur-xl border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
       >
         <NuxtLink
           v-for="route in routes"

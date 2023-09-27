@@ -23,7 +23,7 @@ try {
             :data-aos-once="true"
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
-            button-link="roadmap"
+            button-link="updates/feature-request"
             :button-label="$t('pages.home.textBlock1.button')"
           />
           <div

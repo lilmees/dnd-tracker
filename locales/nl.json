@@ -70,7 +70,7 @@
       "textBlock1": {
         "title": "Met liefde gemaakt 💜",
         "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campagnes. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
-        "button": "Ga naar de roadmap"
+        "button": "Nieuwe features aanvragen"
       },
       "summary": {
         "title": "Een tracker met unieke skills 🤝",
@@ -237,6 +237,34 @@
         "one": "Je bent nu officieel onderdeel van onze gemeenschap, en je bent slechts één stap verwijderd van het ontgrendelen van een wereld vol spannende updates en fantastische avonturen. We kunnen niet wachten om onze nieuwste nieuwtjes en aanbiedingen met je te delen.",
         "two": "Intussen, pak je dobbelstenen, verzamel je party en bereid je voor op epische avonturen. Je reis met ons is net begonnen, en samen zullen we rijken verkennen die de verbeelding te boven gaan.",
         "three": "Blijf op de hoogte, en laat de avonturen beginnen!"
+      }
+    },
+    "featureRequest": {
+      "status": {
+        "review": "Onder beoordeling",
+        "progress": "In uitvoering"
+      },
+      "cta": {
+        "title": "Oproep aan Moedige Avonturiers: Deel Jouw Heroïsche Ideeën!",
+        "text": "Dappere avonturier, uw raad wordt gezocht! We verlangen naar uw ideeën en suggesties. Of het nu een heldhaftig concept is voor een nieuwe functie, een verfijnende aanraking voor een bestaande, of enige andere fantastische gedachte, deel het zeker met ons."
+      },
+      "nothing": "Wij hebben geen feature gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanvragen! We staan open voor gebruikersfeedback en streven naar verbetering van onze services op basis van jouw suggesties.",
+      "request": "Feature voorstellen",
+      "sort": {
+        "title": "Sorteer",
+        "options": {
+          "mostVotes": "Meeste stemmen",
+          "leastVotes": "Minste stemmen",
+          "newestFirst": "Nieuwste eerst",
+          "oldestFirst": "Oudste eerst"
+        }
+      },
+      "filter": {
+        "title": "Gemaakt door",
+        "options": {
+          "all": "Iedereen",
+          "my": "Mij"
+        }
       }
     }
   },
@@ -405,6 +433,11 @@
       "nothing": "Er is geen badge gevonden met deze code",
       "already": "De code is al geclaimd",
       "claim": "Ontvang badge"
+    },
+    "addFeatureRequestModal": {
+      "title": "Feature request maken",
+      "submitted": "Je feature request is met enthousiasme ontvangen en ondergaat momenteel een zorgvuldige evaluatie. Zodra het is goedgekeurd, zal iedereen de mogelijkheid hebben om erop te stemmen. Je kunt controleren of verzoek is goedgekeurd zodra het label 'Onder beoordeling' niet meer zichtbaar is.",
+      "another": "Nog een feature request maken"
     }
   }
 }

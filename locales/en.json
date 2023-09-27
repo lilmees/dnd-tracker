@@ -70,7 +70,7 @@
       "textBlock1": {
         "title": "Made with love 💜",
         "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
-        "button": "Go to the roadmap"
+        "button": "Request new features"
       },
       "summary": {
         "title": "Why choose dnd-tracker for your encounters 🤔",
@@ -237,6 +237,34 @@
         "one": "You're now officially part of our community, and you're one step closer to unlocking a world of exciting updates and fantastic adventures. We can't wait to share our latest news and offerings with you.",
         "two": "In the meantime, grab your dice, gather your party, and prepare for epic adventures. Your journey with us has just begun, and together, we'll explore realms beyond imagination.",
         "three": "Stay tuned, and let the adventures begin!"
+      }
+    },
+    "featureRequest": {
+      "status": {
+        "review": "Under review",
+        "progress": "In progress"
+      },
+      "cta": {
+        "title": "Calling All Brave Adventurers: Share Your Heroic Ideas!",
+        "text": "Brave adventurer, your counsel is sought! We yearn for your ideas and suggestions. Whether it be a heroic concept for a new feature, a refining touch for an existing one, or any other fantastical notion, be sure to let us know."
+      },
+      "nothing": "We haven't found a feature that matches these filters, but that doesn't mean you can't request it yourself! We are open to user feedback and strive to improve our services based on your suggestions.",
+      "request": "Suggest feature",
+      "sort": {
+        "title": "Sort",
+        "options": {
+          "mostVotes": "Most votes",
+          "leastVotes": "Least votes",
+          "newestFirst": "Newest first",
+          "oldestFirst": "Oldest first"
+        }
+      },
+      "filter": {
+        "title": "Made by",
+        "options": {
+          "all": "Everyone",
+          "my": "Me"
+        }
       }
     }
   },
@@ -405,6 +433,11 @@
       "nothing": "No badge found with this code",
       "already": "Code is already claimed",
       "claim": "Claim badge"
+    },
+    "addFeatureRequestModal": {
+      "title": "Create feature request",
+      "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
+      "another": "Create another feature request"
     }
   }
 }
