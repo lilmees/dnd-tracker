@@ -118,7 +118,7 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal v-if="open" @close="resetState">
+  <Modal :open="open" @close="resetState">
     <template #header>
       <h2>
         {{ $t(`components.encounterModal.${update ? 'update' : 'add'}`) }}

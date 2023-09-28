@@ -16,7 +16,7 @@ function deleteConfirmation (): void {
 </script>
 
 <template>
-  <Modal v-if="open" @close="$emit('close')">
+  <Modal :open="open" @close="$emit('close')">
     <template #header>
       <h2>
         {{ $t('components.confirmationModal.title') }}

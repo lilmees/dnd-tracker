@@ -83,7 +83,7 @@ const tableSpacing = computed<string>(() => {
     </div>
     <component
       :is="store.activeModal"
-      v-if="store.activeModal"
+      :open="store.activeModal"
       @update="store.updateRow($event as never)"
       @close="store.resetActiveState()"
     />
