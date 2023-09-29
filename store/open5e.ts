@@ -13,9 +13,9 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
 
   const options: Open5eType[] = [
     'spells',
-    'backgrounds',
-    'planes',
-    'feats',
+    // 'backgrounds',
+    // 'planes',
+    // 'feats',
     'conditions',
     'magicitems',
     'weapons',
