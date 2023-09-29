@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { data } = await useAsyncData('changelog', () => queryContent('/changelog').findOne())
+</script>
 
 <template>
-  <div>coming soon</div>
+  <NuxtLayout>
+    <ContentRenderer :value="data" />
+  </NuxtLayout>
 </template>
