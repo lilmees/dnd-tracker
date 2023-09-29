@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { start, end } from '@/utils/animation-helpers'
 
+defineExpose({ close })
 withDefaults(
   defineProps<{ label?: string, routes?: Route[] }>(), {
     label: '',
@@ -12,7 +13,11 @@ const localePath = useLocalePath()
 
 const isOpen = ref<boolean>(false)
 
-onKeyStroke('Escape', () => { isOpen.value = false })
+onKeyStroke('Escape', () => close())
+
+function close (): void {
+  isOpen.value = false
+}
 </script>
 
 <template>
