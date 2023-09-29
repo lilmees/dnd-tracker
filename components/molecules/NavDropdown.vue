@@ -49,7 +49,7 @@ function close (): void {
         class="absolute z-[1] block w-max right-0 backdrop-blur-xl"
       >
         <div
-          class="bg-primary/50 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+          class="bg-primary/70 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
           <NuxtLink
             v-for="route in routes"

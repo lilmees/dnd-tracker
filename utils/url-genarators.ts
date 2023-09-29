@@ -4,10 +4,10 @@ export function encounterUrl (encounter: Encounter): string {
   return `/encounters/${encounter.id}${title === '-' ? '-encounter' : `-${title}`}`
 }
 
-export function campaignUrl (campaign: Campaign): string {
+export function campaignUrl (campaign: Campaign, settings = false): string {
   const title: string = campaign.title.replace(/[^a-zA-Z0-9]+/g, '-')
 
-  return `/campaigns/${campaign.id}${title === '-' ? '-campaign' : `-${title}`}`
+  return `/campaigns${settings ? '/settings' : ''}/${campaign.id}${title === '-' ? '-campaign' : `-${title}`}`
 }
 
 export function backUrl (campaign: Campaign | number | undefined): string {

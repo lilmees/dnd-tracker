@@ -55,7 +55,7 @@ function close (): void {
     >
       <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-[55px]">
         <div
-          class="border-4 border-secondary bg-secondary/50 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+          class="border-4 border-secondary bg-secondary/70 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
           <RouteLink
             v-for="route in routes"
@@ -66,7 +66,7 @@ function close (): void {
           />
           <template v-if="user">
             <button
-              class="text-danger hover:text-white max-w-max font-bold"
+              class="text-warning hover:text-white max-w-max font-bold"
               @click="
                 () => {
                   isOpen = false

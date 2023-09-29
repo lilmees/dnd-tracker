@@ -71,7 +71,7 @@ function resetState (): void {
   <NuxtLayout>
     <div class="py-4 space-y-4">
       <div class="flex justify-end">
-        <Back url="/campaigns" :label="$t('pages.campaign.back')" class="sm:hidden" />
+        <Back url="/campaigns" :label="$t('pages.campaign.back')" />
       </div>
       <div
         class="rounded-lg w-full shadow p-6 flex flex-wrap justify-between items-center gap-4 border-4 bg-slate-700"
@@ -88,13 +88,25 @@ function resetState (): void {
           v-else
           class="bg-background rounded-full w-[250px] h-9"
         />
-        <div class="flex justify-end">
-          <Back
-            url="/campaigns"
-            :label="$t('pages.campaign.back')"
-            class="hidden sm:block"
-            :color="store.campaign?.color || '#fff'"
-          />
+        <div v-if="store.campaign" class="flex justify-end items-center">
+          <RouteLink
+            :url="campaignUrl(store.campaign as Campaign, true)"
+          >
+            <button
+              v-tippy="{ content: $t('components.visualOptions.tooltip') }"
+              :aria-label="$t('components.visualOptions.tooltip')"
+              class="py-1 px-2 disabled:opacity-40 disabled:cursor-not-allowed border-4 rounded-lg"
+              :style="{
+                'border-color': store.campaign?.background || '#21252E'
+              }"
+            >
+              <Icon
+                name="iconamoon:options"
+                class="w-8 h-8"
+                aria-hidden="true"
+              />
+            </button>
+          </RouteLink>
         </div>
       </div>
       <div class="space-y-8 pt-10">

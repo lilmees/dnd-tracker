@@ -5,7 +5,6 @@ defineEmits(['remove', 'update'])
 defineProps<{ campaign: Campaign }>()
 
 const user = useSupabaseUser()
-const localePath = useLocalePath()
 </script>
 
 <template>
@@ -59,14 +58,14 @@ const localePath = useLocalePath()
         </template>
       </tippy>
     </div>
-    <NuxtLink
-      :to="localePath(campaignUrl(campaign))"
+    <RouteLink
+      :url="campaignUrl(campaign)"
       class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
     >
       <h2>{{ campaign.title }}</h2>
       <div>
         <p>Encounters: {{ campaign.initiative_sheets?.length || 0 }}</p>
       </div>
-    </NuxtLink>
+    </RouteLink>
   </div>
 </template>

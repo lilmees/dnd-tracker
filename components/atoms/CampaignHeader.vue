@@ -5,7 +5,6 @@ const props = defineProps<{ campaign: Campaign | number }>()
 
 const store = useCampaignsStore()
 const route = useRoute()
-const localePath = useLocalePath()
 
 const cam = ref<Campaign | null>(null)
 
@@ -40,9 +39,9 @@ if (props.campaign) {
       </h2>
     </div>
     <div class="mb-1">
-      <NuxtLink
+      <RouteLink
         v-if="!route.path.includes('/campaigns/') && cam?.title"
-        :to="localePath(campaignUrl(cam))"
+        :url="campaignUrl(cam)"
       >
         <button
           class="btn-primary"
@@ -50,7 +49,7 @@ if (props.campaign) {
         >
           {{ $t('pages.campaign.goCampaign') }}
         </button>
-      </NuxtLink>
+      </RouteLink>
     </div>
   </div>
 </template>

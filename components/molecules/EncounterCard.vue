@@ -5,7 +5,6 @@ defineEmits(['remove', 'copy', 'update'])
 defineProps<{ encounter: Encounter }>()
 
 const user = useSupabaseUser()
-const localePath = useLocalePath()
 </script>
 
 <template>
@@ -71,14 +70,14 @@ const localePath = useLocalePath()
         </template>
       </tippy>
     </div>
-    <NuxtLink
-      :to="localePath(encounterUrl(encounter))"
+    <RouteLink
+      :url="encounterUrl(encounter)"
       class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
     >
       <h2>{{ encounter.title }}</h2>
       <div>
         <p>Rows: {{ encounter.rows.length }}</p>
       </div>
-    </NuxtLink>
+    </RouteLink>
   </div>
 </template>
