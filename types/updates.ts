@@ -24,3 +24,17 @@ interface FeatureRequest {
 interface NewFeatureRequest extends Omit<FeatureRequest, 'id'|'created_at'|'created_by'> {
   created_by: string
 }
+
+interface FeatureItems {
+  title: string
+  items: [{
+    text: string,
+    adminOnly?: boolean
+  }]
+}
+
+interface ChangelogItem {
+  version: string
+  date: string,
+  features: FeatureItems[]
+}

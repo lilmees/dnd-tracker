@@ -9,7 +9,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
     class="bg-tracker/60 border-4 border-tracker m-4 rounded-lg py-8"
   >
     <div class="dnd-container flex flex-col gap-4">
-      <div class="flex flex-col md:flex-row justify-between">
+      <div class="flex flex-col gap-x-4 md:flex-row justify-between">
         <NuxtLink :to="localePath('/')" class="mt-2">
           <NuxtImg
             src="/logo.svg"
@@ -19,7 +19,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
             provider="imagekit"
           />
         </NuxtLink>
-        <div class="flex flex-row gap-y-4 gap-x-20 mt-3">
+        <div class="flex flex-col sm:flex-row gap-y-4 gap-x-20 mt-3">
           <div class="mt-4 md:mt-0">
             <p class="mb-4 head-3">
               Contact
@@ -43,6 +43,33 @@ const showNav = useState<boolean>('showNavigation', () => true)
                 />
                 <span>
                   Form
+                </span>
+              </NuxtLink>
+            </div>
+          </div>
+          <div class="mt-4 md:mt-0">
+            <p class="mb-4 head-3">
+              Updates
+            </p>
+            <div class="flex flex-col gap-4">
+              <NuxtLink :to="localePath('/updates/feature-request')" class="flex">
+                <Icon
+                  name="ph:git-pull-request"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
+                <span>
+                  Feature requests
+                </span>
+              </NuxtLink>
+              <NuxtLink :to="localePath('/updates/changelog')" class="flex">
+                <Icon
+                  name="ph:lightning"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
+                <span>
+                  Changelogs
                 </span>
               </NuxtLink>
             </div>
