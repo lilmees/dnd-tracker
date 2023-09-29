@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { start, end } from '@/utils/animation-helpers'
+
 withDefaults(
   defineProps<{ label?: string, routes?: Route[] }>(), {
     label: '',
@@ -9,12 +11,14 @@ withDefaults(
 const localePath = useLocalePath()
 
 const isOpen = ref<boolean>(false)
+
+onKeyStroke('Escape', () => { isOpen.value = false })
 </script>
 
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-primary/50 rounded-lg group"
+      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-primary/50 rounded-lg group duration-200 ease-in-out"
       :class="{ 'rounded-b-none': isOpen }"
       @click="isOpen = !isOpen"
     >
@@ -28,25 +32,33 @@ const isOpen = ref<boolean>(false)
         aria-hidden="true"
       />
     </button>
-    <div
-      class="absolute z-[1] block w-max right-0"
-      :class="{ 'invisible top-0': !isOpen }"
+    <Transition
+      name="expand"
+      @enter="start"
+      @after-enter="end"
+      @before-leave="start"
+      @after-leave="end"
     >
       <div
-        class="bg-primary/50 backdrop-blur-xl border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        v-show="isOpen"
+        class="absolute z-[1] block w-max right-0 backdrop-blur-xl"
       >
-        <NuxtLink
-          v-for="route in routes"
-          :key="route.label"
-          :to="localePath(`/${route.url}`)"
-          class="hover:text-white"
-          active-class="active-link"
-          @click="isOpen = false"
+        <div
+          class="bg-primary/50 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
-          {{ $t(route.label) }}
-        </NuxtLink>
+          <NuxtLink
+            v-for="route in routes"
+            :key="route.label"
+            :to="localePath(`/${route.url}`)"
+            class="hover:text-white"
+            active-class="active-link"
+            @click="isOpen = false"
+          >
+            {{ $t(route.label) }}
+          </NuxtLink>
+        </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
 
@@ -54,4 +66,12 @@ const isOpen = ref<boolean>(false)
 .active-link {
   @apply text-primary underline;
 }
+
+.expand-leave-active, .expand-enter-active {
+    @apply duration-200 ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
+  }
 </style>

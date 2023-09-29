@@ -141,7 +141,7 @@ function selectedSummoner (value: unknown): void {
         aria-hidden="true"
       />
     </button>
-    <Modal v-if="isOpen" @close="closeModal">
+    <Modal :open="isOpen" @close="closeModal">
       <template #header>
         <h2>
           {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}

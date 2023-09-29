@@ -22,7 +22,7 @@ function resetState (): void {
   <TextButton @click="isOpen = true">
     {{ $t('components.badgeModal.claim') }}
   </TextButton>
-  <Modal v-if="isOpen" @close="resetState">
+  <Modal :open="isOpen" @close="resetState">
     <template #header>
       <h2>
         {{ $t('components.badgeModal.title') }}

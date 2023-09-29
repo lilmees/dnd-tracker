@@ -48,7 +48,7 @@ function resetForm (): void {
 </script>
 
 <template>
-  <Modal v-if="open" @close="resetForm">
+  <Modal :open="open" @close="resetForm">
     <template #header>
       <h2>
         {{ $t('components.addFeatureRequestModal.title') }}

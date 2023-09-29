@@ -110,140 +110,138 @@ function resetState (): void {
 </script>
 
 <template>
-  <div>
-    <Modal :title="false" @close="$emit('close')">
-      <div
-        v-if="
-          (store.activeRow?.ac === 0 || store.activeRow?.ac)
-            && (store.activeRow?.maxAc === 0 || store.activeRow?.maxAc)
-        "
-        class="flex flex-wrap gap-x-4 gap-y-2 pb-6 items-start justify-center"
-      >
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.current') }}
+  <Modal :title="false" @close="$emit('close')">
+    <div
+      v-if="
+        (store.activeRow?.ac === 0 || store.activeRow?.ac)
+          && (store.activeRow?.maxAc === 0 || store.activeRow?.maxAc)
+      "
+      class="flex flex-wrap gap-x-4 gap-y-2 pb-6 items-start justify-center"
+    >
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.current') }}
+        </p>
+        <p class="head-1" :class="{ 'text-danger': store.activeRow.ac < 1 }">
+          {{ store.activeRow.ac }}
+        </p>
+      </div>
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.max') }}
+        </p>
+        <div class="flex gap-1 items-start justify-center">
+          <p
+            class="head-1"
+            :class="[
+              !store.activeRow?.maxAcOld
+                ? undefined
+                : store.activeRow.maxAcOld < store.activeRow.maxAc
+                  ? 'text-success'
+                  : 'text-danger'
+            ]"
+          >
+            {{ store.activeRow.maxAc || 0 }}
           </p>
-          <p class="head-1" :class="{ 'text-danger': store.activeRow.ac < 1 }">
-            {{ store.activeRow.ac }}
-          </p>
-        </div>
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.max') }}
-          </p>
-          <div class="flex gap-1 items-start justify-center">
-            <p
-              class="head-1"
-              :class="[
-                !store.activeRow?.maxAcOld
-                  ? undefined
-                  : store.activeRow.maxAcOld < store.activeRow.maxAc
-                    ? 'text-success'
-                    : 'text-danger'
-              ]"
-            >
-              {{ store.activeRow.maxAc || 0 }}
-            </p>
-            <p
-              v-if="store.activeRow.maxAcOld === 0 || store.activeRow.maxAcOld"
-              class="body-small"
-            >
-              ({{ store.activeRow.maxAcOld }})
-            </p>
-          </div>
-        </div>
-        <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
-          <p class="font-bold">
-            {{ $t('general.temp') }}
-          </p>
-          <p class="head-1">
-            {{ store.activeRow.tempAc || 0 }}
+          <p
+            v-if="store.activeRow.maxAcOld === 0 || store.activeRow.maxAcOld"
+            class="body-small"
+          >
+            ({{ store.activeRow.maxAcOld }})
           </p>
         </div>
       </div>
-      <h2 class="mb-6">
-        {{ $t('pages.encounter.update.ac') }}
-      </h2>
+      <div class="p-2 rounded-lg space-y-2 min-w-[75px] bg-black/50 text-center">
+        <p class="font-bold">
+          {{ $t('general.temp') }}
+        </p>
+        <p class="head-1">
+          {{ store.activeRow.tempAc || 0 }}
+        </p>
+      </div>
+    </div>
+    <h2 class="mb-6">
+      {{ $t('pages.encounter.update.ac') }}
+    </h2>
+    <FormKit
+      v-model="formAmount"
+      type="form"
+      :actions="false"
+      @submit="updateAc"
+    >
       <FormKit
-        v-model="formAmount"
-        type="form"
-        :actions="false"
-        @submit="updateAc"
-      >
-        <FormKit
-          name="amount"
-          type="number"
-          :label="$t('components.inputs.amountLabel')"
-          validation="required|between:1,1000|number"
-          :suffix-icon="isRollingDice ? 'close' : dice"
-          @suffix-icon-click="isRollingDice = !isRollingDice"
-        />
+        name="amount"
+        type="number"
+        :label="$t('components.inputs.amountLabel')"
+        validation="required|between:1,1000|number"
+        :suffix-icon="isRollingDice ? 'close' : dice"
+        @suffix-icon-click="isRollingDice = !isRollingDice"
+      />
 
-        <DiceRolling
-          v-if="isRollingDice"
-          @result="(v) => {
-            formAmount.amount = v
-            isRollingDice = false
-          }"
+      <DiceRolling
+        v-if="isRollingDice"
+        @result="(v) => {
+          formAmount.amount = v
+          isRollingDice = false
+        }"
+      />
+      <div class="flex gap-2 flex-wrap py-2 justify-end">
+        <button
+          type="submit"
+          class="btn-success"
+          :aria-label="$t('actions.reset')"
+          @click="resetAc"
+        >
+          {{ $t('actions.reset') }}
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          :aria-label="$t('actions.temp')"
+          @click="type = 'temp'"
+        >
+          {{ $t('actions.temp') }}
+        </button>
+        <button
+          type="submit"
+          class="btn-danger"
+          :aria-label="$t('actions.remove')"
+          @click="type = 'remove'"
+        >
+          {{ $t('actions.remove') }}
+        </button>
+      </div>
+    </FormKit>
+    <div class="w-full border border-black h-px my-6" />
+    <h2 class="mb-6">
+      {{ $t('pages.encounter.override.ac') }}
+    </h2>
+    <FormKit
+      v-model="formOverride"
+      :actions="false"
+      type="form"
+      @submit="overrideAc"
+    >
+      <div class="flex gap-2 items-start">
+        <FormKit
+          type="number"
+          name="amount"
+          :label="$t('components.inputs.overrideFieldLabel', { field: 'AC' })"
+          :help="$t('components.inputs.optionalFieldHelp', { field: 'AC' })"
+          validation="required|between:1,1000|number"
+          validation-visibility="submit"
+          outer-class="grow"
+          :suffix-icon="store.activeRow?.maxAcOld ? 'rewind' : undefined"
+          @suffix-icon-click="overrideAc({ reset: true })"
         />
-        <div class="flex gap-2 flex-wrap py-2 justify-end">
-          <button
-            type="submit"
-            class="btn-success"
-            :aria-label="$t('actions.reset')"
-            @click="resetAc"
-          >
-            {{ $t('actions.reset') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-primary"
-            :aria-label="$t('actions.temp')"
-            @click="type = 'temp'"
-          >
-            {{ $t('actions.temp') }}
-          </button>
-          <button
-            type="submit"
-            class="btn-danger"
-            :aria-label="$t('actions.remove')"
-            @click="type = 'remove'"
-          >
-            {{ $t('actions.remove') }}
-          </button>
-        </div>
-      </FormKit>
-      <div class="w-full border border-black h-px my-6" />
-      <h2 class="mb-6">
-        {{ $t('pages.encounter.override.ac') }}
-      </h2>
-      <FormKit
-        v-model="formOverride"
-        :actions="false"
-        type="form"
-        @submit="overrideAc"
-      >
-        <div class="flex gap-2 items-start">
-          <FormKit
-            type="number"
-            name="amount"
-            :label="$t('components.inputs.overrideFieldLabel', { field: 'AC' })"
-            :help="$t('components.inputs.optionalFieldHelp', { field: 'AC' })"
-            validation="required|between:1,1000|number"
-            validation-visibility="submit"
-            outer-class="grow"
-            :suffix-icon="store.activeRow?.maxAcOld ? 'rewind' : undefined"
-            @suffix-icon-click="overrideAc({ reset: true })"
-          />
-          <FormKit
-            type="submit"
-            :aria-label="$t('actions.update')"
-            outer-class="mt-6"
-          >
-            {{ $t('actions.save') }}
-          </FormKit>
-        </div>
-      </FormKit>
-    </Modal>
-  </div>
+        <FormKit
+          type="submit"
+          :aria-label="$t('actions.update')"
+          outer-class="mt-6"
+        >
+          {{ $t('actions.save') }}
+        </FormKit>
+      </div>
+    </FormKit>
+  </Modal>
 </template>

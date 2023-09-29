@@ -26,12 +26,12 @@ const store = useTableStore()
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
-    <div class="flex gap-2 items-center bg-black rounded-lg border-4 border-secondary">
+    <div class="flex gap-2 items-center bg-secondary/50 rounded-lg border-4 border-secondary">
       <button
         v-tippy="{ content: $t('actions.prev') }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"
         :aria-label="$t('actions.prev')"
-        class="group disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-tracker"
+        class="group disabled:cursor-not-allowed duration-300 ease-in-out p-2 border-r-2 border-secondary"
         @click="store.prevInitiative"
       >
         <Icon
@@ -47,7 +47,7 @@ const store = useTableStore()
         v-tippy="{ content: $t('actions.next') }"
         :disabled="!store.encounter.rows.length"
         :aria-label="$t('actions.next')"
-        class="p-2 border-l-2 border-tracker"
+        class="p-2 border-l-2 border-secondary"
         @click="store.nextInitiative"
       >
         <Icon

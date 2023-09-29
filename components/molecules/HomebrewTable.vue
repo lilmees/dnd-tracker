@@ -258,7 +258,7 @@ function updated (hb: Homebrew, id: number): void {
       />
       <component
         :is="store.activeModal"
-        v-if="store.activeModal"
+        :open="store.activeModal"
         @close="store.resetActiveState()"
       />
     </div>

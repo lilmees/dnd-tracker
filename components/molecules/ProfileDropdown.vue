@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { start, end } from '@/utils/animation-helpers'
+
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 
@@ -6,6 +8,8 @@ const profile = useProfileStore()
 const user = useSupabaseUser()
 
 const isOpen = ref<boolean>(false)
+
+onKeyStroke('Escape', () => { isOpen.value = false })
 
 onBeforeMount(() => profile.fetch())
 </script>
@@ -37,32 +41,50 @@ onBeforeMount(() => profile.fetch())
         />
       </ClientOnly>
     </button>
-    <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-14">
-      <div
-        class="border-4 border-secondary bg-secondary/50 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
-      >
-        <RouteLink
-          v-for="route in routes"
-          :key="route.url"
-          :label="$t(route.label)"
-          :url="route.url"
-          @click="isOpen = false"
-        />
-        <template v-if="user">
-          <button
-            class="text-danger hover:text-white max-w-max font-bold"
-            @click="
-              () => {
-                isOpen = false
-                $emit('logout')
-              }
-            "
-          >
-            {{ $t('components.navbar.logout') }}
-          </button>
-        </template>
-        <LangSwitcher class="pt-4" @click="isOpen = false" />
+    <Transition
+      name="expand"
+      @enter="start"
+      @after-enter="end"
+      @before-leave="start"
+      @after-leave="end"
+    >
+      <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-[55px]">
+        <div
+          class="border-4 border-secondary bg-secondary/50 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        >
+          <RouteLink
+            v-for="route in routes"
+            :key="route.url"
+            :label="$t(route.label)"
+            :url="route.url"
+            @click="isOpen = false"
+          />
+          <template v-if="user">
+            <button
+              class="text-danger hover:text-white max-w-max font-bold"
+              @click="
+                () => {
+                  isOpen = false
+                  $emit('logout')
+                }
+              "
+            >
+              {{ $t('components.navbar.logout') }}
+            </button>
+          </template>
+          <LangSwitcher class="pt-4" @click="isOpen = false" />
+        </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
+
+<style scoped>
+.expand-leave-active, .expand-enter-active {
+    @apply duration-200 ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
+  }
+</style>

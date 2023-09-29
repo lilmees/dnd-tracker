@@ -94,7 +94,7 @@ function reset () {
         aria-hidden="true"
       />
     </button>
-    <FullScreenSearch v-if="isOpen" @close="reset">
+    <FullScreenSearch :open="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen pt-20 pb-6">
         <h1 class="pb-4 text-center">
           {{ $t('components.addInitiativeMonster.bestiary') }}
