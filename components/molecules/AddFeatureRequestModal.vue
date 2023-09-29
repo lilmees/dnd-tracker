@@ -48,7 +48,6 @@ function resetForm (): void {
 </script>
 
 <template>
-  <pre>{{ open }}</pre>
   <Modal :open="open" @close="resetForm">
     <template #header>
       <h2>
