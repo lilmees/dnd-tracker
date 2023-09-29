@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { start, end } from '@/utils/animation-helpers'
 
+defineExpose({ close })
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 
@@ -9,9 +10,13 @@ const user = useSupabaseUser()
 
 const isOpen = ref<boolean>(false)
 
-onKeyStroke('Escape', () => { isOpen.value = false })
+onKeyStroke('Escape', () => close())
 
 onBeforeMount(() => profile.fetch())
+
+function close (): void {
+  isOpen.value = false
+}
 </script>
 
 <template>
