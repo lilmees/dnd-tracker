@@ -10,7 +10,7 @@ const profile = useProfileStore()
 
 <template>
   <div
-    class="rounded-lg min-w-[250px] max-w-md relative group border-4"
+    class="rounded-lg min-w-[250px] max-w-md relative group border-4 flex flex-col"
     :style="{
       'background-color': `${encounter.background}80`,
       'border-color': encounter.background,
@@ -73,10 +73,13 @@ const profile = useProfileStore()
     </div>
     <RouteLink
       :url="encounterUrl(encounter)"
-      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
+      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
+      :style="false"
       :class="{ 'pt-8': !isAdmin(encounter.campaign as Campaign, profile.data?.id || '') }"
     >
-      <h2>{{ encounter.title }}</h2>
+      <h2>
+        {{ encounter.title }}
+      </h2>
       <div>
         <p>Rows: {{ encounter.rows.length }}</p>
       </div>

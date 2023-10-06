@@ -22,8 +22,8 @@ function close (): void {
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-secondary bg-secondary/50 rounded-lg shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer"
-      :class="{ 'rounded-b-none': isOpen }"
+      class="border-4 border-secondary bg-secondary/50 rounded-lg shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer transition-all duration-200 ease-in-out"
+      :class="{ 'rounded-b-none !bg-secondary/80': isOpen }"
       @click="isOpen = !isOpen"
     >
       <ClientOnly>
@@ -55,7 +55,7 @@ function close (): void {
     >
       <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-[55px]">
         <div
-          class="border-4 border-secondary bg-secondary/70 backdrop-blur-xl flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+          class="border-4 border-secondary bg-secondary/80 flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
           <RouteLink
             v-for="route in routes"

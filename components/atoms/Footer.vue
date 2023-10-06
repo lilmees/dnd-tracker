@@ -106,7 +106,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
           src="/cat.webp"
           alt="Wizard cat"
           sizes="sm:500px md:500px lg:500px"
-          class="h-[200px] hidden md:block"
+          class="h-[200px] hidden md:block float"
           format="webp"
           provider="imagekit"
         />

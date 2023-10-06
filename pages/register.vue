@@ -13,7 +13,7 @@ const form = ref<Register>({ email: '', password: '', name: '', username: '', ma
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 const image = ref<string>(
-  `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1).toString(36).substring(7)}.svg?size=100`
+  `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1).toString(36).substring(7)}&size=100`
 )
 
 async function register ({ __init, username, name, marketing, ...credentials }: Obj): Promise<void> {
@@ -42,9 +42,9 @@ async function register ({ __init, username, name, marketing, ...credentials }: 
 }
 
 function randomAvatar (): void {
-  image.value = `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
+  image.value = `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1)
     .toString(36)
-    .substring(7)}.svg?size=100`
+    .substring(7)}&size=100`
 }
 
 function handleIconClick (node: FormKitNode) {

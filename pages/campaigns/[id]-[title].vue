@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="pt-[150px] pb-20">
+  <div class="pt-[150px] pb-20 relative">
     <template v-if="!route.fullPath.includes('/join')">
       <h1 class="pb-4 dnd-container flex gap-4 items-center">
         <span class="text-slate-300">Campaign:</span>
@@ -47,11 +47,12 @@ onMounted(() => {
           },
         ]"
       />
+      <div class="inset-0 absolute fancy-shadow -z-[1]" />
     </template>
     <div v-if="!route.fullPath.includes('/join')" class="dnd-container">
       <NuxtPage />
     </div>
-    <NuxtLayout v-else>
+    <NuxtLayout v-else shadow>
       <NuxtPage />
     </NuxtLayout>
   </div>

@@ -23,7 +23,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     try {
       const { data, error: errorMessage } = await supabase
         .from('campaigns')
-        .select('*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges)')
+        .select('*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(id), team(id)')
 
       if (errorMessage) {
         throw errorMessage

@@ -36,7 +36,7 @@
                 'components.encounterTable.headers.modify'
               ]"
               :key="header"
-              class="py-3 px-2 bg-background border-b border-r last:border-r-0 border-slate-700 uppercase"
+              class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"
             >
               {{ $t(header) }}
             </th>
@@ -49,55 +49,55 @@
             class="border-b last:border-b-0 border-slate-700"
           >
             <td class="px-2 py-1 border-r border-slate-700 text-center max-w-[30px]">
-              <div class="w-6 h-6 bg-background rounded-full" />
+              <div class="w-6 h-6 bg-tracker rounded-full" />
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <div class="w-[100px] h-8 bg-background rounded-full" />
+              <div class="w-[100px] h-8 bg-tracker rounded-full" />
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <div class="w-[100px] h-8 bg-background rounded-full" />
+              <div class="w-[100px] h-8 bg-tracker rounded-full" />
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <div class="w-[100px] h-8 bg-background rounded-full" />
+              <div class="w-[100px] h-8 bg-tracker rounded-full" />
             </td>
             <td class="p-2 border-r border-slate-700">
-              <div class="w-[100px] h-8 bg-background rounded-full" />
+              <div class="w-[100px] h-8 bg-tracker rounded-full" />
             </td>
             <td class="p-2 border-r border-slate-700">
               <div class="flex gap-1">
-                <div class="w-6 h-6 bg-background rounded-full" />
-                <div class="w-6 h-6 bg-background rounded-full" />
-                <div class="w-6 h-6 bg-background rounded-full" />
-                <div class="w-6 h-6 bg-background rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
               </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <div class="w-[100px] h-8 bg-background rounded-full" />
+              <div class="w-[100px] h-8 bg-tracker rounded-full" />
             </td>
             <td class="border-r border-slate-700 min-w-[150px] min-h-[50px] relative">
-              <div class="w-full h-8 bg-background rounded-full" />
+              <div class="w-full h-8 bg-tracker rounded-full" />
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               <div class="flex gap-1 flex-wrap">
                 <div class="flex gap-1">
-                  <div class="w-6 h-6 bg-background rounded-full" />
-                  <div class="w-6 h-6 bg-background rounded-full" />
-                  <div class="w-6 h-6 bg-background rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
                 </div>
                 <div class="flex gap-1">
-                  <div class="w-6 h-6 bg-background rounded-full" />
-                  <div class="w-6 h-6 bg-background rounded-full" />
-                  <div class="w-6 h-6 bg-background rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
+                  <div class="w-6 h-6 bg-tracker rounded-full" />
                 </div>
               </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
-              <div class="w-6 h-6 bg-background rounded-full" />
+              <div class="w-6 h-6 bg-tracker rounded-full" />
             </td>
             <td class="px-2 py-1">
               <div class="flex gap-1">
-                <div class="w-6 h-6 bg-background rounded-full" />
-                <div class="w-6 h-6 bg-background rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
+                <div class="w-6 h-6 bg-tracker rounded-full" />
               </div>
             </td>
           </tr>

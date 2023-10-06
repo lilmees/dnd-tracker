@@ -21,6 +21,8 @@ try {
           <TitleText
             data-aos="zoom-in"
             :data-aos-once="true"
+            :data-aos-mirror="false"
+            :data-aos-duration="1000"
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
             button-link="updates/feature-request"
@@ -29,6 +31,8 @@ try {
           <div
             data-aos="zoom-in"
             :data-aos-once="true"
+            :data-aos-mirror="false"
+            :data-aos-duration="1000"
             class="mt-20 lg:mt-32 flex md:justify-end"
           >
             <Summary
@@ -47,22 +51,27 @@ try {
         <div
           v-if="store.encounter"
           data-aos="zoom-in"
+          :data-aos-duration="1000"
           :data-aos-once="true"
+          :data-aos-mirror="false"
           class="space-y-4"
         >
           <div class="flex justify-end">
             <VisualOptions />
           </div>
-          <div class="rounded-lg bg-tracker/50 border-4 border-tracker">
+          <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative container-max">
+            <div class="abolsute inset-0 z-[-0] fancy-shadow" />
             <EncounterHeader />
             <EncounterTable />
             <EncounterOptions />
           </div>
         </div>
         <div
+          class="container grid md:grid-cols-2 gap-10"
           data-aos="zoom-in"
           :data-aos-once="true"
-          class="container grid md:grid-cols-2 gap-10"
+          :data-aos-mirror="false"
+          :data-aos-duration="1000"
         >
           <HomeDiceRolling />
           <NuxtImg
@@ -78,6 +87,8 @@ try {
         <TitleText
           data-aos="zoom-in"
           :data-aos-once="true"
+          :data-aos-mirror="false"
+          :data-aos-duration="1000"
           center
           :title="$t('pages.home.textBlock2.title')"
           :text="$t('pages.home.textBlock2.text')"

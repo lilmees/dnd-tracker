@@ -19,7 +19,7 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <section class="max-w-4xl mx-auto">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2 pb-6">
         <FormKit

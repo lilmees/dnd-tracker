@@ -39,6 +39,7 @@
   "general": {
     "encounters": "Encounters",
     "players": "Players",
+    "members": "Members",
     "monsters": "Monsters",
     "notes": "Notes",
     "total": "Total",
