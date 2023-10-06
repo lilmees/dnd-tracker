@@ -113,6 +113,25 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     }
   }
 
+  async function getProfileByUsernameFuzzy (username: string): Promise<SocialProfile[]|undefined> {
+    try {
+      const { data, error: err } = await supabase
+        .from('profiles')
+        .select('id, created_at, username, name, avatar, email, badges')
+        .ilike('username', `%${username}%`)
+        .limit(12)
+
+      if (err) {
+        throw err
+      }
+
+      return data as SocialProfile[]
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
+    }
+  }
+
   return {
     loading,
     error,
@@ -120,6 +139,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     fetch,
     updateProfile,
     deleteProfile,
-    getProfileById
+    getProfileById,
+    getProfileByUsernameFuzzy
   }
 })

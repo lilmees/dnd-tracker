@@ -146,7 +146,7 @@ function resetState (): void {
           :key="index"
           class="space-y-4 pb-10"
         >
-          <CampaignHeader
+          <EncounterCampaignHeader
             v-if="Object.keys(store.sortedEncounters)[index] !== '0'"
             :campaign="
               typeof group[0].campaign === 'object'

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { encounterUrl } from '@/utils/url-genarators'
+import { isAdmin } from '@/utils/permission-helpers'
 
 defineEmits(['remove', 'copy', 'update'])
 defineProps<{ encounter: Encounter }>()
 
-const user = useSupabaseUser()
+const profile = useProfileStore()
 </script>
 
 <template>
@@ -18,7 +19,7 @@ const user = useSupabaseUser()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="user && encounter.created_by === user.id"
+        v-if="profile.data && isAdmin(encounter.campaign as Campaign, profile.data.id)"
         interactive
         :z-index="2"
       >
@@ -73,6 +74,7 @@ const user = useSupabaseUser()
     <RouteLink
       :url="encounterUrl(encounter)"
       class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
+      :class="{ 'pt-8': !isAdmin(encounter.campaign as Campaign, profile.data?.id || '') }"
     >
       <h2>{{ encounter.title }}</h2>
       <div>

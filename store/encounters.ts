@@ -20,7 +20,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     try {
       const { data: sheets, error: err } = await supabase
         .from('initiative_sheets')
-        .select('*, profiles(id, name, username, avatar),campaign(id, title, background, color)')
+        .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
 
       if (err) {
         throw err
@@ -39,7 +39,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
-      .select('*, profiles(id, name, username, avatar)')
+      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
       .eq('campaign', `${id}`)
 
     if (err) {
@@ -53,7 +53,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .insert([encounter as never])
-      .select('*')
+      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
 
     if (err) {
       throw err

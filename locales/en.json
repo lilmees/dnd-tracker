@@ -30,6 +30,7 @@
     "open": "Open",
     "next": "Next",
     "prev": "Previous",
+    "decline": "Decline",
     "read": {
       "more": "Read more",
       "less": "Read less"
@@ -63,6 +64,20 @@
     "success": {
       "title": "Success",
       "text": "Your changes have been successfully saved!"
+    },
+    "roles": {
+      "Owner": {
+        "title": "Owner",
+        "description": "Owners can take the same actions as administrators, but they have the additional authority to end the campaign"
+      },
+      "Admin": {
+        "title": "Admin",
+        "description": "Admins can create content for a campaign, play encounters and access the campaign settings page but cannot delete the campaign"
+      },
+      "Viewer": {
+        "title": "Player",
+        "description": "Players only have the option to play encounters and not edit content"
+      }
     }
   },
   "pages": {
@@ -107,8 +122,20 @@
       }
     },
     "campaign": {
-      "back": "Back to campaigns",
-      "goCampaign": "Go to campaign"
+      "content": {},
+      "settings": {
+        "add": "Add people"
+      },
+      "danger": {},
+      "join": {
+        "title": "Answer the Call to Adventure: Join {campaign} Now!",
+        "text": "Congratulations! You've received an invitation to join {campaign} as a {role}. Your opportunity to be a part of this incredible journey is right at your fingertips.",
+        "accept": "Join the Adventure"
+      },
+      "toast": {
+        "success": "Updated your campaign successfully",
+        "delete": "Removed your campaign successfully"
+      }
     },
     "encounters": {
       "encounters": "Encounters",
@@ -266,6 +293,10 @@
           "my": "Me"
         }
       }
+    },
+    "noMember": {
+      "title": "You're not a team member",
+      "text": "Oops! It seems like you're not a member, and you don't have access to this content. If you believe this is a mistake, please don't hesitate to reach out to the owner or an admin for assistance."
     }
   },
   "components": {
@@ -313,9 +344,11 @@
       "damageDiceLabel": "Damage dice",
       "marketingLabel": "Get notified about updates",
       "codeLabel": "Code",
+      "roleLabel": "Role of the user",
       "nothing": "Nothing selected",
       "overrideFieldLabel": "Max {field} override",
-      "optionalFieldHelp": "Optional to overwrite the current {field}"
+      "optionalFieldHelp": "Optional to overwrite the current {field}",
+      "searchByUsername": "Search by username"
     },
     "cammpaignModal": {
       "add": "Create a new campaign",
@@ -438,6 +471,26 @@
       "title": "Create feature request",
       "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
       "another": "Create another feature request"
+    },
+    "encounterCampaignHeader": {
+      "go": "Go to campaign"
+    },
+    "userModal": {
+      "title": "Add people to {campaign}",
+      "select": "Select a member above",
+      "add": "Add {username} to this campaign",
+      "member": "Member of the campaign",
+      "invited": "Invitation awaiting response",
+      "toast": {
+        "invited": {
+          "title": "The invitation has been sent successfully",
+          "text": "After accepting the invitation, the person is added as a team member"
+        },
+        "alreadyInvited": {
+          "title": "This person has already received an invitation",
+          "text": "The person you have invited still has an active invitation for this campaign"
+        }
+      }
     }
   }
 }

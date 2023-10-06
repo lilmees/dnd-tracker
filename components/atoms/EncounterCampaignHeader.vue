@@ -41,13 +41,13 @@ if (props.campaign) {
     <div class="mb-1">
       <RouteLink
         v-if="!route.path.includes('/campaigns/') && cam?.title"
-        :url="campaignUrl(cam)"
+        :url="campaignUrl(cam, 'content')"
       >
         <button
           class="btn-primary"
-          :aria-label="$t('pages.campaign.goCampaign')"
+          :aria-label="$t('components.encounterCampaignHeader.go')"
         >
-          {{ $t('pages.campaign.goCampaign') }}
+          {{ $t('components.encounterCampaignHeader.go') }}
         </button>
       </RouteLink>
     </div>

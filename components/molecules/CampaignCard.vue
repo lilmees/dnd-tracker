@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { campaignUrl } from '@/utils/url-genarators'
+import { isOwner } from '@/utils/permission-helpers'
 
 defineEmits(['remove', 'update'])
 defineProps<{ campaign: Campaign }>()
@@ -18,7 +19,7 @@ const user = useSupabaseUser()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="user && campaign.created_by === user.id"
+        v-if="user && isOwner(campaign, user.id)"
         interactive
         :z-index="2"
       >
@@ -59,8 +60,9 @@ const user = useSupabaseUser()
       </tippy>
     </div>
     <RouteLink
-      :url="campaignUrl(campaign)"
+      :url="campaignUrl(campaign, 'content')"
       class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
+      :class="{ 'pt-8': !isOwner(campaign, user?.id || '') }"
     >
       <h2>{{ campaign.title }}</h2>
       <div>

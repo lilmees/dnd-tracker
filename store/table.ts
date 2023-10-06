@@ -1,8 +1,9 @@
 import logRocket from 'logrocket'
+import { isMember } from '@/utils/permission-helpers'
 
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
-  const user = useSupabaseUser()
+  const profile = useProfileStore()
   const localePath = useLocalePath()
   const toast = useToastStore()
   const { t } = useI18n()
@@ -28,7 +29,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     const { data, error } = await supabase
       .from('initiative_sheets')
-      .select('*, campaign(id, title, background, color)')
+      .select('*, campaign(id, title, background, color, created_by, team(*))')
       .eq('id', id)
       .single()
 
@@ -37,8 +38,9 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (error) {
       throw error
     }
-    if (user.value && !enc.admins.includes(user.value.id)) {
-      navigateTo(localePath('/encounters'))
+
+    if (typeof enc.campaign !== 'number' && profile.data && !isMember(enc.campaign, profile.data.id)) {
+      navigateTo(localePath('/not-member'))
     }
 
     enc.rows = typeof enc.rows === 'string'

@@ -8,11 +8,13 @@ const props = withDefaults(
     item?: Homebrew
     encounter?: boolean
     update?: boolean
+    disabled?: boolean
   }>(),
   {
     item: undefined,
     encounter: false,
     update: false,
+    disabled: false
   }
 )
 
@@ -33,7 +35,7 @@ const form = ref<HomebrewForm>({
   summoner: undefined,
   ac: undefined,
   health: undefined,
-  actions: getActions(),
+  actions: getActions()
 })
 
 const dice =
@@ -50,7 +52,7 @@ const summonersOptions = computed<Option[]>(() => {
   if (table.encounter?.rows && props.encounter) {
     return table.encounter.rows
       .filter(r => r.type !== 'summon')
-      .map(o => {
+      .map((o) => {
         return { label: o.name, value: o.id }
       })
   } else {
@@ -58,13 +60,13 @@ const summonersOptions = computed<Option[]>(() => {
   }
 })
 
-function getActions(): Action[] {
+function getActions (): Action[] {
   return props.item
     ? [...props.item.actions, ...props.item.legendary_actions, ...props.item.reactions, ...props.item.special_abilities]
     : []
 }
 
-function handleSumbit({ __init, data, slots, ...formData }: Obj): void {
+function handleSumbit ({ __init, data, slots, ...formData }: Obj): void {
   error.value = ''
   isLoading.value = true
 
@@ -100,7 +102,7 @@ function handleSumbit({ __init, data, slots, ...formData }: Obj): void {
   }
 }
 
-async function updateHomebrew(formData: Obj): Promise<void> {
+async function updateHomebrew (formData: Obj): Promise<void> {
   if (!props.item?.id) {
     return
   }
@@ -111,16 +113,16 @@ async function updateHomebrew(formData: Obj): Promise<void> {
   emit('updated', updated)
 }
 
-async function addHomebrew(formData: Obj): Promise<void> {
+async function addHomebrew (formData: Obj): Promise<void> {
   await store.addHomebrew(
     useEmptyKeyRemover({
       ...formData,
-      campaign: store?.campaign?.id,
+      campaign: store?.campaign?.id
     }) as AddHomebrew
   )
 }
 
-async function addInitiative({ amount, ...data }: Obj): Promise<void> {
+async function addInitiative ({ amount, ...data }: Obj): Promise<void> {
   if (!table.encounter?.rows) {
     return
   }
@@ -141,11 +143,11 @@ async function addInitiative({ amount, ...data }: Obj): Promise<void> {
   }
 
   await table.encounterUpdate({
-    rows: [...table.encounter.rows, ...rows],
+    rows: [...table.encounter.rows, ...rows]
   } as UpdateEncounter)
 }
 
-function closeModal(): void {
+function closeModal (): void {
   form.value.type = 'player'
   isOpen.value = false
 }
@@ -157,6 +159,7 @@ function closeModal(): void {
       v-tippy="{ content: $t(encounter ? 'components.homebrewModal.add' : update ? 'actions.update' : 'actions.add') }"
       :aria-label="$t(encounter ? 'components.homebrewModal.add' : update ? 'actions.update' : 'actions.add')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
+      :disabled="disabled"
       @click="isOpen = true"
     >
       <span v-if="encounter" class="md:hidden">
