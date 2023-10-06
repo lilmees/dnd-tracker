@@ -62,9 +62,9 @@ const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): 
 }, 1000)
 
 function randomAvatar (): string {
-  return `https://avatars.dicebear.com/api/open-peeps/${(Math.random() + 1)
+  return `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1)
     .toString(36)
-    .substring(7)}.svg?size=100`
+    .substring(7)}&size=100`
 }
 
 async function deleteUser (): Promise<void> {
@@ -95,13 +95,13 @@ function handleIconClick (node: FormKitNode) {
         class="flex flex-wrap gap-y-2 gap-x-4 items-end pb-4 border-b-2 border-slate-700"
       >
         <div
-          class="w-[100px] h-[100px] bg-primary/50 rounded-lg border-4 border-primary overflow-hidden"
+          class="w-20 h-20 bg-primary/50 rounded-lg border-4 border-primary overflow-hidden"
         >
           <NuxtImg
             :src="image"
             alt="avatar"
-            sizes="sm:150px md:150px lg:150px"
-            class="w-full h-full object-cover p-2"
+            sizes="sm:100px md:100px lg:100px"
+            class="w-full h-full object-cover "
           />
         </div>
         <div class="flex flex-col gap-2">
