@@ -29,7 +29,7 @@ function sendContactMail (form: Obj): void {
 <template>
   <NuxtLayout name="centered">
     <section class="mt-10">
-      <h1 class="max-w-[300px] pb-4">
+      <h1 class="max-w-[300px] pb-8">
         {{ $t('pages.contact.title') }}
       </h1>
       <FormKit

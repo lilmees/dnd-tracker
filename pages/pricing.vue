@@ -31,7 +31,7 @@ async function handleFreeTier (): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <section class="mx-auto max-w-screen-md mb-8 lg:mb-12">
       <h1 class="mb-4 sm:text-4xl xl:text-5xl text-center">
         {{ $t('pages.pricing.title') }}

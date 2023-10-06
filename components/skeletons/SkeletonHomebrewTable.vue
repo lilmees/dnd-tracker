@@ -22,37 +22,37 @@
         class="border-b last:border-b-0 border-slate-700 animate-pulse"
       >
         <td class="px-2 py-1 border-r border-slate-700 relative">
-          <div class="w-full h-6 rounded-full bg-background" />
+          <div class="w-full h-6 rounded-full bg-tracker" />
         </td>
         <td
           class="px-2 py-1 border-r border-slate-700"
         >
           <div class="flex gap-2 items-center">
-            <div class="w-6 h-6 rounded-full bg-background" />
-            <div class="w-[100px] h-6 rounded-full bg-background" />
+            <div class="w-6 h-6 rounded-full bg-tracker" />
+            <div class="w-[100px] h-6 rounded-full bg-tracker" />
           </div>
         </td>
         <td class="px-2 py-1 border-r border-slate-700 relative">
-          <div class="w-full h-6 rounded-full bg-background" />
+          <div class="w-full h-6 rounded-full bg-tracker" />
         </td>
         <td class="px-2 py-1 border-r border-slate-700">
-          <div class="w-full h-6 rounded-full bg-background" />
+          <div class="w-full h-6 rounded-full bg-tracker" />
         </td>
         <td class="px-2 py-1 border-r border-slate-700">
-          <div class="w-full h-6 rounded-full bg-background" />
+          <div class="w-full h-6 rounded-full bg-tracker" />
         </td>
         <td class="px-2 py-1 border-r border-slate-700">
           <div class="flex w-full justify-center">
-            <div class="w-6 h-6 rounded-full bg-background" />
+            <div class="w-6 h-6 rounded-full bg-tracker" />
           </div>
         </td>
         <td class="px-2 py-1 border-r border-slate-700">
-          <div class="w-full h-6 rounded-full bg-background" />
+          <div class="w-full h-6 rounded-full bg-tracker" />
         </td>
         <td class="px-2 py-1">
           <div class="flex justify-center items-center gap-1">
-            <div class="w-6 h-6 rounded-full bg-background" />
-            <div class="w-6 h-6 rounded-full bg-background" />
+            <div class="w-6 h-6 rounded-full bg-tracker" />
+            <div class="w-6 h-6 rounded-full bg-tracker" />
           </div>
         </td>
       </tr>

@@ -9,6 +9,21 @@
   }
 }
 
+@layer utilities {
+  .fancy-shadow {
+    background:conic-gradient(
+      from 230.29deg at 51.63% 52.16%, 
+      rgba(217, 38, 170, 0.3) 0deg,
+      rgba(115, 51, 224, 0.3) 67.5deg,
+      rgba(108, 39, 157, 0.3) 198.75deg, 
+      rgba(24, 38, 163, 0.3) 251.25deg, 
+      rgba(115, 51, 224, 0.3) 301.88deg, 
+      rgba(105, 30, 255, 0.3) 360deg
+    );
+    @apply w-full h-full absolute blur-[200px] -top-10 left-0 translate-x-0;
+  }
+}
+
 @layer base {
   :root {
     color-scheme: dark;
