@@ -58,7 +58,7 @@ function angle (cx: number, cy: number, ex: number, ey: number): number {
         :data-aos-duration="1000"
         :data-aos-once="true"
         data-dragon
-        class="max-w-[500px] relative opacity-0"
+        class="max-w-[500px] relative opacity-0 float"
       >
         <div ref="eyeLeft" class="absolute top-[55%] left-[54%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />

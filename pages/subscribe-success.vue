@@ -16,8 +16,8 @@ function handleConfetti (container: Container): void {
 </script>
 
 <template>
-  <NuxtLayout>
-    <div class="space-y-6 max-w-prose mx-auto p-6 rounded-lg border-4 border-primary bg-primary/50">
+  <NuxtLayout shadow>
+    <div class="space-y-6 max-w-prose mx-auto p-6 rounded-lg border-4 border-black bg-black/50">
       <h2>
         {{ $t('pages.subscribeSuccess.title') }}
       </h2>
@@ -34,7 +34,7 @@ function handleConfetti (container: Container): void {
       </div>
       <div class="flex justify-end">
         <RouteLink url="/">
-          <button class="btn-black">
+          <button class="btn-primary">
             {{ $t('pages.error.goHome') }}
           </button>
         </RouteLink>

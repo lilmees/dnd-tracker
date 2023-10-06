@@ -20,6 +20,6 @@ const localePath = useLocalePath()
 
 <style scoped>
 .active-link {
-  @apply text-primary underline;
+  @apply underline underline-offset-4;
 }
 </style>
