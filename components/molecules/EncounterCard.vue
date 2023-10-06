@@ -19,7 +19,7 @@ const profile = useProfileStore()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="profile.data && isAdmin(encounter.campaign as Campaign, profile.data.id)"
+        v-if="!encounter.campaign || (profile.data && isAdmin(encounter.campaign as Campaign, profile.data.id))"
         interactive
         :z-index="2"
       >
@@ -73,9 +73,9 @@ const profile = useProfileStore()
     </div>
     <RouteLink
       :url="encounterUrl(encounter)"
-      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
+      class="flex flex-col gap-4 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
+      :class="{ 'pt-8': encounter.campaign && profile.data && !isAdmin(encounter.campaign as Campaign, profile.data.id) }"
       :style="false"
-      :class="{ 'pt-8': !isAdmin(encounter.campaign as Campaign, profile.data?.id || '') }"
     >
       <h2>
         {{ encounter.title }}
