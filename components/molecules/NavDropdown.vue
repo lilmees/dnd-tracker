@@ -9,8 +9,6 @@ withDefaults(
   }
 )
 
-const localePath = useLocalePath()
-
 const isOpen = ref<boolean>(false)
 
 onKeyStroke('Escape', () => close())
@@ -23,8 +21,8 @@ function close (): void {
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-primary/50 rounded-lg group duration-200 ease-in-out"
-      :class="{ 'rounded-b-none': isOpen }"
+      class="border-4 border-primary flex flex-row items-center px-4 py-3 cursor-pointer gap-x-2 group bg-primary/50 rounded-lg group duration-200 ease-in-out transition-all"
+      :class="{ 'rounded-b-none !bg-primary/80': isOpen }"
       @click="isOpen = !isOpen"
     >
       <span class="duration-200 font-bold text-slate-300 group-hover:text-white">
@@ -46,21 +44,20 @@ function close (): void {
     >
       <div
         v-show="isOpen"
-        class="absolute z-[1] block w-max right-0 backdrop-blur-xl"
+        class="absolute z-[1] block w-max right-0"
       >
         <div
-          class="bg-primary/50 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+          class="bg-primary/80 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
-          <NuxtLink
+          <RouteLink
             v-for="route in routes"
             :key="route.label"
-            :to="localePath(`/${route.url}`)"
+            :url="route.url"
             class="hover:text-white"
-            active-class="active-link"
             @click="isOpen = false"
           >
             {{ $t(route.label) }}
-          </NuxtLink>
+          </RouteLink>
         </div>
       </div>
     </Transition>
@@ -68,10 +65,6 @@ function close (): void {
 </template>
 
 <style scoped>
-.active-link {
-  @apply text-primary underline;
-}
-
 .expand-leave-active, .expand-enter-active {
     @apply duration-200 ease-in-out overflow-hidden;
   }
