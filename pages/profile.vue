@@ -89,7 +89,7 @@ function handleIconClick (node: FormKitNode) {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <section v-if="profile.data" class="space-y-2">
       <div
         class="flex flex-wrap gap-y-2 gap-x-4 items-end pb-4 border-b-2 border-slate-700"

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 withDefaults(
-  defineProps<{ padding?: boolean }>(), {
-    padding: false
+  defineProps<{
+    padding?: boolean,
+    shadow?: boolean }>(), {
+    padding: false,
+    shadow: false
   }
 )
 
@@ -15,6 +18,12 @@ onBeforeMount(() => { showNav.value = true })
     class="max-w-[3000px] pb-20 mx-auto w-full px-4 no-scrollbar overflow-y-auto grow flex flex-col"
     :class="{ 'pt-[170px]': padding }"
   >
-    <slot />
+    <div class="relative">
+      <div
+        v-if="shadow"
+        class="abolsute inset-0 z-[-1] fancy-shadow"
+      />
+      <slot />
+    </div>
   </main>
 </template>

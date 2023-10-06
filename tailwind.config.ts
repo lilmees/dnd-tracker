@@ -14,7 +14,7 @@ export const theme = {
       text: ['Inter', 'sans-serif']
     },
     colors: {
-      background: '#2A303C',
+      background: '#121111',
       tracker: '#21252E',
       primary: '#7333E0',
       secondary: '#D926AA',

@@ -42,7 +42,7 @@ async function deleteCampaigns (): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <div v-if="!store.error">
       <div class="pt-5 pb-10 flex justify-between items-center">
         <h1 class="grow">
