@@ -74,9 +74,8 @@ function resetState (): void {
             @click="isCreatingEncounter = true"
           >
             <Icon
-
               name="material-symbols:add"
-              class="w-6 h-6 cursor-pointer text-success"
+              class="w-6 h-6 text-success"
               aria-hidden="true"
             />
           </button>

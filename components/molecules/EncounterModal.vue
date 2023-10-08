@@ -7,7 +7,7 @@ const props = withDefaults(
     open: boolean,
     encounter?: Encounter,
     campaignId?: number,
-    update?: boolean,
+    update?: boolean
   }>(), {
     encounter: undefined,
     campaignId: undefined,
