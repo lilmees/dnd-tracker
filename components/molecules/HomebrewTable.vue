@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { isAdmin } from '@/utils/permission-helpers'
+
 const store = useCurrentCampaignStore()
+const profile = useProfileStore()
 
 const sortedBy = ref<string>('name')
 const sortACS = ref<boolean>(true)
@@ -105,7 +108,7 @@ function updated (hb: Homebrew, id: number): void {
           <p>Lair)</p>
         </div>
       </div>
-      <HomebrewModal />
+      <HomebrewModal :disabled="!store.campaign || !isAdmin(store?.campaign, profile.data?.id || '')" />
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <div
@@ -116,7 +119,11 @@ function updated (hb: Homebrew, id: number): void {
         <thead>
           <tr>
             <th
-              v-for="header in ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']"
+              v-for="header in
+                isAdmin(store.campaign, profile.data?.id || '')
+                  ? ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']
+                  : ['name', 'type', 'player', 'health', 'ac', 'link', 'actions']
+              "
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
               :class="{
@@ -227,7 +234,7 @@ function updated (hb: Homebrew, id: number): void {
                 </div>
               </div>
             </td>
-            <td class="px-2 py-1">
+            <td v-if="isAdmin(store.campaign, profile.data?.id || '')" class="px-2 py-1">
               <div class="flex justify-center items-center gap-1">
                 <HomebrewModal
                   update

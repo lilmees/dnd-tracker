@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { campaignUrl } from '@/utils/url-genarators'
+import { isOwner } from '@/utils/permission-helpers'
 
 defineEmits(['remove', 'update'])
 defineProps<{ campaign: Campaign }>()
 
 const user = useSupabaseUser()
-const localePath = useLocalePath()
 </script>
 
 <template>
   <div
-    class="rounded-lg min-w-[250px] max-w-md relative group border-4"
+    class="rounded-lg min-w-[250px] max-w-md relative group border-4 flex flex-col"
     :style="{
       'background-color': `${campaign.background}80`,
       'border-color': campaign.background,
@@ -19,7 +19,7 @@ const localePath = useLocalePath()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="user && campaign.created_by === user.id"
+        v-if="user && isOwner(campaign, user.id)"
         interactive
         :z-index="2"
       >
@@ -59,14 +59,42 @@ const localePath = useLocalePath()
         </template>
       </tippy>
     </div>
-    <NuxtLink
-      :to="localePath(campaignUrl(campaign))"
-      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
+    <RouteLink
+      :url="campaignUrl(campaign, 'content')"
+      class="flex flex-col gap-4 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
+      :style="false"
+      :class="{ 'pt-8': !isOwner(campaign, user?.id || '') }"
     >
       <h2>{{ campaign.title }}</h2>
-      <div>
-        <p>Encounters: {{ campaign.initiative_sheets?.length || 0 }}</p>
+      <div class="flex gap-4">
+        <div
+          v-tippy="{content: $t('general.members')}"
+          class="flex items-center gap-1"
+        >
+          <Icon name="fluent:people-team-16-filled" :aria-hidden="true" />
+          <span class="body-small">
+            {{ (campaign.team?.length || 0) + 1 }}
+          </span>
+        </div>
+        <div
+          v-tippy="{content: $t('general.encounters')}"
+          class="flex items-center gap-1"
+        >
+          <Icon name="ri:table-fill" :aria-hidden="true" />
+          <span class="body-small">
+            {{ campaign.initiative_sheets?.length || 0 }}
+          </span>
+        </div>
+        <div
+          v-tippy="{content: $t('general.homebrew')}"
+          class="flex items-center gap-1"
+        >
+          <Icon name="ph:beer-stein-fill" :aria-hidden="true" />
+          <span class="body-small">
+            {{ campaign.homebrew_items?.length || 0 }}
+          </span>
+        </div>
       </div>
-    </NuxtLink>
+    </RouteLink>
   </div>
 </template>

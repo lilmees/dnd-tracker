@@ -3,8 +3,12 @@ const props = withDefaults(
   defineProps<{
     user: SocialProfile
     username?: boolean
+    name?: boolean
+    interactive?: boolean
   }>(), {
-    username: false
+    username: false,
+    name: false,
+    interactive: true
   }
 )
 
@@ -22,7 +26,7 @@ const date = computed<string>(() => {
 
 <template>
   <div v-if="user" class="w-fit">
-    <tippy interactive trigger="mouseenter click">
+    <tippy interactive :trigger="interactive ? 'mouseenter click' : ''">
       <div class="flex items-end gap-2 w-fit">
         <div
           class="w-10 h-10 bg-secondary/50 rounded-lg border-4 border-secondary overflow-hidden"
@@ -34,9 +38,14 @@ const date = computed<string>(() => {
             class="w-full h-full object-cover"
           />
         </div>
-        <span class="font-bold">
-          {{ user.username }}
-        </span>
+        <div v-if="username || name" class="flex flex-col items-start">
+          <span v-if="username" class="font-bold">
+            {{ user.username }}
+          </span>
+          <span v-if="name" class="body-small">
+            {{ user.name }}
+          </span>
+        </div>
       </div>
       <template #content>
         <div class="p-4 overflow-auto space-y-2">
@@ -47,7 +56,7 @@ const date = computed<string>(() => {
             {{ date }}
           </div>
           <div
-            v-if="user.badges"
+            v-if="user.badges.length"
             class="flex flex-wrap items-end gap-4 border-t pt-2 border-slate-700"
           >
             <Badge

@@ -19,6 +19,7 @@ const { locale } = useI18n()
     >
       <span class="absolute z-10 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/50 left-0 -translate-x-1/2 border-4 border-secondary backdrop-blur">
         <Icon
+          aria-hidden="true"
           name="ph:lightning"
           class="h-5 w-5 z-20"
         />
@@ -26,6 +27,7 @@ const { locale } = useI18n()
       <div class="flex flex-col flex-1 gap-4 border-4 border-black bg-black/50 rounded-lg p-5 relative -mt-2">
         <div class="flex items-end gap-4 relative">
           <Icon
+            aria-hidden="true"
             name="teenyicons:left-solid"
             class="h-10 w-10 absolute -left-12 text-black"
           />

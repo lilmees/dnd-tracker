@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { isAdmin } from '@/utils/permission-helpers'
 
 const store = useCurrentCampaignStore()
+const profile = useProfileStore()
 const toast = useToastStore()
 const notes = useNotesStore()
 
@@ -55,6 +57,8 @@ function resetState (): void {
       <button
         v-tippy="{ content: $t('actions.add') }"
         :aria-label="$t('actions.add')"
+        :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '')"
+        class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="isOpen = true"
       >
         <Icon
@@ -86,6 +90,7 @@ function resetState (): void {
         v-for="note in store.campaign.notes"
         :key="note.created_at"
         :note="note"
+        :campaign="store.campaign"
         @update="(v: Note) => {
           selected = [v]
           isUpdating = true

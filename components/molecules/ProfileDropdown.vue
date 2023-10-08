@@ -66,7 +66,7 @@ function close (): void {
           />
           <template v-if="user">
             <button
-              class="text-danger hover:text-white max-w-max font-bold"
+              class="text-warning hover:text-white max-w-max font-bold"
               @click="
                 () => {
                   isOpen = false

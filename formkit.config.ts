@@ -29,7 +29,7 @@ export default defineFormKitConfig((): any => {
             messages: 'list-none p-0 mt-1 mb-0',
             message: 'text-danger text-xs mt-1',
             outer: 'mb-4 formkit-disabled:opacity-50',
-            prefixIcon: 'cursor-pointer w-10 flex self-stretch grow-0 shrink-0 rounded-tl rounded-bl border-r-4 border-black [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
+            prefixIcon: 'cursor-pointer w-10 flex self-stretch grow-0 shrink-0 rounded-tl rounded-bl [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
             suffixIcon: 'cursor-pointer w-10 flex border-l-4 border-black self-stretch grow-0 shrink-0 [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto'
           },
           'family:box': {

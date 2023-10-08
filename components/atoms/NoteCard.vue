@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { isAdmin } from '@/utils/permission-helpers'
+
 defineEmits(['remove', 'update'])
-defineProps<{ note: Note }>()
+defineProps<{ note: Note, campaign: Campaign }>()
+
+const profile = useProfileStore()
 </script>
 
 <template>
@@ -10,6 +14,7 @@ defineProps<{ note: Note }>()
     <div class="flex justify-end mr-2">
       <tippy interactive :z-index="2">
         <Icon
+          v-if="isAdmin(campaign, profile.data?.id || '')"
           name="tabler:dots"
           class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
           aria-hidden="true"
@@ -44,7 +49,10 @@ defineProps<{ note: Note }>()
         </template>
       </tippy>
     </div>
-    <div class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2">
+    <div
+      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2"
+      :class="{ 'pt-8': !isAdmin(campaign, profile.data?.id || '') }"
+    >
       <h3 v-if="note.title">
         {{ note.title }}
       </h3>

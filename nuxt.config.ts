@@ -34,18 +34,19 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     'nuxt-simple-sitemap',
     '@vite-pwa/nuxt',
-    ['nuxt-mail', {
-      message: {
-        to: 'jeremy@dnd-tracker.com' // default fallback
-      },
-      smtp: {
-        service: 'gmail',
-        auth: {
-          user: process.env.MAIL,
-          pass: process.env.MAIL_PASSWORD
-        }
-      }
-    }]
+    'vue-email/nuxt'
+    // ['nuxt-mail', {
+    //   message: {
+    //     to: 'jeremy@dnd-tracker.com' // default fallback
+    //   },
+    //   smtp: {
+    //     service: 'gmail',
+    //     auth: {
+    //       user: process.env.MAIL,
+    //       pass: process.env.MAIL_PASSWORD
+    //     }
+    //   }
+    // }]
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -59,7 +60,9 @@ export default defineNuxtConfig({
       stripeProYearly: process.env.STRIPE_PRO_YEARLY,
       logRocket: process.env.LOGROCKET_ID,
       formkit: process.env.FORMKIT_PRO
-    }
+    },
+    mailAddress: process.env.MAIL,
+    mailPassword: process.env.MAIL_PASSWORD
   },
   appConfig: {
     umami: {
@@ -174,6 +177,12 @@ export default defineNuxtConfig({
       options: {
         apiVersion: '2022-11-15'
       }
+    }
+  },
+  vueEmail: {
+    baseUrl: process.env.production ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
+    i18n: {
+      defaultLocale: 'en'
     }
   }
 })

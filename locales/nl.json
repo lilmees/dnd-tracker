@@ -30,6 +30,7 @@
     "open": "Openen",
     "next": "Volgende",
     "prev": "Vorige",
+    "decline": "Afwijzen",
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"
@@ -38,6 +39,7 @@
   "general": {
     "encounters": "Encounters",
     "players": "Spelers",
+    "members": "Leden",
     "monsters": "Monsters",
     "notes": "Notities",
     "total": "Totaal",
@@ -63,6 +65,20 @@
     "success": {
       "title": "Succes",
       "text": "De wijzigingen zijn opgeslagen"
+    },
+    "roles": {
+      "Owner": {
+        "title": "Eigenaar",
+        "description": "Eigenaren kunnen dezelfde acties ondernemen als beheerders, maar ze hebben de extra bevoegdheid om de campagne te beëindigen"
+      },
+      "Admin": {
+        "title": "Beheerder",
+        "description": "Beheerders kunnen content maken voor een campagne, encounters spelen en hebben toegang tot de pagina met campagne-instellingen maar kan de campagne niet verwijderen"
+      },
+      "Viewer": {
+        "title": "Speler",
+        "description": "Spelers hebben alleen de mogelijkheid om encounters te spelen en geen inhoud aan te passen"
+      }
     }
   },
   "pages": {
@@ -107,8 +123,20 @@
       }
     },
     "campaign": {
-      "back": "Terug naar campagnes",
-      "goCampaign": "Ga naar campagne"
+      "content": {},
+      "settings": {
+        "add": "Mensen toevoegen"
+      },
+      "danger": {},
+      "join": {
+        "title": "Beantwoord de Oproep tot Avontuur: Sluit je nu aan bij {campaign}!",
+        "text": "Gefeliciteerd! Je hebt een uitnodiging ontvangen om deel te nemen aan {campaign} als een {role}. Jouw kans om deel uit te maken van dit ongelooflijke avontuur ligt nu binnen handbereik.",
+        "accept": "Ga het Avontuur aan"
+      },
+      "toast": {
+        "update": "Je campagne is succesvol bijgewerkt",
+        "delete": "Je campagne is succesvol verwijderd"
+      }
     },
     "encounters": {
       "encounters": "Encounters",
@@ -266,6 +294,10 @@
           "my": "Mij"
         }
       }
+    },
+    "noMember": {
+      "title": "Je bent geen teamlid",
+      "text": "Oeps! Het lijkt erop dat je geen lid bent en geen toegang hebt tot deze inhoud. Als je denkt dat dit een vergissing is, aarzel dan niet om contact op te nemen met de eigenaar of een beheerder voor hulp."
     }
   },
   "components": {
@@ -313,9 +345,11 @@
       "damageDiceLabel": "Schade dobbelsteen",
       "marketingLabel": "Ontvang meldingen over updates",
       "codeLabel": "Code",
+      "roleLabel": "Functie van de gebruiker",
       "nothing": "Nog niets geselecteerd",
       "overrideFieldLabel": "Max {field} overschrijven",
-      "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven"
+      "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven",
+      "searchByUsername": "Zoeken op gebruikersnaam"
     },
     "cammpaignModal": {
       "add": "Maak een nieuwe campagne",
@@ -438,6 +472,26 @@
       "title": "Feature request maken",
       "submitted": "Je feature request is met enthousiasme ontvangen en ondergaat momenteel een zorgvuldige evaluatie. Zodra het is goedgekeurd, zal iedereen de mogelijkheid hebben om erop te stemmen. Je kunt controleren of verzoek is goedgekeurd zodra het label 'Onder beoordeling' niet meer zichtbaar is.",
       "another": "Nog een feature request maken"
+    },
+    "encounterCampaignHeader": {
+      "go": "Ga naar campagne"
+    },
+    "userModal": {
+      "title": "Mensen toevoegen aan {campaign}",
+      "select": "Kies een persoon hierboven",
+      "add": "{username} toevoegen aan campaign",
+      "member": "Lid van de campagne",
+      "invited": "Uitnodiging in afwachting",
+      "toast": {
+        "invited": {
+          "title": "De uitnodiging is succesvol verstuurd",
+          "text": "Na acceptatie van de uitnodiging wordt de persoon toegevoegd als teamlid"
+        },
+        "alreadyInvited": {
+          "title": "Deze persoon heeft reeds een uitnodiging ontvangen",
+          "text": "Degene die je hebt uitgenodigd, heeft nog een lopende uitnodiging voor deze campagne"
+        }
+      }
     }
   }
 }

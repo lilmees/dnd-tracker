@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { encounterUrl } from '@/utils/url-genarators'
+import { isAdmin } from '@/utils/permission-helpers'
 
 defineEmits(['remove', 'copy', 'update'])
 defineProps<{ encounter: Encounter }>()
 
-const user = useSupabaseUser()
-const localePath = useLocalePath()
+const profile = useProfileStore()
 </script>
 
 <template>
   <div
-    class="rounded-lg min-w-[250px] max-w-md relative group border-4"
+    class="rounded-lg min-w-[250px] max-w-md relative group border-4 flex flex-col"
     :style="{
       'background-color': `${encounter.background}80`,
       'border-color': encounter.background,
@@ -19,7 +19,7 @@ const localePath = useLocalePath()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="user && encounter.created_by === user.id"
+        v-if="!encounter.campaign || (profile.data && isAdmin(encounter.campaign as Campaign, profile.data.id))"
         interactive
         :z-index="2"
       >
@@ -71,14 +71,18 @@ const localePath = useLocalePath()
         </template>
       </tippy>
     </div>
-    <NuxtLink
-      :to="localePath(encounterUrl(encounter))"
-      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2 cursor-pointer"
+    <RouteLink
+      :url="encounterUrl(encounter)"
+      class="flex flex-col gap-4 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
+      :class="{ 'pt-8': encounter.campaign && profile.data && !isAdmin(encounter.campaign as Campaign, profile.data.id) }"
+      :style="false"
     >
-      <h2>{{ encounter.title }}</h2>
+      <h2>
+        {{ encounter.title }}
+      </h2>
       <div>
         <p>Rows: {{ encounter.rows.length }}</p>
       </div>
-    </NuxtLink>
+    </RouteLink>
   </div>
 </template>

@@ -1,5 +1,14 @@
 <script setup lang="ts">
-defineProps<{ url: string, label?: string}>()
+withDefaults(
+  defineProps<{
+    url: string,
+    label?: string,
+    style?: boolean
+  }>(), {
+    label: undefined,
+    style: true
+  }
+)
 
 const localePath = useLocalePath()
 </script>
@@ -7,7 +16,8 @@ const localePath = useLocalePath()
 <template>
   <NuxtLink
     :to="localePath(url.charAt(0) === '/' ? url : `/${url}`)"
-    class="text-slate-300 hover:text-white duration-200 ease-in-out max-w-max font-bold"
+    class="duration-200 ease-in-out max-w-max font-bold"
+    :class="{ 'text-slate-300 hover:text-white': style }"
     active-class="active-link"
   >
     <slot>

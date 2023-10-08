@@ -1,10 +1,12 @@
 import logRocket from 'logrocket'
+import { isMember } from '@/utils/permission-helpers'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
-  const user = useSupabaseUser()
+  const supabase = useSupabaseClient()
   const store = useCampaignsStore()
   const homebrew = useHomebrewStore()
   const encounterStore = useEncountersStore()
+  const profile = useProfileStore()
   const toast = useToastStore()
   const localePath = useLocalePath()
 
@@ -24,8 +26,8 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     try {
       campaign.value = await store.getCampaignById(id)
 
-      if (user.value && !campaign.value.admins.includes(user.value.id)) {
-        navigateTo(localePath('/campaigns'))
+      if (profile.data && !isMember(campaign.value, profile.data.id)) {
+        navigateTo(localePath('/not-member'))
       }
 
       useHead({ title: campaign.value.title })
@@ -83,6 +85,83 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
+  async function findJoinCampaignToken (token: string): Promise<CheckJoinCampaign|undefined> {
+    const { data, error } = await supabase
+      .from('join_campaign')
+      .select('*, user(id, created_at, username, name, avatar, email, badges), campaign(title, id)')
+      .eq('token', token)
+
+    if (error) {
+      throw error
+    }
+    if (data.length) {
+      return data[0]
+    }
+  }
+
+  async function createJoinCampaignToken (join: CreateJoinCampaign): Promise<void> {
+    const { data, error } = await supabase
+      .from('join_campaign')
+      .insert([join as never])
+      .select('*, user(id, created_at, username, name, avatar, email, badges)')
+
+    if (error) {
+      throw error
+    }
+    if (data && campaign.value) {
+      campaign.value.join_campaign?.push(data[0] as JoinCampaign)
+    }
+  }
+
+  async function deleteJoinCampaignToken (id: number): Promise<void> {
+    const { error } = await supabase
+      .from('join_campaign')
+      .delete()
+      .eq('id', id)
+      .select('*')
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.join_campaign) {
+      campaign.value.join_campaign = campaign.value.join_campaign.filter(h => h.id !== id)
+    }
+  }
+
+  async function addCampaignTeamMember (member: AddTeamMember, id: number): Promise<void> {
+    const { data, error } = await supabase
+      .from('team')
+      .insert([member as never])
+      .select('*, user(id, created_at, username, name, avatar, email, badges)')
+
+    if (error) {
+      throw error
+    }
+
+    await deleteJoinCampaignToken(id)
+
+    if (data && campaign.value) {
+      campaign.value.team?.push(data[0] as TeamMember)
+    }
+  }
+
+  async function deleteCampaignTeamMember (id: number): Promise<void> {
+    const { error } = await supabase
+      .from('team')
+      .delete()
+      .eq('id', id)
+      .select('*')
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.team) {
+      campaign.value.team = campaign.value.team.filter(h => h.id !== id)
+    }
+  }
+
   function resetActiveState (): void {
     activeIndex.value = undefined
     activeHomebrew.value = undefined
@@ -101,6 +180,11 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     addHomebrew,
     updateHomebrew,
     removeHomebrew,
-    resetActiveState
+    resetActiveState,
+    findJoinCampaignToken,
+    createJoinCampaignToken,
+    deleteJoinCampaignToken,
+    addCampaignTeamMember,
+    deleteCampaignTeamMember
   }
 })
