@@ -4,37 +4,46 @@ import logRocket from 'logrocket'
 const store = useTableStore()
 const toast = useToastStore()
 
+const blob = ref<HTMLDivElement>()
+
 try {
   await store.getSandboxEncounter()
 } catch (err) {
   logRocket.captureException(err as Error)
   toast.error()
 }
+
+if (process.client) {
+  document.body.onmousemove = (event) => {
+    if (blob.value) {
+      const { clientX, clientY } = event
+
+      blob.value.animate({
+        left: `${clientX}px`,
+        top: `${clientY}px`
+      }, { duration: 3000, fill: 'forwards' })
+    }
+  }
+}
 </script>
 
 <template>
   <NuxtLayout name="wide">
     <div>
+      <div
+        ref="blob"
+        class="hidden md:block -z-[1] h-[200px] w-[200px] fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full from-info to-secondary bg-gradient-to-r rotates blur-[100px]"
+      />
       <Hero />
       <div class="flex flex-col gap-y-[100px] sm:gap-y-[150px] py-20 px-4 container-max">
         <div class="container grid gap-10 lg:grid-cols-2">
           <TitleText
-            data-aos="zoom-in"
-            :data-aos-once="true"
-            :data-aos-mirror="false"
-            :data-aos-duration="1000"
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
             button-link="updates/feature-request"
             :button-label="$t('pages.home.textBlock1.button')"
           />
-          <div
-            data-aos="zoom-in"
-            :data-aos-once="true"
-            :data-aos-mirror="false"
-            :data-aos-duration="1000"
-            class="mt-20 lg:mt-32 flex md:justify-end"
-          >
+          <div class="mt-20 lg:mt-32 flex md:justify-end">
             <Summary
               :title="$t('pages.home.summary.title')"
               :items="[
@@ -50,10 +59,6 @@ try {
         </div>
         <div
           v-if="store.encounter"
-          data-aos="zoom-in"
-          :data-aos-duration="1000"
-          :data-aos-once="true"
-          :data-aos-mirror="false"
           class="space-y-4"
         >
           <div class="flex justify-end">
@@ -66,13 +71,7 @@ try {
             <EncounterOptions />
           </div>
         </div>
-        <div
-          class="container grid md:grid-cols-2 gap-10"
-          data-aos="zoom-in"
-          :data-aos-once="true"
-          :data-aos-mirror="false"
-          :data-aos-duration="1000"
-        >
+        <div class="container grid md:grid-cols-2 gap-10">
           <HomeDiceRolling />
           <NuxtImg
             src="/dragon_hoard.webp"
@@ -85,10 +84,6 @@ try {
           />
         </div>
         <TitleText
-          data-aos="zoom-in"
-          :data-aos-once="true"
-          :data-aos-mirror="false"
-          :data-aos-duration="1000"
           center
           :title="$t('pages.home.textBlock2.title')"
           :text="$t('pages.home.textBlock2.text')"

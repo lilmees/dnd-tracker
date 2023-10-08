@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
+import { contrastColor } from '@/utils/color-helpers'
 
 const emit = defineEmits(['close'])
 const props = withDefaults(
@@ -57,7 +58,7 @@ async function addCampaign (data: Obj): Promise<void> {
       ...data as CampaignForm,
       created_by: user.value.id,
       admins: [user.value.id],
-      color: useContrastColor(data.background)
+      color: contrastColor(data.background)
     })
   }
 }
@@ -67,7 +68,7 @@ async function updateCampaign (data: Obj): Promise<void> {
     await store.updateCampaign(
       {
         ...data,
-        color: useContrastColor(data.background)
+        color: contrastColor(data.background)
       },
       props.campaign.id
     )

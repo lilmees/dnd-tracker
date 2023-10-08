@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { contrastColor } from '@/utils/color-helpers'
 
 const store = useCurrentCampaignStore()
 const campaignStore = useCampaignsStore()
@@ -37,7 +38,7 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
       await campaignStore.updateCampaign(
         {
           ...formData,
-          color: useContrastColor(formData.background)
+          color: contrastColor(formData.background)
         },
         store.campaign.id
       )

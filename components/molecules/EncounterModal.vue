@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { contrastColor } from '@/utils/color-helpers'
 
 const emit = defineEmits(['close', 'added', 'updated'])
 const props = withDefaults(
@@ -83,7 +84,7 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
     const enc = await store.updateEncounter(
-      { ...data, color: useContrastColor(data.background) },
+      { ...data, color: contrastColor(data.background) },
       props.encounter.id
     )
 
@@ -99,7 +100,7 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       rows: [],
       created_by: user.value.id,
       admins: [user.value.id],
-      color: useContrastColor(data.background),
+      color: contrastColor(data.background),
       activeIndex: 0
     }) as AddEncounter
 

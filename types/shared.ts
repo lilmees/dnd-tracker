@@ -10,3 +10,9 @@ interface Option {
 interface Obj {
   [key: string]: any
 }
+
+interface RGB {
+  r: number
+  g: number
+  b: number
+}
