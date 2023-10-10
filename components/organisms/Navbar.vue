@@ -117,7 +117,7 @@ async function logout (): Promise<void> {
           </ClientOnly>
         </div>
         <button
-          v-if="isSmall"
+          class="sm:hidden"
           aria-label="Open menu"
           aria-haspopup="true"
           @click="isOpen = true"
@@ -139,7 +139,7 @@ async function logout (): Promise<void> {
           leave-to-class="!-translate-y-full"
         >
           <NavbarPopup
-            v-show="isOpen"
+            v-if="isOpen"
             :routes="visibleRoutes"
             :drop-down-routes="[...route.playRoutes, ...route.profileRoutes]"
             :logged-in="user ? true : false"
