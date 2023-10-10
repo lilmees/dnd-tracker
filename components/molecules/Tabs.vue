@@ -21,7 +21,7 @@ const route = useRoute()
       <div
         v-for="(tab, i) in tabs"
         :key="i"
-        class="pb-1 border-b-4 relative top-1 border-transparent"
+        class="pb-1 border-b-4 relative top-1 border-transparent transition-colors duration-200 ease-in-out"
         :class="{ '!border-primary': tab.link === route.fullPath }"
       >
         <RouteLink
@@ -51,7 +51,7 @@ const route = useRoute()
           active-class="text-white"
           :class="{
             'pointer-events-none opacity-50': !hasPermission(role, tab.role),
-            '!border-black': tab.link === route.fullPath
+            '!border-slate-300': tab.link === route.fullPath
           }"
         >
           <Icon :name="tab.icon" class="w-5 h-5" />

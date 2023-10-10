@@ -65,3 +65,5 @@ interface CheckJoinCampaign extends Omit<JoinCampaign, 'campaign'> {
 interface AddTeamMember extends Omit<TeamMember, 'id'|'user'> {
   user: string
 }
+
+interface UpdateTeamMember extends Pick<TeamMember, 'role'> {}

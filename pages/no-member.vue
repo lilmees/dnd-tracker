@@ -1,8 +1,6 @@
 <template>
-  <NuxtLayout>
-    <div
-      class="space-y-6 max-w-prose mx-auto p-6 rounded-lg border-4 border-black bg-black/30"
-    >
+  <NuxtLayout name="centered">
+    <div class="space-y-6">
       <h2>
         {{ $t('pages.noMember.title') }}
       </h2>

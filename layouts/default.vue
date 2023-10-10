@@ -14,7 +14,7 @@ onBeforeMount(() => { showNav.value = true })
     <div class="relative">
       <div
         v-if="shadow"
-        class="abolsute inset-0 z-[-1] fancy-shadow"
+        class="abolsute inset-0 z-[-1] fancy-shadow opacity-70"
       />
       <div class=" dnd-container no-scrollbar overflow-y-auto">
         <slot />
