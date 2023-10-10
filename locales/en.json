@@ -126,7 +126,9 @@
     "campaign": {
       "content": {},
       "settings": {
-        "add": "Add people"
+        "add": "Add people",
+        "access": "Manage access",
+        "campaign": "Campaign settings"
       },
       "danger": {
         "transfer": {

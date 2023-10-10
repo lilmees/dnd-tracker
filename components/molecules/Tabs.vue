@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { SwiperSlide } from 'swiper/vue'
 import { hasPermission } from '@/utils/permission-helpers'
+import { calculateSliderOverflow } from '@/utils/calculate-slide-offset'
 
 withDefaults(
   defineProps<{
@@ -12,7 +13,12 @@ withDefaults(
   }
 )
 
+const { width } = useWindowSize()
 const route = useRoute()
+
+const slideOffset = ref<number>(16)
+
+watch(width, v => (slideOffset.value = calculateSliderOverflow(v)), { immediate: true })
 </script>
 
 <template>
@@ -21,7 +27,7 @@ const route = useRoute()
       <div
         v-for="(tab, i) in tabs"
         :key="i"
-        class="pb-1 border-b-4 relative top-1 border-transparent"
+        class="pb-1 border-b-4 relative top-1 border-transparent transition-colors duration-200 ease-in-out"
         :class="{ '!border-primary': tab.link === route.fullPath }"
       >
         <RouteLink
@@ -39,7 +45,7 @@ const route = useRoute()
         </RouteLink>
       </div>
     </div>
-    <Carousel class="dnd-container sm:hidden pb-1" :space="8">
+    <Carousel class="pb-1 w-full sm:hidden" :space="8" :slide-offset="slideOffset">
       <SwiperSlide
         v-for="(tab, i) in tabs"
         :key="i"
@@ -51,7 +57,7 @@ const route = useRoute()
           active-class="text-white"
           :class="{
             'pointer-events-none opacity-50': !hasPermission(role, tab.role),
-            '!border-black': tab.link === route.fullPath
+            '!border-slate-300': tab.link === route.fullPath
           }"
         >
           <Icon :name="tab.icon" class="w-5 h-5" />

@@ -164,6 +164,26 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
+  async function updateCampaignTeamMember (member: UpdateTeamMember, id: number): Promise<void> {
+    const { error } = await supabase
+      .from('team')
+      .update(member as never)
+      .eq('id', id)
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.team) {
+      const index = campaign.value.team.findIndex(e => e.id === id)
+
+      campaign.value.team[index] = {
+        ...campaign.value.team[index],
+        ...member
+      }
+    }
+  }
+
   function resetActiveState (): void {
     activeIndex.value = undefined
     activeHomebrew.value = undefined
@@ -187,6 +207,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     createJoinCampaignToken,
     deleteJoinCampaignToken,
     addCampaignTeamMember,
-    deleteCampaignTeamMember
+    deleteCampaignTeamMember,
+    updateCampaignTeamMember
   }
 })

@@ -14,13 +14,6 @@ const needConfirmation = ref<boolean>(false)
 const selectedInvite = ref<JoinCampaign>()
 const selectedTeamMember = ref<TeamMember>()
 
-// when creating content as admin the owner cant see it
-// when creating content as admin set the created_by still as the owner
-// check creating encounter/campaign because rls changed
-// update role when switching select
-// add danger zone functionality
-// when finished remove that the invite is always sent to my email adress
-
 const members = computed<any[]>(() => {
   return !store.campaign
     ? []
@@ -67,6 +60,17 @@ async function handleDelete (): Promise<void> {
     selectedInvite.value = undefined
   }
 }
+
+async function changeRole (role: string | undefined, member: TeamMember): Promise<void> {
+  try {
+    if (role) {
+      await store.updateCampaignTeamMember({ role: role as UserRole }, member.id)
+    }
+  } catch (err) {
+    logRocket.captureException(err as Error)
+    toast.error()
+  }
+}
 </script>
 
 <template>
@@ -76,7 +80,7 @@ async function handleDelete (): Promise<void> {
     >
       <div class="md:min-w-[300px]">
         <h2>
-          Manage access
+          {{ $t('pages.campaign.settings.access') }}
           <span class="text-[10px]">
             (max 10)
           </span>
@@ -88,22 +92,22 @@ async function handleDelete (): Promise<void> {
           class="p-6 rounded-lg overflow-x-auto overflow-y-hidden w-full border-4 border-tracker bg-tracker/50"
         >
           <div
-            v-for="item in members"
-            :key="item.user.id"
+            v-for="member in members"
+            :key="member.user.id"
             class="flex flex-col sm:flex-row gap-x-4 gap-y-2 sm:items-center sm:justify-between border-b border-slate-700 mb-2 pb-1 last:border-none last:mb-0 last:pb-0"
           >
-            <Avatar :user="item.user" :username="isSmall" />
+            <Avatar :user="member.user" :username="isSmall" />
             <p class="w-[200px] hidden sm:block font-bold">
-              {{ item.user.username }}
+              {{ member.user.username }}
             </p>
-            <div v-if="item?.invite" class="max-w-[300px] grow flex items-center gap-2">
+            <div v-if="member?.invite" class="max-w-[300px] grow flex items-center gap-2">
               <Icon name="mingcute:invite-line" :aria-hidden="true" class="w-5 h-5" />
               <span>
                 {{ $t('components.userModal.invited') }}
               </span>
             </div>
             <div
-              v-else-if="item.role === 'Owner'"
+              v-else-if="member.role === 'Owner'"
               class="max-w-[300px] grow flex items-center gap-2"
             >
               <Icon name="tabler:chess-king" :aria-hidden="true" class="w-5 h-5" />
@@ -113,22 +117,23 @@ async function handleDelete (): Promise<void> {
             </div>
             <FormKit
               v-else
-              :value="item.role"
+              :value="member.role"
               name="title"
               type="select"
-              :disabled="item.role === 'Owner'"
+              :disabled="member.role === 'Owner'"
               :options="[
                 { value: 'Viewer', label: $t('general.roles.Viewer.title') },
                 { value: 'Admin', label: $t('general.roles.Admin.title') }
               ]"
               outer-class="$reset max-w-[300px] grow !pb-0"
+              @input="changeRole($event, member)"
             />
             <button
-              :disabled="item.role === 'Owner'"
+              :disabled="member.role === 'Owner'"
               :aria-label="$t('actions.delete')"
               class="w-fit disabled:opacity-50 disabled:cursor-not-allowed"
               @click="() => {
-                item?.invite ? selectedInvite = item : selectedTeamMember = item
+                member?.invite ? selectedInvite = member : selectedTeamMember = member
                 needConfirmation = true
               }"
             >
@@ -168,7 +173,7 @@ async function handleDelete (): Promise<void> {
       >
         <div class="md:min-w-[300px]">
           <h2>
-            Campaign settings
+            {{ $t('pages.campaign.settings.campaign') }}
           </h2>
         </div>
         <div class="grow max-w-4xl">

@@ -284,7 +284,7 @@ function updated (hb: Homebrew, id: number): void {
         sizes="sm:500px md:500px lg:500px"
         format="webp"
         provider="imagekit"
-        class="mx-auto"
+        class="mx-auto float"
       />
     </div>
   </section>

@@ -51,7 +51,7 @@ onMounted(() => {
           },
         ]"
       />
-      <div class="inset-0 absolute fancy-shadow -z-[1]" />
+      <div class="inset-0 absolute fancy-shadow -z-[1] opacity-70" />
     </template>
     <div v-if="!route.fullPath.includes('/join')" class="dnd-container">
       <NuxtPage />

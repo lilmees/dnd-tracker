@@ -59,7 +59,8 @@ async function handleSubmit (): Promise<void> {
         role: userRole.value,
         token
       })
-      await sentMail(token)
+
+      sentMail(token)
 
       toast.success({
         title: t('components.userModal.toast.invited.title'),
@@ -83,8 +84,7 @@ async function sentMail (token: string): Promise<void> {
     method: 'POST',
     body: {
       locale: locale.value,
-      to: 'jeremymees123@gmail.com',
-      // to: selectedUser.value.email,
+      to: selectedUser.value!.email,
       props: {
         inviteLink: link,
         invitedBy: profile.data?.username || 'Owner',
