@@ -31,6 +31,7 @@
     "next": "Next",
     "prev": "Previous",
     "decline": "Decline",
+    "transfer": "Transfer",
     "read": {
       "more": "Read more",
       "less": "Read less"
@@ -127,7 +128,16 @@
       "settings": {
         "add": "Add people"
       },
-      "danger": {},
+      "danger": {
+        "transfer": {
+          "title": "Transfer ownership",
+          "text": "Transfer this campaign to another user who is already a team member"
+        },
+        "delete": {
+          "title": "Delete this campaign",
+          "text": "Once you delete a campaign, there is no going back. Please be certain"
+        }
+      },
       "join": {
         "title": "Answer the Call to Adventure: Join {campaign} Now!",
         "text": "Congratulations! You've received an invitation to join {campaign} as a {role}. Your opportunity to be a part of this incredible journey is right at your fingertips.",
@@ -346,6 +356,7 @@
       "marketingLabel": "Get notified about updates",
       "codeLabel": "Code",
       "roleLabel": "Role of the user",
+      "newRoleLabel": "Your new role",
       "nothing": "Nothing selected",
       "overrideFieldLabel": "Max {field} override",
       "optionalFieldHelp": "Optional to overwrite the current {field}",
@@ -490,6 +501,16 @@
         "alreadyInvited": {
           "title": "This person has already received an invitation",
           "text": "The person you have invited still has an active invitation for this campaign"
+        }
+      }
+    },
+    "transferOwnershipModal": {
+      "title": "Transfer ownership from {campaign}",
+      "text": "Are you certain about transferring ownership from the {campaign} campaign? Please note that this action is irreversible unless the new owner decides to revert it. If you are absolutely sure, Enter {campaign} in the input field and then proceed to transfer.",
+      "removed": "No more team member (removed)",
+      "toast": {
+        "success": {
+          "title": "Ownership has been successfully transferred to {username}"
         }
       }
     }

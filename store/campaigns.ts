@@ -109,9 +109,11 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     if (error) {
       throw error
     }
+
     if (data.length && campaigns.value) {
       const index = campaigns.value.findIndex(e => e.id === id)
       const oldData = campaigns.value.splice(index, 1)
+
       campaigns.value.push({ ...oldData[0], ...data[0] as object })
     }
   }

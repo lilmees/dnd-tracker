@@ -129,7 +129,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addCampaignTeamMember (member: AddTeamMember, id: number): Promise<void> {
+  async function addCampaignTeamMember (member: AddTeamMember, id?: number): Promise<void> {
     const { data, error } = await supabase
       .from('team')
       .insert([member as never])
@@ -139,7 +139,9 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       throw error
     }
 
-    await deleteJoinCampaignToken(id)
+    if (id) {
+      await deleteJoinCampaignToken(id)
+    }
 
     if (data && campaign.value) {
       campaign.value.team?.push(data[0] as TeamMember)
