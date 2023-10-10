@@ -1,15 +1,3 @@
-export function hasPermission (role: UserRole, admin = false, owner = false): boolean {
-  if (!admin && !owner) {
-    return true
-  } else if (admin && !owner) {
-    return role === 'Admin' || role === 'Owner'
-  } else if (!admin && owner) {
-    return role === 'Owner'
-  } else {
-    return false
-  }
-}
-
 export function isOwner (campaign: Campaign, id: string): boolean {
   return campaign.created_by.id === id
 }
@@ -32,4 +20,26 @@ export function isMember (campaign: Campaign, id: string): boolean {
 
 export function isInvited (campaign: Campaign, id: string): boolean {
   return campaign.join_campaign?.map(join => join.user.id).includes(id) || false
+}
+
+export function hasPermission (userRole: UserRole, expected: UserRole): boolean {
+  if (userRole === 'Owner') {
+    return true
+  } else if (userRole === 'Admin' && expected === 'Viewer') {
+    return true
+  } else if (userRole === expected) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function getRole (campaign: Campaign, id: string): UserRole {
+  if (isOwner(campaign, id)) {
+    return 'Owner'
+  } else if (isAdmin(campaign, id)) {
+    return 'Admin'
+  } else {
+    return 'Viewer'
+  }
 }

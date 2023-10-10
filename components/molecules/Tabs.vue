@@ -25,12 +25,11 @@ const route = useRoute()
         :class="{ '!border-primary': tab.link === route.fullPath }"
       >
         <RouteLink
-          v-if="hasPermission(role, tab.adminOnly, tab.ownerOnly)"
           :url="tab.link"
           class="flex gap-2 items-center py-1 px-2 rounded-lg text-slate-300 hover:bg-tracker hover:text-white"
           active-class="text-white"
           :class="{
-            'pointer-events-none': disabled
+            'pointer-events-none opacity-50': !hasPermission(role, tab.role)
           }"
         >
           <Icon :name="tab.icon" class="w-5 h-5" />
@@ -47,12 +46,11 @@ const route = useRoute()
         class="max-w-fit"
       >
         <RouteLink
-          v-if="hasPermission(role, tab.adminOnly, tab.ownerOnly)"
           :url="tab.link"
           class="flex gap-2 items-center py-1 px-2 rounded-lg text-slate-300 bg-tracker border-4 border-tracker hover:text-white"
           active-class="text-white"
           :class="{
-            'pointer-events-none': disabled,
+            'pointer-events-none opacity-50': !hasPermission(role, tab.role),
             '!border-black': tab.link === route.fullPath
           }"
         >

@@ -10,13 +10,15 @@ withDefaults(
   defineProps<{
     space?: number,
     speed?: number,
+    slideOffset?: number,
     loop?: boolean,
     centered?: boolean,
     pagination?: boolean,
-    navigation?: boolean
+    navigation?: boolean,
   }>(), {
     space: 32,
     speed: 600,
+    slideOffset: 0,
     loop: false,
     centered: false,
     pagination: false,
@@ -34,6 +36,8 @@ withDefaults(
       keyboard
       :centered-slides="centered"
       :loop="loop"
+      :slides-offset-before="slideOffset"
+      :slides-offset-after="slideOffset"
       :space-between="space"
       :speed="speed"
       :slides-per-view="'auto'"
