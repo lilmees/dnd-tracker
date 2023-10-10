@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { getRole } from '@/utils/permission-helpers'
+
 definePageMeta({ middleware: ['auth'] })
 
+const profile = useProfileStore()
 const store = useCurrentCampaignStore()
 const route = useRoute()
 
@@ -25,25 +28,26 @@ onMounted(() => {
       </h1>
       <Tabs
         class="mb-10"
-        role="Owner"
+        :role="store.campaign ? getRole(store.campaign, profile.data?.id || '') : 'Viewer'"
         :disabled="!store.campaign"
         :tabs="[
           {
             label: 'Content',
             icon: 'fluent:content-view-24-regular',
-            link: `${url}/content`
+            link: `${url}/content`,
+            role: 'Viewer'
           },
           {
             label: 'Settings',
             icon: 'iconamoon:options',
             link: `${url}/settings`,
-            adminOnly: true
+            role: 'Admin'
           },
           {
             label: 'Danger zone',
             icon: 'solar:danger-triangle-outline',
             link: `${url}/danger-zone`,
-            ownerOnly: true
+            role: 'Owner'
           },
         ]"
       />

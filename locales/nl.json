@@ -31,6 +31,7 @@
     "next": "Volgende",
     "prev": "Vorige",
     "decline": "Afwijzen",
+    "transfer": "Overdragen",
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"
@@ -127,7 +128,16 @@
       "settings": {
         "add": "Mensen toevoegen"
       },
-      "danger": {},
+      "danger": {
+        "transfer": {
+          "title": "Overdracht van eigendom",
+          "text": "Draag deze campagne over aan een andere gebruiker die al lid is van het team"
+        },
+        "delete": {
+          "title": "Verwijder deze campagne",
+          "text": "Als je een campagne verwijdert, is er geen weg meer terug. Wees alsjeblieft zeker"
+        }
+      },
       "join": {
         "title": "Beantwoord de Oproep tot Avontuur: Sluit je nu aan bij {campaign}!",
         "text": "Gefeliciteerd! Je hebt een uitnodiging ontvangen om deel te nemen aan {campaign} als een {role}. Jouw kans om deel uit te maken van dit ongelooflijke avontuur ligt nu binnen handbereik.",
@@ -346,6 +356,7 @@
       "marketingLabel": "Ontvang meldingen over updates",
       "codeLabel": "Code",
       "roleLabel": "Functie van de gebruiker",
+      "newRoleLabel": "Je nieuwe functie",
       "nothing": "Nog niets geselecteerd",
       "overrideFieldLabel": "Max {field} overschrijven",
       "optionalFieldHelp": "Optioneel om het huidige {field} te overschrijven",
@@ -490,6 +501,16 @@
         "alreadyInvited": {
           "title": "Deze persoon heeft reeds een uitnodiging ontvangen",
           "text": "Degene die je hebt uitgenodigd, heeft nog een lopende uitnodiging voor deze campagne"
+        }
+      }
+    },
+    "transferOwnershipModal": {
+      "title": "Overdracht van eigendom {campaign}",
+      "text": "Ben je er zeker van dat je de eigendom van de {campaign} campagne wilt overdragen? Let op dat deze actie onomkeerbaar is, tenzij de nieuwe eigenaar besluit dit terug te draaien. Als je absoluut zeker bent, voer {campaign} in het invoerveld in en ga vervolgens verder met overdragen.",
+      "removed": "Geen team lid meer (verdwijderd)",
+      "toast": {
+        "success": {
+          "title": "De eigendom is succesvol overgedragen aan {username}"
         }
       }
     }
