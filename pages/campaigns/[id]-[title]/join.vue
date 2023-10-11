@@ -76,9 +76,6 @@ function routeToNoMember (): void {
 }
 </script>
 
-// when centered layout
-// check both roles working
-
 <template>
   <div
     v-if="data"
