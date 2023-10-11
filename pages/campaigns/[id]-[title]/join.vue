@@ -12,19 +12,23 @@ if (!route.query.token) {
   routeToNoMember()
 }
 
-const isLoading = ref<boolean>(false)
+const isLoading = ref<boolean>(true)
 const container = ref<Container>()
 const data = ref<CheckJoinCampaign>()
 
-onMounted(async () => {
+whenever(() => profile.data, v => getInvite(v.id))
+
+async function getInvite (id: string): Promise<void> {
   const check = await store.findJoinCampaignToken(route.query.token as string)
 
-  if (!check || (profile.data?.id !== check.user.id)) {
+  if (!check || (id !== check.user.id)) {
     routeToNoMember()
   } else {
     data.value = check as CheckJoinCampaign
   }
-})
+
+  isLoading.value = false
+}
 
 async function acceptInvite (): Promise<void> {
   isLoading.value = true
@@ -75,7 +79,7 @@ function routeToNoMember (): void {
 <template>
   <div
     v-if="data"
-    class="space-y-6 max-w-prose mx-auto p-6 rounded-lg border-4 border-black bg-black/30"
+    class="space-y-6"
   >
     <h2>
       {{ $t('pages.campaign.join.title', { campaign: data.campaign.title }) }}
@@ -244,7 +248,7 @@ function routeToNoMember (): void {
   </div>
   <div
     v-else
-    class="animate-pulse space-y-6 max-w-prose mx-auto p-6 rounded-lg border-4 border-tracker bg-tracker/50 h-[250px]"
+    class="animate-pulse space-y-6 h-[250px]"
   >
     <div class="bg-tracker w-full h-8 rounded-full" />
     <div class="bg-tracker w-full h-20 rounded-lg" />
