@@ -12,7 +12,7 @@ const url = computed<string>(() => {
 })
 
 onMounted(() => {
-  if (route?.params?.id) {
+  if (route?.params?.id && !route.fullPath.includes('/join')) {
     store.getCampaignInfo(+route.params.id)
   }
 })
@@ -56,7 +56,7 @@ onMounted(() => {
     <div v-if="!route.fullPath.includes('/join')" class="dnd-container">
       <NuxtPage />
     </div>
-    <NuxtLayout v-else shadow>
+    <NuxtLayout v-else name="centered">
       <NuxtPage />
     </NuxtLayout>
   </div>
