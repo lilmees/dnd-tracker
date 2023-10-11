@@ -105,20 +105,7 @@ function resetState (): void {
             @copy="copyEncounter"
           />
         </div>
-        <div v-else class="space-y-4 pt-4">
-          <p class="text-center">
-            {{ $t('pages.encounters.noData.title') }}
-          </p>
-          <div class="flex justify-center">
-            <button
-              class="btn-primary w-fit"
-              :aria-label="$t('pages.encounters.add')"
-              @click="isCreatingEncounter = true"
-            >
-              {{ $t('pages.encounters.add') }}
-            </button>
-          </div>
-        </div>
+        <NoContent v-else content="encounters" icon="ri:table-line" />
       </div>
     </div>
     <HomebrewTable class="py-10" />

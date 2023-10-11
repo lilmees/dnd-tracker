@@ -38,6 +38,7 @@
     }
   },
   "general": {
+    "campaigns": "Campagnes",
     "encounters": "Encounters",
     "players": "Spelers",
     "members": "Leden",
@@ -80,6 +81,10 @@
         "title": "Speler",
         "description": "Spelers hebben alleen de mogelijkheid om encounters te spelen en geen inhoud aan te passen"
       }
+    },
+    "noContent": {
+      "title": "Nog geen {content}",
+      "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
     }
   },
   "pages": {
@@ -117,10 +122,6 @@
         "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
         "amount": "Verwijder {number} campagnes",
         "multiple": "{number} campagnes"
-      },
-      "noData": {
-        "title": "Je hebt nog geen campagne gemaakt",
-        "text": "Maak een campagne en begin te spelen met alle mogelijkheden"
       }
     },
     "campaign": {
@@ -159,10 +160,6 @@
         "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
         "amount": "Verwijder {number} encounters",
         "multiple": "{number} encounters"
-      },
-      "noData": {
-        "title": "Je hebt nog geen encounter gemaakt",
-        "text": "Maak een encounter en begin te spelen met alle mogelijkheden"
       }
     },
     "encounter": {
@@ -368,10 +365,6 @@
       "add": "Maak een nieuwe campagne",
       "update": "Update campagne {title}"
     },
-    "homebrewTable": {
-      "title": "Klaar om je creativiteit de vrije loop te laten?",
-      "text": "Begin vandaag met het maken van je eigen homebrew vandaag! Met slechts enkele eenvoudige inputs en wat verbeeldingskracht kun je je unieke ideeën tot leven brengen en een persoonlijk tintje geven aan je campagne. Wacht niet langer, duik erin en begin nu met het maken van je eigen unieke items!"
-    },
     "encounterModal": {
       "add": "Maak een nieuwe encounter",
       "update": "Update encounter {title}"
@@ -437,9 +430,6 @@
     "confirmationModal": {
       "title": "Verwijder bevestiging",
       "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
-    },
-    "campaignNotes": {
-      "none": "Geen notities toegevoegd"
     },
     "noteModal": {
       "add": "Notitie creëren",

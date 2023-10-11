@@ -38,6 +38,7 @@
     }
   },
   "general": {
+    "campaigns": "Campaigns",
     "encounters": "Encounters",
     "players": "Players",
     "members": "Members",
@@ -80,6 +81,10 @@
         "title": "Player",
         "description": "Players only have the option to play encounters and not edit content"
       }
+    },
+    "noContent": {
+      "title": "No {content} yet",
+      "text": "The quest for {content} begins here, but it's yet to be undertaken"
     }
   },
   "pages": {
@@ -117,10 +122,6 @@
         "subtitle": "Select campaigns to remove by clicking on them.",
         "amount": "Remove {number} campaigns",
         "multiple": "{number} campaigns"
-      },
-      "noData": {
-        "title": "You have no created campaigns",
-        "text": "Create a campaign and start playing around witth all the posibilities"
       }
     },
     "campaign": {
@@ -159,10 +160,6 @@
         "subtitle": "Select encounters to remove by clicking on them.",
         "amount": "Remove {number} encounters",
         "multiple": "{number} encounters"
-      },
-      "noData": {
-        "title": "You have no created encounters",
-        "text": "Create a encounter and start playing around witth all the posibilities"
       }
     },
     "encounter": {
@@ -368,10 +365,6 @@
       "add": "Create a new campaign",
       "update": "Update campaign {title}"
     },
-    "homebrewTable": {
-      "title": "Ready to unleash your creativity?",
-      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
-    },
     "encounterModal": {
       "add": "Create a new encounter",
       "update": "Update encounter {title}"
@@ -437,9 +430,6 @@
     "confirmationModal": {
       "title": "Delete confirmation",
       "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
-    },
-    "campaignNotes": {
-      "none": "No notes added"
     },
     "noteModal": {
       "add": "Create note",
