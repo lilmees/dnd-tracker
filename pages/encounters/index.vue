@@ -185,20 +185,7 @@ function resetState (): void {
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
-      >
-        <h2>{{ $t('pages.encounters.noData.title') }}</h2>
-        <p>{{ $t('pages.encounters.noData.text') }}</p>
-        <button
-          class="btn-primary"
-          :aria-label="$t('pages.encounters.add')"
-          @click="isOpen = true"
-        >
-          {{ $t('pages.encounters.add') }}
-        </button>
-      </div>
+      <NoContent v-else content="encounters" icon="ri:table-line" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">

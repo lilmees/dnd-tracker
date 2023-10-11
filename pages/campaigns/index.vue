@@ -156,20 +156,11 @@ async function deleteCampaigns (): Promise<void> {
           </div>
         </div>
       </template>
-      <div
+      <NoContent
         v-else
-        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
-      >
-        <h2>{{ $t('pages.campaigns.noData.title') }}</h2>
-        <p>{{ $t('pages.campaigns.noData.text') }}</p>
-        <button
-          class="btn-black"
-          :aria-label="$t('pages.campaigns.add')"
-          @click="isOpen = true"
-        >
-          {{ $t('pages.campaigns.add') }}
-        </button>
-      </div>
+        :content="$t('general.campaigns').toLowerCase()"
+        icon="fa6-solid:dungeon"
+      />
       <CampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
