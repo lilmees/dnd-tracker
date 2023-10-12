@@ -4,7 +4,7 @@ interface BadgeI18n {
 }
 
 interface Badge {
-  id?: string
+  id: number
   created_at?: string
   code?: string
   label: BadgeI18n
@@ -14,6 +14,6 @@ interface Badge {
   description: BadgeI18n
 }
 
-interface EarnedBadge extends Omit<Badge, 'id'|'created_at'|'code'> {
+interface EarnedBadge extends Omit<Badge, 'created_at'|'code'> {
   earned: number
 }

@@ -231,6 +231,11 @@
       }
     },
     "profile": {
+      "subscription": {
+        "current": "Huidige abonnement",
+        "handle": "Abonnement beheren",
+        "upgrade": "Abonnement upgraden"
+      },
       "data": {
         "title": "Persoonlijke data",
         "subtitle": "Data Metamorfose: Ontketen de Magie!"

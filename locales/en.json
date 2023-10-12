@@ -231,6 +231,11 @@
       }
     },
     "profile": {
+      "subscription": {
+        "current": "Current subscription",
+        "handle": "Handle subscription",
+        "upgrade": "Upgrade subscription"
+      },
       "data": {
         "title": "Personal data",
         "subtitle": "Data Metamorphosis: Unleash the Magic!"

@@ -15,7 +15,7 @@ export const useBadgesStore = defineStore('useBadgesStore', () => {
     try {
       const { data: result, error: err } = await supabase
         .from('badges')
-        .select('background, color, description, icon, label')
+        .select('id, background, color, description, icon, label')
         .eq('code', code)
         .single()
 
@@ -43,9 +43,24 @@ export const useBadgesStore = defineStore('useBadgesStore', () => {
     }
   }
 
+  async function getBadgeById (id: number): Promise<Badge|undefined> {
+    try {
+      const { data: result, error: err } = await supabase
+        .from('badges')
+        .select('id, background, color, description, icon, label')
+        .eq('id', id)
+        .single()
+
+      return result as Badge
+    } catch (err) {
+      logRocket.captureException(err as Error)
+    }
+  }
+
   return {
     loading,
     error,
-    addBadge
+    addBadge,
+    getBadgeById
   }
 })
