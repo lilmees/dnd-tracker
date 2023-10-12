@@ -1,9 +1,10 @@
 import { serverSupabaseClient } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
+  console.log(body.type)
   if (!correctWebhookType(body.type)) {
     return
   }
@@ -16,14 +17,14 @@ export default defineEventHandler(async (event) => {
     stripe_trail_ends_at: subscription.trail_end,
     stripe_ends_at: subscription.ended_at,
     stripe_started_at: subscription.start_date,
-    subscription_type: getSubscriptionType(subscription.items?.data[0].plan.id)
+    subscription_type: getSubscriptionType(subscription.items?.data[0].plan.id),
   }
 
-  const { data } = await client
+  const { data } = (await client
     .from('profiles')
     .select('stripe_last_event')
     .eq('stripe_id', subscription.customer)
-    .single() as { data: { stripe_last_event: number }}
+    .single()) as { data: { stripe_last_event: number } }
 
   if (data?.stripe_last_event > body.created) {
     return `Did not handle ${body.type} because it was an old event`
@@ -34,7 +35,7 @@ export default defineEventHandler(async (event) => {
   stripeData = {
     ...stripeData,
     paid_subscription_active: !cancel,
-    subscription_id: cancel ? null : subscription.id
+    subscription_id: cancel ? null : subscription.id,
   }
 
   await client
@@ -45,7 +46,7 @@ export default defineEventHandler(async (event) => {
   return `handled ${body.type}`
 })
 
-function getSubscriptionType (id?: string): StripeSubscriptionType {
+function getSubscriptionType(id?: string): StripeSubscriptionType {
   const config = useRuntimeConfig()
 
   if (!id) {
@@ -61,17 +62,21 @@ function getSubscriptionType (id?: string): StripeSubscriptionType {
   }
 }
 
-function correctWebhookType (type: StripeWebhookType): boolean {
-  return type === 'customer.subscription.created' ||
+function correctWebhookType(type: StripeWebhookType): boolean {
+  return (
+    type === 'customer.subscription.created' ||
     type === 'customer.subscription.resumed' ||
     type === 'customer.subscription.updated' ||
     type === 'customer.subscription.deleted' ||
     type === 'customer.subscription.paused' ||
     type === 'invoice.payment_failed'
+  )
 }
 
-function cancelSubscription (type: StripeWebhookType): boolean {
-  return type === 'customer.subscription.deleted' ||
+function cancelSubscription(type: StripeWebhookType): boolean {
+  return (
+    type === 'customer.subscription.deleted' ||
     type === 'customer.subscription.paused' ||
     type === 'invoice.payment_failed'
+  )
 }
