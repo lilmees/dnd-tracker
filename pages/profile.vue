@@ -5,7 +5,9 @@ import logRocket from 'logrocket'
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
+const stripe = useStripeStore()
 const toast = useToastStore()
+const localePath = useLocalePath()
 const { t } = useI18n()
 
 const image = ref<string>(profile.data?.avatar || randomAvatar())
@@ -86,6 +88,12 @@ function handleIconClick (node: FormKitNode) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
+
+async function stripePortal (): Promise<void> {
+  if (profile.data?.stripe_session_id) {
+    await stripe.createPortalSession(profile.data.stripe_session_id)
+  }
+}
 </script>
 
 <template>
@@ -131,6 +139,27 @@ function handleIconClick (node: FormKitNode) {
           v-bind="badge"
         />
         <BadgeModal />
+      </div>
+      <div class="flex flex-wrap gap-4 items-center justify-between pt-2 pb-4 border-b-2 border-slate-700">
+        <div class="flex gap-4">
+          {{ $t('pages.profile.subscription.current') }}:
+          <span class="font-bold capitalize">{{ profile.data.subscription_type }}</span>
+        </div>
+        <button
+          class="btn-black"
+          :aria-label="
+            $t(profile.data.stripe_session_id
+              ? 'pages.profile.subscription.handle'
+              : 'pages.profile.subscription.upgrade')
+          "
+          @click="profile.data.stripe_session_id ? stripePortal() : navigateTo(localePath('/pricing'))"
+        >
+          {{
+            $t(profile.data.stripe_session_id
+              ? 'pages.profile.subscription.handle'
+              : 'pages.profile.subscription.upgrade')
+          }}
+        </button>
       </div>
       <div
         class="flex flex-col md:flex-row justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
