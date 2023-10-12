@@ -2,25 +2,13 @@
 const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()
-const mail = useMail()
 
-const form = ref<ContactForm>({ name: '', email: '', question: '' })
-
-function sendContactMail (form: Obj): void {
-  mail.send({
-    from: form.email,
-    subject: form.name
-      ? `Contact/question mail from ${form.name}`
-      : 'Contact/question mail',
-    html: `
-    <h1>New question/contact</h1>
-    <p>DATE: ${new Date()} </p>
-    <p>EMAIL: ${form.email} </p>
-    ${form.name ? `<p>NAME: ${form.name} </p>` : ''}
-    </br>
-    <p>${form.question} </p>
-    `
+function sendContactMail ({ __init, ...formData }: Obj): void {
+  useFetch('/api/emails/contact-request', {
+    method: 'POST',
+    body: { props: formData }
   })
+
   toast.success({ title: t('pages.contact.success') })
   navigateTo(localePath('/'))
 }
@@ -31,9 +19,11 @@ function sendContactMail (form: Obj): void {
     <section class="mt-10">
       <h1 class="max-w-[300px] pb-8">
         {{ $t('pages.contact.title') }}
+        <span class="wave mr-2">
+          👋
+        </span>
       </h1>
       <FormKit
-        v-model="form"
         type="form"
         :actions="false"
         @submit="sendContactMail"
@@ -51,8 +41,9 @@ function sendContactMail (form: Obj): void {
         <FormKit
           name="question"
           type="textarea"
+          :maxlength="1000"
           :label="$t('components.inputs.questionLabel')"
-          validation="required|length:3,1000|"
+          validation="required|length:3,1000"
         />
         <FormKit type="submit" :aria-label="$t('pages.contact.send')">
           {{ $t('pages.contact.send') }}
