@@ -4,37 +4,33 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
-  console.log(body.type)
-
   if (!correctWebhookType(body.type)) {
     return
   }
 
   const subscription = body.data.object
 
-  let stripeData: Partial<Stripe> = {
-    stripe_last_event: body.created,
-    stripe_status: subscription.status,
-    stripe_trail_ends_at: subscription.trail_end,
-    stripe_ends_at: subscription.ended_at,
-    stripe_started_at: subscription.start_date,
-    subscription_type: getSubscriptionType(subscription.items?.data[0].plan.id)
-  }
-
-  const { data } = (await client
+  const { data } = await client
     .from('profiles')
     .select('stripe_last_event')
     .eq('stripe_id', subscription.customer)
-    .single()) as { data: { stripe_last_event: number } }
+    .single()
 
-  if (data?.stripe_last_event > body.created) {
+  if (!data) {
+    return
+  } else if (data?.stripe_last_event > body.created) {
     return `Did not handle ${body.type} because it was an old event`
   }
 
   const cancel = cancelSubscription(body.type)
 
-  stripeData = {
-    ...stripeData,
+  const stripeData: Partial<Stripe> = {
+    stripe_last_event: body.created,
+    stripe_status: subscription.status,
+    stripe_trail_ends_at: subscription.trail_end,
+    stripe_ends_at: subscription.ended_at,
+    stripe_started_at: subscription.start_date,
+    subscription_type: cancel ? 'free' : getSubscriptionType(subscription.items?.data[0].plan.id),
     paid_subscription_active: !cancel,
     subscription_id: cancel ? null : subscription.id
   }

@@ -148,14 +148,18 @@ async function stripePortal (): Promise<void> {
         <button
           class="btn-black"
           :aria-label="
-            $t(profile.data.stripe_session_id
+            $t(profile.data.stripe_session_id && profile.data.paid_subscription_active
               ? 'pages.profile.subscription.handle'
               : 'pages.profile.subscription.upgrade')
           "
-          @click="profile.data.stripe_session_id ? stripePortal() : navigateTo(localePath('/pricing'))"
+          @click="
+            profile.data.stripe_session_id && profile.data.paid_subscription_active
+              ? stripePortal()
+              : navigateTo(localePath('/pricing'))
+          "
         >
           {{
-            $t(profile.data.stripe_session_id
+            $t(profile.data.stripe_session_id && profile.data.paid_subscription_active
               ? 'pages.profile.subscription.handle'
               : 'pages.profile.subscription.upgrade')
           }}
