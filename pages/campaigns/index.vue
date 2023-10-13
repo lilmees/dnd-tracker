@@ -52,7 +52,7 @@ async function deleteCampaigns (): Promise<void> {
           <button
             class="btn-primary"
             :aria-label="$t('pages.campaigns.add')"
-            :disabled="store.loading"
+            :disabled="store.loading || (store.campaigns && store.max <= store.campaigns.length)"
             @click="isOpen = true"
           >
             {{ $t('pages.campaigns.add') }}
@@ -126,6 +126,10 @@ async function deleteCampaigns (): Promise<void> {
             </button>
           </div>
         </template>
+        <LimitCta
+          v-else-if="store.campaigns && store.max <= store.campaigns.length"
+          class="mb-10"
+        />
         <div class="flex flex-wrap gap-4 items-start">
           <div
             v-for="campaign in store.sortedCampaigns"

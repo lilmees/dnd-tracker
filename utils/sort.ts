@@ -1,3 +1,9 @@
+export function sortCreatedAt (arr: Encounter[] | Campaign[]): Encounter[] | Campaign[] {
+  return arr.sort((a, b) => {
+    return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
+  })
+}
+
 export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampaignEncounter {
   const groupObj: SortedCampaignEncounter = {}
 
@@ -18,10 +24,7 @@ export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampa
   })
 
   for (const key in groupObj) {
-    groupObj[key].encounters = groupObj[key].encounters
-      .sort((a: Encounter, b: Encounter) => {
-        return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-      })
+    groupObj[key].encounters = sortCreatedAt(groupObj[key].encounters) as Encounter[]
   }
 
   return groupObj
@@ -43,6 +46,23 @@ export function sortEncountersByUserCreated (encounters: Encounter[], userId: st
     return acc
   },
   { userArr: [], nonUserArr: [] } as { userArr: Encounter[], nonUserArr: Encounter[]}
+  )
+
+  return { userArr, nonUserArr }
+}
+
+export function sortCampaignsByCreatedAt (campaigns: Campaign[], userId: string) : {
+  userArr: Campaign[],
+  nonUserArr: Campaign[]
+} {
+  const { userArr, nonUserArr } = campaigns.reduce((acc, cam) => {
+    cam.created_by.id === userId
+      ? acc.userArr.push(cam)
+      : acc.nonUserArr.push(cam)
+
+    return acc
+  },
+  { userArr: [], nonUserArr: [] } as { userArr: Campaign[], nonUserArr: Campaign[]}
   )
 
   return { userArr, nonUserArr }
