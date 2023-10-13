@@ -1,5 +1,6 @@
 import logRocket from 'logrocket'
 import { isMember } from '@/utils/permission-helpers'
+import { isMedior } from '@/utils/subscription-helpers'
 
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()

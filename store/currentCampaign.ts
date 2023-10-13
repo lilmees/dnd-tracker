@@ -1,5 +1,6 @@
 import logRocket from 'logrocket'
 import { isMember } from '@/utils/permission-helpers'
+import { getMax } from '@/utils/subscription-helpers'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const supabase = useSupabaseClient()
@@ -18,6 +19,8 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const activeModal = ref<HomebrewModal>()
   const activeHomebrew = ref<Homebrew>()
   const activeIndex = ref<number>()
+
+  const max = computed<number>(() => getMax('team', profile.data?.subscription_type || 'free'))
 
   async function getCampaignInfo (id: number): Promise<void> {
     loading.value = true
@@ -199,6 +202,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     activeModal,
     activeHomebrew,
     activeIndex,
+    max,
     getCampaignInfo,
     addHomebrew,
     updateHomebrew,

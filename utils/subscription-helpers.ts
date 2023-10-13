@@ -18,13 +18,27 @@ export function hasCorrectSubscription (subscription: StripeSubscriptionType, ex
   }
 }
 
-export function getMax (type: 'encounter'|'campaign', subscription: StripeSubscriptionType): number {
-  if (subscription === 'free') {
-    return type === 'encounter' ? 10 : 3
-  } else if (subscription === 'medior') {
-    return type === 'encounter' ? 50 : 10
-  } else if (subscription === 'pro') {
-    return type === 'encounter' ? 250 : 25
+export function getMax (type: 'encounter'|'campaign'|'team', subscription: StripeSubscriptionType): number {
+  switch (subscription) {
+    case 'free':
+      switch (type) {
+        case 'encounter': return 10
+        case 'campaign': return 3
+        case 'team': return 1
+      }
+      break
+    case 'medior':
+      switch (type) {
+        case 'encounter': return 50
+        case 'campaign': return 10
+        case 'team': return 3
+      }
+      break
+    case 'pro':
+      switch (type) {
+        case 'encounter': return 250
+        case 'campaign': return 25
+        case 'team': return 15
+      }
   }
-  return 0
 }

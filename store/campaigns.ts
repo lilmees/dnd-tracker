@@ -1,5 +1,6 @@
 import logRocket from 'logrocket'
 import { sortCampaignsByCreatedAt, sortCreatedAt } from '@/utils/sort'
+import { getMax } from '@/utils/subscription-helpers'
 
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
