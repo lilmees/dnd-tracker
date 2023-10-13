@@ -31,7 +31,8 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       }
 
       useHead({ title: campaign.value.title })
-      encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
+      await encounterStore.fetch()
+      encounters.value = encounterStore.restrictionEncounters.filter(enc => enc.campaign?.id === campaign.value!.id)
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

@@ -16,8 +16,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (!profile.data) { return [] }
     const { userArr, nonUserArr } = sortEncountersByUserCreated(data.value, profile.data.id)
 
-    // return [...userArr.splice(0, 3), ...nonUserArr]
-
     return [...userArr.splice(0, max.value), ...nonUserArr]
   })
 
@@ -152,6 +150,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     loading,
     error,
     data,
+    restrictionEncounters,
     sortedEncounters,
     max,
     fetch,
