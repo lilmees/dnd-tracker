@@ -17,7 +17,7 @@ const { locale } = useI18n()
       role="article"
       class="relative pl-10"
     >
-      <span class="absolute z-10 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/50 left-0 -translate-x-1/2 border-4 border-secondary backdrop-blur">
+      <span class="absolute z-[1] inline-flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/50 left-0 -translate-x-1/2 border-4 border-secondary backdrop-blur">
         <Icon
           aria-hidden="true"
           name="ph:lightning"
