@@ -236,7 +236,9 @@ function selectedSummoner (value: unknown): void {
         </div>
       </div>
       <div v-else-if="homebrews && !homebrews.length">
-        {{ $t('homebrew.none') }}
+        <span class="font-bold">
+          {{ $t('general.noContent.title', { content: 'Homebrew' }) }}
+        </span>
       </div>
       <div v-else class="pt-20">
         <div class="loader !relative" />

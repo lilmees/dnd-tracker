@@ -49,7 +49,9 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     enc.rows = useIndexCorrecter(enc.rows as Row[])
 
-    subscribeEncounterChanges()
+    if (profile.data && isMedior(profile.data)) {
+      subscribeEncounterChanges()
+    }
 
     encounter.value = data
     isLoading.value = false
