@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const session = await stripe.checkout.sessions.create({
+    allow_promotion_codes: true,
     billing_address_collection: 'auto',
     line_items: [{ price: price.id, quantity: 1 }],
     mode: 'subscription',
