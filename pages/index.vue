@@ -68,9 +68,8 @@ if (process.client) {
             <div class="abolsute inset-0 z-[-0] fancy-shadow" />
             <EncounterHeader />
             <EncounterTable />
-            <EncounterOptions class="hidden md:flex" />
+            <EncounterOptions />
           </div>
-          <EncounterOptions class="md:hidden" />
         </div>
         <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
           <div class="flex flex-col justify-center items-center h-full">
