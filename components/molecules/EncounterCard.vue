@@ -3,7 +3,14 @@ import { encounterUrl } from '@/utils/url-genarators'
 import { isAdmin } from '@/utils/permission-helpers'
 
 defineEmits(['remove', 'copy', 'update'])
-defineProps<{ encounter: Encounter }>()
+withDefaults(
+  defineProps<{
+    encounter: Encounter
+    disableCopy?: boolean
+   }>(), {
+    disableCopy: false
+  }
+)
 
 const profile = useProfileStore()
 </script>
@@ -19,7 +26,7 @@ const profile = useProfileStore()
   >
     <div class="flex justify-end mr-2">
       <tippy
-        v-if="!encounter.campaign || (profile.data && isAdmin(encounter.campaign as Campaign, profile.data.id))"
+        v-if="!encounter.campaign || (profile.data && isAdmin(encounter.campaign, profile.data.id))"
         interactive
         :z-index="2"
       >
@@ -44,8 +51,9 @@ const profile = useProfileStore()
               <p>{{ $t('actions.update') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max disabled:opacity-50 disabled:cursor-not-allowed"
               :aria-label="$t('actions.copy')"
+              :disabled="disableCopy"
               @click="$emit('copy', encounter)"
             >
               <Icon
@@ -74,7 +82,7 @@ const profile = useProfileStore()
     <RouteLink
       :url="encounterUrl(encounter)"
       class="flex flex-col gap-4 justify-between px-6 pb-8 pt-2 cursor-pointer grow !max-w-full"
-      :class="{ 'pt-8': encounter.campaign && profile.data && !isAdmin(encounter.campaign as Campaign, profile.data.id) }"
+      :class="{ 'pt-8': encounter.campaign && profile.data && !isAdmin(encounter.campaign, profile.data.id) }"
       :style="false"
     >
       <h2>

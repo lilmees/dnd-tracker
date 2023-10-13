@@ -44,13 +44,13 @@ async function deleteCampaigns (): Promise<void> {
 <template>
   <NuxtLayout shadow>
     <div v-if="!store.error">
-      <div class="pt-5 pb-10 flex flex-wrap gap-4 justify-between items-center">
+      <div class="pb-10 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
         </h1>
         <div class="flex gap-2">
           <button
-            class="btn-primary tracker-shadow-pulse"
+            class="btn-primary"
             :aria-label="$t('pages.campaigns.add')"
             :disabled="store.loading"
             @click="isOpen = true"

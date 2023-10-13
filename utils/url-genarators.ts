@@ -10,16 +10,11 @@ export function campaignUrl (campaign: Campaign, type: CampaignPageType): string
   return `/campaigns/${campaign.id}${title === '-' ? '-campaign' : `-${title}`}/${type}`
 }
 
-export function backUrl (campaign: Campaign | number | undefined): string {
+export function backUrl (campaign: Campaign | undefined): string {
   if (!campaign) {
     return '/encounters'
   }
+  const title: string = campaign.title.replace(/[^a-zA-Z0-9]+/g, '-')
 
-  const isCampaign: boolean = typeof campaign === 'object'
-  const id: number = isCampaign ? (campaign as Campaign).id : campaign as number
-  const title: string = isCampaign
-    ? (campaign as Campaign).title.replace(/[^a-zA-Z0-9]+/g, '-')
-    : 'campaign'
-
-  return `/campaigns/${id}${title === '-' ? '-campaign' : `-${title}`}`
+  return `/campaigns/${campaign.id}${title === '-' ? '-campaign' : `-${title}`}`
 }

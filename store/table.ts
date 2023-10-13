@@ -39,7 +39,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       throw error
     }
 
-    if (typeof enc.campaign !== 'number' && profile.data && !isMember(enc.campaign, profile.data.id)) {
+    if (profile.data && !isMember(enc.campaign, profile.data.id)) {
       navigateTo(localePath('/not-member'))
     }
 

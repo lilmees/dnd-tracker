@@ -61,14 +61,18 @@ function resetState (): void {
 <template>
   <NuxtLayout shadow>
     <div v-if="!store.error">
-      <div class="pt-5 pb-10 flex justify-between gap-4 items-center flex-wrap">
+      <div class="pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
+          <span class="text-[10px]">
+            ({{ $t('components.limitCta.max', { number: store.max }) }})
+          </span>
         </h1>
         <div class="flex gap-2">
           <button
-            class="btn-primary tracker-shadow-pulse"
+            class="btn-primary"
             :aria-label="$t('pages.encounters.add')"
+            :disabled="store.max <= store.data.length"
             @click="isOpen = true"
           >
             {{ $t('pages.encounters.add') }}
@@ -141,22 +145,16 @@ function resetState (): void {
             </button>
           </div>
         </template>
+        <LimitCta v-else-if="store.max <= store.data.length" class="mb-10" />
         <div
-          v-for="(group, index) in Object.values(store.sortedEncounters)"
+          v-for="(group, name, index) in store.sortedEncounters"
           :key="index"
           class="space-y-4 pb-10"
         >
-          <EncounterCampaignHeader
-            v-if="Object.keys(store.sortedEncounters)[index] !== '0'"
-            :campaign="
-              typeof group[0].campaign === 'object'
-                ? (group[0].campaign as Campaign).id
-                : group[0].campaign
-            "
-          />
+          <EncounterCampaignHeader v-if="group.campaign" :campaign="group.campaign" />
           <div class="flex flex-wrap gap-4 items-start">
             <div
-              v-for="encounter in group"
+              v-for="encounter in group.encounters"
               :key="encounter.id"
               class="relative"
             >
@@ -171,6 +169,7 @@ function resetState (): void {
               />
               <EncounterCard
                 :encounter="encounter"
+                :disable-copy="store.max <= store.data.length"
                 @update="(v: Encounter) => {
                   selected = [v];
                   isUpdating = true

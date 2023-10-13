@@ -510,6 +510,11 @@
           "title": "Ownership has been successfully transferred to {username}"
         }
       }
+    },
+    "limitCta": {
+      "text": "You've reached the limit of your current plan. Unlock more features and benefits by upgrading now. Don't worry if you don't see your content it's not removed",
+      "cta": "Upgrade now",
+      "max": "Max {number} created by yourself or your campaign"
     }
   }
 }
