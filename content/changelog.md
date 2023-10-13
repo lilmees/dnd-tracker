@@ -2,6 +2,51 @@
 ---
 changelog: [
   {
+    version: "v1.0.14",
+    date: "2023-10-13",
+    features: [
+      {
+        "title": "New",
+        "items": [
+          { "text": "New campaign pages: content, settings & danger zone" },
+          { "text": "Added team functionality to campaigns" },
+          { "text": "Changelog page" },
+          { "text": "Feature request page" },
+          { "text": "Badges on profile" },
+          { "text": "Subscribe success page" },
+          { "text": "Updated pricing page" }
+        ]
+      },
+      {
+        "title": "Improvements",
+        "items": [
+          { "text": "Updated styling" },
+          { "text": "More subtle animations" },
+          { "text": "Coupon code for subscriptions" },
+          { "text": "SEO and accessibility changes" },
+          { "text": "When a user deletes a profile, also cancel the subscription" },
+          { "text": "Changes for faster loading of encounters" },
+          { "text": "Links in encounters now get loaded in an iframe" },
+          { "text": "HP and AC override updated" },
+          { "text": "Updated the way mails get sent" },
+          { "text": "Updated create encounter/campaign CTA" }
+        ]
+      },
+      {
+        "title": "Bug fixes",
+        "items": [
+          { "text": "Hydration error" },
+          { "text": "Avatars would not load anymore" },
+          { "text": "When the navigation bar goes off-screen, the dropdowns did not close" },
+          { "text": "Could not add 0 as initiative" },
+          { "text": "Active links are purple in the navigation bar even when the background is purple" },
+          { "text": "Can't add a link to homebrew on the campaign page" },
+          { "text": "Build edit menu disappeared when pressing the button instead of hovering" }
+        ]
+      }
+    ]
+  },
+  {
     version: "v1.0.13",
     date: "2023-09-08",
     features: [
