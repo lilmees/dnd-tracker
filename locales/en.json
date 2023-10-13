@@ -99,11 +99,19 @@
         "item1": "Live updating between different devices",
         "item2": "We are constantly working to optimize the product",
         "item3": "Everything in 1 convenient place for the DM",
-        "item4": "Integrated dice roller",
+        "item4": "Collaborative Dungeon Mastering",
         "item5": "Plenty of information you can get your hands on",
         "item6": "Attractive dark mode design for all vampires among us"
       },
       "textBlock2": {
+        "title": "Collaborative Dungeon Mastering 🧙‍♂️🧙",
+        "text": "Join forces with fellow Dungeon Masters in a realm where creativity knows no bounds. Our platform allows you to seamlessly collaborate on your Dungeons & Dragons campaigns, fostering a dynamic and immersive experience. Whether you're crafting epic adventures, creating homebrew, or co-managing games, our system brings DMs together, making your campaigns more thrilling and memorable."
+      },
+      "textBlock3": {
+        "title": "Enhanced Engagement 🧠",
+        "text": "Elevate your experience with our unique functionality. We've integrated a feature that enables you to attach a link to a specific encounter player. When the linked website supports it, it opens right within an iframe, so you don't have to switch between all your tabs. This keeps you engaged and immersed in the game, allowing for quick reference to monsters, player stats, or even a funny cat video."
+      },
+      "textBlock4": {
         "title": "Weird stuff 🐛",
         "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
       }
@@ -325,10 +333,6 @@
     },
     "linkModal": {
       "placeholder": "Amidst the realm of dragons and dungeons, a hero's legend remains untold, as the user has not yet linked their character's saga."
-    },
-    "homeDiceRolling": {
-      "title": "Roll with ease",
-      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
     },
     "inputs": {
       "emailLabel": "Email address",

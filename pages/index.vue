@@ -68,25 +68,52 @@ if (process.client) {
             <div class="abolsute inset-0 z-[-0] fancy-shadow" />
             <EncounterHeader />
             <EncounterTable />
-            <EncounterOptions />
+            <EncounterOptions class="hidden md:flex" />
+          </div>
+          <EncounterOptions class="md:hidden" />
+        </div>
+        <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
+          <div class="flex flex-col justify-center items-center h-full">
+            <NuxtImg
+              src="/team.png"
+              alt="Dragon on hoard"
+              sizes="sm:1000px md:1000px lg:1000px"
+              format="webp"
+              provider="imagekit"
+              width="500"
+              class="rounded-lg tracker-shadow-pulse"
+            />
+          </div>
+          <div class="flex flex-col justify-center h-full">
+            <TitleText
+              :title="$t('pages.home.textBlock2.title')"
+              :text="$t('pages.home.textBlock2.text')"
+            />
           </div>
         </div>
-        <div class="container grid md:grid-cols-2 gap-10">
-          <HomeDiceRolling />
-          <NuxtImg
-            src="/dragon_hoard.webp"
-            alt="Dragon on hoard"
-            sizes="sm:500px md:500px lg:500px"
-            format="webp"
-            provider="imagekit"
-            width="500"
-            class="mx-auto"
-          />
+        <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
+          <div class="flex flex-col justify-center h-full">
+            <TitleText
+              :title="$t('pages.home.textBlock3.title')"
+              :text="$t('pages.home.textBlock3.text')"
+            />
+          </div>
+          <div class="flex flex-col justify-center items-center h-full">
+            <NuxtImg
+              src="/link.png"
+              alt="Dragon on hoard"
+              sizes="sm:1000px md:1000px lg:1000px"
+              format="webp"
+              provider="imagekit"
+              width="500"
+              class="rounded-lg tracker-shadow-pulse"
+            />
+          </div>
         </div>
         <TitleText
           center
-          :title="$t('pages.home.textBlock2.title')"
-          :text="$t('pages.home.textBlock2.text')"
+          :title="$t('pages.home.textBlock4.title')"
+          :text="$t('pages.home.textBlock4.text')"
         />
       </div>
     </div>

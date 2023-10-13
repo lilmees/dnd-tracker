@@ -99,11 +99,19 @@
         "item1": "Live synchronisatie tussen verschillende toestellen",
         "item2": "Regelmatige optimalisaties en nieuwe functies",
         "item3": "Alles op één handige plaats voor de GM",
-        "item4": "Inclusief een dobbelsteenroller",
+        "item4": "Samenwerking in Dungeon Mastering",
         "item5": "Integratie van official content met de mogelijkheid om je eigen homebrew toe te voegen",
         "item6": "Aantrekkelijk dark mode design"
       },
       "textBlock2": {
+        "title": "Samenwerking in Dungeon Mastering 🧙‍♂️🧙",
+        "text": "Verenig krachten met mede Dungeon Masters in een rijk waar creativiteit geen grenzen kent. Ons platform stelt je in staat om naadloos samen te werken aan je Dungeons & Dragons campagnes, waardoor een dynamische en meeslepende ervaring ontstaat. Of je nu epische avonturen smeedt, eigen homebrew creëert, of samen games beheert, ons systeem brengt DM's samen en maakt jouw campagnes nog spannender en gedenkwaardiger."
+      },
+      "textBlock3": {
+        "title": "Verbeterde betrokkenheid 🧠",
+        "text": "Verrijk je ervaring met onze unieke functionaliteit. We hebben een functie geïntegreerd waarmee je een link kunt toevoegen aan een specifieke encounter speler. Wanneer de gelinkte website dit ondersteunt, opent deze direct binnen een iframe, zodat je niet hoeft te zoeken tussen al je tabbladen. Dit houdt je betrokken en ondergedompeld in het spel en biedt de mogelijkheid voor een snelle raadpleging van monsters, spelerstatistieken, of zelfs een grappige kattenvideo."
+      },
+      "textBlock4": {
         "title": "Vreemde gebeurtenissen 🐛",
         "text": "Doordat deze DnD Tracker nog in zijn kinderschoenen staat, kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet om ons iets te laten weten, zodat we deze snel kunnen oplossen."
       }
@@ -325,10 +333,6 @@
     },
     "linkModal": {
       "placeholder": "Te midden van het rijk der draken en kerkerdoolhoven blijft de legende van een held onverteld, omdat de gebruiker de saga van hun personage nog niet heeft gelinkt."
-    },
-    "homeDiceRolling": {
-      "title": "Rollen met gemak",
-      "text": "Een digitale dobbelsteenroller is een handig hulpmiddel waarmee gebruikers gemakkelijk meerdere dobbelstenen van hetzelfde type kunnen rollen. Met zijn snelle en gemakkelijke rolmogelijkheden is het een essentieel hulpmiddel voor elke tabletop gamer. Voor dungeon masters kan het hun werkproces aanzienlijk versnellen, zodat ze zich meer kunnen richten op het vertellen van verhalen en het spelen."
     },
     "inputs": {
       "emailLabel": "E-mail adres",
