@@ -82,7 +82,7 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
         <h2>
           {{ $t('pages.campaign.settings.access') }}
           <span class="text-[10px]">
-            (max 10)
+            (max {{ store.max }})
           </span>
         </h2>
       </div>
@@ -154,7 +154,7 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
           <button
             class="btn-black disabled:cursor-not-allowed"
             :aria-label="$t('pages.campaign.settings.add')"
-            :disabled="isLoading || store.loading || members.length >= 10"
+            :disabled="isLoading || store.loading || members.length >= store.max"
             @click="isOpen = true"
           >
             {{ $t('pages.campaign.settings.add') }}

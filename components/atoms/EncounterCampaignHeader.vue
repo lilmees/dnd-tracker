@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { campaignUrl } from '@/utils/url-genarators'
 
-const props = defineProps<{ campaign: Campaign | number }>()
+const props = defineProps<{ campaign: number }>()
 
 const store = useCampaignsStore()
 const route = useRoute()
 
 const cam = ref<Campaign | null>(null)
 
-// if there is only the id of the campaign then fetch the information
 if (props.campaign) {
-  if (typeof props.campaign !== 'object') {
-    cam.value = await store.getCampaignById(props.campaign)
-  } else {
-    cam.value = props.campaign as Campaign
-  }
+  cam.value = await store.getCampaignById(props.campaign)
 }
 
 </script>

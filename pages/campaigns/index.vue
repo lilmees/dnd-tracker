@@ -44,15 +44,15 @@ async function deleteCampaigns (): Promise<void> {
 <template>
   <NuxtLayout shadow>
     <div v-if="!store.error">
-      <div class="pt-5 pb-10 flex flex-wrap gap-4 justify-between items-center">
+      <div class="pb-10 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
         </h1>
         <div class="flex gap-2">
           <button
-            class="btn-primary tracker-shadow-pulse"
+            class="btn-primary"
             :aria-label="$t('pages.campaigns.add')"
-            :disabled="store.loading"
+            :disabled="store.loading || (store.campaigns && store.max <= store.campaigns.length)"
             @click="isOpen = true"
           >
             {{ $t('pages.campaigns.add') }}
@@ -126,6 +126,10 @@ async function deleteCampaigns (): Promise<void> {
             </button>
           </div>
         </template>
+        <LimitCta
+          v-else-if="store.campaigns && store.max <= store.campaigns.length"
+          class="mb-10"
+        />
         <div class="flex flex-wrap gap-4 items-start">
           <div
             v-for="campaign in store.sortedCampaigns"

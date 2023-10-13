@@ -70,7 +70,7 @@ function resetState (): void {
             v-tippy="{ content: $t('actions.add') }"
             :aria-label="$t('actions.add')"
             class="disabled:opacity-40 disabled:cursor-not-allowed"
-            :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '')"
+            :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '') || encStore.max <= encStore.data.length"
             @click="isCreatingEncounter = true"
           >
             <Icon
@@ -86,25 +86,28 @@ function resetState (): void {
         >
           <SkeletonEncounterCard v-for="i in 4" :key="i" />
         </div>
-        <div
+        <template
           v-else-if="store.encounters.length"
-          class="flex flex-wrap gap-4 items-start"
         >
-          <EncounterCard
-            v-for="encounter in store.encounters"
-            :key="encounter.id"
-            :encounter="encounter"
-            @update="(v: Encounter) => {
-              selected = [v];
-              isUpdating = true
-            }"
-            @remove="(v: Encounter) => {
-              selected = [v];
-              needConfirmation = true
-            }"
-            @copy="copyEncounter"
-          />
-        </div>
+          <LimitCta v-if="encStore.max <= encStore.data.length" class="mb-10" />
+          <div class="flex flex-wrap gap-4 items-start">
+            <EncounterCard
+              v-for="encounter in store.encounters"
+              :key="encounter.id"
+              :encounter="encounter"
+              :disable-copy="encStore.max <= encStore.data.length"
+              @update="(v: Encounter) => {
+                selected = [v];
+                isUpdating = true
+              }"
+              @remove="(v: Encounter) => {
+                selected = [v];
+                needConfirmation = true
+              }"
+              @copy="copyEncounter"
+            />
+          </div>
+        </template>
         <NoContent v-else content="encounters" icon="ri:table-line" />
       </div>
     </div>

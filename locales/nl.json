@@ -510,6 +510,11 @@
           "title": "De eigendom is succesvol overgedragen aan {username}"
         }
       }
+    },
+    "limitCta": {
+      "text": "Je hebt de limiet van je huidige abonnement bereikt. Ontgrendel meer functies en voordelen door nu te upgraden. Maak je geen zorgen als je je inhoud niet ziet, deze is niet verwijderd",
+      "cta": "Nu upgraden",
+      "max": "Max {number} gecreëerd door jezelf of je campagne"
     }
   }
 }

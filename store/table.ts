@@ -1,5 +1,6 @@
 import logRocket from 'logrocket'
 import { isMember } from '@/utils/permission-helpers'
+import { isMedior } from '@/utils/subscription-helpers'
 
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
@@ -39,7 +40,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       throw error
     }
 
-    if (typeof enc.campaign !== 'number' && profile.data && !isMember(enc.campaign, profile.data.id)) {
+    if (profile.data && !isMember(enc.campaign, profile.data.id)) {
       navigateTo(localePath('/not-member'))
     }
 
@@ -49,7 +50,9 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     enc.rows = useIndexCorrecter(enc.rows as Row[])
 
-    subscribeEncounterChanges()
+    if (profile.data && isMedior(profile.data)) {
+      subscribeEncounterChanges()
+    }
 
     encounter.value = data
     isLoading.value = false

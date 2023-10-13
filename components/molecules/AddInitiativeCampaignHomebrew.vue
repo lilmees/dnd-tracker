@@ -11,17 +11,6 @@ const selected = ref<Homebrew[]>([])
 const summoner = ref<Option | null>(null)
 const search = ref<string>('')
 
-const id = computed<number | undefined>(() => {
-  if (!store.encounter?.campaign) {
-    return undefined
-  }
-
-  return typeof store.encounter.campaign === 'object'
-    ? store.encounter.campaign.id
-    : store.encounter.campaign
-}
-)
-
 const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
 
 const summonOptions = computed<Option[]>(() => {
@@ -57,8 +46,8 @@ watch(() => summon.value, () => {
 })
 
 onMounted(async () => {
-  if (id.value) {
-    homebrews.value = await homebrew.getHomebrewByCampaignId(id.value)
+  if (store.encounter?.campaign?.id) {
+    homebrews.value = await homebrew.getHomebrewByCampaignId(store.encounter.campaign.id)
   } else if (store.isSandbox) {
     homebrews.value = homebrew.sandbox
   }
@@ -129,7 +118,7 @@ function selectedSummoner (value: unknown): void {
       }"
       :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
-      :disabled="!id && !store.isSandbox"
+      :disabled="!store.encounter?.campaign?.id && !store.isSandbox"
       @click="isOpen = true"
     >
       <span class="md:hidden">
@@ -247,7 +236,9 @@ function selectedSummoner (value: unknown): void {
         </div>
       </div>
       <div v-else-if="homebrews && !homebrews.length">
-        {{ $t('homebrew.none') }}
+        <span class="font-bold">
+          {{ $t('general.noContent.title', { content: 'Homebrew' }) }}
+        </span>
       </div>
       <div v-else class="pt-20">
         <div class="loader !relative" />

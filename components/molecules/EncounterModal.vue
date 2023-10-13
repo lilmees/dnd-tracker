@@ -54,9 +54,7 @@ watch(() => campaigns.campaigns, (v) => {
 
 // set the values from campaign when in update mode
 whenever(() => props.update, () => {
-  const camp = typeof props.encounter?.campaign !== 'object'
-    ? props.encounter?.campaign
-    : props.encounter?.campaign?.id
+  const camp = props.encounter?.campaign?.id
 
   form.value.title = props.encounter?.title || ''
   form.value.background = props.encounter?.background || '#7333E0'

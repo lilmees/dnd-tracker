@@ -1,17 +1,27 @@
 import logRocket from 'logrocket'
+import { sortEncountersByCampaign, sortEncountersByUserCreated } from '@/utils/sort'
+import { getMax } from '@/utils/subscription-helpers'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
-  const user = useSupabaseUser()
+  const profile = useProfileStore()
 
   const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
 
-  const sortedEncounters = computed<{ [key: string]: Encounter[] } | null>(() => data.value
-    ? useEncountersByTeam(data.value)
-    : null
-  )
+  const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
+
+  const restrictionEncounters = computed<Encounter[]>(() => {
+    if (!profile.data) { return [] }
+    const { userArr, nonUserArr } = sortEncountersByUserCreated(data.value, profile.data.id)
+
+    return [...userArr.splice(0, max.value), ...nonUserArr]
+  })
+
+  const sortedEncounters = computed<SortedCampaignEncounter>(() => {
+    return sortEncountersByCampaign(restrictionEncounters.value)
+  })
 
   async function fetch (): Promise<void> {
     loading.value = true
@@ -67,21 +77,21 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   }
 
   async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<Encounter|undefined> {
-    if (!user.value) {
+    if (!profile.data) {
       return
     }
 
     let encounter: UpdateEncounter = {
       ...enc,
       title: `copy ${enc.title}`.slice(0, 30),
-      created_by: user.value.id,
+      created_by: profile.data.id,
       campaign: undefined
     }
 
     if (enc.campaign) {
       encounter = {
         ...encounter,
-        campaign: typeof enc.campaign === 'object' ? enc.campaign.id : enc.campaign as number
+        campaign: enc.campaign.id
       }
     }
 
@@ -121,7 +131,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       .from('initiative_sheets')
       .update(encounter as never)
       .eq('id', id)
-      .select('*')
+      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
 
     if (err) {
       throw err
@@ -140,7 +150,9 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     loading,
     error,
     data,
+    restrictionEncounters,
     sortedEncounters,
+    max,
     fetch,
     getEncountersByCampaign,
     addEncounter,

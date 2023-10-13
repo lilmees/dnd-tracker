@@ -1,24 +1,34 @@
 import logRocket from 'logrocket'
+import { sortCampaignsByCreatedAt, sortCreatedAt } from '@/utils/sort'
+import { getMax } from '@/utils/subscription-helpers'
 
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
+  const profile = useProfileStore()
 
   const loading = ref<boolean>(true)
-  const error = ref<string | null>(null)
-  const campaigns = ref<Campaign[] | null>(null)
-  const currentCampaign = ref<Campaign | null>(null)
-  const currentCampaignEncounters = ref<Encounter[]>([])
+  const error = ref<string>()
+  const campaigns = ref<Campaign[]>()
+
+  const max = computed<number>(() => getMax('campaign', profile.data?.subscription_type || 'free'))
+
+  const restrictionCampaigns = computed<Campaign[] | null>(() => {
+    if (!profile.data || !campaigns.value) { return null }
+
+    const { userArr, nonUserArr } = sortCampaignsByCreatedAt(campaigns.value, profile.data.id)
+
+    return [...userArr.splice(0, max.value), ...nonUserArr]
+  })
 
   const sortedCampaigns = computed<Campaign[] | null>(() => {
-    return campaigns.value
-      ? campaigns.value
-        .sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
+    return restrictionCampaigns.value
+      ? sortCreatedAt(restrictionCampaigns.value) as Campaign[]
       : null
   })
 
   async function fetch (): Promise<void> {
     loading.value = true
-    error.value = null
+    error.value = undefined
 
     try {
       const { data, error: errorMessage } = await supabase
@@ -123,8 +133,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     error,
     campaigns,
     sortedCampaigns,
-    currentCampaign,
-    currentCampaignEncounters,
+    max,
     fetch,
     getCampaignById,
     addCampaign,

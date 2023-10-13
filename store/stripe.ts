@@ -74,8 +74,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         description: t('pages.pricing.pro'),
         prices: [3, 30],
         items: [
-          { label: t('pages.pricing.encounters', { number: 'infinite' }), icon: 'check' },
-          { label: t('pages.pricing.campaigns', { number: 'infinite' }), icon: 'check' },
+          { label: t('pages.pricing.encounters', { number: 300 }), icon: 'check' },
+          { label: t('pages.pricing.campaigns', { number: 25 }), icon: 'check' },
           { label: t('pages.pricing.multiple'), icon: 'check' },
           { label: t('pages.pricing.live'), icon: 'check' },
           { label: t('pages.pricing.update'), icon: 'check' }
