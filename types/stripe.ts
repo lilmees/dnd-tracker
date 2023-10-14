@@ -19,3 +19,20 @@ interface Stripe {
   stripe_last_event: string
   stripe_trail_ends_at: string
 }
+
+interface StripeProduct {
+  name: string
+  prices: number[]
+  monthId: string
+  yearId: string
+}
+
+interface ProductPricing {
+  type: StripeSubscriptionType
+  title: string
+  description: string
+  items: { label: string, icon: string }[]
+  prices?: number[]
+  monthId?: string
+  yearId?: string
+}
