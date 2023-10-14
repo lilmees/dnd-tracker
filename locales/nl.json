@@ -438,7 +438,7 @@
     },
     "confirmationModal": {
       "title": "Verwijder bevestiging",
-      "text": "Ben je zeker dat je {title} wilt verwijderen? Type {title} in het invulveld en duw op verwijderen"
+      "text": "Om {title} te verwijderen, typt u het woord DELETE in het onderstaande veld"
     },
     "noteModal": {
       "add": "Notitie creëren",
