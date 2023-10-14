@@ -30,9 +30,16 @@ export default defineEventHandler(async (event) => {
     stripe_trail_ends_at: subscription.trail_end,
     stripe_ends_at: subscription.ended_at,
     stripe_started_at: subscription.start_date,
-    subscription_type: cancel ? 'free' : getSubscriptionType(subscription.items?.data[0].plan.id),
+    subscription_type: 'free',
     paid_subscription_active: !cancel,
     subscription_id: cancel ? null : subscription.id
+  }
+
+  if (!cancel) {
+    const products = await $fetch('/api/stripe/products')
+    const subType = getSubscriptionType(products, subscription.items?.data[0].plan.id)
+
+    stripeData.subscription_type = subType
   }
 
   await client
@@ -43,20 +50,19 @@ export default defineEventHandler(async (event) => {
   return `handled ${body.type}`
 })
 
-function getSubscriptionType (id?: string): StripeSubscriptionType {
-  const config = useRuntimeConfig()
-
+function getSubscriptionType (products: StripeProduct[], id?: string): StripeSubscriptionType {
   if (!id) {
     return 'free'
   }
+  let sub: StripeSubscriptionType = 'free'
 
-  if (id === config.public.stripeMediorMonthly || id === config.public.stripeMediorYearly) {
-    return 'medior'
-  } else if (id === config.public.stripeProMonthly || id === config.public.stripeProYearly) {
-    return 'pro'
-  } else {
-    return 'free'
-  }
+  products.forEach((product) => {
+    if (product.monthId === id || product.yearId === id) {
+      sub = product.name.replace(' plan', '').toLowerCase() as StripeSubscriptionType
+    }
+  })
+
+  return sub
 }
 
 function correctWebhookType (type: StripeWebhookType): boolean {

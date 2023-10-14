@@ -2,11 +2,13 @@
 const emit = defineEmits(['subscribe', 'free'])
 const props = withDefaults(
   defineProps<{
-  product: Pricing,
+  product: ProductPricing,
+  loading?: boolean,
   current?: boolean,
   yearly?: boolean
   popular?: string
 }>(), {
+    loading: false,
     current: false,
     yearly: false,
     popular: undefined
@@ -47,16 +49,17 @@ function subscribe () {
       {{ product.description }}
     </p>
     <div class="flex items-baseline my-8">
-      <span class="mr-2 text-5xl font-extrabold">
+      <span v-if="product.prices" class="mr-2 text-5xl font-extrabold">
         {{ product.prices[yearly && product.prices.length > 1 ? 1 : 0] }}€
       </span>
+      <div v-else-if="loading" class="w-16 h-12 rounded-lg bg-tracker animate-pulse" />
       <span>/{{ $t(yearly ? 'general.year' : 'general.month') }}</span>
     </div>
     <button
       class="btn-primary w-full"
       :class="current ? 'btn-secondary' : 'btn-primary'"
       :aria-label="current ? $t('components.pricingCard.current') : $t('components.pricingCard.start')"
-      :disabled="current"
+      :disabled="current || loading"
     >
       {{ current ? $t('components.pricingCard.current') : $t('components.pricingCard.start') }}
     </button>

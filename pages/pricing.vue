@@ -66,6 +66,7 @@ async function handleFreeTier (): Promise<void> {
           v-for="(product, i) in stripe.products"
           :key="product.title"
           :product="product"
+          :loading="stripe.loading"
           :yearly="isYearly"
           :popular="i === 1 ? $t('pages.pricing.popular') : undefined"
           :current="product.type === profile?.data?.subscription_type"
