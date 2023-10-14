@@ -438,7 +438,7 @@
     },
     "confirmationModal": {
       "title": "Delete confirmation",
-      "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
+      "text": "To delete {title}, type the word DELETE into the field below"
     },
     "noteModal": {
       "add": "Create note",
