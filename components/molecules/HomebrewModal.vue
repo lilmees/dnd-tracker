@@ -276,7 +276,7 @@ function closeModal (): void {
           name="actions"
           :label="$t('components.inputs.actionsLabel')"
           :add-label="$t('components.inputs.addActionLabel')"
-          :max="10"
+          :max="20"
           :min="0"
           :remove-control="true"
         >
