@@ -10,13 +10,12 @@ export default defineEventHandler(async (event) => {
   const price = await stripe.prices.retrieve(body.lookup)
 
   let customer
+  let update = {}
 
   if (!body.customer) {
     customer = await stripe.customers.create({ email: body.user.email })
 
-    await client.from('profiles')
-      .update({ stripe_id: customer.id } as never)
-      .eq('id', body.user.id)
+    update = { stripe_id: customer.id }
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -24,10 +23,14 @@ export default defineEventHandler(async (event) => {
     billing_address_collection: 'auto',
     line_items: [{ price: price.id, quantity: 1 }],
     mode: 'subscription',
-    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
     customer: body.customer || customer?.id
   })
+
+  await client.from('profiles')
+    .update({ ...update, stripe_session_id: session.id } as never)
+    .eq('id', body.user.id)
 
   return {
     url: session.url
