@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { contrastColor } from '@/utils/color-helpers'
 
 const emit = defineEmits(['close', 'added', 'updated'])
 const props = withDefaults(
@@ -7,7 +8,7 @@ const props = withDefaults(
     open: boolean,
     encounter?: Encounter,
     campaignId?: number,
-    update?: boolean,
+    update?: boolean
   }>(), {
     encounter: undefined,
     campaignId: undefined,
@@ -53,9 +54,7 @@ watch(() => campaigns.campaigns, (v) => {
 
 // set the values from campaign when in update mode
 whenever(() => props.update, () => {
-  const camp = typeof props.encounter?.campaign !== 'object'
-    ? props.encounter?.campaign
-    : props.encounter?.campaign?.id
+  const camp = props.encounter?.campaign?.id
 
   form.value.title = props.encounter?.title || ''
   form.value.background = props.encounter?.background || '#7333E0'
@@ -83,7 +82,7 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
     const enc = await store.updateEncounter(
-      { ...data, color: useContrastColor(data.background) },
+      { ...data, color: contrastColor(data.background) },
       props.encounter.id
     )
 
@@ -99,7 +98,7 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       rows: [],
       created_by: user.value.id,
       admins: [user.value.id],
-      color: useContrastColor(data.background),
+      color: contrastColor(data.background),
       activeIndex: 0
     }) as AddEncounter
 
@@ -118,7 +117,7 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal v-if="open" @close="resetState">
+  <Modal :open="open" @close="resetState">
     <template #header>
       <h2>
         {{ $t(`components.encounterModal.${update ? 'update' : 'add'}`) }}

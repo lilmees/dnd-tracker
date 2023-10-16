@@ -57,7 +57,7 @@ function resetState (): void {
         aria-hidden="true"
       />
     </button>
-    <Modal v-if="isOpen && table.encounter" @close="resetState">
+    <Modal :open="isOpen && !!table.encounter" @close="resetState">
       <template #header>
         <h2>{{ $t('components.visualOptions.tooltip') }}</h2>
       </template>

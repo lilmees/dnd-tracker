@@ -137,7 +137,7 @@ function scrollToTop (): void {
         aria-hidden="true"
       />
     </button>
-    <FullScreenSearch v-if="isOpen" @close="reset">
+    <FullScreenSearch :open="isOpen" @close="reset">
       <div class="flex flex-col max-h-screen pt-20 pb-6">
         <div
           class="flex items-start gap-4 px-1"

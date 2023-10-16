@@ -1,10 +1,13 @@
 import logRocket from 'logrocket'
+import { isMember } from '@/utils/permission-helpers'
+import { getMax } from '@/utils/subscription-helpers'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
-  const user = useSupabaseUser()
+  const supabase = useSupabaseClient()
   const store = useCampaignsStore()
   const homebrew = useHomebrewStore()
   const encounterStore = useEncountersStore()
+  const profile = useProfileStore()
   const toast = useToastStore()
   const localePath = useLocalePath()
 
@@ -13,6 +16,12 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const campaign = ref<Campaign | null>(null)
   const encounters = ref<Encounter[]>([])
 
+  const activeModal = ref<HomebrewModal>()
+  const activeHomebrew = ref<Homebrew>()
+  const activeIndex = ref<number>()
+
+  const max = computed<number>(() => getMax('team', profile.data?.subscription_type || 'free'))
+
   async function getCampaignInfo (id: number): Promise<void> {
     loading.value = true
     error.value = null
@@ -20,12 +29,13 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     try {
       campaign.value = await store.getCampaignById(id)
 
-      if (user.value && !campaign.value.admins.includes(user.value.id)) {
-        navigateTo(localePath('/campaigns'))
+      if (profile.data && !isMember(campaign.value, profile.data.id)) {
+        navigateTo(localePath('/not-member'))
       }
 
       useHead({ title: campaign.value.title })
-      encounters.value = await encounterStore.getEncountersByCampaign(campaign.value.id)
+      await encounterStore.fetch()
+      encounters.value = encounterStore.restrictionEncounters.filter(enc => enc.campaign?.id === campaign.value!.id)
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
@@ -79,14 +89,130 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
+  async function findJoinCampaignToken (token: string): Promise<CheckJoinCampaign|undefined> {
+    const { data, error } = await supabase
+      .from('join_campaign')
+      .select('*, user(id, created_at, username, name, avatar, email, badges), campaign(title, id)')
+      .eq('token', token)
+
+    if (error) {
+      throw error
+    }
+    if (data.length) {
+      return data[0]
+    }
+  }
+
+  async function createJoinCampaignToken (join: CreateJoinCampaign): Promise<void> {
+    const { data, error } = await supabase
+      .from('join_campaign')
+      .insert([join as never])
+      .select('*, user(id, created_at, username, name, avatar, email, badges)')
+
+    if (error) {
+      throw error
+    }
+    if (data && campaign.value) {
+      campaign.value.join_campaign?.push(data[0] as JoinCampaign)
+    }
+  }
+
+  async function deleteJoinCampaignToken (id: number): Promise<void> {
+    const { error } = await supabase
+      .from('join_campaign')
+      .delete()
+      .eq('id', id)
+      .select('*')
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.join_campaign) {
+      campaign.value.join_campaign = campaign.value.join_campaign.filter(h => h.id !== id)
+    }
+  }
+
+  async function addCampaignTeamMember (member: AddTeamMember, id?: number): Promise<void> {
+    const { data, error } = await supabase
+      .from('team')
+      .insert([member as never])
+      .select('*, user(id, created_at, username, name, avatar, email, badges)')
+
+    if (error) {
+      throw error
+    }
+
+    if (id) {
+      await deleteJoinCampaignToken(id)
+    }
+
+    if (data && campaign.value) {
+      campaign.value.team?.push(data[0] as TeamMember)
+    }
+  }
+
+  async function deleteCampaignTeamMember (id: number): Promise<void> {
+    const { error } = await supabase
+      .from('team')
+      .delete()
+      .eq('id', id)
+      .select('*')
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.team) {
+      campaign.value.team = campaign.value.team.filter(h => h.id !== id)
+    }
+  }
+
+  async function updateCampaignTeamMember (member: UpdateTeamMember, id: number): Promise<void> {
+    const { error } = await supabase
+      .from('team')
+      .update(member as never)
+      .eq('id', id)
+
+    if (error) {
+      throw error
+    }
+
+    if (campaign.value?.team) {
+      const index = campaign.value.team.findIndex(e => e.id === id)
+
+      campaign.value.team[index] = {
+        ...campaign.value.team[index],
+        ...member
+      }
+    }
+  }
+
+  function resetActiveState (): void {
+    activeIndex.value = undefined
+    activeHomebrew.value = undefined
+    activeModal.value = undefined
+  }
+
   return {
     loading,
     error,
     campaign,
     encounters,
+    activeModal,
+    activeHomebrew,
+    activeIndex,
+    max,
     getCampaignInfo,
     addHomebrew,
     updateHomebrew,
-    removeHomebrew
+    removeHomebrew,
+    resetActiveState,
+    findJoinCampaignToken,
+    createJoinCampaignToken,
+    deleteJoinCampaignToken,
+    addCampaignTeamMember,
+    deleteCampaignTeamMember,
+    updateCampaignTeamMember
   }
 })

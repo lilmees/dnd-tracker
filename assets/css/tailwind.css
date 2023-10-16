@@ -4,8 +4,47 @@
 
 @layer components {
   .btn {
-    @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold;
-    @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed;
+    @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold transition-all;
+    @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
+
+@layer utilities {
+  .fancy-shadow {
+    background:conic-gradient(
+      from 230.29deg at 51.63% 52.16%, 
+      rgba(217, 38, 170, 0.3) 0deg,
+      rgba(115, 51, 224, 0.3) 67.5deg,
+      rgba(108, 39, 157, 0.3) 198.75deg, 
+      rgba(24, 38, 163, 0.3) 251.25deg, 
+      rgba(115, 51, 224, 0.3) 301.88deg, 
+      rgba(105, 30, 255, 0.3) 360deg
+    );
+    @apply w-full h-full absolute blur-[200px] -top-10 left-0 translate-x-0;
+  }
+
+  .rotates {
+    animation: rotate 20s infinite
+  }
+
+  .float {
+    animation: float 6s ease-in-out infinite
+  }
+
+  .wave {
+    animation-name: wave;
+    animation-duration: 2.5s;
+    animation-iteration-count: 2;
+    transform-origin: 70% 70%;
+    display: inline-block;
+  }
+
+  .tracker-shadow-pulse {
+    animation: pulsate-shadow 2s ease-in-out infinite;
+  }
+
+  .visibility-pulse {
+    animation: pulsate-opacity 2s ease-in-out infinite;
   }
 }
 
@@ -94,14 +133,6 @@
 
   kbd {
     @apply border-2 rounded px-1 py-px;
-  }
-
-  .tracker-shadow-pulse {
-    animation: pulsate-shadow 2s ease-in-out infinite;
-  }
-
-  .visibility-pulse {
-    animation: pulsate-opacity 2s ease-in-out infinite;
   }
 
   select, option {
@@ -215,6 +246,49 @@
     }
     100% {
       opacity: 0.7;
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translatey(0px);
+    }
+    50% {
+      transform: translatey(20px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+
+  @keyframes wave {
+    0% { transform: rotate( 0.0deg) }
+    10% { transform: rotate(14.0deg) }
+    20% { transform: rotate(-8.0deg) }
+    30% { transform: rotate(14.0deg) }
+    40% { transform: rotate(-4.0deg) }
+    50% { transform: rotate(10.0deg) }
+    60% { transform: rotate( 0.0deg) }
+   100% { transform: rotate( 0.0deg) }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+      scale: 1;
+    }
+    25% {
+      scale: 1.25 1;
+    }
+    50% {
+      scale: 1 1.5;
+    }
+    75% {
+      scale: 1.25 1;
+    }
+    100% {
+      transform: rotate(360deg);
+      scale: 1;
     }
   }
 }

@@ -18,11 +18,33 @@ const summoner = computed<string | null>(() => {
   }
 })
 
-watchDebounced(
-  note,
-  () => store.updateRow('note', note.value as never, props.row, props.index),
-  { debounce: 500, maxWait: 1000 }
-)
+watchDebounced(note, () => {
+  store.activeField = 'note'
+  store.activeRow = props.row
+  store.activeIndex = props.index
+  store.updateRow(note.value as never)
+}, { debounce: 500, maxWait: 1000 })
+
+async function moveRow (up: boolean): Promise<void> {
+  if (store?.encounter) {
+    const rows = store.encounter.rows
+    const lowestIndex = rows.findIndex(r => r.index === props.index)
+    if (up) {
+      rows[lowestIndex].index = lowestIndex - 1
+      rows[lowestIndex - 1].index = lowestIndex
+      // update the follwing indexes
+      for (let i = lowestIndex + 1; i < rows.length; i++) {
+        rows[i].index = i
+      }
+    } else {
+      rows[lowestIndex].index = lowestIndex + 1
+      rows[lowestIndex + 1].index = lowestIndex
+    }
+    await store.encounterUpdate({
+      rows: rows.sort((a, b) => a.index - b.index)
+    })
+  }
+}
 </script>
 
 <template>
@@ -44,11 +66,31 @@ watchDebounced(
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Name
-        :name="row.name"
-        :type="row.type"
-        @update="store.updateRow('name', $event as never, row, index)"
-      />
+      <div class="flex gap-2 items-center pl-4">
+        <Icon
+          :name="useHomebrewIcon(row.type)"
+          :class="useHomebrewColor(row.type)"
+          size="20"
+          class="min-w-[20px]"
+          aria-hidden="true"
+        />
+        <p
+          class="peer cursor-pointer"
+          @click="() => {
+            store.activeRow = row
+            store.activeIndex = index
+            store.activeField = 'name'
+            store.activeModal = 'name'
+          }"
+        >
+          {{ row.name }}
+        </p>
+        <Icon
+          name="lucide:wrench"
+          class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+          aria-hidden="true"
+        />
+      </div>
     </td>
     <td
       v-if="
@@ -66,35 +108,137 @@ watchDebounced(
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Initiative
-        :initiative="row.initiative"
-        :index="row.index"
-        @update="store.updateRow('initiative', $event as never, row, index)"
-      />
+      <div class="flex justify-between gap-2">
+        <div
+          class="flex gap-2 items-center"
+          @click="() => {
+            store.activeRow = row
+            store.activeIndex = index
+            store.activeField = 'initiative'
+            store.activeModal = 'initiative'
+          }"
+        >
+          <p
+            v-if="row.initiative !== null && row.initiative >= 0"
+            class="peer cursor-pointer"
+          >
+            {{ row.initiative }}
+          </p>
+          <p
+            v-else
+            class="text-slate-600 cursor-pointer"
+          >
+            Add
+          </p>
+          <Icon
+            name="lucide:wrench"
+            class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+            :class="{ hidden: !row.initiative }"
+            aria-hidden="true"
+          />
+        </div>
+        <div
+          v-if="row.initiative !== null && row.initiative >= 0"
+          class="flex gap-1 items-center"
+        >
+          <Icon
+            v-if="
+              store.encounter
+                && store.encounter.rows.length !== index + 1
+                && store.encounter.rows[index + 1].initiative === row.initiative
+            "
+            name="ph:arrow-down"
+            class="w-6 h-6 cursor-pointer text-secondary"
+            aria-hidden="true"
+            @click="moveRow(false)"
+          />
+          <Icon
+            v-if="store.encounter
+              && index > 0
+              && store.encounter.rows[index - 1]?.initiative === row.initiative"
+            name="ph:arrow-up"
+            class="w-6 h-6 cursor-pointer text-secondary"
+            aria-hidden="true"
+            @click="moveRow(true)"
+          />
+        </div>
+      </div>
     </td>
     <td
       v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('ac')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Ac
-        :ac="row?.ac || null"
-        :temp-ac="row?.tempAc || null"
-        :type="row.type"
-        @update="store.updateRow('ac', $event as never, row, index)"
-      />
+      <div class="flex gap-2 items-center">
+        <div
+          class="peer cursor-pointer flex gap-1"
+          @click="() => {
+            store.activeRow = row
+            store.activeIndex = index
+            store.activeField = 'ac'
+            store.activeModal = 'ac'
+          }"
+        >
+          <p v-if="row.ac !== null">
+            {{ row.ac }}
+          </p>
+          <p
+            v-else-if="row.type !== 'lair'"
+            class="text-slate-600"
+          >
+            Add
+          </p>
+          <span
+            v-if="row.ac !== null && row.tempAc"
+            class="text-warning"
+          >+{{ row.tempAc }}</span>
+        </div>
+        <Icon
+          name="lucide:wrench"
+          class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+          :class="{ hidden: !row.ac }"
+          aria-hidden="true"
+        />
+      </div>
     </td>
     <td
       v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('health')"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Hp
-        :health="typeof row.health === 'number' ? row.health : null"
-        :temp-health="row.tempHealth || null"
-        :type="row.type"
-        @update="store.updateRow('health', $event as never, row, index)"
-      />
+      <div class="flex gap-2 items-center">
+        <div
+          class="peer cursor-pointer flex gap-1"
+          @click="() => {
+            store.activeRow = row
+            store.activeIndex = index
+            store.activeField = 'health'
+            store.activeModal = 'hp'
+          }"
+        >
+          <p
+            v-if="row.health !== null"
+            :class="{
+              'text-danger font-bold': typeof row.health === 'number' && +row.health < 1
+            }"
+          >
+            {{ row.health }}
+          </p>
+          <p v-else-if="row.type !== 'lair'" class="text-slate-600">
+            Add
+          </p>
+          <span
+            v-if="row.health !== null && row.tempHealth"
+            class="text-warning"
+          >+{{ row.tempHealth }}</span>
+        </div>
+        <Icon
+          name="lucide:wrench"
+          class="w-4 h-4 opacity-0 peer-hover:opacity-100 duration-200 ease-in-out"
+          :class="{ hidden: !row.health }"
+          aria-hidden="true"
+        />
+      </div>
     </td>
     <td
       class="border-r border-slate-700"
@@ -109,7 +253,12 @@ watchDebounced(
     >
       <Effects
         :conditions="row.conditions"
-        @update="store.updateRow($event.type, $event.value as never, row, index)"
+        @update="(v) => {
+          store.activeRow = row
+          store.activeIndex = index
+          store.activeField = 'conditions'
+          store.updateRow(v as never)
+        }"
       />
     </td>
     <td
@@ -131,7 +280,12 @@ watchDebounced(
       <DeathSaves
         v-if="row.deathSaves"
         :death-saves="row.deathSaves"
-        @update="store.updateRow('deathSaves', $event as never, row, index)"
+        @update="(v) => {
+          store.activeRow = row
+          store.activeIndex = index
+          store.activeField = 'deathSaves'
+          store.updateRow(v as never)
+        }"
       />
     </td>
     <td
@@ -142,7 +296,12 @@ watchDebounced(
       <Concentration
         v-if="typeof row.concentration === 'boolean'"
         :concentration="row.concentration"
-        @toggle="store.updateRow('concentration', !row.concentration as never, row, index)"
+        @toggle="() => {
+          store.activeRow = row
+          store.activeIndex = index
+          store.activeField = 'concentration'
+          store.updateRow(!row.concentration as never)
+        }"
       />
     </td>
     <td
@@ -156,7 +315,9 @@ watchDebounced(
             { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() }
           ]
         })"
-        @delete="store.encounterUpdate({ rows: store.encounter.rows.filter(r => r.id !== row.id) })"
+        @delete="store.encounterUpdate({
+          rows: store.encounter.rows.filter(r => r.id !== row.id)
+        })"
       />
     </td>
   </tr>

@@ -19,7 +19,10 @@ const {
 
 const isOpen = ref<boolean>(false)
 
-onMounted(() => store.fetch())
+onMounted(() => {
+  store.fetch()
+  reset()
+})
 
 whenever(error, () => { toast.error() })
 
@@ -56,21 +59,30 @@ function resetState (): void {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <div v-if="!store.error">
-      <div class="pt-5 pb-10 flex justify-between gap-4 items-center flex-wrap">
+      <div class="pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
+          <span class="text-[10px]">
+            ({{ $t('components.limitCta.max', { number: store.max }) }})
+          </span>
         </h1>
         <div class="flex gap-2">
           <button
-            class="btn-primary tracker-shadow-pulse"
+            class="btn-primary"
             :aria-label="$t('pages.encounters.add')"
+            :disabled="store.max <= store.data.length"
             @click="isOpen = true"
           >
             {{ $t('pages.encounters.add') }}
           </button>
-          <tippy interactive :z-index="2" placement="left">
+          <tippy
+            interactive
+            :z-index="2"
+            placement="left"
+            trigger="mouseenter click"
+          >
             <button
               class="bg-secondary/50 border-4 border-secondary rounded-lg w-12 h-12"
               :aria-label="$t('general.options')"
@@ -133,22 +145,16 @@ function resetState (): void {
             </button>
           </div>
         </template>
+        <LimitCta v-else-if="store.max <= store.data.length" class="mb-10" />
         <div
-          v-for="(group, index) in Object.values(store.sortedEncounters)"
+          v-for="(group, name, index) in store.sortedEncounters"
           :key="index"
           class="space-y-4 pb-10"
         >
-          <CampaignHeader
-            v-if="Object.keys(store.sortedEncounters)[index] !== '0'"
-            :campaign="
-              typeof group[0].campaign === 'object'
-                ? (group[0].campaign as Campaign).id
-                : group[0].campaign
-            "
-          />
+          <EncounterCampaignHeader v-if="group.campaign" :campaign="group.campaign" />
           <div class="flex flex-wrap gap-4 items-start">
             <div
-              v-for="encounter in group"
+              v-for="encounter in group.encounters"
               :key="encounter.id"
               class="relative"
             >
@@ -163,6 +169,7 @@ function resetState (): void {
               />
               <EncounterCard
                 :encounter="encounter"
+                :disable-copy="store.max <= store.data.length"
                 @update="(v: Encounter) => {
                   selected = [v];
                   isUpdating = true
@@ -177,20 +184,7 @@ function resetState (): void {
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
-      >
-        <h2>{{ $t('pages.encounters.noData.title') }}</h2>
-        <p>{{ $t('pages.encounters.noData.text') }}</p>
-        <button
-          class="btn-primary"
-          :aria-label="$t('pages.encounters.add')"
-          @click="isOpen = true"
-        >
-          {{ $t('pages.encounters.add') }}
-        </button>
-      </div>
+      <NoContent v-else content="encounters" icon="ri:table-line" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
       <h2 class="text-center text-danger">

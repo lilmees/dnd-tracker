@@ -7,6 +7,10 @@ interface EncounterProfile {
 
 type TableSpacing = 'compact' | 'normal' | 'cozy'
 
+type EncounterModal = 'name' | 'initiative' | 'ac' | 'hp' | 'link-modal' | 'ac-modal' | 'hp-modal' | 'condition-modal' | 'possible-attacks-modal'
+
+type EncounterUpdateField = 'name' | 'initiative' | 'ac' | 'health' | 'link' | 'note' | 'concentration' | 'deathSaves' | 'note' | 'conditions'
+
 interface EncounterSettings {
   spacing: TableSpacing
   rows: string[]
@@ -20,7 +24,7 @@ interface Encounter {
   title: string
   rows: Row[]
   profiles: EncounterProfile
-  campaign: number | Campaign
+  campaign: Campaign
   admins: string[]
   round: number
   owner?: string
@@ -36,7 +40,7 @@ interface AddEncounter extends Omit<Encounter, 'id'|'created_at'|'profiles'|'inf
   campaign: undefined | number
 }
 
-interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'profiles'>> {
+interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'profiles'|'campaign'>> {
   campaign?: number
 }
 
@@ -44,4 +48,12 @@ interface EncounterForm {
   title: string
   campaign?: number
   background: string
+}
+
+interface SortedCampaignEncounter {
+  [key: string]: {
+    encounters: Encounter[]
+    campaign?: number
+    created_by?: string
+  }
 }

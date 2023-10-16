@@ -2,13 +2,13 @@
 import { reset } from '@formkit/core'
 
 const emit = defineEmits(['close', 'delete'])
-const props = defineProps<{ open: boolean, title: string }>()
+defineProps<{ open: boolean, title: string }>()
 
 const form = ref<{ title: string }>({ title: '' })
-const same = computed<boolean>(() => props.title === form.value.title)
+const same = computed<boolean>(() => form.value.title.trim().toLowerCase() === 'delete')
 
 function deleteConfirmation (): void {
-  if (form.value.title.trim() === props.title.trim()) {
+  if (same.value) {
     reset('form')
     emit('delete')
   }
@@ -16,24 +16,27 @@ function deleteConfirmation (): void {
 </script>
 
 <template>
-  <Modal v-if="open" @close="$emit('close')">
+  <Modal :open="open" @close="$emit('close')">
     <template #header>
       <h2>
         {{ $t('components.confirmationModal.title') }}
       </h2>
     </template>
     <div class="text-white space-y-4">
-      <p class="pb-4">
-        <template
-          v-for="text in $t('components.confirmationModal.text', { title }).split(title)"
-          :key="text"
-        >
-          {{ text }}
-          <span class="font-bold last:hidden text-danger">
-            {{ title }}
-          </span>
-        </template>
-      </p>
+      <div class="p-4 bg-danger/50 rounded-lg flex gap-4 items-center">
+        <Icon name="ph:warning-bold" class="min-w-[30px] min-h-[30px]" />
+        <p>
+          <template
+            v-for="text in $t('components.confirmationModal.text', { title }).split(title)"
+            :key="text"
+          >
+            {{ text }}
+            <span class="font-bold last:hidden">
+              {{ title }}
+            </span>
+          </template>
+        </p>
+      </div>
       <FormKit
         id="form"
         v-model="form"
@@ -43,9 +46,8 @@ function deleteConfirmation (): void {
       >
         <FormKit
           name="title"
-          :label="$t('components.inputs.titleLabel')"
           validation="required"
-          :placeholder="title"
+          placeholder="DELETE"
         />
         <div class="flex justify-end gap-2">
           <button

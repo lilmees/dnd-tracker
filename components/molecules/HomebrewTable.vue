@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { isAdmin } from '@/utils/permission-helpers'
+
 const store = useCurrentCampaignStore()
+const profile = useProfileStore()
 
 const sortedBy = ref<string>('name')
 const sortACS = ref<boolean>(true)
@@ -9,14 +12,18 @@ const page = ref<number>(0)
 const perPage = ref<number>(20)
 const shownHomebrew = ref<Homebrew[]>([])
 
-watch(() => store.campaign?.homebrew_items, (v) => {
-  if (v) {
-    sortACS.value = true
-    sortedHomebrew.value = sortByString(v, 'name')
-    pages.value = Math.ceil(sortedHomebrew.value.length / perPage.value)
-    paginate(0)
-  }
-}, { immediate: true })
+watch(
+  () => store.campaign?.homebrew_items,
+  (v) => {
+    if (v) {
+      sortACS.value = true
+      sortedHomebrew.value = sortByString(v, 'name')
+      pages.value = Math.ceil(sortedHomebrew.value.length / perPage.value)
+      paginate(0)
+    }
+  },
+  { immediate: true }
+)
 
 function sortItems (key: string): void {
   if (!store.campaign?.homebrew_items) {
@@ -78,7 +85,7 @@ function paginate (pageNumber: number): void {
   page.value = pageNumber
   shownHomebrew.value = sortedHomebrew.value.slice(
     pageNumber * perPage.value,
-    (pageNumber * perPage.value) + perPage.value
+    pageNumber * perPage.value + perPage.value
   )
 }
 
@@ -105,7 +112,7 @@ function updated (hb: Homebrew, id: number): void {
           <p>Lair)</p>
         </div>
       </div>
-      <HomebrewModal />
+      <HomebrewModal :disabled="!store.campaign || !isAdmin(store?.campaign, profile.data?.id || '')" />
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <div
@@ -116,11 +123,13 @@ function updated (hb: Homebrew, id: number): void {
         <thead>
           <tr>
             <th
-              v-for="header in ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']"
+              v-for="header in isAdmin(store.campaign, profile.data?.id || '')
+                ? ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']
+                : ['name', 'type', 'player', 'health', 'ac', 'link', 'actions']"
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
               :class="{
-                'cursor-pointer': ['name', 'type', 'player', 'health', 'ac'].includes(header)
+                'cursor-pointer': ['name', 'type', 'player', 'health', 'ac'].includes(header),
               }"
               @click="sortItems(header)"
             >
@@ -133,7 +142,7 @@ function updated (hb: Homebrew, id: number): void {
                   class="w-5 h-5 cursor-pointer text-secondary/50"
                   :class="{
                     '!hidden': ['link', 'actions', 'modify'].includes(header),
-                    '!text-secondary': sortedBy === header
+                    '!text-secondary': sortedBy === header,
                   }"
                   aria-hidden="true"
                 />
@@ -142,17 +151,11 @@ function updated (hb: Homebrew, id: number): void {
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="item in shownHomebrew"
-            :key="item.id"
-            class="border-b last:border-b-0 border-slate-700"
-          >
+          <tr v-for="(item, index) in shownHomebrew" :key="item.id" class="border-b last:border-b-0 border-slate-700">
             <td class="px-2 py-1 border-r border-slate-700 relative">
               {{ item.name }}
             </td>
-            <td
-              class="px-2 py-1 border-r border-slate-700"
-            >
+            <td class="px-2 py-1 border-r border-slate-700">
               <div class="flex gap-2 items-center">
                 <Icon
                   :name="useHomebrewIcon(item.type)"
@@ -176,50 +179,50 @@ function updated (hb: Homebrew, id: number): void {
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               <div class="flex justify-center">
-                <NuxtLink
-                  v-if="item.link"
-                  :to="item.link"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="w-fit"
-                >
-                  <Icon
-                    name="ph:link-simple-horizontal"
-                    class="w-8 h-8 cursor-pointer text-info"
-                    aria-hidden="true"
-                  />
+                <NuxtLink v-if="item.link" :to="item.link" target="_blank" rel="noreferrer noopener" class="w-fit">
+                  <Icon name="ph:link-simple-horizontal" class="w-8 h-8 cursor-pointer text-info" aria-hidden="true" />
                 </NuxtLink>
               </div>
             </td>
             <td class="px-2 py-1 border-r border-slate-700">
               <div
                 v-if="
-                  item.actions?.length
-                    || item.legendary_actions?.length
-                    || item.reactions?.length
-                    || item.special_abilities?.length
+                  item.actions?.length ||
+                    item.legendary_actions?.length ||
+                    item.reactions?.length ||
+                    item.special_abilities?.length
                 "
               >
-                <PossibleAttacksModal
-                  :row="(item as Row)"
-                  :label="`
-                  ${[
-                    ...item.actions || [],
-                    ...item.legendary_actions || [],
-                    ...item.reactions || [],
-                    ...item.special_abilities || [],
-                  ].length} ${$t('components.inputs.actionsLabel')}
-                  `"
-                />
+                <div
+                  class="flex flex-wrap items-center gap-x-2 cursor-pointer"
+                  @click="
+                    () => {
+                      store.activeHomebrew = item
+                      store.activeIndex = index
+                      store.activeModal = 'possible-attacks-modal'
+                    }
+                  "
+                >
+                  <Icon name="iconamoon:search-bold" class="w-4 h-4 text-primary cursor-pointer" aria-hidden="true" />
+                  <p>
+                    {{
+                      `${
+                        [
+                          ...(item.actions || []),
+                          ...(item.legendary_actions || []),
+                          ...(item.reactions || []),
+                          ...(item.special_abilities || []),
+                        ].length
+                      }
+                      ${$t('components.inputs.actionsLabel')}`
+                    }}
+                  </p>
+                </div>
               </div>
             </td>
-            <td class="px-2 py-1">
+            <td v-if="isAdmin(store.campaign, profile.data?.id || '')" class="px-2 py-1">
               <div class="flex justify-center items-center gap-1">
-                <HomebrewModal
-                  update
-                  :item="item"
-                  @updated="updated($event, item.id)"
-                />
+                <HomebrewModal update :item="item" @updated="updated($event, item.id)" />
                 <button
                   v-tippy="{ content: $t('actions.delete') }"
                   :aria-label="$t('actions.delete')"
@@ -236,30 +239,9 @@ function updated (hb: Homebrew, id: number): void {
           </tr>
         </tbody>
       </table>
-      <Pagination
-        v-if="pages > 1"
-        v-model="page"
-        :total-pages="pages"
-        @paginate="paginate"
-      />
+      <Pagination v-if="pages > 1" v-model="page" :total-pages="pages" @paginate="paginate" />
+      <component :is="store.activeModal" :open="store.activeModal" @close="store.resetActiveState()" />
     </div>
-    <div v-else class="grid md:grid-cols-2 gap-4 pt-6">
-      <div class="flex flex-col justify-center gap-4">
-        <h2 class="pb-2">
-          {{ $t('components.homebrewTable.title') }}
-        </h2>
-        <p class="max-w-prose">
-          {{ $t('components.homebrewTable.text') }}
-        </p>
-      </div>
-      <NuxtImg
-        src="/dragon_hoard.webp"
-        alt="Dragon on hoard"
-        sizes="sm:500px md:500px lg:500px"
-        format="webp"
-        provider="imagekit"
-        class="mx-auto"
-      />
-    </div>
+    <NoContent v-else content="homebrew" icon="la:dragon" />
   </section>
 </template>

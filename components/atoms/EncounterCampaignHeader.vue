@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { campaignUrl } from '@/utils/url-genarators'
 
-const props = defineProps<{ campaign: Campaign | number }>()
+const props = defineProps<{ campaign: number }>()
 
 const store = useCampaignsStore()
 const route = useRoute()
-const localePath = useLocalePath()
 
 const cam = ref<Campaign | null>(null)
 
-// if there is only the id of the campaign then fetch the information
 if (props.campaign) {
-  if (typeof props.campaign !== 'object') {
-    cam.value = await store.getCampaignById(props.campaign)
-  } else {
-    cam.value = props.campaign as Campaign
-  }
+  cam.value = await store.getCampaignById(props.campaign)
 }
 
 </script>
@@ -40,17 +34,17 @@ if (props.campaign) {
       </h2>
     </div>
     <div class="mb-1">
-      <NuxtLink
+      <RouteLink
         v-if="!route.path.includes('/campaigns/') && cam?.title"
-        :to="localePath(campaignUrl(cam))"
+        :url="campaignUrl(cam, 'content')"
       >
         <button
           class="btn-primary"
-          :aria-label="$t('pages.campaign.goCampaign')"
+          :aria-label="$t('components.encounterCampaignHeader.go')"
         >
-          {{ $t('pages.campaign.goCampaign') }}
+          {{ $t('components.encounterCampaignHeader.go') }}
         </button>
-      </NuxtLink>
+      </RouteLink>
     </div>
   </div>
 </template>

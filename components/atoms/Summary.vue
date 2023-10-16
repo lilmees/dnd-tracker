@@ -1,27 +1,12 @@
 <script setup lang="ts">
-import { gsap, Power3 } from 'gsap'
-
 withDefaults(
   defineProps<{ title?: string, items?: string[]}>(),
   { title: '', items: () => [] }
 )
-
-const el = ref<HTMLDivElement>()
-const isVisible: Ref<boolean> = useElementVisibility(el)
-
-watch(isVisible, (v: boolean) => {
-  if (v && el.value) {
-    gsap.fromTo(
-      el.value,
-      { scale: 0.85 },
-      { scale: 1, duration: 0.75, ease: Power3.easeOut }
-    )
-  }
-})
 </script>
 
 <template>
-  <div ref="el">
+  <div>
     <h2 v-if="title" class="pb-4">
       {{ title }}
     </h2>

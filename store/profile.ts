@@ -4,6 +4,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const auth = useAuthStore()
+  const toast = useToastStore()
 
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
@@ -93,12 +94,52 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     data.value = null
   }
 
+  async function getProfileById (id: string): Promise<SocialProfile|undefined> {
+    try {
+      const { data, error: err } = await supabase
+        .from('profiles')
+        .select('id, created_at, username, name, avatar, email, badges')
+        .eq('id', id)
+        .single()
+
+      if (err) {
+        throw err
+      }
+
+      return data as SocialProfile
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
+    }
+  }
+
+  async function getProfileByUsernameFuzzy (username: string): Promise<SocialProfile[]|undefined> {
+    try {
+      const { data, error: err } = await supabase
+        .from('profiles')
+        .select('id, created_at, username, name, avatar, email, badges')
+        .ilike('username', `%${username}%`)
+        .limit(12)
+
+      if (err) {
+        throw err
+      }
+
+      return data as SocialProfile[]
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
+    }
+  }
+
   return {
     loading,
     error,
     data,
     fetch,
     updateProfile,
-    deleteProfile
+    deleteProfile,
+    getProfileById,
+    getProfileByUsernameFuzzy
   }
 })

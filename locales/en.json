@@ -30,14 +30,18 @@
     "open": "Open",
     "next": "Next",
     "prev": "Previous",
+    "decline": "Decline",
+    "transfer": "Transfer",
     "read": {
       "more": "Read more",
       "less": "Read less"
     }
   },
   "general": {
+    "campaigns": "Campaigns",
     "encounters": "Encounters",
     "players": "Players",
+    "members": "Members",
     "monsters": "Monsters",
     "notes": "Notes",
     "total": "Total",
@@ -46,6 +50,8 @@
     "round": "Round",
     "month": "month",
     "year": "year",
+    "monthly": "Monthly",
+    "annually": "Annually",
     "link": "Link",
     "noSelected": "Nothing selected",
     "or": "of",
@@ -61,6 +67,24 @@
     "success": {
       "title": "Success",
       "text": "Your changes have been successfully saved!"
+    },
+    "roles": {
+      "Owner": {
+        "title": "Owner",
+        "description": "Owners can take the same actions as administrators, but they have the additional authority to end the campaign"
+      },
+      "Admin": {
+        "title": "Admin",
+        "description": "Admins can create content for a campaign, play encounters and access the campaign settings page but cannot delete the campaign"
+      },
+      "Viewer": {
+        "title": "Player",
+        "description": "Players only have the option to play encounters and not edit content"
+      }
+    },
+    "noContent": {
+      "title": "No {content} yet",
+      "text": "The quest for {content} begins here, but it's yet to be undertaken"
     }
   },
   "pages": {
@@ -68,18 +92,26 @@
       "textBlock1": {
         "title": "Made with love 💜",
         "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
-        "button": "Go to the roadmap"
+        "button": "Request new features"
       },
       "summary": {
         "title": "Why choose dnd-tracker for your encounters 🤔",
         "item1": "Live updating between different devices",
         "item2": "We are constantly working to optimize the product",
         "item3": "Everything in 1 convenient place for the DM",
-        "item4": "Integrated dice roller",
+        "item4": "Collaborative Dungeon Mastering",
         "item5": "Plenty of information you can get your hands on",
         "item6": "Attractive dark mode design for all vampires among us"
       },
       "textBlock2": {
+        "title": "Collaborative Dungeon Mastering 🧙‍♂️🧙",
+        "text": "Join forces with fellow Dungeon Masters in a realm where creativity knows no bounds. Our platform allows you to seamlessly collaborate on your Dungeons & Dragons campaigns, fostering a dynamic and immersive experience. Whether you're crafting epic adventures, creating homebrew, or co-managing games, our system brings DMs together, making your campaigns more thrilling and memorable."
+      },
+      "textBlock3": {
+        "title": "Enhanced Engagement 🧠",
+        "text": "Elevate your experience with our unique functionality. We've integrated a feature that enables you to attach a link to a specific encounter player. When the linked website supports it, it opens right within an iframe, so you don't have to switch between all your tabs. This keeps you engaged and immersed in the game, allowing for quick reference to monsters, player stats, or even a funny cat video."
+      },
+      "textBlock4": {
         "title": "Weird stuff 🐛",
         "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
       }
@@ -98,15 +130,34 @@
         "subtitle": "Select campaigns to remove by clicking on them.",
         "amount": "Remove {number} campaigns",
         "multiple": "{number} campaigns"
-      },
-      "noData": {
-        "title": "You have no created campaigns",
-        "text": "Create a campaign and start playing around witth all the posibilities"
       }
     },
     "campaign": {
-      "back": "Back to campaigns",
-      "goCampaign": "Go to campaign"
+      "content": {},
+      "settings": {
+        "add": "Add people",
+        "access": "Manage access",
+        "campaign": "Campaign settings"
+      },
+      "danger": {
+        "transfer": {
+          "title": "Transfer ownership",
+          "text": "Transfer this campaign to another user who is already a team member"
+        },
+        "delete": {
+          "title": "Delete this campaign",
+          "text": "Once you delete a campaign, there is no going back. Please be certain"
+        }
+      },
+      "join": {
+        "title": "Answer the Call to Adventure: Join {campaign} Now!",
+        "text": "Congratulations! You've received an invitation to join {campaign} as a {role}. Your opportunity to be a part of this incredible journey is right at your fingertips.",
+        "accept": "Join the Adventure"
+      },
+      "toast": {
+        "success": "Updated your campaign successfully",
+        "delete": "Removed your campaign successfully"
+      }
     },
     "encounters": {
       "encounters": "Encounters",
@@ -117,10 +168,6 @@
         "subtitle": "Select encounters to remove by clicking on them.",
         "amount": "Remove {number} encounters",
         "multiple": "{number} encounters"
-      },
-      "noData": {
-        "title": "You have no created encounters",
-        "text": "Create a encounter and start playing around witth all the posibilities"
       }
     },
     "encounter": {
@@ -192,6 +239,11 @@
       }
     },
     "profile": {
+      "subscription": {
+        "current": "Current subscription",
+        "handle": "Handle subscription",
+        "upgrade": "Upgrade subscription"
+      },
       "data": {
         "title": "Personal data",
         "subtitle": "Data Metamorphosis: Unleash the Magic!"
@@ -213,20 +265,61 @@
     },
     "pricing": {
       "title": "Designed for the best dungeon masters, like you.",
-      "text": "Affordable Prices, Quality Service. At DnD-Tracker, we believe in delivering high-quality service at a fair price. Our pricing plans are designed to fit your needs and budget. Choose the best option for you and enjoy a seamless experience with us. Get in touch with us today to learn more.",
-      "starter": "Best option for getting to know the product. Best for dungeon masters with 1-3 running campaigns.",
-      "medior": "Best option for the dungeon master with multiple active campaigns running at the same time.",
-      "pro": "Best option for the professional dungeon masters and when you work with multiple DM's on the same campaigns.",
+      "text": "Choose a budget-friendly plan loaded with premium features to enrich your D&D encounters, engage your players, and create epic moments.",
+      "starter": "The perfect choice for beginners and dungeon masters with 1-3 active campaigns.",
+      "medior": "The ideal choice for experienced dungeon masters who run multiple campaigns simultaneously.",
+      "pro": "The ultimate choice for professional dungeon masters and for those collaborating with multiple DMs on the same campaigns.",
+      "popular": "Most popular",
       "encounters": "Encounters: {number}",
       "campaigns": "Campaigns: {number}",
       "multiple": "Multiple campaign admins",
-      "setup": "No setup, or hidden fees",
+      "live": "Real-time updates between screens",
       "update": "Updates: always free"
     },
     "contact": {
-      "title": "Love to hear from you, Get in touch 👋",
+      "title": "Love to hear from you, Get in touch",
       "send": "Send your question",
       "success": "Contact email was successfully sent"
+    },
+    "subscribeSuccess": {
+      "title": "Thank you for subscribing to our service! 🎉",
+      "text": {
+        "one": "You're now officially part of our community, and you're one step closer to unlocking a world of exciting updates and fantastic adventures. We can't wait to share our latest news and offerings with you.",
+        "two": "In the meantime, grab your dice, gather your party, and prepare for epic adventures. Your journey with us has just begun, and together, we'll explore realms beyond imagination.",
+        "three": "Stay tuned, and let the adventures begin!"
+      }
+    },
+    "featureRequest": {
+      "status": {
+        "review": "Under review",
+        "progress": "In progress"
+      },
+      "cta": {
+        "title": "Calling All Brave Adventurers: Share Your Heroic Ideas!",
+        "text": "Brave adventurer, your counsel is sought! We yearn for your ideas and suggestions. Whether it be a heroic concept for a new feature, a refining touch for an existing one, or any other fantastical notion, be sure to let us know."
+      },
+      "nothing": "We haven't found a feature that matches these filters, but that doesn't mean you can't request it yourself! We are open to user feedback and strive to improve our services based on your suggestions.",
+      "request": "Suggest feature",
+      "sort": {
+        "title": "Sort",
+        "options": {
+          "mostVotes": "Most votes",
+          "leastVotes": "Least votes",
+          "newestFirst": "Newest first",
+          "oldestFirst": "Oldest first"
+        }
+      },
+      "filter": {
+        "title": "Made by",
+        "options": {
+          "all": "Everyone",
+          "my": "Me"
+        }
+      }
+    },
+    "noMember": {
+      "title": "You're not a team member",
+      "text": "Oops! It seems like you're not a member, and you don't have access to this content. If you believe this is a mistake, please don't hesitate to reach out to the owner or an admin for assistance."
     }
   },
   "components": {
@@ -239,12 +332,7 @@
       "start": "Let the session start"
     },
     "linkModal": {
-      "demo": "This isn't available in the demo",
       "placeholder": "Amidst the realm of dragons and dungeons, a hero's legend remains untold, as the user has not yet linked their character's saga."
-    },
-    "homeDiceRolling": {
-      "title": "Roll with ease",
-      "text": "A digital dice roller is a convenient tool that allows users to roll multiple dice of the same type with ease. With its fast and easy rolling capabilities, it's an essential tool for any tabletop gamer. For dungeon masters, it can significantly speed up their workflow, allowing them to focus more on storytelling and gameplay."
     },
     "inputs": {
       "emailLabel": "Email address",
@@ -274,17 +362,17 @@
       "damageBonusLabel": "Damage bonus",
       "damageDiceLabel": "Damage dice",
       "marketingLabel": "Get notified about updates",
+      "codeLabel": "Code",
+      "roleLabel": "Role of the user",
+      "newRoleLabel": "Your new role",
       "nothing": "Nothing selected",
       "overrideFieldLabel": "Max {field} override",
-      "optionalFieldHelp": "Optional to overwrite the current {field}"
+      "optionalFieldHelp": "Optional to overwrite the current {field}",
+      "searchByUsername": "Search by username"
     },
     "cammpaignModal": {
       "add": "Create a new campaign",
       "update": "Update campaign {title}"
-    },
-    "homebrewTable": {
-      "title": "Ready to unleash your creativity?",
-      "text": "Start making your own homebrew today! With just a few inputs and some imagination, you can bring your unique ideas to life and add a personal touch to your campaign. Don't wait any longer, dive in and start creating your own one-of-a-kind items now!"
     },
     "encounterModal": {
       "add": "Create a new encounter",
@@ -346,15 +434,11 @@
       "campaigns": "Campaigns",
       "profile": "Profile",
       "pricing": "Pricing",
-      "play": "Play",
-      "subscription": "Subscription"
+      "play": "Play"
     },
     "confirmationModal": {
       "title": "Delete confirmation",
-      "text": "If you are sure you want to delete {title}? Type {title} in the input field and press delete"
-    },
-    "campaignNotes": {
-      "none": "No notes added"
+      "text": "To delete {title}, type the word DELETE into the field below"
     },
     "noteModal": {
       "add": "Create note",
@@ -388,6 +472,53 @@
     },
     "infoDropdown": {
       "title": "Pinned information cards"
+    },
+    "badgeModal": {
+      "title": "Customize Your Profile with a Badge",
+      "add": "Add a badge",
+      "nothing": "No badge found with this code",
+      "already": "Code is already claimed",
+      "claim": "Claim badge"
+    },
+    "addFeatureRequestModal": {
+      "title": "Create feature request",
+      "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
+      "another": "Create another feature request"
+    },
+    "encounterCampaignHeader": {
+      "go": "Go to campaign"
+    },
+    "userModal": {
+      "title": "Add people to {campaign}",
+      "select": "Select a member above",
+      "add": "Add {username} to this campaign",
+      "member": "Member of the campaign",
+      "invited": "Invitation awaiting response",
+      "toast": {
+        "invited": {
+          "title": "The invitation has been sent successfully",
+          "text": "After accepting the invitation, the person is added as a team member"
+        },
+        "alreadyInvited": {
+          "title": "This person has already received an invitation",
+          "text": "The person you have invited still has an active invitation for this campaign"
+        }
+      }
+    },
+    "transferOwnershipModal": {
+      "title": "Transfer ownership from {campaign}",
+      "text": "Are you certain about transferring ownership from the {campaign} campaign? Please note that this action is irreversible unless the new owner decides to revert it. If you are absolutely sure, Enter {campaign} in the input field and then proceed to transfer.",
+      "removed": "No more team member (removed)",
+      "toast": {
+        "success": {
+          "title": "Ownership has been successfully transferred to {username}"
+        }
+      }
+    },
+    "limitCta": {
+      "text": "You've reached the limit of your current plan. Unlock more features and benefits by upgrading now. Don't worry if you don't see your content it's not removed",
+      "cta": "Upgrade now",
+      "max": "Max {number} created by yourself or your campaign"
     }
   }
 }

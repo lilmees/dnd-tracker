@@ -1,56 +1,45 @@
 import { serverSupabaseClient } from '#supabase/server'
 
-const config = useRuntimeConfig()
-
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
-  const subscription = body.data.object
-  const typeId = subscription.items.data[0].plan.id
-  let productName
-  let stripeData: Stripe = {
-    stripe_last_event: body.created,
-    stripe_status: subscription.status,
-    stripe_trail_ends_at: subscription.trail_end,
-    stripe_ends_at: subscription.ended_at,
-    stripe_started_at: subscription.start_date
+  if (!correctWebhookType(body.type)) {
+    return
   }
 
-  if (typeId === config.public.stripeMediorMonthly || typeId === config.public.stripeMediorYearly) {
-    productName = 'medior'
-  } else if (typeId === config.public.stripeProMonthly || typeId === config.public.stripeProYearly) {
-    productName = 'pro'
-  }
+  const subscription = body.data.object
 
   const { data } = await client
     .from('profiles')
     .select('stripe_last_event')
     .eq('stripe_id', subscription.customer)
-    .single() as { data: { stripe_last_event: number }}
+    .single()
 
-  if (data?.stripe_last_event > body.created) {
+  if (!data) {
+    return
+  } else if (data?.stripe_last_event > body.created) {
     return `Did not handle ${body.type} because it was an old event`
   }
 
-  if (
-    body.type === 'customer.subscription.created' ||
-    body.type === 'customer.subscription.resumed' ||
-    body.type === 'customer.subscription.updated'
-  ) {
-    stripeData = {
-      ...stripeData,
-      paid_subscription_active: true,
-      subscription_id: subscription.id,
-      subscription_type: productName
-    }
-  } else if (body.type === 'customer.subscription.deleted' || body.type === 'customer.subscription.paused') {
-    stripeData = {
-      ...stripeData,
-      paid_subscription_active: false,
-      subscription_id: null,
-      subscription_type: 'free'
-    }
+  const cancel = cancelSubscription(body.type)
+
+  const stripeData: Partial<Stripe> = {
+    stripe_last_event: body.created,
+    stripe_status: subscription.status,
+    stripe_trail_ends_at: subscription.trail_end,
+    stripe_ends_at: subscription.ended_at,
+    stripe_started_at: subscription.start_date,
+    subscription_type: 'free',
+    paid_subscription_active: !cancel,
+    subscription_id: cancel ? null : subscription.id
+  }
+
+  if (!cancel) {
+    const products = await $fetch('/api/stripe/products')
+    const subType = getSubscriptionType(products, subscription.items?.data[0].plan.id)
+
+    stripeData.subscription_type = subType
   }
 
   await client
@@ -60,3 +49,37 @@ export default defineEventHandler(async (event) => {
 
   return `handled ${body.type}`
 })
+
+function getSubscriptionType (products: StripeProduct[], id?: string): StripeSubscriptionType {
+  if (!id) {
+    return 'free'
+  }
+  let sub: StripeSubscriptionType = 'free'
+
+  products.forEach((product) => {
+    if (product.monthId === id || product.yearId === id) {
+      sub = product.name.replace(' plan', '').toLowerCase() as StripeSubscriptionType
+    }
+  })
+
+  return sub
+}
+
+function correctWebhookType (type: StripeWebhookType): boolean {
+  return (
+    type === 'customer.subscription.created' ||
+    type === 'customer.subscription.resumed' ||
+    type === 'customer.subscription.updated' ||
+    type === 'customer.subscription.deleted' ||
+    type === 'customer.subscription.paused' ||
+    type === 'invoice.payment_failed'
+  )
+}
+
+function cancelSubscription (type: StripeWebhookType): boolean {
+  return (
+    type === 'customer.subscription.deleted' ||
+    type === 'customer.subscription.paused' ||
+    type === 'invoice.payment_failed'
+  )
+}

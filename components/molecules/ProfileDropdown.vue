@@ -1,36 +1,29 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
+import { start, end } from '@/utils/animation-helpers'
 
+defineExpose({ close })
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()
 
 const profile = useProfileStore()
-const stripe = useStripeStore()
-const toast = useToastStore()
 const user = useSupabaseUser()
 
 const isOpen = ref<boolean>(false)
 
+onKeyStroke('Escape', () => close())
+
 onBeforeMount(() => profile.fetch())
 
-async function manageSubscription () {
+function close (): void {
   isOpen.value = false
-  try {
-    if (profile?.data?.stripe_session_id) {
-      await stripe.createPortalSession(profile.data.stripe_session_id)
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  }
 }
 </script>
 
 <template>
   <div v-click-outside="() => (isOpen = false)" class="relative">
     <button
-      class="border-4 border-secondary bg-black p-2 rounded-full shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer"
-      :class="{ 'rounded-b-none': isOpen }"
+      class="border-4 border-secondary bg-secondary/50 rounded-lg shadow shadow-primary hover:tracker-shadow-pulse cursor-pointer transition-all duration-200 ease-in-out"
+      :class="{ 'rounded-b-none !bg-secondary/80': isOpen }"
       @click="isOpen = !isOpen"
     >
       <ClientOnly>
@@ -39,7 +32,7 @@ async function manageSubscription () {
           :src="profile.data.avatar"
           alt="Avatar image"
           sizes="sm:40px md:40px lg:40px"
-          class="w-8 -scale-x-100 relative bottom-1"
+          class="w-12 -scale-x-100"
           format="webp"
         />
         <NuxtImg
@@ -47,47 +40,56 @@ async function manageSubscription () {
           src="/dice.webp"
           alt="D20 dice"
           sizes="sm:40px md:40px lg:40px"
-          class="w-8"
+          class="w-12"
           format="webp"
           provider="imagekit"
         />
       </ClientOnly>
     </button>
-    <div v-if="isOpen" class="absolute z-[1] block w-max right-0">
-      <div
-        class="border-4 border-secondary bg-black flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
-      >
-        <RouteLink
-          v-for="route in routes"
-          :key="route.url"
-          :label="$t(route.label)"
-          :url="route.url"
-          @click="isOpen = false"
-        />
-        <template v-if="user">
-          <ClientOnly>
-            <!-- <button
-              v-if="profile?.data?.stripe_session_id"
-              class="text-slate-300 hover:text-white max-w-max font-bold"
-              @click="manageSubscription"
+    <Transition
+      name="expand"
+      @enter="start"
+      @after-enter="end"
+      @before-leave="start"
+      @after-leave="end"
+    >
+      <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-[55px]">
+        <div
+          class="border-4 border-secondary bg-secondary/80 flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
+        >
+          <RouteLink
+            v-for="route in routes"
+            :key="route.url"
+            :label="$t(route.label)"
+            :url="route.url"
+            @click="isOpen = false"
+          />
+          <template v-if="user">
+            <button
+              class="text-warning hover:text-white max-w-max font-bold"
+              @click="
+                () => {
+                  isOpen = false
+                  $emit('logout')
+                }
+              "
             >
-              {{ $t('components.navbar.subscription') }}
-            </button> -->
-          </ClientOnly>
-          <button
-            class="text-danger hover:text-white max-w-max font-bold"
-            @click="
-              () => {
-                isOpen = false
-                $emit('logout')
-              }
-            "
-          >
-            {{ $t('components.navbar.logout') }}
-          </button>
-        </template>
-        <LangSwitcher class="pt-4" @click="isOpen = false" />
+              {{ $t('components.navbar.logout') }}
+            </button>
+          </template>
+          <LangSwitcher class="pt-4" @click="isOpen = false" />
+        </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
+
+<style scoped>
+.expand-leave-active, .expand-enter-active {
+    @apply duration-200 ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
+  }
+</style>

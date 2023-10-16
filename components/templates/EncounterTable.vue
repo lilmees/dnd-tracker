@@ -1,15 +1,22 @@
 <script setup lang="ts">
 const store = useTableStore()
 const { t } = useI18n()
-const keys = useMagicKeys()
 
 // Initiative down
-whenever(keys.shift_arrowleft, () => store.prevInitiative())
-whenever(keys.pageUp, () => store.prevInitiative())
+onKeyStroke(['ArrowLeft', 'PageDown'], (e) => {
+  e.preventDefault()
+  if (e.shiftKey || e.metaKey || e.key === 'PageDown') {
+    store.prevInitiative()
+  }
+})
 
-// Initiative down
-whenever(keys.shift_arrowRight, () => store.nextInitiative())
-whenever(keys.PageDown, () => store.nextInitiative())
+// Initiative up
+onKeyStroke(['ArrowRight', 'PageUp'], (e) => {
+  e.preventDefault()
+  if (e.shiftKey || e.metaKey || e.key === 'PageUp') {
+    store.nextInitiative()
+  }
+})
 
 const headers = computed<string[]>(() => {
   const always = ['name', 'init', 'manage']
@@ -55,6 +62,7 @@ const tableSpacing = computed<string>(() => {
               v-for="header in headers"
               :key="header"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
+              scope="col"
             >
               {{ header }}
             </th>
@@ -80,5 +88,11 @@ const tableSpacing = computed<string>(() => {
         {{ $t('components.encounterTable.empty') }}
       </div>
     </div>
+    <component
+      :is="store.activeModal"
+      :open="store.activeModal"
+      @update="store.updateRow($event as never)"
+      @close="store.resetActiveState()"
+    />
   </section>
 </template>

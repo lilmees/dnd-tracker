@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Power3, gsap } from 'gsap'
-
 const anchor = ref<HTMLElement>()
 const eyeLeft = ref<HTMLElement>()
 const eyeRight = ref<HTMLElement>()
@@ -22,97 +20,45 @@ function calculateEyes (e: MouseEvent) {
 function angle (cx: number, cy: number, ex: number, ey: number): number {
   return (Math.atan2(ey - cy, ex - cx) * 180) / Math.PI
 }
-
-onMounted(() => {
-  if (process.client) {
-    animate()
-  }
-})
-
-function animate (): void {
-  const image = document.querySelector('[data-image]')
-  const container = document.querySelector('[data-container]')
-  const title = document.querySelector('[data-title]')
-  const dragon = document.querySelector('[data-dragon]')
-
-  gsap.fromTo(
-    image,
-    { scale: 1.5 },
-    { duration: 1.5, scale: 1, ease: Power3.easeOut }
-  )
-
-  gsap.fromTo(image,
-    { scale: 1 },
-    {
-      scrollTrigger: {
-        trigger: container,
-        toggleActions: 'restart none none none',
-        start: 'top 5%',
-        end: 'bottom 0%',
-        scrub: 2
-      },
-      ease: Power3.easeOut,
-      scale: 1.5
-    })
-
-  gsap.fromTo(
-    title,
-    { y: 100, opacity: 0 },
-    { duration: 0.6, delay: 0.2, y: 0, opacity: 100, ease: Power3.easeOut }
-  )
-
-  gsap.fromTo(
-    dragon,
-    { y: '100%', scale: 0.5, opacity: 0 },
-    { y: '0%', scale: 1, opacity: 1, ease: Power3.easeOut }
-  )
-
-  gsap.fromTo(dragon,
-    { y: '150%', scale: 0.5, opacity: 0.5 },
-    {
-      scrollTrigger: {
-        trigger: container,
-        toggleActions: 'restart none none none',
-        scrub: 2
-      },
-      y: '0%',
-      scale: 1,
-      opacity: 1,
-      duration: 1.5,
-      ease: Power3.easeOut
-    }
-  )
-}
 </script>
 
 <template>
-  <div data-container class="relative" @mousemove="calculateEyes">
-    <div
-      data-wrapper
-      class="w-full h-screen md:h-[80vh] md:min-h-[800px] rounded-lg blur-md pt-6 overflow-hidden"
-    >
-      <NuxtImg
-        data-image
-        src="/background.webp"
-        alt="Background image"
-        sizes="sm:500px md:1000px lg:1500px"
-        class="w-full h-full object-cover scale-150"
-        format="webp"
-        provider="imagekit"
-      />
+  <div class="relative" @mousemove="calculateEyes">
+    <div class="relative">
+      <div
+        class="w-full scale-105 h-screen md:h-[80vh] md:min-h-[800px] rounded-lg blur-md pt-6 overflow-hidden"
+      >
+        <NuxtImg
+          data-aos="zoom-out"
+          :data-aos-duration="2000"
+          :data-aos-mirror="true"
+          src="/background.webp"
+          alt="Background image"
+          sizes="sm:500px md:1000px lg:1500px"
+          class="w-full h-full object-cover scale-150 !opacity-100"
+          format="webp"
+          provider="imagekit"
+        />
+      </div>
+      <div class="absolute z-[-1] fancy-shadow" />
     </div>
     <div class="absolute inset-0 flex flex-col md:flex-row justify-center items-center p-4 md:gap-x-20 container-max">
       <div class="flex flex-col items-start gap-4">
         <h1
-          data-title
+          data-aos="zoom-in-up"
+          :data-aos-duration="1000"
+          :data-aos-once="true"
           class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left opacity-0"
         >
           {{ $t('components.hero.start') }}
         </h1>
       </div>
       <div
+        data-aos="zoom-in-up"
+        :data-aos-duration="1000"
+        :data-aos-once="true"
         data-dragon
-        class="max-w-[500px] relative opacity-0"
+        class="max-w-[500px] relative opacity-0 float"
       >
         <div ref="eyeLeft" class="absolute top-[55%] left-[54%] pt-1 sm:pt-2">
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />

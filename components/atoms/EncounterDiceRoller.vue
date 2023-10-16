@@ -89,11 +89,13 @@ function rollDice (dice: string): void {
               </template>
             </div>
             <div class="flex flex-col pt-2">
-              <p class="body-extra-small">
+              <label for="amount" class="body-extra-small">
                 AMOUNT
-              </p>
+              </label>
               <input
+                id="amount"
                 v-model="amount"
+                name="Amount"
                 type="number"
                 min="1"
                 max="50"

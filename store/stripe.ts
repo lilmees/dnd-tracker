@@ -1,9 +1,67 @@
 export const useStripeStore = defineStore('useStripeStore', () => {
   const { t } = useI18n()
-  const config = useRuntimeConfig()
   const localePath = useLocalePath()
   const profile = useProfileStore()
   const user = useSupabaseUser()
+
+  const loading = ref<boolean>(true)
+  const products = ref<ProductPricing[]>([
+    {
+      type: 'free',
+      title: 'Starter',
+      description: t('pages.pricing.starter'),
+      prices: [0],
+      items: [
+        { label: t('pages.pricing.encounters', { number: 10 }), icon: 'check' },
+        { label: t('pages.pricing.campaigns', { number: 3 }), icon: 'check' },
+        { label: t('pages.pricing.multiple'), icon: 'cross' },
+        { label: t('pages.pricing.live'), icon: 'cross' },
+        { label: t('pages.pricing.update'), icon: 'check' }
+      ]
+    },
+    {
+      type: 'medior',
+      title: 'Medior',
+      description: t('pages.pricing.medior'),
+      items: [
+        { label: t('pages.pricing.encounters', { number: 50 }), icon: 'check' },
+        { label: t('pages.pricing.campaigns', { number: 10 }), icon: 'check' },
+        { label: t('pages.pricing.multiple'), icon: 'cross' },
+        { label: t('pages.pricing.live'), icon: 'check' },
+        { label: t('pages.pricing.update'), icon: 'check' }
+      ]
+    },
+    {
+      type: 'pro',
+      title: 'Pro',
+      description: t('pages.pricing.pro'),
+      items: [
+        { label: t('pages.pricing.encounters', { number: 250 }), icon: 'check' },
+        { label: t('pages.pricing.campaigns', { number: 25 }), icon: 'check' },
+        { label: t('pages.pricing.multiple'), icon: 'check' },
+        { label: t('pages.pricing.live'), icon: 'check' },
+        { label: t('pages.pricing.update'), icon: 'check' }
+      ]
+    }
+  ])
+
+  async function fetchProducts (): Promise<void> {
+    const stripeProducts = await $fetch('/api/stripe/products')
+
+    products.value.push()
+
+    stripeProducts.forEach((product) => {
+      const { name, prices, monthId, yearId } = product
+      const key = name.replace(' plan', '').toLowerCase() as StripeSubscriptionType
+      const index = products.value.findIndex(product => product.type === key)
+
+      if (index >= 0) {
+        products.value[index] = { ...products.value[index], prices, monthId, yearId }
+      }
+    })
+
+    loading.value = false
+  }
 
   async function subscribe (lookup: string, locale: string): Promise<void> {
     if (!user || !profile.data) {
@@ -36,50 +94,15 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     }
   }
 
+  onMounted(async () => {
+    await fetchProducts()
+  })
+
   return {
+    products,
+    loading,
     subscribe,
     createPortalSession,
-    products: [
-      {
-        title: 'Starter',
-        description: t('pages.pricing.starter'),
-        prices: [0],
-        items: [
-          { label: t('pages.pricing.encounters', { number: 10 }), icon: 'check' },
-          { label: t('pages.pricing.campaigns', { number: 3 }), icon: 'check' },
-          { label: t('pages.pricing.multiple'), icon: 'cross' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
-          { label: t('pages.pricing.update'), icon: 'check' }
-        ]
-      },
-      {
-        title: 'Medior',
-        description: t('pages.pricing.medior'),
-        prices: [3, 32.50],
-        items: [
-          { label: t('pages.pricing.encounters', { number: 50 }), icon: 'check' },
-          { label: t('pages.pricing.campaigns', { number: 10 }), icon: 'check' },
-          { label: t('pages.pricing.multiple'), icon: 'cross' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
-          { label: t('pages.pricing.update'), icon: 'check' }
-        ],
-        monthId: config.public.stripeMediorMonthly,
-        yearId: config.public.stripeMediorYearly
-      },
-      {
-        title: 'Pro',
-        description: t('pages.pricing.pro'),
-        prices: [5, 50],
-        items: [
-          { label: t('pages.pricing.encounters', { number: 'infinite' }), icon: 'check' },
-          { label: t('pages.pricing.campaigns', { number: 'infinite' }), icon: 'check' },
-          { label: t('pages.pricing.multiple'), icon: 'check' },
-          { label: t('pages.pricing.setup'), icon: 'check' },
-          { label: t('pages.pricing.update'), icon: 'check' }
-        ],
-        monthId: config.public.stripeProMonthly,
-        yearId: config.public.stripeProYearly
-      }
-    ] as Pricing[]
+    fetchProducts
   }
 })

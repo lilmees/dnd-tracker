@@ -19,6 +19,10 @@ export default defineNuxtConfig({
     '@/assets/css/quill.css'
   ],
   modules: [
+    '@nuxt/content',
+    'nuxt-particles',
+    '@unlok-co/nuxt-stripe',
+    'nuxt-security',
     'nuxt-icon',
     'nuxt-schema-org',
     '@nuxtjs/supabase',
@@ -30,18 +34,7 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     'nuxt-simple-sitemap',
     '@vite-pwa/nuxt',
-    ['nuxt-mail', {
-      message: {
-        to: 'jeremy@dnd-tracker.com' // default fallback
-      },
-      smtp: {
-        service: 'gmail',
-        auth: {
-          user: process.env.MAIL,
-          pass: process.env.MAIL_PASSWORD
-        }
-      }
-    }]
+    'vue-email/nuxt'
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -49,15 +42,11 @@ export default defineNuxtConfig({
       beta: process.env.BETA,
       appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
-      stripePk: process.env.STRIPE_PK,
-      stripeMediorMonthly: process.env.STRIPE_MEDIOR_MONTHLY,
-      stripeMediorYearly: process.env.STRIPE_MEDIOR_YEARLY,
-      stripeProMonthly: process.env.STRIPE_PRO_MONTHLY,
-      stripeProYearly: process.env.STRIPE_PRO_YEARLY,
       logRocket: process.env.LOGROCKET_ID,
       formkit: process.env.FORMKIT_PRO
     },
-    stripeSk: process.env.STRIPE_SK
+    mailAddress: process.env.MAIL,
+    mailPassword: process.env.MAIL_PASSWORD
   },
   appConfig: {
     umami: {
@@ -150,5 +139,34 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': ['\'self\'', 'https:', 'data:'],
+        'frame-ancestors': ['\'self\'', 'https:', 'data:']
+      },
+      crossOriginEmbedderPolicy: false
+    }
+  },
+  stripe: {
+    server: {
+      key: process.env.STRIPE_SK,
+      options: {
+        apiVersion: '2022-11-15'
+      }
+    },
+    client: {
+      key: process.env.STRIPE_PK,
+      options: {
+        apiVersion: '2022-11-15'
+      }
+    }
+  },
+  vueEmail: {
+    baseUrl: process.env.production ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
+    i18n: {
+      defaultLocale: 'en'
+    }
   }
 })

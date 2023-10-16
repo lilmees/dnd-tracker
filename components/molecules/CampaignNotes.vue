@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { isAdmin } from '@/utils/permission-helpers'
 
 const store = useCurrentCampaignStore()
+const profile = useProfileStore()
 const toast = useToastStore()
 const notes = useNotesStore()
 
@@ -55,6 +57,8 @@ function resetState (): void {
       <button
         v-tippy="{ content: $t('actions.add') }"
         :aria-label="$t('actions.add')"
+        :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '')"
+        class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="isOpen = true"
       >
         <Icon
@@ -67,25 +71,17 @@ function resetState (): void {
     <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
       <SkeletonNoteCard v-for="i in 4" :key="i" />
     </div>
-    <div v-else-if="!store?.campaign?.notes?.length" class="space-y-4 pt-4">
-      <p class="text-center">
-        {{ $t('components.campaignNotes.none') }}
-      </p>
-      <div class="flex justify-center">
-        <button
-          class="btn-primary w-fit mx-auto"
-          :aria-label="$t('components.noteModal.add')"
-          @click="isOpen = true"
-        >
-          {{ $t('components.noteModal.add') }}
-        </button>
-      </div>
-    </div>
+    <NoContent
+      v-else-if="!store?.campaign?.notes?.length"
+      :content="$t('general.notes').toLowerCase()"
+      icon="clarity:note-line"
+    />
     <div v-else class="flex gap-4 flex-wrap items-start">
       <NoteCard
         v-for="note in store.campaign.notes"
         :key="note.created_at"
         :note="note"
+        :campaign="store.campaign"
         @update="(v: Note) => {
           selected = [v]
           isUpdating = true

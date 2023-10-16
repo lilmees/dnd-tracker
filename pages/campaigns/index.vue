@@ -18,7 +18,10 @@ const {
 
 const isOpen = ref<boolean>(false)
 
-onMounted(() => store.fetch())
+onMounted(() => {
+  store.fetch()
+  reset()
+})
 
 whenever(() => store.error, () => { toast.error() })
 
@@ -39,22 +42,27 @@ async function deleteCampaigns (): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout shadow>
     <div v-if="!store.error">
-      <div class="pt-5 pb-10 flex justify-between items-center">
+      <div class="pb-10 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
         </h1>
         <div class="flex gap-2">
           <button
-            class="btn-primary tracker-shadow-pulse"
+            class="btn-primary"
             :aria-label="$t('pages.campaigns.add')"
-            :disabled="store.loading"
+            :disabled="store.loading || (store.campaigns && store.max <= store.campaigns.length)"
             @click="isOpen = true"
           >
             {{ $t('pages.campaigns.add') }}
           </button>
-          <tippy interactive :z-index="2" placement="left">
+          <tippy
+            interactive
+            :z-index="2"
+            placement="left"
+            trigger="mouseenter click"
+          >
             <button
               class="bg-secondary/50 border-4 border-secondary rounded-lg w-12 h-12"
               :aria-label="$t('general.options')"
@@ -118,6 +126,10 @@ async function deleteCampaigns (): Promise<void> {
             </button>
           </div>
         </template>
+        <LimitCta
+          v-else-if="store.campaigns && store.max <= store.campaigns.length"
+          class="mb-10"
+        />
         <div class="flex flex-wrap gap-4 items-start">
           <div
             v-for="campaign in store.sortedCampaigns"
@@ -148,20 +160,11 @@ async function deleteCampaigns (): Promise<void> {
           </div>
         </div>
       </template>
-      <div
+      <NoContent
         v-else
-        class="mx-auto max-w-lg border-4 border-primary p-2 sm:p-10 rounded-lg space-y-4"
-      >
-        <h2>{{ $t('pages.campaigns.noData.title') }}</h2>
-        <p>{{ $t('pages.campaigns.noData.text') }}</p>
-        <button
-          class="btn-black"
-          :aria-label="$t('pages.campaigns.add')"
-          @click="isOpen = true"
-        >
-          {{ $t('pages.campaigns.add') }}
-        </button>
-      </div>
+        :content="$t('general.campaigns').toLowerCase()"
+        icon="fa6-solid:dungeon"
+      />
       <CampaignModal :open="isOpen" @close="isOpen = false" />
     </div>
     <div v-else class="max-w-sm mx-auto py-20 space-y-4">
