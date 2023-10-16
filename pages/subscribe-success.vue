@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import type { Container } from 'tsparticles-engine'
 
-definePageMeta({ middleware: ['session-id', 'auth'] })
+definePageMeta({ middleware: ['auth'] })
 
-const route = useRoute()
 const profile = useProfileStore()
 const badge = useBadgesStore()
 
 onMounted(async () => {
   if (profile.data) {
-    const changes: ProfileUpdate = { stripe_session_id: route.query.session_id as string }
-
+    const changes: ProfileUpdate = {}
     // add family badge if not already added
     if (!profile.data.badges.some(badge => badge.id === 4)) {
       const familyBadge = await badge.getBadgeById(4)
