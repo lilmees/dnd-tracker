@@ -3,7 +3,7 @@
 changelog: [
   {
     version: "v1.0.14",
-    date: "2023-10-13",
+    date: "2023-10-16",
     features: [
       {
         "title": "New",
@@ -20,9 +20,11 @@ changelog: [
       {
         "title": "Improvements",
         "items": [
+          { "text": "Confirmation modal no longer expects the title, you now need to type delete" },
           { "text": "Updated styling" },
+          { "text": "Updated hotkeys for mac users" },
           { "text": "More subtle animations" },
-          { "text": "Coupon code for subscriptions" },
+          { "text": "Coupon code possibility for subscriptions" },
           { "text": "SEO and accessibility changes" },
           { "text": "When a user deletes a profile, also cancel the subscription" },
           { "text": "Changes for faster loading of encounters" },
