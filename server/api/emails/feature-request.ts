@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const config = useRuntimeConfig()
 
-  const template = await useCompiler('ContactRequest.vue', {
+  const template = await useCompiler('FeatureRequest.vue', {
     props: body.props
   })
 
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   const options = {
     from: body.props.email,
     to: 'jeremy@dnd-tracker.com',
-    subject: 'New contact request/question',
+    subject: 'New feature request',
     html: template
   }
 

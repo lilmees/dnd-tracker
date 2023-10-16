@@ -3,33 +3,45 @@ import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 
 const emit = defineEmits(['close'])
-const props = defineProps<{
-  open: boolean,
-  userId: string,
-}>()
+defineProps<{ open: boolean }>()
 
 const feature = useFeaturesStore()
+const profile = useProfileStore()
 
 const isAccepted = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
 const error = ref<string|undefined>()
 
-function handleSubmit ({ __init, ...formData }: Obj): void {
+async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
   error.value = undefined
   isLoading.value = true
 
   try {
     const newFeature: NewFeatureRequest = {
       ...formData as { title: string, text: string },
-      created_by: props.userId,
+      created_by: profile.data!.id,
       voted: {
-        like: [props.userId],
+        like: [profile.data!.id],
         dislike: []
       },
       status: 'review'
     }
 
-    feature.addFeature(newFeature)
+    const feat = await feature.addFeature(newFeature)
+
+    if (feat) {
+      useFetch('/api/emails/feature-request', {
+        method: 'POST',
+        body: {
+          props: {
+            ...formData,
+            id: feat.id,
+            name: profile.data!.username,
+            email: profile.data!.email
+          }
+        }
+      })
+    }
 
     isAccepted.value = true
   } catch (err: any) {
