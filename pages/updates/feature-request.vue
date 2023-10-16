@@ -114,7 +114,6 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
     <AddFeatureRequestModal
       v-if="profile.data"
       :open="isOpen"
-      :user-id="profile.data.id"
       @close="isOpen = false"
     />
   </NuxtLayout>

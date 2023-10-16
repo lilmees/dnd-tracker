@@ -72,7 +72,7 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
     }
   }
 
-  async function addFeature (feature: NewFeatureRequest): Promise<void> {
+  async function addFeature (feature: NewFeatureRequest): Promise<undefined|FeatureRequest> {
     const { data: results, error } = await supabase
       .from('features')
       .insert([feature as never])
@@ -86,6 +86,8 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
       data.value
         ? data.value.push(results[0])
         : data.value = [results[0]]
+
+      return results[0] as FeatureRequest
     }
   }
 
