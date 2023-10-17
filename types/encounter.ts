@@ -25,7 +25,6 @@ interface Encounter {
   rows: Row[]
   profiles: EncounterProfile
   campaign: Campaign
-  admins: string[]
   round: number
   owner?: string
   info?: string

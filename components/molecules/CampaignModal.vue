@@ -57,7 +57,6 @@ async function addCampaign (data: Obj): Promise<void> {
     await store.addCampaign({
       ...data as CampaignForm,
       created_by: user.value.id,
-      admins: [user.value.id],
       color: contrastColor(data.background)
     })
   }
