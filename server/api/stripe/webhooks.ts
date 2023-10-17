@@ -22,7 +22,11 @@ export default defineEventHandler(async (event) => {
     return `Did not handle ${body.type} because it was an old event`
   }
 
-  const cancel = cancelSubscription(body.type)
+  let cancel = cancelSubscription(body.type)
+
+  if (subscription.status === 'incomplete') {
+    cancel = true
+  }
 
   const stripeData: Partial<Stripe> = {
     stripe_last_event: body.created,

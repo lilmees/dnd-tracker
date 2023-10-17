@@ -97,7 +97,6 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       round: 1,
       rows: [],
       created_by: user.value.id,
-      admins: [user.value.id],
       color: contrastColor(data.background),
       activeIndex: 0
     }) as AddEncounter

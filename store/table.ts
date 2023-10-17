@@ -100,7 +100,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       enc.rows = useIndexCorrecter(enc.rows as Row[])
     }
 
-    const { admins, created_at, created_by, id, ...data } = { ...encounter.value, ...enc }
+    const { created_at, created_by, id, ...data } = { ...encounter.value, ...enc }
 
     if (data.campaign && typeof data.campaign === 'object') {
       data.campaign = data.campaign.id
