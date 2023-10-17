@@ -35,6 +35,7 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
         },
         store.campaign.id
       )
+
       toast.success({ title: t('pages.campaign.toast.update') })
     }
   } catch (err: any) {
