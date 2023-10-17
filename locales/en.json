@@ -155,7 +155,7 @@
         "accept": "Join the Adventure"
       },
       "toast": {
-        "success": "Updated your campaign successfully",
+        "update": "Updated your campaign successfully",
         "delete": "Removed your campaign successfully"
       }
     },
