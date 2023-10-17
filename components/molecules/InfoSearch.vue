@@ -11,16 +11,13 @@ interface Form { search: string, type: Open5eType}
 const form = ref<Form>({ search: '', type: 'spells' })
 const isLoading = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
-const isInit = ref<boolean>(true)
 const showPinned = ref<boolean>(false)
 const hits = ref<InfoCard[]>([])
 const page = ref<number>(0)
 const pages = ref<number>(0)
 
-watchOnce(() => isOpen.value, (v: boolean) => {
-  if (v) {
-    isLoading.value = true
-    isInit.value = false
+whenever(() => isOpen.value, () => {
+  if (!hits.value.length) {
     fetchInfo(form.value)
   }
 })
@@ -29,7 +26,6 @@ watch(
   form,
   (v: Form) => {
     if (v) {
-      isLoading.value = true
       page.value = 0
       fetchInfo(form.value)
     } else {
@@ -41,6 +37,8 @@ watch(
 )
 
 const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
+  isLoading.value = true
+
   try {
     const { results, count } = await open5e.getData({
       query: { search: query.search, page: page.value + 1 },
@@ -48,14 +46,7 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
     })
     pages.value = Math.ceil(count / 20)
 
-    // Filter out objects with the same name
-    const unique: InfoCard[] = results.reduce((arr: InfoCard[], r: InfoCard) => {
-      return !arr.find(item => item.name === r.name)
-        ? arr.concat(r)
-        : arr
-    }, [])
-
-    hits.value = unique
+    hits.value = results
   } catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
@@ -65,7 +56,6 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
 }, 500, { maxWait: 1000 })
 
 function paginate (newPage: number): void {
-  isLoading.value = true
   page.value = newPage
   fetchInfo(form.value)
   scrollToTop()
@@ -138,53 +128,55 @@ function scrollToTop (): void {
       />
     </button>
     <FullScreenSearch :open="isOpen" @close="reset">
-      <div class="flex flex-col max-h-screen pt-20 pb-6">
-        <div
-          class="flex items-start gap-4 px-1"
-          :class="{ 'pb-10': !table.encounter?.info_cards?.length || false }"
-        >
-          <FormKit
-            v-model="form.type"
-            type="select"
-            :label="$t('components.inputs.typeLabel')"
-            :options="open5e.options"
-            @input="form.search = ''"
-          />
-          <div class="grow">
+      <div class="flex flex-col max-h-screen py-6">
+        <div class="space-y-2">
+          <div
+            class="flex items-start gap-4 max-w-prose w-full mx-auto"
+            :class="{ 'pb-10': !table.encounter?.info_cards?.length || false }"
+          >
             <FormKit
               v-model="form.search"
               type="search"
               :label="$t('components.inputs.nameLabel')"
+              outer-class="$reset !pb-0 grow"
+            />
+            <FormKit
+              v-model="form.type"
+              type="select"
+              :label="$t('components.inputs.typeLabel')"
+              :options="open5e.options"
+              outer-class="$reset !pb-0 grow"
+              @input="form.search = ''"
             />
           </div>
+          <div
+            v-if="table.encounter?.info_cards?.length"
+            class="flex gap-4 pt-2 pb-8 w-full max-w-prose mx-auto"
+          >
+            <button class="btn-primary" @click="showToggle">
+              {{ $t(`components.infoSearch.${ showPinned ? 'hide' : 'show' }`) }}
+            </button>
+            <button class="btn-danger" @click="removePins">
+              {{ $t('components.infoSearch.remove') }}
+            </button>
+          </div>
         </div>
-        <div
-          v-if="table.encounter?.info_cards?.length"
-          class="flex gap-4 pt-2 pb-8"
-        >
-          <button class="btn-primary" @click="showToggle">
-            {{ $t(`components.infoSearch.${ showPinned ? 'hide' : 'show' }`) }}
-          </button>
-          <button class="btn-danger" @click="removePins">
-            {{ $t('components.infoSearch.remove') }}
-          </button>
-        </div>
-        <div v-if="isLoading" class="relative w-20 h-20 mx-auto">
-          <div class="loader" />
-        </div>
-        <div
-          v-else-if="!isLoading && (hits.length || showPinned)"
-          class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto"
-        >
-          <InfoCard
-            v-for="(hit, index) in showPinned ? table.encounter?.info_cards : hits"
-            :id="index === 0 ? 'el' : ''"
-            :key="hit.slug"
-            :hit="hit"
-            :sandbox="table.isSandbox"
-            :pinned="table.encounter?.info_cards?.some(info => info.slug === hit.slug) || false"
-            @pin="handlePinToggle"
-          />
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto">
+          <template v-if="isLoading">
+            <SkeletonInfoCard v-for="i in 20" :key="i" />
+          </template>
+          <template v-else-if="hits.length || showPinned">
+            <InfoCard
+              v-for="(hit, index) in showPinned ? table.encounter?.info_cards : hits"
+              :id="index === 0 ? 'el' : ''"
+              :key="hit.slug"
+              :hit="hit"
+              :sandbox="table.isSandbox"
+              :type="form.type"
+              :pinned="table.encounter?.info_cards?.some(info => info.slug === hit.slug) || false"
+              @pin="handlePinToggle"
+            />
+          </template>
         </div>
         <Pagination
           v-if="pages > 1 && !isLoading && hits.length && !showPinned"
@@ -194,8 +186,8 @@ function scrollToTop (): void {
           @paginate="paginate"
         />
         <p
-          v-if="!isLoading && !hits.length && !isInit && form.search !== ''"
-          class="text-center max-w-prose mx-auto p-4 sm:p-8 bg-tracker rounded-lg"
+          v-if="!isLoading && !hits.length && form.search !== ''"
+          class="text-center max-w-prose mx-auto"
         >
           {{ $t('components.fullScreenSearch.notFound') }}
         </p>

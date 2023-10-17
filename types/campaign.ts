@@ -28,7 +28,6 @@ interface Campaign {
   id: number
   created_at: string
   created_by: SocialProfile
-  admins: string[]
   homebrew_items?: Homebrew[]
   initiative_sheets?: Encounter[]
   notes?: Note[]
@@ -39,7 +38,7 @@ interface Campaign {
   join_campaign?: JoinCampaign[]
 }
 
-interface AddCampaign extends Pick<Campaign, 'admins'|'title'|'background'|'color'> {
+interface AddCampaign extends Pick<Campaign, 'title'|'background'|'color'> {
   created_by: string
 }
 

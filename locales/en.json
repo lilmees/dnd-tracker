@@ -155,7 +155,7 @@
         "accept": "Join the Adventure"
       },
       "toast": {
-        "success": "Updated your campaign successfully",
+        "update": "Updated your campaign successfully",
         "delete": "Removed your campaign successfully"
       }
     },
@@ -380,7 +380,19 @@
     },
     "addInitiativeMonster": {
       "bestiary": "Bestiary",
-      "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!"
+      "notFound": "We haven't found a monster to match these filters, but that doesn't mean you can't create it yourself as homebrew!",
+      "sort": {
+        "title": "Sort",
+        "options": {
+          "alphabet": "Alphabetical",
+          "mostHP": "Most HP",
+          "leastHP": "Least HP",
+          "mostAC": "Most AC",
+          "leastAC": "Least AC",
+          "mostCR": "Most CR",
+          "leastCR": "Least CR"
+        }
+      }
     },
     "addInitiativeCampaignHomebrew": {
       "addCampaignHomebrew": "Add campaign homebrew",
