@@ -30,7 +30,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     const { data, error } = await supabase
       .from('initiative_sheets')
-      .select('*, campaign(id, title, background, color, created_by, team(*))')
+      .select('*, campaign(id, title, background, color, created_by(id, created_at, username, name, avatar, email, badges), team(*))')
       .eq('id', id)
       .single()
 
@@ -40,7 +40,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       throw error
     }
 
-    if (profile.data && !isMember(enc.campaign, profile.data.id)) {
+    if (enc.campaign && profile.data && !isMember(enc.campaign, profile.data.id)) {
       navigateTo(localePath('/not-member'))
     }
 
@@ -50,7 +50,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     enc.rows = useIndexCorrecter(enc.rows as Row[])
 
-    if (profile.data && isMedior(profile.data)) {
+    if (enc.campaign && profile.data && isMedior(profile.data)) {
       subscribeEncounterChanges()
     }
 
@@ -108,16 +108,17 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     if (!isSandbox.value && id) {
       try {
-        const { error } = await supabase
+        const { data: updated, error } = await supabase
           .from('initiative_sheets')
           .update(data as never)
           .eq('id', id)
+          .select('*, campaign(id, title, background, color, created_by(id, created_at, username, name, avatar, email, badges), team(*))')
 
         if (error) {
           throw error
         }
 
-        encounter.value = { ...encounter.value, ...enc } as Encounter
+        encounter.value = updated[0] as Encounter
       } catch (err) {
         logRocket.captureException(err as Error)
         toast.error()
