@@ -380,7 +380,19 @@
     },
     "addInitiativeMonster": {
       "bestiary": "Bestiary",
-      "notFound": "Wij hebben geen monster gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanmaken als homebrew!"
+      "notFound": "Wij hebben geen monster gevonden die bij deze filters past, maar dat wil niet zeggen dat je het niet zelf kan aanmaken als homebrew!",
+      "sort": {
+        "title": "Sorteer",
+        "options": {
+          "alphabet": "Alfabetisch",
+          "mostHP": "Meeste HP",
+          "leastHP": "Minste HP",
+          "mostAC": "Meeste AC",
+          "leastAC": "Minste AC",
+          "mostCR": "Meeste CR",
+          "leastCR": "Minste CR"
+        }
+      }
     },
     "addInitiativeCampaignHomebrew": {
       "addCampaignHomebrew": "campagne homebrew toevoegen",
