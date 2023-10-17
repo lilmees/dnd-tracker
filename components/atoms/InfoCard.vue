@@ -1,18 +1,23 @@
 <script setup lang="ts">
 defineEmits(['pin'])
-defineProps<{
+const props = defineProps<{
   hit: InfoCard,
   pinned: boolean,
-  sandbox: boolean
+  sandbox: boolean,
+  type: Open5eType
 }>()
 
 const { $md } = useNuxtApp()
 
 const isOpen = ref<boolean>(false)
+
+function hideOpenButton (): boolean {
+  return props.type === 'weapons' || props.type === 'armor'
+}
 </script>
 
 <template>
-  <div class="border-4 border-primary rounded-lg p-4 sm:p-8 relative">
+  <div class="border-4 border-primary rounded-lg p-3 relative">
     <button
       v-if="!sandbox"
       v-tippy="{
@@ -35,10 +40,10 @@ const isOpen = ref<boolean>(false)
     <div
       v-if="hit.desc"
       class="mt-4 html-richtext"
-      :class="{ 'line-clamp-3': !isOpen }"
+      :class="{ 'line-clamp-3': !isOpen && hideOpenButton }"
       v-html="$md.render(hit.desc)"
     />
-    <template v-if="isOpen">
+    <template v-if="isOpen || hideOpenButton()">
       <p v-if="hit.category" class="mt-4">
         <span class="font-bold">Category:</span> {{ hit.category }}
       </p>
@@ -156,7 +161,7 @@ const isOpen = ref<boolean>(false)
         </ul>
       </div>
     </template>
-    <div class="flex justify-end mt-4">
+    <div v-if="!hideOpenButton()" class="flex justify-end mt-4">
       <button
         class="flex gap-2 btn-black"
         :aria-label="$t(`actions.read.${isOpen ? 'less' : 'more'}`)"
