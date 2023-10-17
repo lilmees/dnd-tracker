@@ -11,7 +11,7 @@ export function campaignUrl (campaign: Campaign, type: CampaignPageType): string
 }
 
 export function backUrl (campaign: Campaign | undefined): string {
-  if (!campaign) {
+  if (!campaign?.title) {
     return '/encounters'
   }
   const title: string = campaign.title.replace(/[^a-zA-Z0-9]+/g, '-')
