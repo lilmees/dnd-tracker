@@ -10,7 +10,7 @@ const store = useTableStore()
     <InfoSearch />
     <EncounterDiceRoller />
     <AddInitiativeMonster />
-    <template v-if="store?.encounter?.campaign || store.isSandbox">
+    <template v-if="store.encounter?.campaign || store.isSandbox">
       <AddInitiativeCampaignHomebrew />
     </template>
     <HomebrewModal encounter />

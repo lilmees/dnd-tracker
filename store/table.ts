@@ -89,7 +89,8 @@ export const useTableStore = defineStore('useTableStore', () => {
             })
             navigateTo(localePath('/encounters'))
           } else {
-            encounter.value = payload.new as Encounter
+            const { campaign, created_at, id, ...updated } = payload.new
+            encounter.value = { ...encounter.value, ...updated } as Encounter
           }
         })
       .subscribe()
