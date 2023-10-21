@@ -15,7 +15,4 @@ const store = useTableStore()
     </template>
     <HomebrewModal encounter />
   </div>
-  <pre>
-    {{ store.encounter?.campaign }}
-  </pre>
 </template>
