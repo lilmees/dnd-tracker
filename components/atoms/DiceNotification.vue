@@ -60,54 +60,51 @@ onUnmounted(() => onClose())
   >
     <section
       v-if="rolled"
-      class="bg-black border-4 rounded-3xl overflow-hidden w-full max-w-sm fixed bottom-5 z-[1] left-1/2 -translate-x-1/2"
+      class="backdrop-blur border-4 rounded-lg overflow-hidden w-full max-w-lg fixed bottom-5 z-[1] left-1/2 -translate-x-1/2"
       :class="{
-        'border-secondary': rolled.dice === 'd100',
-        'border-primary': rolled.dice === 'd20',
-        'border-warning': rolled.dice === 'd12',
-        'border-info': rolled.dice === 'd10',
-        'border-danger': rolled.dice === 'd8',
-        'border-help': rolled.dice === 'd6',
-        'border-success': rolled.dice === 'd4',
+        'border-secondary bg-secondary/50': rolled.dice === 'd100',
+        'border-primary bg-primary/50': rolled.dice === 'd20',
+        'border-warning bg-warning/50': rolled.dice === 'd12',
+        'border-info bg-info/50': rolled.dice === 'd10',
+        'border-danger bg-danger/50': rolled.dice === 'd8',
+        'border-help bg-help/50': rolled.dice === 'd6',
+        'border-success bg-success/50': rolled.dice === 'd4',
       }"
       @mouseover="onMouseover"
       @mouseleave="onMouseleave"
     >
-      <h3 class="text-center px-6 py-4">
-        {{
-          rolled.amount > 1
-            ? `${rolled.amount}x ${rolled.dice.toUpperCase()}`
-            : rolled.dice.toUpperCase()
-        }}
-      </h3>
-      <p
-        class="flex gap-2 px-6"
-        :class="{
-          'pb-4 justify-center': !Array.isArray(rolled.result)
-        }"
-      >
-        {{ $t('general.total') }}:
-        <span class="font-bold">
+      <div class="py-4 px-6 space-y-2">
+        <h3>
           {{
-            Array.isArray(rolled.result)
-              ? rolled.result.reduce((sum, a) => sum + a, 0)
-              : rolled.result
+            rolled.amount > 1
+              ? `${rolled.dice.toUpperCase()} x${rolled.amount}`
+              : rolled.dice.toUpperCase()
           }}
-        </span>
-        <span v-if="rolled.max === rolled.result">🎉</span>
-        <span v-if="rolled.result === 1">😿</span>
-      </p>
-      <p
-        v-if="Array.isArray(rolled.result)"
-        class="flex flex-wrap gap-1 max-w-[350px] px-6 pb-4"
-      >
-        <span
-          v-for="(result, index) in rolled.result"
-          :key="result"
+        </h3>
+        <p class="flex gap-2">
+          {{ $t('general.total') }}:
+          <span class="font-bold">
+            {{
+              Array.isArray(rolled.result)
+                ? rolled.result.reduce((sum, a) => sum + a, 0)
+                : rolled.result
+            }}
+          </span>
+          <span v-if="rolled.max === rolled.result">🎉</span>
+          <span v-if="rolled.result === 1">😿</span>
+        </p>
+        <p
+          v-if="Array.isArray(rolled.result)"
+          class="flex flex-wrap gap-1 text-slate-300 body-small"
         >
-          {{ index !== rolled.result.length - 1 ? `${result},` : result }}
-        </span>
-      </p>
+          <span
+            v-for="(result, index) in rolled.result"
+            :key="result"
+          >
+            {{ index !== rolled.result.length - 1 ? `${result},` : result }}
+          </span>
+        </p>
+      </div>
       <div class="h-2 w-full">
         <div
           class="h-full ease-in-out"
