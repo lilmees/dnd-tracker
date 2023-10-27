@@ -53,7 +53,7 @@ function rollDice (dice: string): void {
           v-if="isOpen"
           class="absolute bottom-0 right-0 z-10"
         >
-          <div class="bg-black border-4 border-primary rounded-lg p-2">
+          <div class="bg-background/50 backdrop-blur-xl border-4 border-background rounded-lg p-2">
             <div class="flex flex-col gap-1">
               <template
                 v-for="dice in ['d100', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4']"
@@ -65,7 +65,7 @@ function rollDice (dice: string): void {
                     placement: 'left',
 
                   }"
-                  class="bg-black rounded-lg p-2 border-2 w-10 h-10 z-0"
+                  class="rounded-lg p-2 border-2 w-10 h-10 z-0"
                   :class="{
                     'border-secondary': dice === 'd100',
                     'border-primary': dice === 'd20',
@@ -97,8 +97,8 @@ function rollDice (dice: string): void {
                 v-model="amount"
                 name="Amount"
                 type="number"
-                min="1"
-                max="50"
+                :min="1"
+                :max="50"
                 class="border-none outline-none text-white body-small w-[40px] bg-transparent"
               >
             </div>

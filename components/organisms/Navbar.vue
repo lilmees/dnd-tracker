@@ -27,9 +27,9 @@ watch(isSmall, (v: boolean) => {
 })
 
 onMounted(() => {
-  let prevScrollpos = window.pageYOffset
+  let prevScrollpos = window.scrollY
   window.onscroll = function () {
-    const currentScrollPos = window.pageYOffset
+    const currentScrollPos = window.scrollY
 
     navVisible.value = (prevScrollpos > currentScrollPos && currentScrollPos !== 0) || currentScrollPos === 0
 
