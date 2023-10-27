@@ -61,11 +61,11 @@ if (process.client) {
           v-if="store.encounter"
           class="space-y-4"
         >
-          <div class="flex justify-end">
+          <div class="flex justify-end relative z-[1]">
             <VisualOptions />
           </div>
-          <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative container-max">
-            <div class="abolsute inset-0 z-[-0] fancy-shadow" />
+          <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
+            <div class="abolsute inset-0 z-[-1] fancy-shadow" />
             <EncounterHeader />
             <EncounterTable />
             <EncounterOptions />
