@@ -48,7 +48,7 @@ onMounted(async () => {
       >
         <ClientOnly>
           <RichText
-            class="pt-2"
+
             :content="store.encounter.info || ''"
             :label="$t('pages.encounter.info')"
             @update="store.encounterUpdate({ info: $event })"
@@ -58,6 +58,7 @@ onMounted(async () => {
           v-if="store.encounter?.info_cards?.length"
           :cards="store.encounter.info_cards"
         />
+        <NameGenerator />
       </div>
     </div>
   </NuxtLayout>

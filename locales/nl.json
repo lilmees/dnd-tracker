@@ -23,6 +23,7 @@
     "copy": "Kopiëren",
     "random": "Willekeurig",
     "create": "Creëren",
+    "generate": "Genereren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
     "drag": "Sleep mij",
@@ -101,7 +102,7 @@
         "item3": "Alles op één handige plaats voor de GM",
         "item4": "Samenwerking in Dungeon Mastering",
         "item5": "Integratie van official content met de mogelijkheid om je eigen homebrew toe te voegen",
-        "item6": "Aantrekkelijk dark mode design"
+        "item6": "Fantasie naam generator"
       },
       "textBlock2": {
         "title": "Samenwerking in Dungeon Mastering 🧙‍♂️🧙",
@@ -531,6 +532,13 @@
       "text": "Je hebt de limiet van je huidige abonnement bereikt. Ontgrendel meer functies en voordelen door nu te upgraden. Maak je geen zorgen als je je inhoud niet ziet, deze is niet verwijderd",
       "cta": "Nu upgraden",
       "max": "Max {number} gecreëerd door jezelf of je campagne"
+    },
+    "nameGenerator": {
+      "title": "Fantasie naam generator",
+      "cta": "Genereer je fantasie namen nu!",
+      "toast": {
+        "title": "{name} gekopieerd naar klembord"
+      }
     }
   }
 }

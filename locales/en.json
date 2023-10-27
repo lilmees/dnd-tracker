@@ -23,6 +23,7 @@
     "copy": "Copy",
     "random": "Random",
     "create": "Create",
+    "generate": "Generate",
     "openSettings": "Settings",
     "closeSettings": "Close settings",
     "drag": "Drag me",
@@ -101,7 +102,7 @@
         "item3": "Everything in 1 convenient place for the DM",
         "item4": "Collaborative Dungeon Mastering",
         "item5": "Plenty of information you can get your hands on",
-        "item6": "Attractive dark mode design for all vampires among us"
+        "item6": "Fantasy name generator"
       },
       "textBlock2": {
         "title": "Collaborative Dungeon Mastering 🧙‍♂️🧙",
@@ -531,6 +532,13 @@
       "text": "You've reached the limit of your current plan. Unlock more features and benefits by upgrading now. Don't worry if you don't see your content it's not removed",
       "cta": "Upgrade now",
       "max": "Max {number} created by yourself or your campaign"
+    },
+    "nameGenerator": {
+      "title": "Fantasy name generator",
+      "cta": "Generate your fantasy names now!",
+      "toast": {
+        "title": "Copied {name} to clipboard"
+      }
     }
   }
 }
