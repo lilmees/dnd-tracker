@@ -240,6 +240,7 @@ function handleSubmit ({ __init, file }: Obj): void {
           <div class="space-y-2">
             <h3>Todo's</h3>
             <ul class="list-disc ml-4">
+              <li>Draw background</li>
               <li>Draw shapes</li>
               <li>Toast for max amount of sprites</li>
               <li>Zoom options</li>
@@ -250,9 +251,9 @@ function handleSubmit ({ __init, file }: Obj): void {
           </div>
         </div>
         <div>
-          <Accordion :sections="Object.keys(sprites)">
+          <Accordion :sections="['monsters', 'characters', 'animals', 'items']">
             <template
-              v-for="category in Object.keys(sprites)"
+              v-for="category in ['monsters', 'characters', 'animals', 'items']"
               :key="category"
               #[category]
             >

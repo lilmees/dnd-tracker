@@ -14,12 +14,12 @@ export const useMapBuilder = () => {
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
 
-  // const {
-  //   isDrawingShape,
-  //   mouseDown,
-  //   mouseMove,
-  //   mouseUp
-  // } = useFabricShapeDrawing()
+  const {
+    isDrawingShape,
+    mouseDown,
+    mouseMove,
+    mouseUp
+  } = useFabricShapeDrawing()
 
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(
