@@ -14,12 +14,12 @@ export const useMapBuilder = () => {
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
 
-  const {
-    isDrawingShape,
-    mouseDown,
-    mouseMove,
-    mouseUp
-  } = useFabricShapeDrawing()
+  // const {
+  //   isDrawingShape,
+  //   mouseDown,
+  //   mouseMove,
+  //   mouseUp
+  // } = useFabricShapeDrawing()
 
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(
@@ -182,37 +182,6 @@ export const useMapBuilder = () => {
     }
   }
 
-  function flip (axis: 'x' | 'y'): void {
-    const object = canvas.value?.getActiveObject()
-
-    if (!object) {
-      return
-    }
-
-    const key = `flip${axis.toUpperCase()}`
-
-    update(object, key, !object.get(key))
-  }
-
-  function clone (): void {
-    const activeObjects = canvas.value?.getActiveObjects()
-
-    if (!activeObjects || !activeObjects.length) {
-      return
-    }
-
-    activeObjects.forEach(async (obj) => {
-      const clone: fabric.Object = await obj.clone()
-
-      clone.set({ top: obj.top + 8, left: obj.left + 8 })
-
-      canvas.value?.add(clone)
-    })
-
-    canvas.value?.discardActiveObject()
-    canvas.value?.requestRenderAll()
-  }
-
   function serializeCanvas (): void {}
 
   function deserializeCanvas (items: fabric.Object[]): void {
@@ -233,17 +202,6 @@ export const useMapBuilder = () => {
       canvas.value!.renderOnAddRemove = origRenderOnAddRemove
       canvas.value!.requestRenderAll()
     })
-  }
-
-  function exportCanvas (): void {
-    if (!canvas.value) {
-      return
-    }
-
-    const link = document.createElement('a')
-    link.href = canvas.value.toDataURL()
-    link.download = 'dnd-tracker-map.png'
-    link.click()
   }
 
   watch(
@@ -287,9 +245,6 @@ export const useMapBuilder = () => {
     update,
     keydownHandler,
     toggleDrawing,
-    setBrush,
-    flip,
-    clone,
-    exportCanvas
+    setBrush
   }
 }

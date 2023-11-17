@@ -3,6 +3,7 @@ import * as fabric from 'fabric'
 import { reset } from '@formkit/core'
 import sprites from '@/fixtures/sprites.json'
 import { readFile } from '@/utils/file-reader'
+import { flip, clone, exportCanvas } from '@/utils/fabric-utils'
 
 const {
   canvas,
@@ -21,9 +22,7 @@ const {
   setBackgroundImage,
   toggleDrawing,
   setBrush,
-  flip,
-  clone,
-  exportCanvas
+  update
 } = useMapBuilder()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -154,21 +153,21 @@ function handleSubmit ({ __init, file }: Obj): void {
                 <button
                   :disabled="!spriteSelected"
                   class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="flip('x')"
+                  @click="flip('x', canvas, update)"
                 >
                   <Icon name="uil:flip-v-alt" class="w-6 h-6" />
                 </button>
                 <button
                   :disabled="!spriteSelected"
                   class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="flip('y')"
+                  @click="flip('y', canvas, update)"
                 >
                   <Icon name="uil:flip-h-alt" class="w-6 h-6" />
                 </button>
                 <button
                   :disabled="!spriteSelected"
                   class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="clone"
+                  @click="clone(canvas)"
                 >
                   <Icon name="ph:copy-bold" class="w-6 h-6" />
                 </button>
@@ -183,7 +182,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               </button>
             </div>
           </div>
-          <button class="btn-primary w-full" @click="exportCanvas">
+          <button class="btn-primary w-full" @click="exportCanvas(canvas)">
             Export
           </button>
         </div>
