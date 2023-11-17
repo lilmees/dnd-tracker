@@ -143,7 +143,7 @@ export default defineNuxtConfig({
   security: {
     headers: {
       contentSecurityPolicy: {
-        'img-src': ['\'self\'', 'https:', 'data:'],
+        'img-src': ['\'self\'', 'https:', 'data:', 'blob:'],
         'frame-ancestors': ['\'self\'', 'https:', 'data:']
       },
       crossOriginEmbedderPolicy: false

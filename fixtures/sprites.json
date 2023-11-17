@@ -1,0 +1,648 @@
+{
+  "animals": [
+    {
+      "value": "ant",
+      "label": "Ant"
+    },
+    {
+      "value": "bat",
+      "label": "Bat"
+    },
+    {
+      "value": "bedbug",
+      "label": "Bedbug"
+    },
+    {
+      "value": "beetle",
+      "label": "Beetle"
+    },
+    {
+      "value": "boar",
+      "label": "Boar"
+    },
+    {
+      "value": "cat",
+      "label": "Cat"
+    },
+    {
+      "value": "chicken",
+      "label": "Chicken"
+    },
+    {
+      "value": "cockroach",
+      "label": "Cockroach"
+    },
+    {
+      "value": "cow",
+      "label": "Cow"
+    },
+    {
+      "value": "crab",
+      "label": "Crab"
+    },
+    {
+      "value": "dog",
+      "label": "Dog"
+    },
+    {
+      "value": "duck",
+      "label": "Duck"
+    },
+    {
+      "value": "fox",
+      "label": "Fox"
+    },
+    {
+      "value": "goat",
+      "label": "Goat"
+    },
+    {
+      "value": "monkey",
+      "label": "Monkey"
+    },
+    {
+      "value": "pig",
+      "label": "Pig"
+    },
+    {
+      "value": "rat",
+      "label": "Rat"
+    },
+    {
+      "value": "scarab",
+      "label": "Scarab"
+    },
+    {
+      "value": "sheep",
+      "label": "Sheep"
+    },
+    {
+      "value": "spider",
+      "label": "Spider"
+    },
+    {
+      "value": "tick",
+      "label": "Tick"
+    },
+    {
+      "value": "toad",
+      "label": "Toad"
+    },
+    {
+      "value": "turtle",
+      "label": "Turtle"
+    },
+    {
+      "value": "wolf",
+      "label": "Wolf"
+    }
+  ],
+  "characters": [
+    {
+      "value": "acolyte",
+      "label": "Acolyte"
+    },
+    {
+      "value": "angel",
+      "label": "Angel"
+    },
+    {
+      "value": "archon",
+      "label": "Archon"
+    },
+    {
+      "value": "assassin",
+      "label": "Assassin"
+    },
+    {
+      "value": "barmaid",
+      "label": "Barmaid"
+    },
+    {
+      "value": "battlemage",
+      "label": "Battlemage"
+    },
+    {
+      "value": "blademaster",
+      "label": "Blademaster"
+    },
+    {
+      "value": "champion",
+      "label": "Champion"
+    },
+    {
+      "value": "cherub",
+      "label": "Cherub"
+    },
+    {
+      "value": "child",
+      "label": "Child"
+    },
+    {
+      "value": "cleric",
+      "label": "Cleric"
+    },
+    {
+      "value": "crusader",
+      "label": "Crusader"
+    },
+    {
+      "value": "damsel",
+      "label": "Damsel"
+    },
+    {
+      "value": "druid",
+      "label": "Druid"
+    },
+    {
+      "value": "drunkard",
+      "label": "Drunkard"
+    },
+    {
+      "value": "elf-archer",
+      "label": "Elf Archer"
+    },
+    {
+      "value": "elf-enchanter",
+      "label": "Elf Enchanter"
+    },
+    {
+      "value": "elf-lord",
+      "label": "Elf Lord"
+    },
+    {
+      "value": "elf-wayfarer",
+      "label": "Elf Wayfarer"
+    },
+    {
+      "value": "friar",
+      "label": "Friar"
+    },
+    {
+      "value": "high-priest",
+      "label": "High Priest"
+    },
+    {
+      "value": "kid",
+      "label": "Kid"
+    },
+    {
+      "value": "knight",
+      "label": "Knight"
+    },
+    {
+      "value": "necromancer",
+      "label": "Necromancer"
+    },
+    {
+      "value": "paladin",
+      "label": "Paladin"
+    },
+    {
+      "value": "pixie",
+      "label": "Pixie"
+    },
+    {
+      "value": "priest",
+      "label": "Priest"
+    },
+    {
+      "value": "pyromancer",
+      "label": "Pyromancer"
+    },
+    {
+      "value": "ranger",
+      "label": "Ranger"
+    },
+    {
+      "value": "rogue",
+      "label": "Rogue"
+    },
+    {
+      "value": "shepard",
+      "label": "Shepard"
+    },
+    {
+      "value": "slinger",
+      "label": "Slinger"
+    },
+    {
+      "value": "soldier",
+      "label": "Soldier"
+    },
+    {
+      "value": "sorceress",
+      "label": "Sorceress"
+    },
+    {
+      "value": "swordsman",
+      "label": "Swordsman"
+    },
+    {
+      "value": "villager",
+      "label": "Villager"
+    },
+    {
+      "value": "wanderer",
+      "label": "Wanderer"
+    }
+  ],
+  "monsters": [
+    {
+      "value": "abomination",
+      "label": "Abomination"
+    },
+    {
+      "value": "ancient-fighter",
+      "label": "Ancient Fighter"
+    },
+    {
+      "value": "aqua-drake",
+      "label": "Aqua Drake"
+    },
+    {
+      "value": "archer",
+      "label": "Archer"
+    },
+    {
+      "value": "balor",
+      "label": "Balor"
+    },
+    {
+      "value": "beholder",
+      "label": "Beholder"
+    },
+    {
+      "value": "bestial",
+      "label": "Bestial"
+    },
+    {
+      "value": "bladeguard",
+      "label": "Bladeguard"
+    },
+    {
+      "value": "bony-soldier",
+      "label": "Bony Soldier"
+    },
+    {
+      "value": "brawler",
+      "label": "Brawler"
+    },
+    {
+      "value": "bronze-adult-dragon",
+      "label": "Bronze Adult Dragon"
+    },
+    {
+      "value": "bronze-wyrmling",
+      "label": "Bronze Wyrmling"
+    },
+    {
+      "value": "cadaver",
+      "label": "Cadaver"
+    },
+    {
+      "value": "copper-adult-dragon",
+      "label": "Copper Adult Dragon"
+    },
+    {
+      "value": "copper-wyrmling",
+      "label": "Copper Wyrmling"
+    },
+    {
+      "value": "crawler",
+      "label": "Crawler"
+    },
+    {
+      "value": "cyclops",
+      "label": "Cyclops"
+    },
+    {
+      "value": "demon-eye",
+      "label": "Demon Eye"
+    },
+    {
+      "value": "demon",
+      "label": "Demon"
+    },
+    {
+      "value": "demonling",
+      "label": "Demonling"
+    },
+    {
+      "value": "demonspawn",
+      "label": "Demonspawn"
+    },
+    {
+      "value": "deva",
+      "label": "Deva"
+    },
+    {
+      "value": "earth-elemental",
+      "label": "Earth Elemental"
+    },
+    {
+      "value": "ettin",
+      "label": "Ettin"
+    },
+    {
+      "value": "fire-elemental",
+      "label": "Fire Elemental"
+    },
+    {
+      "value": "flesh-golem",
+      "label": "Flesh Golem"
+    },
+    {
+      "value": "fomorian",
+      "label": "Fomorian"
+    },
+    {
+      "value": "ghoul",
+      "label": "Ghoul"
+    },
+    {
+      "value": "gnoll-grunt",
+      "label": "Gnoll Grunt"
+    },
+    {
+      "value": "gnoll-pikeman",
+      "label": "Gnoll Pikeman"
+    },
+    {
+      "value": "goblin-occultist",
+      "label": "Goblin Occultist"
+    },
+    {
+      "value": "goblin-fanatic",
+      "label": "Goblin Fanatic"
+    },
+    {
+      "value": "goblin-archer",
+      "label": "Goblin Archer"
+    },
+    {
+      "value": "goblin-wolf-rider",
+      "label": "Goblin Wolf Rider"
+    },
+    {
+      "value": "goop",
+      "label": "Goop"
+    },
+    {
+      "value": "gouger",
+      "label": "Gouger"
+    },
+    {
+      "value": "great-wyvern",
+      "label": "Great Wyvern"
+    },
+    {
+      "value": "green-adult-dragon",
+      "label": "Green Adult Dragon"
+    },
+    {
+      "value": "green-wyrmling",
+      "label": "Green Wyrmling"
+    },
+    {
+      "value": "gremlin",
+      "label": "Gremlin"
+    },
+    {
+      "value": "grimlock",
+      "label": "Grimlock"
+    },
+    {
+      "value": "grunt",
+      "label": "Grunt"
+    },
+    {
+      "value": "harpy",
+      "label": "Harpy"
+    },
+    {
+      "value": "ice-golem",
+      "label": "Ice Golem"
+    },
+    {
+      "value": "imp",
+      "label": "Imp"
+    },
+    {
+      "value": "intellect-devourer",
+      "label": "Intellect Devourer"
+    },
+    {
+      "value": "iron-golem",
+      "label": "Iron Golem"
+    },
+    {
+      "value": "jelly",
+      "label": "Jelly"
+    },
+    {
+      "value": "lizardfolk-archer",
+      "label": "Lizardfolk Archer"
+    },
+    {
+      "value": "lizardfolk-spearman",
+      "label": "Lizardfolk Spearman"
+    },
+    {
+      "value": "merfolk-aquamancer",
+      "label": "Merfolk Aquamancer"
+    },
+    {
+      "value": "merfolk-impaler",
+      "label": "Merfolk Impaler"
+    },
+    {
+      "value": "merfolk-mystic",
+      "label": "Merfolk Mystic"
+    },
+    {
+      "value": "merfolk-scout",
+      "label": "Merfolk Scout"
+    },
+    {
+      "value": "mimic",
+      "label": "Mimic"
+    },
+    {
+      "value": "mud-wyvern",
+      "label": "Mud Wyvern"
+    },
+    {
+      "value": "orc-mage",
+      "label": "Orc Mage"
+    },
+    {
+      "value": "orc-savage",
+      "label": "Orc Savage"
+    },
+    {
+      "value": "orc-shaman",
+      "label": "Orc Shaman"
+    },
+    {
+      "value": "orge",
+      "label": "Orge"
+    },
+    {
+      "value": "planetar",
+      "label": "Planetar"
+    },
+    {
+      "value": "red-adult-dragon",
+      "label": "Red Adult Dragon"
+    },
+    {
+      "value": "red-wyrmling",
+      "label": "Red Wyrmling"
+    },
+    {
+      "value": "revenant",
+      "label": "Revenant"
+    },
+    {
+      "value": "scoundrel",
+      "label": "Scoundrel"
+    },
+    {
+      "value": "seraph",
+      "label": "Seraph"
+    },
+    {
+      "value": "shambler",
+      "label": "Shambler"
+    },
+    {
+      "value": "skeleton",
+      "label": "Skeleton"
+    },
+    {
+      "value": "skull",
+      "label": "Skull"
+    },
+    {
+      "value": "slaad",
+      "label": "Slaad"
+    },
+    {
+      "value": "slime",
+      "label": "Slime"
+    },
+    {
+      "value": "spellslinger",
+      "label": "Spellslinger"
+    },
+    {
+      "value": "stalker",
+      "label": "Stalker"
+    },
+    {
+      "value": "toxic-hound",
+      "label": "Toxic Hound"
+    },
+    {
+      "value": "treant",
+      "label": "Treant"
+    },
+    {
+      "value": "troll",
+      "label": "Troll"
+    },
+    {
+      "value": "viridian-drake",
+      "label": "Viridian Drake"
+    },
+    {
+      "value": "watcher",
+      "label": "Watcher"
+    },
+    {
+      "value": "water-elemental",
+      "label": "Water Elemental"
+    },
+    {
+      "value": "white-adult-dragon",
+      "label": "White Adult Dragon"
+    },
+    {
+      "value": "white-wyrmling",
+      "label": "White Wyrmling"
+    },
+    {
+      "value": "wisp",
+      "label": "Wisp"
+    },
+    {
+      "value": "witch",
+      "label": "Witch"
+    },
+    {
+      "value": "zombie",
+      "label": "Zombie"
+    }
+  ],
+  "items": [
+    {
+      "value": "chair",
+      "label": "Chair"
+    },
+    {
+      "value": "chest",
+      "label": "Chest"
+    },
+    {
+      "value": "coin",
+      "label": "Coin"
+    },
+    {
+      "value": "crate",
+      "label": "Crate"
+    },
+    {
+      "value": "door",
+      "label": "Door"
+    },
+    {
+      "value": "key",
+      "label": "Key"
+    },
+    {
+      "value": "lever",
+      "label": "Lever"
+    },
+    {
+      "value": "stairs",
+      "label": "Stairs"
+    },
+    {
+      "value": "table",
+      "label": "Table"
+    },
+    {
+      "value": "trap",
+      "label": "Trap"
+    },
+    {
+      "value": "vase",
+      "label": "Vase"
+    }
+  ],
+  "floors": [
+    {
+      "value": "brick",
+      "label": "Brick"
+    },
+    {
+      "value": "tile",
+      "label": "Tile"
+    },
+    {
+      "value": "small-tile",
+      "label": "Small Tile"
+    }
+  ]
+}
