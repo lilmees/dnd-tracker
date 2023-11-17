@@ -100,7 +100,7 @@ function handleSubmit ({ __init, file }: Obj): void {
 <template>
   <NuxtLayout>
     <div class="flex flex-col gap-6 items-center">
-      <div class="flex justify-center items-start w-full gap-4">
+      <div class="grid grid-cols-4 gap-4">
         <div class="space-y-4">
           <div
             class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg transition-colors duration-200 ease-in-out"
@@ -186,7 +186,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             Export
           </button>
         </div>
-        <div class="space-y-4 relative">
+        <div class="col-span-2 space-y-4 relative">
           <div>
             <div
               ref="canvasContainer"
@@ -232,7 +232,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                   validation="required"
                 />
                 <FormKit type="submit">
-                  Add backgorund
+                  Add background
                 </FormKit>
               </FormKit>
             </div>
@@ -243,36 +243,39 @@ function handleSubmit ({ __init, file }: Obj): void {
               <li>Draw shapes</li>
               <li>Toast for max amount of sprites</li>
               <li>Zoom options</li>
-              <li>Draw fog and remove fog</li>
+              <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
               <li>Tile maps</li>
               <li>No items out of the map</li>
             </ul>
           </div>
         </div>
-        <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg max-w-sm">
-          <template v-for="key in Object.keys(sprites)" :key="key">
-            <h2 class="first:pt-0 py-2">
-              {{ key }}
-            </h2>
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="sprite in sprites[key as keyof SpriteMap]"
-                :key="sprite.value"
-                class="w-12"
-              >
-                <NuxtImg
-                  :id="sprite.value"
-                  :draggable="true"
-                  :src="`/art/${key}/${sprite.value}.svg`"
-                  class="w-12 h-12"
-                  @drag.stop="handleDrag"
-                />
-                <p class="body-extra-small font-bold text-center">
-                  {{ sprite.label }}
-                </p>
+        <div>
+          <Accordion :sections="Object.keys(sprites)">
+            <template
+              v-for="category in Object.keys(sprites)"
+              :key="category"
+              #[category]
+            >
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="sprite in sprites[category as keyof SpriteMap]"
+                  :key="sprite.value"
+                  class="w-12"
+                >
+                  <NuxtImg
+                    :id="sprite.value"
+                    :draggable="true"
+                    :src="`/art/${category}/${sprite.value}.svg`"
+                    class="w-12 h-12"
+                    @drag.stop="handleDrag"
+                  />
+                  <p class="body-extra-small font-bold text-center">
+                    {{ sprite.label }}
+                  </p>
+                </div>
               </div>
-            </div>
-          </template>
+            </template>
+          </Accordion>
         </div>
       </div>
     </div>
