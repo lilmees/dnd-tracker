@@ -45,3 +45,27 @@ export function exportCanvas (canvas: fabric.Canvas | undefined): void {
   link.download = 'dnd-tracker-map.png'
   link.click()
 }
+
+export function snapToGrid (object: fabric.Object, grid: number): void {
+  object?.set({
+    left: Math.floor(object.left / grid) * grid,
+    top: Math.floor(object.top / grid) * grid
+  })
+}
+
+export function getCoordsFromGroupItem (group: fabric.Group, object: fabric.BaseFabricObject): fabric.Point {
+  return {
+    x: object.left + group.left + group.width / 2,
+    y: object.top + group.top + group.height / 2
+  } as fabric.Point
+}
+
+export function getGridObjectByCoords (group: fabric.Group, point: fabric.Point): fabric.BaseFabricObject | undefined {
+  for (const object of group.getObjects()) {
+    const { x, y } = getCoordsFromGroupItem(group, object)
+
+    if (point.x === x && point.y === y) {
+      return object
+    }
+  }
+}

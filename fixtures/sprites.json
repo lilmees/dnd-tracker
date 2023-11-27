@@ -631,18 +631,69 @@
       "label": "Vase"
     }
   ],
+  "nature": [
+    {
+      "value": "tree-1",
+      "label": "Tree 1"
+    },
+    {
+      "value": "tree-2",
+      "label": "Tree 2"
+    }
+  ],
   "floors": [
     {
       "value": "brick",
       "label": "Brick"
     },
     {
-      "value": "tile",
-      "label": "Tile"
+      "value": "stone-tile",
+      "label": "Stone tile",
+      "variations": 2
     },
     {
-      "value": "small-tile",
-      "label": "Small Tile"
+      "value": "slate-tile",
+      "label": "Slate tile",
+      "variations": 2
+    },
+    {
+      "value": "wood",
+      "label": "Wood"
+    },
+    {
+      "value": "path",
+      "label": "Path"
+    },
+    {
+      "value": "grass",
+      "label": "Grass",
+      "variations": 3
+    },
+    {
+      "value": "high-grass",
+      "label": "High grass"
+    },
+    {
+      "value": "dirt",
+      "label": "Dirt",
+      "variations": 3
+    },
+    {
+      "value": "sand",
+      "label": "Sand",
+      "variations": 3
+    },
+    {
+      "value": "water",
+      "label": "Water"
+    },
+    {
+      "value": "lava",
+      "label": "Lava"
+    },
+    {
+      "value": "remove",
+      "label": "Remove"
     }
   ]
 }

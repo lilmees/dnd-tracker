@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import * as fabric from 'fabric'
 import { reset } from '@formkit/core'
-import sprites from '@/fixtures/sprites.json'
 import { readFile } from '@/utils/file-reader'
 import { flip, clone, exportCanvas } from '@/utils/fabric-utils'
 
 const {
   canvas,
+  floorLayer,
+  sprites,
   draggedOver,
   spriteAmount,
   maxSprites,
@@ -15,14 +16,15 @@ const {
   activeColor,
   activeBrush,
   spriteSelected,
+  selectedSprite,
   mount,
   getSprite,
-  createPattern,
-  setBackgroundPattern,
+  fillBackground,
   setBackgroundImage,
   toggleDrawing,
   setBrush,
-  update
+  update,
+  add
 } = useMapBuilder()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -39,8 +41,12 @@ onMounted(() => {
 //   canvas.value?.add(await fabric.Image.fromURL(getSprite(type, sprite), {}, {}))
 // }
 
-async function changeBackground (sprite : FloorSprite): Promise<void> {
-  setBackgroundPattern(await createPattern(getSprite('floors', sprite)))
+function changeBackground (sprite : Sprite): void {
+  const spriteData = getSprite('floors', sprite)
+
+  if (spriteData) {
+    fillBackground(spriteData, canvas.value, floorLayer.value)
+  }
 }
 
 function handleDrag (event: DragEvent): void {
@@ -54,15 +60,18 @@ function handleDrop (event: DragEvent): void {
     return
   }
 
-  const newImage = new fabric.Image(draggingImg.value, {
+  // set sprite name on drag
+  // filter on selected sprite and take correct size
+  // size attribute in json for custom size
+
+  add(new fabric.Image(draggingImg.value, {
     width: 32,
     height: 32,
     left: event.offsetX - 16 < 0 ? 0 : event.offsetX,
     top: event.offsetY - 16 < 0 ? 0 : event.offsetY
-  })
+  }))
 
-  canvas.value?.add(newImage)
-  canvas.value?.requestRenderAll()
+  draggingImg.value = undefined
 }
 
 function handleSubmit ({ __init, file }: Obj): void {
@@ -95,6 +104,14 @@ function handleSubmit ({ __init, file }: Obj): void {
 
   reset('form')
 }
+
+function setFloorSpite (sprite: Sprite): void {
+  selectedSprite.value = selectedSprite.value === sprite
+    ? undefined
+    : sprite as FloorSprite
+
+  toggleDrawing(false)
+}
 </script>
 
 <template>
@@ -102,6 +119,65 @@ function handleSubmit ({ __init, file }: Obj): void {
     <div class="flex flex-col gap-6 items-center">
       <div class="grid grid-cols-4 gap-4">
         <div class="space-y-4">
+          <div
+            class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
+            :class="{ '!border-success': selectedSprite }"
+          >
+            <h3>
+              Tile set
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                v-for="sprite in sprites['floors']"
+                :key="sprite.value"
+                class="w-12 p-1 transition-colors duration-200 ease-in-out"
+                :class="{
+                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite
+                }"
+              >
+                <NuxtImg
+                  :id="sprite.value"
+                  :draggable="true"
+                  :src="`/art/floors/${sprite.value}${sprite.variations ? '-1' : ''}.svg`"
+                  class="w-12 h-12"
+                  @click="setFloorSpite(sprite.value as Sprite)"
+                />
+                <p class="body-extra-small font-bold text-center">
+                  {{ sprite.label }}
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <span> Utils: </span>
+              <button
+                :disabled="!selectedSprite"
+                class="disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="changeBackground(selectedSprite!)"
+              >
+                <Icon name="bxs:color-fill" class="w-6 h-6" />
+              </button>
+            </div>
+            <div class="border-t-4 border-tracker pt-4">
+              <FormKit
+                id="form"
+                type="form"
+                :actions="false"
+
+                @submit="handleSubmit"
+              >
+                <FormKit
+                  label="Custom background"
+                  name="file"
+                  type="file"
+                  accept=".png,.svg,.jpg,.jpeg"
+                  validation="required"
+                />
+                <FormKit type="submit">
+                  Add background
+                </FormKit>
+              </FormKit>
+            </div>
+          </div>
           <div
             class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg transition-colors duration-200 ease-in-out"
             :class="{ '!border-success': isDrawingMode }"
@@ -200,47 +276,14 @@ function handleSubmit ({ __init, file }: Obj): void {
               {{ spriteAmount }} / {{ maxSprites }}
             </div>
           </div>
-          <div>
-            <p class="font-bold mb-1 body-small">
-              Background
-            </p>
-            <div class="flex gap-3 items-center">
-              <button class="btn-primary" @click="changeBackground('brick')">
-                Brick
-              </button>
-              <button class="btn-primary" @click="changeBackground('tile')">
-                Tile
-              </button>
-              <button class="btn-primary" @click="changeBackground('small-tile')">
-                Small tile
-              </button>
-            </div>
-            <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg mt-4">
-              <p class="head-3 mb-2">
-                Custom background
-              </p>
-              <FormKit
-                id="form"
-                type="form"
-                :actions="false"
-                @submit="handleSubmit"
-              >
-                <FormKit
-                  name="file"
-                  type="file"
-                  accept=".png,.svg,.jpg,.jpeg"
-                  validation="required"
-                />
-                <FormKit type="submit">
-                  Add background
-                </FormKit>
-              </FormKit>
-            </div>
-          </div>
           <div class="space-y-2">
             <h3>Todo's</h3>
             <ul class="list-disc ml-4">
-              <li>Draw background</li>
+              <li>Optimize svg's</li>
+              <li>bigger sprites</li>
+              <li>Save button</li>
+              <li>Option to toggle Snap to grid</li>
+              <li>When clicking inside drawing option auto enable drawing mode/ background mode</li>
               <li>Draw shapes</li>
               <li>Toast for max amount of sprites</li>
               <li>Zoom options</li>
@@ -251,9 +294,9 @@ function handleSubmit ({ __init, file }: Obj): void {
           </div>
         </div>
         <div>
-          <Accordion :sections="['monsters', 'characters', 'animals', 'items']">
+          <Accordion :sections="['monsters', 'characters', 'animals', 'items', 'nature']">
             <template
-              v-for="category in ['monsters', 'characters', 'animals', 'items']"
+              v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
               :key="category"
               #[category]
             >

@@ -1,6 +1,29 @@
 type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors'
 
-type FloorSprite = 'brick' | 'tile' | 'small-tile'
+type NatureSprite =
+  | 'brick'
+  | 'stone-tile'
+  | 'slate-tile'
+  | 'wood'
+  | 'grass'
+  | 'high-grass'
+  | 'path'
+  | 'dirt'
+  | 'sand'
+
+type FloorSprite =
+  | 'brick'
+  | 'stone-tile'
+  | 'slate-tile'
+  | 'wood'
+  | 'grass'
+  | 'high-grass'
+  | 'path'
+  | 'dirt'
+  | 'sand'
+  | 'water'
+  | 'lava'
+  | 'remove'
 
 type AnimalSprite =
   | 'ant'
@@ -156,9 +179,10 @@ type MonsterSprite =
 
 type ItemSprite = 'chair' | 'chest' | 'coin' | 'crate' | 'door' | 'key' | 'lever' | 'stairs' | 'table' | 'trap' | 'vase'
 
-type Sprite = AnimalSprite | CharacterSprite | MonsterSprite | ItemSprite | FloorSprite
+type Sprite = NatureSprite | AnimalSprite | CharacterSprite | MonsterSprite | ItemSprite | FloorSprite
 
 interface SpriteMap {
+  nature: NatureSprite[],
   animals: AnimalSprite[],
   characters: CharacterSprite[],
   monsters: MonsterSprite[],
@@ -167,3 +191,19 @@ interface SpriteMap {
 }
 
 type FabricBrush = 'Pencil'|'Eraser'|'Spray'
+
+interface SpriteMetaData {
+  label: string
+  value: string
+  variations?: number
+  size?: number
+}
+
+interface SpriteData extends SpriteMetaData {
+  url: string
+}
+
+interface Coords {
+  x: number,
+  y: number
+}

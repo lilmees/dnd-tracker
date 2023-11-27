@@ -1,9 +1,12 @@
 import * as fabric from 'fabric'
+import sprites from '@/fixtures/sprites.json'
+import { snapToGrid } from '@/utils/fabric-utils'
 
 export const useMapBuilder = () => {
   const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
 
   const canvas = ref<fabric.Canvas>()
+  const floorLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const cellWidth = ref<number>(32)
   const isDrawingMode = ref<boolean>(false)
   const activeBrush = ref<FabricBrush>('Pencil')
@@ -13,13 +16,14 @@ export const useMapBuilder = () => {
   const maxSprites = ref<number>(500)
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
+  const selectedSprite = ref<Sprite>()
 
   const {
-    isDrawingShape,
     mouseDown,
+    mouseUp,
     mouseMove,
-    mouseUp
-  } = useFabricShapeDrawing()
+    fillBackground
+  } = useFabricDrawing(cellWidth.value)
 
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(
@@ -35,6 +39,8 @@ export const useMapBuilder = () => {
 
     window.addEventListener('keydown', keydownHandler)
 
+    canvas.value.add(floorLayer.value)
+
     setBrush('Pencil')
 
     // Draw grid lines on the canvas
@@ -46,19 +52,30 @@ export const useMapBuilder = () => {
 
     calculateCount()
 
-    canvas.value.on('dragenter', () => { draggedOver.value = true })
-    canvas.value.on('dragleave', () => { draggedOver.value = false })
-    canvas.value.on('object:added', e => calculateCount(e as { target: fabric.Object }))
-    canvas.value.on('object:removed', () => calculateCount())
-    canvas.value.on('selection:created', () => { spriteSelected.value = true })
-    canvas.value.on('selection:cleared', () => { spriteSelected.value = false })
-    canvas.value.on('mouse:down', e => mouseDown(canvas.value!, e))
+    canvas.value.on({
+      dragenter: () => { draggedOver.value = true },
+      dragleave: () => { draggedOver.value = false },
+      'object:added': e => calculateCount(e as { target: fabric.Object }),
+      'object:removed': () => calculateCount(),
+      'object:moving': ({ target }) => snapToGrid(target, cellWidth.value),
+      'selection:created': () => { spriteSelected.value = true },
+      'selection:cleared': () => { spriteSelected.value = false },
+      'mouse:down': ({ e }) => {
+        if (!selectedSprite.value) { return }
+        mouseDown(e, canvas.value, floorLayer.value, getSprite('floors', selectedSprite.value))
+      },
+      'mouse:move': ({ e }) => {
+        if (!selectedSprite.value) { return }
+        mouseMove(e, canvas.value, floorLayer.value, getSprite('floors', selectedSprite.value))
+      },
+      'mouse:up': () => mouseUp(canvas.value)
+    })
 
     // canvas.value.on('object:modified', e => handleBoundaries(e))
   }
 
   function calculateCount (event?: { target: fabric.Object }): void {
-    let count: number = (canvas.value?.getObjects().length || 32) - 32
+    let count: number = (canvas.value?.getObjects().length || 32) - 32 // minus grid lines
 
     if (event && count > maxSprites.value) {
       canvas.value?.remove(event.target)
@@ -70,8 +87,15 @@ export const useMapBuilder = () => {
     spriteAmount.value = count
   }
 
-  function getSprite (type: SpriteType, sprite: Sprite): string {
-    return `${siteUrl}/art/${type}/${sprite}.svg`
+  function getSprite (type: SpriteType, sprite: Sprite): SpriteData | undefined {
+    const spriteMeta: SpriteMetaData | undefined = sprites[type].find(svg => svg.value === sprite)
+
+    if (!spriteMeta) { return }
+
+    return {
+      url: `${siteUrl}/art/${type}/${sprite}${spriteMeta?.variations ? '-1' : ''}.svg`,
+      ...spriteMeta
+    }
   }
 
   async function createPattern (url: string): Promise<fabric.Pattern> {
@@ -80,17 +104,13 @@ export const useMapBuilder = () => {
     return new fabric.Pattern({ source: patternImg })
   }
 
-  function setBackgroundPattern (pattern: fabric.Pattern): void {
-    canvas.value?.set({
-      backgroundColor: pattern,
-      backgroundImage: undefined
-    })
-
+  function setBackgroundImage (img: fabric.Image): void {
+    canvas.value?.set({ backgroundImage: img })
     canvas.value?.requestRenderAll()
   }
 
-  function setBackgroundImage (img: fabric.Image): void {
-    canvas.value?.set({ backgroundImage: img })
+  function add (object: fabric.Object): void {
+    canvas.value?.add(object)
     canvas.value?.requestRenderAll()
   }
 
@@ -157,9 +177,13 @@ export const useMapBuilder = () => {
     // }
   }
 
-  function toggleDrawing (): void {
-    isDrawingMode.value = !isDrawingMode.value
+  function toggleDrawing (value: boolean): void {
+    isDrawingMode.value = value ?? !isDrawingMode.value
     canvas.value?.set('isDrawingMode', isDrawingMode.value)
+
+    if (isDrawingMode.value) {
+      selectedSprite.value = undefined
+    }
   }
 
   function setBrush (brush: FabricBrush): void {
@@ -191,7 +215,6 @@ export const useMapBuilder = () => {
 
     // deze functie moet json naar fabric object casten maar werkt niet momenteel
     fabric.util.enlivenObjects(items, (objects) => {
-      console.log(objects)
       const origRenderOnAddRemove = canvas.value!.renderOnAddRemove
       canvas.value!.renderOnAddRemove = false
 
@@ -228,6 +251,8 @@ export const useMapBuilder = () => {
 
   return {
     canvas,
+    floorLayer,
+    sprites,
     draggedOver,
     spriteAmount,
     maxSprites,
@@ -236,11 +261,13 @@ export const useMapBuilder = () => {
     brushSize,
     activeColor,
     spriteSelected,
+    selectedSprite,
     mount,
     createPattern,
     getSprite,
-    setBackgroundPattern,
+    fillBackground,
     setBackgroundImage,
+    add,
     remove,
     update,
     keydownHandler,
