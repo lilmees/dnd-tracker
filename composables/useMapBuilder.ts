@@ -7,6 +7,7 @@ export const useMapBuilder = () => {
 
   const canvas = ref<fabric.Canvas>()
   const floorLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
+  const middleLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const cellWidth = ref<number>(32)
   const isDrawingMode = ref<boolean>(false)
   const activeBrush = ref<FabricBrush>('Pencil')
@@ -17,13 +18,16 @@ export const useMapBuilder = () => {
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
   const selectedSprite = ref<Sprite>()
+  const selectedType = ref<SpriteType>()
+  const recentCategorySearch = ref<{ sprite: Sprite, category: SpriteType }>()
 
   const {
-    mouseDown,
-    mouseUp,
-    mouseMove,
-    fillBackground
-  } = useFabricDrawing(cellWidth.value)
+    mouseDownFloor,
+    mouseUpFloor,
+    mouseMoveFloor,
+    fillBackground,
+    isDrawingFloor
+  } = useFabricDrawFloor(cellWidth.value)
 
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(
@@ -40,6 +44,7 @@ export const useMapBuilder = () => {
     window.addEventListener('keydown', keydownHandler)
 
     canvas.value.add(floorLayer.value)
+    canvas.value.add(middleLayer.value)
 
     setBrush('Pencil')
 
@@ -60,18 +65,57 @@ export const useMapBuilder = () => {
       'object:moving': ({ target }) => snapToGrid(target, cellWidth.value),
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
-      'mouse:down': ({ e }) => {
-        if (!selectedSprite.value) { return }
-        mouseDown(e, canvas.value, floorLayer.value, getSprite('floors', selectedSprite.value))
-      },
-      'mouse:move': ({ e }) => {
-        if (!selectedSprite.value) { return }
-        mouseMove(e, canvas.value, floorLayer.value, getSprite('floors', selectedSprite.value))
-      },
-      'mouse:up': () => mouseUp(canvas.value)
+      'mouse:down': ({ e }) => handleMouse(e, 'down'),
+      'mouse:move': ({ e }) => handleMouse(e, 'move'),
+      'mouse:up': () => mouseUpFloor(canvas.value)
     })
 
     // canvas.value.on('object:modified', e => handleBoundaries(e))
+  }
+
+  function handleMouse (e: fabric.TPointerEvent, action: 'move' | 'down'): void {
+    console.log({
+      sprite: selectedSprite.value,
+      type: selectedType.value,
+      isNotDrawing: !isDrawingFloor.value && action === 'move'
+    })
+    if (
+      !selectedSprite.value ||
+      !selectedType.value ||
+      (!isDrawingFloor.value && action === 'move')
+    ) { return }
+
+    const spriteData = getSprite(selectedType.value, selectedSprite.value)
+
+    if (spriteData) {
+      switch (action) {
+        case 'down':
+          mouseDownFloor(e, canvas.value, floorLayer.value, spriteData)
+          break
+        case 'move':
+          mouseMoveFloor(e, canvas.value, floorLayer.value, spriteData)
+          break
+      }
+    }
+  }
+
+  function findType (sprite: Sprite): SpriteType | undefined {
+    if (recentCategorySearch.value?.sprite === sprite) {
+      return recentCategorySearch.value.category
+    }
+
+    for (const category in sprites) {
+      const json = sprites as SpriteMap
+
+      const categoryArray = json[category as keyof SpriteMap]
+      const match = categoryArray.find(item => item.value === sprite)
+
+      if (match) {
+        recentCategorySearch.value = { sprite, category: category as SpriteType }
+
+        return category as SpriteType
+      }
+    }
   }
 
   function calculateCount (event?: { target: fabric.Object }): void {
@@ -88,7 +132,7 @@ export const useMapBuilder = () => {
   }
 
   function getSprite (type: SpriteType, sprite: Sprite): SpriteData | undefined {
-    const spriteMeta: SpriteMetaData<Sprite> | undefined = sprites[type].find(svg => svg.value === sprite)
+    const spriteMeta = sprites[type].find(svg => svg.value === sprite) as SpriteMetaData<Sprite>
 
     if (!spriteMeta) { return }
 
@@ -98,10 +142,11 @@ export const useMapBuilder = () => {
     }
   }
 
-  async function createPattern (url: string): Promise<fabric.Pattern> {
-    const patternImg = await fabric.util.loadImage(url)
+  function setSprite (sprite: Sprite, type: SpriteType): void {
+    selectedSprite.value = selectedSprite.value === sprite ? undefined : sprite
+    selectedType.value = selectedSprite.value ? type : undefined
 
-    return new fabric.Pattern({ source: patternImg })
+    toggleDrawing(false)
   }
 
   function setBackgroundImage (img: fabric.Image): void {
@@ -177,7 +222,7 @@ export const useMapBuilder = () => {
     // }
   }
 
-  function toggleDrawing (value: boolean): void {
+  function toggleDrawing (value?: boolean): void {
     isDrawingMode.value = value ?? !isDrawingMode.value
     canvas.value?.set('isDrawingMode', isDrawingMode.value)
 
@@ -209,22 +254,22 @@ export const useMapBuilder = () => {
   function serializeCanvas (): void {}
 
   function deserializeCanvas (items: fabric.Object[]): void {
-    if (!canvas.value) {
-      return
-    }
+    // if (!canvas.value) {
+    //   return
+    // }
 
     // deze functie moet json naar fabric object casten maar werkt niet momenteel
-    fabric.util.enlivenObjects(items, (objects) => {
-      const origRenderOnAddRemove = canvas.value!.renderOnAddRemove
-      canvas.value!.renderOnAddRemove = false
+    // fabric.util.enlivenObjects(items, (objects) => {
+    //   const origRenderOnAddRemove = canvas.value!.renderOnAddRemove
+    //   canvas.value!.renderOnAddRemove = false
 
-      objects.forEach((object: fabric.Object) => {
-        canvas.value!.add(object)
-      })
+    //   objects.forEach((object: fabric.Object) => {
+    //     canvas.value!.add(object)
+    //   })
 
-      canvas.value!.renderOnAddRemove = origRenderOnAddRemove
-      canvas.value!.requestRenderAll()
-    })
+    //   canvas.value!.renderOnAddRemove = origRenderOnAddRemove
+    //   canvas.value!.requestRenderAll()
+    // })
   }
 
   watch(
@@ -262,8 +307,8 @@ export const useMapBuilder = () => {
     activeColor,
     spriteSelected,
     selectedSprite,
+    selectedType,
     mount,
-    createPattern,
     getSprite,
     fillBackground,
     setBackgroundImage,
@@ -272,6 +317,8 @@ export const useMapBuilder = () => {
     update,
     keydownHandler,
     toggleDrawing,
-    setBrush
+    setBrush,
+    findType,
+    setSprite
   }
 }

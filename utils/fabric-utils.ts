@@ -69,3 +69,9 @@ export function getGridObjectByCoords (group: fabric.Group, point: fabric.Point)
     }
   }
 }
+
+export async function createPattern (url: string): Promise<fabric.Pattern> {
+  const patternImg = await fabric.util.loadImage(url)
+
+  return new fabric.Pattern({ source: patternImg })
+}

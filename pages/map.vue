@@ -17,12 +17,14 @@ const {
   activeBrush,
   spriteSelected,
   selectedSprite,
+  selectedType,
   mount,
   getSprite,
   fillBackground,
   setBackgroundImage,
   toggleDrawing,
   setBrush,
+  setSprite,
   update,
   add
 } = useMapBuilder()
@@ -44,7 +46,7 @@ onMounted(() => {
 function changeBackground (sprite : Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
-  if (spriteData) {
+  if (spriteData && canvas.value) {
     fillBackground(spriteData, canvas.value, floorLayer.value)
   }
 }
@@ -116,21 +118,13 @@ function handleSubmit ({ __init, file }: Obj): void {
 
   reset('form')
 }
-
-function setFloorSpite (sprite: Sprite): void {
-  selectedSprite.value = selectedSprite.value === sprite
-    ? undefined
-    : sprite as FloorSprite
-
-  toggleDrawing(false)
-}
 </script>
 
 <template>
   <NuxtLayout>
     <div class="flex flex-col gap-6 items-center">
-      <div class="grid grid-cols-4 gap-4">
-        <div class="space-y-4">
+      <div class="flex gap-4">
+        <div class="space-y-4 w-full">
           <div
             class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
             :class="{ '!border-success': selectedSprite }"
@@ -152,7 +146,7 @@ function setFloorSpite (sprite: Sprite): void {
                   :draggable="true"
                   :src="`/art/floors/${sprite.value}${sprite.variations ? '-1' : ''}.svg`"
                   class="w-12 h-12"
-                  @click="setFloorSpite(sprite.value as Sprite)"
+                  @click="setSprite(sprite.value as Sprite, 'floors')"
                 />
                 <p class="body-extra-small font-bold text-center">
                   {{ sprite.label }}
@@ -263,7 +257,7 @@ function setFloorSpite (sprite: Sprite): void {
               <button
                 class="w-full flex items-center justify-center gap-2"
                 :class="[isDrawingMode ? 'btn-success' : 'btn-danger']"
-                @click="toggleDrawing"
+                @click="toggleDrawing(undefined)"
               >
                 <Icon name="ic:outline-draw" />
                 Draw mode
@@ -274,7 +268,7 @@ function setFloorSpite (sprite: Sprite): void {
             Export
           </button>
         </div>
-        <div class="col-span-2 space-y-4 relative">
+        <div class="w-[512px] space-y-4 relative">
           <div>
             <div
               ref="canvasContainer"
@@ -291,9 +285,11 @@ function setFloorSpite (sprite: Sprite): void {
           <div class="space-y-2">
             <h3>Todo's</h3>
             <ul class="list-disc ml-4">
+              <li>Drawing conected textures (walls, fences?)</li>
               <li>Optimize svg's</li>
               <li>Save button</li>
               <li>Option to toggle Snap to grid</li>
+              <li>Option to toggle grid lines</li>
               <li>When clicking inside drawing option auto enable drawing mode/background mode</li>
               <li>Toast for max amount of sprites</li>
               <li>Zoom options</li>
@@ -302,7 +298,7 @@ function setFloorSpite (sprite: Sprite): void {
             </ul>
           </div>
         </div>
-        <div>
+        <div class="w-full">
           <Accordion :sections="['monsters', 'characters', 'animals', 'items', 'nature']">
             <template
               v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"

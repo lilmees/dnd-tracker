@@ -1,62 +1,62 @@
 import * as fabric from 'fabric'
 import { getGridObjectByCoords } from '@/utils/fabric-utils'
 
-export function useFabricDrawing (grid: number) {
-  const isDrawing = ref<boolean>(false)
+export function useFabricDrawFloor (grid: number) {
+  const isDrawingFloor = ref<boolean>(false)
 
-  function mouseDown (
+  function mouseDownFloor (
     event: fabric.TPointerEvent,
     canvas?: fabric.Canvas,
-    floorLayer?: fabric.Group,
+    layer?: fabric.Group,
     sprite?: SpriteData
   ): void {
-    if (!sprite || !canvas || !floorLayer) { return }
+    if (!sprite || !canvas || !layer) { return }
 
     canvas.selection = false
 
-    isDrawing.value = true
+    isDrawingFloor.value = true
 
-    createTile(canvas, floorLayer, sprite, event)
+    createTile(canvas, layer, sprite, event)
   }
 
-  function mouseMove (
+  function mouseMoveFloor (
     event: fabric.TPointerEvent,
     canvas?: fabric.Canvas,
-    floorLayer?: fabric.Group,
+    layer?: fabric.Group,
     sprite?: SpriteData
   ): void {
-    if (!isDrawing.value || !sprite || !canvas || !floorLayer) { return }
+    if (!isDrawingFloor.value || !sprite || !canvas || !layer) { return }
 
-    createTile(canvas, floorLayer, sprite, event)
+    createTile(canvas, layer, sprite, event)
   }
 
-  function mouseUp (canvas?: fabric.Canvas): void {
+  function mouseUpFloor (canvas?: fabric.Canvas): void {
     if (!canvas) { return }
 
     canvas.selection = true
-    isDrawing.value = false
+    isDrawingFloor.value = false
   }
 
   function fillBackground (
     sprite: SpriteData,
     canvas: fabric.Canvas,
-    floorLayer: fabric.Group
+    layer: fabric.Group
   ): void {
-    if (!sprite || !canvas || !floorLayer) { return }
+    if (!sprite || !canvas || !layer) { return }
 
     const xCells: number = canvas.getWidth() / grid
     const yCells: number = canvas.getHeight() / grid
 
     for (let i = 0; i < xCells; i++) {
       for (let j = 0; j < yCells; j++) {
-        createTile(canvas, floorLayer, sprite, { x: j * grid, y: i * grid })
+        createTile(canvas, layer, sprite, { x: j * grid, y: i * grid })
       }
     }
   }
 
   async function createTile (
     canvas: fabric.Canvas,
-    floorLayer: fabric.Group,
+    layer: fabric.Group,
     sprite: SpriteData,
     event: fabric.TPointerEvent | Coords
   ): Promise<void> {
@@ -70,12 +70,12 @@ export function useFabricDrawing (grid: number) {
       y: Math.floor(pointer.y / grid) * grid
     } as fabric.Point
 
-    const occupiedSlot = getGridObjectByCoords(floorLayer!, coords)
+    const occupiedSlot = getGridObjectByCoords(layer!, coords)
 
     if (occupiedSlot) {
       // Remove brush
       if (sprite.value === 'remove') {
-        floorLayer!.remove(occupiedSlot as fabric.Object)
+        layer!.remove(occupiedSlot as fabric.Object)
         canvas!.requestRenderAll()
 
         return
@@ -84,7 +84,7 @@ export function useFabricDrawing (grid: number) {
       // If it's already the right sprite don't update it
       if (occupiedSlot.getSrc()?.includes(sprite.value)) { return }
 
-      floorLayer!.remove(occupiedSlot as fabric.Object)
+      layer!.remove(occupiedSlot as fabric.Object)
     }
 
     // Don't create new sprite if it's the remove brush
@@ -96,7 +96,7 @@ export function useFabricDrawing (grid: number) {
 
     const img = await fabric.util.loadImage(imgUrl)
 
-    floorLayer!.add(new fabric.Image(img, {
+    layer!.add(new fabric.Image(img, {
       left: coords.x,
       top: coords.y,
       width: grid,
@@ -108,9 +108,10 @@ export function useFabricDrawing (grid: number) {
   }
 
   return {
-    mouseDown,
-    mouseUp,
-    mouseMove,
-    fillBackground
+    mouseDownFloor,
+    mouseUpFloor,
+    mouseMoveFloor,
+    fillBackground,
+    isDrawingFloor
   }
 }
