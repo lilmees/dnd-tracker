@@ -88,7 +88,7 @@ export const useMapBuilder = () => {
   }
 
   function getSprite (type: SpriteType, sprite: Sprite): SpriteData | undefined {
-    const spriteMeta: SpriteMetaData | undefined = sprites[type].find(svg => svg.value === sprite)
+    const spriteMeta: SpriteMetaData<Sprite> | undefined = sprites[type].find(svg => svg.value === sprite)
 
     if (!spriteMeta) { return }
 

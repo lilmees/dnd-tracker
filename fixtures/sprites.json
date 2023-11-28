@@ -629,16 +629,64 @@
     {
       "value": "vase",
       "label": "Vase"
+    },
+    {
+      "value": "sign",
+      "label": "Sign"
     }
   ],
   "nature": [
     {
-      "value": "tree-1",
-      "label": "Tree 1"
+      "value": "oak",
+      "label": "Oak",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
     },
     {
-      "value": "tree-2",
-      "label": "Tree 2"
+      "value": "willow",
+      "label": "Willow",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "mushroom",
+      "label": "Mushroom"
+    },
+    {
+      "value": "bush",
+      "label": "Bush"
+    },
+    {
+      "value": "small-bush",
+      "label": "Small bush"
+    },
+    {
+      "value": "flower-bush",
+      "label": "Flower bush"
+    },
+    {
+      "value": "cactus",
+      "label": "Cactus"
+    },
+    {
+      "value": "flower-cactus",
+      "label": "Flower cactus"
+    },
+    {
+      "value": "sandstone",
+      "label": "Sandstone"
+    },
+    {
+      "value": "stone",
+      "label": "Stone"
+    },
+    {
+      "value": "pebbles",
+      "label": "Pebbles"
     }
   ],
   "floors": [

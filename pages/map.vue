@@ -29,7 +29,7 @@ const {
 
 const canvasEl = ref<HTMLCanvasElement>()
 const canvasContainer = ref<HTMLDivElement>()
-const draggingImg = ref<HTMLImageElement>()
+const draggingSprite = ref<{ sprite: Sprite, type: SpriteType }>()
 
 onMounted(() => {
   if (canvasEl.value && canvasContainer.value) {
@@ -50,28 +50,40 @@ function changeBackground (sprite : Sprite): void {
 }
 
 function handleDrag (event: DragEvent): void {
-  draggingImg.value = event.target as HTMLImageElement
+  if (event.target?.src) {
+    const split = event.target.src.split('/')
+
+    draggingSprite.value = {
+      sprite: split.at(-1).replace('.svg', ''),
+      type: split.at(-2)
+    }
+  }
 }
 
-function handleDrop (event: DragEvent): void {
+async function handleDrop (event: DragEvent): Promise<void> {
   draggedOver.value = false
 
-  if (!draggingImg.value) {
-    return
-  }
+  if (!draggingSprite.value) { return }
 
-  // set sprite name on drag
-  // filter on selected sprite and take correct size
-  // size attribute in json for custom size
+  const spriteData = getSprite(draggingSprite.value.type, draggingSprite.value.sprite)
 
-  add(new fabric.Image(draggingImg.value, {
-    width: 32,
-    height: 32,
-    left: event.offsetX - 16 < 0 ? 0 : event.offsetX,
-    top: event.offsetY - 16 < 0 ? 0 : event.offsetY
+  if (!spriteData) { return }
+
+  const img = await fabric.util.loadImage(spriteData.url)
+
+  const width = spriteData.size?.width || 32
+  const height = spriteData.size?.height || 32
+  const offsetX = event.offsetX - (width / 2)
+  const offsetY = event.offsetY - (height / 2)
+
+  add(new fabric.Image(img, {
+    width,
+    height,
+    left: offsetX < 0 ? 0 : offsetX,
+    top: offsetY < 0 ? 0 : offsetY
   }))
 
-  draggingImg.value = undefined
+  draggingSprite.value = undefined
 }
 
 function handleSubmit ({ __init, file }: Obj): void {

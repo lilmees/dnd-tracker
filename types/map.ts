@@ -1,15 +1,16 @@
 type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors'
 
 type NatureSprite =
-  | 'brick'
-  | 'stone-tile'
-  | 'slate-tile'
-  | 'wood'
-  | 'grass'
-  | 'high-grass'
-  | 'path'
-  | 'dirt'
-  | 'sand'
+  | 'oak'
+  | 'sandstone'
+  | 'stone'
+  | 'pebbles'
+  | 'mushroom'
+  | 'flower-bush'
+  | 'bush'
+  | 'small-bush'
+  | 'flower-cactus'
+  | 'cactus'
 
 type FloorSprite =
   | 'brick'
@@ -177,29 +178,31 @@ type MonsterSprite =
   | 'witch'
   | 'zombie'
 
-type ItemSprite = 'chair' | 'chest' | 'coin' | 'crate' | 'door' | 'key' | 'lever' | 'stairs' | 'table' | 'trap' | 'vase'
+type ItemSprite = 'chair' | 'chest' | 'coin' | 'crate' | 'door' | 'key' | 'lever' | 'stairs' | 'table' | 'trap' | 'vase' | 'sign'
 
 type Sprite = NatureSprite | AnimalSprite | CharacterSprite | MonsterSprite | ItemSprite | FloorSprite
 
+interface SpriteMetaData<T> {
+  label: string
+  value: T
+  variations?: number
+  size?: {
+    width: number
+    height: number
+  }
+}
+
 interface SpriteMap {
-  nature: NatureSprite[],
-  animals: AnimalSprite[],
-  characters: CharacterSprite[],
-  monsters: MonsterSprite[],
-  items: ItemSprite[],
-  floors: FloorSprite[]
+  nature: SpriteMetaData<NatureSprite>[],
+  animals: SpriteMetaData<AnimalSprite>[],
+  characters: SpriteMetaData<CharacterSprite>[],
+  monsters: SpriteMetaData<MonsterSprite>[],
+  items: SpriteMetaData<ItemSprite>[],
+  floors: SpriteMetaData<FloorSprite>[]
 }
 
 type FabricBrush = 'Pencil'|'Eraser'|'Spray'
-
-interface SpriteMetaData {
-  label: string
-  value: string
-  variations?: number
-  size?: number
-}
-
-interface SpriteData extends SpriteMetaData {
+interface SpriteData extends SpriteMetaData<Sprite> {
   url: string
 }
 
