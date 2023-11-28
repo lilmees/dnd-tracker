@@ -1,4 +1,4 @@
-type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors'
+type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors' | 'nature'
 
 type NatureSprite =
   | 'oak'
