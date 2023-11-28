@@ -292,15 +292,12 @@ function setFloorSpite (sprite: Sprite): void {
             <h3>Todo's</h3>
             <ul class="list-disc ml-4">
               <li>Optimize svg's</li>
-              <li>bigger sprites</li>
               <li>Save button</li>
               <li>Option to toggle Snap to grid</li>
-              <li>When clicking inside drawing option auto enable drawing mode/ background mode</li>
-              <li>Draw shapes</li>
+              <li>When clicking inside drawing option auto enable drawing mode/background mode</li>
               <li>Toast for max amount of sprites</li>
               <li>Zoom options</li>
               <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
-              <li>Tile maps</li>
               <li>No items out of the map</li>
             </ul>
           </div>

@@ -710,7 +710,8 @@
     },
     {
       "value": "path",
-      "label": "Path"
+      "label": "Path",
+      "variations": 2
     },
     {
       "value": "grass",
