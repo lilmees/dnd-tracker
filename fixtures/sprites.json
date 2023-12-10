@@ -1,4 +1,53 @@
 {
+  "walls": [
+    {
+      "value": "fence",
+      "label": "Fence",
+      "versions": [
+        "default",
+        "l",
+        "r",
+        "t",
+        "b",
+        "lr",
+        "lt",
+        "lb",
+        "rt",
+        "rb",
+        "tb",
+        "lrt",
+        "lrb",
+        "lrtb"
+      ]
+    },
+    {
+      "value": "brick",
+      "label": "Brick",
+      "versions": [
+        "default",
+        "l",
+        "r",
+        "t",
+        "b",
+        "lr",
+        "lt",
+        "lb",
+        "rt",
+        "rb",
+        "tb",
+        "lrt",
+        "lrb",
+        "lrtb"
+      ]
+    },
+    {
+      "value": "remove",
+      "label": "Remove",
+      "versions": [
+        "default"
+      ]
+    }
+  ],
   "animals": [
     {
       "value": "ant",

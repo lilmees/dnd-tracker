@@ -22,12 +22,13 @@ export const useMapBuilder = () => {
   const recentCategorySearch = ref<{ sprite: Sprite, category: SpriteType }>()
 
   const {
-    mouseDownFloor,
-    mouseUpFloor,
-    mouseMoveFloor,
+    mouseDown,
+    mouseUp,
+    mouseMove,
     fillBackground,
-    isDrawingFloor
-  } = useFabricDrawFloor(cellWidth.value)
+    isDrawingFloor,
+    isDrawingWall
+  } = useFabricDraw(cellWidth.value)
 
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(
@@ -67,33 +68,36 @@ export const useMapBuilder = () => {
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
       'mouse:move': ({ e }) => handleMouse(e, 'move'),
-      'mouse:up': () => mouseUpFloor(canvas.value)
+      'mouse:up': ({ e }) => handleMouse(e, 'up')
     })
 
     // canvas.value.on('object:modified', e => handleBoundaries(e))
   }
 
-  function handleMouse (e: fabric.TPointerEvent, action: 'move' | 'down'): void {
-    console.log({
-      sprite: selectedSprite.value,
-      type: selectedType.value,
-      isNotDrawing: !isDrawingFloor.value && action === 'move'
-    })
+  function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
     if (
       !selectedSprite.value ||
       !selectedType.value ||
-      (!isDrawingFloor.value && action === 'move')
+      (selectedType.value !== 'floors' && selectedType.value !== 'walls') ||
+      ((!isDrawingWall.value && !isDrawingFloor.value) && action === 'move')
     ) { return }
 
     const spriteData = getSprite(selectedType.value, selectedSprite.value)
 
     if (spriteData) {
+      const layer: fabric.Group = selectedType.value === 'floors'
+        ? floorLayer.value
+        : middleLayer.value
+
       switch (action) {
         case 'down':
-          mouseDownFloor(e, canvas.value, floorLayer.value, spriteData)
+          mouseDown(e, canvas.value, layer, spriteData)
           break
         case 'move':
-          mouseMoveFloor(e, canvas.value, floorLayer.value, spriteData)
+          mouseMove(e, canvas.value, layer, spriteData)
+          break
+        case 'up':
+          mouseUp(canvas.value)
           break
       }
     }

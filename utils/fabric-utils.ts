@@ -70,6 +70,95 @@ export function getGridObjectByCoords (group: fabric.Group, point: fabric.Point)
   }
 }
 
+export function pixelToGrid (pixel: number, grid: number): number {
+  return Math.floor(pixel / grid)
+}
+
+export function sameImgSource (object: fabric.Image, sprite: Sprite): boolean {
+  return object.getSrc().includes(sprite)
+}
+
+export function getAdjacentSprites (
+  group: fabric.Group,
+  coords: Coords,
+  grid: number,
+  sprite?: Sprite,
+  sameImage = true
+): AdjacentSprite {
+  let left = false
+  let right = false
+  let bottom = false
+  let top = false
+
+  const xCoords = pixelToGrid(coords.x, grid)
+  const yCoords = pixelToGrid(coords.y, grid)
+
+  for (const object of group.getObjects()) {
+    if ((sprite && sameImage && sameImgSource(object as fabric.Image, sprite)) || !sameImage) {
+      const { x, y } = getCoordsFromGroupItem(group, object)
+      const xItem = pixelToGrid(x, grid)
+      const yItem = pixelToGrid(y, grid)
+
+      // Vertical
+      if (xItem === xCoords) {
+        bottom = bottom || yItem - 1 === yCoords
+        top = top || yItem + 1 === yCoords
+      }
+
+      // Horizontal
+      if (yItem === yCoords) {
+        left = left || xItem + 1 === xCoords
+        right = right || xItem - 1 === xCoords
+      }
+    }
+  }
+
+  return { left, right, bottom, top }
+}
+
+export function createAdjacentString (
+  { left, right, bottom, top }: AdjacentSprite,
+  versions?: SpriteDirection[]
+): SpriteDirection {
+  if (!left && !right && !bottom && !top) {
+    return 'default'
+  }
+
+  let string = ''
+
+  if (left) { string += 'l' }
+  if (right) { string += 'r' }
+  if (top) { string += 't' }
+  if (bottom) { string += 'b' }
+
+  return string === '' ? 'default' : string as SpriteDirection
+}
+
+export function getConnectedCellCoords (
+  connection: Connection,
+  coords: fabric.Point,
+  grid: number
+): fabric.Point {
+  let { x, y } = coords
+
+  switch (connection) {
+    case 'left':
+      x -= grid
+      break
+    case 'right':
+      x += grid
+      break
+    case 'bottom':
+      y += grid
+      break
+    case 'top':
+      y -= grid
+      break
+  }
+
+  return { x, y } as fabric.Point
+}
+
 export async function createPattern (url: string): Promise<fabric.Pattern> {
   const patternImg = await fabric.util.loadImage(url)
 

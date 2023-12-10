@@ -1,4 +1,9 @@
-type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors' | 'nature'
+type SpriteType = 'animals' | 'characters' | 'monsters' | 'items' | 'floors' | 'nature' | 'walls'
+
+type WallSprite =
+  | 'fence'
+  | 'brick'
+  | 'remove'
 
 type NatureSprite =
   | 'oak'
@@ -180,7 +185,25 @@ type MonsterSprite =
 
 type ItemSprite = 'chair' | 'chest' | 'coin' | 'crate' | 'door' | 'key' | 'lever' | 'stairs' | 'table' | 'trap' | 'vase' | 'sign'
 
-type Sprite = NatureSprite | AnimalSprite | CharacterSprite | MonsterSprite | ItemSprite | FloorSprite
+type Sprite = NatureSprite | AnimalSprite | CharacterSprite | MonsterSprite | ItemSprite | FloorSprite | WallSprite
+
+type SpriteDirection =
+  | 'default'
+  | 'l'
+  | 'r'
+  | 't'
+  | 'b'
+  | 'lr'
+  | 'lt'
+  | 'lb'
+  | 'rt'
+  | 'rb'
+  | 'tb'
+  | 'ltb'
+  | 'rtb'
+  | 'lrt'
+  | 'lrb'
+  | 'lrtb'
 
 interface SpriteMetaData<T> {
   label: string
@@ -189,7 +212,8 @@ interface SpriteMetaData<T> {
   size?: {
     width: number
     height: number
-  }
+  },
+  versions?: SpriteDirection[]
 }
 
 interface SpriteMap {
@@ -198,7 +222,8 @@ interface SpriteMap {
   characters: SpriteMetaData<CharacterSprite>[],
   monsters: SpriteMetaData<MonsterSprite>[],
   items: SpriteMetaData<ItemSprite>[],
-  floors: SpriteMetaData<FloorSprite>[]
+  floors: SpriteMetaData<FloorSprite>[],
+  walls: SpriteMetaData<WallSprite>[]
 }
 
 type FabricBrush = 'Pencil'|'Eraser'|'Spray'
@@ -210,3 +235,12 @@ interface Coords {
   x: number,
   y: number
 }
+
+interface AdjacentSprite {
+  left: boolean
+  right: boolean
+  bottom: boolean
+  top: boolean
+}
+
+type Connection = 'left' | 'right' | 'bottom' | 'top'

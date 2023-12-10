@@ -127,7 +127,7 @@ function handleSubmit ({ __init, file }: Obj): void {
         <div class="space-y-4 w-full">
           <div
             class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
-            :class="{ '!border-success': selectedSprite }"
+            :class="{ '!border-success': selectedSprite && selectedType === 'floors' }"
           >
             <h3>
               Tile set
@@ -138,7 +138,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                 :key="sprite.value"
                 class="w-12 p-1 transition-colors duration-200 ease-in-out"
                 :class="{
-                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite
+                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors'
                 }"
               >
                 <NuxtImg
@@ -268,7 +268,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             Export
           </button>
         </div>
-        <div class="w-[512px] space-y-4 relative">
+        <div class="w-[520px] space-y-4 relative">
           <div>
             <div
               ref="canvasContainer"
@@ -285,7 +285,6 @@ function handleSubmit ({ __init, file }: Obj): void {
           <div class="space-y-2">
             <h3>Todo's</h3>
             <ul class="list-disc ml-4">
-              <li>Drawing conected textures (walls, fences?)</li>
               <li>Optimize svg's</li>
               <li>Save button</li>
               <li>Option to toggle Snap to grid</li>
@@ -298,7 +297,36 @@ function handleSubmit ({ __init, file }: Obj): void {
             </ul>
           </div>
         </div>
-        <div class="w-full">
+        <div class="space-y-4 w-full">
+          <div
+            class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
+            :class="{ '!border-success': selectedSprite && selectedType === 'walls' }"
+          >
+            <h3>
+              Wall
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                v-for="sprite in sprites['walls']"
+                :key="sprite.value"
+                class="w-12 p-1 transition-colors duration-200 ease-in-out"
+                :class="{
+                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls'
+                }"
+              >
+                <NuxtImg
+                  :id="sprite.value"
+                  :draggable="true"
+                  :src="`/art/walls/${sprite.value}${sprite.value === 'remove' ? '' : '-default'}.svg`"
+                  class="w-12 h-12"
+                  @click="setSprite(sprite.value as Sprite, 'walls')"
+                />
+                <p class="body-extra-small font-bold text-center">
+                  {{ sprite.label }}
+                </p>
+              </div>
+            </div>
+          </div>
           <Accordion :sections="['monsters', 'characters', 'animals', 'items', 'nature']">
             <template
               v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
