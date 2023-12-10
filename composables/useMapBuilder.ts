@@ -8,15 +8,19 @@ export const useMapBuilder = () => {
   const canvas = ref<fabric.Canvas>()
   const floorLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const middleLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
+  const gridLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
+
   const cellWidth = ref<number>(32)
   const isDrawingMode = ref<boolean>(false)
   const activeBrush = ref<FabricBrush>('Pencil')
   const activeColor = ref<string>('#000000')
   const brushSize = ref<string>('32')
   const draggedOver = ref<boolean>(false)
-  const maxSprites = ref<number>(500)
+  const maxSprites = ref<number>(250)
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
+  const showGrid = ref<boolean>(true)
+  const useSnapToGrid = ref<boolean>(false)
   const selectedSprite = ref<Sprite>()
   const selectedType = ref<SpriteType>()
   const recentCategorySearch = ref<{ sprite: Sprite, category: SpriteType }>()
@@ -46,14 +50,15 @@ export const useMapBuilder = () => {
 
     canvas.value.add(floorLayer.value)
     canvas.value.add(middleLayer.value)
+    canvas.value.add(gridLayer.value)
 
     setBrush('Pencil')
 
     // Draw grid lines on the canvas
     const options = { stroke: '#000000', strokeWidth: 2, selectable: false }
     for (let i = 1; i < canvas.value.getWidth() / cellWidth.value + 1; i++) {
-      canvas.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 600], options))
-      canvas.value.add(new fabric.Line([0, cellWidth.value * i, 600, cellWidth.value * i], options))
+      gridLayer.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 600], options))
+      gridLayer.value.add(new fabric.Line([0, cellWidth.value * i, 600, cellWidth.value * i], options))
     }
 
     calculateCount()
@@ -123,7 +128,7 @@ export const useMapBuilder = () => {
   }
 
   function calculateCount (event?: { target: fabric.Object }): void {
-    let count: number = (canvas.value?.getObjects().length || 32) - 32 // minus grid lines
+    const count: number = canvas.value?.getObjects().filter(obj => !(obj instanceof fabric.Group)).length || 0
 
     if (event && count > maxSprites.value) {
       canvas.value?.remove(event.target)
@@ -226,6 +231,18 @@ export const useMapBuilder = () => {
     // }
   }
 
+  function toggleGridLines (): void {
+    showGrid.value = !showGrid.value
+
+    if (showGrid.value) {
+      canvas.value?.add(gridLayer.value)
+    } else {
+      canvas.value?.remove(gridLayer.value)
+    }
+
+    canvas.value?.requestRenderAll()
+  }
+
   function toggleDrawing (value?: boolean): void {
     isDrawingMode.value = value ?? !isDrawingMode.value
     canvas.value?.set('isDrawingMode', isDrawingMode.value)
@@ -312,6 +329,8 @@ export const useMapBuilder = () => {
     spriteSelected,
     selectedSprite,
     selectedType,
+    useSnapToGrid,
+    showGrid,
     mount,
     getSprite,
     fillBackground,
@@ -323,6 +342,7 @@ export const useMapBuilder = () => {
     toggleDrawing,
     setBrush,
     findType,
-    setSprite
+    setSprite,
+    toggleGridLines
   }
 }

@@ -18,6 +18,7 @@ const {
   spriteSelected,
   selectedSprite,
   selectedType,
+  showGrid,
   mount,
   getSprite,
   fillBackground,
@@ -26,7 +27,8 @@ const {
   setBrush,
   setSprite,
   update,
-  add
+  add,
+  toggleGridLines
 } = useMapBuilder()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -268,33 +270,53 @@ function handleSubmit ({ __init, file }: Obj): void {
             Export
           </button>
         </div>
-        <div class="w-[520px] space-y-4 relative">
-          <div>
-            <div
-              ref="canvasContainer"
-              class="border-tracker border-4 rounded-lg w-fit transition-colors duration-200 ease-in-out"
-              :class="{ '!border-success': draggedOver }"
-              @drop.prevent.stop="handleDrop"
+        <div class="space-y-4">
+          <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg flex gap-4">
+            <button
+              :disabled="!canvas"
+              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              @click="changeBackground(selectedSprite!)"
             >
-              <canvas ref="canvasEl" width="512" height="512" class="rounded" />
-            </div>
-            <div class="flex justify-end" :class="{ 'text-danger': spriteAmount >= maxSprites }">
-              {{ spriteAmount }} / {{ maxSprites }}
-            </div>
+              <Icon name="fluent-mdl2:snap-to-grid" class="w-6 h-6" />
+            </button>
+            <button
+              :disabled="!canvas"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              :class="{ 'text-success': showGrid }"
+              @click="toggleGridLines()"
+            >
+              <Icon name="fluent-mdl2:show-grid" class="w-6 h-6" />
+            </button>
           </div>
-          <div class="space-y-2">
-            <h3>Todo's</h3>
-            <ul class="list-disc ml-4">
-              <li>Optimize svg's</li>
-              <li>Save button</li>
-              <li>Option to toggle Snap to grid</li>
-              <li>Option to toggle grid lines</li>
-              <li>When clicking inside drawing option auto enable drawing mode/background mode</li>
-              <li>Toast for max amount of sprites</li>
-              <li>Zoom options</li>
-              <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
-              <li>No items out of the map</li>
-            </ul>
+          <div class="w-[520px] space-y-4 relative">
+            <div>
+              <div
+                ref="canvasContainer"
+                class="border-tracker border-4 rounded-lg w-fit transition-colors duration-200 ease-in-out"
+                :class="{ '!border-success': draggedOver }"
+                @drop.prevent.stop="handleDrop"
+              >
+                <canvas ref="canvasEl" width="512" height="512" class="rounded" />
+              </div>
+              <div class="flex justify-end" :class="{ 'text-danger': spriteAmount >= maxSprites }">
+                {{ spriteAmount }} / {{ maxSprites }}
+              </div>
+            </div>
+            <div class="space-y-2">
+              <h3>Todo's</h3>
+              <ul class="list-disc ml-4">
+                <li>Optimize svg's</li>
+                <li>Save button</li>
+                <li>Option to toggle Snap to grid</li>
+                <li>Option to toggle grid lines</li>
+                <li>Tooltips</li>
+                <li>When clicking inside drawing option auto enable drawing mode/background mode</li>
+                <li>Toast for max amount of sprites</li>
+                <li>Zoom options</li>
+                <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
+                <li>No items out of the map</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="space-y-4 w-full">
