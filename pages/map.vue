@@ -19,6 +19,7 @@ const {
   selectedSprite,
   selectedType,
   showGrid,
+  useSnapToGrid,
   mount,
   getSprite,
   fillBackground,
@@ -274,8 +275,9 @@ function handleSubmit ({ __init, file }: Obj): void {
           <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg flex gap-4">
             <button
               :disabled="!canvas"
-              class="disabled:opacity-50 disabled:cursor-not-allowed"
-              @click="changeBackground(selectedSprite!)"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              :class="{ 'text-success': useSnapToGrid }"
+              @click="useSnapToGrid = !useSnapToGrid"
             >
               <Icon name="fluent-mdl2:snap-to-grid" class="w-6 h-6" />
             </button>

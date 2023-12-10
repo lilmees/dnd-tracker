@@ -55,7 +55,7 @@ export const useMapBuilder = () => {
     setBrush('Pencil')
 
     // Draw grid lines on the canvas
-    const options = { stroke: '#000000', strokeWidth: 2, selectable: false }
+    const options = { stroke: '#000000', strokeWidth: 1 }
     for (let i = 1; i < canvas.value.getWidth() / cellWidth.value + 1; i++) {
       gridLayer.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 600], options))
       gridLayer.value.add(new fabric.Line([0, cellWidth.value * i, 600, cellWidth.value * i], options))
@@ -68,7 +68,9 @@ export const useMapBuilder = () => {
       dragleave: () => { draggedOver.value = false },
       'object:added': e => calculateCount(e as { target: fabric.Object }),
       'object:removed': () => calculateCount(),
-      'object:moving': ({ target }) => snapToGrid(target, cellWidth.value),
+      'object:moving': ({ target }) => {
+        if (useSnapToGrid.value) { snapToGrid(target, cellWidth.value) }
+      },
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
@@ -128,7 +130,7 @@ export const useMapBuilder = () => {
   }
 
   function calculateCount (event?: { target: fabric.Object }): void {
-    const count: number = canvas.value?.getObjects().filter(obj => !(obj instanceof fabric.Group)).length || 0
+    let count: number = canvas.value?.getObjects().filter(obj => !(obj instanceof fabric.Group)).length || 0
 
     if (event && count > maxSprites.value) {
       canvas.value?.remove(event.target)
@@ -164,6 +166,10 @@ export const useMapBuilder = () => {
   }
 
   function add (object: fabric.Object): void {
+    if (useSnapToGrid.value) {
+      snapToGrid(object, cellWidth.value)
+    }
+
     canvas.value?.add(object)
     canvas.value?.requestRenderAll()
   }
