@@ -42,10 +42,6 @@ onMounted(() => {
   }
 })
 
-// async function handleSubmit ({ type, sprite }: Obj): Promise<void> {
-//   canvas.value?.add(await fabric.Image.fromURL(getSprite(type, sprite), {}, {}))
-// }
-
 function changeBackground (sprite : Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
@@ -55,6 +51,10 @@ function changeBackground (sprite : Sprite): void {
 }
 
 function handleDrag (event: DragEvent): void {
+  toggleDrawing(false)
+  selectedSprite.value = undefined
+  selectedType.value = undefined
+
   if (event.target?.src) {
     const split = event.target.src.split('/')
 
@@ -309,10 +309,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               <ul class="list-disc ml-4">
                 <li>Optimize svg's</li>
                 <li>Save button</li>
-                <li>Option to toggle Snap to grid</li>
-                <li>Option to toggle grid lines</li>
                 <li>Tooltips</li>
-                <li>When clicking inside drawing option auto enable drawing mode/background mode</li>
                 <li>Toast for max amount of sprites</li>
                 <li>Zoom options</li>
                 <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
@@ -358,9 +355,10 @@ function handleSubmit ({ __init, file }: Obj): void {
               #[category]
             >
               <div class="flex flex-wrap gap-2">
-                <div
+                <button
                   v-for="sprite in sprites[category as keyof SpriteMap]"
                   :key="sprite.value"
+                  :aria-label="sprite.value"
                   class="w-12"
                 >
                   <NuxtImg
@@ -373,7 +371,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                   <p class="body-extra-small font-bold text-center">
                     {{ sprite.label }}
                   </p>
-                </div>
+                </button>
               </div>
             </template>
           </Accordion>

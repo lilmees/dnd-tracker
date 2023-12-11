@@ -255,6 +255,7 @@ export const useMapBuilder = () => {
 
     if (isDrawingMode.value) {
       selectedSprite.value = undefined
+      selectedType.value = undefined
     }
   }
 
