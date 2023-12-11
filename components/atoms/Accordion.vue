@@ -24,7 +24,9 @@ function end (el: Element): void {
       @keydown.escape="open = null"
     >
       <p class="head-2 ">
-        {{ section }}
+        <slot :name="`title-${section}`">
+          {{ section }}
+        </slot>
       </p>
       <Icon
         name="tabler:chevron-down"

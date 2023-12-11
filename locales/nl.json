@@ -33,6 +33,8 @@
     "prev": "Vorige",
     "decline": "Afwijzen",
     "transfer": "Overdragen",
+    "flip": "Flip {axis}",
+    "export": "Export",
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"
@@ -44,6 +46,10 @@
     "players": "Spelers",
     "members": "Leden",
     "monsters": "Monsters",
+    "characters": "Karakters",
+    "animals": "Dieren",
+    "items": "Voorwerpen",
+    "nature": "Natuur",
     "notes": "Notities",
     "total": "Totaal",
     "grandTotal": "Eindtotaal",
@@ -61,6 +67,11 @@
     "current": "Huidig",
     "temp": "Tijdelijk",
     "max": "Max",
+    "drawing": "Tekenen",
+    "brushes": "Penselen",
+    "pencil": "Potlood",
+    "spraycan": "Spuitbus",
+    "eraser": "Wisser",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -321,6 +332,17 @@
     "noMember": {
       "title": "Je bent geen teamlid",
       "text": "Oeps! Het lijkt erop dat je geen lid bent en geen toegang hebt tot deze inhoud. Als je denkt dat dit een vergissing is, aarzel dan niet om contact op te nemen met de eigenaar of een beheerder voor hulp."
+    },
+    "map": {
+      "tileSet": "Vloertegels",
+      "wallSet": "Muurtegels",
+      "fillBackground": "Achtergrond vullen",
+      "addBackground": "Achtergrond toevoegen",
+      "customBackground": "Eigen achtergrond",
+      "drawingMode": "Tekenmodus",
+      "snapToGrid": "Rasteruitlijning",
+      "showGrid": "Toon raster",
+      "brushSize": "Borstelgrootte: {size}"
     }
   },
   "components": {

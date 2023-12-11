@@ -133,7 +133,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             :class="{ '!border-success': selectedSprite && selectedType === 'floors' }"
           >
             <h3>
-              Tile set
+              {{ $t('pages.map.tileSet') }}
             </h3>
             <div class="flex flex-wrap gap-2">
               <div
@@ -159,6 +159,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="flex gap-2 flex-wrap">
               <span> Utils: </span>
               <button
+                v-tippy="$t('pages.map.fillBackground')"
                 :disabled="!selectedSprite"
                 class="disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="changeBackground(selectedSprite!)"
@@ -171,18 +172,17 @@ function handleSubmit ({ __init, file }: Obj): void {
                 id="form"
                 type="form"
                 :actions="false"
-
                 @submit="handleSubmit"
               >
                 <FormKit
-                  label="Custom background"
+                  :label="$t('pages.map.customBackground')"
                   name="file"
                   type="file"
                   accept=".png,.svg,.jpg,.jpeg"
                   validation="required"
                 />
                 <FormKit type="submit">
-                  Add background
+                  {{ $t('pages.map.addBackground') }}
                 </FormKit>
               </FormKit>
             </div>
@@ -192,69 +192,53 @@ function handleSubmit ({ __init, file }: Obj): void {
             :class="{ '!border-success': isDrawingMode }"
           >
             <h3 class="mb-4">
-              Drawing Tools
+              {{ $t('general.drawing') }}
             </h3>
             <div class="space-y-4">
               <FormKit
                 v-model="brushSize"
                 type="slider"
-                :label="`Brush size: ${brushSize}px`"
+                :label="$t('pages.map.brushSize', { size: `${brushSize}px` })"
                 min="1"
                 max="150"
               />
               <FormKit
                 type="colorpicker"
-                label="Color picker"
                 format="hex"
                 inline
                 @input="activeColor = $event || '#000000'"
               />
               <div class="flex gap-2 flex-wrap">
-                <span> Brushes: </span>
-                <button @click="setBrush('Pencil')">
+                <span> {{ $t('general.brushes') }}: </span>
+                <button
+                  v-tippy="$t('general.pencil')"
+                  @click="setBrush('Pencil')"
+                >
                   <Icon
                     name="ph:pencil-bold"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Pencil' }"
                   />
                 </button>
-                <button @click="setBrush('Spray')">
+                <button
+                  v-tippy="$t('general.spraycan')"
+                  @click="setBrush('Spray')"
+                >
                   <Icon
                     name="tabler:spray"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Spray' }"
                   />
                 </button>
-                <button @click="setBrush('Eraser')">
+                <button
+                  v-tippy="$t('general.eraser')"
+                  @click="setBrush('Eraser')"
+                >
                   <Icon
                     name="ph:eraser-bold"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Eraser' }"
                   />
-                </button>
-              </div>
-              <div class="flex gap-2 flex-wrap">
-                <span> Utils: </span>
-                <button
-                  :disabled="!spriteSelected"
-                  class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="flip('x', canvas, update)"
-                >
-                  <Icon name="uil:flip-v-alt" class="w-6 h-6" />
-                </button>
-                <button
-                  :disabled="!spriteSelected"
-                  class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="flip('y', canvas, update)"
-                >
-                  <Icon name="uil:flip-h-alt" class="w-6 h-6" />
-                </button>
-                <button
-                  :disabled="!spriteSelected"
-                  class="disabled:opacity-50 disabled:cursor-not-allowed"
-                  @click="clone(canvas)"
-                >
-                  <Icon name="ph:copy-bold" class="w-6 h-6" />
                 </button>
               </div>
               <button
@@ -263,17 +247,18 @@ function handleSubmit ({ __init, file }: Obj): void {
                 @click="toggleDrawing(undefined)"
               >
                 <Icon name="ic:outline-draw" />
-                Draw mode
+                {{ $t('pages.map.drawingMode') }}
               </button>
             </div>
           </div>
           <button class="btn-primary w-full" @click="exportCanvas(canvas)">
-            Export
+            {{ $t('actions.export') }}
           </button>
         </div>
         <div class="space-y-4">
           <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg flex gap-4">
             <button
+              v-tippy="$t('pages.map.snapToGrid')"
               :disabled="!canvas"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               :class="{ 'text-success': useSnapToGrid }"
@@ -282,12 +267,37 @@ function handleSubmit ({ __init, file }: Obj): void {
               <Icon name="fluent-mdl2:snap-to-grid" class="w-6 h-6" />
             </button>
             <button
+              v-tippy="$t('pages.map.showGrid')"
               :disabled="!canvas"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               :class="{ 'text-success': showGrid }"
               @click="toggleGridLines()"
             >
               <Icon name="fluent-mdl2:show-grid" class="w-6 h-6" />
+            </button>
+            <button
+              v-tippy="$t('actions.flip', { axis: 'x' })"
+              :disabled="!spriteSelected"
+              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              @click="flip('x', canvas, update)"
+            >
+              <Icon name="uil:flip-v-alt" class="w-6 h-6" />
+            </button>
+            <button
+              v-tippy="$t('actions.flip', { axis: 'y' })"
+              :disabled="!spriteSelected"
+              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              @click="flip('y', canvas, update)"
+            >
+              <Icon name="uil:flip-h-alt" class="w-6 h-6" />
+            </button>
+            <button
+              v-tippy="$t('actions.copy')"
+              :disabled="!spriteSelected"
+              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              @click="clone(canvas)"
+            >
+              <Icon name="ph:copy-bold" class="w-6 h-6" />
             </button>
           </div>
           <div class="w-[520px] space-y-4 relative">
@@ -309,7 +319,6 @@ function handleSubmit ({ __init, file }: Obj): void {
               <ul class="list-disc ml-4">
                 <li>Optimize svg's</li>
                 <li>Save button</li>
-                <li>Tooltips</li>
                 <li>Toast for max amount of sprites</li>
                 <li>Zoom options</li>
                 <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
@@ -324,7 +333,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             :class="{ '!border-success': selectedSprite && selectedType === 'walls' }"
           >
             <h3>
-              Wall
+              {{ $t('pages.map.wallSet') }}
             </h3>
             <div class="flex flex-wrap gap-2">
               <div
@@ -349,6 +358,13 @@ function handleSubmit ({ __init, file }: Obj): void {
             </div>
           </div>
           <Accordion :sections="['monsters', 'characters', 'animals', 'items', 'nature']">
+            <template
+              v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
+              :key="category"
+              #[`title-${category}`]
+            >
+              {{ $t(`general.${category}`) }}
+            </template>
             <template
               v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
               :key="category"
