@@ -35,6 +35,8 @@
     "transfer": "Overdragen",
     "flip": "Flip {axis}",
     "export": "Export",
+    "zoomIn": "Inzoomen",
+    "zoomOut": "Uitzoomen",
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"

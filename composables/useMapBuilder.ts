@@ -30,6 +30,7 @@ export const useMapBuilder = () => {
   const isPanning = ref<boolean>(false)
   const lastPosX = ref<number>()
   const lastPosY = ref<number>()
+  const zoom = ref<number>(1)
 
   const {
     mouseDown,
@@ -122,22 +123,26 @@ export const useMapBuilder = () => {
   function handleMouseWheel (e: WheelEvent): void {
     if (!canvas.value) { return }
 
-    let zoom = canvas.value.getZoom()
+    let currentZoom = canvas.value.getZoom()
     const width = canvas.value.getWidth()
     const height = canvas.value.getHeight()
     const vpt = canvas.value!.viewportTransform
 
-    zoom *= 0.999 ** e.deltaY
+    // Makes zoom smoother
+    currentZoom *= 0.999 ** e.deltaY
+    currentZoom = Math.max(1, Math.min(currentZoom, 10))
 
-    if (zoom > 10) { zoom = 10 }
-    if (zoom < 1) { zoom = 1 }
+    canvas.value.zoomToPoint(
+      new fabric.Point({ x: e.offsetX, y: e.offsetY }),
+      currentZoom
+    )
 
-    canvas.value.zoomToPoint(new fabric.Point({ x: e.offsetX, y: e.offsetY }), zoom)
+    zoom.value = currentZoom
 
     e.preventDefault()
     e.stopPropagation()
 
-    setViewPortTransformWithinBounds(vpt, zoom, width, height)
+    setViewPortTransformWithinBounds(vpt, currentZoom, width, height)
   }
 
   function handlePanning (e: MouseEvent, action: 'move'|'down'|'up'): void {
@@ -151,18 +156,19 @@ export const useMapBuilder = () => {
         break
       case 'move':
         if (isPanning.value) {
-          const zoom = canvas.value!.getZoom()
+          const currentZoom = canvas.value!.getZoom()
           const width = canvas.value!.getWidth()
           const height = canvas.value!.getHeight()
           const vpt = canvas.value!.viewportTransform
 
-          setViewPortTransformWithinBounds(vpt, zoom, width, height, () => {
+          setViewPortTransformWithinBounds(vpt, currentZoom, width, height, () => {
             vpt[4] += e.clientX - (lastPosX.value ?? 0)
             vpt[5] += e.clientY - (lastPosY.value ?? 0)
           })
 
           canvas.value!.requestRenderAll()
 
+          zoom.value = currentZoom
           lastPosX.value = e.clientX
           lastPosY.value = e.clientY
         }
@@ -173,6 +179,13 @@ export const useMapBuilder = () => {
         isPanning.value = false
         break
     }
+  }
+
+  function changeZoom (out: boolean): void {
+    const currentZoom = Math.max(1, Math.min(out ? zoom.value - 1 : zoom.value + 1))
+
+    canvas.value?.setZoom(currentZoom)
+    zoom.value = currentZoom
   }
 
   function findType (sprite: Sprite): SpriteType | undefined {
@@ -403,6 +416,7 @@ export const useMapBuilder = () => {
     selectedType,
     useSnapToGrid,
     showGrid,
+    zoom,
     mount,
     getSprite,
     fillBackground,
@@ -415,6 +429,7 @@ export const useMapBuilder = () => {
     setBrush,
     findType,
     setSprite,
-    toggleGridLines
+    toggleGridLines,
+    changeZoom
   }
 }

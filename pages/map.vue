@@ -20,6 +20,7 @@ const {
   selectedType,
   showGrid,
   useSnapToGrid,
+  zoom,
   mount,
   getSprite,
   fillBackground,
@@ -29,7 +30,8 @@ const {
   setSprite,
   update,
   add,
-  toggleGridLines
+  toggleGridLines,
+  changeZoom
 } = useMapBuilder()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -278,7 +280,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <button
               v-tippy="$t('actions.flip', { axis: 'x' })"
               :disabled="!spriteSelected"
-              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="flip('x', canvas, update)"
             >
               <Icon name="uil:flip-v-alt" class="w-6 h-6" />
@@ -286,7 +288,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <button
               v-tippy="$t('actions.flip', { axis: 'y' })"
               :disabled="!spriteSelected"
-              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="flip('y', canvas, update)"
             >
               <Icon name="uil:flip-h-alt" class="w-6 h-6" />
@@ -294,10 +296,26 @@ function handleSubmit ({ __init, file }: Obj): void {
             <button
               v-tippy="$t('actions.copy')"
               :disabled="!spriteSelected"
-              class="disabled:opacity-50 disabled:cursor-not-allowed"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="clone(canvas)"
             >
               <Icon name="ph:copy-bold" class="w-6 h-6" />
+            </button>
+            <button
+              v-tippy="$t('actions.zoomOut')"
+              :disabled="!canvas || zoom === 1"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              @click="changeZoom(true)"
+            >
+              <Icon name="iconamoon:zoom-out-bold" class="w-6 h-6" />
+            </button>
+            <button
+              v-tippy="$t('actions.zoomIn')"
+              :disabled="!canvas || zoom === 10"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              @click="changeZoom(false)"
+            >
+              <Icon name="iconamoon:zoom-in-bold" class="w-6 h-6" />
             </button>
           </div>
           <div class="w-[520px] space-y-4 relative">
@@ -320,7 +338,6 @@ function handleSubmit ({ __init, file }: Obj): void {
                 <li>Optimize svg's</li>
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>
-                <li>Zoom options</li>
                 <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
                 <li>No items out of the map</li>
               </ul>

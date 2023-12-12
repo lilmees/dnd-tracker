@@ -35,6 +35,8 @@
     "transfer": "Transfer",
     "flip": "Flip {axis}",
     "export": "Export",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
     "read": {
       "more": "Read more",
       "less": "Read less"
