@@ -339,7 +339,6 @@ function handleSubmit ({ __init, file }: Obj): void {
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>
                 <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
-                <li>No items out of the map</li>
               </ul>
             </div>
           </div>

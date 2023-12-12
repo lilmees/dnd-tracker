@@ -78,6 +78,7 @@ export const useMapBuilder = () => {
       'object:moving': ({ target }) => {
         if (useSnapToGrid.value) { snapToGrid(target, cellWidth.value) }
       },
+      'object:modified': ({ target }) => handleBoundaries(target),
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
@@ -85,8 +86,6 @@ export const useMapBuilder = () => {
       'mouse:up': ({ e }) => handleMouse(e, 'up'),
       'mouse:wheel': ({ e }) => handleMouseWheel(e)
     })
-
-    // canvas.value.on('object:modified', e => handleBoundaries(e))
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
@@ -293,26 +292,27 @@ export const useMapBuilder = () => {
     }
   }
 
-  function handleBoundaries (event: any): void {
-    // if (!canvas.value) {
-    //   return
-    // }
-    // const obj = event.target
-    // const boundingRect = obj.getBoundingRect(true)
-    // if (
-    //   boundingRect.left < 0 ||
-    //   boundingRect.top < 0 ||
-    //   boundingRect.left + boundingRect.width > canvas.value.getWidth() ||
-    //   boundingRect.top + boundingRect.height > canvas.value.getHeight()
-    // ) {
-    //   obj.top = obj._stateProperties.top
-    //   obj.left = obj._stateProperties.left
-    //   obj.angle = obj._stateProperties.angle
-    //   obj.scaleX = obj._stateProperties.scaleX
-    //   obj.scaleY = obj._stateProperties.scaleY
-    //   obj.setCoords()
-    //   obj.saveState()
-    // }
+  function handleBoundaries (target: fabric.Image): void {
+    if (!canvas.value) { return }
+
+    const width = canvas.value.getWidth()
+    const height = canvas.value.getHeight()
+    const boundingBox = target.getBoundingRect()
+
+    if (boundingBox.left < 0) {
+      target.set({ left: 0 })
+    } else if (boundingBox.left + boundingBox.width > width) {
+      target.set({ left: width - boundingBox.width })
+    }
+
+    if (boundingBox.top < 0) {
+      target.set({ top: 0 })
+    } else if (boundingBox.top + boundingBox.height > height) {
+      target.set({ top: height - boundingBox.height })
+    }
+
+    target.setCoords()
+    canvas.value.requestRenderAll()
   }
 
   function toggleGridLines (): void {
