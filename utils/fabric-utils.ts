@@ -164,3 +164,28 @@ export async function createPattern (url: string): Promise<fabric.Pattern> {
 
   return new fabric.Pattern({ source: patternImg })
 }
+
+export function setViewPortTransformWithinBounds (
+  vpt: fabric.TMat2D,
+  zoom: number,
+  width: number,
+  height: number,
+  cb?: () => void
+): void {
+  if (zoom < 200 / width) {
+    vpt[4] = 200 - width * zoom / 2
+    vpt[5] = 200 - height * zoom / 2
+  } else {
+    if (cb) { cb() }
+    if (vpt[4] >= 0) {
+      vpt[4] = 0
+    } else if (vpt[4] < width - width * zoom) {
+      vpt[4] = width - width * zoom
+    }
+    if (vpt[5] >= 0) {
+      vpt[5] = 0
+    } else if (vpt[5] < height - height * zoom) {
+      vpt[5] = height - height * zoom
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import * as fabric from 'fabric'
 import sprites from '@/fixtures/sprites.json'
-import { snapToGrid } from '@/utils/fabric-utils'
+import {
+  snapToGrid,
+  setViewPortTransformWithinBounds
+} from '@/utils/fabric-utils'
 
 export const useMapBuilder = () => {
   const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
@@ -24,6 +27,9 @@ export const useMapBuilder = () => {
   const selectedSprite = ref<Sprite>()
   const selectedType = ref<SpriteType>()
   const recentCategorySearch = ref<{ sprite: Sprite, category: SpriteType }>()
+  const isPanning = ref<boolean>(false)
+  const lastPosX = ref<number>()
+  const lastPosY = ref<number>()
 
   const {
     mouseDown,
@@ -57,8 +63,8 @@ export const useMapBuilder = () => {
     // Draw grid lines on the canvas
     const options = { stroke: '#000000', strokeWidth: 1 }
     for (let i = 1; i < canvas.value.getWidth() / cellWidth.value + 1; i++) {
-      gridLayer.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 600], options))
-      gridLayer.value.add(new fabric.Line([0, cellWidth.value * i, 600, cellWidth.value * i], options))
+      gridLayer.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 512], options))
+      gridLayer.value.add(new fabric.Line([0, cellWidth.value * i, 512, cellWidth.value * i], options))
     }
 
     calculateCount()
@@ -75,13 +81,16 @@ export const useMapBuilder = () => {
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
       'mouse:move': ({ e }) => handleMouse(e, 'move'),
-      'mouse:up': ({ e }) => handleMouse(e, 'up')
+      'mouse:up': ({ e }) => handleMouse(e, 'up'),
+      'mouse:wheel': ({ e }) => handleMouseWheel(e)
     })
 
     // canvas.value.on('object:modified', e => handleBoundaries(e))
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
+    if (canvas.value) { handlePanning(e as MouseEvent, action) }
+
     if (
       !selectedSprite.value ||
       !selectedType.value ||
@@ -107,6 +116,62 @@ export const useMapBuilder = () => {
           mouseUp(canvas.value)
           break
       }
+    }
+  }
+
+  function handleMouseWheel (e: WheelEvent): void {
+    if (!canvas.value) { return }
+
+    let zoom = canvas.value.getZoom()
+    const width = canvas.value.getWidth()
+    const height = canvas.value.getHeight()
+    const vpt = canvas.value!.viewportTransform
+
+    zoom *= 0.999 ** e.deltaY
+
+    if (zoom > 10) { zoom = 10 }
+    if (zoom < 1) { zoom = 1 }
+
+    canvas.value.zoomToPoint(new fabric.Point({ x: e.offsetX, y: e.offsetY }), zoom)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    setViewPortTransformWithinBounds(vpt, zoom, width, height)
+  }
+
+  function handlePanning (e: MouseEvent, action: 'move'|'down'|'up'): void {
+    switch (action) {
+      case 'down':
+        if (e.altKey) {
+          isPanning.value = true
+          lastPosX.value = e.clientX
+          lastPosY.value = e.clientY
+        }
+        break
+      case 'move':
+        if (isPanning.value) {
+          const zoom = canvas.value!.getZoom()
+          const width = canvas.value!.getWidth()
+          const height = canvas.value!.getHeight()
+          const vpt = canvas.value!.viewportTransform
+
+          setViewPortTransformWithinBounds(vpt, zoom, width, height, () => {
+            vpt[4] += e.clientX - (lastPosX.value ?? 0)
+            vpt[5] += e.clientY - (lastPosY.value ?? 0)
+          })
+
+          canvas.value!.requestRenderAll()
+
+          lastPosX.value = e.clientX
+          lastPosY.value = e.clientY
+        }
+        break
+      case 'up':
+        canvas.value!.setViewportTransform(canvas.value!.viewportTransform)
+
+        isPanning.value = false
+        break
     }
   }
 
