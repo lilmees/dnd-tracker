@@ -4,7 +4,8 @@ import {
   getAdjacentSprites,
   createAdjacentString,
   sameImgSource,
-  getConnectedCellCoords
+  getConnectedCellCoords,
+  withinBoundaries
 } from '@/utils/fabric-utils'
 
 export function useFabricDraw (grid: number) {
@@ -17,7 +18,12 @@ export function useFabricDraw (grid: number) {
     layer?: fabric.Group,
     sprite?: SpriteData
   ): void {
-    if (!sprite || !canvas || !layer) { return }
+    if (
+      !sprite ||
+      !canvas ||
+      !layer ||
+      (event && !withinBoundaries(event as MouseEvent, canvas))
+    ) { return }
 
     canvas.selection = false
 
@@ -36,7 +42,13 @@ export function useFabricDraw (grid: number) {
     layer?: fabric.Group,
     sprite?: SpriteData
   ): void {
-    if ((isDrawingFloor.value || isDrawingWall.value) && sprite && canvas && layer) {
+    if (
+      (isDrawingFloor.value || isDrawingWall.value) &&
+      sprite &&
+      canvas &&
+      layer &&
+      withinBoundaries(event as MouseEvent, canvas)
+    ) {
       createTile(canvas, layer, sprite, event)
     }
   }

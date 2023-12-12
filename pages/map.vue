@@ -335,6 +335,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="space-y-2">
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
+                <li>Don't allow drawing when panning</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>

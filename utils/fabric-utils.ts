@@ -189,3 +189,11 @@ export function setViewPortTransformWithinBounds (
     }
   }
 }
+
+export function withinBoundaries (event: MouseEvent, canvas: fabric.Canvas): boolean {
+  const width = canvas.getWidth()
+  const height = canvas.getHeight()
+  const { x, y } = canvas.getPointer(event)
+
+  return !(x < 0 || x > height || y < 0 || y > width)
+}
