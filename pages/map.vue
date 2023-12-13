@@ -22,6 +22,7 @@ const {
   useSnapToGrid,
   zoom,
   mount,
+  resetCanvas,
   getSprite,
   fillBackground,
   setBackgroundImage,
@@ -317,6 +318,14 @@ function handleSubmit ({ __init, file }: Obj): void {
             >
               <Icon name="iconamoon:zoom-in-bold" class="w-6 h-6" />
             </button>
+            <button
+              v-tippy="$t('actions.reset')"
+              :disabled="!canvas"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              @click="resetCanvas()"
+            >
+              <Icon name="carbon:reset" class="w-6 h-6 text-danger" />
+            </button>
           </div>
           <div class="w-[520px] space-y-4 relative">
             <div>
@@ -335,8 +344,6 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="space-y-2">
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
-                <li>Reset canvas to view</li>
-                <li>Reset canvas</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>

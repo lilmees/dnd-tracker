@@ -19,7 +19,7 @@ export const useMapBuilder = () => {
   const activeColor = ref<string>('#000000')
   const brushSize = ref<string>('32')
   const draggedOver = ref<boolean>(false)
-  const maxSprites = ref<number>(250)
+  const maxSprites = ref<number>(200)
   const spriteAmount = ref<number>(0)
   const spriteSelected = ref<boolean>(false)
   const showGrid = ref<boolean>(true)
@@ -42,16 +42,31 @@ export const useMapBuilder = () => {
   } = useFabricDraw(cellWidth.value)
 
   function mount (element: HTMLCanvasElement): void {
-    canvas.value = markRaw(
-      new fabric.Canvas(element, {
-        backgroundColor: '#21252EB3',
-        isDrawingMode: isDrawingMode.value
-      })
-    )
+    canvas.value = markRaw(new fabric.Canvas(element))
 
-    if (!canvas.value) {
-      return
+    if (canvas.value) {
+      setCanvasValues()
     }
+  }
+
+  function resetCanvas (): void {
+    if (canvas.value) {
+      lastPosX.value = undefined
+      lastPosY.value = undefined
+      floorLayer.value.removeAll()
+      middleLayer.value.removeAll()
+      canvas.value.clear()
+      setCanvasValues()
+    }
+  }
+
+  function setCanvasValues (): void {
+    if (!canvas.value) { return }
+
+    canvas.value?.set({
+      backgroundColor: '#21252EB3',
+      isDrawingMode: isDrawingMode.value
+    })
 
     window.addEventListener('keydown', keydownHandler)
 
@@ -419,6 +434,7 @@ export const useMapBuilder = () => {
     showGrid,
     zoom,
     mount,
+    resetCanvas,
     getSprite,
     fillBackground,
     setBackgroundImage,
