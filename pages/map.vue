@@ -39,6 +39,8 @@ const canvasEl = ref<HTMLCanvasElement>()
 const canvasContainer = ref<HTMLDivElement>()
 const draggingSprite = ref<{ sprite: Sprite, type: SpriteType }>()
 
+const isSmall = useMediaQuery('(max-width: 1250px)')
+
 onMounted(() => {
   if (canvasEl.value && canvasContainer.value) {
     mount(canvasEl.value)
@@ -129,74 +131,101 @@ function handleSubmit ({ __init, file }: Obj): void {
 <template>
   <NuxtLayout>
     <div class="flex flex-col gap-6 items-center">
-      <div class="flex gap-4">
-        <div class="space-y-4 w-full">
-          <div
-            class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
-            :class="{ '!border-success': selectedSprite && selectedType === 'floors' }"
+      <div class="gap-4 w-full hidden min-[850px]:flex">
+        <div class="flex flex-col gap-y-4 w-full">
+          <SpritesAccordion
+            v-if="isSmall"
+            :sprites="(sprites as SpriteMap)"
+            @handle-drag="handleDrag"
+          />
+          <Accordion
+            :title="$t('pages.map.tileSet')"
+            :active="selectedSprite && selectedType === 'floors'"
           >
-            <h3>
-              {{ $t('pages.map.tileSet') }}
-            </h3>
+            <div>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="sprite in sprites['floors']"
+                  :key="sprite.value"
+                  class="w-12 p-1 transition-colors duration-200 ease-in-out"
+                  :class="{
+                    'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors'
+                  }"
+                >
+                  <NuxtImg
+                    :id="sprite.value"
+                    :draggable="true"
+                    :src="`/art/floors/${sprite.value}${sprite.variations ? '-1' : ''}.svg`"
+                    class="w-12 h-12"
+                    @click="setSprite(sprite.value as Sprite, 'floors')"
+                  />
+                  <p class="body-extra-small font-bold text-center">
+                    {{ sprite.label }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <span> Utils: </span>
+                <button
+                  v-tippy="$t('pages.map.fillBackground')"
+                  :disabled="!selectedSprite"
+                  class="disabled:opacity-50 disabled:cursor-not-allowed"
+                  @click="changeBackground(selectedSprite!)"
+                >
+                  <Icon name="bxs:color-fill" class="w-6 h-6" />
+                </button>
+              </div>
+              <div class="border-t-4 border-tracker pt-4">
+                <FormKit
+                  id="form"
+                  type="form"
+                  :actions="false"
+                  @submit="handleSubmit"
+                >
+                  <FormKit
+                    :label="$t('pages.map.customBackground')"
+                    name="file"
+                    type="file"
+                    accept=".png,.svg,.jpg,.jpeg"
+                    validation="required"
+                  />
+                  <FormKit type="submit">
+                    {{ $t('pages.map.addBackground') }}
+                  </FormKit>
+                </FormKit>
+              </div>
+            </div>
+          </Accordion>
+          <Accordion
+            :title="$t('pages.map.wallSet')"
+            :active="selectedSprite && selectedType === 'walls'"
+          >
             <div class="flex flex-wrap gap-2">
               <div
-                v-for="sprite in sprites['floors']"
+                v-for="sprite in sprites['walls']"
                 :key="sprite.value"
                 class="w-12 p-1 transition-colors duration-200 ease-in-out"
                 :class="{
-                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors'
+                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls'
                 }"
               >
                 <NuxtImg
                   :id="sprite.value"
                   :draggable="true"
-                  :src="`/art/floors/${sprite.value}${sprite.variations ? '-1' : ''}.svg`"
+                  :src="`/art/walls/${sprite.value}${sprite.value === 'remove' ? '' : '-default'}.svg`"
                   class="w-12 h-12"
-                  @click="setSprite(sprite.value as Sprite, 'floors')"
+                  @click="setSprite(sprite.value as Sprite, 'walls')"
                 />
                 <p class="body-extra-small font-bold text-center">
                   {{ sprite.label }}
                 </p>
               </div>
             </div>
-            <div class="flex gap-2 flex-wrap">
-              <span> Utils: </span>
-              <button
-                v-tippy="$t('pages.map.fillBackground')"
-                :disabled="!selectedSprite"
-                class="disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="changeBackground(selectedSprite!)"
-              >
-                <Icon name="bxs:color-fill" class="w-6 h-6" />
-              </button>
-            </div>
-            <div class="border-t-4 border-tracker pt-4">
-              <FormKit
-                id="form"
-                type="form"
-                :actions="false"
-                @submit="handleSubmit"
-              >
-                <FormKit
-                  :label="$t('pages.map.customBackground')"
-                  name="file"
-                  type="file"
-                  accept=".png,.svg,.jpg,.jpeg"
-                  validation="required"
-                />
-                <FormKit type="submit">
-                  {{ $t('pages.map.addBackground') }}
-                </FormKit>
-              </FormKit>
-            </div>
-          </div>
-          <div
-            class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg transition-colors duration-200 ease-in-out"
-            :class="{ '!border-success': isDrawingMode }"
+          </Accordion>
+          <Accordion
+            :title="$t('general.drawing')"
+            :active="isDrawingMode"
           >
-            <h3 class="mb-4">
-              {{ $t('general.drawing') }}
-            </h3>
             <div class="space-y-4">
               <FormKit
                 v-model="brushSize"
@@ -253,12 +282,12 @@ function handleSubmit ({ __init, file }: Obj): void {
                 {{ $t('pages.map.drawingMode') }}
               </button>
             </div>
-          </div>
+          </Accordion>
           <button class="btn-primary w-full" @click="exportCanvas(canvas)">
             {{ $t('actions.export') }}
           </button>
         </div>
-        <div class="space-y-4">
+        <div class="flex flex-col gap-y-4">
           <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg flex gap-4">
             <button
               v-tippy="$t('pages.map.snapToGrid')"
@@ -344,6 +373,9 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="space-y-2">
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
+                <li>Remove icon in tools</li>
+                <li>Warning for mobile users</li>
+                <li>icons aria-hidden="true"</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>
@@ -352,71 +384,15 @@ function handleSubmit ({ __init, file }: Obj): void {
             </div>
           </div>
         </div>
-        <div class="space-y-4 w-full">
-          <div
-            class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg space-y-4 transition-colors duration-200 ease-in-out"
-            :class="{ '!border-success': selectedSprite && selectedType === 'walls' }"
-          >
-            <h3>
-              {{ $t('pages.map.wallSet') }}
-            </h3>
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="sprite in sprites['walls']"
-                :key="sprite.value"
-                class="w-12 p-1 transition-colors duration-200 ease-in-out"
-                :class="{
-                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls'
-                }"
-              >
-                <NuxtImg
-                  :id="sprite.value"
-                  :draggable="true"
-                  :src="`/art/walls/${sprite.value}${sprite.value === 'remove' ? '' : '-default'}.svg`"
-                  class="w-12 h-12"
-                  @click="setSprite(sprite.value as Sprite, 'walls')"
-                />
-                <p class="body-extra-small font-bold text-center">
-                  {{ sprite.label }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <Accordion :sections="['monsters', 'characters', 'animals', 'items', 'nature']">
-            <template
-              v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
-              :key="category"
-              #[`title-${category}`]
-            >
-              {{ $t(`general.${category}`) }}
-            </template>
-            <template
-              v-for="category in ['monsters', 'characters', 'animals', 'items', 'nature']"
-              :key="category"
-              #[category]
-            >
-              <div class="flex flex-wrap gap-2">
-                <button
-                  v-for="sprite in sprites[category as keyof SpriteMap]"
-                  :key="sprite.value"
-                  :aria-label="sprite.value"
-                  class="w-12"
-                >
-                  <NuxtImg
-                    :id="sprite.value"
-                    :draggable="true"
-                    :src="`/art/${category}/${sprite.value}.svg`"
-                    class="w-12 h-12"
-                    @drag.stop="handleDrag"
-                  />
-                  <p class="body-extra-small font-bold text-center">
-                    {{ sprite.label }}
-                  </p>
-                </button>
-              </div>
-            </template>
-          </Accordion>
+        <div v-if="!isSmall" class="flex flex-col gap-y-4 w-full">
+          <SpritesAccordion
+            :sprites="(sprites as SpriteMap)"
+            @handle-drag="handleDrag"
+          />
         </div>
+      </div>
+      <div class="bloxk min-[850px]:hidden">
+        only mobile error
       </div>
     </div>
   </NuxtLayout>

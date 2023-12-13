@@ -1,43 +1,37 @@
 <script setup lang="ts">
-defineProps<{ sections: string[] }>()
+import { start, end } from '@/utils/animation-helpers'
 
-const open = ref<number | null>(null)
+defineProps<{
+  title: string,
+  active: boolean | undefined
+}>()
 
-function start (el: Element): void {
-  (el as HTMLDivElement).style.height = el.scrollHeight + 'px'
-}
-
-function end (el: Element): void {
-  (el as HTMLDivElement).style.height = ''
-}
+const open = ref<boolean>(false)
 </script>
 
 <template>
   <div
-    v-for="(section, index) in sections"
-    :key="section"
-    class="rounded-lg p-4 bg-tracker/50 space-y-4 border-4 border-tracker mb-1"
+    class="rounded-lg p-4 bg-tracker/50 space-y-4 border-4 mb-1 transition-colors duration-200 ease-in-out"
+    :class="[active ? 'border-success' : 'border-tracker']"
   >
     <button
       class="flex w-full justify-between items-center outline-none"
-      @click="open = open === index ? null : index"
-      @keydown.escape="open = null"
+      @click="open = !open"
+      @keydown.escape="open = false"
     >
-      <p class="head-2 ">
-        <slot :name="`title-${section}`">
-          {{ section }}
-        </slot>
-      </p>
+      <h3>
+        {{ title }}
+      </h3>
       <Icon
         name="tabler:chevron-down"
         class="duration-200 h-6 w-6 stroke-2"
-        :class="{ 'rotate-180': open === index }"
+        :class="{ 'rotate-180': open }"
         aria-hidden="true"
       />
     </button>
     <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
-      <template v-if="open === index">
-        <slot :name="section" />
+      <template v-if="open">
+        <slot />
       </template>
     </Transition>
   </div>

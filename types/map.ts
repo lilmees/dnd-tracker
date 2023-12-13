@@ -226,6 +226,8 @@ interface SpriteMap {
   walls: SpriteMetaData<WallSprite>[]
 }
 
+interface DraggableSprites extends Omit<SpriteMap, 'walls'|'floors'> {}
+
 type FabricBrush = 'Pencil'|'Eraser'|'Spray'
 interface SpriteData extends SpriteMetaData<Sprite> {
   url: string
