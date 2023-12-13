@@ -89,7 +89,10 @@ export const useMapBuilder = () => {
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
-    if (canvas.value) { handlePanning(e as MouseEvent, action) }
+    if (canvas.value && e.altKey) {
+      handlePanning(e as MouseEvent, action)
+      return
+    }
 
     if (
       !selectedSprite.value ||
@@ -147,11 +150,9 @@ export const useMapBuilder = () => {
   function handlePanning (e: MouseEvent, action: 'move'|'down'|'up'): void {
     switch (action) {
       case 'down':
-        if (e.altKey) {
-          isPanning.value = true
-          lastPosX.value = e.clientX
-          lastPosY.value = e.clientY
-        }
+        isPanning.value = true
+        lastPosX.value = e.clientX
+        lastPosY.value = e.clientY
         break
       case 'move':
         if (isPanning.value) {
