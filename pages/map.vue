@@ -31,6 +31,7 @@ const {
   setSprite,
   update,
   add,
+  remove,
   toggleGridLines,
   changeZoom
 } = useMapBuilder()
@@ -332,6 +333,14 @@ function handleSubmit ({ __init, file }: Obj): void {
               <Icon name="ph:copy-bold" class="w-6 h-6" />
             </button>
             <button
+              v-tippy="$t('actions.copy')"
+              :disabled="!spriteSelected"
+              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
+              @click="remove()"
+            >
+              <Icon name="material-symbols:delete-outline-rounded" class="w-6 h-6 text-danger outline-none" />
+            </button>
+            <button
               v-tippy="$t('actions.zoomOut')"
               :disabled="!canvas || zoom === 1"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
@@ -373,8 +382,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="space-y-2">
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
-                <li>Remove icon in tools</li>
-                <li>Warning for mobile users</li>
+                <li>left toolbars look duplicated</li>
                 <li>icons aria-hidden="true"</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
@@ -391,8 +399,8 @@ function handleSubmit ({ __init, file }: Obj): void {
           />
         </div>
       </div>
-      <div class="bloxk min-[850px]:hidden">
-        only mobile error
+      <div class="block min-[850px]:hidden max-w-prose text-center">
+        {{ $t('pages.map.smallScreenCta') }}
       </div>
     </div>
   </NuxtLayout>

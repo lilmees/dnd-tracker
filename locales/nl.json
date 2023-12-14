@@ -344,7 +344,8 @@
       "drawingMode": "Tekenmodus",
       "snapToGrid": "Rasteruitlijning",
       "showGrid": "Toon raster",
-      "brushSize": "Borstelgrootte: {size}"
+      "brushSize": "Borstelgrootte: {size}",
+      "smallScreenCta": "Attention Dungeon Architects! Duik in de wereld van grotere schermen (850px en meer) en ontdek de kracht om verbluffende kerkerskaarten te creëren"
     }
   },
   "components": {

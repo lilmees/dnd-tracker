@@ -344,7 +344,8 @@
       "drawingMode": "Drawing mode",
       "snapToGrid": "Snap to grid",
       "showGrid": "Show grid",
-      "brushSize": "Brush size: {size}"
+      "brushSize": "Brush size: {size}",
+      "smallScreenCta": "Attention Dungeon Architects! Dive into the world of larger screens (850px and up) and unveil the power to create stunning dungeon maps"
     }
   },
   "components": {
