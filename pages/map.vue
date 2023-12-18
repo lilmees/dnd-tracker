@@ -169,11 +169,16 @@ function handleSubmit ({ __init, file }: Obj): void {
                 <span> Utils: </span>
                 <button
                   v-tippy="$t('pages.map.fillBackground')"
+                  :aria-label="$t('pages.map.fillBackground')"
                   :disabled="!selectedSprite"
                   class="disabled:opacity-50 disabled:cursor-not-allowed"
                   @click="changeBackground(selectedSprite!)"
                 >
-                  <Icon name="bxs:color-fill" class="w-6 h-6" />
+                  <Icon
+                    name="bxs:color-fill"
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
               <div class="border-t-4 border-tracker pt-4">
@@ -245,30 +250,36 @@ function handleSubmit ({ __init, file }: Obj): void {
                 <span> {{ $t('general.brushes') }}: </span>
                 <button
                   v-tippy="$t('general.pencil')"
+                  :aria-label="$t('general.pencil')"
                   @click="setBrush('Pencil')"
                 >
                   <Icon
                     name="ph:pencil-bold"
+                    aria-hidden="true"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Pencil' }"
                   />
                 </button>
                 <button
                   v-tippy="$t('general.spraycan')"
+                  :aria-label="$t('general.spraycan')"
                   @click="setBrush('Spray')"
                 >
                   <Icon
                     name="tabler:spray"
+                    aria-hidden="true"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Spray' }"
                   />
                 </button>
                 <button
                   v-tippy="$t('general.eraser')"
+                  :aria-label="$t('general.eraser')"
                   @click="setBrush('Eraser')"
                 >
                   <Icon
                     name="ph:eraser-bold"
+                    aria-hidden="true"
                     class="w-6 h-6 transition-colors duration-300 ease-in-out"
                     :class="{ 'text-primary': activeBrush === 'Eraser' }"
                   />
@@ -276,15 +287,23 @@ function handleSubmit ({ __init, file }: Obj): void {
               </div>
               <button
                 class="w-full flex items-center justify-center gap-2"
+                :aria-label="$t('pages.map.drawingMode')"
                 :class="[isDrawingMode ? 'btn-success' : 'btn-danger']"
                 @click="toggleDrawing(undefined)"
               >
-                <Icon name="ic:outline-draw" />
+                <Icon
+                  name="ic:outline-draw"
+                  aria-hidden="true"
+                />
                 {{ $t('pages.map.drawingMode') }}
               </button>
             </div>
           </Accordion>
-          <button class="btn-primary w-full" @click="exportCanvas(canvas)">
+          <button
+            class="btn-primary w-full"
+            :aria-label="$t('actions.export')"
+            @click="exportCanvas(canvas)"
+          >
             {{ $t('actions.export') }}
           </button>
         </div>
@@ -292,77 +311,118 @@ function handleSubmit ({ __init, file }: Obj): void {
           <div class="bg-tracker/50 border-4 border-tracker p-4 rounded-lg flex gap-4">
             <button
               v-tippy="$t('pages.map.snapToGrid')"
+              :aria-label="$t('pages.map.snapToGrid')"
               :disabled="!canvas"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               :class="{ 'text-success': useSnapToGrid }"
               @click="useSnapToGrid = !useSnapToGrid"
             >
-              <Icon name="fluent-mdl2:snap-to-grid" class="w-6 h-6" />
+              <Icon
+                name="fluent-mdl2:snap-to-grid"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('pages.map.showGrid')"
+              :aria-label="$t('pages.map.showGrid')"
               :disabled="!canvas"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               :class="{ 'text-success': showGrid }"
               @click="toggleGridLines()"
             >
-              <Icon name="fluent-mdl2:show-grid" class="w-6 h-6" />
+              <Icon
+                name="fluent-mdl2:show-grid"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.flip', { axis: 'x' })"
+              :aria-label="$t('actions.flip', { axis: 'x' })"
               :disabled="!spriteSelected"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="flip('x', canvas, update)"
             >
-              <Icon name="uil:flip-v-alt" class="w-6 h-6" />
+              <Icon
+                name="uil:flip-v-alt"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.flip', { axis: 'y' })"
+              :aria-label="$t('actions.flip', { axis: 'y' })"
               :disabled="!spriteSelected"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="flip('y', canvas, update)"
             >
-              <Icon name="uil:flip-h-alt" class="w-6 h-6" />
+              <Icon
+                name="uil:flip-h-alt"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.copy')"
+              :aria-label="$t('actions.copy')"
               :disabled="!spriteSelected"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="clone(canvas)"
             >
-              <Icon name="ph:copy-bold" class="w-6 h-6" />
+              <Icon
+                name="ph:copy-bold"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.copy')"
+              :aria-label="$t('actions.copy')"
               :disabled="!spriteSelected"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="remove()"
             >
-              <Icon name="material-symbols:delete-outline-rounded" class="w-6 h-6 text-danger outline-none" />
+              <Icon
+                name="material-symbols:delete-outline-rounded"
+                class="w-6 h-6 text-danger outline-none"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.zoomOut')"
+              :aria-label="$t('actions.zoomOut')"
               :disabled="!canvas || zoom === 1"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="changeZoom(true)"
             >
-              <Icon name="iconamoon:zoom-out-bold" class="w-6 h-6" />
+              <Icon
+                name="iconamoon:zoom-out-bold"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.zoomIn')"
+              :aria-label="$t('actions.zoomIn')"
               :disabled="!canvas || zoom === 10"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="changeZoom(false)"
             >
-              <Icon name="iconamoon:zoom-in-bold" class="w-6 h-6" />
+              <Icon
+                name="iconamoon:zoom-in-bold"
+                class="w-6 h-6"
+                aria-hidden="true"
+              />
             </button>
             <button
               v-tippy="$t('actions.reset')"
+              :aria-label="$t('actions.reset')"
               :disabled="!canvas"
               class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
               @click="resetCanvas()"
             >
-              <Icon name="carbon:reset" class="w-6 h-6 text-danger" />
+              <Icon name="carbon:reset" class="w-6 h-6 text-danger" aria-hidden="true" />
             </button>
           </div>
           <div class="w-[520px] space-y-4 relative">
@@ -383,7 +443,6 @@ function handleSubmit ({ __init, file }: Obj): void {
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
                 <li>left toolbars look duplicated</li>
-                <li>icons aria-hidden="true"</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
                 <li>Toast for max amount of sprites</li>
