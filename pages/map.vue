@@ -442,10 +442,11 @@ function handleSubmit ({ __init, file }: Obj): void {
             <div class="space-y-2">
               <h3>Todo's</h3>
               <ul class="list-disc ml-4">
-                <li>left toolbars look duplicated</li>
                 <li>Optimize svg's</li>
                 <li>Save button</li>
-                <li>Toast for max amount of sprites</li>
+                <li>Bug: double amount of options</li>
+                <li>Dynamic size for canvas</li>
+                <li>Add to nav dropdown (always show the dropdown just filter out the log in stuff)</li>
                 <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
               </ul>
             </div>

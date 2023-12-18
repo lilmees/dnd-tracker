@@ -8,6 +8,9 @@ import {
 export const useMapBuilder = () => {
   const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
 
+  const toast = useToastStore()
+  const { t } = useI18n()
+
   const canvas = ref<fabric.Canvas>()
   const floorLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const middleLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
@@ -229,7 +232,11 @@ export const useMapBuilder = () => {
       canvas.value?.remove(event.target)
       canvas.value?.requestRenderAll()
       count--
-      // use a toast for max amount of sprites
+
+      toast.warn({
+        title: t('pages.map.toast.max.title'),
+        text: t('pages.map.toast.max.text')
+      })
     }
 
     spriteAmount.value = count

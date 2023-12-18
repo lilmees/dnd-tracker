@@ -345,7 +345,13 @@
       "snapToGrid": "Rasteruitlijning",
       "showGrid": "Toon raster",
       "brushSize": "Borstelgrootte: {size}",
-      "smallScreenCta": "Attention Dungeon Architects! Duik in de wereld van grotere schermen (850px en meer) en ontdek de kracht om verbluffende kerkerskaarten te creëren"
+      "smallScreenCta": "Attention Dungeon Architects! Duik in de wereld van grotere schermen (850px en meer) en ontdek de kracht om verbluffende kerkerskaarten te creëren",
+      "toast": {
+        "max": {
+          "title": "Maximaal aantal sprites bereikt",
+          "text": "Je hebt het maximale aantal toegestane sprites op de kaart bereikt. Overweeg om wat sprites te verwijderen voordat je nieuwe toevoegt."
+        }
+      }
     }
   },
   "components": {

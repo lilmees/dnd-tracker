@@ -345,7 +345,13 @@
       "snapToGrid": "Snap to grid",
       "showGrid": "Show grid",
       "brushSize": "Brush size: {size}",
-      "smallScreenCta": "Attention Dungeon Architects! Dive into the world of larger screens (850px and up) and unveil the power to create stunning dungeon maps"
+      "smallScreenCta": "Attention Dungeon Architects! Dive into the world of larger screens (850px and up) and unveil the power to create stunning dungeon maps",
+      "toast": {
+        "max": {
+          "title": "Maximum Sprites Reached",
+          "text": "You have reached the maximum allowable number of sprites on the map. Consider removing some sprites before adding new ones."
+        }
+      }
     }
   },
   "components": {
