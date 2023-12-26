@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       '~/components/organisms',
       '~/components/templates',
       '~/components/tableRow',
+      '~/components/map',
       '~/components/skeletons'
     ]
   },

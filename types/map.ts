@@ -229,6 +229,9 @@ interface SpriteMap {
 interface DraggableSprites extends Omit<SpriteMap, 'walls'|'floors'> {}
 
 type FabricBrush = 'Pencil'|'Eraser'|'Spray'
+
+type FabricShape = 'Rectangle'|'Cube'|'Cone'|'Line'|'Sphere'
+
 interface SpriteData extends SpriteMetaData<Sprite> {
   url: string
 }
@@ -246,3 +249,16 @@ interface AdjacentSprite {
 }
 
 type Connection = 'left' | 'right' | 'bottom' | 'top'
+
+interface AOE {
+  width?: number
+  height?: number
+  radius?: number
+}
+
+interface AOETooltip {
+  hidden: boolean
+  top?: string
+  left?: string
+  aoe?: AOE,
+}

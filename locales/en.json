@@ -74,6 +74,9 @@
     "pencil": "Pencil",
     "spraycan": "Spraycan",
     "eraser": "Eraser",
+    "width": "Width",
+    "height": "Height",
+    "radius": "Radius",
     "error": {
       "title": "Error",
       "text": "Something went wrong"

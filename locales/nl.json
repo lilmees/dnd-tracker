@@ -74,6 +74,9 @@
     "pencil": "Potlood",
     "spraycan": "Spuitbus",
     "eraser": "Wisser",
+    "width": "Breedte",
+    "height": "Hoogte",
+    "radius": "Straal",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"

@@ -197,3 +197,14 @@ export function withinBoundaries (event: MouseEvent, canvas: fabric.Canvas): boo
 
   return !(x < 0 || x > height || y < 0 || y > width)
 }
+
+export function clipPathToPolygon (clipPath: string, width: number, height: number): Coords[] {
+  return clipPath.split(',').map((point) => {
+    const coords = point.trim().split(' ')
+
+    return {
+      x: (parseFloat(coords[0]) / 100) * width,
+      y: (parseFloat(coords[1]) / 100) * height
+    }
+  })
+}

@@ -165,6 +165,11 @@ export default defineFormKitConfig((): any => {
             chartBar:
               'absolute bottom-0 h-full bg-slate-700 opacity-[.66] data-[active="false"]:opacity-[.25]'
           },
+          togglebuttons: {
+            wrapper: 'flex flex-col',
+            options: 'flex gap-2',
+            input: 'ring-0 aria-pressed:border-primary focus-within:border-primary'
+          },
           colorpicker: {
             outer: 'group formkit-disabled:cursor-not-allowed',
             help: 'group-[[data-inline]]:-mt-1 group-[[data-inline]]:mb-2',

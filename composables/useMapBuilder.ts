@@ -15,6 +15,7 @@ export const useMapBuilder = () => {
   const floorLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const middleLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
   const gridLayer = ref<fabric.Group>(new fabric.Group([], { selectable: false }))
+  const tooltip = ref<AOETooltip>()
 
   const cellWidth = ref<number>(32)
   const isDrawingMode = ref<boolean>(false)
@@ -100,10 +101,32 @@ export const useMapBuilder = () => {
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
-      'mouse:move': ({ e }) => handleMouse(e, 'move'),
+      'mouse:move': ({ e, target }) => {
+        handleTooltip(target, e)
+        handleMouse(e, 'move')
+      },
       'mouse:up': ({ e }) => handleMouse(e, 'up'),
       'mouse:wheel': ({ e }) => handleMouseWheel(e)
     })
+  }
+
+  function handleTooltip (target: fabric.Object, e: fabric.TPointerEvent): void {
+    if (!canvas.value || !target) { return }
+
+    if (
+      !(target instanceof fabric.Group) &&
+      e instanceof MouseEvent &&
+      target.aoe
+    ) {
+      tooltip.value = {
+        aoe: target.aoe,
+        hidden: false,
+        left: `${e.clientX + 25}px`,
+        top: `${e.clientY - 200}px`
+      }
+    } else {
+      tooltip.value = { hidden: true }
+    }
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
@@ -266,9 +289,9 @@ export const useMapBuilder = () => {
   }
 
   function add (object: fabric.Object): void {
-    if (useSnapToGrid.value) {
-      snapToGrid(object, cellWidth.value)
-    }
+    // if (useSnapToGrid.value) {
+    //   snapToGrid(object, cellWidth.value)
+    // }
 
     canvas.value?.add(object)
     canvas.value?.requestRenderAll()
@@ -425,6 +448,7 @@ export const useMapBuilder = () => {
 
   return {
     canvas,
+    cellWidth,
     floorLayer,
     sprites,
     draggedOver,
@@ -440,6 +464,7 @@ export const useMapBuilder = () => {
     useSnapToGrid,
     showGrid,
     zoom,
+    tooltip,
     mount,
     resetCanvas,
     getSprite,

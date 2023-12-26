@@ -6,6 +6,7 @@ import { flip, clone, exportCanvas } from '@/utils/fabric-utils'
 
 const {
   canvas,
+  cellWidth,
   floorLayer,
   sprites,
   draggedOver,
@@ -21,6 +22,7 @@ const {
   showGrid,
   useSnapToGrid,
   zoom,
+  tooltip,
   mount,
   resetCanvas,
   getSprite,
@@ -125,7 +127,7 @@ function handleSubmit ({ __init, file }: Obj): void {
     })
   }
 
-  reset('form')
+  reset('background')
 }
 </script>
 
@@ -142,6 +144,10 @@ function handleSubmit ({ __init, file }: Obj): void {
           <Accordion
             :title="$t('pages.map.tileSet')"
             :active="selectedSprite && selectedType === 'floors'"
+            @close="() => {
+              selectedSprite = undefined
+              selectedType = undefined
+            }"
           >
             <div>
               <div class="flex flex-wrap gap-2">
@@ -183,7 +189,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               </div>
               <div class="border-t-4 border-tracker pt-4">
                 <FormKit
-                  id="form"
+                  id="background"
                   type="form"
                   :actions="false"
                   @submit="handleSubmit"
@@ -205,6 +211,10 @@ function handleSubmit ({ __init, file }: Obj): void {
           <Accordion
             :title="$t('pages.map.wallSet')"
             :active="selectedSprite && selectedType === 'walls'"
+            @close="() => {
+              selectedSprite = undefined
+              selectedType = undefined
+            }"
           >
             <div class="flex flex-wrap gap-2">
               <div
@@ -231,6 +241,9 @@ function handleSubmit ({ __init, file }: Obj): void {
           <Accordion
             :title="$t('general.drawing')"
             :active="isDrawingMode"
+            only-open-active
+            @open="toggleDrawing(true)"
+            @close="toggleDrawing(false)"
           >
             <div class="space-y-4">
               <FormKit
@@ -285,18 +298,6 @@ function handleSubmit ({ __init, file }: Obj): void {
                   />
                 </button>
               </div>
-              <button
-                class="w-full flex items-center justify-center gap-2"
-                :aria-label="$t('pages.map.drawingMode')"
-                :class="[isDrawingMode ? 'btn-success' : 'btn-danger']"
-                @click="toggleDrawing(undefined)"
-              >
-                <Icon
-                  name="ic:outline-draw"
-                  aria-hidden="true"
-                />
-                {{ $t('pages.map.drawingMode') }}
-              </button>
             </div>
           </Accordion>
           <button
@@ -425,30 +426,18 @@ function handleSubmit ({ __init, file }: Obj): void {
               <Icon name="carbon:reset" class="w-6 h-6 text-danger" aria-hidden="true" />
             </button>
           </div>
-          <div class="w-[520px] space-y-4 relative">
-            <div>
-              <div
-                ref="canvasContainer"
-                class="border-tracker border-4 rounded-lg w-fit transition-colors duration-200 ease-in-out"
-                :class="{ '!border-success': draggedOver }"
-                @drop.prevent.stop="handleDrop"
-              >
-                <canvas ref="canvasEl" width="512" height="512" class="rounded" />
-              </div>
-              <div class="flex justify-end" :class="{ 'text-danger': spriteAmount >= maxSprites }">
-                {{ spriteAmount }} / {{ maxSprites }}
-              </div>
+          <div class="w-[520px] space-y-1 relative">
+            <div
+              ref="canvasContainer"
+              class="border-tracker border-4 rounded-lg w-fit transition-colors duration-200 ease-in-out"
+              :class="{ '!border-success': draggedOver }"
+              @drop.prevent.stop="handleDrop"
+              @mouseleave="tooltip = { hidden: true }"
+            >
+              <canvas ref="canvasEl" width="512" height="512" class="rounded" />
             </div>
-            <div class="space-y-2">
-              <h3>Todo's</h3>
-              <ul class="list-disc ml-4">
-                <li>Optimize svg's</li>
-                <li>Save button</li>
-                <li>Bug: double amount of options</li>
-                <li>Dynamic size for canvas</li>
-                <li>Add to nav dropdown (always show the dropdown just filter out the log in stuff)</li>
-                <li>Draw fog and remove fog (eraser brush is currently not updated in the library i use for rendering. So i have to wait on them)</li>
-              </ul>
+            <div class="flex justify-end" :class="{ 'text-danger': spriteAmount >= maxSprites }">
+              {{ spriteAmount }} / {{ maxSprites }}
             </div>
           </div>
         </div>
