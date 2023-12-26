@@ -485,7 +485,10 @@
       "campaigns": "Campagnes",
       "profile": "Profiel",
       "pricing": "Prijzen",
-      "play": "Spelen"
+      "play": "Spelen",
+      "fantasy": "Fantasienaam generator",
+      "info": "Informatie",
+      "map": "Map maker"
     },
     "confirmationModal": {
       "title": "Verwijder bevestiging",

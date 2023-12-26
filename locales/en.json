@@ -485,7 +485,10 @@
       "campaigns": "Campaigns",
       "profile": "Profile",
       "pricing": "Pricing",
-      "play": "Play"
+      "play": "Play",
+      "fantasy": "Fantasie name generator",
+      "info": "Information",
+      "map": "Map creator"
     },
     "confirmationModal": {
       "title": "Delete confirmation",

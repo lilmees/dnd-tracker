@@ -36,8 +36,16 @@ const localePath = useLocalePath()
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
       <div v-show="!loggedIn" class="flex flex-col gap-y-2">
-        <RouteLink :label="$t('components.navbar.login')" url="login" />
-        <RouteLink :label="$t('components.navbar.register')" url="register" />
+        <RouteLink
+          :label="$t('components.navbar.login')"
+          url="login"
+          @click="$emit('close')"
+        />
+        <RouteLink
+          :label="$t('components.navbar.register')"
+          url="register"
+          @click="$emit('close')"
+        />
       </div>
       <RouteLink
         v-for="route in routes"
@@ -46,20 +54,22 @@ const localePath = useLocalePath()
         :url="route.url"
         @click="$emit('close')"
       />
-      <div v-show="loggedIn" class="flex flex-col gap-y-2">
-        <RouteLink
-          v-for="route in dropDownRoutes"
-          :key="route.url"
-          :label="$t(route.label)"
-          :url="route.url"
-          @click="$emit('close')"
-        />
-        <div
-          class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold pt-4"
-          @click="$emit('logout')"
-        >
-          {{ $t('components.navbar.logout') }}
-        </div>
+      <RouteLink
+        v-for="route in loggedIn
+          ? dropDownRoutes
+          : dropDownRoutes.filter(r => r.requiredLogIn === false)
+        "
+        :key="route.url"
+        :label="$t(route.label)"
+        :url="route.url"
+        @click="$emit('close')"
+      />
+      <div
+        v-show="loggedIn"
+        class="text-danger hover:text-white cursor-pointer duration-200 ease-in-out max-w-max font-bold pt-4"
+        @click="$emit('logout')"
+      >
+        {{ $t('components.navbar.logout') }}
       </div>
     </div>
     <LangSwitcher class="pt-5" />
