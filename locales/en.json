@@ -33,6 +33,10 @@
     "prev": "Previous",
     "decline": "Decline",
     "transfer": "Transfer",
+    "flip": "Flip {axis}",
+    "export": "Export",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
     "read": {
       "more": "Read more",
       "less": "Read less"
@@ -44,6 +48,10 @@
     "players": "Players",
     "members": "Members",
     "monsters": "Monsters",
+    "characters": "Characters",
+    "animals": "Animals",
+    "items": "Items",
+    "nature": "Nature",
     "notes": "Notes",
     "total": "Total",
     "grandTotal": "Grand total",
@@ -61,6 +69,14 @@
     "current": "Current",
     "temp": "Temporary",
     "max": "Max",
+    "drawing": "Drawing",
+    "brushes": "Brushes",
+    "pencil": "Pencil",
+    "spraycan": "Spraycan",
+    "eraser": "Eraser",
+    "width": "Width",
+    "height": "Height",
+    "radius": "Radius",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -321,6 +337,24 @@
     "noMember": {
       "title": "You're not a team member",
       "text": "Oops! It seems like you're not a member, and you don't have access to this content. If you believe this is a mistake, please don't hesitate to reach out to the owner or an admin for assistance."
+    },
+    "map": {
+      "tileSet": "Floor set",
+      "wallSet": "Wall set",
+      "fillBackground": "Fill background",
+      "addBackground": "Add background",
+      "customBackground": "Custom background",
+      "drawingMode": "Drawing mode",
+      "snapToGrid": "Snap to grid",
+      "showGrid": "Show grid",
+      "brushSize": "Brush size: {size}",
+      "smallScreenCta": "Attention Dungeon Architects! Dive into the world of larger screens (850px and up) and unveil the power to create stunning dungeon maps",
+      "toast": {
+        "max": {
+          "title": "Maximum Sprites Reached",
+          "text": "You have reached the maximum allowable number of sprites on the map. Consider removing some sprites before adding new ones."
+        }
+      }
     }
   },
   "components": {
