@@ -6,7 +6,7 @@ const toast = useToastStore()
 const table = useTableStore()
 const { t } = useI18n()
 
-interface Form { search: string, type: Open5eType}
+interface Form { search: string, type: Open5eType }
 
 const form = ref<Form>({ search: '', type: 'spells' })
 const isLoading = ref<boolean>(false)
