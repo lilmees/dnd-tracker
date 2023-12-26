@@ -355,6 +355,10 @@
           "text": "You have reached the maximum allowable number of sprites on the map. Consider removing some sprites before adding new ones."
         }
       }
+    },
+    "fantasyNameGenerator": {
+      "title": "Fantasy name generator",
+      "description": "Whether you're a seasoned Dungeon Master or just starting to explore the world of tabletop role-playing, our D&D Fantasy name generator has got your back. Never be at a loss for words when a player hits you with the question, \"What's the name of this NPC?\""
     }
   },
   "components": {
