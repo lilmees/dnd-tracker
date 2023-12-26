@@ -236,7 +236,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               </div>
             </div>
           </Accordion>
-          <Accordion
+          <!-- <Accordion
             :title="$t('general.drawing')"
             :active="isDrawingMode"
             only-open-active
@@ -254,6 +254,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               <FormKit
                 type="colorpicker"
                 format="hex"
+                value="#000000"
                 inline
                 @input="activeColor = $event || '#000000'"
               />
@@ -297,7 +298,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                 </button>
               </div>
             </div>
-          </Accordion>
+          </Accordion> -->
           <button
             class="btn-primary w-full"
             :aria-label="$t('actions.export')"
