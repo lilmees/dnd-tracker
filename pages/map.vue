@@ -432,6 +432,8 @@ function handleSubmit ({ __init, file }: Obj): void {
               class="border-tracker border-4 rounded-lg w-fit transition-colors duration-200 ease-in-out"
               :class="{ '!border-success': draggedOver }"
               @drop.prevent.stop="handleDrop"
+              @dragover.prevent
+              @dragenter.prevent
               @mouseleave="tooltip = { hidden: true }"
             >
               <canvas ref="canvasEl" width="512" height="512" class="rounded" />
