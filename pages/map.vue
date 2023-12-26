@@ -42,8 +42,6 @@ const canvasEl = ref<HTMLCanvasElement>()
 const canvasContainer = ref<HTMLDivElement>()
 const draggingSprite = ref<{ sprite: Sprite, type: SpriteType }>()
 
-const isSmall = useMediaQuery('(max-width: 1250px)')
-
 onMounted(() => {
   if (canvasEl.value && canvasContainer.value) {
     mount(canvasEl.value)
@@ -137,7 +135,7 @@ function handleSubmit ({ __init, file }: Obj): void {
       <div class="gap-4 w-full hidden min-[850px]:flex">
         <div class="flex flex-col gap-y-4 w-full">
           <SpritesAccordion
-            v-if="isSmall"
+            class="min-[1250px]:hidden"
             :sprites="(sprites as SpriteMap)"
             @handle-drag="handleDrag"
           />
@@ -443,7 +441,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             </div>
           </div>
         </div>
-        <div v-if="!isSmall" class="flex flex-col gap-y-4 w-full">
+        <div class="hidden min-[1250px]:flex flex-col gap-y-4 w-full">
           <SpritesAccordion
             :sprites="(sprites as SpriteMap)"
             @handle-drag="handleDrag"
