@@ -3,9 +3,14 @@ import { start, end } from '@/utils/animation-helpers'
 
 defineExpose({ close })
 withDefaults(
-  defineProps<{ label?: string, routes?: Route[] }>(), {
+  defineProps<{
+    label?: string
+    routes?: Route[]
+    loggedIn?: boolean
+  }>(), {
     label: '',
-    routes: () => []
+    routes: () => [],
+    loggedIn: false
   }
 )
 
@@ -49,15 +54,16 @@ function close (): void {
         <div
           class="bg-primary/80 border-4 border-primary flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
         >
-          <RouteLink
-            v-for="route in routes"
-            :key="route.label"
-            :url="route.url"
-            class="hover:text-white"
-            @click="isOpen = false"
-          >
-            {{ $t(route.label) }}
-          </RouteLink>
+          <template v-for="route in routes" :key="route.label">
+            <RouteLink
+              v-if="!route.requiredLogIn || (loggedIn && route.requiredLogIn)"
+              :url="route.url"
+              class="hover:text-white"
+              @click="isOpen = false"
+            >
+              {{ $t(route.label) }}
+            </RouteLink>
+          </template>
         </div>
       </div>
     </Transition>

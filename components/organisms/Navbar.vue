@@ -97,18 +97,26 @@ async function logout (): Promise<void> {
             :url="link.url"
           />
           <ClientOnly>
-            <div v-show="!user" class="flex items-center gap-4">
-              <RouteLink :label="$t('components.navbar.login')" url="login" />
-              <RouteLink :label="$t('components.navbar.register')" url="register" />
-              <LangSwitcher />
-            </div>
-            <div v-show="user" class="flex items-center gap-4">
+            <div class="flex items-center gap-4">
+              <RouteLink
+                v-show="!user"
+                :label="$t('components.navbar.login')"
+                url="login"
+              />
+              <RouteLink
+                v-show="!user"
+                :label="$t('components.navbar.register')"
+                url="register"
+              />
               <NavDropdown
                 ref="dropdown"
                 :routes="route.playRoutes"
                 :label="$t('components.navbar.play')"
+                :logged-in="!!user"
               />
+              <LangSwitcher v-if="!user" />
               <ProfileDropdown
+                v-show="user"
                 ref="profileDropdown"
                 :routes="route.profileRoutes"
                 @logout="logout"
