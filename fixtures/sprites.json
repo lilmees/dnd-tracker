@@ -294,6 +294,22 @@
     {
       "value": "wanderer",
       "label": "Wanderer"
+    },
+    {
+      "value": "dwarf-king",
+      "label": "Dwarf King",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "elf-archmage",
+      "label": "Elf Archmage",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
     }
   ],
   "monsters": [
@@ -514,6 +530,14 @@
       "label": "Merfolk Scout"
     },
     {
+      "value": "merfolk-wavemaster",
+      "label": "Merfolk Wavemaster",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
       "value": "mimic",
       "label": "Mimic"
     },
@@ -532,6 +556,14 @@
     {
       "value": "orc-shaman",
       "label": "Orc Shaman"
+    },
+    {
+      "value": "orc-juggernaut",
+      "label": "Orc Juggernaut",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
     },
     {
       "value": "orge",
@@ -632,6 +664,70 @@
     {
       "value": "zombie",
       "label": "Zombie"
+    },
+    {
+      "value": "carnivorius-worm",
+      "label": "Carnivorius Worm",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "godly-empyrean",
+      "label": "Godly Empyrean",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "ancient-gold-dragon",
+      "label": "Ancient Gold dragon",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "ancient-red-dragon",
+      "label": "Ancient Red dragon",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "peerless-solar",
+      "label": "Peerless Solar",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "rearing-nightmare",
+      "label": "Rearing Nightmare",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "skull-spider",
+      "label": "Skull Spider",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "value": "storm-giant",
+      "label": "Storm Giant",
+      "size": {
+        "width": 64,
+        "height": 64
+      }
     }
   ],
   "items": [
