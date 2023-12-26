@@ -14,7 +14,7 @@ const localePath = useLocalePath()
     class="fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto bg-tracker p-4 z-20"
   >
     <div class="flex justify-between items-center gap-4 pb-10">
-      <NuxtLink :to="localePath('/')">
+      <NuxtLink :to="localePath('/')" @click="$emit('close')">
         <NuxtImg
           src="/logo.svg"
           alt="DnD Tracker logo"
