@@ -461,7 +461,8 @@
         "concentration": "CON",
         "modify": "Modify",
         "summoner": "Summoner"
-      }
+      },
+      "quick": "Add all initiatives"
     },
     "actions": {
       "link": "Link",
@@ -581,6 +582,10 @@
       "toast": {
         "title": "Copied {name} to clipboard"
       }
+    },
+    "quickInitiativeModal": {
+      "title": "Quick add initiatives",
+      "roll": "Roll all initiatives"
     }
   }
 }

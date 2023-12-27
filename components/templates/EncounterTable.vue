@@ -2,6 +2,8 @@
 const store = useTableStore()
 const { t } = useI18n()
 
+const quickInit = ref<boolean>(false)
+
 // Initiative down
 onKeyStroke(['ArrowLeft', 'PageDown'], (e) => {
   e.preventDefault()
@@ -52,9 +54,7 @@ const tableSpacing = computed<string>(() => {
 
 <template>
   <section>
-    <div
-      class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full"
-    >
+    <div class="inline-block rounded-lg overflow-x-auto overflow-y-hidden w-full">
       <table class="min-w-full">
         <thead>
           <tr>
@@ -65,6 +65,20 @@ const tableSpacing = computed<string>(() => {
               scope="col"
             >
               {{ header }}
+              <button
+                v-if="header === 'Init'"
+                v-tippy="$t('components.encounterTable.quick')"
+                :aria-label="$t('components.encounterTable.quick')"
+                :disabled="!store?.encounter?.rows?.length"
+                class="disabled:opacity-60 disabled:cursor-not-allowed"
+                @click="quickInit = true"
+              >
+                <Icon
+                  name="ph:lightning-fill"
+                  class="text-warning w-3 h-3"
+                  aria-hidden="true"
+                />
+              </button>
             </th>
           </tr>
         </thead>
@@ -94,5 +108,6 @@ const tableSpacing = computed<string>(() => {
       @update="store.updateRow($event as never)"
       @close="store.resetActiveState()"
     />
+    <QuickInitiativeModal v-if="quickInit" @close="quickInit = false" />
   </section>
 </template>

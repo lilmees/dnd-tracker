@@ -461,7 +461,8 @@
         "concentration": "CON",
         "modify": "Aanpassen",
         "summoner": "Oproeper"
-      }
+      },
+      "quick": "Voeg alle initiatieven toe"
     },
     "actions": {
       "link": "Link",
@@ -526,7 +527,7 @@
     },
     "infoDropdown": {
       "title": "Gepinde informatie kaarten",
-      "cta": "Ontgrendel het volledige potentieel van je ontmoeting! Pin nu essentiële informatiekaarten vast om georganiseerd te blijven en productiviteit te maximaliseren."
+      "cta": "Ontgrendel het volledige potentieel van je encounter! Pin nu essentiële informatiekaarten vast om georganiseerd te blijven en productiviteit te maximaliseren."
     },
     "badgeModal": {
       "title": "Personaliseer je profiel met een badge",
@@ -581,6 +582,10 @@
       "toast": {
         "title": "{name} gekopieerd naar klembord"
       }
+    },
+    "quickInitiativeModal": {
+      "title": "Initiatieven snel toevoegen",
+      "roll": "Alle initiatieven rollen"
     }
   }
 }
