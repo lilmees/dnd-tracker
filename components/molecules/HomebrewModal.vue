@@ -33,8 +33,8 @@ const form = ref<HomebrewForm>({
   initiative: undefined,
   amount: undefined,
   summoner: undefined,
-  ac: undefined,
-  health: undefined,
+  ac: props.item?.ac,
+  health: props.item?.health,
   actions: getActions()
 })
 
