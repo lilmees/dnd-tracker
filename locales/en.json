@@ -525,7 +525,8 @@
       "remove": "Remove pin"
     },
     "infoDropdown": {
-      "title": "Pinned information cards"
+      "title": "Pinned information cards",
+      "cta": "Unlock the full potential of your encounter! Pin essential information cards now to stay organized and maximize productivity."
     },
     "badgeModal": {
       "title": "Customize Your Profile with a Badge",

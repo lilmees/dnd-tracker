@@ -14,6 +14,7 @@ type EncounterUpdateField = 'name' | 'initiative' | 'ac' | 'health' | 'link' | '
 interface EncounterSettings {
   spacing: TableSpacing
   rows: string[]
+  widgets: string[]
   modified: boolean
 }
 
