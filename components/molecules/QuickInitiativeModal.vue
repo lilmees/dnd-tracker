@@ -38,7 +38,6 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
       }
     }
 
-    // doesnt update the order (index) of rows but it does seem to update the initiatives correctly
     await store.encounterUpdate({ rows: store.encounter!.rows })
   } catch (err) {
     logRocket.captureException(err as Error)
