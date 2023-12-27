@@ -48,18 +48,18 @@ onMounted(async () => {
       >
         <ClientOnly>
           <RichText
-            v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets.includes('note'))"
+            v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('note'))"
             :content="store.encounter.info || ''"
             :label="$t('pages.encounter.info')"
             @update="store.encounterUpdate({ info: $event })"
           />
         </ClientOnly>
         <InfoDropdown
-          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets.includes('info-pins'))"
+          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('info-pins'))"
           :cards="store.encounter.info_cards"
         />
         <NameGenerator
-          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets.includes('fantasy-name-generator'))"
+          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('fantasy-name-generator'))"
         />
       </div>
     </div>

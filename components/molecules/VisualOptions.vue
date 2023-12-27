@@ -14,8 +14,8 @@ const isOpen = ref<boolean>(false)
 whenever(() => isOpen.value, () => {
   if (table.encounter) {
     if (table.encounter.settings.modified) {
-      form.value.rows = table.encounter.settings.rows
-      form.value.widgets = table.encounter.settings.widgets
+      form.value.rows = table.encounter.settings.rows || []
+      form.value.widgets = table.encounter.settings.widgets || []
     }
     form.value.spacing = table.encounter.settings.spacing || 'normal'
   }
