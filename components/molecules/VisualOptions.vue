@@ -4,9 +4,9 @@ import { reset } from '@formkit/core'
 
 const toast = useToastStore()
 const table = useTableStore()
-const { t } = useI18n()
 
 const rowOptions = ['summoner', 'ac', 'health', 'conditions', 'note', 'deathSaves', 'concentration', 'modify']
+const widgetOptions = ['note', 'info-pins', 'fantasy-name-generator']
 
 const isLoading = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
@@ -15,14 +15,16 @@ whenever(() => isOpen.value, () => {
   if (table.encounter) {
     if (table.encounter.settings.modified) {
       form.value.rows = table.encounter.settings.rows
+      form.value.widgets = table.encounter.settings.widgets
     }
     form.value.spacing = table.encounter.settings.spacing || 'normal'
   }
 })
 
-const form = ref<{ spacing: TableSpacing, rows: string[] }>({
+const form = ref<Omit<EncounterSettings, 'modified'>>({
   spacing: table.encounter?.settings.spacing || 'normal',
-  rows: rowOptions
+  rows: rowOptions,
+  widgets: widgetOptions
 })
 
 function update ({ __init, ...formData }: Obj): void {
@@ -91,6 +93,16 @@ function resetState (): void {
             { label: 'Death saves', value: 'deathSaves' },
             { label: 'Concentration', value: 'concentration' },
             { label: 'Modify', value: 'modify' }
+          ]"
+        />
+        <FormKit
+          name="widgets"
+          type="checkbox"
+          label="Active widgets"
+          :options="[
+            { label: 'Note', value: 'note' },
+            { label: 'Info pins', value: 'info-pins' },
+            { label: 'Fantasy name generator', value: 'fantasy-name-generator' }
           ]"
         />
         <FormKit type="submit" :aria-label="$t('actions.update')">

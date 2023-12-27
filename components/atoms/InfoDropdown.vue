@@ -184,5 +184,11 @@ async function removePin (info: InfoCard): Promise<void> {
         </div>
       </template>
     </div>
+    <div
+      v-if="!cards.length"
+      class="rounded-lg p-4 bg-tracker/50 space-y-4 border-4 border-tracker mb-1 text-slate-300 body-small"
+    >
+      {{ $t('components.infoDropdown.cta') }}
+    </div>
   </div>
 </template>
