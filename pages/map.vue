@@ -157,13 +157,14 @@ function handleSubmit ({ __init, file }: Obj): void {
                     'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors'
                   }"
                 >
-                  <NuxtImg
+                  <img
                     :id="sprite.value"
                     :draggable="true"
                     :src="`/art/floors/${sprite.value}${sprite.variations ? '-1' : ''}.svg`"
+                    loading="lazy"
                     class="w-12 h-12"
                     @click="setSprite(sprite.value as Sprite, 'floors')"
-                  />
+                  >
                   <p class="body-extra-small font-bold text-center">
                     {{ sprite.label }}
                   </p>
@@ -223,13 +224,14 @@ function handleSubmit ({ __init, file }: Obj): void {
                   'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls'
                 }"
               >
-                <NuxtImg
+                <img
                   :id="sprite.value"
                   :draggable="true"
                   :src="`/art/walls/${sprite.value}${sprite.value === 'remove' ? '' : '-default'}.svg`"
+                  loading="lazy"
                   class="w-12 h-12"
                   @click="setSprite(sprite.value as Sprite, 'walls')"
-                />
+                >
                 <p class="body-extra-small font-bold text-center">
                   {{ sprite.label }}
                 </p>
