@@ -39,27 +39,17 @@ async function handleFreeTier (): Promise<void> {
       <p class="mb-5 max-w-3xl mx-auto text-center">
         {{ $t('pages.pricing.text') }}
       </p>
-      <div class="flex gap-x-3 p-2 border-4 border-black bg-black/50 rounded-lg w-fit mx-auto my-10 font-bold relative">
-        <button
-          class="py-1 px-2 rounded-lg relative z-[1]"
-          :aria-label="$t('general.monthly')"
-          @click="isYearly = false"
-        >
-          {{ $t('general.monthly') }}
-        </button>
-        <button
-          class="py-1 px-2 rounded-lg relative z-[1]"
-          :aria-label="$t('general.annually')"
-          @click="isYearly = true"
-        >
-          {{ $t('general.annually') }}
-        </button>
-        <div class="absolute flex left-1 right-1">
-          <div
-            class="absolute bg-primary h-[32px] w-1/2 rounded-lg duration-300 ease-out transition-all"
-            :class="{ 'translate-x-full': isYearly }"
-          />
-        </div>
+      <div class="flex justify-center">
+        <FormKit
+          v-model="isYearly"
+          type="togglebuttons"
+          name="annually"
+          :options="[
+            { value: false, label: $t('general.monthly') },
+            { value: true, label: $t('general.annually') }
+          ]"
+          validation="required"
+        />
       </div>
       <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         <PricingCard
