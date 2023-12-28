@@ -112,7 +112,8 @@ function updated (hb: Homebrew, id: number): void {
         :disabled="
           !store.campaign ||
             !isAdmin(store?.campaign, profile.data?.id || '') ||
-            (store.campaign?.homebrew_items || []).length >= 100"
+            (store.campaign?.homebrew_items || []).length >= 100
+        "
       />
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
