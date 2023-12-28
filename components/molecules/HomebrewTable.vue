@@ -4,6 +4,10 @@ import { isAdmin } from '@/utils/permission-helpers'
 const store = useCurrentCampaignStore()
 const profile = useProfileStore()
 
+const isOpen = ref<boolean>(false)
+const isUpdate = ref<boolean>(false)
+const selectedHomebrew = ref<Homebrew>()
+
 const search = ref<string>('')
 const oldSearch = ref<string>('')
 const sortedBy = ref<string>('name')
@@ -84,15 +88,6 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
     return sortACS.value ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
   })
 }
-
-function updated (hb: Homebrew, id: number): void {
-  const index = shownHomebrew.value.findIndex(h => h.id === id)
-
-  shownHomebrew.value[index] = {
-    ...shownHomebrew.value[index],
-    ...hb
-  }
-}
 </script>
 
 <template>
@@ -108,13 +103,26 @@ function updated (hb: Homebrew, id: number): void {
           <p>Lair)</p>
         </div>
       </div>
-      <HomebrewModal
+      <button
+        v-tippy="$t('actions.add')"
+        :aria-label="$t('actions.add')"
+        class="disabled:opacity-40 disabled:cursor-not-allowed"
         :disabled="
           !store.campaign ||
             !isAdmin(store?.campaign, profile.data?.id || '') ||
-            (store.campaign?.homebrew_items || []).length >= 50
-        "
-      />
+            (store.campaign?.homebrew_items || []).length >= 50"
+        @click="() => {
+          selectedHomebrew = undefined
+          isUpdate = false
+          isOpen = true
+        }"
+      >
+        <Icon
+          name="material-symbols:add"
+          class="text-success w-6 h-6"
+          aria-hidden="true"
+        />
+      </button>
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <template v-else-if="store?.campaign?.homebrew_items?.length">
@@ -235,7 +243,21 @@ function updated (hb: Homebrew, id: number): void {
                 </td>
                 <td v-if="isAdmin(store.campaign, profile.data?.id || '')" class="px-2 py-1">
                   <div class="flex justify-center items-center gap-1">
-                    <HomebrewModal update :item="item" @updated="updated($event, item.id)" />
+                    <button
+                      v-tippy="$t('actions.update')"
+                      :aria-label="$t('actions.update')"
+                      @click="() => {
+                        selectedHomebrew = item
+                        isUpdate = true
+                        isOpen = true
+                      }"
+                    >
+                      <Icon
+                        name="lucide:wrench"
+                        class="text-info w-6 h-6"
+                        aria-hidden="true"
+                      />
+                    </button>
                     <button
                       v-tippy="{ content: $t('actions.delete') }"
                       :aria-label="$t('actions.delete')"
@@ -266,5 +288,12 @@ function updated (hb: Homebrew, id: number): void {
       </div>
     </template>
     <NoContent v-else content="homebrew" icon="la:dragon" />
+    <HomebrewModal
+      :open="isOpen"
+      :update="isUpdate"
+      :item="selectedHomebrew"
+      @close="isOpen = false"
+      @updated="isOpen = false"
+    />
   </section>
 </template>
