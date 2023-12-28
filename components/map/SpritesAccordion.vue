@@ -92,13 +92,14 @@ function setOpenState (filters: DraggableSprites): void {
               :aria-label="sprite.value"
               class="w-12"
             >
-              <NuxtImg
+              <img
                 :id="sprite.value"
                 :draggable="true"
                 :src="`/art/${category}/${sprite.value}.svg`"
+                loading="lazy"
                 class="w-12 h-12"
                 @drag.stop="$emit('handleDrag', $event)"
-              />
+              >
               <p class="body-extra-small font-bold text-center">
                 {{ sprite.label }}
               </p>
