@@ -447,6 +447,9 @@
       "add": "Homebrew maken",
       "update": "Homebrew aanpassen"
     },
+    "homebrewTable": {
+      "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
+    },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",
       "headers": {

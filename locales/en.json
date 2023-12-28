@@ -447,6 +447,9 @@
       "add": "Create homebrew",
       "update": "Update homebrew"
     },
+    "homebrewTable": {
+      "nothing": "We haven't found any homebrew that matches this search, but that doesn't mean you can't create it yourself."
+    },
     "encounterTable": {
       "empty": "Add a row to your encounter to get started!",
       "headers": {

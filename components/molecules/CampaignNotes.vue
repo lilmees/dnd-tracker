@@ -57,7 +57,11 @@ function resetState (): void {
       <button
         v-tippy="{ content: $t('actions.add') }"
         :aria-label="$t('actions.add')"
-        :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '')"
+        :disabled="
+          !store.campaign ||
+            !isAdmin(store.campaign, profile.data?.id || '') ||
+            (store.campaign?.notes || []).length >= 100
+        "
         class="disabled:opacity-40 disabled:cursor-not-allowed"
         @click="isOpen = true"
       >
