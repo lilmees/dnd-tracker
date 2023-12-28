@@ -98,11 +98,11 @@ function resetState (): void {
         <FormKit
           name="widgets"
           type="checkbox"
-          label="Active widgets"
+          :label="$t('components.visualOptions.widgets')"
           :options="[
-            { label: 'Note', value: 'note' },
-            { label: 'Info pins', value: 'info-pins' },
-            { label: 'Fantasy name generator', value: 'fantasy-name-generator' }
+            { label: $t('general.note'), value: 'note' },
+            { label: $t('general.infoPins'), value: 'info-pins' },
+            { label: $t('general.fantasyNameGenerator'), value: 'fantasy-name-generator' }
           ]"
         />
         <FormKit type="submit" :aria-label="$t('actions.update')">
