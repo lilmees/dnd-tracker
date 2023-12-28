@@ -24,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <NuxtLayout name="wide" padding shadow>
+  <NuxtLayout name="wide" padding>
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
@@ -36,10 +36,11 @@ onMounted(async () => {
           <VisualOptions />
         </div>
       </div>
-      <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4">
+      <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4 relative">
         <EncounterHeader />
         <EncounterTable />
         <EncounterOptions class="hidden md:flex" />
+        <div class="abolsute inset-0 z-[-1] fancy-shadow" />
       </div>
       <EncounterOptions class="md:hidden" />
       <div
