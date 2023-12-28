@@ -28,14 +28,14 @@ function handleCopy (name: string): void {
 
 <template>
   <NuxtLayout>
-    <div class="flex flex-col py-6 gap-10">
+    <div class="flex flex-col pt-6 pb-16 gap-10">
       <h1 class="mb-4 sm:text-4xl xl:text-5xl text-center">
         {{ $t('pages.fantasyNameGenerator.title') }}
       </h1>
-      <p class="mb-5 max-w-3xl mx-auto text-center">
+      <p class="mb-5 max-w-3xl mx-auto text-center pb-10">
         {{ $t('pages.fantasyNameGenerator.description') }}
       </p>
-      <div class="p-6 border-4 border-tracker bg-tracker/50 rounded-lg my-10 max-w-prose mx-auto w-full">
+      <div class="relative p-6 border-4 border-tracker bg-tracker/50 rounded-lg max-w-prose mx-auto w-full">
         <ul
           v-if="names.length"
           class="list-disc list-outside ml-4 grid sm:grid-cols-2 gap-x-6"
@@ -65,6 +65,7 @@ function handleCopy (name: string): void {
             {{ $t('actions.generate') }}
           </button>
         </div>
+        <div class="abolsute inset-0 z-[-1] fancy-shadow" />
       </div>
     </div>
   </NuxtLayout>
