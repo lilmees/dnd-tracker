@@ -1,11 +1,19 @@
 <script setup lang="ts">
 defineEmits(['pin'])
-const props = defineProps<{
-  hit: InfoCard,
-  pinned: boolean,
-  sandbox: boolean,
-  type: Open5eType
-}>()
+
+const props = withDefaults(
+  defineProps<{
+    hit: InfoCard
+    type: Open5eType
+    pinned?: boolean
+    sandbox?: boolean
+    gray?: boolean
+  }>(), {
+    pinned: false,
+    sandbox: false,
+    gray: false
+  }
+)
 
 const { $md } = useNuxtApp()
 
@@ -17,7 +25,10 @@ function hideOpenButton (): boolean {
 </script>
 
 <template>
-  <div class="border-4 border-primary rounded-lg p-3 relative">
+  <div
+    class="border-4 rounded-lg p-3 relative"
+    :class="[gray ? 'border-tracker bg-tracker/50' : 'border-primary']"
+  >
     <button
       v-if="!sandbox"
       v-tippy="{

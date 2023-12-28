@@ -1,4 +1,17 @@
-type Open5eType = 'spells' | 'monsters' | 'backgrounds' | 'planes' | 'feats' | 'conditions' | 'races' | 'classes' | 'magicitems' | 'weapons' | 'armor'
+type Open5eType =
+  | 'spells'
+  | 'monsters'
+  | 'backgrounds'
+  | 'planes'
+  | 'feats'
+  | 'conditions'
+  | 'races'
+  | 'classes'
+  | 'magicitems'
+  | 'weapons'
+  | 'armor'
+  | 'documents'
+  | 'sections'
 
 type Open5eSortBy = 'name' | 'hit_points' | '-hit_points' | 'armor_class' | '-armor_class' | 'cr' | '-cr'
 
@@ -6,7 +19,7 @@ interface Open5eQuery {
   search?: string
   page?: number
   limit?: number
- }
+}
 
 interface Open5eFilters {
   type?: Open5eType
@@ -42,19 +55,19 @@ interface Open5eItem extends PossibleAttacks, Abilities {
   size: string
   type: string
   subtype: string
-  group: string|null
+  group: string | null
   alignment: string
   armor_class: number
   armor_desc: string
   hit_points: number
   hit_dice: string
   speed: { [k: string]: number }
-  strength_save: string|null
-  dexterity_save: string|null
+  strength_save: string | null
+  dexterity_save: string | null
   constitution_save: number
   intelligence_save: number
   wisdom_save: number
-  charisma_save: string|null
+  charisma_save: string | null
   perception: number
   skills: { [k: string]: number }
   damage_vulnerabilities: string
@@ -77,7 +90,7 @@ interface Open5eItem extends PossibleAttacks, Abilities {
 
 interface Open5eResponse {
   count: number
-  next: string|null
-  previous: string|null
+  next: string | null
+  previous: string | null
   results: Open5eItem[]
 }

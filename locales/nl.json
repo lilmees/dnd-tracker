@@ -23,6 +23,7 @@
     "copy": "Kopiëren",
     "random": "Willekeurig",
     "create": "Creëren",
+    "generate": "Genereren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
     "drag": "Sleep mij",
@@ -32,6 +33,10 @@
     "prev": "Vorige",
     "decline": "Afwijzen",
     "transfer": "Overdragen",
+    "flip": "Flip {axis}",
+    "export": "Export",
+    "zoomIn": "Inzoomen",
+    "zoomOut": "Uitzoomen",
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"
@@ -43,6 +48,10 @@
     "players": "Spelers",
     "members": "Leden",
     "monsters": "Monsters",
+    "characters": "Karakters",
+    "animals": "Dieren",
+    "items": "Voorwerpen",
+    "nature": "Natuur",
     "notes": "Notities",
     "total": "Totaal",
     "grandTotal": "Eindtotaal",
@@ -60,6 +69,14 @@
     "current": "Huidig",
     "temp": "Tijdelijk",
     "max": "Max",
+    "drawing": "Tekenen",
+    "brushes": "Penselen",
+    "pencil": "Potlood",
+    "spraycan": "Spuitbus",
+    "eraser": "Wisser",
+    "width": "Breedte",
+    "height": "Hoogte",
+    "radius": "Straal",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -101,7 +118,7 @@
         "item3": "Alles op één handige plaats voor de GM",
         "item4": "Samenwerking in Dungeon Mastering",
         "item5": "Integratie van official content met de mogelijkheid om je eigen homebrew toe te voegen",
-        "item6": "Aantrekkelijk dark mode design"
+        "item6": "Fantasie naam generator"
       },
       "textBlock2": {
         "title": "Samenwerking in Dungeon Mastering 🧙‍♂️🧙",
@@ -320,6 +337,28 @@
     "noMember": {
       "title": "Je bent geen teamlid",
       "text": "Oeps! Het lijkt erop dat je geen lid bent en geen toegang hebt tot deze inhoud. Als je denkt dat dit een vergissing is, aarzel dan niet om contact op te nemen met de eigenaar of een beheerder voor hulp."
+    },
+    "map": {
+      "tileSet": "Vloertegels",
+      "wallSet": "Muurtegels",
+      "fillBackground": "Achtergrond vullen",
+      "addBackground": "Achtergrond toevoegen",
+      "customBackground": "Eigen achtergrond",
+      "drawingMode": "Tekenmodus",
+      "snapToGrid": "Rasteruitlijning",
+      "showGrid": "Toon raster",
+      "brushSize": "Borstelgrootte: {size}",
+      "smallScreenCta": "Attention Dungeon Architects! Duik in de wereld van grotere schermen (850px en meer) en ontdek de kracht om verbluffende kerkerskaarten te creëren",
+      "toast": {
+        "max": {
+          "title": "Maximaal aantal sprites bereikt",
+          "text": "Je hebt het maximale aantal toegestane sprites op de kaart bereikt. Overweeg om wat sprites te verwijderen voordat je nieuwe toevoegt."
+        }
+      }
+    },
+    "fantasyNameGenerator": {
+      "title": "Fantasy name generator",
+      "description": "Of je nu een doorgewinterde Dungeon Master bent of net begint met het ontdekken van de wereld van tabletop role-playing, onze D&D Fantasy name generator staat voor je klaar. Sta nooit meer sprakeloos wanneer een speler je overvalt met de vraag: \"Hoe heet deze NPC?\""
     }
   },
   "components": {
@@ -408,6 +447,9 @@
       "add": "Homebrew maken",
       "update": "Homebrew aanpassen"
     },
+    "homebrewTable": {
+      "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
+    },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",
       "headers": {
@@ -422,7 +464,8 @@
         "concentration": "CON",
         "modify": "Aanpassen",
         "summoner": "Oproeper"
-      }
+      },
+      "quick": "Voeg alle initiatieven toe"
     },
     "actions": {
       "link": "Link",
@@ -446,7 +489,10 @@
       "campaigns": "Campagnes",
       "profile": "Profiel",
       "pricing": "Prijzen",
-      "play": "Spelen"
+      "play": "Spelen",
+      "fantasy": "Fantasienaam generator",
+      "info": "Informatie",
+      "map": "Map maker"
     },
     "confirmationModal": {
       "title": "Verwijder bevestiging",
@@ -483,7 +529,8 @@
       "remove": "Verwijder pin"
     },
     "infoDropdown": {
-      "title": "Gepinde informatie kaarten"
+      "title": "Gepinde informatie kaarten",
+      "cta": "Ontgrendel het volledige potentieel van je encounter! Pin nu essentiële informatiekaarten vast om georganiseerd te blijven en productiviteit te maximaliseren."
     },
     "badgeModal": {
       "title": "Personaliseer je profiel met een badge",
@@ -531,6 +578,17 @@
       "text": "Je hebt de limiet van je huidige abonnement bereikt. Ontgrendel meer functies en voordelen door nu te upgraden. Maak je geen zorgen als je je inhoud niet ziet, deze is niet verwijderd",
       "cta": "Nu upgraden",
       "max": "Max {number} gecreëerd door jezelf of je campagne"
+    },
+    "nameGenerator": {
+      "title": "Fantasie naam generator",
+      "cta": "Genereer je fantasie namen nu!",
+      "toast": {
+        "title": "{name} gekopieerd naar klembord"
+      }
+    },
+    "quickInitiativeModal": {
+      "title": "Initiatieven snel toevoegen",
+      "roll": "Alle initiatieven rollen"
     }
   }
 }

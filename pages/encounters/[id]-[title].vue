@@ -44,19 +44,22 @@ onMounted(async () => {
       <EncounterOptions class="md:hidden" />
       <div
         v-if="!store.isLoading"
-        class="container pt-10 items-start grid md:grid-cols-2 gap-8"
+        class="pt-10 items-start grid md:grid-cols-2 gap-8"
       >
         <ClientOnly>
           <RichText
-            class="pt-2"
+            v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('note'))"
             :content="store.encounter.info || ''"
             :label="$t('pages.encounter.info')"
             @update="store.encounterUpdate({ info: $event })"
           />
         </ClientOnly>
         <InfoDropdown
-          v-if="store.encounter?.info_cards?.length"
+          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('info-pins'))"
           :cards="store.encounter.info_cards"
+        />
+        <NameGenerator
+          v-if="(!store.encounter.settings.modified || store.encounter.settings.widgets?.includes('fantasy-name-generator'))"
         />
       </div>
     </div>

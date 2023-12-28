@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       '~/components/organisms',
       '~/components/templates',
       '~/components/tableRow',
+      '~/components/map',
       '~/components/skeletons'
     ]
   },
@@ -143,7 +144,7 @@ export default defineNuxtConfig({
   security: {
     headers: {
       contentSecurityPolicy: {
-        'img-src': ['\'self\'', 'https:', 'data:'],
+        'img-src': ['\'self\'', 'https:', 'data:', 'blob:'],
         'frame-ancestors': ['\'self\'', 'https:', 'data:']
       },
       crossOriginEmbedderPolicy: false

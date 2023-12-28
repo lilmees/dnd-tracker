@@ -23,6 +23,7 @@
     "copy": "Copy",
     "random": "Random",
     "create": "Create",
+    "generate": "Generate",
     "openSettings": "Settings",
     "closeSettings": "Close settings",
     "drag": "Drag me",
@@ -32,6 +33,10 @@
     "prev": "Previous",
     "decline": "Decline",
     "transfer": "Transfer",
+    "flip": "Flip {axis}",
+    "export": "Export",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
     "read": {
       "more": "Read more",
       "less": "Read less"
@@ -43,6 +48,10 @@
     "players": "Players",
     "members": "Members",
     "monsters": "Monsters",
+    "characters": "Characters",
+    "animals": "Animals",
+    "items": "Items",
+    "nature": "Nature",
     "notes": "Notes",
     "total": "Total",
     "grandTotal": "Grand total",
@@ -60,6 +69,14 @@
     "current": "Current",
     "temp": "Temporary",
     "max": "Max",
+    "drawing": "Drawing",
+    "brushes": "Brushes",
+    "pencil": "Pencil",
+    "spraycan": "Spraycan",
+    "eraser": "Eraser",
+    "width": "Width",
+    "height": "Height",
+    "radius": "Radius",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -101,7 +118,7 @@
         "item3": "Everything in 1 convenient place for the DM",
         "item4": "Collaborative Dungeon Mastering",
         "item5": "Plenty of information you can get your hands on",
-        "item6": "Attractive dark mode design for all vampires among us"
+        "item6": "Fantasy name generator"
       },
       "textBlock2": {
         "title": "Collaborative Dungeon Mastering 🧙‍♂️🧙",
@@ -320,6 +337,28 @@
     "noMember": {
       "title": "You're not a team member",
       "text": "Oops! It seems like you're not a member, and you don't have access to this content. If you believe this is a mistake, please don't hesitate to reach out to the owner or an admin for assistance."
+    },
+    "map": {
+      "tileSet": "Floor set",
+      "wallSet": "Wall set",
+      "fillBackground": "Fill background",
+      "addBackground": "Add background",
+      "customBackground": "Custom background",
+      "drawingMode": "Drawing mode",
+      "snapToGrid": "Snap to grid",
+      "showGrid": "Show grid",
+      "brushSize": "Brush size: {size}",
+      "smallScreenCta": "Attention Dungeon Architects! Dive into the world of larger screens (850px and up) and unveil the power to create stunning dungeon maps",
+      "toast": {
+        "max": {
+          "title": "Maximum Sprites Reached",
+          "text": "You have reached the maximum allowable number of sprites on the map. Consider removing some sprites before adding new ones."
+        }
+      }
+    },
+    "fantasyNameGenerator": {
+      "title": "Fantasy name generator",
+      "description": "Whether you're a seasoned Dungeon Master or just starting to explore the world of tabletop role-playing, our D&D Fantasy name generator has got your back. Never be at a loss for words when a player hits you with the question, \"What's the name of this NPC?\""
     }
   },
   "components": {
@@ -408,6 +447,9 @@
       "add": "Create homebrew",
       "update": "Update homebrew"
     },
+    "homebrewTable": {
+      "nothing": "We haven't found any homebrew that matches this search, but that doesn't mean you can't create it yourself."
+    },
     "encounterTable": {
       "empty": "Add a row to your encounter to get started!",
       "headers": {
@@ -422,7 +464,8 @@
         "concentration": "CON",
         "modify": "Modify",
         "summoner": "Summoner"
-      }
+      },
+      "quick": "Add all initiatives"
     },
     "actions": {
       "link": "Link",
@@ -446,7 +489,10 @@
       "campaigns": "Campaigns",
       "profile": "Profile",
       "pricing": "Pricing",
-      "play": "Play"
+      "play": "Play",
+      "fantasy": "Fantasie name generator",
+      "info": "Information",
+      "map": "Map creator"
     },
     "confirmationModal": {
       "title": "Delete confirmation",
@@ -483,7 +529,8 @@
       "remove": "Remove pin"
     },
     "infoDropdown": {
-      "title": "Pinned information cards"
+      "title": "Pinned information cards",
+      "cta": "Unlock the full potential of your encounter! Pin essential information cards now to stay organized and maximize productivity."
     },
     "badgeModal": {
       "title": "Customize Your Profile with a Badge",
@@ -531,6 +578,17 @@
       "text": "You've reached the limit of your current plan. Unlock more features and benefits by upgrading now. Don't worry if you don't see your content it's not removed",
       "cta": "Upgrade now",
       "max": "Max {number} created by yourself or your campaign"
+    },
+    "nameGenerator": {
+      "title": "Fantasy name generator",
+      "cta": "Generate your fantasy names now!",
+      "toast": {
+        "title": "Copied {name} to clipboard"
+      }
+    },
+    "quickInitiativeModal": {
+      "title": "Quick add initiatives",
+      "roll": "Roll all initiatives"
     }
   }
 }

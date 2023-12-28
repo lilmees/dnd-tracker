@@ -1,5 +1,6 @@
 interface Route {
   label: string
   url: string
-  requiredLogIn: boolean
+  requiredLogIn: boolean,
+  beta?: boolean
 }

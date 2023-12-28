@@ -50,7 +50,7 @@ function subscribe () {
     </p>
     <div class="flex items-baseline my-8">
       <span v-if="product.prices" class="mr-2 text-5xl font-extrabold">
-        {{ product.prices[yearly && product.prices.length > 1 ? 1 : 0] }}€
+        {{ product.prices[!yearly && product.prices.length > 1 ? 1 : 0] }}€
       </span>
       <div v-else-if="loading" class="w-16 h-12 rounded-lg bg-tracker animate-pulse" />
       <span>/{{ $t(yearly ? 'general.year' : 'general.month') }}</span>
