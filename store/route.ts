@@ -9,7 +9,7 @@ export const useRouteStore = defineStore('useRouteStore', () => {
     { label: 'components.navbar.encounters', url: 'encounters', requiredLogIn: true },
     { label: 'components.navbar.fantasy', url: 'fantasy-name-generator', requiredLogIn: false },
     { label: 'components.navbar.info', url: 'info', requiredLogIn: false },
-    { label: 'components.navbar.map', url: 'map', requiredLogIn: false }
+    { label: 'components.navbar.map', url: 'map', requiredLogIn: false, beta: true }
   ])
 
   const profileRoutes = ref<Route[]>([

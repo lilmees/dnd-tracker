@@ -62,6 +62,12 @@ function close (): void {
               @click="isOpen = false"
             >
               {{ $t(route.label) }}
+              <span
+                v-if="route.beta"
+                class="body-extra-small text-secondary relative bottom-px ml-2"
+              >
+                BETA
+              </span>
             </RouteLink>
           </template>
         </div>
