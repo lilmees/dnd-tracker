@@ -40,7 +40,8 @@
     "read": {
       "more": "Read more",
       "less": "Read less"
-    }
+    },
+    "buyCoffee": "Buy me a coffee"
   },
   "general": {
     "campaigns": "Campaigns",
@@ -61,6 +62,8 @@
     "year": "year",
     "monthly": "Monthly",
     "annually": "Annually",
+    "oneTime": "One-time",
+    "forever": "Forever",
     "link": "Link",
     "noSelected": "Nothing selected",
     "or": "of",
@@ -285,7 +288,7 @@
     },
     "pricing": {
       "title": "Designed for the best dungeon masters, like you.",
-      "text": "Choose a budget-friendly plan loaded with premium features to enrich your D&D encounters, engage your players, and create epic moments.",
+      "description": "Choose a budget-friendly plan loaded with premium features to enrich your D&D encounters, engage your players, and create epic moments.",
       "starter": "The perfect choice for beginners and dungeon masters with 1-3 active campaigns.",
       "medior": "The ideal choice for experienced dungeon masters who run multiple campaigns simultaneously.",
       "pro": "The ultimate choice for professional dungeon masters and for those collaborating with multiple DMs on the same campaigns.",
@@ -294,7 +297,9 @@
       "campaigns": "Campaigns: {number}",
       "multiple": "Multiple campaign admins",
       "live": "Real-time updates between screens",
-      "update": "Updates: always free"
+      "update": "Updates: always free",
+      "cta": "Get started",
+      "text": "DnD Tracker is not managed by a large company but rather by a passionate individual with a love for both D&D and coding (and let's not forget about cats and coffee). The goal is not to get rich, which is why this is not a website with subscription fees. A one-time show of support is the greatest compliment you can give me. However, if you'd like to contribute even more, you can always consider donating a virtual cup of coffee."
     },
     "contact": {
       "title": "Love to hear from you, Get in touch",
@@ -504,10 +509,6 @@
     "noteModal": {
       "add": "Create note",
       "update": "Update note"
-    },
-    "pricingCard": {
-      "start": "Get started",
-      "current": "Current"
     },
     "fullScreenSearch": {
       "tooltip": "Search information",
