@@ -7,7 +7,6 @@ definePageMeta({ middleware: ['auth'] })
 const profile = useProfileStore()
 const stripe = useStripeStore()
 const toast = useToastStore()
-const localePath = useLocalePath()
 const { t } = useI18n()
 
 const image = ref<string>(profile.data?.avatar || randomAvatar())
@@ -88,12 +87,6 @@ function handleIconClick (node: FormKitNode) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
-
-async function stripePortal (): Promise<void> {
-  if (profile.data?.stripe_session_id) {
-    await stripe.createPortalSession(profile.data.stripe_session_id)
-  }
-}
 </script>
 
 <template>
@@ -143,27 +136,12 @@ async function stripePortal (): Promise<void> {
       <div class="flex flex-wrap gap-4 items-center justify-between pt-2 pb-4 border-b-2 border-slate-700">
         <div class="flex gap-4">
           {{ $t('pages.profile.subscription.current') }}:
-          <span class="font-bold capitalize">{{ profile.data.subscription_type }}</span>
+          <span class="font-bold capitalize">{{
+            profile.data.paid_subscription_active
+              ? profile.data.subscription_type
+              : 'free'
+          }}</span>
         </div>
-        <button
-          class="btn-black"
-          :aria-label="
-            $t(profile.data.stripe_session_id && profile.data.paid_subscription_active
-              ? 'pages.profile.subscription.handle'
-              : 'pages.profile.subscription.upgrade')
-          "
-          @click="
-            profile.data.stripe_session_id && profile.data.paid_subscription_active
-              ? stripePortal()
-              : navigateTo(localePath('/pricing'))
-          "
-        >
-          {{
-            $t(profile.data.stripe_session_id && profile.data.paid_subscription_active
-              ? 'pages.profile.subscription.handle'
-              : 'pages.profile.subscription.upgrade')
-          }}
-        </button>
       </div>
       <div
         class="flex flex-col md:flex-row justify-between gap-x-10 gap-y-4 py-6 border-b-2 border-slate-700"
@@ -203,7 +181,11 @@ async function stripePortal (): Promise<void> {
               type="checkbox"
               :label="$t('components.inputs.marketingLabel')"
             />
-            <FormKit type="submit" :label="$t('actions.save')" />
+            <FormKit
+              type="submit"
+              :label="$t('actions.save')"
+              input-class="$reset btn-primary"
+            />
             <p v-if="infoError" class="text-danger body-small mt-1">
               {{ infoError }}
             </p>
@@ -236,7 +218,11 @@ async function stripePortal (): Promise<void> {
               validation="required|length:6,50|contains_lowercase|contains_uppercase|contains_alpha|contains_numeric|contains_symbol"
               @suffix-icon-click="handleIconClick"
             />
-            <FormKit type="submit" :label="$t('actions.save')" />
+            <FormKit
+              type="submit"
+              :label="$t('actions.save')"
+              input-class="$reset btn-primary"
+            />
             <p v-if="passwordError" class="text-danger body-small mt-1">
               {{ passwordError }}
             </p>

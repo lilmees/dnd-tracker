@@ -9,17 +9,15 @@ export default defineEventHandler(async (event): Promise<StripeProduct[]> => {
   const groupedProducts: StripeProduct[] = []
 
   products.forEach((product) => {
-    const productPrices = prices.filter(price => price.product === product.id)
+    const price = prices.find(price => price.product === product.id)
 
-    const monthPrice = productPrices.find(price => price.recurring?.interval === 'month')
-    const yearPrice = productPrices.find(price => price.recurring?.interval === 'year')
-
-    groupedProducts.push({
-      name: product.name,
-      prices: productPrices.map(price => (price.unit_amount || 0) / 100),
-      monthId: monthPrice?.id || '',
-      yearId: yearPrice?.id || ''
-    })
+    if (price) {
+      groupedProducts.push({
+        name: product.name,
+        price: (price.unit_amount || 0) / 100,
+        id: price.id
+      })
+    }
   })
 
   return groupedProducts

@@ -1,32 +1,30 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
 const profile = useProfileStore()
-const user = useSupabaseUser()
-const localePath = useLocalePath()
-const toast = useToastStore()
 
-const isYearly = ref<boolean>(false)
-
-async function subscribe (id: string): Promise<void> {
-  await stripe.subscribe(id, locale.value)
+async function subscribe (id: string, type: StripeSubscriptionType): Promise<void> {
+  await stripe.subscribe(id, locale.value, type)
 }
 
-async function handleFreeTier (): Promise<void> {
-  if (!user.value) {
-    navigateTo(localePath('/register'))
-  } else {
-    try {
-      if (profile?.data?.stripe_session_id) {
-        await stripe.createPortalSession(profile.data.stripe_session_id)
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
+function isCurrent (type: StripeSubscriptionType): boolean {
+  const current = profile.data?.paid_subscription_active
+    ? profile.data.subscription_type
+    : 'free'
+
+  return type === current
+}
+
+function isUpgradeable (type: StripeSubscriptionType): boolean {
+  const current = profile.data?.paid_subscription_active
+    ? profile.data.subscription_type
+    : 'free'
+
+  if (current === 'free') {
+    return true
   }
+
+  return type === 'upgrade to pro' && current === 'medior'
 }
 </script>
 
@@ -36,33 +34,105 @@ async function handleFreeTier (): Promise<void> {
       <h1 class="mb-4 sm:text-4xl xl:text-5xl text-center">
         {{ $t('pages.pricing.title') }}
       </h1>
-      <p class="mb-5 max-w-3xl mx-auto text-center">
+      <p class="mb-16 max-w-3xl mx-auto text-center">
+        {{ $t('pages.pricing.description') }}
+      </p>
+      <div class="inline-block overflow-x-auto overflow-y-hidden w-full">
+        <div class="bg-tracker/50 border-4 border-tracker rounded-lg">
+          <table class="min-w-full">
+            <thead>
+              <tr>
+                <th
+                  v-for="(header, index) in [
+                    undefined,
+                    ...stripe.shownProduct.map(({ title, price }) => { return { title, price } })
+                  ]"
+                  :key="index"
+                  class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
+                >
+                  <div v-if="header" class="flex flex-col text-xl">
+                    <span>
+                      {{ header.title }}
+                    </span>
+                    <div v-if="stripe.loading" class="w-[140px] mx-auto h-8 rounded-lg bg-tracker animate-pulse relative top-1" />
+                    <div v-else-if="header.price" class="font-extrabold flex items-baseline justify-center">
+                      {{ header.price }}€ <span class="body-small"> /{{ $t('general.oneTime') }} </span>
+                    </div>
+                    <div v-else class="font-extrabold flex items-baseline justify-center">
+                      0€ <span class="body-small"> /{{ $t('general.forever') }} </span>
+                    </div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(item, index) in stripe.labels"
+                :key="item"
+                class="border-b last:border-b-0 border-slate-700"
+              >
+                <td class="px-2 py-1 border-r border-slate-700 font-bold">
+                  {{ $t(item) }}
+                </td>
+                <td
+                  v-for="product in stripe.shownProduct"
+                  :key="product.type"
+                  class="px-2 py-1 border-r last:border-r-0 border-slate-700 text-center font-bold"
+                >
+                  <span v-if="product.items[index].number">
+                    {{ product.items[index].number }}
+                  </span>
+                  <Icon
+                    v-else
+                    :name="product.items[index].icon === 'check' ? 'material-symbols:check-small-rounded' : 'ic:round-clear'"
+                    class="w-8 h-8"
+                    :class="[product.items[index].icon === 'check' ? 'text-success' : 'text-danger  ']"
+                    aria-hidden="true"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="px-2 py-1 border-r border-slate-700" />
+                <td
+                  v-for="product in stripe.shownProduct"
+                  :key="product.type"
+                  class="px-2 py-1 border-r last:border-r-0 border-slate-700 text-center font-bold"
+                >
+                  <SkeletonButton v-if="stripe.loading" block />
+                  <div v-else-if="isCurrent(product.type)" class="btn-secondary w-full">
+                    {{ $t('general.current') }}
+                  </div>
+                  <button
+                    v-else-if="product.id && product.price !== 0 && isUpgradeable(product.type)"
+                    class="btn-primary w-full"
+                    :aria-label="$t('pages.pricing.cta')"
+                    :disabled="stripe.loading"
+                    @click="subscribe(product.id, product.type)"
+                  >
+                    {{ $t('pages.pricing.cta') }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="mb-5 max-w-3xl mx-auto text-center pt-12">
         {{ $t('pages.pricing.text') }}
       </p>
       <div class="flex justify-center">
-        <FormKit
-          v-model="isYearly"
-          type="togglebuttons"
-          name="annually"
-          :options="[
-            { value: false, label: $t('general.monthly') },
-            { value: true, label: $t('general.annually') }
-          ]"
-          validation="required"
-        />
-      </div>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <PricingCard
-          v-for="(product, i) in stripe.products"
-          :key="product.title"
-          :product="product"
-          :loading="stripe.loading"
-          :yearly="isYearly"
-          :popular="i === 1 ? $t('pages.pricing.popular') : undefined"
-          :current="product.type === profile?.data?.subscription_type"
-          @subscribe="subscribe"
-          @free="handleFreeTier"
-        />
+        <a href="https://ko-fi.com/B0B2SSBBQ" target="_blank">
+          <div class="btn-primary flex items-center gap-4">
+            <span>
+              {{ $t('actions.buyCoffee') }}
+            </span>
+            <Icon
+              name="tabler:coffee"
+              class="w-5 h-5"
+              aria-hidden="true"
+            />
+          </div>
+        </a>
       </div>
     </section>
   </NuxtLayout>

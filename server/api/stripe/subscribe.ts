@@ -22,14 +22,18 @@ export default defineEventHandler(async (event) => {
     allow_promotion_codes: true,
     billing_address_collection: 'auto',
     line_items: [{ price: price.id, quantity: 1 }],
-    mode: 'subscription',
+    mode: 'payment',
     success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
     customer: body.customer || customer?.id
   })
 
   await client.from('profiles')
-    .update({ ...update, stripe_session_id: session.id } as never)
+    .update({
+      ...update,
+      stripe_session_id: session.id,
+      subscription_type: body.type === 'upgrade to pro' ? 'pro' : body.type
+    } as never)
     .eq('id', body.user.id)
 
   return {
