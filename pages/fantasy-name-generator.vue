@@ -4,14 +4,13 @@ const toast = useToastStore()
 const { t } = useI18n()
 
 const names = ref<string[]>([])
-const amount = ref<string>('10')
 
 onMounted(() => generate())
 
 function generate (): void {
   names.value = []
 
-  for (let i = 0; i < +amount.value; i++) {
+  for (let i = 0; i < 30; i++) {
     names.value.push(useRandomName())
   }
 }
@@ -36,27 +35,18 @@ function handleCopy (name: string): void {
         {{ $t('pages.fantasyNameGenerator.description') }}
       </p>
       <div class="relative p-6 border-4 border-tracker bg-tracker/50 rounded-lg max-w-prose mx-auto w-full">
-        <ul
+        <ol
           v-if="names.length"
-          class="list-disc list-outside ml-4 grid sm:grid-cols-2 gap-x-6"
+          class="list-disc list-inside grid sm:grid-cols-2 gap-x-6"
         >
           <li v-for="name in names" :key="name" class="mb-1 last:mb-0">
             <button class="text-left cursor-copy" @click="handleCopy(name)">
               {{ name }}
             </button>
           </li>
-        </ul>
+        </ol>
         <SkeletonList v-else />
         <div class="flex justify-end gap-2 items-end pt-6">
-          <FormKit
-            v-model="amount"
-            type="number"
-            :min="1"
-            :max="20"
-            outer-class="$reset !pb-0"
-            inner-class="!mb-0"
-            :disabled="!names.length"
-          />
           <button
             :disabled="!names.length"
             class="btn-primary"
