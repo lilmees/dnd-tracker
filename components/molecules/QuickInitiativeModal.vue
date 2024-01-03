@@ -86,8 +86,10 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
             <FormKit
               name="initiative"
               label="MOD"
-              validation="between:-10,10|number"
+              validation="between:-20,20|number"
               type="number"
+              min="-20"
+              max="20"
               outer-class="w-[100px]"
             />
           </div>

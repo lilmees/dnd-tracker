@@ -51,7 +51,9 @@ function updateInitiative ({ __init, initiative, amount }: Obj): void {
         <FormKit
           name="initiative"
           :label="`${$t('components.inputs.initiativeLabel')} (MODIFIER)`"
-          validation="between:-10,10|number"
+          validation="between:-20,20|number"
+          min="-20"
+          max="20"
           type="number"
           outer-class="grow"
         />
