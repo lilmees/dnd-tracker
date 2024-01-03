@@ -15,7 +15,7 @@ function generateForm (): QuickInitiativeForm {
   const form: QuickInitiativeForm = {}
 
   store.encounter?.rows.forEach((row) => {
-    form[row.name] = {
+    form[row.id] = {
       amount: undefined,
       initiative: row.initiative_modifier || undefined
     }
@@ -33,9 +33,9 @@ function rollAllInitiatives (): void {
 async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
   try {
     for (const key in rows) {
-      const index = store.encounter!.rows.findIndex(({ name }) => name === key)
+      const index = store.encounter!.rows.findIndex(({ id }) => id === +key)
 
-      if (index !== undefined) {
+      if (index >= 0) {
         const init: number = +rows[key].amount + (+rows[key].initiative || 0)
         store.encounter!.rows[index].initiative = Math.max(init, 0)
       }
@@ -68,7 +68,7 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
         <FormKit
           v-for="row in store.encounter?.rows || []"
           :key="row.id"
-          :name="row.name"
+          :name="row.id.toString()"
           type="group"
         >
           <div class="flex gap-x-2 items-start">
@@ -80,7 +80,7 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
               outer-class="grow"
               :suffix-icon="dice"
               @suffix-icon-click="() => {
-                form[row.name].amount = useDiceRoll(20) as number
+                form[row.id].amount = useDiceRoll(20) as number
               }"
             />
             <FormKit

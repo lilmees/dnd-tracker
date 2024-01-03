@@ -240,11 +240,11 @@ function closeModal (): void {
         />
         <FormKit
           name="initiative_modifier"
-          max="10"
-          min="-10"
+          max="20"
+          min="-20"
           type="number"
           :label="`${$t('components.inputs.initiativeLabel')} (MODIFIER)`"
-          validation="between:-10,10|number"
+          validation="between:-20,20|number"
         />
       </div>
       <div v-if="form.type !== 'lair'" class="grid sm:grid-cols-2 gap-x-3">
