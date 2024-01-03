@@ -15,7 +15,10 @@ function generateForm (): QuickInitiativeForm {
   const form: QuickInitiativeForm = {}
 
   store.encounter?.rows.forEach((row) => {
-    form[row.name] = { amount: undefined, initiative: undefined }
+    form[row.name] = {
+      amount: undefined,
+      initiative: row.initiative_modifier || undefined
+    }
   })
 
   return form

@@ -3,11 +3,13 @@ import { reset } from '@formkit/core'
 
 const emit = defineEmits(['update', 'close'])
 
+const store = useTableStore()
+
 const form = ref<{
   initiative: number|null,
   amount: number|null
 }>({
-  initiative: null,
+  initiative: store.activeRow?.initiative_modifier || null,
   amount: null
 })
 
