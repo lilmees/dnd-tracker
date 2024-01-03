@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { _0 } from '#tailwind-config/theme/backdropBlur'
 
 const store = useTableStore()
 const toast = useToastStore()
@@ -16,9 +17,13 @@ whenever(() => isOpen.value, () => {
 
 async function addMonster (monster: Open5eItem) {
   isLoading.value = true
+
   try {
     if (store.encounter) {
-      const row = useCreateRow(monster as unknown as Row, 'monster', store.encounter.rows)
+      const row = useCreateRow({
+        ...monster,
+        initiative_modifier: Math.max(0, monster.dexterity - 8)
+      } as unknown as Row, 'monster', store.encounter.rows)
       await store.encounterUpdate({
         rows: [...store.encounter.rows, row]
       })

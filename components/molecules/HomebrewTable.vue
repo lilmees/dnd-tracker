@@ -52,9 +52,9 @@ const sorted = computed<Homebrew[]>(() => {
 })
 
 function setSorting (header: string): void {
-  sortACS.value = header === sortedBy.value ? !sortACS.value : false
-
-  sortedBy.value = header
+  const key = header === 'hp' ? 'health' : header
+  sortACS.value = key === sortedBy.value ? !sortACS.value : false
+  sortedBy.value = key
 }
 
 function sortByNumber (arr: Homebrew[], key: string): Homebrew[] {
@@ -141,12 +141,12 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
               <tr>
                 <th
                   v-for="header in isAdmin(store.campaign, profile.data?.id || '')
-                    ? ['name', 'type', 'player', 'health', 'ac', 'link', 'actions', 'modify']
-                    : ['name', 'type', 'player', 'health', 'ac', 'link', 'actions']"
+                    ? ['name', 'type', 'player', 'hp', 'ac', 'init mod', 'link', 'actions', 'modify']
+                    : ['name', 'type', 'player', 'hp', 'ac', 'init mod', 'link', 'actions']"
                   :key="header"
                   class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
                   :class="{
-                    'cursor-pointer': ['name', 'type', 'player', 'health', 'ac'].includes(header),
+                    'cursor-pointer': ['name', 'type', 'player', 'hp', 'ac'].includes(header),
                   }"
                   @click="setSorting(header)"
                 >
@@ -158,8 +158,8 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
                       name="ph:arrows-down-up-bold"
                       class="w-5 h-5 cursor-pointer text-secondary/50"
                       :class="{
-                        '!hidden': ['link', 'actions', 'modify'].includes(header),
-                        '!text-secondary': sortedBy === header,
+                        '!hidden': ['init mod', 'link', 'actions', 'modify'].includes(header),
+                        '!text-secondary': sortedBy === (header === 'hp' ? 'health' : header),
                       }"
                       aria-hidden="true"
                     />
@@ -197,6 +197,9 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
                 </td>
                 <td class="px-2 py-1 border-r border-slate-700">
                   {{ item.type === 'lair' ? '' : item.ac || '' }}
+                </td>
+                <td class="px-2 py-1 border-r border-slate-700">
+                  {{ item.type === 'lair' ? '' : item.initiative_modifier || '' }}
                 </td>
                 <td class="px-2 py-1 border-r border-slate-700">
                   <div class="flex justify-center">
