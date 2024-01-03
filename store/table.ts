@@ -8,6 +8,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const localePath = useLocalePath()
   const toast = useToastStore()
   const { t } = useI18n()
+  const route = useRoute()
 
   const encounter = ref<Encounter | null>(null)
   const isLoading = ref<boolean>(true)
@@ -83,11 +84,13 @@ export const useTableStore = defineStore('useTableStore', () => {
         { event: '*', schema: 'public', table: 'initiative_sheets' },
         (payload: SupabaseRealTime) => {
           if (payload.eventType === 'DELETE') {
-            toast.info({
-              title: t('pages.encounter.toasts.removed.title'),
-              text: t('pages.encounter.toasts.removed.text')
-            })
-            navigateTo(localePath('/encounters'))
+            if (route.fullPath.includes('/encounters/')) {
+              toast.info({
+                title: t('pages.encounter.toasts.removed.title'),
+                text: t('pages.encounter.toasts.removed.text')
+              })
+              navigateTo(localePath('/encounters'))
+            }
           } else {
             const { campaign, created_at, id, ...updated } = payload.new
             encounter.value = { ...encounter.value, ...updated } as Encounter
