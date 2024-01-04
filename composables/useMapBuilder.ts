@@ -130,7 +130,9 @@ export const useMapBuilder = () => {
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
-    if (canvas.value && e.altKey) {
+    const { altKey, shiftKey, ctrlKey, metaKey } = e
+
+    if (canvas.value && (altKey || shiftKey || ctrlKey || metaKey)) {
       handlePanning(e as MouseEvent, action)
       return
     }
@@ -289,9 +291,9 @@ export const useMapBuilder = () => {
   }
 
   function add (object: fabric.Object): void {
-    // if (useSnapToGrid.value) {
-    //   snapToGrid(object, cellWidth.value)
-    // }
+    if (useSnapToGrid.value) {
+      snapToGrid(object, cellWidth.value)
+    }
 
     canvas.value?.add(object)
     canvas.value?.requestRenderAll()
@@ -405,24 +407,7 @@ export const useMapBuilder = () => {
 
   function serializeCanvas (): void {}
 
-  function deserializeCanvas (items: fabric.Object[]): void {
-    // if (!canvas.value) {
-    //   return
-    // }
-
-    // deze functie moet json naar fabric object casten maar werkt niet momenteel
-    // fabric.util.enlivenObjects(items, (objects) => {
-    //   const origRenderOnAddRemove = canvas.value!.renderOnAddRemove
-    //   canvas.value!.renderOnAddRemove = false
-
-    //   objects.forEach((object: fabric.Object) => {
-    //     canvas.value!.add(object)
-    //   })
-
-    //   canvas.value!.renderOnAddRemove = origRenderOnAddRemove
-    //   canvas.value!.requestRenderAll()
-    // })
-  }
+  function deserializeCanvas (items: fabric.Object[]): void {}
 
   watch(
     () => brushSize.value,

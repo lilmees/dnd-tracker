@@ -48,6 +48,14 @@ onMounted(() => {
   }
 })
 
+// Clone active  selection
+onKeyStroke(['V', 'v'], (e) => {
+  e.preventDefault()
+  if (e.ctrlKey || e.metaKey) {
+    clone(canvas.value)
+  }
+})
+
 function changeBackground (sprite : Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
