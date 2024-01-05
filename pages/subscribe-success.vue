@@ -5,10 +5,15 @@ definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
 const badge = useBadgesStore()
+const customer = useRoute().query.customer
+const localePath = useLocalePath()
 
 onMounted(async () => {
-  if (profile.data) {
-    const changes: ProfileUpdate = {}
+  if (customer && profile.data?.stripe_id === customer) {
+    const changes: ProfileUpdate = {
+      paid_subscription_active: true
+    }
+
     // add family badge if not already added
     if (!profile.data.badges.some(badge => badge.id === 4)) {
       const familyBadge = await badge.getBadgeById(4)
@@ -20,6 +25,8 @@ onMounted(async () => {
     }
 
     await profile.updateProfile(changes)
+  } else {
+    navigateTo(localePath('/home'))
   }
 })
 

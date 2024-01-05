@@ -101,17 +101,6 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     }
   }
 
-  async function createPortalSession (id: string): Promise<void> {
-    const { data } = await useFetch('/api/stripe/create_portal_session', {
-      method: 'POST',
-      body: { session_id: id }
-    })
-
-    if (data.value) {
-      navigateTo(data.value.url, { external: true })
-    }
-  }
-
   onMounted(async () => {
     await fetchProducts()
   })
@@ -121,7 +110,6 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     shownProduct,
     loading,
     subscribe,
-    createPortalSession,
     fetchProducts,
     labels: [
       'general.encounters',

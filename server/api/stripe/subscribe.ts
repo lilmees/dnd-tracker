@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     billing_address_collection: 'auto',
     line_items: [{ price: price.id, quantity: 1 }],
     mode: 'payment',
-    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success`,
+    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success?customer=${body.customer || customer?.id}`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
     customer: body.customer || customer?.id
   })
