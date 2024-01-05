@@ -58,6 +58,7 @@ function setForm (): HomebrewForm {
     link: props.item?.link || '',
     type: props.item?.type || ('player' as RowType),
     initiative: undefined,
+    initiative_modifier: props.item?.initiative_modifier || undefined,
     amount: undefined,
     summoner: undefined,
     ac: props.item?.ac,
@@ -223,20 +224,30 @@ function closeModal (): void {
           outer-class="grow"
         />
       </div>
-      <FormKit
-        v-if="encounter"
-        name="initiative"
-        type="number"
-        min="1"
-        max="50"
-        :label="$t('components.inputs.initiativeLabel')"
-        validation="between:1,50|number"
-        :suffix-icon="dice"
-        @suffix-icon-click="() => {
-          form.initiative = useDiceRoll(20) as number
-        }"
-      />
-      <div v-if="form.type !== 'lair'" class="flex flex-row gap-x-3 items-center">
+      <div :class="{ 'grid sm:grid-cols-2 gap-x-3': encounter }">
+        <FormKit
+          v-if="encounter"
+          name="initiative"
+          type="number"
+          min="1"
+          max="50"
+          :label="$t('components.inputs.initiativeLabel')"
+          validation="between:1,50|number"
+          :suffix-icon="dice"
+          @suffix-icon-click="() => {
+            form.initiative = useDiceRoll(20) as number
+          }"
+        />
+        <FormKit
+          name="initiative_modifier"
+          max="20"
+          min="-20"
+          type="number"
+          :label="`${$t('components.inputs.initiativeLabel')} (MODIFIER)`"
+          validation="between:-20,20|number"
+        />
+      </div>
+      <div v-if="form.type !== 'lair'" class="grid sm:grid-cols-2 gap-x-3">
         <FormKit
           name="ac"
           type="number"

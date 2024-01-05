@@ -21,6 +21,9 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "pasteSelected": "Geselecteerd plakken",
+    "moveSelected": "Geselecteerd bewegen",
+    "panMap": "Map verschuiven",
     "random": "Willekeurig",
     "create": "Creëren",
     "generate": "Genereren",
@@ -40,9 +43,14 @@
     "read": {
       "more": "Lees meer",
       "less": "Lees minder"
-    }
+    },
+    "buyCoffee": "Koop mij een koffietje"
   },
   "general": {
+    "up": "Omhoog",
+    "down": "Omlaag",
+    "Left": "Links",
+    "Right": "Rechts",
     "campaigns": "Campagnes",
     "encounters": "Encounters",
     "players": "Spelers",
@@ -62,6 +70,8 @@
     "year": "jaar",
     "monthly": "Maandelijks",
     "annually": "Jaarlijks",
+    "oneTime": "Eenmalig",
+    "forever": "Voor altijd",
     "noSelected": "Niets geselecteerd",
     "or": "of",
     "options": "Opties",
@@ -285,16 +295,16 @@
     },
     "pricing": {
       "title": "Gemaakt voor de beste dungeon masters, zoals jij.",
-      "text": "Kies een budgetvriendelijk plan vol met premium functies om je D&D encounters te verrijken, je spelers te betrekken, en epische momenten te creëren.",
+      "description": "Kies een budgetvriendelijk plan vol met premium functies om je D&D encounters te verrijken, je spelers te betrekken, en epische momenten te creëren.",
       "starter": "De perfecte keuze voor beginners en dungeon masters met 1-3 actieve campagnes.",
       "medior": "De ideale keuze voor ervaren dungeon masters die gelijktijdig meerdere campagnes leiden.",
       "pro": "De ultieme keuze voor professionele dungeon masters en voor diegenen die samenwerken met meerdere DM's aan dezelfde campagnes.",
       "popular": "Populairste",
-      "encounters": "Encounters: {number}",
-      "campaigns": "Campagnes: {number}",
       "multiple": "Meerdere campagne beheerders",
       "live": "Real-time updates tussen schermen",
-      "update": "Updates: altijd gratis"
+      "update": "Updates altijd gratis",
+      "cta": "Start nu",
+      "text": "DnD Tracker wordt niet beheerd door een groot bedrijf, maar eerder door een gepassioneerde individu met liefde voor zowel D&D als coderen (en laten we vooral de katten en koffie niet vergeten). Het doel is niet om er rijk van te worden, daarom is dit geen website met abonnementskosten. Een eenmalige steunbetuiging is al het grootste compliment dat je mij kunt geven. Mocht je echter nog meer willen bijdragen, kun je altijd overwegen om mij een virtueel kopje koffie te doneren."
     },
     "contact": {
       "title": "Hoor graag van je, neem contact op",
@@ -504,10 +514,6 @@
     "noteModal": {
       "add": "Notitie creëren",
       "update": "Notitie bijwerken"
-    },
-    "pricingCard": {
-      "start": "Start nu",
-      "current": "Huidig"
     },
     "fullScreenSearch": {
       "tooltip": "Informatie opzoeken",

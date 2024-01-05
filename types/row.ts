@@ -44,6 +44,7 @@ interface Row extends Partial<PossibleAttacks> {
   id: string | number
   index: number
   initiative: number
+  initiative_modifier?: number
   link?: string
   maxAc?: number
   maxHealth?: number

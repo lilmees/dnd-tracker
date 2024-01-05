@@ -8,6 +8,7 @@ interface Homebrew extends PossibleAttacks {
   health?: number
   link?: string
   type: RowType
+  initiative_modifier?: number
 }
 
 interface AddHomebrew extends Required<Omit<Homebrew, 'id'|'created_at'>> {}
@@ -23,6 +24,7 @@ interface HomebrewForm {
   ac?: number | undefined
   health?: number | undefined
   initiative?: number | undefined
+  initiative_modifier?: number | undefined
   amount?: number | undefined,
   summoner?: Summoner | undefined | number
 }
