@@ -8,7 +8,7 @@ const isOpen = ref<boolean>(false)
   <div
     class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-end gap-2 p-4"
   >
-    <Hotkeys class="hidden md:block" />
+    <HotkeysEncounter class="hidden md:block" />
     <InfoSearch />
     <EncounterDiceRoller />
     <AddInitiativeMonster />

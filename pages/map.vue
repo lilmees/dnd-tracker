@@ -48,6 +48,14 @@ onMounted(() => {
   }
 })
 
+// Clone active  selection
+onKeyStroke(['V', 'v'], (e) => {
+  e.preventDefault()
+  if (e.ctrlKey || e.metaKey) {
+    clone(canvas.value)
+  }
+})
+
 function changeBackground (sprite : Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
@@ -426,6 +434,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             >
               <Icon name="carbon:reset" class="w-6 h-6 text-danger" aria-hidden="true" />
             </button>
+            <HotkeysMap />
           </div>
           <div class="w-[520px] space-y-1 relative">
             <div

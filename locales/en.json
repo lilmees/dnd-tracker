@@ -21,6 +21,8 @@
     "tryAgain": "Try again",
     "info": "Show information",
     "copy": "Copy",
+    "pasteSelected": "Paste selected",
+    "moveSelected": "Move selected",
     "random": "Random",
     "create": "Create",
     "generate": "Generate",
@@ -44,6 +46,10 @@
     "buyCoffee": "Buy me a coffee"
   },
   "general": {
+    "up": "Up",
+    "down": "Down",
+    "Left": "Left",
+    "Right": "Right",
     "campaigns": "Campaigns",
     "encounters": "Encounters",
     "players": "Players",

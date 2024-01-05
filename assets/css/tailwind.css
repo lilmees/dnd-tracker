@@ -132,7 +132,7 @@
   }
 
   kbd {
-    @apply border-2 rounded px-1 py-px;
+    @apply border-2 rounded p-1;
   }
 
   select, option {
