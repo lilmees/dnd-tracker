@@ -425,15 +425,38 @@ function handleSubmit ({ __init, file }: Obj): void {
                 aria-hidden="true"
               />
             </button>
-            <button
-              v-tippy="$t('actions.reset')"
-              :aria-label="$t('actions.reset')"
-              :disabled="!canvas"
-              class="disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ease-in-out"
-              @click="resetCanvas()"
+            <tippy
+              interactive
+              trigger="click"
             >
-              <Icon name="carbon:reset" class="w-6 h-6 text-danger" aria-hidden="true" />
-            </button>
+              <Icon
+                v-tippy="{
+                  content: $t('actions.reset'),
+                  touch: false
+                }"
+                name="carbon:reset"
+                class="w-6 h-6 text-danger outline-none"
+                aria-hidden="true"
+              />
+              <template #content="{ hide }">
+                <div class="p-4 space-y-2 overflow-auto">
+                  <p class="head-3 text-center pb-2">
+                    {{ $t('actions.reset') }} map
+                  </p>
+                  <button
+                    :aria-label="$t('actions.reset')"
+                    :disabled="!canvas"
+                    class="btn-danger"
+                    @click="() => {
+                      resetCanvas()
+                      hide()
+                    }"
+                  >
+                    {{ $t('actions.reset') }}
+                  </button>
+                </div>
+              </template>
+            </tippy>
             <HotkeysMap />
           </div>
           <div class="w-[520px] space-y-1 relative">

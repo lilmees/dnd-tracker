@@ -23,6 +23,7 @@
     "copy": "Copy",
     "pasteSelected": "Paste selected",
     "moveSelected": "Move selected",
+    "panMap": "Pan map",
     "random": "Random",
     "create": "Create",
     "generate": "Generate",
