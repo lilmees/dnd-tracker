@@ -21,6 +21,9 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "pasteSelected": "Geselecteerd plakken",
+    "moveSelected": "Geselecteerd bewegen",
+    "panMap": "Map verschuiven",
     "random": "Willekeurig",
     "create": "Creëren",
     "generate": "Genereren",
@@ -44,6 +47,10 @@
     "buyCoffee": "Koop mij een koffietje"
   },
   "general": {
+    "up": "Omhoog",
+    "down": "Omlaag",
+    "Left": "Links",
+    "Right": "Rechts",
     "campaigns": "Campagnes",
     "encounters": "Encounters",
     "players": "Spelers",

@@ -130,9 +130,9 @@ export const useMapBuilder = () => {
   }
 
   function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
-    const { altKey, shiftKey, ctrlKey, metaKey } = e
+    const { shiftKey } = e
 
-    if (canvas.value && (altKey || shiftKey || ctrlKey || metaKey)) {
+    if (canvas.value && shiftKey) {
       handlePanning(e as MouseEvent, action)
       return
     }
