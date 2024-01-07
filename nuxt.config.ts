@@ -47,7 +47,8 @@ export default defineNuxtConfig({
       formkit: process.env.FORMKIT_PRO
     },
     mailAddress: process.env.MAIL,
-    mailPassword: process.env.MAIL_PASSWORD
+    mailPassword: process.env.MAIL_PASSWORD,
+    stripeWebhook: process.env.STRIPE_WEBHOOK
   },
   appConfig: {
     umami: {

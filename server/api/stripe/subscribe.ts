@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     billing_address_collection: 'auto',
     line_items: [{ price: price.id, quantity: 1 }],
     mode: 'payment',
-    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success?customer=${body.customer || customer?.id}`,
+    success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
     customer: body.customer || customer?.id
   })
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     .update({
       ...update,
       stripe_session_id: session.id,
-      subscription_type: body.type === 'upgrade to pro' ? 'pro' : body.type
+      temp_subscription: body.type === 'upgrade to pro' ? 'pro' : body.type
     } as never)
     .eq('id', body.user.id)
 

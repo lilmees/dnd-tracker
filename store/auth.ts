@@ -15,8 +15,10 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         email: credentails.email,
         id: userData.user.id,
         role: 'User',
-        paid_subscription_active: false,
-        subscription_type: 'free'
+        subscription_type: 'free',
+        temp_subscription: 'free',
+        subscription_id: null,
+        badges: []
       }
 
       const { error } = await supabase.from('profiles').insert([profile as never])

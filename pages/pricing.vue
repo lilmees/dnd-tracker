@@ -8,17 +8,13 @@ async function subscribe (id: string, type: StripeSubscriptionType): Promise<voi
 }
 
 function isCurrent (type: StripeSubscriptionType): boolean {
-  const current = profile.data?.paid_subscription_active
-    ? profile.data.subscription_type
-    : 'free'
+  const current = profile.data?.subscription_type || 'free'
 
   return type === current
 }
 
 function isUpgradeable (type: StripeSubscriptionType): boolean {
-  const current = profile.data?.paid_subscription_active
-    ? profile.data.subscription_type
-    : 'free'
+  const current = profile.data?.subscription_type || 'free'
 
   if (current === 'free') {
     return true

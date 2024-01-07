@@ -136,11 +136,7 @@ function handleIconClick (node: FormKitNode) {
       <div class="flex flex-wrap gap-4 items-center justify-between pt-2 pb-4 border-b-2 border-slate-700">
         <div class="flex gap-4">
           {{ $t('pages.profile.subscription.current') }}:
-          <span class="font-bold capitalize">{{
-            profile.data.paid_subscription_active
-              ? profile.data.subscription_type
-              : 'free'
-          }}</span>
+          <span class="font-bold capitalize">{{ profile.data.subscription_type }}</span>
         </div>
       </div>
       <div
