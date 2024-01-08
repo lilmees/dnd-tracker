@@ -1,24 +1,14 @@
 type StripeSubscriptionType = 'medior' | 'pro' | 'free' | 'upgrade to pro'
 
-type StripeSubscriptionStatus =
-  | 'active'
-  | 'past_due'
-  | 'unpaid'
-  | 'canceled'
-  | 'incomplete'
-  | 'incomplete_expired'
-  | 'trialing'
-  | 'paused'
-
 type StripeFields =
   | 'subscription_type'
   | 'temp_subscription'
-  | 'subscription_id'
 
 interface Stripe {
   subscription_type: StripeSubscriptionType
   temp_subscription: StripeSubscriptionType
-  subscription_id: string | null
+  stripe_session_id?: string
+  stripe_id?: string
 }
 
 interface StripeProduct {
