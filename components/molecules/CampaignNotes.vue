@@ -11,6 +11,7 @@ const isOpen = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
 const selected = ref<Note[]>([])
+const maxAmount = ref<number>(50)
 
 function addedNote (note: Note): void {
   if (store.campaign) {
@@ -54,23 +55,33 @@ function resetState (): void {
   <section class="space-y-4">
     <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <h2>{{ $t('general.notes') }}</h2>
-      <button
-        v-tippy="{ content: $t('actions.add') }"
-        :aria-label="$t('actions.add')"
-        :disabled="
-          !store.campaign ||
-            !isAdmin(store.campaign, profile.data?.id || '') ||
-            (store.campaign?.notes || []).length >= 100
-        "
-        class="disabled:opacity-40 disabled:cursor-not-allowed"
-        @click="isOpen = true"
-      >
-        <Icon
-          name="material-symbols:add"
-          class="w-6 h-6 text-success"
-          aria-hidden="true"
-        />
-      </button>
+      <div class="flex gap-4 items-center">
+        <div
+          class="body-small"
+          :class="{
+            'text-danger': (store.campaign?.notes || []).length >= maxAmount
+          }"
+        >
+          {{ (store.campaign?.notes || []).length }} / {{ maxAmount }}
+        </div>
+        <button
+          v-tippy="{ content: $t('actions.add') }"
+          :aria-label="$t('actions.add')"
+          :disabled="
+            !store.campaign ||
+              !isAdmin(store.campaign, profile.data?.id || '') ||
+              (store.campaign?.notes || []).length >= maxAmount
+          "
+          class="disabled:opacity-40 disabled:cursor-not-allowed"
+          @click="isOpen = true"
+        >
+          <Icon
+            name="material-symbols:add"
+            class="w-6 h-6 text-success"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </div>
     <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
       <SkeletonNoteCard v-for="i in 4" :key="i" />
