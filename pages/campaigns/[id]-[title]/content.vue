@@ -67,6 +67,9 @@ function resetState (): void {
         <div class="flex justify-between border-b-2 border-slate-700 pb-1">
           <h2>{{ $t('general.encounters') }}</h2>
           <div class="flex gap-4 items-center">
+            <span class="text-[10px]">
+              {{ $t('general.globally') }}
+            </span>
             <div
               class="body-small"
               :class="{
