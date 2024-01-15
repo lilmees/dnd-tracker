@@ -12,7 +12,7 @@ const isOpen = ref<boolean>(false)
     <InfoSearch />
     <EncounterDiceRoller />
     <AddInitiativeMonster />
-    <template v-if="store.encounter?.campaign || store.isSandbox">
+    <template v-if="(store.encounter?.campaign || store.isSandbox) && !store.isPlayground">
       <AddInitiativeCampaignHomebrew />
     </template>
     <button

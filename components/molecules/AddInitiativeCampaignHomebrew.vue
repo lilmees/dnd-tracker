@@ -118,7 +118,7 @@ function selectedSummoner (value: unknown): void {
       }"
       :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
-      :disabled="!store.encounter?.campaign?.id && !store.isSandbox"
+      :disabled="!store.encounter?.campaign?.id && !store.isSandbox && !store.isPlayground"
       @click="isOpen = true"
     >
       <span class="md:hidden">

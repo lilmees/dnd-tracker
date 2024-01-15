@@ -25,6 +25,8 @@ export const useTableStore = defineStore('useTableStore', () => {
       : false
   })
 
+  const isPlayground = computed(() => route.fullPath.includes('/playground'))
+
   async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
@@ -110,7 +112,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       data.campaign = data.campaign.id
     }
 
-    if (!isSandbox.value && id) {
+    if (!isSandbox.value && !isPlayground.value && id) {
       try {
         const { data: updated, error } = await supabase
           .from('initiative_sheets')
@@ -202,10 +204,34 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
+  function setPlaygroundValues (): void {
+    encounter.value = {
+      id: 1,
+      created_at: `${Date.now()}`,
+      title: 'Playground',
+      round: 1,
+      rows: [],
+      created_by: 'user',
+      background: '#7333E0',
+      color: '#FFFFFF',
+      activeIndex: 0,
+      info_cards: [],
+      settings: {
+        spacing: 'normal',
+        rows: [],
+        modified: false,
+        widgets: []
+      }
+    }
+
+    isLoading.value = false
+  }
+
   return {
     encounter,
     isLoading,
     isSandbox,
+    isPlayground,
     includesSummond,
     activeModal,
     activeRow,
@@ -219,6 +245,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     nextInitiative,
     prevInitiative,
     checkDeathSaves,
-    resetActiveState
+    resetActiveState,
+    setPlaygroundValues
   }
 })
