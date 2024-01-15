@@ -5,7 +5,6 @@ import logRocket from 'logrocket'
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
-const stripe = useStripeStore()
 const toast = useToastStore()
 const { t } = useI18n()
 

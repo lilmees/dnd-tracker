@@ -7,6 +7,7 @@ export const useRouteStore = defineStore('useRouteStore', () => {
   const playRoutes = ref<Route[]>([
     { label: 'components.navbar.campaigns', url: 'campaigns', requiredLogIn: true },
     { label: 'components.navbar.encounters', url: 'encounters', requiredLogIn: true },
+    { label: 'components.navbar.playground', url: 'playground', requiredLogIn: false },
     { label: 'components.navbar.fantasy', url: 'fantasy-name-generator', requiredLogIn: false },
     { label: 'components.navbar.info', url: 'info', requiredLogIn: false },
     { label: 'components.navbar.map', url: 'map', requiredLogIn: false, beta: true }

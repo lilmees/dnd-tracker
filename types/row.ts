@@ -39,7 +39,7 @@ interface Row extends Partial<PossibleAttacks> {
   concentration: boolean
   conditions: Condition[]
   created_at: string
-  deathSaves: DeathSaves,
+  deathSaves: DeathSaves
   health?: number
   id: string | number
   index: number
