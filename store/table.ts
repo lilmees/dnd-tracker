@@ -12,6 +12,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
   const encounter = ref<Encounter | null>(null)
   const isLoading = ref<boolean>(true)
+  const isSyncing = ref<boolean>(false)
   const isSandbox = ref<boolean>(false)
 
   const activeModal = ref<EncounterModal>()
@@ -85,6 +86,8 @@ export const useTableStore = defineStore('useTableStore', () => {
       .on('postgres_changes',
         { event: '*', schema: 'public', table: 'initiative_sheets' },
         (payload: SupabaseRealTime) => {
+          isSyncing.value = true
+
           if (payload.eventType === 'DELETE') {
             if (route.fullPath.includes('/encounters/')) {
               toast.info({
@@ -97,11 +100,15 @@ export const useTableStore = defineStore('useTableStore', () => {
             const { campaign, created_at, id, ...updated } = payload.new
             encounter.value = { ...encounter.value, ...updated } as Encounter
           }
+
+          isSyncing.value = false
         })
       .subscribe()
   }
 
   async function encounterUpdate (enc: UpdateEncounter): Promise<void> {
+    isSyncing.value = true
+
     if (enc.rows?.length) {
       enc.rows = useIndexCorrecter(enc.rows as Row[])
     }
@@ -132,6 +139,8 @@ export const useTableStore = defineStore('useTableStore', () => {
     } else {
       encounter.value = data as Encounter
     }
+
+    isSyncing.value = false
   }
 
   async function updateRow (value: never): Promise<void> {
@@ -230,6 +239,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   return {
     encounter,
     isLoading,
+    isSyncing,
     isSandbox,
     isPlayground,
     includesSummond,

@@ -90,6 +90,11 @@
     "note": "Note",
     "infoPins": "Info pins",
     "fantasyNameGenerator": "Fantasy name generator",
+    "globally": "Globally",
+    "synced": "Synced",
+    "syncing": "Syncing",
+    "online": "Online",
+    "offline": "Offline",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
