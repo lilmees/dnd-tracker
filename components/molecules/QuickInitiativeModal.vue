@@ -33,11 +33,13 @@ function rollAllInitiatives (): void {
 async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
   try {
     for (const key in rows) {
-      const index = store.encounter!.rows.findIndex(({ id }) => id === +key)
+      if (rows[key].amount !== undefined) {
+        const index = store.encounter!.rows.findIndex(({ id }) => id === +key)
 
-      if (index >= 0) {
-        const init: number = +rows[key].amount + (+rows[key].initiative || 0)
-        store.encounter!.rows[index].initiative = Math.max(init, 0)
+        if (index >= 0) {
+          const init: number = +rows[key].amount + (+rows[key].initiative || 0)
+          store.encounter!.rows[index].initiative = Math.max(init, 0)
+        }
       }
     }
 
@@ -75,7 +77,7 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
             <FormKit
               name="amount"
               :label="row.name"
-              validation="required|between:0,50|number"
+              validation="between:0,50|number"
               type="number"
               outer-class="grow"
               :suffix-icon="dice"
