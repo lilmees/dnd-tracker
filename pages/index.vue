@@ -40,7 +40,8 @@ if (process.client) {
           <TitleText
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
-            button-link="updates/feature-request"
+            :text2="$t('pages.home.textBlock1.text2')"
+            button-link="playground"
             :button-label="$t('pages.home.textBlock1.button')"
           />
           <div class="mt-20 lg:mt-32 flex md:justify-end">
@@ -54,6 +55,7 @@ if (process.client) {
                 $t('pages.home.summary.item5'),
                 $t('pages.home.summary.item6'),
               ]"
+              class="max-w-[500px]"
             />
           </div>
         </div>

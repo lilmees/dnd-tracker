@@ -12,7 +12,7 @@ onMounted(async () => {
   if (route?.params?.id) {
     try {
       await store.getEncounter(route.params.id as string)
-      console.log(store.encounter)
+
       if (store?.encounter?.title) {
         useHead({ title: store.encounter.title })
       }
