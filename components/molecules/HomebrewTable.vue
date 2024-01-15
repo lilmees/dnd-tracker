@@ -15,6 +15,7 @@ const sortACS = ref<boolean>(true)
 const pages = ref<number>(0)
 const page = ref<number>(0)
 const perPage = ref<number>(20)
+const maxAmount = ref<number>(100)
 
 const sorted = computed<Homebrew[]>(() => {
   if (!store.campaign?.homebrew_items || !store.campaign.homebrew_items.length) {
@@ -103,26 +104,36 @@ function sortByString (arr: Homebrew[], key: string): Homebrew[] {
           <p>Lair)</p>
         </div>
       </div>
-      <button
-        v-tippy="$t('actions.add')"
-        :aria-label="$t('actions.add')"
-        class="disabled:opacity-40 disabled:cursor-not-allowed"
-        :disabled="
-          !store.campaign ||
-            !isAdmin(store?.campaign, profile.data?.id || '') ||
-            (store.campaign?.homebrew_items || []).length >= 50"
-        @click="() => {
-          selectedHomebrew = undefined
-          isUpdate = false
-          isOpen = true
-        }"
-      >
-        <Icon
-          name="material-symbols:add"
-          class="text-success w-6 h-6"
-          aria-hidden="true"
-        />
-      </button>
+      <div class="flex gap-4 items-center">
+        <div
+          class="body-small"
+          :class="{
+            'text-danger': (store.campaign?.homebrew_items || []).length >= maxAmount
+          }"
+        >
+          {{ (store.campaign?.homebrew_items || []).length }} / {{ maxAmount }}
+        </div>
+        <button
+          v-tippy="$t('actions.add')"
+          :aria-label="$t('actions.add')"
+          class="disabled:opacity-40 disabled:cursor-not-allowed"
+          :disabled="
+            !store.campaign ||
+              !isAdmin(store?.campaign, profile.data?.id || '') ||
+              (store.campaign?.homebrew_items || []).length >= maxAmount"
+          @click="() => {
+            selectedHomebrew = undefined
+            isUpdate = false
+            isOpen = true
+          }"
+        >
+          <Icon
+            name="material-symbols:add"
+            class="text-success w-6 h-6"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </div>
     <SkeletonHomebrewTable v-if="store.loading" />
     <template v-else-if="store?.campaign?.homebrew_items?.length">
