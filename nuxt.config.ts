@@ -1,6 +1,4 @@
 import UnheadVite from '@unhead/addons/vite'
-import en from './locales/en.json'
-import nl from './locales/nl.json'
 
 export default defineNuxtConfig({
   components: {
@@ -32,10 +30,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@formkit/nuxt',
     '@nuxtjs/i18n',
-    '@nuxt/image-edge',
-    'nuxt-simple-sitemap',
+    '@nuxtjs/sitemap',
     '@vite-pwa/nuxt',
-    'vue-email/nuxt'
+    '@vue-email/nuxt',
+    '@nuxt/image'
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -99,14 +97,7 @@ export default defineNuxtConfig({
     locales: [
       { code: 'nl', iso: 'nl-BE', name: 'Nederlands', icon: '🇧🇪' },
       { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' }
-    ],
-    vueI18n: {
-      missingWarn: false,
-      legacy: false,
-      locale: 'nl',
-      fallbackLocale: 'nl',
-      messages: { en, nl }
-    }
+    ]
   },
   schemaOrg: {
     host: process.env.NUXT_PUBLIC_SITE_URL
@@ -122,13 +113,6 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: false,
     exposeConfig: true
-  },
-  pinia: {
-    autoImports: [
-      'defineStore',
-      ['defineStore', 'definePiniaStore'],
-      'storeToRefs'
-    ]
   },
   supabase: {
     redirect: false

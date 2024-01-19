@@ -3,7 +3,7 @@ const { data } = await useAsyncData('changelog', () => queryContent('/changelog'
 </script>
 
 <template>
-  <NuxtLayout shadow>
+  <Layout shadow>
     <ContentRenderer :value="data" />
-  </NuxtLayout>
+  </Layout>
 </template>

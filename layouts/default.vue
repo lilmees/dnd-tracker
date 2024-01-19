@@ -2,8 +2,12 @@
 const showNav = useState<boolean>('showNavigation', () => true)
 
 withDefaults(
-  defineProps<{ shadow?: boolean }>(),
-  { shadow: false }
+  defineProps<{
+    shadow?: boolean
+   }>(),
+  {
+    shadow: false
+  }
 )
 
 onBeforeMount(() => { showNav.value = true })

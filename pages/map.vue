@@ -138,7 +138,7 @@ function handleSubmit ({ __init, file }: Obj): void {
 </script>
 
 <template>
-  <NuxtLayout>
+  <Layout>
     <div class="flex flex-col gap-6 items-center">
       <div class="gap-4 w-full hidden min-[850px]:flex">
         <div class="flex flex-col gap-y-4 w-full">
@@ -487,5 +487,5 @@ function handleSubmit ({ __init, file }: Obj): void {
         {{ $t('pages.map.smallScreenCta') }}
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

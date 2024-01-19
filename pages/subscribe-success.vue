@@ -29,7 +29,7 @@ function handleConfetti (container: Container): void {
 </script>
 
 <template>
-  <NuxtLayout name="centered" shadow>
+  <Layout name="centered" shadow>
     <div class="space-y-6">
       <h2>
         {{ $t('pages.subscribeSuccess.title') }}
@@ -180,5 +180,5 @@ function handleConfetti (container: Container): void {
         @load="handleConfetti"
       />
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

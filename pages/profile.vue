@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FormKitNode, reset } from '@formkit/core'
+import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['auth'] })
@@ -82,14 +82,14 @@ async function deleteUser (): Promise<void> {
   }
 }
 
-function handleIconClick (node: FormKitNode) {
+function handleIconClick (node: any) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
 </script>
 
 <template>
-  <NuxtLayout shadow>
+  <Layout shadow>
     <section v-if="profile.data" class="space-y-2">
       <div
         class="flex flex-wrap gap-y-2 gap-x-4 items-end pb-4 border-b-2 border-slate-700"
@@ -241,5 +241,5 @@ function handleIconClick (node: FormKitNode) {
         @delete="deleteUser"
       />
     </section>
-  </NuxtLayout>
+  </Layout>
 </template>

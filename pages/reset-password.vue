@@ -30,7 +30,7 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout name="centered">
+  <Layout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
         {{ $t('pages.resetPassword.title') }}
@@ -72,5 +72,5 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
         </NuxtLink>
       </div>
     </section>
-  </NuxtLayout>
+  </Layout>
 </template>

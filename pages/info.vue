@@ -60,7 +60,7 @@ function paginate (newPage: number): void {
 </script>
 
 <template>
-  <NuxtLayout shadow>
+  <Layout shadow>
     <div class="flex flex-col py-6 gap-10 max-h-full">
       <div class="flex items-start gap-4 max-w-prose w-full mx-auto p-6 rounded-lg border-tracker bg-tracker/50">
         <FormKit
@@ -108,5 +108,5 @@ function paginate (newPage: number): void {
         {{ $t('components.fullScreenSearch.notFound') }}
       </p>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

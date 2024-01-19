@@ -42,7 +42,7 @@ async function deleteCampaigns (): Promise<void> {
 </script>
 
 <template>
-  <NuxtLayout shadow>
+  <Layout shadow>
     <div v-if="!store.error">
       <div class="pb-10 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
@@ -195,5 +195,5 @@ async function deleteCampaigns (): Promise<void> {
       update
       @close="reset"
     />
-  </NuxtLayout>
+  </Layout>
 </template>
