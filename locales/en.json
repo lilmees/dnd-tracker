@@ -21,6 +21,7 @@
     "tryAgain": "Try again",
     "info": "Show information",
     "copy": "Copy",
+    "copyClipboard": "Copied to clipboard",
     "pasteSelected": "Paste selected",
     "moveSelected": "Move selected",
     "panMap": "Pan map",
@@ -44,7 +45,8 @@
       "more": "Read more",
       "less": "Read less"
     },
-    "buyCoffee": "Buy me a coffee"
+    "buyCoffee": "Buy me a coffee",
+    "share": "Share"
   },
   "general": {
     "up": "Up",
@@ -608,6 +610,9 @@
     "quickInitiativeModal": {
       "title": "Quick add initiatives",
       "roll": "Roll all initiatives"
+    },
+    "encounterOptions": {
+      "playgroundWarning": "Playground encounters can't be saved"
     }
   }
 }

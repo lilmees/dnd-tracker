@@ -6,8 +6,14 @@ const isOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="p-4 flex justify-end md:justify-between md:items-center">
+  <div
+    class="p-4 flex justify-end"
+    :class="{
+      'md:justify-between md:items-center': !store.isHome
+    }"
+  >
     <div
+      v-if="!store.isHome && !store.isPlayground"
       v-tippy="
         !online
           ? $t('general.offline')
@@ -28,6 +34,19 @@ const isOpen = ref<boolean>(false)
           'bg-success': !store.isSyncing && online,
         }"
       />
+    </div>
+    <div
+      v-else-if="store.isPlayground"
+      class="hidden md:flex gap-2 max-w-[250px] items-center"
+    >
+      <Icon
+        name="ph:warning-bold"
+        class="min-w-[32px] min-h-[32px] text-warning "
+        aria-hidden="true"
+      />
+      <span class="body-small text-slate-300">
+        {{ $t('components.encounterOptions.playgroundWarning') }}
+      </span>
     </div>
     <div class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-between gap-2">
       <HotkeysEncounter class="hidden md:block" />

@@ -1,7 +1,14 @@
 <script setup lang="ts">
 const store = useTableStore()
+const route = useRoute()
 
-onMounted(() => store.setPlaygroundValues())
+onMounted(async () => {
+  if (route.query.content) {
+    await store.loadSharedEncounter(route.query.content as string)
+  } else {
+    store.setPlaygroundValues()
+  }
+})
 </script>
 
 <template>

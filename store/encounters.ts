@@ -5,6 +5,9 @@ import { getMax } from '@/utils/subscription-helpers'
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
+  const { copy } = useClipboard()
+  const toast = useToastStore()
+  const { t, locale } = useI18n()
 
   const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
@@ -146,6 +149,22 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
+  function shareEncounter (encounter: Encounter): void {
+    try {
+      const content = window.btoa(encodeURIComponent(encounter.id))
+      const url = `https://dnd-tracker.com${locale.value === 'en' ? '/en/' : '/'}playground?content=${content}`
+
+      copy(url)
+
+      toast.info({
+        title: t('actions.copyClipboard'),
+        timeout: 2000
+      })
+    } catch (err) {
+      toast.error()
+    }
+  }
+
   return {
     loading,
     error,
@@ -159,6 +178,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     copyEncounter,
     deleteEncounter,
     bulkDeleteEncounters,
-    updateEncounter
+    updateEncounter,
+    shareEncounter
   }
 })
