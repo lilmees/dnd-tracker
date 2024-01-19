@@ -14,7 +14,7 @@ withDefaults(
 </script>
 
 <template>
-  <div>
+  <div style="min-height: calc(100vh - 350px);">
     <NuxtLayout
       :name="name"
       :shadow="shadow"
