@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <Layout>
     <div class="space-y-4">
       <h1>
         Privacy Policy for DnD-Tracker
@@ -75,7 +75,7 @@
         By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.
       </p>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>
 
 <script setup>

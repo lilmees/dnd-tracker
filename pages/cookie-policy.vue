@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <Layout>
     <div class="space-y-4">
       <h1>Cookie Policy for DnD-Tracker</h1>
       <p>This is the Cookie Policy for DnD-Tracker, accessible from https://dnd-tracker.com</p>
@@ -76,7 +76,7 @@
         <li>Email: jeremy@dnd-tracker.com</li>
       </ul>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>
 
 <style scoped>

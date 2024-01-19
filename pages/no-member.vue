@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout name="centered">
+  <Layout name="centered">
     <div class="space-y-6">
       <h2>
         {{ $t('pages.noMember.title') }}
@@ -15,5 +15,5 @@
         </RouteLink>
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

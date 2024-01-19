@@ -12,7 +12,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <NuxtLayout name="wide" padding>
+  <Layout name="wide" padding>
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
@@ -46,5 +46,5 @@ onMounted(async () => {
         />
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

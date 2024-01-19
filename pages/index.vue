@@ -28,7 +28,7 @@ if (process.client) {
 </script>
 
 <template>
-  <NuxtLayout name="wide">
+  <Layout name="wide">
     <div>
       <div
         ref="blob"
@@ -118,5 +118,5 @@ if (process.client) {
         />
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

@@ -56,8 +56,8 @@ onMounted(() => {
     <div v-if="!route.fullPath.includes('/join')" class="dnd-container">
       <NuxtPage />
     </div>
-    <NuxtLayout v-else name="centered">
+    <Layout v-else name="centered">
       <NuxtPage />
-    </NuxtLayout>
+    </Layout>
   </div>
 </template>

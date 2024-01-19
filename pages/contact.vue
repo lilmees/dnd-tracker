@@ -15,7 +15,7 @@ function sendContactMail ({ __init, ...formData }: Obj): void {
 </script>
 
 <template>
-  <NuxtLayout name="centered">
+  <Layout name="centered">
     <section class="mt-10">
       <h1 class="max-w-[300px] pb-8">
         {{ $t('pages.contact.title') }}
@@ -50,5 +50,5 @@ function sendContactMail ({ __init, ...formData }: Obj): void {
         </FormKit>
       </FormKit>
     </section>
-  </NuxtLayout>
+  </Layout>
 </template>

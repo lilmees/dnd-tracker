@@ -54,7 +54,7 @@ function handleIconClick (node: FormKitNode) {
 </script>
 
 <template>
-  <NuxtLayout name="centered">
+  <Layout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
         {{ $t('pages.register.register') }}
@@ -126,5 +126,5 @@ function handleIconClick (node: FormKitNode) {
         </NuxtLink>
       </div>
     </section>
-  </NuxtLayout>
+  </Layout>
 </template>
