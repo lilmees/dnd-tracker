@@ -50,6 +50,7 @@
     "aos": "^3.0.0-beta.6",
     "click-outside-vue3": "^4.0.1",
     "fabric": "^6.0.0-beta15",
+    "ipx": "^3.0.0",
     "logrocket": "^4.0.1",
     "markdown-it": "^13.0.1",
     "nodemailer": "^6.9.5",
