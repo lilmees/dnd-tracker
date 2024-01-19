@@ -118,6 +118,7 @@ function resetState (): void {
                 needConfirmation = true
               }"
               @copy="copyEncounter"
+              @share="encStore.shareEncounter"
             />
           </div>
         </template>

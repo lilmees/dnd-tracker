@@ -21,6 +21,7 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "copyClipboard": "Naar klemboard gekopieerd",
     "pasteSelected": "Geselecteerd plakken",
     "moveSelected": "Geselecteerd bewegen",
     "panMap": "Map verschuiven",
@@ -44,7 +45,8 @@
       "more": "Lees meer",
       "less": "Lees minder"
     },
-    "buyCoffee": "Koop mij een koffietje"
+    "buyCoffee": "Koop mij een koffietje",
+    "share": "Delen"
   },
   "general": {
     "up": "Omhoog",
@@ -606,6 +608,9 @@
     "quickInitiativeModal": {
       "title": "Initiatieven snel toevoegen",
       "roll": "Alle initiatieven rollen"
+    },
+    "encounterOptions": {
+      "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
     }
   }
 }

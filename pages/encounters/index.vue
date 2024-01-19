@@ -179,6 +179,7 @@ function resetState (): void {
                   needConfirmation = true
                 }"
                 @copy="copyEncounter"
+                @share="store.shareEncounter"
               />
             </div>
           </div>

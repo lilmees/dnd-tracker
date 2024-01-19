@@ -26,7 +26,8 @@ export const useTableStore = defineStore('useTableStore', () => {
       : false
   })
 
-  const isPlayground = computed(() => route.fullPath.includes('/playground'))
+  const isPlayground = computed<boolean>(() => route.fullPath.includes('/playground'))
+  const isHome = computed<boolean>(() => route.fullPath.replace('en', '') === '/')
 
   async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
@@ -236,12 +237,33 @@ export const useTableStore = defineStore('useTableStore', () => {
     isLoading.value = false
   }
 
+  async function loadSharedEncounter (hash: string): Promise<void> {
+    try {
+      const id = decodeURIComponent(window.atob(hash))
+
+      const sheet = await $fetch(`/api/encounter/playground/${id}`)
+
+      encounter.value = {
+        id: 1,
+        created_at: `${Date.now()}`,
+        created_by: 'user',
+        ...sheet
+      } as Encounter
+    } catch (err) {
+      setPlaygroundValues()
+      toast.error()
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     encounter,
     isLoading,
     isSyncing,
     isSandbox,
     isPlayground,
+    isHome,
     includesSummond,
     activeModal,
     activeRow,
@@ -256,6 +278,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     prevInitiative,
     checkDeathSaves,
     resetActiveState,
-    setPlaygroundValues
+    setPlaygroundValues,
+    loadSharedEncounter
   }
 })
