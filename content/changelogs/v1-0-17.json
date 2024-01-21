@@ -1,0 +1,51 @@
+{
+  "version": "v1.0.17",
+  "date": "2024-01-21",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Share encounters"
+        },
+        {
+          "text": "Encounter playground page"
+        },
+        {
+          "text": "Encounter syncing indicator"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "When quick adding initiative not all the input fields should be required"
+        },
+        {
+          "text": "Homebrew form (monster, summon) quantity automatically 1"
+        },
+        {
+          "text": "Campaign items max amount indicator"
+        },
+        {
+          "text": "Updated Nuxt version"
+        },
+        {
+          "text": "Updated Fabric version"
+        },
+        {
+          "text": "Removed homepage image shadows"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Homebrew max is 100 not 50"
+        }
+      ]
+    }
+  ]
+}

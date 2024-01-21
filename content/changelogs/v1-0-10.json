@@ -1,0 +1,51 @@
+{
+  "version": "v1.0.10",
+  "date": "2023-07-09",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Beta label in the navigation bar so that new user know it’s not a finished product"
+        },
+        {
+          "text": "New notification component with loading bar"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Better dice rolling notification"
+        },
+        {
+          "text": "Dice roller is now in the encounter options bar instead of the floating button"
+        },
+        {
+          "text": "When on 0HP and you get healed your death saves reset"
+        },
+        {
+          "text": "When on 0HP and you get attack you get 2 death saves"
+        },
+        {
+          "text": "When 3 failed deathsaves you get a notification"
+        },
+        {
+          "text": "When 3 saved deathsaves you get a notification and stabelized tag positioned left from the death saves"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Bad styling for dropdown on windows"
+        },
+        {
+          "text": "Name of the app was to long to fit on your phone (PWA)"
+        }
+      ]
+    }
+  ]
+}

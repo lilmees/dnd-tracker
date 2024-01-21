@@ -1,0 +1,84 @@
+{
+  "version": "v1.0.12",
+  "date": "2023-08-15",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Added bug logging tool for the users"
+        },
+        {
+          "text": "New styling of the website"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Bulk deleting of campaigns/encounters"
+        },
+        {
+          "text": "Rich text editor for encounter notes"
+        },
+        {
+          "text": "Restyled and updated the profile page"
+        },
+        {
+          "text": "Skeleton loaders for UI components for better UX"
+        },
+        {
+          "text": "Updated error page"
+        },
+        {
+          "text": "Improved the animations"
+        },
+        {
+          "text": "When creating an encounter on the campaign page, it automatically links it to the campaign"
+        },
+        {
+          "text": "Created utility functions for generating page URLs"
+        },
+        {
+          "text": "Possibility to add the initiative modifier to the rolled value"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "After creating an encounter, you couldn't create another one without refreshing"
+        },
+        {
+          "text": "Error when logging out on the profile page"
+        },
+        {
+          "text": "LogRocket created an error when trying to catch an error"
+        },
+        {
+          "text": "Every time you updated an encounter row that had 3 failed death saves, you got a notification"
+        },
+        {
+          "text": "When loading the website, sometimes you could see 'Register/Login' in the navigation component when you're already logged in"
+        },
+        {
+          "text": "Cookie banner gets shown too many times"
+        },
+        {
+          "text": "Indexes of initiative items not updating after adding new initiative items"
+        },
+        {
+          "text": "Couldn't add all homebrew items to an encounter without selecting one"
+        },
+        {
+          "text": "After 1 hour of using the site, you needed to refresh before you could do something again (expired JWT token)"
+        },
+        {
+          "text": "After creating a campaign, the modal doesn't reset for using it the next time"
+        }
+      ]
+    }
+  ]
+}
