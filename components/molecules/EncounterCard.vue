@@ -2,7 +2,7 @@
 import { encounterUrl } from '@/utils/url-genarators'
 import { isAdmin } from '@/utils/permission-helpers'
 
-defineEmits(['remove', 'copy', 'update'])
+defineEmits(['remove', 'copy', 'update', 'share'])
 withDefaults(
   defineProps<{
     encounter: Encounter
@@ -28,6 +28,7 @@ const profile = useProfileStore()
       <tippy
         v-if="!encounter.campaign || (profile.data && isAdmin(encounter.campaign, profile.data.id))"
         interactive
+        placement="bottom"
         :z-index="2"
       >
         <Icon
@@ -38,6 +39,18 @@ const profile = useProfileStore()
         />
         <template #content>
           <div class="p-4 space-y-2 overflow-auto">
+            <button
+              class="flex gap-2 items-center max-w-max"
+              :aria-label="$t('actions.share')"
+              @click="$emit('share', encounter)"
+            >
+              <Icon
+                name="ph:link-simple-horizontal"
+                class="h-4 w-4"
+                aria-hidden="true"
+              />
+              <p>{{ $t('actions.share') }}</p>
+            </button>
             <button
               class="flex gap-2 items-center max-w-max"
               :aria-label="$t('actions.update')"

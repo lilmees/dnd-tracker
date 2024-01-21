@@ -66,19 +66,32 @@ function resetState (): void {
       <div class="space-y-4">
         <div class="flex justify-between border-b-2 border-slate-700 pb-1">
           <h2>{{ $t('general.encounters') }}</h2>
-          <button
-            v-tippy="{ content: $t('actions.add') }"
-            :aria-label="$t('actions.add')"
-            class="disabled:opacity-40 disabled:cursor-not-allowed"
-            :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '') || encStore.max <= encStore.data.length"
-            @click="isCreatingEncounter = true"
-          >
-            <Icon
-              name="material-symbols:add"
-              class="w-6 h-6 text-success"
-              aria-hidden="true"
-            />
-          </button>
+          <div class="flex gap-4 items-center">
+            <span class="text-[10px]">
+              {{ $t('general.globally') }}
+            </span>
+            <div
+              class="body-small"
+              :class="{
+                'text-danger': encStore.data.length >= encStore.max
+              }"
+            >
+              {{ encStore.data.length }} / {{ encStore.max }}
+            </div>
+            <button
+              v-tippy="{ content: $t('actions.add') }"
+              :aria-label="$t('actions.add')"
+              class="disabled:opacity-40 disabled:cursor-not-allowed"
+              :disabled="!store.campaign || !isAdmin(store.campaign, profile.data?.id || '') || encStore.max <= encStore.data.length"
+              @click="isCreatingEncounter = true"
+            >
+              <Icon
+                name="material-symbols:add"
+                class="w-6 h-6 text-success"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
         </div>
         <div
           v-if="store.loading"
@@ -105,6 +118,7 @@ function resetState (): void {
                 needConfirmation = true
               }"
               @copy="copyEncounter"
+              @share="encStore.shareEncounter"
             />
           </div>
         </template>

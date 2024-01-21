@@ -1,0 +1,57 @@
+{
+  "version": "v1.0.11",
+  "date": "2023-07-24",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Ability to use arrow keys + shift for changing initiative"
+        },
+        {
+          "text": "Ability to use pageUp and PageDown for changing initiative"
+        },
+        {
+          "text": "Search component for querying open5e data"
+        },
+        {
+          "text": "Pin info cards to the bottom of an encounter"
+        },
+        {
+          "text": "New logo"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Updated translation files"
+        },
+        {
+          "text": "Ability to search in the add homebrew to initiative modal"
+        },
+        {
+          "text": "Ability to sort the homebrew table on the campaign page"
+        },
+        {
+          "text": "Extra notifications troughout the application"
+        },
+        {
+          "text": "Changed social media share image to include the new logo"
+        },
+        {
+          "text": "Pop up to show all the hotkeys on the encounter page"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "can't copy a encounter without a campaign attached to it"
+        }
+      ]
+    }
+  ]
+}

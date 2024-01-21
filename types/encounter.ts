@@ -24,8 +24,8 @@ interface Encounter {
   created_by: string
   title: string
   rows: Row[]
-  profiles: EncounterProfile
-  campaign: Campaign
+  profiles?: EncounterProfile
+  campaign?: Campaign
   round: number
   owner?: string
   info?: string

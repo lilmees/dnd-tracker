@@ -21,6 +21,7 @@
     "tryAgain": "Try again",
     "info": "Show information",
     "copy": "Copy",
+    "copyClipboard": "Copied to clipboard",
     "pasteSelected": "Paste selected",
     "moveSelected": "Move selected",
     "panMap": "Pan map",
@@ -44,7 +45,8 @@
       "more": "Read more",
       "less": "Read less"
     },
-    "buyCoffee": "Buy me a coffee"
+    "buyCoffee": "Buy me a coffee",
+    "share": "Share"
   },
   "general": {
     "up": "Up",
@@ -90,6 +92,11 @@
     "note": "Note",
     "infoPins": "Info pins",
     "fantasyNameGenerator": "Fantasy name generator",
+    "globally": "Globally",
+    "synced": "Synced",
+    "syncing": "Syncing",
+    "online": "Online",
+    "offline": "Offline",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -122,7 +129,8 @@
       "textBlock1": {
         "title": "Made with love 💜",
         "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
-        "button": "Request new features"
+        "text2": "Try the Encounter Tracker now without creating an account!",
+        "button": "Start Exploring"
       },
       "summary": {
         "title": "Why choose dnd-tracker for your encounters 🤔",
@@ -507,7 +515,8 @@
       "play": "Play",
       "fantasy": "Fantasie name generator",
       "info": "Information",
-      "map": "Map creator"
+      "map": "Map creator",
+      "playground": "Encounter playground"
     },
     "confirmationModal": {
       "title": "Delete confirmation",
@@ -601,6 +610,9 @@
     "quickInitiativeModal": {
       "title": "Quick add initiatives",
       "roll": "Roll all initiatives"
+    },
+    "encounterOptions": {
+      "playgroundWarning": "Playground encounters can't be saved"
     }
   }
 }

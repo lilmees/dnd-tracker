@@ -25,7 +25,7 @@ async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise
 </script>
 
 <template>
-  <NuxtLayout name="centered">
+  <Layout name="centered">
     <section class="space-y-6">
       <h1 class="text-center">
         {{ $t('pages.login.title') }}
@@ -92,5 +92,5 @@ async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise
         </NuxtLink>
       </div>
     </section>
-  </NuxtLayout>
+  </Layout>
 </template>

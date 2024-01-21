@@ -28,7 +28,7 @@ if (process.client) {
 </script>
 
 <template>
-  <NuxtLayout name="wide">
+  <Layout name="wide">
     <div>
       <div
         ref="blob"
@@ -40,7 +40,8 @@ if (process.client) {
           <TitleText
             :title="$t('pages.home.textBlock1.title')"
             :text="$t('pages.home.textBlock1.text')"
-            button-link="updates/feature-request"
+            :text2="$t('pages.home.textBlock1.text2')"
+            button-link="playground"
             :button-label="$t('pages.home.textBlock1.button')"
           />
           <div class="mt-20 lg:mt-32 flex md:justify-end">
@@ -54,6 +55,7 @@ if (process.client) {
                 $t('pages.home.summary.item5'),
                 $t('pages.home.summary.item6'),
               ]"
+              class="max-w-[500px]"
             />
           </div>
         </div>
@@ -73,15 +75,18 @@ if (process.client) {
         </div>
         <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
           <div class="flex flex-col justify-center items-center h-full">
-            <NuxtImg
-              src="/team.png"
-              alt="Dragon on hoard"
-              sizes="sm:1000px md:1000px lg:1000px"
-              format="webp"
-              provider="imagekit"
-              width="500"
-              class="rounded-lg tracker-shadow-pulse"
-            />
+            <div class="relative">
+              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <NuxtImg
+                src="/team.png"
+                alt="Dragon on hoard"
+                sizes="sm:1000px md:1000px lg:1000px"
+                format="webp"
+                provider="imagekit"
+                width="500"
+                class="rounded-lg"
+              />
+            </div>
           </div>
           <div class="flex flex-col justify-center h-full">
             <TitleText
@@ -98,15 +103,18 @@ if (process.client) {
             />
           </div>
           <div class="flex flex-col justify-center items-center h-full">
-            <NuxtImg
-              src="/link.png"
-              alt="Dragon on hoard"
-              sizes="sm:1000px md:1000px lg:1000px"
-              format="webp"
-              provider="imagekit"
-              width="500"
-              class="rounded-lg tracker-shadow-pulse"
-            />
+            <div class="relative">
+              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <NuxtImg
+                src="/link.png"
+                alt="Dragon on hoard"
+                sizes="sm:1000px md:1000px lg:1000px"
+                format="webp"
+                provider="imagekit"
+                width="500"
+                class="rounded-lg"
+              />
+            </div>
           </div>
         </div>
         <TitleText
@@ -116,5 +124,5 @@ if (process.client) {
         />
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

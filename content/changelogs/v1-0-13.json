@@ -1,0 +1,69 @@
+{
+  "version": "v1.0.13",
+  "date": "2023-09-08",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Configuration options for displaying specific columns and preferred column spacing in encounters"
+        },
+        {
+          "text": "Add actions to Homebrew"
+        },
+        {
+          "text": "Override HP and AC"
+        },
+        {
+          "text": "Add player name to Homebrew when of type player"
+        },
+        {
+          "text": "Google SSO"
+        },
+        {
+          "text": "Integrated Umami analytics (Doesn't collect personal information)"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Changed 'Monster manual' to 'Bestiary'"
+        },
+        {
+          "text": "Bestiary is now full screen modal"
+        },
+        {
+          "text": "Info search cards can now be opened, allowing more content to fit on the screen"
+        },
+        {
+          "text": "Add initiative campaign modal updated functionality"
+        },
+        {
+          "text": "Accessibility updated for screen-readers"
+        },
+        {
+          "text": "Updated the column label from 'Actions' to 'Manage' to reduce confusion with attack actions"
+        },
+        {
+          "text": "Added extra 'DEX' label to the initiative modal for more clarity"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Homebrew table not updating after updating row"
+        },
+        {
+          "text": "Could not update or delete encounters on campaign detail page"
+        },
+        {
+          "text": "Sometimes campaigns could not be created"
+        }
+      ]
+    }
+  ]
+}

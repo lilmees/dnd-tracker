@@ -26,7 +26,7 @@ function handleCopy (name: string): void {
 </script>
 
 <template>
-  <NuxtLayout>
+  <Layout>
     <div class="flex flex-col pt-6 pb-16 gap-10">
       <h1 class="mb-4 sm:text-4xl xl:text-5xl text-center">
         {{ $t('pages.fantasyNameGenerator.title') }}
@@ -58,5 +58,5 @@ function handleCopy (name: string): void {
         <div class="abolsute inset-0 z-[-1] fancy-shadow" />
       </div>
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

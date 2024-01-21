@@ -59,7 +59,7 @@ function resetState (): void {
 </script>
 
 <template>
-  <NuxtLayout shadow>
+  <Layout shadow>
     <div v-if="!store.error">
       <div class="pb-10 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
@@ -179,6 +179,7 @@ function resetState (): void {
                   needConfirmation = true
                 }"
                 @copy="copyEncounter"
+                @share="store.shareEncounter"
               />
             </div>
           </div>
@@ -216,5 +217,5 @@ function resetState (): void {
         @added="resetState"
       />
     </div>
-  </NuxtLayout>
+  </Layout>
 </template>

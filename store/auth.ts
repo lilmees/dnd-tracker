@@ -17,7 +17,6 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         role: 'User',
         subscription_type: 'free',
         temp_subscription: 'free',
-        subscription_id: null,
         badges: []
       }
 

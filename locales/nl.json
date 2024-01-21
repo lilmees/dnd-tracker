@@ -21,6 +21,7 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "copyClipboard": "Naar klemboard gekopieerd",
     "pasteSelected": "Geselecteerd plakken",
     "moveSelected": "Geselecteerd bewegen",
     "panMap": "Map verschuiven",
@@ -44,7 +45,8 @@
       "more": "Lees meer",
       "less": "Lees minder"
     },
-    "buyCoffee": "Koop mij een koffietje"
+    "buyCoffee": "Koop mij een koffietje",
+    "share": "Delen"
   },
   "general": {
     "up": "Omhoog",
@@ -90,6 +92,11 @@
     "note": "Notitie",
     "infoPins": "Info pins",
     "fantasyNameGenerator": "Fantasy name generator",
+    "globally": "Globaal",
+    "synced": "Gesynchroniseerd",
+    "syncing": "Synchroniseren",
+    "online": "Online",
+    "offline": "Offline",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -122,7 +129,8 @@
       "textBlock1": {
         "title": "Met liefde gemaakt 💜",
         "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campagnes. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
-        "button": "Nieuwe features aanvragen"
+        "text2": "Probeer de Encounter Tracker nu zonder account!",
+        "button": "Begin met ontdekken"
       },
       "summary": {
         "title": "Een tracker met unieke skills 🤝",
@@ -505,7 +513,8 @@
       "play": "Spelen",
       "fantasy": "Fantasienaam generator",
       "info": "Informatie",
-      "map": "Map maker"
+      "map": "Map maker",
+      "playground": "Encounter playground"
     },
     "confirmationModal": {
       "title": "Verwijder bevestiging",
@@ -599,6 +608,9 @@
     "quickInitiativeModal": {
       "title": "Initiatieven snel toevoegen",
       "roll": "Alle initiatieven rollen"
+    },
+    "encounterOptions": {
+      "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
     }
   }
 }

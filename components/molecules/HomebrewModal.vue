@@ -59,7 +59,7 @@ function setForm (): HomebrewForm {
     type: props.item?.type || ('player' as RowType),
     initiative: undefined,
     initiative_modifier: props.item?.initiative_modifier || undefined,
-    amount: undefined,
+    amount: 1,
     summoner: undefined,
     ac: props.item?.ac,
     health: props.item?.health,
@@ -89,10 +89,9 @@ function handleSumbit ({ __init, data, slots, ...formData }: Obj): void {
 
     if (props.encounter) {
       addInitiative(homebrewData)
-    } else if (props.update) {
-      updateHomebrew(homebrewData)
     } else {
-      addHomebrew(homebrewData)
+      delete homebrewData.amount
+      props.update ? updateHomebrew(homebrewData) : addHomebrew(homebrewData)
     }
 
     reset('form')

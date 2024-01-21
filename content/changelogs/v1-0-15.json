@@ -1,0 +1,63 @@
+{
+  "version": "v1.0.15",
+  "date": "2023-12-28",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Modal for adding everyone's initiative at once"
+        },
+        {
+          "text": "Map creator (BETA)"
+        },
+        {
+          "text": "Fantasy name generator page and widget"
+        },
+        {
+          "text": "Information page where you can view all the D&D content"
+        },
+        {
+          "text": "Option to hide encounter widgets (notes, info pins, fantasy name generator)"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Search function for homebrew items on the campaign overview page"
+        },
+        {
+          "text": "HP and AC now show up when updating homebrew items"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "No maximum amount of homebrew items. Maximum amount is 100"
+        },
+        {
+          "text": "No maximum amount of notes. Maximum amount is 50"
+        },
+        {
+          "text": "Add campaign homebrew button disabled after updating encounter"
+        },
+        {
+          "text": "Bestiary CR sorting doesn't work"
+        },
+        {
+          "text": "Notifications where in EN when language was NL"
+        },
+        {
+          "text": "Couldn't update HP and initiative sometimes on encounter page"
+        },
+        {
+          "text": "Initiative button on homescreem didn't work"
+        }
+      ]
+    }
+  ]
+}

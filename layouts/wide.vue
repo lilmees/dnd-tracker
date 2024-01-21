@@ -2,7 +2,8 @@
 withDefaults(
   defineProps<{
     padding?: boolean,
-    shadow?: boolean }>(), {
+    shadow?: boolean
+  }>(), {
     padding: false,
     shadow: false
   }

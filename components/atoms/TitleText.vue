@@ -3,19 +3,19 @@ withDefaults(
   defineProps<{
   title?: string,
   text?: string,
+  text2?: string,
   buttonLabel?: string,
   buttonLink?: string,
   center?: boolean
   }>(), {
     text: '',
+    text2: '',
     title: '',
     center: false,
     buttonLabel: '',
     buttonLink: ''
   }
 )
-
-const localePath = useLocalePath()
 </script>
 
 <template>
@@ -29,6 +29,13 @@ const localePath = useLocalePath()
       :class="{ 'mx-auto': center }"
     >
       {{ text }}
+    </p>
+    <p
+      v-if="text2"
+      class="max-w-prose pt-3"
+      :class="{ 'mx-auto': center }"
+    >
+      {{ text2 }}
     </p>
     <div
       v-if="buttonLink && buttonLabel"

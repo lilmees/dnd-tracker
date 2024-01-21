@@ -42,5 +42,44 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
     }
   }
 
+  sanitizeRow(row)
+
   return row
+}
+
+function sanitizeRow (row: Row): void {
+  const keys: string[] = [
+    'ac',
+    'campaign',
+    'concentration',
+    'conditions',
+    'created_at',
+    'deathSaves',
+    'health',
+    'id',
+    'index',
+    'initiative',
+    'initiative_modifier',
+    'link',
+    'maxAc',
+    'maxHealth',
+    'maxAcOld',
+    'maxHealthOld',
+    'name',
+    'note',
+    'tempAc',
+    'tempHealth',
+    'type',
+    'summoner',
+    'actions',
+    'legendary_actions',
+    'reactions',
+    'special_abilities'
+  ]
+
+  for (const key in row) {
+    if (!keys.includes(key)) {
+      delete row[key as keyof Row]
+    }
+  }
 }

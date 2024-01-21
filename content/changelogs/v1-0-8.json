@@ -1,0 +1,46 @@
+{
+  "version": "v1.0.8",
+  "date": "2023-03-11",
+  "features": [
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Changed error logging library for better error messages for debuging"
+        },
+        {
+          "text": "Updated the code responsible for index checking in encounters"
+        },
+        {
+          "text": "Updated color picking component"
+        },
+        {
+          "text": "Changed the code from javascript to typescript for stability and type checking"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Couldn’t select conditions on encounters"
+        },
+        {
+          "text": "Couldn’t set base ac when its empty"
+        },
+        {
+          "text": "Couldn’t set base hp when its empty"
+        },
+        {
+          "text": "Random color generator sometimes generated invalid color strings"
+        },
+        {
+          "text": "When logging out the navigation bar did not update"
+        },
+        {
+          "text": "Sometimes the initiative buttons wouldn’t work"
+        }
+      ]
+    }
+  ]
+}

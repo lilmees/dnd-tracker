@@ -1,0 +1,36 @@
+{
+  "version": "v1.0.9",
+  "date": "2023-04-31",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "You can now add DnD Tracker to your mobile/tablet as a pwa app"
+        },
+        {
+          "text": "Toggle dice roller"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Styling updates"
+        },
+        {
+          "text": "Accessibility updates for screen readers"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Memory error"
+        }
+      ]
+    }
+  ]
+}
