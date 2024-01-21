@@ -49,7 +49,7 @@
     "@vueup/vue-quill": "^1.2.0",
     "aos": "^3.0.0-beta.6",
     "click-outside-vue3": "^4.0.1",
-    "fabric": "^6.0.0-beta15",
+    "fabric": "^6.0.0-beta16",
     "ipx": "^3.0.0",
     "logrocket": "^4.0.1",
     "markdown-it": "^13.0.1",
