@@ -75,15 +75,18 @@ if (process.client) {
         </div>
         <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
           <div class="flex flex-col justify-center items-center h-full">
-            <NuxtImg
-              src="/team.png"
-              alt="Dragon on hoard"
-              sizes="sm:1000px md:1000px lg:1000px"
-              format="webp"
-              provider="imagekit"
-              width="500"
-              class="rounded-lg tracker-shadow-pulse"
-            />
+            <div class="relative">
+              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <NuxtImg
+                src="/team.png"
+                alt="Dragon on hoard"
+                sizes="sm:1000px md:1000px lg:1000px"
+                format="webp"
+                provider="imagekit"
+                width="500"
+                class="rounded-lg"
+              />
+            </div>
           </div>
           <div class="flex flex-col justify-center h-full">
             <TitleText
@@ -100,15 +103,18 @@ if (process.client) {
             />
           </div>
           <div class="flex flex-col justify-center items-center h-full">
-            <NuxtImg
-              src="/link.png"
-              alt="Dragon on hoard"
-              sizes="sm:1000px md:1000px lg:1000px"
-              format="webp"
-              provider="imagekit"
-              width="500"
-              class="rounded-lg tracker-shadow-pulse"
-            />
+            <div class="relative">
+              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <NuxtImg
+                src="/link.png"
+                alt="Dragon on hoard"
+                sizes="sm:1000px md:1000px lg:1000px"
+                format="webp"
+                provider="imagekit"
+                width="500"
+                class="rounded-lg"
+              />
+            </div>
           </div>
         </div>
         <TitleText
