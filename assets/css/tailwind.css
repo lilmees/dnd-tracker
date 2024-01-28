@@ -7,6 +7,11 @@
     @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold transition-all;
     @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
+
+  .btn-small {
+    @apply body-small py-[2px] px-3 rounded outline-none border-2 text-white duration-200 ease-in-out font-medium transition-all;
+    @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+  }
 }
 
 @layer utilities {
@@ -45,6 +50,14 @@
 
   .visibility-pulse {
     animation: pulsate-opacity 2s ease-in-out infinite;
+  }
+
+  .expand-leave-active, .expand-enter-active {
+    @apply duration-500 ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
   }
 }
 
@@ -131,6 +144,38 @@
     @apply btn bg-danger/50 hover:bg-danger/60 border-danger;
   }
 
+  .btn-small-black {
+    @apply btn-small bg-black/50 hover:bg-black/60 border-black;
+  }
+
+  .btn-small-primary {
+    @apply btn-small bg-primary/50 hover:bg-primary/60 border-primary;
+  }
+
+  .btn-small-secondary {
+    @apply btn-small bg-secondary/50 hover:bg-secondary/60 border-secondary;
+  }
+
+  .btn-small-success {
+    @apply btn-small bg-success/50 hover:bg-success/60 border-success;
+  }
+
+  .btn-small-info {
+    @apply btn-small bg-info/50 hover:bg-info/60 border-info;
+  }
+
+  .btn-small-warning {
+    @apply btn-small bg-warning/50 hover:bg-warning/60 border-warning;
+  }
+
+  .btn-small-help {
+    @apply btn-small bg-help/50 hover:bg-help/60 border-help;
+  }
+
+  .btn-small-danger {
+    @apply btn-small bg-danger/50 hover:bg-danger/60 border-danger;
+  }
+
   kbd {
     @apply border-2 rounded p-1;
   }
@@ -165,6 +210,14 @@
 
   .html-richtext a, u {
     @apply text-primary;
+  }
+
+  .tr {
+    @apply border-b last:border-b-0 border-slate-700;
+  }
+
+  .td {
+    @apply px-2 py-1 border-r last:border-r-0 border-slate-700;
   }
 
   .no-scrollbar::-webkit-scrollbar {

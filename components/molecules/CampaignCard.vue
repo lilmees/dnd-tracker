@@ -10,7 +10,7 @@ const user = useSupabaseUser()
 
 <template>
   <div
-    class="rounded-lg min-w-[250px] max-w-md relative group border-4 flex flex-col"
+    class="rounded-lg min-w-[250px] max-w-md relative border-4 flex flex-col"
     :style="{
       'background-color': `${campaign.background}80`,
       'border-color': campaign.background,
@@ -25,7 +25,7 @@ const user = useSupabaseUser()
       >
         <Icon
           name="tabler:dots"
-          class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+          class="w-6 h-6 cursor-pointer"
           :style="{ color: campaign.color }"
           aria-hidden="true"
         />
@@ -58,6 +58,14 @@ const user = useSupabaseUser()
           </div>
         </template>
       </tippy>
+      <Icon
+        v-else
+        v-tippy="$t('general.notAllowed')"
+        name="tabler:dots"
+        class="w-6 h-6 cursor-not-allowed opacity-50 absolute"
+        :style="{ color: campaign.color }"
+        aria-hidden="true"
+      />
     </div>
     <RouteLink
       :url="campaignUrl(campaign, 'content')"

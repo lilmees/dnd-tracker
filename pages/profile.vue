@@ -3,6 +3,7 @@ import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['auth'] })
+useHead({ title: 'Profile' })
 
 const profile = useProfileStore()
 const toast = useToastStore()

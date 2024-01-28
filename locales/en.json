@@ -3,6 +3,7 @@
     "add": "Add",
     "addSelected": "Add selected",
     "addAll": "Add all",
+    "select": "Select",
     "selectOption": "Select an option",
     "delete": "Delete",
     "cancel": "Cancel",
@@ -97,6 +98,9 @@
     "syncing": "Syncing",
     "online": "Online",
     "offline": "Offline",
+    "table": "Table",
+    "cards": "Cards",
+    "color": "Color",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -122,7 +126,8 @@
     "noContent": {
       "title": "No {content} yet",
       "text": "The quest for {content} begins here, but it's yet to be undertaken"
-    }
+    },
+    "notAllowed": "Action not allowed: you are not the owner or administrator"
   },
   "pages": {
     "home": {
@@ -472,6 +477,9 @@
     },
     "homebrewTable": {
       "nothing": "We haven't found any homebrew that matches this search, but that doesn't mean you can't create it yourself."
+    },
+    "table": {
+      "nothing": "We haven't found any { item } that matches this search, but that doesn't mean you can't create it yourself."
     },
     "encounterTable": {
       "empty": "Add a row to your encounter to get started!",

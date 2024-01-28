@@ -1,4 +1,41 @@
-export function sortCreatedAt (arr: Encounter[] | Campaign[]): Encounter[] | Campaign[] {
+export function sortByNumber<T> (arr: T[], key: string, acs = true): T[] {
+  return arr.sort((a: T, b: T) => {
+    const aValue = Array.isArray(a[key as keyof T])
+      ? (a[key as keyof T] as unknown[]).length
+      : a[key as keyof T] as number
+
+    const bValue = Array.isArray(b[key as keyof T])
+      ? (b[key as keyof T] as unknown[]).length
+      : b[key as keyof T] as number
+
+    if (aValue === null || aValue === undefined) {
+      return bValue === null || bValue === undefined ? 0 : 1
+    } else if (bValue === null || bValue === undefined) {
+      return -1
+    }
+
+    return acs ? aValue - bValue : bValue - aValue
+  })
+}
+
+export function sortByString<T> (arr: T[], key: string, acs = true): T[] {
+  return arr.sort((a: T, b: T) => {
+    const aValue: string = a[key as keyof T] as string
+    const bValue: string = b[key as keyof T] as string
+
+    if (!aValue && !bValue) {
+      return 0
+    } else if (!aValue) {
+      return 1
+    } else if (!bValue) {
+      return -1
+    }
+
+    return acs ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+  })
+}
+
+export function sortCreatedAt<T extends { created_at: string }> (arr: T[]): T[] {
   return arr.sort((a, b) => {
     return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
   })

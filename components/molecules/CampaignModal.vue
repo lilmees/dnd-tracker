@@ -20,6 +20,7 @@ const user = useSupabaseUser()
 
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
+
 const form = ref<CampaignForm>({
   title: '',
   background: '#7333E0'
@@ -28,11 +29,9 @@ const form = ref<CampaignForm>({
 whenever(
   () => props.open,
   () => {
-    if (props.update && props.campaign) {
-      form.value = {
-        title: props.campaign.title,
-        background: props.campaign.background
-      }
+    if (props.update) {
+      form.value.title = props.campaign?.title || ''
+      form.value.background = props.campaign?.background || '#7333E0'
     }
   }
 )

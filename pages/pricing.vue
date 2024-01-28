@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Pricing' })
+
 const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
 const profile = useProfileStore()
