@@ -12,18 +12,12 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
 
   const max = computed<number>(() => getMax('campaign', profile.data?.subscription_type || 'free'))
 
-  const restrictionCampaigns = computed<Campaign[] | null>(() => {
+  const allowedCampaigns = computed<Campaign[] | null>(() => {
     if (!profile.data || !campaigns.value) { return null }
 
     const { userArr, nonUserArr } = sortCampaignsByCreatedAt(campaigns.value, profile.data.id)
 
     return [...userArr.splice(0, max.value), ...nonUserArr]
-  })
-
-  const sortedCampaigns = computed<Campaign[] | null>(() => {
-    return restrictionCampaigns.value
-      ? sortCreatedAt(restrictionCampaigns.value) as Campaign[]
-      : null
   })
 
   async function fetch (): Promise<void> {
@@ -73,9 +67,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       throw error
     }
     if (data) {
-      campaigns.value
-        ? campaigns.value.push(data[0])
-        : campaigns.value = [data[0]]
+      fetch()
     }
   }
 
@@ -132,7 +124,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     loading,
     error,
     campaigns,
-    sortedCampaigns,
+    allowedCampaigns,
     max,
     fetch,
     getCampaignById,

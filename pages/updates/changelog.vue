@@ -1,8 +1,11 @@
 <script setup lang="ts">
+useHead({ title: 'Changelogs' })
+
 const { data } = await useAsyncData('changelog', async () => {
   const logs = await queryContent('changelogs').find()
   return (logs || []).reverse()
 })
+
 const { locale } = useI18n()
 </script>
 

@@ -75,13 +75,3 @@ function close (): void {
     </Transition>
   </div>
 </template>
-
-<style scoped>
-.expand-leave-active, .expand-enter-active {
-    @apply duration-200 ease-in-out overflow-hidden;
-  }
-
-  .expand-leave-to, .expand-enter-from {
-    @apply !h-0 opacity-0;
-  }
-</style>

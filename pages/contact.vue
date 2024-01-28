@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Contact' })
+
 const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()

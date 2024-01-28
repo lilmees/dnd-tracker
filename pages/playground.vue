@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Playground' })
+
 const store = useTableStore()
 const route = useRoute()
 

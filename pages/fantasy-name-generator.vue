@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Fantasy name generator' })
+
 const { copy } = useClipboard()
 const toast = useToastStore()
 const { t } = useI18n()

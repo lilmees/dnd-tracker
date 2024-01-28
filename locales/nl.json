@@ -3,6 +3,7 @@
     "add": "Toevoegen",
     "addSelected": "Selectie toevoegen",
     "addAll": "Alles toevoegen",
+    "select": "Selecteer",
     "selectOption": "Selecteer een optie",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
@@ -97,6 +98,9 @@
     "syncing": "Synchroniseren",
     "online": "Online",
     "offline": "Offline",
+    "table": "Tabel",
+    "cards": "Kaarten",
+    "color": "Kleur",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -122,7 +126,8 @@
     "noContent": {
       "title": "Nog geen {content}",
       "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
-    }
+    },
+    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder"
   },
   "pages": {
     "home": {
@@ -470,6 +475,9 @@
     },
     "homebrewTable": {
       "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
+    },
+    "table": {
+      "nothing": "We hebben geen { item } gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
     },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",
