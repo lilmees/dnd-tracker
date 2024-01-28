@@ -132,13 +132,13 @@
   "pages": {
     "home": {
       "textBlock1": {
-        "title": "Made with love 💜",
+        "title": "Made with love",
         "text": "At dnd-tracker, we are not of many words. We let the product speak for itself. What was an encounter tracker as a main idea quickly turned into a much bigger thing. With more and more ideas coming forward, we are currently expanding the dnd-tracker. This will make playing even more exciting, mysterious, easier AND more enjoyable.",
         "text2": "Try the Encounter Tracker now without creating an account!",
         "button": "Start Exploring"
       },
       "summary": {
-        "title": "Why choose dnd-tracker for your encounters 🤔",
+        "title": "A tracker with unique skills",
         "item1": "Live updating between different devices",
         "item2": "We are constantly working to optimize the product",
         "item3": "Everything in 1 convenient place for the DM",
@@ -147,15 +147,15 @@
         "item6": "Fantasy name generator"
       },
       "textBlock2": {
-        "title": "Collaborative Dungeon Mastering 🧙‍♂️🧙",
+        "title": "Collaborative Dungeon Mastering",
         "text": "Join forces with fellow Dungeon Masters in a realm where creativity knows no bounds. Our platform allows you to seamlessly collaborate on your Dungeons & Dragons campaigns, fostering a dynamic and immersive experience. Whether you're crafting epic adventures, creating homebrew, or co-managing games, our system brings DMs together, making your campaigns more thrilling and memorable."
       },
       "textBlock3": {
-        "title": "Enhanced Engagement 🧠",
+        "title": "Enhanced Engagement",
         "text": "Elevate your experience with our unique functionality. We've integrated a feature that enables you to attach a link to a specific encounter player. When the linked website supports it, it opens right within an iframe, so you don't have to switch between all your tabs. This keeps you engaged and immersed in the game, allowing for quick reference to monsters, player stats, or even a funny cat video."
       },
       "textBlock4": {
-        "title": "Weird stuff 🐛",
+        "title": "Weird stuff",
         "text": "Because we are still in the start-up phase of this dnd tracker, sometimes mysterious errors may appear. Please don't hesitate and be sure to let us know so we can fix them quickly."
       }
     },

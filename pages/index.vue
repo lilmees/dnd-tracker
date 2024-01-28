@@ -43,10 +43,12 @@ if (process.client) {
             :text2="$t('pages.home.textBlock1.text2')"
             button-link="playground"
             :button-label="$t('pages.home.textBlock1.button')"
+            sprite="icons/hearth.svg"
           />
           <div class="mt-20 lg:mt-32 flex md:justify-end">
             <Summary
               :title="$t('pages.home.summary.title')"
+              sprite="icons/flame.svg"
               :items="[
                 $t('pages.home.summary.item1'),
                 $t('pages.home.summary.item2'),
@@ -68,6 +70,11 @@ if (process.client) {
           </div>
           <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
             <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+            <img
+              src="/art/animals/cat.svg"
+              loading="lazy"
+              class="w-12 h-12 absolute -top-12 left-20"
+            >
             <EncounterHeader />
             <EncounterTable />
             <EncounterOptions />
@@ -92,6 +99,7 @@ if (process.client) {
             <TitleText
               :title="$t('pages.home.textBlock2.title')"
               :text="$t('pages.home.textBlock2.text')"
+              sprite="monsters/orc-mage.svg"
             />
           </div>
         </div>
@@ -100,6 +108,7 @@ if (process.client) {
             <TitleText
               :title="$t('pages.home.textBlock3.title')"
               :text="$t('pages.home.textBlock3.text')"
+              sprite="icons/eye.svg"
             />
           </div>
           <div class="flex flex-col justify-center items-center h-full">
@@ -121,6 +130,7 @@ if (process.client) {
           center
           :title="$t('pages.home.textBlock4.title')"
           :text="$t('pages.home.textBlock4.text')"
+          sprite="animals/bedbug.svg"
         />
       </div>
     </div>
