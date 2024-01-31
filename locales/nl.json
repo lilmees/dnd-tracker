@@ -57,6 +57,7 @@
     "campaigns": "Campagnes",
     "encounters": "Encounters",
     "players": "Spelers",
+    "player": "Speler",
     "members": "Leden",
     "monsters": "Monsters",
     "characters": "Karakters",
@@ -101,6 +102,10 @@
     "table": "Tabel",
     "cards": "Kaarten",
     "color": "Kleur",
+    "name": "Naam",
+    "modify": "Aanpassen",
+    "type": "Type",
+    "actions": "Acties",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"

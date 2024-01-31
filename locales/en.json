@@ -57,6 +57,7 @@
     "campaigns": "Campaigns",
     "encounters": "Encounters",
     "players": "Players",
+    "player": "Player",
     "members": "Members",
     "monsters": "Monsters",
     "characters": "Characters",
@@ -101,6 +102,10 @@
     "table": "Table",
     "cards": "Cards",
     "color": "Color",
+    "name": "Name",
+    "modify": "Modify",
+    "type": "Type",
+    "actions": "Actions",
     "error": {
       "title": "Error",
       "text": "Something went wrong"

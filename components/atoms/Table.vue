@@ -1,28 +1,18 @@
 <script setup lang="ts">
 defineEmits(['paginate'])
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    headers: { label: string, sort: boolean, id: string }[]
+    headers: TableHeader[]
     pages?: number
-    page?: number
-    perPage?: number
   }>(), {
-    acs: false,
-    pages: 0,
-    page: 0,
-    perPage: 20
+    pages: 0
   }
 )
 
 const sortedBy = defineModel<string>('sortedBy')
-const sortACS = defineModel<boolean>('acs')
-
-const localPage = ref<number>(props.page)
-
-watch(() => props.page, (newPage) => {
-  localPage.value = newPage
-})
+const sortACS = defineModel<boolean>('acs', { default: false })
+const page = defineModel<number>('page', { default: 0 })
 </script>
 
 <template>
@@ -49,7 +39,7 @@ watch(() => props.page, (newPage) => {
                 <Icon
                   v-if="sort"
                   name="ph:arrows-down-up-bold"
-                  class="w-5 h-5 text-secondary/50 transition-colors transition-transform"
+                  class="w-5 h-5 text-secondary/50 transition-all"
                   :class="{
                     '!text-secondary': sortedBy === id,
                     'rotate-180': sortedBy === id && !sortACS
@@ -60,7 +50,7 @@ watch(() => props.page, (newPage) => {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-auto-animate>
           <slot />
         </tbody>
       </table>
@@ -68,7 +58,7 @@ watch(() => props.page, (newPage) => {
     </div>
     <Pagination
       v-if="pages > 1"
-      v-model="localPage"
+      v-model="page"
       :total-pages="pages"
       @paginate="$emit('paginate', $event)"
     />
