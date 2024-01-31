@@ -154,5 +154,9 @@ export default defineNuxtConfig({
     i18n: {
       defaultLocale: 'en'
     }
+  },
+  sitemap: {
+    autoI18n: false,
+    credits: false
   }
 })
