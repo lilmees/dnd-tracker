@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { campaignUrl } from '@/utils/url-genarators'
-import { isOwner } from '@/utils/permission-helpers'
-
 defineEmits(['remove', 'update'])
 defineProps<{ campaign: Campaign }>()
 

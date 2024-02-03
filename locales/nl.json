@@ -22,6 +22,7 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "copyItem": "{item} kopiëren",
     "copyClipboard": "Naar klemboard gekopieerd",
     "pasteSelected": "Geselecteerd plakken",
     "moveSelected": "Geselecteerd bewegen",
@@ -55,6 +56,7 @@
     "Left": "Links",
     "Right": "Rechts",
     "campaigns": "Campagnes",
+    "campaign": "Campagne",
     "encounters": "Encounters",
     "players": "Spelers",
     "player": "Speler",
@@ -106,6 +108,7 @@
     "modify": "Aanpassen",
     "type": "Type",
     "actions": "Acties",
+    "rows": "Rijen",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -624,6 +627,9 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
+    },
+    "contentHeader": {
+      "toMuch": "Te veel items voor kaartweergave"
     }
   }
 }

@@ -38,14 +38,6 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
       <h1 class="text-center">
         {{ $t('pages.forgotPassword.title') }}
       </h1>
-      <NuxtImg
-        src="/dice.webp"
-        alt="D20 logo dice"
-        sizes="sm:80px md:80px lg:80px"
-        format="webp"
-        provider="imagekit"
-        class="w-20 h-20 mx-auto visibility-pulse"
-      />
       <p v-if="error" class="text-danger text-center">
         {{ error }}
       </p>

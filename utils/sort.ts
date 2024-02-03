@@ -1,38 +1,43 @@
-export function sortByNumber<T> (arr: T[], key: string, acs = true): T[] {
-  return arr.sort((a: T, b: T) => {
-    const aValue = Array.isArray(a[key as keyof T])
-      ? (a[key as keyof T] as unknown[]).length
-      : a[key as keyof T] as number
+function getValueFromNestedKeys<T> (v: T, keys: string): any {
+  let value: any = v
 
-    const bValue = Array.isArray(b[key as keyof T])
-      ? (b[key as keyof T] as unknown[]).length
-      : b[key as keyof T] as number
+  for (const key of keys.split('.')) {
+    if (!value) { return value }
+    value = value[key as keyof T] as any
+  }
 
-    if (aValue === null || aValue === undefined) {
-      return bValue === null || bValue === undefined ? 0 : 1
-    } else if (bValue === null || bValue === undefined) {
-      return -1
-    }
+  return value
+}
 
-    return acs ? aValue - bValue : bValue - aValue
+export function sortArray<T> (arr: T[], key: string, acs = true) : T[] {
+  return [...arr].sort((a: T, b: T) => {
+    const aValue = getValueFromNestedKeys<T>(a, key)
+    const bValue = getValueFromNestedKeys<T>(b, key)
+
+    return typeof aValue === 'number' || Array.isArray(aValue)
+      ? sortByNumber(aValue, bValue, acs)
+      : sortByString(aValue, bValue, acs)
   })
 }
 
-export function sortByString<T> (arr: T[], key: string, acs = true): T[] {
-  return arr.sort((a: T, b: T) => {
-    const aValue: string = a[key as keyof T] as string
-    const bValue: string = b[key as keyof T] as string
+export function sortByNumber (a: number|any[], b: number|any[], acs: boolean): number {
+  a = Array.isArray(a) ? a.length : a
+  b = Array.isArray(b) ? b.length : b
 
-    if (!aValue && !bValue) {
-      return 0
-    } else if (!aValue) {
-      return 1
-    } else if (!bValue) {
-      return -1
-    }
+  if (a == null) {
+    return b == null ? 0 : 1
+  } else if (b == null) {
+    return -1
+  }
 
-    return acs ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
-  })
+  return acs ? a - b : b - a
+}
+
+export function sortByString (a: string, b: string, acs: boolean): number {
+  a = a ?? ''
+  b = b ?? ''
+
+  return acs ? a.localeCompare(b) : b.localeCompare(a)
 }
 
 export function sortCreatedAt<T extends { created_at: string }> (arr: T[]): T[] {
@@ -50,7 +55,7 @@ export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampa
     if (encounter.campaign) {
       groupObj[key] = {
         ...groupObj[key],
-        campaign: encounter.campaign.id,
+        campaign: encounter.campaign,
         created_by: encounter.campaign.created_by.id
       }
     }
@@ -59,10 +64,6 @@ export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampa
       ? groupObj[key].encounters.push(encounter)
       : groupObj[key] = { ...groupObj[key], encounters: [encounter] }
   })
-
-  for (const key in groupObj) {
-    groupObj[key].encounters = sortCreatedAt(groupObj[key].encounters) as Encounter[]
-  }
 
   return groupObj
 }

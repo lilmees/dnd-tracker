@@ -7,6 +7,7 @@ useHead({ title: 'Encounters' })
 const store = useEncountersStore()
 const toast = useToastStore()
 const { error } = storeToRefs(store)
+const { t } = useI18n()
 
 const {
   isBulk,
@@ -18,6 +19,17 @@ const {
 } = useBulkEditing()
 
 const isOpen = ref<boolean>(false)
+const isTable = ref<boolean>(false)
+const sortedBy = ref<string>('title')
+const sortACS = ref<boolean>(false)
+
+const headers = [
+  { label: '', sort: false, id: '' },
+  { label: t('general.name'), sort: true, id: 'title' },
+  { label: t('general.campaign'), sort: true, id: 'campaign.title' },
+  { label: t('general.rows'), sort: true, id: 'rows' },
+  { label: t('general.actions'), sort: false, id: 'actions' }
+]
 
 onMounted(() => {
   store.fetch()
@@ -25,6 +37,26 @@ onMounted(() => {
 })
 
 whenever(error, () => { toast.error() })
+
+const visibleItems = computed<Encounter[]>(() => {
+  if (!store.restrictionEncounters) {
+    return []
+  }
+
+  return sortArray<Encounter>(store.restrictionEncounters, sortedBy.value, sortACS.value)
+})
+
+const groupedItems = computed<SortedCampaignEncounter>(() => sortEncountersByCampaign(visibleItems.value))
+
+const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
+
+const toMuchItems = computed<boolean>(() => {
+  const toMuch = store.encounterCount >= store.perPage
+
+  if (toMuch) { isTable.value = true }
+
+  return toMuch
+})
 
 async function deleteEncounter (): Promise<void> {
   try {
@@ -61,93 +93,192 @@ function resetState (): void {
 <template>
   <Layout shadow>
     <div v-if="!store.error">
-      <div class="pb-10 flex justify-between gap-4 items-center flex-wrap">
+      <div class="pb-2 flex justify-between gap-4 items-center flex-wrap">
         <h1 class="grow">
           {{ $t('pages.encounters.encounters') }}
           <span class="text-[10px]">
             ({{ $t('components.limitCta.max', { number: store.max }) }})
           </span>
         </h1>
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center flex-wrap">
+          <span
+            v-if="store.restrictionEncounters"
+            class="text-[10px]"
+            :class="{ 'text-danger': store.encounterCount >= store.max }"
+          >
+            {{ store.encounterCount }}/{{ store.max }}
+          </span>
           <button
-            class="btn-primary"
+            class="btn-small-primary"
             :aria-label="$t('pages.encounters.add')"
             :disabled="store.max <= store.data.length"
             @click="isOpen = true"
           >
             {{ $t('pages.encounters.add') }}
           </button>
-          <tippy
-            interactive
-            :z-index="2"
-            placement="left"
-            trigger="mouseenter click"
+          <button
+            v-tippy="$t('actions.bulkRemove')"
+            :aria-label="$t('actions.bulkRemove')"
+            :disabled="store.loading"
+            class="btn-small-danger"
+            @click="() => {
+              isBulk = !isBulk;
+              if (!isBulk) {
+                reset()
+              }
+            }"
           >
-            <button
-              class="bg-secondary/50 border-4 border-secondary rounded-lg w-12 h-12"
-              :aria-label="$t('general.options')"
-              :disabled="store.loading"
-            >
-              <Icon
-                name="tabler:dots"
-                class="h-6 w-6"
-                aria-hidden="true"
-              />
-            </button>
-            <template #content>
-              <div class="p-4 space-y-2 overflow-auto">
-                <button
-                  class="flex gap-2 items-center max-w-max"
-                  :aria-label="$t('actions.bulkRemove')"
-                  @click="isBulk = true"
-                >
-                  <Icon
-                    name="material-symbols:delete-outline-rounded"
-                    class="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  <p>{{ $t('actions.bulkRemove') }}</p>
-                </button>
-              </div>
-            </template>
-          </tippy>
+            <Icon
+              name="material-symbols:delete-outline-rounded"
+              class="h-4 w-4"
+              aria-hidden="true"
+            />
+          </button>
         </div>
       </div>
-      <div
-        v-if="store.loading"
-        class="flex flex-wrap gap-4 items-start"
-      >
-        <SkeletonEncounterCard v-for="i in 10" :key="i" />
-      </div>
-      <div v-else-if="store.sortedEncounters">
-        <template v-if="isBulk">
-          <h2 class="text-danger">
-            {{ $t('pages.encounters.remove.title') }}
-          </h2>
-          <p class="pt-2 pb-6">
-            {{ $t('pages.encounters.remove.subtitle') }}
-          </p>
-          <div class="flex gap-2 mb-12">
-            <button
-              class="btn-danger"
-              :disabled="!selected.length"
-              :aria-label="$t('pages.encounters.remove.amount', {number: selected.length})"
-              @click="needConfirmation = true"
-            >
-              {{ $t('pages.encounters.remove.amount', {number: selected.length}) }}
-            </button>
-            <button
-              class="btn-success"
-              :aria-label="$t('actions.cancel')"
-              @click="isBulk = false, selected = []"
-            >
-              {{ $t('actions.cancel') }}
-            </button>
+      <template v-if="store.loading">
+        <SkeletonContentHeader />
+        <div class="flex flex-wrap gap-4 items-start">
+          <SkeletonEncounterCard v-for="i in 10" :key="i" />
+        </div>
+      </template>
+      <div v-else-if="visibleItems">
+        <ContentHeader v-model:grid="isTable" v-model:search="store.search" :to-much="toMuchItems" />
+        <LimitCta v-if="!isBulk && store.max <= store.data.length" class="mb-10" />
+        <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
+          <div v-if="isBulk">
+            <h2 class="text-danger">
+              {{ $t('pages.encounters.remove.title') }}
+            </h2>
+            <p class="pt-2 pb-6">
+              {{ $t('pages.encounters.remove.subtitle') }}
+            </p>
+            <div class="flex gap-2 mb-12">
+              <button
+                class="btn-danger"
+                :disabled="!selected.length"
+                :aria-label="$t('pages.encounters.remove.amount', {number: selected.length})"
+                @click="needConfirmation = true"
+              >
+                {{ $t('pages.encounters.remove.amount', {number: selected.length}) }}
+              </button>
+              <button
+                class="btn-success"
+                :aria-label="$t('actions.cancel')"
+                @click="isBulk = false, selected = []"
+              >
+                {{ $t('actions.cancel') }}
+              </button>
+            </div>
           </div>
-        </template>
-        <LimitCta v-else-if="store.max <= store.data.length" class="mb-10" />
+        </Transition>
+        <Table
+          v-show="isTable"
+          v-model:sorted-by="sortedBy"
+          v-model:acs="sortACS"
+          :headers="headers"
+          shadow
+          :pages="store.pages"
+          @paginate="store.paginate"
+        >
+          <tr
+            v-for="(encounter, i) in visibleItems"
+            :key="encounter.id"
+            class="tr transition-colors"
+            :class="{
+              'bg-danger/20': selected.find(c => c.id === encounter.id)
+            }"
+          >
+            <td class="py-1 px-2 border-r last:border-r-0 border-slate-700 max-w-5 text-slate-300">
+              {{ (i + 1) + (store.page * store.perPage) }}
+            </td>
+            <td class="td">
+              <RouteLink
+                :url="encounterUrl(encounter)"
+                class="underline underline-offset-2 decoration-primary"
+              >
+                {{ encounter.title }}
+              </RouteLink>
+            </td>
+            <td class="td">
+              <RouteLink
+                v-if="encounter.campaign"
+                :url="campaignUrl(encounter.campaign, 'content')"
+                class="underline underline-offset-2 decoration-primary"
+              >
+                {{ encounter.campaign.title }}
+              </RouteLink>
+            </td>
+            <td class="td">
+              {{ encounter.rows.length }}
+            </td>
+            <td class="td">
+              <div class="flex justify-center items-center gap-1">
+                <FormKit
+                  v-if="isBulk"
+                  name="marketing"
+                  type="checkbox"
+                  :label="$t('actions.select')"
+                  :value="!!selected.find(c => c.id === encounter.id)"
+                  outer-class="$reset !pb-0"
+                  @click="toggleSelection(encounter)"
+                />
+                <template v-else>
+                  <button
+                    v-tippy="$t('actions.share')"
+                    :aria-label="$t('actions.share')"
+                    @click="store.shareEncounter(encounter)"
+                  >
+                    <Icon
+                      name="material-symbols:share"
+                      class="text-success w-6 h-6"
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    v-tippy="$t('actions.update')"
+                    :aria-label="$t('actions.update')"
+                    @click="() => {
+                      selected = [encounter];
+                      isUpdating = true
+                    }"
+                  >
+                    <Icon
+                      name="lucide:wrench"
+                      class="text-info w-6 h-6"
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    v-tippy="$t('actions.delete')"
+                    :aria-label="$t('actions.delete')"
+                    @click="() => {
+                      selected = [encounter];
+                      needConfirmation = true
+                    }"
+                  >
+                    <Icon
+                      name="material-symbols:delete-outline-rounded"
+                      class="w-6 h-6 text-danger outline-none"
+                      aria-hidden="true"
+                    />
+                  </button>
+                </template>
+              </div>
+            </td>
+          </tr>
+          <template #empty>
+            <div
+              v-if="noItems"
+              class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
+            >
+              {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
+            </div>
+          </template>
+        </Table>
         <div
-          v-for="(group, name, index) in store.sortedEncounters"
+          v-for="(group, name, index) in groupedItems"
+          v-show="!isTable"
           :key="index"
           class="space-y-4 pb-10"
         >

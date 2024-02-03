@@ -1,6 +1,4 @@
 import logRocket from 'logrocket'
-import { sortEncountersByCampaign, sortEncountersByUserCreated } from '@/utils/sort'
-import { getMax } from '@/utils/subscription-helpers'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
@@ -12,6 +10,11 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
+  const pages = ref<number>(0)
+  const page = ref<number>(0)
+  const perPage = ref<number>(20)
+  const encounterCount = ref<number>(0)
+  const search = ref<string>('')
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
 
@@ -22,18 +25,23 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return [...userArr.splice(0, max.value), ...nonUserArr]
   })
 
-  const sortedEncounters = computed<SortedCampaignEncounter>(() => {
-    return sortEncountersByCampaign(restrictionEncounters.value)
-  })
-
   async function fetch (): Promise<void> {
     loading.value = true
     error.value = null
 
     try {
-      const { data: sheets, error: err } = await supabase
+      const { from, to } = generateRange(page.value, perPage.value)
+
+      const { data: sheets, error: err, count } = await supabase
         .from('initiative_sheets')
-        .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
+        .select(
+          '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
+          { count: 'exact' }
+        )
+        .range(from, to)
+
+      encounterCount.value = count || 0
+      pages.value = calcPages((count || 1), perPage.value)
 
       if (err) {
         throw err
@@ -47,6 +55,46 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     } finally {
       loading.value = false
     }
+  }
+
+  async function fuzzySearchEncounters (title: string): Promise<void> {
+    error.value = null
+
+    try {
+      const { from, to } = generateRange(page.value, perPage.value)
+
+      let query = supabase
+        .from('initiative_sheets')
+        .select(
+          '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
+          { count: 'exact' }
+        )
+        .range(from, to)
+
+      if (title) {
+        query = query.ilike('title', `%${title}%`)
+      }
+
+      const { data: sheets, error: err, count } = await query
+
+      encounterCount.value = count || 0
+      pages.value = calcPages((count || 1), perPage.value)
+
+      if (err) {
+        throw err
+      }
+      if (sheets) {
+        data.value = sheets
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      error.value = err as string
+    }
+  }
+
+  async function paginate (newPage: number, search: string): Promise<void> {
+    page.value = newPage
+    await fuzzySearchEncounters(search)
   }
 
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
@@ -111,7 +159,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      fetch()
+      search.value ? fuzzySearchEncounters(search.value) : fetch()
     }
   }
 
@@ -125,7 +173,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      fetch()
+      search.value ? fuzzySearchEncounters(search.value) : fetch()
     }
   }
 
@@ -165,14 +213,25 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
+  watchDebounced(() => search.value, async () => {
+    page.value = 0
+    await fuzzySearchEncounters(search.value)
+  }, { debounce: 250, maxWait: 500 })
+
   return {
     loading,
     error,
     data,
     restrictionEncounters,
-    sortedEncounters,
     max,
+    pages,
+    page,
+    perPage,
+    search,
+    encounterCount,
     fetch,
+    fuzzySearchEncounters,
+    paginate,
     getEncountersByCampaign,
     addEncounter,
     copyEncounter,
