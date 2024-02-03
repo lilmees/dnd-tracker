@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isAdmin } from '@/utils/permission-helpers'
-
 defineEmits(['remove', 'update'])
 defineProps<{ note: Note, campaign: Campaign }>()
 

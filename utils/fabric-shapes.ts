@@ -1,5 +1,4 @@
 import * as fabric from 'fabric'
-import { clipPathToPolygon } from '@/utils/fabric-utils'
 
 const options = {
   fill: 'transparent',

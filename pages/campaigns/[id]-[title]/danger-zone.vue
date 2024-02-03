@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { isOwner } from '@/utils/permission-helpers'
 
 const toast = useToastStore()
 const store = useCampaignsStore()

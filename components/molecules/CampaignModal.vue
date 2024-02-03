@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
-import { contrastColor } from '@/utils/color-helpers'
 
 const emit = defineEmits(['close'])
 const props = withDefaults(

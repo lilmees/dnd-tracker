@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { isAdmin } from '@/utils/permission-helpers'
 
 const store = useCurrentCampaignStore()
 const profile = useProfileStore()

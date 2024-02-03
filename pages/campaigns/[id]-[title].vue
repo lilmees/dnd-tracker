@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getRole } from '@/utils/permission-helpers'
-
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()

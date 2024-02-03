@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { start, end } from '@/utils/animation-helpers'
 
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
