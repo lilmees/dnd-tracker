@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { encounterUrl } from '@/utils/url-genarators'
-import { isAdmin } from '@/utils/permission-helpers'
-
 defineEmits(['remove', 'copy', 'update', 'share'])
 withDefaults(
   defineProps<{
@@ -45,7 +42,7 @@ const profile = useProfileStore()
               @click="$emit('share', encounter)"
             >
               <Icon
-                name="ph:link-simple-horizontal"
+                name="material-symbols:share"
                 class="h-4 w-4"
                 aria-hidden="true"
               />

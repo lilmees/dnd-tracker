@@ -48,6 +48,10 @@
     animation: pulsate-shadow 2s ease-in-out infinite;
   }
 
+  .tracker-shadow {
+    box-shadow: 0 0 20px #4F19AA
+  }
+
   .visibility-pulse {
     animation: pulsate-opacity 2s ease-in-out infinite;
   }

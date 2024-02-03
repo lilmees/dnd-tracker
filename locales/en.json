@@ -22,6 +22,7 @@
     "tryAgain": "Try again",
     "info": "Show information",
     "copy": "Copy",
+    "copyItem": "Copy {item}",
     "copyClipboard": "Copied to clipboard",
     "pasteSelected": "Paste selected",
     "moveSelected": "Move selected",
@@ -55,6 +56,7 @@
     "Left": "Left",
     "Right": "Right",
     "campaigns": "Campaigns",
+    "campaign": "Campaign",
     "encounters": "Encounters",
     "players": "Players",
     "player": "Player",
@@ -106,6 +108,7 @@
     "modify": "Modify",
     "type": "Type",
     "actions": "Actions",
+    "rows": "Rows",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -626,6 +629,9 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
+    },
+    "contentHeader": {
+      "toMuch": "To much items for card view"
     }
   }
 }

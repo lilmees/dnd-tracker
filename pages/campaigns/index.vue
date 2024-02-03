@@ -25,11 +25,11 @@ const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
 
 const headers = [
-  { label: t('components.inputs.nameLabel'), sort: true, id: 'title' },
+  { label: t('general.name'), sort: true, id: 'title' },
   { label: t('general.members'), sort: true, id: 'team' },
   { label: t('general.encounters'), sort: true, id: 'initiative_sheets' },
   { label: t('general.homebrew'), sort: true, id: 'homebrew_items' },
-  { label: t('components.encounterTable.headers.modify'), sort: false, id: 'modify' }
+  { label: t('general.modify'), sort: false, id: 'modify' }
 ]
 
 onMounted(() => {
@@ -44,9 +44,7 @@ const visibleItems = computed<Campaign[]>(() => {
     return []
   }
 
-  const sorted: Campaign[] = sortedBy.value === 'title'
-    ? sortByString(store.allowedCampaigns, sortedBy.value, sortACS.value)
-    : sortByNumber(store.allowedCampaigns, sortedBy.value, sortACS.value)
+  const sorted = sortArray<Campaign>(store.allowedCampaigns, sortedBy.value, sortACS.value)
 
   return searchArray<Campaign>(sorted, 'title', search.value)
 })
@@ -162,6 +160,7 @@ async function deleteCampaigns (): Promise<void> {
           v-model:sorted-by="sortedBy"
           v-model:acs="sortACS"
           :headers="headers"
+          shadow
         >
           <tr
             v-for="item in visibleItems"
@@ -171,9 +170,16 @@ async function deleteCampaigns (): Promise<void> {
               'bg-danger/20': selected.find(c => c.id === item.id)
             }"
           >
+            <td class="td">
+              <RouteLink
+                :url="campaignUrl(item, 'content')"
+                class="underline underline-offset-2 decoration-primary"
+              >
+                {{ item.title }}
+              </RouteLink>
+            </td>
             <td
               v-for="td in [
-                item.title,
                 (item.team?.length || 0) + 1,
                 item.initiative_sheets?.length || 0,
                 item.homebrew_items?.length || 0

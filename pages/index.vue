@@ -69,11 +69,11 @@ if (process.client) {
             <VisualOptions />
           </div>
           <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
-            <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+            <div class="inset-0 z-[-1] fancy-shadow" />
             <img
-              src="/art/animals/cat.svg"
+              src="/cat.gif"
               loading="lazy"
-              class="w-12 h-12 absolute -top-12 left-20"
+              class="w-10 h-10 absolute -top-10 left-20"
             >
             <EncounterHeader />
             <EncounterTable />
@@ -83,7 +83,7 @@ if (process.client) {
         <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
           <div class="flex flex-col justify-center items-center h-full">
             <div class="relative">
-              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <div class="inset-0 z-[-1] fancy-shadow" />
               <NuxtImg
                 src="/team.png"
                 alt="Dragon on hoard"
@@ -113,7 +113,7 @@ if (process.client) {
           </div>
           <div class="flex flex-col justify-center items-center h-full">
             <div class="relative">
-              <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+              <div class="inset-0 z-[-1] fancy-shadow" />
               <NuxtImg
                 src="/link.png"
                 alt="Dragon on hoard"

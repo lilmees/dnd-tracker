@@ -38,13 +38,7 @@ const sorted = computed<Homebrew[]>(() => {
     return []
   }
 
-  let sortedHomebrew: Homebrew[] = []
-
-  if (['health', 'ac'].includes(sortedBy.value)) {
-    sortedHomebrew = sortByNumber(store.campaign.homebrew_items, sortedBy.value, sortACS.value)
-  } else if (['name', 'type', 'player'].includes(sortedBy.value)) {
-    sortedHomebrew = sortByString(store.campaign.homebrew_items, sortedBy.value, sortACS.value)
-  }
+  let sortedHomebrew = sortArray<Homebrew>(store.campaign.homebrew_items, sortedBy.value, sortACS.value)
 
   // Handle search input values
   if (search.value) {

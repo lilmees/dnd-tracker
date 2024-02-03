@@ -5,8 +5,10 @@ withDefaults(
   defineProps<{
     headers: TableHeader[]
     pages?: number
+    shadow?: boolean
   }>(), {
-    pages: 0
+    pages: 0,
+    shadow: false
   }
 )
 
@@ -17,7 +19,7 @@ const page = defineModel<number>('page', { default: 0 })
 
 <template>
   <section class="inline-block overflow-x-auto overflow-y-hidden w-full">
-    <div class="bg-tracker/50 border-4 border-tracker rounded-lg">
+    <div class="bg-tracker/50 border-4 border-tracker rounded-lg relative overflow-y-hidden">
       <table class="min-w-full">
         <thead>
           <tr>
@@ -55,6 +57,7 @@ const page = defineModel<number>('page', { default: 0 })
         </tbody>
       </table>
       <slot name="empty" />
+      <div v-if="shadow" class="inset-0 z-[-1] fancy-shadow" />
     </div>
     <Pagination
       v-if="pages > 1"
