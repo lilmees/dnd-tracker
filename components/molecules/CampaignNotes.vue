@@ -11,6 +11,17 @@ const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
 const selected = ref<Note[]>([])
 const maxAmount = ref<number>(50)
+const search = ref<string>('')
+
+const visibleItems = computed<Note[]>(() => {
+  if (!store.campaign?.notes) {
+    return []
+  }
+
+  return searchArray<Note>(store.campaign.notes, 'title', search.value)
+})
+
+const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
 
 function addedNote (note: Note): void {
   if (store.campaign) {
@@ -90,23 +101,37 @@ function resetState (): void {
       :content="$t('general.notes').toLowerCase()"
       icon="clarity:note-line"
     />
-    <div v-else class="flex gap-4 flex-wrap items-start">
-      <NoteCard
-        v-for="note in store.campaign.notes"
-        :key="note.created_at"
-        :note="note"
-        :campaign="store.campaign"
-        @update="(v: Note) => {
-          selected = [v]
-          isUpdating = true
-          isOpen = true
-        }"
-        @remove="(v: Note) => {
-          selected = [v]
-          needConfirmation = true
-        }"
+    <template v-else>
+      <FormKit
+        v-model="search"
+        type="search"
+        suffix-icon="search"
+        outer-class="$reset !pb-0 w-fit"
       />
-    </div>
+      <div class="flex gap-4 flex-wrap items-start">
+        <NoteCard
+          v-for="note in visibleItems"
+          :key="note.created_at"
+          :note="note"
+          :campaign="store.campaign"
+          @update="(v: Note) => {
+            selected = [v]
+            isUpdating = true
+            isOpen = true
+          }"
+          @remove="(v: Note) => {
+            selected = [v]
+            needConfirmation = true
+          }"
+        />
+      </div>
+      <div
+        v-if="noItems"
+        class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
+      >
+        {{ $t('components.table.nothing', { item: $t('general.notes').toLowerCase() }) }}
+      </div>
+    </template>
     <NoteModal
       v-if="store.campaign"
       :id="store.campaign.id"
