@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isAdmin } from '@/utils/permission-helpers'
-
 const store = useCurrentCampaignStore()
 const profile = useProfileStore()
 const { t } = useI18n()

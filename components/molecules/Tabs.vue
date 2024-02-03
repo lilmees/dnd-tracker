@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { SwiperSlide } from 'swiper/vue'
-import { hasPermission } from '@/utils/permission-helpers'
-import { calculateSliderOverflow } from '@/utils/calculate-slide-offset'
 
 withDefaults(
   defineProps<{

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { start, end } from '@/utils/animation-helpers'
-
 const emit = defineEmits(['close', 'open'])
 
 const props = withDefaults(

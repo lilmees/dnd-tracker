@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import * as fabric from 'fabric'
 import { reset } from '@formkit/core'
-import { readFile } from '@/utils/file-reader'
-import { flip, clone, exportCanvas } from '@/utils/fabric-utils'
 
 useHead({ title: 'Map' })
 

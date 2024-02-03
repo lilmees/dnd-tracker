@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { start, end } from '@/utils/animation-helpers'
-
 defineExpose({ close })
 defineEmits(['logout'])
 defineProps<{ routes: Route[] }>()

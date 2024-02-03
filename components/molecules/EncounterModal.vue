@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { contrastColor } from '@/utils/color-helpers'
 
 const emit = defineEmits(['close', 'added', 'updated'])
 const props = withDefaults(

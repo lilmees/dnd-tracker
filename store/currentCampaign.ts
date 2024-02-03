@@ -1,6 +1,4 @@
 import logRocket from 'logrocket'
-import { isMember } from '@/utils/permission-helpers'
-import { getMax } from '@/utils/subscription-helpers'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const supabase = useSupabaseClient()

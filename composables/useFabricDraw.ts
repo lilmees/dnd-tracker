@@ -1,12 +1,4 @@
 import * as fabric from 'fabric'
-import {
-  getGridObjectByCoords,
-  getAdjacentSprites,
-  createAdjacentString,
-  sameImgSource,
-  getConnectedCellCoords,
-  withinBoundaries
-} from '@/utils/fabric-utils'
 
 export function useFabricDraw (grid: number) {
   const isDrawingFloor = ref<boolean>(false)

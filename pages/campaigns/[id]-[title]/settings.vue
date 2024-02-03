@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { contrastColor } from '@/utils/color-helpers'
 
 const store = useCurrentCampaignStore()
 const campaignStore = useCampaignsStore()

@@ -1,9 +1,5 @@
 import * as fabric from 'fabric'
 import sprites from '@/fixtures/sprites.json'
-import {
-  snapToGrid,
-  setViewPortTransformWithinBounds
-} from '@/utils/fabric-utils'
 
 export const useMapBuilder = () => {
   const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
