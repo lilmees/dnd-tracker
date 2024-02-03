@@ -67,6 +67,7 @@ function handleIconClick (node: any) {
             preload
             alt="avatar"
             sizes="sm:100px md:100px lg:100px"
+            class="w-full h-full"
           />
         </div>
         <TextButton @click="randomAvatar">
