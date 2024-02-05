@@ -14,6 +14,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const page = ref<number>(0)
   const perPage = ref<number>(20)
   const encounterCount = ref<number>(0)
+  const encounterCountLocal = ref<number>(0)
   const search = ref<string>('')
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
@@ -25,14 +26,14 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return [...userArr.splice(0, max.value), ...nonUserArr]
   })
 
-  async function fetch (): Promise<void> {
+  async function fetch (eq?: SupabaseEq): Promise<void> {
     loading.value = true
     error.value = null
 
     try {
       const { from, to } = generateRange(page.value, perPage.value)
 
-      const { data: sheets, error: err, count } = await supabase
+      let query = supabase
         .from('initiative_sheets')
         .select(
           '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
@@ -40,8 +41,16 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         )
         .range(from, to)
 
-      encounterCount.value = count || 0
+      if (eq) {
+        query = query.eq(eq.field, eq.value)
+      }
+
+      const { data: sheets, error: err, count } = await query
+
       pages.value = calcPages((count || 1), perPage.value)
+      encounterCountLocal.value = count || 0
+
+      await getCount()
 
       if (err) {
         throw err
@@ -57,7 +66,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function fuzzySearchEncounters (title: string): Promise<void> {
+  async function fuzzySearchEncounters (eq?: SupabaseEq): Promise<void> {
     error.value = null
 
     try {
@@ -71,14 +80,20 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         )
         .range(from, to)
 
-      if (title) {
-        query = query.ilike('title', `%${title}%`)
+      if (eq) {
+        query = query.eq(eq.field, eq.value)
+      }
+
+      if (search.value) {
+        query = query.ilike('title', `%${search.value}%`)
       }
 
       const { data: sheets, error: err, count } = await query
 
-      encounterCount.value = count || 0
       pages.value = calcPages((count || 1), perPage.value)
+      encounterCountLocal.value = count || 0
+
+      await getCount()
 
       if (err) {
         throw err
@@ -92,9 +107,18 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function paginate (newPage: number, search: string): Promise<void> {
+  async function getCount (): Promise<void> {
+    const { count } = await supabase
+      .from('initiative_sheets')
+      .select('id', { count: 'exact' })
+      .limit(1)
+
+    encounterCount.value = count || 0
+  }
+
+  async function paginate (newPage: number, eq?: { field: string, value: string|number }): Promise<void> {
     page.value = newPage
-    await fuzzySearchEncounters(search)
+    await fuzzySearchEncounters(eq)
   }
 
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
@@ -213,10 +237,12 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  watchDebounced(() => search.value, async () => {
+  function resetPagination (): void {
+    pages.value = 0
     page.value = 0
-    await fuzzySearchEncounters(search.value)
-  }, { debounce: 250, maxWait: 500 })
+    encounterCountLocal.value = 0
+    search.value = ''
+  }
 
   return {
     loading,
@@ -229,6 +255,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     perPage,
     search,
     encounterCount,
+    encounterCountLocal,
     fetch,
     fuzzySearchEncounters,
     paginate,
@@ -238,6 +265,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     deleteEncounter,
     bulkDeleteEncounters,
     updateEncounter,
-    shareEncounter
+    shareEncounter,
+    resetPagination
   }
 })

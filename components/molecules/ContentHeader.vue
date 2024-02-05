@@ -2,8 +2,10 @@
 withDefaults(
   defineProps<{
     toMuch: boolean
+    hideToggle: boolean
    }>(), {
-    toMuch: false
+    toMuch: false,
+    hideToggle: false
   }
 )
 
@@ -13,14 +15,11 @@ const search = defineModel<string>('search')
 const router = useRouter()
 const route = useRoute()
 
-onMounted(() => {
-  if (!isTable.value) {
-    isTable.value = route.query.format === 'table'
-  }
-})
+if (!isTable.value) {
+  isTable.value = route.query.format === 'table'
+}
 
 watch(() => isTable.value, (v) => {
-  isTable.value = v
   router.push({ query: { format: v ? 'table' : undefined } })
 }, { immediate: true })
 </script>
@@ -36,6 +35,7 @@ watch(() => isTable.value, (v) => {
     <div class="flex gap-x-4 gap-y-2 items-center flex-wrap">
       <slot />
       <div
+        v-if="!hideToggle"
         v-tippy="{
           content: toMuch ? $t('components.contentHeader.toMuch') : undefined
         }"

@@ -44,7 +44,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   async function getCampaignById (id: number): Promise<Campaign> {
     const { data, error } = await supabase
       .from('campaigns')
-      .select('*, created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(*), notes(*), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
+      .select('*, created_by(id, created_at, username, name, avatar, email, badges), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
       .eq('id', id)
       .single()
 
