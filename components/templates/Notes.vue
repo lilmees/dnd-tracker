@@ -1,56 +1,31 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-const store = useCurrentCampaignStore()
+const currentStore = useCurrentCampaignStore()
 const profile = useProfileStore()
 const toast = useToastStore()
-const notes = useNotesStore()
+const noteStore = useNotesStore()
 
 const isOpen = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
 const selected = ref<Note[]>([])
-const maxAmount = ref<number>(50)
-const search = ref<string>('')
 
-const visibleItems = computed<Note[]>(() => {
-  if (!store.campaign?.notes) {
-    return []
+whenever(() => currentStore.campaign, () => {
+  if (currentStore.campaign) {
+    noteStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
-
-  return searchArray<Note>(store.campaign.notes, 'title', search.value)
 })
-
-const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
-
-function addedNote (note: Note): void {
-  if (store.campaign) {
-    store.campaign.notes = [...(store.campaign.notes || []), note]
-  }
-  resetState()
-}
 
 async function removeNote (): Promise<void> {
   try {
-    await notes.deleteNote(selected.value[0].id)
-
-    if (store?.campaign?.notes) {
-      store.campaign.notes = store.campaign.notes.filter(p => p.id !== selected.value[0].id)
-    }
+    await noteStore.deleteNote(selected.value[0].id)
   } catch (err: unknown) {
     logRocket.captureException(err as Error)
     toast.error()
   } finally {
     resetState()
   }
-}
-
-function updatedNote (note: Note): void {
-  if (store?.campaign?.notes) {
-    const index = store.campaign.notes.findIndex(p => p.id === note.id)
-    store.campaign.notes[index] = note
-  }
-  resetState()
 }
 
 function resetState (): void {
@@ -69,18 +44,18 @@ function resetState (): void {
         <div
           class="body-small"
           :class="{
-            'text-danger': (store.campaign?.notes || []).length >= maxAmount
+            'text-danger': noteStore.noteCount >= noteStore.maxAmount
           }"
         >
-          {{ (store.campaign?.notes || []).length }} / {{ maxAmount }}
+          {{ noteStore.noteCount }} / {{ noteStore.maxAmount }}
         </div>
         <button
           v-tippy="{ content: $t('actions.add') }"
           :aria-label="$t('actions.add')"
           :disabled="
-            !store.campaign ||
-              !isAdmin(store.campaign, profile.data?.id || '') ||
-              (store.campaign?.notes || []).length >= maxAmount
+            !currentStore.campaign ||
+              !isAdmin(currentStore.campaign, profile.data?.id || '') ||
+              noteStore.noteCount >= noteStore.maxAmount
           "
           class="disabled:opacity-40 disabled:cursor-not-allowed"
           @click="isOpen = true"
@@ -93,27 +68,27 @@ function resetState (): void {
         </button>
       </div>
     </div>
-    <div v-if="store.loading" class="flex gap-2 flex-wrap items-start">
-      <SkeletonNoteCard v-for="i in 4" :key="i" />
+    <div v-if="currentStore.loading" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <SkeletonNoteCard v-for="i in 16" :key="i" />
     </div>
     <NoContent
-      v-else-if="!store?.campaign?.notes?.length"
+      v-else-if="!noteStore.data.length && !noteStore.loading"
       :content="$t('general.notes').toLowerCase()"
       icon="clarity:note-line"
     />
-    <template v-else>
+    <template v-else-if="currentStore.campaign">
       <FormKit
-        v-model="search"
+        v-model="noteStore.search"
         type="search"
         suffix-icon="search"
         outer-class="$reset !pb-0 w-fit"
       />
-      <div class="flex gap-4 flex-wrap items-start">
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         <NoteCard
-          v-for="note in visibleItems"
+          v-for="note in noteStore.visibleItems"
           :key="note.created_at"
           :note="note"
-          :campaign="store.campaign"
+          :campaign="currentStore.campaign"
           @update="(v: Note) => {
             selected = [v]
             isUpdating = true
@@ -126,21 +101,21 @@ function resetState (): void {
         />
       </div>
       <div
-        v-if="noItems"
+        v-if="noteStore.noItems"
         class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
       >
         {{ $t('components.table.nothing', { item: $t('general.notes').toLowerCase() }) }}
       </div>
     </template>
     <NoteModal
-      v-if="store.campaign"
-      :id="store.campaign.id"
+      v-if="currentStore.campaign"
+      :id="currentStore.campaign.id"
       :open="isOpen"
       :note="selected[0] || undefined"
       :update="isUpdating"
       @close="resetState"
-      @added="addedNote"
-      @updated="updatedNote"
+      @added="resetState"
+      @updated="resetState"
     />
     <ConfirmationModal
       v-if="selected.length"

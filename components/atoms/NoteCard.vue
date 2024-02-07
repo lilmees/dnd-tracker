@@ -1,13 +1,23 @@
 <script setup lang="ts">
 defineEmits(['remove', 'update'])
-defineProps<{ note: Note, campaign: Campaign }>()
+const props = defineProps<{ note: Note, campaign: Campaign }>()
 
 const profile = useProfileStore()
+
+const description = ref<HTMLParagraphElement>()
+const isLong = ref<boolean>(false)
+const showAll = ref<boolean>(false)
+
+onMounted(() => {
+  if (description.value) {
+    isLong.value = calculateLines(description.value, props.note.text) > 2
+  }
+})
 </script>
 
 <template>
   <section
-    class="rounded-lg w-fit bg-tracker/50 border-4 border-tracker relative group min-w-[250px] max-w-prose"
+    class="rounded-lg w-full bg-tracker/50 border-4 border-tracker relative group min-w-[250px] max-w-prose"
   >
     <div class="flex justify-end mr-2">
       <tippy interactive :z-index="2">
@@ -54,9 +64,30 @@ const profile = useProfileStore()
       <h3 v-if="note.title">
         {{ note.title }}
       </h3>
-      <p class="pt-2">
+      <p
+        ref="description"
+        class="pt-2 transition-all"
+        :class="{ 'line-clamp-2': !showAll }"
+      >
         {{ note.text }}
       </p>
+      <div v-if="isLong" class="flex justify-end mt-4">
+        <button
+          class="flex gap-2 btn-black"
+          :aria-label="$t(`actions.read.${showAll ? 'less' : 'more'}`)"
+          @click="showAll = !showAll"
+        >
+          <p>
+            {{ $t(`actions.read.${showAll ? 'less' : 'more'}`) }}
+          </p>
+          <Icon
+            name="tabler:chevron-down"
+            class="duration-200 h-6 w-6 stroke-2"
+            :class="{ 'rotate-180': showAll }"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </div>
   </section>
 </template>
