@@ -69,7 +69,7 @@ async function deleteCampaigns (): Promise<void> {
 <template>
   <Layout shadow>
     <div v-if="!store.error">
-      <div class="pb-2 flex flex-wrap gap-4 justify-between items-center">
+      <div class="border-b-2 border-slate-700 pb-1 mb-6 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
         </h1>

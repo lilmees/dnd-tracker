@@ -18,8 +18,6 @@ const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
 const isTable = ref<boolean>(false)
-const sortedBy = ref<string>('title')
-const sortACS = ref<boolean>(false)
 const isBulk = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
@@ -28,8 +26,8 @@ const selected = ref<Encounter[]>([])
 const headers = [
   { label: '', sort: false, id: '' },
   { label: t('general.name'), sort: true, id: 'title' },
-  { label: t('general.campaign'), sort: true, id: 'campaign.title' },
-  { label: t('general.rows'), sort: true, id: 'rows' },
+  { label: t('general.campaign'), sort: false, id: 'campaign.title' },
+  { label: t('general.rows'), sort: false, id: 'rows' },
   { label: t('general.actions'), sort: false, id: 'actions' }
 ]
 
@@ -49,25 +47,16 @@ whenever(() => currentStore.campaign, () => {
   }
 })
 
-watchDebounced(() => encounterStore.search, async () => {
+watchDebounced(() => encounterStore.filters, async () => {
   encounterStore.page = 0
   props.campaignView && currentStore.campaign
     ? await encounterStore.fuzzySearchEncounters({ field: 'campaign', value: currentStore.campaign.id })
     : await encounterStore.fuzzySearchEncounters()
-}, { debounce: 250, maxWait: 500 })
-
-const visibleItems = computed<Encounter[]>(() => {
-  if (!encounterStore.restrictionEncounters) {
-    return []
-  }
-
-  return sortArray<Encounter>(encounterStore.restrictionEncounters, sortedBy.value, sortACS.value)
-})
-
-const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !encounterStore.loading)
+}, { debounce: 100, maxWait: 500, deep: true })
 
 const toMuchItems = computed<boolean>(() => {
   const toMuch = encounterStore.encounterCount >= encounterStore.perPage
+
   if (toMuch) {
     isTable.value = true
   }
@@ -167,13 +156,13 @@ function resetState (): void {
         <SkeletonEncounterCard v-for="i in 10" :key="i" />
       </div>
     </template>
-    <div v-else-if="visibleItems">
+    <div v-else-if="encounterStore.restrictionEncounters">
       <ContentHeader
         v-model:grid="isTable"
-        v-model:search="encounterStore.search"
+        v-model:search="encounterStore.filters.search"
         :to-much="toMuchItems"
         :hide-toggle="campaignView"
-        shadow
+        :shadow="!campaignView"
       />
       <LimitCta v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount" class="mb-10" />
       <BulkRemove
@@ -184,8 +173,8 @@ function resetState (): void {
       />
       <Table
         v-show="isTable"
-        v-model:sorted-by="sortedBy"
-        v-model:acs="sortACS"
+        v-model:sorted-by="encounterStore.filters.sortedBy"
+        v-model:acs="encounterStore.filters.sortACS"
         :headers="headers"
         shadow
         :pages="encounterStore.pages"
@@ -199,7 +188,7 @@ function resetState (): void {
         }"
       >
         <tr
-          v-for="(encounter, i) in visibleItems"
+          v-for="(encounter, i) in encounterStore.restrictionEncounters"
           :key="encounter.id"
           class="tr transition-colors"
           :class="{
@@ -287,7 +276,7 @@ function resetState (): void {
         </tr>
         <template #empty>
           <div
-            v-if="noItems"
+            v-if="encounterStore.noItems"
             class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
           >
             {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
@@ -296,7 +285,7 @@ function resetState (): void {
       </Table>
       <div v-show="!isTable" class="flex flex-wrap gap-4 items-start">
         <div
-          v-for="encounter in visibleItems"
+          v-for="encounter in encounterStore.restrictionEncounters"
           :key="encounter.id"
           class="relative"
         >

@@ -119,8 +119,10 @@ function resetState (): void {
     </div>
     <ul>
       <li>ALle tables bulk delete</li>
-      <li>Overal sorting door supabase laten gebeuren?</li>
+      <li>Overal sorting door supabase laten gebeuren</li>
       <li>filters watcher</li>
+      <li>encounter page not table when tomuch items</li>
+      <li>test actions and if table updates afterwards</li>
     </ul>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
     <template v-else-if="(!homebrewStore.noItems || homebrewStore.filters.search && homebrewStore.noItems) && currentStore.campaign">

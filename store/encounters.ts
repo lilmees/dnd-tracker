@@ -15,7 +15,12 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const perPage = ref<number>(20)
   const encounterCount = ref<number>(0)
   const encounterCountLocal = ref<number>(0)
-  const search = ref<string>('')
+
+  const filters = ref<TableFilters>({
+    search: '',
+    sortedBy: 'id',
+    sortACS: true
+  })
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
 
@@ -25,6 +30,8 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
     return [...userArr.splice(0, max.value), ...nonUserArr]
   })
+
+  const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
   async function fetch (eq?: SupabaseEq): Promise<void> {
     loading.value = true
@@ -40,6 +47,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
           { count: 'exact' }
         )
         .range(from, to)
+        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
 
       if (eq) {
         query = query.eq(eq.field, eq.value)
@@ -79,13 +87,14 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
           { count: 'exact' }
         )
         .range(from, to)
+        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
 
       if (eq) {
         query = query.eq(eq.field, eq.value)
       }
 
-      if (search.value) {
-        query = query.ilike('title', `%${search.value}%`)
+      if (filters.value.search) {
+        query = query.ilike('title', `%${filters.value}%`)
       }
 
       const { data: sheets, error: err, count } = await query
@@ -183,7 +192,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      search.value ? fuzzySearchEncounters() : fetch()
+      filters.value.search ? fuzzySearchEncounters() : fetch()
     }
   }
 
@@ -197,7 +206,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      search.value ? fuzzySearchEncounters() : fetch()
+      filters.value.search ? fuzzySearchEncounters() : fetch()
     }
   }
 
@@ -241,7 +250,11 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     pages.value = 0
     page.value = 0
     encounterCountLocal.value = 0
-    search.value = ''
+    filters.value = {
+      search: '',
+      sortedBy: 'id',
+      sortACS: true
+    }
   }
 
   return {
@@ -253,9 +266,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     pages,
     page,
     perPage,
-    search,
+    filters,
     encounterCount,
     encounterCountLocal,
+    noItems,
     fetch,
     fuzzySearchEncounters,
     paginate,
