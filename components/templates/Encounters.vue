@@ -49,9 +49,12 @@ whenever(() => currentStore.campaign, () => {
 
 watchDebounced(() => encounterStore.filters, async () => {
   encounterStore.page = 0
-  props.campaignView && currentStore.campaign
-    ? await encounterStore.fuzzySearchEncounters({ field: 'campaign', value: currentStore.campaign.id })
-    : await encounterStore.fuzzySearchEncounters()
+  await encounterStore.fetch(
+    props.campaignView && currentStore.campaign
+      ? { field: 'campaign', value: currentStore.campaign.id }
+      : undefined,
+    true
+  )
 }, { debounce: 100, maxWait: 500, deep: true })
 
 const toMuchItems = computed<boolean>(() => {

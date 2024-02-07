@@ -25,13 +25,14 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   watchDebounced(() => filters.value, async (v) => {
     page.value = 0
     if (currentStore.campaign) {
-      await fuzzySearchHomebrew({ field: 'campaign', value: currentStore.campaign.id })
+      await fetch({ field: 'campaign', value: currentStore.campaign.id }, true)
     }
   }, { debounce: 100, maxWait: 500, deep: true })
 
-  async function fetch (eq?: SupabaseEq): Promise<void> {
-    loading.value = true
+  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
+
+    if (!fuzzy) { loading.value = true }
 
     try {
       const { from, to } = generateRange(page.value, perPage.value)
@@ -44,6 +45,10 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
       if (eq) {
         query = query.eq(eq.field, eq.value)
+      }
+
+      if (filters.value.search && fuzzy) {
+        query = query.ilike('name', `%${filters.value.search}%`)
       }
 
       const { data: homebrew, error: err, count } = await query
@@ -67,45 +72,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }
 
-  async function fuzzySearchHomebrew (eq?: SupabaseEq): Promise<void> {
-    error.value = null
-
-    try {
-      const { from, to } = generateRange(page.value, perPage.value)
-
-      let query = supabase
-        .from('homebrew_items')
-        .select('*', { count: 'exact' })
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      if (filters.value.search) {
-        query = query.ilike('name', `%${filters.value.search}%`)
-      }
-
-      const { data: homebrew, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
-      homebrewCountLocal.value = count || 0
-
-      await getCount()
-
-      if (err) {
-        throw err
-      }
-      if (homebrew) {
-        data.value = homebrew
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      error.value = err as string
-    }
-  }
-
   async function getCount (): Promise<void> {
     const { count } = await supabase
       .from('homebrew_items')
@@ -117,7 +83,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
     page.value = newPage
-    await fuzzySearchHomebrew(eq)
+    await fetch(eq, true)
   }
 
   async function getHomebrewByCampaignId (id: number): Promise<Homebrew[]> {
@@ -178,7 +144,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     if (error) {
       throw error
     } else {
-      filters.value.search ? fuzzySearchHomebrew() : fetch()
+      fetch(undefined, !!filters.value.search)
     }
   }
 
@@ -192,7 +158,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     if (err) {
       throw err
     } else {
-      filters.value.search ? fuzzySearchHomebrew() : fetch()
+      fetch(undefined, !!filters.value.search)
     }
   }
 
@@ -234,7 +200,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     noItems,
     fetch,
     paginate,
-    fuzzySearchHomebrew,
     getHomebrewByCampaignId,
     getHomebrewById,
     getHomebrewByType,

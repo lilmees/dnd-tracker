@@ -33,9 +33,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SupabaseEq): Promise<void> {
-    loading.value = true
+  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
+
+    if (!fuzzy) { loading.value = true }
 
     try {
       const { from, to } = generateRange(page.value, perPage.value)
@@ -51,6 +52,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
       if (eq) {
         query = query.eq(eq.field, eq.value)
+      }
+
+      if (filters.value.search && fuzzy) {
+        query = query.ilike('title', `%${filters.value.search}%`)
       }
 
       const { data: sheets, error: err, count } = await query
@@ -74,48 +79,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function fuzzySearchEncounters (eq?: SupabaseEq): Promise<void> {
-    error.value = null
-
-    try {
-      const { from, to } = generateRange(page.value, perPage.value)
-
-      let query = supabase
-        .from('initiative_sheets')
-        .select(
-          '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
-          { count: 'exact' }
-        )
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      if (filters.value.search) {
-        query = query.ilike('title', `%${filters.value}%`)
-      }
-
-      const { data: sheets, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
-      encounterCountLocal.value = count || 0
-
-      await getCount()
-
-      if (err) {
-        throw err
-      }
-      if (sheets) {
-        data.value = sheets
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      error.value = err as string
-    }
-  }
-
   async function getCount (): Promise<void> {
     const { count } = await supabase
       .from('initiative_sheets')
@@ -127,7 +90,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
     page.value = newPage
-    await fuzzySearchEncounters(eq)
+    await fetch(eq, true)
   }
 
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
@@ -192,7 +155,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      filters.value.search ? fuzzySearchEncounters() : fetch()
+      fetch(undefined, !!filters.value.search)
     }
   }
 
@@ -206,7 +169,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      filters.value.search ? fuzzySearchEncounters() : fetch()
+      fetch(undefined, !!filters.value.search)
     }
   }
 
@@ -271,7 +234,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     encounterCountLocal,
     noItems,
     fetch,
-    fuzzySearchEncounters,
     paginate,
     getEncountersByCampaign,
     addEncounter,
