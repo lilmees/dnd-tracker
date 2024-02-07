@@ -122,7 +122,7 @@ async function deleteCampaigns (): Promise<void> {
         </div>
       </template>
       <template v-else-if="store.allowedCampaigns?.length">
-        <ContentHeader v-model:grid="isTable" v-model:search="search" />
+        <ContentHeader v-model:grid="isTable" v-model:search="search" shadow />
         <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
           <div v-if="isBulk">
             <h2 class="text-danger">

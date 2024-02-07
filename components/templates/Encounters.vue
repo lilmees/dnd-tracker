@@ -16,19 +16,14 @@ const toast = useToastStore()
 const { error } = storeToRefs(encounterStore)
 const { t } = useI18n()
 
-const {
-  isBulk,
-  isUpdating,
-  needConfirmation,
-  selected,
-  toggleSelection,
-  reset
-} = useBulkEditing()
-
 const isOpen = ref<boolean>(false)
 const isTable = ref<boolean>(false)
 const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
+const isBulk = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+const selected = ref<Encounter[]>([])
 
 const headers = [
   { label: '', sort: false, id: '' },
@@ -39,7 +34,6 @@ const headers = [
 ]
 
 onMounted(() => {
-  reset()
   props.campaignView
     ? isTable.value = true
     : encounterStore.fetch()
@@ -108,7 +102,10 @@ async function copyEncounter (enc : Encounter): Promise<void> {
 }
 
 function resetState (): void {
-  reset()
+  needConfirmation.value = false
+  isBulk.value = false
+  isUpdating.value = false
+  selected.value = []
   isOpen.value = false
 }
 </script>
@@ -151,7 +148,7 @@ function resetState (): void {
           @click="() => {
             isBulk = !isBulk;
             if (!isBulk) {
-              reset()
+              resetState()
             }
           }"
         >
@@ -176,35 +173,15 @@ function resetState (): void {
         v-model:search="encounterStore.search"
         :to-much="toMuchItems"
         :hide-toggle="campaignView"
+        shadow
       />
       <LimitCta v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount" class="mb-10" />
-      <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
-        <div v-if="isBulk">
-          <h2 class="text-danger">
-            {{ $t('pages.encounters.remove.title') }}
-          </h2>
-          <p class="pt-2 pb-6">
-            {{ $t('pages.encounters.remove.subtitle') }}
-          </p>
-          <div class="flex gap-2 mb-12">
-            <button
-              class="btn-danger"
-              :disabled="!selected.length"
-              :aria-label="$t('pages.encounters.remove.amount', {number: selected.length})"
-              @click="needConfirmation = true"
-            >
-              {{ $t('pages.encounters.remove.amount', {number: selected.length}) }}
-            </button>
-            <button
-              class="btn-success"
-              :aria-label="$t('actions.cancel')"
-              @click="isBulk = false, selected = []"
-            >
-              {{ $t('actions.cancel') }}
-            </button>
-          </div>
-        </div>
-      </Transition>
+      <BulkRemove
+        v-model:isBulk="isBulk"
+        v-model:needConfirmation="needConfirmation"
+        v-model:selected="selected"
+        type="encounters"
+      />
       <Table
         v-show="isTable"
         v-model:sorted-by="sortedBy"
@@ -226,7 +203,7 @@ function resetState (): void {
           :key="encounter.id"
           class="tr transition-colors"
           :class="{
-            'bg-danger/20': selected.find(c => c.id === encounter.id)
+            'bg-danger/20': isBulk && selected.find(c => c.id === encounter.id)
           }"
         >
           <td class="py-1 px-2 border-r last:border-r-0 border-slate-700 max-w-5 text-slate-300">
@@ -261,9 +238,10 @@ function resetState (): void {
                 :label="$t('actions.select')"
                 :value="!!selected.find(c => c.id === encounter.id)"
                 outer-class="$reset !pb-0"
-                @click="toggleSelection(encounter)"
+                @click="toggleSelection<Encounter>(encounter, selected)"
               />
               <template v-else>
+                copy
                 <button
                   v-tippy="$t('actions.share')"
                   :aria-label="$t('actions.share')"
@@ -329,7 +307,7 @@ function resetState (): void {
               '!border-danger bg-danger/50': selected.find(e => e.id === encounter.id)
             }"
             :style="{ 'border-color': encounter.background }"
-            @click="toggleSelection(encounter)"
+            @click="toggleSelection<Encounter>(encounter, selected)"
           />
           <EncounterCard
             :encounter="encounter"
@@ -367,7 +345,10 @@ function resetState (): void {
       :open="needConfirmation"
       :title="selected.length === 1
         ? selected[0].title
-        : $t('pages.encounters.remove.multiple', {number: selected.length})"
+        : $t('components.bulkRemove.multiple', {
+          number: selected.length,
+          type: $t('general.encounters').toLowerCase()
+        })"
       @close="resetState"
       @delete="deleteEncounter"
     />

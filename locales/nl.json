@@ -29,6 +29,7 @@
     "panMap": "Map verschuiven",
     "random": "Willekeurig",
     "create": "Creëren",
+    "createItem": "{item} creëren",
     "generate": "Genereren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
@@ -70,6 +71,7 @@
     "total": "Totaal",
     "grandTotal": "Eindtotaal",
     "homebrew": "Homebrew",
+    "homebrews": "Homebrews",
     "round": "Ronde",
     "link": "Link",
     "month": "maand",
@@ -175,13 +177,7 @@
     "campaigns": {
       "campaigns": "Campagnes",
       "add": "Campagne creëren",
-      "update": "Campagne bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen campagnes",
-        "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} campagnes",
-        "multiple": "{number} campagnes"
-      }
+      "update": "Campagne bijwerken"
     },
     "campaign": {
       "content": {},
@@ -213,13 +209,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
-      "update": "Encounter bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen encounters",
-        "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} encounters",
-        "multiple": "{number} encounters"
-      }
+      "update": "Encounter bijwerken"
     },
     "encounter": {
       "back": "Terug naar encounters",
@@ -630,6 +620,12 @@
     },
     "contentHeader": {
       "toMuch": "Te veel items voor kaartweergave"
+    },
+    "bulkRemove": {
+      "title": "Bulk verwijderen {type}",
+      "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",
+      "amount": "Verwijder {number} {type}",
+      "multiple": "{number} {type}"
     }
   }
 }

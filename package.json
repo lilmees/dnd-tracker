@@ -55,6 +55,7 @@
     "markdown-it": "^13.0.1",
     "nodemailer": "^6.9.5",
     "nuxt-icon": "^0.3.3",
+    "nuxt-lazy-hydrate": "^1.0.0",
     "nuxt-umami": "^2.5.2",
     "swiper": "^10.3.1",
     "vue-tippy": "v6",

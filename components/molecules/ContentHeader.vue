@@ -2,10 +2,12 @@
 withDefaults(
   defineProps<{
     toMuch: boolean
-    hideToggle: boolean
+    hideToggle: boolean,
+    shadow: boolean
    }>(), {
     toMuch: false,
-    hideToggle: false
+    hideToggle: false,
+    shadow: false
   }
 )
 
@@ -30,7 +32,7 @@ watch(() => isTable.value, (v) => {
       v-model="search"
       type="search"
       suffix-icon="search"
-      outer-class="$reset !pb-0 w-fit tracker-shadow"
+      :outer-class="`$reset !pb-0 w-fit ${shadow ? 'tracker-shadow' : ''}`"
     />
     <div class="flex gap-x-4 gap-y-2 items-center flex-wrap">
       <slot />

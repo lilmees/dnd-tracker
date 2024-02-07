@@ -116,7 +116,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     encounterCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: { field: string, value: string|number }): Promise<void> {
+  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
     page.value = newPage
     await fuzzySearchEncounters(eq)
   }
@@ -183,7 +183,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      search.value ? fuzzySearchEncounters(search.value) : fetch()
+      search.value ? fuzzySearchEncounters() : fetch()
     }
   }
 
@@ -197,7 +197,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      search.value ? fuzzySearchEncounters(search.value) : fetch()
+      search.value ? fuzzySearchEncounters() : fetch()
     }
   }
 

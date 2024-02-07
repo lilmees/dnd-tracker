@@ -1,5 +1,124 @@
+import logRocket from 'logrocket'
+
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
+  const currentStore = useCurrentCampaignStore()
+
+  const loading = ref<boolean>(true)
+  const error = ref<string | null>(null)
+  const data = ref<Homebrew[]>([])
+  const pages = ref<number>(0)
+  const page = ref<number>(0)
+  const perPage = ref<number>(20)
+  const homebrewCount = ref<number>(0)
+  const homebrewCountLocal = ref<number>(0)
+  const max = ref<number>(100)
+
+  const filters = ref<TableFilters>({
+    search: '',
+    sortedBy: 'id',
+    sortACS: true
+  })
+
+  const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
+
+  watchDebounced(() => filters.value, async (v) => {
+    page.value = 0
+    if (currentStore.campaign) {
+      await fuzzySearchHomebrew({ field: 'campaign', value: currentStore.campaign.id })
+    }
+  }, { debounce: 100, maxWait: 500, deep: true })
+
+  async function fetch (eq?: SupabaseEq): Promise<void> {
+    loading.value = true
+    error.value = null
+
+    try {
+      const { from, to } = generateRange(page.value, perPage.value)
+
+      let query = supabase
+        .from('homebrew_items')
+        .select('*', { count: 'exact' })
+        .range(from, to)
+        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
+
+      if (eq) {
+        query = query.eq(eq.field, eq.value)
+      }
+
+      const { data: homebrew, error: err, count } = await query
+
+      pages.value = calcPages((count || 1), perPage.value)
+      homebrewCountLocal.value = count || 0
+
+      await getCount()
+
+      if (err) {
+        throw err
+      }
+      if (homebrew) {
+        data.value = homebrew
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      error.value = err as string
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function fuzzySearchHomebrew (eq?: SupabaseEq): Promise<void> {
+    error.value = null
+
+    try {
+      const { from, to } = generateRange(page.value, perPage.value)
+
+      let query = supabase
+        .from('homebrew_items')
+        .select('*', { count: 'exact' })
+        .range(from, to)
+        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
+
+      if (eq) {
+        query = query.eq(eq.field, eq.value)
+      }
+
+      if (filters.value.search) {
+        query = query.ilike('name', `%${filters.value.search}%`)
+      }
+
+      const { data: homebrew, error: err, count } = await query
+
+      pages.value = calcPages((count || 1), perPage.value)
+      homebrewCountLocal.value = count || 0
+
+      await getCount()
+
+      if (err) {
+        throw err
+      }
+      if (homebrew) {
+        data.value = homebrew
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      error.value = err as string
+    }
+  }
+
+  async function getCount (): Promise<void> {
+    const { count } = await supabase
+      .from('homebrew_items')
+      .select('id', { count: 'exact' })
+      .limit(1)
+
+    homebrewCount.value = count || 0
+  }
+
+  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+    page.value = newPage
+    await fuzzySearchHomebrew(eq)
+  }
 
   async function getHomebrewByCampaignId (id: number): Promise<Homebrew[]> {
     const { data, error } = await supabase.from('homebrew_items')
@@ -58,6 +177,22 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
     if (error) {
       throw error
+    } else {
+      filters.value.search ? fuzzySearchHomebrew() : fetch()
+    }
+  }
+
+  async function bulkDeleteHomebrew (ids: number[]): Promise<void> {
+    const { error: err } = await supabase
+      .from('initiative_sheets')
+      .delete()
+      .in('id', ids)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      filters.value.search ? fuzzySearchHomebrew() : fetch()
     }
   }
 
@@ -74,15 +209,42 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data[0]
   }
 
+  function resetPagination (): void {
+    pages.value = 0
+    page.value = 0
+    homebrewCountLocal.value = 0
+    filters.value = {
+      search: '',
+      sortedBy: 'id',
+      sortACS: true
+    }
+  }
+
   return {
+    loading,
+    error,
+    data,
+    max,
+    pages,
+    page,
+    perPage,
+    filters,
+    homebrewCount,
+    homebrewCountLocal,
+    noItems,
+    fetch,
+    paginate,
+    fuzzySearchHomebrew,
     getHomebrewByCampaignId,
     getHomebrewById,
     getHomebrewByType,
     addHomebrew,
     updateHomebrew,
     deleteHomebrew,
+    bulkDeleteHomebrew,
+    resetPagination,
     sandbox: [
-      { type: 'player', id: 1, name: 'Nelson', health: '37', ac: '13', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 1, name: 'Carlo', health: '37', ac: '13', created_at: 'now', campaign: 1 },
       { type: 'player', id: 2, name: 'Silvin', health: '33', ac: '14', created_at: 'now', campaign: 1 },
       { type: 'player', id: 3, name: 'Alexis', health: '29', ac: '12', created_at: 'now', campaign: 1 },
       { type: 'player', id: 4, name: 'Thernus', health: '31', ac: '16', created_at: 'now', campaign: 1 },

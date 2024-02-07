@@ -3,3 +3,9 @@ interface TableHeader {
   sort: boolean,
   id: string
 }
+
+interface TableFilters {
+  search: string,
+  sortedBy: string,
+  sortACS: boolean
+}

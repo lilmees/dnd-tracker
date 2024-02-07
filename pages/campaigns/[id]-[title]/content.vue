@@ -1,7 +1,9 @@
 <template>
   <div class="space-y-4">
     <Encounters campaign-view />
-    <HomebrewTable class="py-10" />
-    <CampaignNotes />
+    <NuxtLazyHydrate when-idle>
+      <Homebrews class="py-10" />
+      <Notes />
+    </NuxtLazyHydrate>
   </div>
 </template>

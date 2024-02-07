@@ -61,77 +61,79 @@ if (process.client) {
             />
           </div>
         </div>
-        <div
-          v-if="store.encounter"
-          class="space-y-4"
-        >
-          <div class="flex justify-end relative z-[1]">
-            <VisualOptions />
-          </div>
-          <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
-            <div class="inset-0 z-[-1] fancy-shadow" />
-            <img
-              src="/cat.gif"
-              loading="lazy"
-              class="w-10 h-10 absolute -top-10 left-20"
-            >
-            <EncounterHeader />
-            <EncounterTable />
-            <EncounterOptions />
-          </div>
-        </div>
-        <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
-          <div class="flex flex-col justify-center items-center h-full">
-            <div class="relative">
+        <NuxtLazyHydrate when-visible>
+          <div
+            v-if="store.encounter"
+            class="space-y-4"
+          >
+            <div class="flex justify-end relative z-[1]">
+              <VisualOptions />
+            </div>
+            <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
               <div class="inset-0 z-[-1] fancy-shadow" />
-              <NuxtImg
-                src="/team.png"
-                alt="Dragon on hoard"
-                sizes="sm:1000px md:1000px lg:1000px"
-                format="webp"
-                provider="imagekit"
-                width="500"
-                class="rounded-lg"
+              <img
+                src="/cat.gif"
+                loading="lazy"
+                class="w-10 h-10 absolute -top-10 left-20"
+              >
+              <EncounterHeader />
+              <EncounterTable />
+              <EncounterOptions />
+            </div>
+          </div>
+          <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
+            <div class="flex flex-col justify-center items-center h-full">
+              <div class="relative">
+                <div class="inset-0 z-[-1] fancy-shadow" />
+                <NuxtImg
+                  src="/team.png"
+                  alt="Dragon on hoard"
+                  sizes="sm:1000px md:1000px lg:1000px"
+                  format="webp"
+                  provider="imagekit"
+                  width="500"
+                  class="rounded-lg"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col justify-center h-full">
+              <TitleText
+                :title="$t('pages.home.textBlock2.title')"
+                :text="$t('pages.home.textBlock2.text')"
+                sprite="monsters/orc-mage.svg"
               />
             </div>
           </div>
-          <div class="flex flex-col justify-center h-full">
-            <TitleText
-              :title="$t('pages.home.textBlock2.title')"
-              :text="$t('pages.home.textBlock2.text')"
-              sprite="monsters/orc-mage.svg"
-            />
-          </div>
-        </div>
-        <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
-          <div class="flex flex-col justify-center h-full">
-            <TitleText
-              :title="$t('pages.home.textBlock3.title')"
-              :text="$t('pages.home.textBlock3.text')"
-              sprite="icons/eye.svg"
-            />
-          </div>
-          <div class="flex flex-col justify-center items-center h-full">
-            <div class="relative">
-              <div class="inset-0 z-[-1] fancy-shadow" />
-              <NuxtImg
-                src="/link.png"
-                alt="Dragon on hoard"
-                sizes="sm:1000px md:1000px lg:1000px"
-                format="webp"
-                provider="imagekit"
-                width="500"
-                class="rounded-lg"
+          <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">
+            <div class="flex flex-col justify-center h-full">
+              <TitleText
+                :title="$t('pages.home.textBlock3.title')"
+                :text="$t('pages.home.textBlock3.text')"
+                sprite="icons/eye.svg"
               />
             </div>
+            <div class="flex flex-col justify-center items-center h-full">
+              <div class="relative">
+                <div class="inset-0 z-[-1] fancy-shadow" />
+                <NuxtImg
+                  src="/link.png"
+                  alt="Dragon on hoard"
+                  sizes="sm:1000px md:1000px lg:1000px"
+                  format="webp"
+                  provider="imagekit"
+                  width="500"
+                  class="rounded-lg"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <TitleText
-          center
-          :title="$t('pages.home.textBlock4.title')"
-          :text="$t('pages.home.textBlock4.text')"
-          sprite="animals/bedbug.svg"
-        />
+          <TitleText
+            center
+            :title="$t('pages.home.textBlock4.title')"
+            :text="$t('pages.home.textBlock4.text')"
+            sprite="animals/bedbug.svg"
+          />
+        </NuxtLazyHydrate>
       </div>
     </div>
   </Layout>
