@@ -85,6 +85,20 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     fetch()
   }
 
+  async function bulkDeleteNote (ids: number[]): Promise<void> {
+    const { error: err } = await supabase
+      .from('notes')
+      .delete()
+      .in('id', ids)
+      .select('*')
+
+    if (err) {
+      throw err
+    } else {
+      fetch()
+    }
+  }
+
   async function updateNote (note: Note, id: number): Promise<Note> {
     const { data, error } = await supabase
       .from('notes')
@@ -112,6 +126,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     getNoteById,
     addNote,
     deleteNote,
+    bulkDeleteNote,
     updateNote
   }
 })

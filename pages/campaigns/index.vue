@@ -76,7 +76,7 @@ async function deleteCampaigns (): Promise<void> {
         <div class="flex items-end gap-2 flex-wrap">
           <span
             v-if="store.campaigns"
-            class="text-[10px]"
+            class="text-[12px]"
             :class="{ 'text-danger': store.campaigns.length >= store.max }"
           >
             {{ store.campaigns.length }}/{{ store.max }}
@@ -123,33 +123,12 @@ async function deleteCampaigns (): Promise<void> {
       </template>
       <template v-else-if="store.allowedCampaigns?.length">
         <ContentHeader v-model:grid="isTable" v-model:search="search" shadow />
-        <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
-          <div v-if="isBulk">
-            <h2 class="text-danger">
-              {{ $t('pages.campaigns.remove.title') }}
-            </h2>
-            <p class="pt-2 pb-6">
-              {{ $t('pages.campaigns.remove.subtitle') }}
-            </p>
-            <div class="flex gap-2 mb-12">
-              <button
-                class="btn-danger"
-                :disabled="!selected.length"
-                :aria-label="$t('pages.campaigns.remove.amount', { number: selected.length })"
-                @click="needConfirmation = true"
-              >
-                {{ $t('pages.campaigns.remove.amount', { number: selected.length }) }}
-              </button>
-              <button
-                class="btn-success"
-                :aria-label="$t('actions.cancel')"
-                @click="isBulk = false, selected = []"
-              >
-                {{ $t('actions.cancel') }}
-              </button>
-            </div>
-          </div>
-        </Transition>
+        <BulkRemove
+          v-model:isBulk="isBulk"
+          v-model:needConfirmation="needConfirmation"
+          v-model:selected="selected"
+          type="campaigns"
+        />
         <LimitCta
           v-if="!isBulk && store.campaigns && store.max <= store.campaigns.length"
           class="mb-10"

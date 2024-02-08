@@ -68,7 +68,7 @@ function resetState (): void {
     <div class="flex justify-between border-b-2 border-slate-700 pb-1">
       <div class="flex gap-4 items-end">
         <h2>{{ $t('general.homebrew') }}</h2>
-        <div class="hidden md:flex gap-1 text-[10px]">
+        <div class="hidden md:flex gap-1 text-[12px]">
           <p>(Monsters,</p>
           <p>Players,</p>
           <p>Npc's,</p>
@@ -76,7 +76,7 @@ function resetState (): void {
           <p>Lair)</p>
         </div>
       </div>
-      <div class="flex gap-2 items-center flex-wrap">
+      <div class="flex gap-2 items-end flex-wrap">
         <div
           class="body-small"
           :class="{
@@ -87,7 +87,7 @@ function resetState (): void {
         </div>
         <button
           class="btn-small-primary"
-          :aria-label="$t('actions.add')"
+          :aria-label="$t('actions.createItem', { item: $t('general.homebrew') })"
           :disabled="
             !currentStore.campaign ||
               !isAdmin(currentStore?.campaign, profile.data?.id || '') ||

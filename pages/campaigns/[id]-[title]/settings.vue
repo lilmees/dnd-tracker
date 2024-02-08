@@ -81,7 +81,7 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
       <div class="md:min-w-[300px]">
         <h2>
           {{ $t('pages.campaign.settings.access') }}
-          <span class="text-[10px]">
+          <span class="text-[12px]">
             (max {{ store.max }})
           </span>
         </h2>

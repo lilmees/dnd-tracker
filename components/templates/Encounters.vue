@@ -104,14 +104,14 @@ function resetState (): void {
 
 <template>
   <div v-if="!encounterStore.error">
-    <div class="border-b-2 border-slate-700 pb-1 flex justify-between gap-4 items-center flex-wrap mb-6">
-      <h1 class="grow">
-        {{ $t('pages.encounters.encounters') }}
-        <span class="text-[10px]">
+    <div class="flex justify-between border-b-2 border-slate-700 pb-1 mb-4">
+      <div class="flex items-end gap-2">
+        <h2>{{ $t('pages.encounters.encounters') }}</h2>
+        <span class="text-[12px]">
           ({{ $t('components.limitCta.max', { number: encounterStore.max }) }})
         </span>
-      </h1>
-      <div class="flex gap-2 items-center flex-wrap">
+      </div>
+      <div class="flex gap-2 items-end flex-wrap">
         <div
           class="body-small"
           :class="{
@@ -122,7 +122,7 @@ function resetState (): void {
         </div>
         <button
           class="btn-small-primary"
-          :aria-label="$t('pages.encounters.add')"
+          :aria-label="$t('actions.createItem', { item: $t('general.encounter') })"
           :disabled="
             campaignView
               ? !currentStore.campaign || !isAdmin(currentStore.campaign, profile.data?.id || '')
@@ -130,7 +130,7 @@ function resetState (): void {
           "
           @click="isOpen = true"
         >
-          {{ $t('pages.encounters.add') }}
+          {{ $t('actions.createItem', { item: $t('general.encounter') }) }}
         </button>
         <button
           v-tippy="$t('actions.bulkRemove')"
@@ -294,7 +294,7 @@ function resetState (): void {
         >
           <div
             v-if="isBulk"
-            class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer"
+            class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer transition-colors"
             :class="{
               '!border-danger bg-danger/50': selected.find(e => e.id === encounter.id)
             }"

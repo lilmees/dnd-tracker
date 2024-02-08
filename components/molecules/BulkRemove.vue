@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ type: 'campaigns'|'encounters'|'homebrews' }>()
+defineProps<{ type: 'campaigns'|'encounters'|'homebrews'|'notes' }>()
 
 const selected = defineModel<any[]>('selected', { default: [] })
 const isBulk = defineModel<boolean>('isBulk', { default: false })
