@@ -226,14 +226,11 @@ async function deleteCampaigns (): Promise<void> {
             :key="campaign.id"
             class="relative"
           >
-            <div
+            <BulkRemoveCard
               v-if="isBulk"
-              class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer"
-              :class="{
-                '!border-danger bg-danger/50': selected.find(c => c.id === campaign.id)
-              }"
-              :style="{ 'border-color': campaign.background }"
-              @click="toggleSelection(campaign)"
+              :selected="!!selected.find(e => e.id === campaign.id)"
+              :border="campaign.background"
+              @toggled="toggleSelection<Campaign>(campaign, selected)"
             />
             <CampaignCard
               :campaign="campaign"

@@ -5,6 +5,7 @@
     "addAll": "Add all",
     "select": "Select",
     "selectOption": "Select an option",
+    "clickToSelect": "Click to select",
     "delete": "Delete",
     "cancel": "Cancel",
     "save": "Save",
@@ -138,7 +139,8 @@
       "title": "No {content} yet",
       "text": "The quest for {content} begins here, but it's yet to be undertaken"
     },
-    "notAllowed": "Action not allowed: you are not the owner or administrator"
+    "notAllowed": "Action not allowed: you are not the owner or administrator",
+    "selectedToRemove": "Selected to remove"
   },
   "pages": {
     "home": {

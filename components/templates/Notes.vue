@@ -114,13 +114,10 @@ function resetState (): void {
           :key="note.created_at"
           class="relative"
         >
-          <div
+          <BulkRemoveCard
             v-if="isBulk"
-            class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer transition-colors"
-            :class="{
-              '!border-danger bg-danger/50': selected.find(e => e.id === note.id)
-            }"
-            @click="toggleSelection<Note>(note, selected)"
+            :selected="!!selected.find(e => e.id === note.id)"
+            @toggled="toggleSelection<Note>(note, selected)"
           />
           <NoteCard
             :note="note"

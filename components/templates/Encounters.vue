@@ -292,14 +292,11 @@ function resetState (): void {
           :key="encounter.id"
           class="relative"
         >
-          <div
+          <BulkRemoveCard
             v-if="isBulk"
-            class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer transition-colors"
-            :class="{
-              '!border-danger bg-danger/50': selected.find(e => e.id === encounter.id)
-            }"
-            :style="{ 'border-color': encounter.background }"
-            @click="toggleSelection<Encounter>(encounter, selected)"
+            :selected="!!selected.find(e => e.id === encounter.id)"
+            :border="encounter.background"
+            @toggled="toggleSelection<Encounter>(encounter, selected)"
           />
           <EncounterCard
             :encounter="encounter"

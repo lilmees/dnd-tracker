@@ -5,6 +5,7 @@
     "addAll": "Alles toevoegen",
     "select": "Selecteer",
     "selectOption": "Selecteer een optie",
+    "clickToSelect": "Klik om te selecteren",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
     "save": "Opslaan",
@@ -138,7 +139,8 @@
       "title": "Nog geen {content}",
       "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
     },
-    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder"
+    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder",
+    "selectedToRemove": "Geselecteerd om te verwijderen"
   },
   "pages": {
     "home": {
