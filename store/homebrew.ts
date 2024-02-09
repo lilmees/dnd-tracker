@@ -3,8 +3,10 @@ import logRocket from 'logrocket'
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
   const currentStore = useCurrentCampaignStore()
+  const toast = useToastStore()
 
   const loading = ref<boolean>(true)
+  const searching = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Homebrew[]>([])
   const pages = ref<number>(0)
@@ -32,7 +34,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
 
-    if (!fuzzy) { loading.value = true }
+    fuzzy ? searching.value = true : loading.value = true
 
     try {
       const { from, to } = generateRange(page.value, perPage.value)
@@ -69,13 +71,17 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       error.value = err as string
     } finally {
       loading.value = false
+      searching.value = false
     }
   }
 
   async function getCount (): Promise<void> {
+    if (currentStore.campaign === null) { return }
+
     const { count } = await supabase
       .from('homebrew_items')
       .select('id', { count: 'exact' })
+      .eq('campaign', currentStore.campaign.id)
       .limit(1)
 
     homebrewCount.value = count || 0
@@ -123,56 +129,65 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function addHomebrew (homebrew: AddHomebrew): Promise<Homebrew> {
-    const { data, error } = await supabase.from('homebrew_items')
-      .insert([homebrew as never])
-      .select('*')
+  async function addHomebrew (homebrew: AddHomebrew): Promise<void> {
+    try {
+      const { data: newHomebrew, error } = await supabase.from('homebrew_items')
+        .insert([homebrew as never])
+        .select('*')
 
-    if (error) {
-      throw error
-    } else {
-      return data[0] as Homebrew
+      if (error) {
+        throw error
+      } else if (newHomebrew.length) {
+        data.value = [newHomebrew[0] as Homebrew, ...data.value]
+        homebrewCount.value++
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
-  async function deleteHomebrew (id: number): Promise<void> {
-    const { error } = await supabase.from('homebrew_items')
-      .delete()
-      .eq('id', id)
-      .select('*')
+  async function deleteHomebrew (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('homebrew_items').delete()
 
-    if (error) {
-      throw error
-    } else {
-      fetch(undefined, !!filters.value.search)
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
+
+      const { error } = await query
+
+      if (error) {
+        throw error
+      } else {
+        fetch({ field: 'campaign', value: currentStore.campaign!.id }, !!filters.value.search)
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
-  async function bulkDeleteHomebrew (ids: number[]): Promise<void> {
-    const { error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .in('id', ids)
-      .select('*')
+  async function updateHomebrew (homebrew: UpdateHomebrew, id: number): Promise<void> {
+    try {
+      const { data: updatedHomebrew, error } = await supabase.from('homebrew_items')
+        .update(homebrew as never)
+        .eq('id', id)
+        .select('*')
 
-    if (err) {
-      throw err
-    } else {
-      fetch(undefined, !!filters.value.search)
+      if (error) {
+        throw error
+      } else if (updatedHomebrew.length) {
+        const index = data.value.findIndex(e => e.id === id)
+        data.value[index] = {
+          ...data.value[index],
+          ...updatedHomebrew[0] as Homebrew
+        }
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
-  }
-
-  async function updateHomebrew (homebrew: UpdateHomebrew, id: number): Promise<Homebrew> {
-    const { data, error } = await supabase.from('homebrew_items')
-      .update(homebrew as never)
-      .eq('id', id)
-      .select('*')
-
-    if (error) {
-      throw error
-    }
-
-    return data[0]
   }
 
   function resetPagination (): void {
@@ -188,6 +203,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   return {
     loading,
+    searching,
     error,
     data,
     max,
@@ -206,7 +222,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     addHomebrew,
     updateHomebrew,
     deleteHomebrew,
-    bulkDeleteHomebrew,
     resetPagination,
     sandbox: [
       { type: 'player', id: 1, name: 'Carlo', health: '37', ac: '13', created_at: 'now', campaign: 1 },

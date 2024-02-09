@@ -40,49 +40,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addHomebrew (hb: AddHomebrew): Promise<void> {
-    try {
-      const data = await homebrewStore.addHomebrew(hb)
-
-      if (campaign?.value?.homebrew_items) {
-        campaign.value.homebrew_items = [...campaign.value.homebrew_items, data]
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
-  }
-
-  async function updateHomebrew (hb: Homebrew, id: number): Promise<void> {
-    try {
-      await homebrewStore.updateHomebrew(hb, id)
-
-      if (campaign?.value?.homebrew_items) {
-        const index = campaign.value.homebrew_items.findIndex(e => e.id === id)
-        campaign.value.homebrew_items[index] = {
-          ...campaign.value.homebrew_items[index],
-          ...hb
-        }
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
-  }
-
-  async function removeHomebrew (id: number): Promise<void> {
-    try {
-      await homebrewStore.deleteHomebrew(id)
-
-      if (campaign?.value?.homebrew_items) {
-        campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
-  }
-
   async function findJoinCampaignToken (token: string): Promise<CheckJoinCampaign|undefined> {
     const { data, error } = await supabase
       .from('join_campaign')
@@ -197,9 +154,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     activeIndex,
     max,
     getCampaignInfo,
-    addHomebrew,
-    updateHomebrew,
-    removeHomebrew,
     resetActiveState,
     findJoinCampaignToken,
     createJoinCampaignToken,

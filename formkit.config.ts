@@ -19,7 +19,7 @@ export default defineFormKitConfig((): any => {
       classes: generateClasses(
         {
           global: {
-            fieldset: 'border-4 border-black rounded-lg px-2 pb-1',
+            fieldset: 'border-4 border-black rounded-lg px-2 pb-1 bg-tracker/50',
             help: 'text-xs text-gray-300',
             inner: 'formkit-disabled:cursor-not-allowed formkit-disabled:pointer-events-none transition-all duration-200',
             input: 'outline-none text-white bg-tracker/50 disabled:cursor-not-allowed placeholder:text-gray-400',

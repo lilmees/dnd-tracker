@@ -6,7 +6,7 @@ import 'tippy.js/animations/shift-away.css'
 export default defineNuxtPlugin(({ vueApp }) => {
   vueApp.use(VueTippy, {
     defaultProps: {
-      delay: 100,
+      delay: 400,
       animation: 'shift-away',
       theme: 'translucent'
     }

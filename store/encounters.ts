@@ -115,9 +115,9 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      data.value && data.value.length
-        ? data.value.push(sheets[0])
-        : (data.value = [sheets[0]])
+      data.value = data.value && data.value.length
+        ? [sheets[0] as Encounter, ...data.value]
+        : [sheets[0]]
 
       return sheets[0]
     }
@@ -183,12 +183,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      if (data.value) {
-        data.value = data.value.filter(e => e.id !== id)
-        data.value.push(sheets[0])
-      } else {
-        data.value = [sheets[0]]
-      }
+      fetch(undefined, !!filters.value.search)
       return sheets[0]
     }
   }

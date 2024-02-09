@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const homebrewStore = useHomebrewStore()
 const currentStore = useCurrentCampaignStore()
 const profile = useProfileStore()
-const toast = useToastStore()
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
@@ -39,27 +36,21 @@ whenever(() => currentStore.campaign, () => {
   }
 })
 
-async function deleteHomebrew (): Promise<void> {
-  try {
-    if (selected.value.length === 1) {
-      await homebrewStore.deleteHomebrew(selected.value[0].id)
-    } else if (selected.value.length > 1) {
-      await homebrewStore.bulkDeleteHomebrew(selected.value.map(v => v.id))
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    resetState()
-  }
-}
-
 function resetState (): void {
   needConfirmation.value = false
   isBulk.value = false
   isUpdating.value = false
   selected.value = []
   isOpen.value = false
+}
+
+function getActionsAmount (item: Homebrew): number {
+  return [
+    ...(item.actions || []),
+    ...(item.legendary_actions || []),
+    ...(item.reactions || []),
+    ...(item.special_abilities || [])
+  ].length
 }
 </script>
 
@@ -80,10 +71,10 @@ function resetState (): void {
         <div
           class="body-small"
           :class="{
-            'text-danger': homebrewStore.homebrewCountLocal >= homebrewStore.max
+            'text-danger': homebrewStore.homebrewCount >= homebrewStore.max
           }"
         >
-          {{ homebrewStore.homebrewCountLocal }} / {{ homebrewStore.max }}
+          {{ homebrewStore.homebrewCount }} / {{ homebrewStore.max }}
         </div>
         <button
           class="btn-small-primary"
@@ -91,7 +82,7 @@ function resetState (): void {
           :disabled="
             !currentStore.campaign ||
               !isAdmin(currentStore?.campaign, profile.data?.id || '') ||
-              homebrewStore.homebrewCountLocal >= homebrewStore.max
+              homebrewStore.homebrewCount >= homebrewStore.max
           "
           @click="isOpen = true"
         >
@@ -100,7 +91,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="homebrewStore.loading"
+          :disabled="homebrewStore.loading || homebrewStore.searching"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -118,8 +109,14 @@ function resetState (): void {
       </div>
     </div>
     <ul>
+      <li>Homebrew update not working</li>
+      <li>Add searching/disabled to all tables</li>
+      <li>Test when error is thrown in homebrewmodal if the emit still gets called</li>
+      <li>Change bulk delete functions to always allow bulk delete</li>
       <li>encounter page not table when tomuch items</li>
       <li>test actions and if table updates afterwards</li>
+      <li>test if homebrew modal en encounter page works</li>
+      <li>remove usebulkediting composable</li>
     </ul>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
     <template v-else-if="(!homebrewStore.noItems || homebrewStore.filters.search && homebrewStore.noItems) && currentStore.campaign">
@@ -141,6 +138,7 @@ function resetState (): void {
         v-model:page="homebrewStore.page"
         :headers="headers"
         :pages="homebrewStore.pages"
+        :searching="homebrewStore.searching"
         shadow
         @paginate="(p) => {
           homebrewStore.paginate(
@@ -192,50 +190,33 @@ function resetState (): void {
             <div class="flex justify-center">
               <NuxtLink
                 v-if="item.link"
+                v-tippy="$t('actions.link')"
                 :to="item.link"
                 target="_blank"
                 rel="noreferrer noopener"
                 class="w-fit icon-btn-info"
               >
-                <Icon name="ph:link-simple-horizontal" class="w-8 h-8 cursor-pointer" aria-hidden="true" />
+                <Icon name="ph:link-simple-horizontal" class="w-8 h-8" aria-hidden="true" />
               </NuxtLink>
             </div>
           </td>
           <td class="px-2 py-1 border-r border-slate-700">
-            <div
-              v-if="
-                item.actions?.length ||
-                  item.legendary_actions?.length ||
-                  item.reactions?.length ||
-                  item.special_abilities?.length
+            <button
+              v-if="getActionsAmount(item)"
+              class="flex items-center gap-x-2 icon-btn-primary"
+              @click="
+                () => {
+                  currentStore.activeHomebrew = item
+                  currentStore.activeIndex = index
+                  currentStore.activeModal = 'possible-attacks-modal'
+                }
               "
             >
-              <div
-                class="flex flex-wrap items-center gap-x-2 cursor-pointer"
-                @click="
-                  () => {
-                    currentStore.activeHomebrew = item
-                    currentStore.activeIndex = index
-                    currentStore.activeModal = 'possible-attacks-modal'
-                  }
-                "
-              >
-                <Icon name="iconamoon:search-bold" class="w-4 h-4 text-primary cursor-pointer" aria-hidden="true" />
-                <p>
-                  {{
-                    `${
-                      [
-                        ...(item.actions || []),
-                        ...(item.legendary_actions || []),
-                        ...(item.reactions || []),
-                        ...(item.special_abilities || []),
-                      ].length
-                    }
-                        ${$t('components.inputs.actionsLabel')}`
-                  }}
-                </p>
-              </div>
-            </div>
+              <Icon name="iconamoon:search-bold" class="w-4 h-4" aria-hidden="true" />
+              <span class="whitespace-nowrap">
+                {{ `${getActionsAmount(item)} ${$t('components.inputs.actionsLabel')}` }}
+              </span>
+            </button>
           </td>
           <td
             v-if="currentStore.campaign && isAdmin(currentStore.campaign, profile.data?.id || '')"
@@ -309,7 +290,12 @@ function resetState (): void {
             type: $t('general.homebrews').toLowerCase()
           })"
         @close="resetState"
-        @delete="deleteHomebrew"
+        @delete="() => {
+          homebrewStore.deleteHomebrew(
+            selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+          );
+          resetState()
+        }"
       />
     </template>
     <NoContent v-else content="homebrew" icon="la:dragon" />

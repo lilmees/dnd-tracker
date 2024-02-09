@@ -246,9 +246,9 @@ function resetState (): void {
                   />
                 </button>
                 <button
-                  v-tippy="$t('actions.share')"
+                  v-tippy="$t('actions.copy')"
                   class="icon-btn-primary"
-                  :aria-label="$t('actions.share')"
+                  :aria-label="$t('actions.copy')"
                   @click="copyEncounter(encounter)"
                 >
                   <Icon
