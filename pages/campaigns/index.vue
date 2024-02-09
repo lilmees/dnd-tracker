@@ -168,7 +168,7 @@ async function deleteCampaigns (): Promise<void> {
               {{ td }}
             </td>
             <td class="td">
-              <div class="flex justify-center items-center gap-1">
+              <div class="flex justify-center items-center gap-2">
                 <FormKit
                   v-if="isBulk"
                   name="marketing"
@@ -181,6 +181,7 @@ async function deleteCampaigns (): Promise<void> {
                 <template v-else>
                   <button
                     v-tippy="$t('actions.update')"
+                    class="icon-btn-info"
                     :aria-label="$t('actions.update')"
                     @click="() => {
                       selected = [item];
@@ -189,12 +190,13 @@ async function deleteCampaigns (): Promise<void> {
                   >
                     <Icon
                       name="lucide:wrench"
-                      class="text-info w-6 h-6"
+                      class="w-6 h-6"
                       aria-hidden="true"
                     />
                   </button>
                   <button
                     v-tippy="$t('actions.delete')"
+                    class="icon-btn-danger"
                     :aria-label="$t('actions.delete')"
                     @click="() => {
                       selected = [item];
@@ -203,7 +205,7 @@ async function deleteCampaigns (): Promise<void> {
                   >
                     <Icon
                       name="material-symbols:delete-outline-rounded"
-                      class="w-6 h-6 text-danger outline-none"
+                      class="w-6 h-6"
                       aria-hidden="true"
                     />
                   </button>

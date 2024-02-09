@@ -29,7 +29,7 @@ const user = useSupabaseUser()
         <template #content>
           <div class="p-4 space-y-2 overflow-auto">
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-info"
               :aria-label="$t('actions.update')"
               @click="$emit('update', campaign)"
             >
@@ -41,7 +41,7 @@ const user = useSupabaseUser()
               <p>{{ $t('actions.update') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-danger"
               :aria-label="$t('actions.remove')"
               @click="$emit('remove', campaign)"
             >

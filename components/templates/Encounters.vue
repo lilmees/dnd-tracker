@@ -222,7 +222,7 @@ function resetState (): void {
             {{ encounter.rows.length }}
           </td>
           <td class="td">
-            <div class="flex justify-center items-center gap-1">
+            <div class="flex justify-center items-center gap-2">
               <FormKit
                 v-if="isBulk"
                 name="marketing"
@@ -233,20 +233,33 @@ function resetState (): void {
                 @click="toggleSelection<Encounter>(encounter, selected)"
               />
               <template v-else>
-                copy
                 <button
                   v-tippy="$t('actions.share')"
+                  class="icon-btn-success"
                   :aria-label="$t('actions.share')"
                   @click="encounterStore.shareEncounter(encounter)"
                 >
                   <Icon
                     name="material-symbols:share"
-                    class="text-success w-6 h-6"
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  v-tippy="$t('actions.share')"
+                  class="icon-btn-primary"
+                  :aria-label="$t('actions.share')"
+                  @click="copyEncounter(encounter)"
+                >
+                  <Icon
+                    name="material-symbols:content-copy-outline-rounded"
+                    class="w-6 h-6"
                     aria-hidden="true"
                   />
                 </button>
                 <button
                   v-tippy="$t('actions.update')"
+                  class="icon-btn-info"
                   :aria-label="$t('actions.update')"
                   @click="() => {
                     selected = [encounter];
@@ -255,12 +268,13 @@ function resetState (): void {
                 >
                   <Icon
                     name="lucide:wrench"
-                    class="text-info w-6 h-6"
+                    class="w-6 h-6"
                     aria-hidden="true"
                   />
                 </button>
                 <button
                   v-tippy="$t('actions.delete')"
+                  class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
                   @click="() => {
                     selected = [encounter];
@@ -269,7 +283,7 @@ function resetState (): void {
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-6 h-6 text-danger outline-none"
+                    class="w-6 h-6"
                     aria-hidden="true"
                   />
                 </button>

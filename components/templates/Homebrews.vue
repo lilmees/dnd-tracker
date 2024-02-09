@@ -118,9 +118,6 @@ function resetState (): void {
       </div>
     </div>
     <ul>
-      <li>ALle tables bulk delete</li>
-      <li>Overal sorting door supabase laten gebeuren</li>
-      <li>filters watcher</li>
       <li>encounter page not table when tomuch items</li>
       <li>test actions and if table updates afterwards</li>
     </ul>
@@ -193,8 +190,14 @@ function resetState (): void {
           </td>
           <td class="px-2 py-1 border-r border-slate-700">
             <div class="flex justify-center">
-              <NuxtLink v-if="item.link" :to="item.link" target="_blank" rel="noreferrer noopener" class="w-fit">
-                <Icon name="ph:link-simple-horizontal" class="w-8 h-8 cursor-pointer text-info" aria-hidden="true" />
+              <NuxtLink
+                v-if="item.link"
+                :to="item.link"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="w-fit icon-btn-info"
+              >
+                <Icon name="ph:link-simple-horizontal" class="w-8 h-8 cursor-pointer" aria-hidden="true" />
               </NuxtLink>
             </div>
           </td>
@@ -238,7 +241,7 @@ function resetState (): void {
             v-if="currentStore.campaign && isAdmin(currentStore.campaign, profile.data?.id || '')"
             class="px-2 py-1"
           >
-            <div class="flex justify-center items-center gap-1">
+            <div class="flex justify-center items-center gap-2">
               <FormKit
                 v-if="isBulk"
                 name="marketing"
@@ -251,6 +254,7 @@ function resetState (): void {
               <template v-else>
                 <button
                   v-tippy="$t('actions.update')"
+                  class="icon-btn-info"
                   :aria-label="$t('actions.update')"
                   @click="() => {
                     selected = [item];
@@ -259,12 +263,13 @@ function resetState (): void {
                 >
                   <Icon
                     name="lucide:wrench"
-                    class="text-info w-6 h-6"
+                    class="w-6 h-6"
                     aria-hidden="true"
                   />
                 </button>
                 <button
                   v-tippy="{ content: $t('actions.delete') }"
+                  class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
                   @click="() => {
                     selected = [item];
@@ -273,7 +278,7 @@ function resetState (): void {
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-6 h-6 text-danger outline-none"
+                    class="w-6 h-6"
                     aria-hidden="true"
                   />
                 </button>
