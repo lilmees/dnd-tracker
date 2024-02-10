@@ -8,6 +8,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const { t, locale } = useI18n()
 
   const loading = ref<boolean>(true)
+  const searching = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
   const pages = ref<number>(0)
@@ -35,6 +36,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
+    fuzzy ? searching.value = true : loading.value = true
 
     if (!fuzzy) { loading.value = true }
 
@@ -76,6 +78,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       error.value = err as string
     } finally {
       loading.value = false
+      searching.value = false
     }
   }
 
@@ -210,6 +213,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   return {
     loading,
+    searching,
     error,
     data,
     restrictionEncounters,

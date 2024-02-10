@@ -107,7 +107,6 @@ function getActionsAmount (item: Homebrew): number {
       </div>
     </div>
     <ul>
-      <li>Add searching/disabled to all tables</li>
       <li>encounter page not table when tomuch items</li>
       <li>test if homebrew modal on encounter page works</li>
       <li>remove usebulkediting composable</li>

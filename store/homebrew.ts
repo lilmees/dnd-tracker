@@ -33,7 +33,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
-
     fuzzy ? searching.value = true : loading.value = true
 
     try {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const props = withDefaults(
   defineProps<{
     campaignView?: boolean
@@ -109,7 +107,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="encounterStore.loading"
+          :disabled="encounterStore.loading || encounterStore.searching"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -153,8 +151,9 @@ function resetState (): void {
         v-model:sorted-by="encounterStore.filters.sortedBy"
         v-model:acs="encounterStore.filters.sortACS"
         :headers="headers"
-        shadow
         :pages="encounterStore.pages"
+        :searching="encounterStore.searching"
+        shadow
         @paginate="(p) => {
           encounterStore.paginate(
             p,
