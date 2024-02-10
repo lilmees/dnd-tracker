@@ -112,6 +112,7 @@ async function updateHomebrew (formData: Obj): Promise<void> {
 
   const updated = useEmptyKeyRemover(formData) as Homebrew
   await homebrewStore.updateHomebrew(updated, props.item.id as number)
+  // test with trhowing an error here and if the console log still gets executed
   console.log('tester')
   emit('updated', updated)
 }

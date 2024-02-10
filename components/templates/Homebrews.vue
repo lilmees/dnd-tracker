@@ -5,8 +5,6 @@ const profile = useProfileStore()
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
-const isUpdate = ref<boolean>(false)
-const selectedHomebrew = ref<Homebrew>()
 const isBulk = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
@@ -109,7 +107,6 @@ function getActionsAmount (item: Homebrew): number {
       </div>
     </div>
     <ul>
-      <li>Homebrew update not working</li>
       <li>Add searching/disabled to all tables</li>
       <li>Test when error is thrown in homebrewmodal if the emit still gets called</li>
       <li>Change bulk delete functions to always allow bulk delete</li>
@@ -119,7 +116,12 @@ function getActionsAmount (item: Homebrew): number {
       <li>remove usebulkediting composable</li>
     </ul>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
-    <template v-else-if="(!homebrewStore.noItems || homebrewStore.filters.search && homebrewStore.noItems) && currentStore.campaign">
+    <template
+      v-else-if="
+        (!homebrewStore.noItems || homebrewStore.filters.search && homebrewStore.noItems)
+          && currentStore.campaign
+      "
+    >
       <FormKit
         v-model="homebrewStore.filters.search"
         type="search"
@@ -300,11 +302,11 @@ function getActionsAmount (item: Homebrew): number {
     </template>
     <NoContent v-else content="homebrew" icon="la:dragon" />
     <HomebrewModal
-      :open="isOpen"
-      :update="isUpdate"
-      :item="selectedHomebrew"
-      @close="isOpen = false"
-      @updated="isOpen = false"
+      :open="isOpen || isUpdating"
+      :update="isUpdating"
+      :item="selected.length ? selected[0] : undefined"
+      @close="resetState"
+      @updated="resetState"
     />
   </section>
 </template>
