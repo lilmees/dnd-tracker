@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const currentStore = useCurrentCampaignStore()
 const profile = useProfileStore()
-const toast = useToastStore()
 const noteStore = useNotesStore()
 
 const isOpen = ref<boolean>(false)
@@ -17,21 +14,6 @@ whenever(() => currentStore.campaign, () => {
     noteStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
 })
-
-async function removeNote (): Promise<void> {
-  try {
-    if (selected.value.length === 1) {
-      await noteStore.deleteNote(selected.value[0].id)
-    } else if (selected.value.length > 1) {
-      await noteStore.bulkDeleteNote(selected.value.map(v => v.id))
-    }
-  } catch (err: unknown) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    resetState()
-  }
-}
 
 function resetState (): void {
   isOpen.value = false
@@ -149,8 +131,6 @@ function resetState (): void {
       :note="selected.length && isUpdating ? selected[0] : undefined"
       :update="isUpdating"
       @close="resetState"
-      @added="resetState"
-      @updated="resetState"
     />
     <ConfirmationModal
       :open="needConfirmation"
@@ -161,7 +141,12 @@ function resetState (): void {
           type: $t('general.notes').toLowerCase()
         })"
       @close="resetState"
-      @delete="removeNote"
+      @delete="() => {
+        noteStore.deleteNote(
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+        )
+        resetState()
+      }"
     />
   </section>
 </template>

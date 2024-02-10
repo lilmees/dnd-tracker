@@ -67,32 +67,6 @@ const toMuchItems = computed<boolean>(() => {
   return toMuch
 })
 
-async function deleteEncounter (): Promise<void> {
-  try {
-    if (selected.value.length === 1) {
-      await encounterStore.deleteEncounter(selected.value[0].id)
-    } else if (selected.value.length > 1) {
-      await encounterStore.bulkDeleteEncounters(selected.value.map(v => v.id))
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    resetState()
-  }
-}
-
-async function copyEncounter (enc : Encounter): Promise<void> {
-  try {
-    await encounterStore.copyEncounter(enc)
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    resetState()
-  }
-}
-
 function resetState (): void {
   needConfirmation.value = false
   isBulk.value = false
@@ -249,7 +223,7 @@ function resetState (): void {
                   v-tippy="$t('actions.copy')"
                   class="icon-btn-primary"
                   :aria-label="$t('actions.copy')"
-                  @click="copyEncounter(encounter)"
+                  @click="encounterStore.copyEncounter(encounter)"
                 >
                   <Icon
                     name="material-symbols:content-copy-outline-rounded"
@@ -323,7 +297,7 @@ function resetState (): void {
               selected = [v];
               needConfirmation = true
             }"
-            @copy="copyEncounter(encounter)"
+            @copy="encounterStore.copyEncounter"
             @share="encounterStore.shareEncounter"
           />
         </div>
@@ -353,7 +327,12 @@ function resetState (): void {
           type: $t('general.encounters').toLowerCase()
         })"
       @close="resetState"
-      @delete="deleteEncounter"
+      @delete="() => {
+        encounterStore.deleteEncounter(
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+        );
+        resetState()
+      }"
     />
     <EncounterModal
       :open="isUpdating || isOpen"

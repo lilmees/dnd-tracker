@@ -106,14 +106,11 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 }
 
 async function updateHomebrew (formData: Obj): Promise<void> {
-  if (!props.item?.id) {
-    return
-  }
+  if (!props.item?.id) { return }
 
   const updated = useEmptyKeyRemover(formData) as Homebrew
   await homebrewStore.updateHomebrew(updated, props.item.id as number)
-  // test with trhowing an error here and if the console log still gets executed
-  console.log('tester')
+
   emit('updated', updated)
 }
 

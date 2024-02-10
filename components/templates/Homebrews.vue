@@ -108,12 +108,10 @@ function getActionsAmount (item: Homebrew): number {
     </div>
     <ul>
       <li>Add searching/disabled to all tables</li>
-      <li>Test when error is thrown in homebrewmodal if the emit still gets called</li>
-      <li>Change bulk delete functions to always allow bulk delete</li>
       <li>encounter page not table when tomuch items</li>
-      <li>test actions and if table updates afterwards</li>
-      <li>test if homebrew modal en encounter page works</li>
+      <li>test if homebrew modal on encounter page works</li>
       <li>remove usebulkediting composable</li>
+      <li>test if homebrew creation still works on encounter page</li>
     </ul>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
     <template

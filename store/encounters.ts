@@ -18,7 +18,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const filters = ref<TableFilters>({
     search: '',
-    sortedBy: 'id',
+    sortedBy: 'title',
     sortACS: true
   })
 
@@ -145,31 +145,24 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return await addEncounter(encounter as AddEncounter)
   }
 
-  async function deleteEncounter (id: number): Promise<void> {
-    const { error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .eq('id', id)
-      .select('*')
+  async function deleteEncounter (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('initiative_sheets').delete()
 
-    if (err) {
-      throw err
-    } else {
-      fetch(undefined, !!filters.value.search)
-    }
-  }
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
 
-  async function bulkDeleteEncounters (ids: number[]): Promise<void> {
-    const { error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .in('id', ids)
-      .select('*')
+      const { error: err } = await query
 
-    if (err) {
-      throw err
-    } else {
-      fetch(undefined, !!filters.value.search)
+      if (err) {
+        throw err
+      } else {
+        fetch(undefined, !!filters.value.search)
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
@@ -234,7 +227,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     addEncounter,
     copyEncounter,
     deleteEncounter,
-    bulkDeleteEncounters,
     updateEncounter,
     shareEncounter,
     resetPagination

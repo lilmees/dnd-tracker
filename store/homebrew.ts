@@ -18,7 +18,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   const filters = ref<TableFilters>({
     search: '',
-    sortedBy: 'id',
+    sortedBy: 'name',
     sortACS: true
   })
 

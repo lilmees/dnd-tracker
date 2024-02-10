@@ -1,7 +1,9 @@
 import logRocket from 'logrocket'
 
 export const useNotesStore = defineStore('useNotesStore', () => {
+  const currentStore = useCurrentCampaignStore()
   const supabase = useSupabaseClient()
+  const toast = useToastStore()
 
   const loading = ref<boolean>(true)
   const data = ref<Note[]>([])
@@ -19,9 +21,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     loading.value = true
 
     try {
-      let query = supabase
-        .from('notes')
-        .select('*', { count: 'exact' })
+      let query = supabase.from('notes').select('*', { count: 'exact' })
 
       if (eq) {
         query = query.eq(eq.field, eq.value)
@@ -44,73 +44,66 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     }
   }
 
-  async function getNoteById (id: number): Promise<Note> {
-    const { data, error } = await supabase
-      .from('notes')
-      .select('*')
-      .eq('id', id)
-      .single()
+  async function addNote (note: Note): Promise<void> {
+    try {
+      const { data: newNote, error } = await supabase
+        .from('notes')
+        .insert([note as never])
+        .select('*')
 
-    if (error) {
-      throw error
-    } else {
-      return data
+      if (error) {
+        throw error
+      } else {
+        data.value = [newNote[0], ...data.value]
+        noteCount.value++
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
-  async function addNote (note: Note): Promise<Note> {
-    const { data, error } = await supabase
-      .from('notes')
-      .insert([note as never])
-      .select('*')
+  async function deleteNote (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('notes').delete()
 
-    if (error) {
-      throw error
-    } else {
-      fetch()
-      return data[0]
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
+
+      const { error: err } = await query
+
+      if (err) {
+        throw err
+      } else {
+        fetch({ field: 'campaign', value: currentStore.campaign!.id })
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
-  async function deleteNote (id: number): Promise<void> {
-    const { error } = await supabase
-      .from('notes')
-      .delete()
-      .eq('id', id)
+  async function updateNote (note: Note, id: number): Promise<void> {
+    try {
+      const { data: updatedNote, error } = await supabase
+        .from('notes')
+        .update(note as never)
+        .eq('id', id)
+        .select('*')
 
-    if (error) {
-      throw error
-    }
-
-    fetch()
-  }
-
-  async function bulkDeleteNote (ids: number[]): Promise<void> {
-    const { error: err } = await supabase
-      .from('notes')
-      .delete()
-      .in('id', ids)
-      .select('*')
-
-    if (err) {
-      throw err
-    } else {
-      fetch()
-    }
-  }
-
-  async function updateNote (note: Note, id: number): Promise<Note> {
-    const { data, error } = await supabase
-      .from('notes')
-      .update(note as never)
-      .eq('id', id)
-      .select('*')
-
-    if (error) {
-      throw error
-    } else {
-      fetch()
-      return data[0]
+      if (error) {
+        throw error
+      } else {
+        const index = data.value.findIndex(e => e.id === id)
+        data.value[index] = {
+          ...data.value[index],
+          ...updatedNote[0] as Note
+        }
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
@@ -123,10 +116,8 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     visibleItems,
     noItems,
     fetch,
-    getNoteById,
     addNote,
     deleteNote,
-    bulkDeleteNote,
     updateNote
   }
 })
