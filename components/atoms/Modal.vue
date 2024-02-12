@@ -47,13 +47,13 @@ onKeyStroke('Escape', () => emit('close'))
       >
         <div class="relative pb-4">
           <button
-            class="absolute -top-7 -right-7 group"
+            class="absolute -top-7 -right-7 group icon-btn-danger group"
             :aria-label="$t('actions.close')"
             @click="$emit('close')"
           >
             <Icon
               name="ic:round-clear"
-              class="text-danger w-8 h-8 rounded-full ring-danger group-focus-within:ring"
+              class="w-8 h-8 text-danger group-hover:text-white transition-colors"
               aria-hidden="true"
             />
           </button>

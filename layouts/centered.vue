@@ -42,10 +42,10 @@ if (process.client) {
           loading="lazy"
           class="w-10 h-10 absolute -top-10"
         >
-        <NuxtLink :to="localePath('/')" class="group">
+        <NuxtLink :to="localePath('/')" class="group absolute right-4 top-4 icon-btn-danger">
           <Icon
             name="ic:round-clear"
-            class="w-8 h-8 text-danger cursor-pointer absolute right-4 top-4 rounded-full ring-danger group-focus-within:ring"
+            class="w-8 h-8 text-danger group-hover:text-white transition-colors"
             aria-hidden="true"
           />
         </NuxtLink>

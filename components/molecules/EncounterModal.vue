@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-const emit = defineEmits(['close', 'added', 'updated'])
+const emit = defineEmits(['close'])
 const props = withDefaults(
   defineProps<{
     open: boolean,
@@ -60,6 +60,10 @@ whenever(() => props.update, () => {
   form.value.campaign = props.campaignId || camp
 })
 
+whenever(() => props.open, () => {
+  form.value.campaign = props.campaignId
+})
+
 function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
   error.value = undefined
   isLoading.value = true
@@ -80,13 +84,13 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
-    const enc = await store.updateEncounter(
+    await store.updateEncounter(
       { ...data, color: contrastColor(data.background) },
       props.encounter.id
     )
-
-    emit('updated', enc)
   }
+
+  emit('close')
 }
 
 async function addEncounter (data: EncounterForm): Promise<void> {
@@ -100,10 +104,10 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       activeIndex: 0
     }) as AddEncounter
 
-    const encounter = await store.addEncounter(enc)
-
-    emit('added', encounter)
+    await store.addEncounter(enc)
   }
+
+  emit('close')
 }
 
 function resetState (): void {

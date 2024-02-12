@@ -328,11 +328,15 @@ function resetState (): void {
     <EncounterModal
       :open="isUpdating || isOpen"
       :encounter="selected.length && isUpdating ? selected[0] : undefined"
-      :campaign="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
+      :campaign-id="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
       :update="isUpdating"
       @close="resetState"
       @updated="resetState"
       @added="resetState"
     />
+    <p>
+      {{ currentStore.campaign && campaignView }}
+      {{ currentStore.campaign?.id }}
+    </p>
   </div>
 </template>
