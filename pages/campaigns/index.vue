@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
 
@@ -8,20 +6,15 @@ const toast = useToastStore()
 const store = useCampaignsStore()
 const { t } = useI18n()
 
-const {
-  isBulk,
-  isUpdating,
-  needConfirmation,
-  selected,
-  toggleSelection,
-  reset
-} = useBulkEditing()
-
 const isOpen = ref<boolean>(false)
 const isTable = ref<boolean>(false)
 const search = ref<string>('')
 const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
+const isBulk = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+const selected = ref<Campaign[]>([])
 
 const headers = [
   { label: t('general.name'), sort: true, id: 'title' },
@@ -31,17 +24,12 @@ const headers = [
   { label: t('general.modify'), sort: false, id: 'modify' }
 ]
 
-onMounted(() => {
-  store.fetch()
-  reset()
-})
+onMounted(() => { store.fetch() })
 
 whenever(() => store.error, () => { toast.error() })
 
 const visibleItems = computed<Campaign[]>(() => {
-  if (!store.allowedCampaigns) {
-    return []
-  }
+  if (!store.allowedCampaigns) { return [] }
 
   const sorted = sortArray<Campaign>(store.allowedCampaigns, sortedBy.value, sortACS.value)
 
@@ -50,19 +38,12 @@ const visibleItems = computed<Campaign[]>(() => {
 
 const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
 
-async function deleteCampaigns (): Promise<void> {
-  try {
-    if (selected.value.length === 1) {
-      await store.deleteCampaign(selected.value[0].id)
-    } else if (selected.value.length > 1) {
-      await store.bulkDeleteCampaigns(selected.value.map(v => v.id))
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    reset()
-  }
+function resetState (): void {
+  needConfirmation.value = false
+  isBulk.value = false
+  isUpdating.value = false
+  selected.value = []
+  isOpen.value = false
 }
 </script>
 
@@ -101,9 +82,7 @@ async function deleteCampaigns (): Promise<void> {
             class="btn-small-danger"
             @click="() => {
               isBulk = !isBulk;
-              if (!isBulk) {
-                reset()
-              }
+              if (!isBulk) { resetState() }
             }"
           >
             <Icon
@@ -278,19 +257,21 @@ async function deleteCampaigns (): Promise<void> {
       :open="needConfirmation"
       :title="selected.length === 1
         ? selected[0].title
-        : $t('pages.campaigns.remove.multiple', {number: selected.length})
+        : $t('pages.campaigns.remove.multiple', { number: selected.length })
       "
-      @close="reset"
-      @delete="deleteCampaigns"
+      @close="resetState"
+      @delete="() => {
+        store.deleteCampaign(
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+        );
+        resetState()
+      }"
     />
     <CampaignModal
       :open="isOpen || (isUpdating && !!selected.length)"
       :campaign="selected.length ? selected[0] : undefined"
       :update="isUpdating"
-      @close="() => {
-        isOpen = false
-        reset();
-      }"
+      @close="resetState"
     />
   </Layout>
 </template>

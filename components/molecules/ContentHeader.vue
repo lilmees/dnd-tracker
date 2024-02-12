@@ -1,9 +1,9 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    toMuch: boolean
-    hideToggle: boolean,
-    shadow: boolean
+    toMuch?: boolean
+    hideToggle?: boolean,
+    shadow?: boolean
    }>(), {
     toMuch: false,
     hideToggle: false,

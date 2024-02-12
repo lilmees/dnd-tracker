@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    hideToggle: boolean
+    hideToggle?: boolean
    }>(), {
     hideToggle: false
   }
