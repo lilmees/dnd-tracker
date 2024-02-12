@@ -63,9 +63,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       const { data: sheets, error: err, count } = await query
 
       pages.value = calcPages((count || 1), perPage.value)
-      encounterCountLocal.value = count || 0
 
-      await getCount()
+      if (fuzzy) {
+        await getCount()
+      }
 
       if (err) {
         throw err
@@ -203,7 +204,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   function resetPagination (): void {
     pages.value = 0
     page.value = 0
-    encounterCountLocal.value = 0
     filters.value = {
       search: '',
       sortedBy: 'id',
@@ -223,7 +223,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     perPage,
     filters,
     encounterCount,
-    encounterCountLocal,
     noItems,
     fetch,
     paginate,

@@ -13,7 +13,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const page = ref<number>(0)
   const perPage = ref<number>(20)
   const homebrewCount = ref<number>(0)
-  const homebrewCountLocal = ref<number>(0)
   const max = ref<number>(100)
 
   const filters = ref<TableFilters>({
@@ -55,9 +54,10 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       const { data: homebrew, error: err, count } = await query
 
       pages.value = calcPages((count || 1), perPage.value)
-      homebrewCountLocal.value = count || 0
 
-      await getCount()
+      if (fuzzy) {
+        await getCount()
+      }
 
       if (err) {
         throw err
@@ -192,7 +192,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   function resetPagination (): void {
     pages.value = 0
     page.value = 0
-    homebrewCountLocal.value = 0
     filters.value = {
       search: '',
       sortedBy: 'id',
@@ -211,7 +210,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     perPage,
     filters,
     homebrewCount,
-    homebrewCountLocal,
     noItems,
     fetch,
     paginate,

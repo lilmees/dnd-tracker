@@ -106,9 +106,6 @@ function getActionsAmount (item: Homebrew): number {
         </button>
       </div>
     </div>
-    <p>
-      do i need the count on the normal fetches if there's a separate getCount function
-    </p>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
     <template
       v-else-if="
