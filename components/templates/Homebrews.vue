@@ -106,12 +106,9 @@ function getActionsAmount (item: Homebrew): number {
         </button>
       </div>
     </div>
-    <ul>
-      <li>encounter page not table when tomuch items</li>
-      <li>test if homebrew modal on encounter page works</li>
-      <li>remove usebulkediting composable</li>
-      <li>test if homebrew creation still works on encounter page</li>
-    </ul>
+    <p>
+      do i need the count on the normal fetches if there's a separate getCount function
+    </p>
     <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
     <template
       v-else-if="

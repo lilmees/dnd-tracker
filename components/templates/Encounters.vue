@@ -55,15 +55,7 @@ watchDebounced(() => encounterStore.filters, async () => {
   )
 }, { debounce: 100, maxWait: 500, deep: true })
 
-const toMuchItems = computed<boolean>(() => {
-  const toMuch = encounterStore.encounterCount >= encounterStore.perPage
-
-  if (toMuch) {
-    isTable.value = true
-  }
-
-  return toMuch
-})
+const toMuch = computed<boolean>(() => encounterStore.encounterCount >= encounterStore.perPage)
 
 function resetState (): void {
   needConfirmation.value = false
@@ -135,7 +127,7 @@ function resetState (): void {
       <ContentHeader
         v-model:grid="isTable"
         v-model:search="encounterStore.filters.search"
-        :to-much="toMuchItems"
+        :to-much="toMuch"
         :hide-toggle="campaignView"
         :shadow="!campaignView"
       />

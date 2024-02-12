@@ -1,5 +1,5 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
   defineProps<{
     toMuch?: boolean
     hideToggle?: boolean,
@@ -20,6 +20,10 @@ const route = useRoute()
 if (!isTable.value) {
   isTable.value = route.query.format === 'table'
 }
+
+whenever(() => props.toMuch, (v) => {
+  isTable.value = true
+}, { immediate: true })
 
 watch(() => isTable.value, (v) => {
   router.push({ query: { format: v ? 'table' : undefined } })
