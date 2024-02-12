@@ -5,6 +5,7 @@
     "addAll": "Alles toevoegen",
     "select": "Selecteer",
     "selectOption": "Selecteer een optie",
+    "clickToSelect": "Klik om te selecteren",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
     "save": "Opslaan",
@@ -29,6 +30,7 @@
     "panMap": "Map verschuiven",
     "random": "Willekeurig",
     "create": "Creëren",
+    "createItem": "{item} creëren",
     "generate": "Genereren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
@@ -58,6 +60,7 @@
     "campaigns": "Campagnes",
     "campaign": "Campagne",
     "encounters": "Encounters",
+    "encounter": "Encounter",
     "players": "Spelers",
     "player": "Speler",
     "members": "Leden",
@@ -70,6 +73,7 @@
     "total": "Totaal",
     "grandTotal": "Eindtotaal",
     "homebrew": "Homebrew",
+    "homebrews": "Homebrews",
     "round": "Ronde",
     "link": "Link",
     "month": "maand",
@@ -135,7 +139,8 @@
       "title": "Nog geen {content}",
       "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
     },
-    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder"
+    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder",
+    "selectedToRemove": "Geselecteerd om te verwijderen"
   },
   "pages": {
     "home": {
@@ -175,13 +180,7 @@
     "campaigns": {
       "campaigns": "Campagnes",
       "add": "Campagne creëren",
-      "update": "Campagne bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen campagnes",
-        "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} campagnes",
-        "multiple": "{number} campagnes"
-      }
+      "update": "Campagne bijwerken"
     },
     "campaign": {
       "content": {},
@@ -213,13 +212,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
-      "update": "Encounter bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen encounters",
-        "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} encounters",
-        "multiple": "{number} encounters"
-      }
+      "update": "Encounter bijwerken"
     },
     "encounter": {
       "back": "Terug naar encounters",
@@ -630,6 +623,12 @@
     },
     "contentHeader": {
       "toMuch": "Te veel items voor kaartweergave"
+    },
+    "bulkRemove": {
+      "title": "Bulk verwijderen {type}",
+      "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",
+      "amount": "Verwijder {number} {type}",
+      "multiple": "{number} {type}"
     }
   }
 }

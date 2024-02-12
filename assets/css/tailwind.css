@@ -12,6 +12,16 @@
     @apply body-small py-[2px] px-3 rounded outline-none border-2 text-white duration-200 ease-in-out font-medium transition-all;
     @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
+
+  .icon-btn {
+    @apply body-small outline-none font-medium relative;
+    @apply active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply before:content-[''] before:p-1 before:rounded-lg before:absolute before:-inset-1 before:duration-300 before:ease-in-out before:transition-all;
+  }
+
+  .icon-btn > * {
+    @apply relative z-[1];
+  }
 }
 
 @layer utilities {
@@ -178,6 +188,38 @@
 
   .btn-small-danger {
     @apply btn-small bg-danger/50 hover:bg-danger/60 border-danger;
+  }
+
+  .icon-btn-black {
+    @apply icon-btn hover:before:bg-black/50;
+  }
+
+  .icon-btn-primary {
+    @apply icon-btn hover:before:bg-primary/50;
+  }
+
+  .icon-btn-secondary {
+    @apply icon-btn hover:before:bg-secondary/50;
+  }
+
+  .icon-btn-success {
+    @apply icon-btn hover:before:bg-success/50;
+  }
+
+  .icon-btn-info {
+    @apply icon-btn hover:before:bg-info/50;
+  }
+
+  .icon-btn-warning {
+    @apply icon-btn hover:before:bg-warning/50;
+  }
+
+  .icon-btn-help {
+    @apply icon-btn hover:before:bg-help/50;
+  }
+
+  .icon-btn-danger {
+    @apply icon-btn hover:before:bg-danger/50;
   }
 
   kbd {

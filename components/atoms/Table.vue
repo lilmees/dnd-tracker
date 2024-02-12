@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { search } from '@formkit/icons'
+
 defineEmits(['paginate'])
 
 withDefaults(
@@ -6,9 +8,11 @@ withDefaults(
     headers: TableHeader[]
     pages?: number
     shadow?: boolean
+    searching?: boolean
   }>(), {
     pages: 0,
-    shadow: false
+    shadow: false,
+    searching: false
   }
 )
 
@@ -27,8 +31,9 @@ const page = defineModel<number>('page', { default: 0 })
               v-for="{ label, sort, id } in headers"
               :key="label"
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 cursor-pointer"
+              :class="{ '!cursor-progress': searching }"
               @click="() => {
-                if (sort) {
+                if (sort && !searching) {
                   sortACS = id === sortedBy ? !sortACS : false
                   sortedBy = id
                 }
@@ -63,6 +68,7 @@ const page = defineModel<number>('page', { default: 0 })
       v-if="pages > 1"
       v-model="page"
       :total-pages="pages"
+      :searching="searching"
       @paginate="$emit('paginate', $event)"
     />
   </section>

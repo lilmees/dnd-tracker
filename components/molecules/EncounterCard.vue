@@ -37,7 +37,7 @@ const profile = useProfileStore()
         <template #content>
           <div class="p-4 space-y-2 overflow-auto">
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-success"
               :aria-label="$t('actions.share')"
               @click="$emit('share', encounter)"
             >
@@ -49,7 +49,7 @@ const profile = useProfileStore()
               <p>{{ $t('actions.share') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-info"
               :aria-label="$t('actions.update')"
               @click="$emit('update', encounter)"
             >
@@ -61,7 +61,7 @@ const profile = useProfileStore()
               <p>{{ $t('actions.update') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max disabled:opacity-50 disabled:cursor-not-allowed"
+              class="flex gap-2 items-center max-w-max icon-btn-primary"
               :aria-label="$t('actions.copy')"
               :disabled="disableCopy"
               @click="$emit('copy', encounter)"
@@ -74,7 +74,7 @@ const profile = useProfileStore()
               <p>{{ $t('actions.copy') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-danger"
               :aria-label="$t('actions.delete')"
               @click="$emit('remove', encounter)"
             >

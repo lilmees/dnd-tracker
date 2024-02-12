@@ -71,7 +71,11 @@ const isOpen = ref<boolean>(false)
           aria-hidden="true"
         />
       </button>
-      <HomebrewModal encounter :open="isOpen" @close="isOpen = false" />
+      <HomebrewModal
+        encounter
+        :open="isOpen"
+        @close="isOpen = false"
+      />
     </div>
   </div>
 </template>

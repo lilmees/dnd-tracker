@@ -1,9 +1,13 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    toMuch: boolean
+    toMuch?: boolean
+    hideToggle?: boolean,
+    shadow?: boolean
    }>(), {
-    toMuch: false
+    toMuch: false,
+    hideToggle: false,
+    shadow: false
   }
 )
 
@@ -13,14 +17,15 @@ const search = defineModel<string>('search')
 const router = useRouter()
 const route = useRoute()
 
-onMounted(() => {
-  if (!isTable.value) {
-    isTable.value = route.query.format === 'table'
-  }
-})
+if (!isTable.value) {
+  isTable.value = route.query.format === 'table'
+}
+
+whenever(() => props.toMuch, (v) => {
+  isTable.value = true
+}, { immediate: true })
 
 watch(() => isTable.value, (v) => {
-  isTable.value = v
   router.push({ query: { format: v ? 'table' : undefined } })
 }, { immediate: true })
 </script>
@@ -31,11 +36,12 @@ watch(() => isTable.value, (v) => {
       v-model="search"
       type="search"
       suffix-icon="search"
-      outer-class="$reset !pb-0 w-fit tracker-shadow"
+      :outer-class="`$reset !pb-0 w-fit ${shadow ? 'tracker-shadow' : ''}`"
     />
     <div class="flex gap-x-4 gap-y-2 items-center flex-wrap">
       <slot />
       <div
+        v-if="!hideToggle"
         v-tippy="{
           content: toMuch ? $t('components.contentHeader.toMuch') : undefined
         }"

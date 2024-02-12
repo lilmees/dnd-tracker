@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Campaigns' })
 
@@ -8,20 +6,15 @@ const toast = useToastStore()
 const store = useCampaignsStore()
 const { t } = useI18n()
 
-const {
-  isBulk,
-  isUpdating,
-  needConfirmation,
-  selected,
-  toggleSelection,
-  reset
-} = useBulkEditing()
-
 const isOpen = ref<boolean>(false)
 const isTable = ref<boolean>(false)
 const search = ref<string>('')
 const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
+const isBulk = ref<boolean>(false)
+const isUpdating = ref<boolean>(false)
+const needConfirmation = ref<boolean>(false)
+const selected = ref<Campaign[]>([])
 
 const headers = [
   { label: t('general.name'), sort: true, id: 'title' },
@@ -31,17 +24,12 @@ const headers = [
   { label: t('general.modify'), sort: false, id: 'modify' }
 ]
 
-onMounted(() => {
-  store.fetch()
-  reset()
-})
+onMounted(() => { store.fetch() })
 
 whenever(() => store.error, () => { toast.error() })
 
 const visibleItems = computed<Campaign[]>(() => {
-  if (!store.allowedCampaigns) {
-    return []
-  }
+  if (!store.allowedCampaigns) { return [] }
 
   const sorted = sortArray<Campaign>(store.allowedCampaigns, sortedBy.value, sortACS.value)
 
@@ -50,33 +38,26 @@ const visibleItems = computed<Campaign[]>(() => {
 
 const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
 
-async function deleteCampaigns (): Promise<void> {
-  try {
-    if (selected.value.length === 1) {
-      await store.deleteCampaign(selected.value[0].id)
-    } else if (selected.value.length > 1) {
-      await store.bulkDeleteCampaigns(selected.value.map(v => v.id))
-    }
-  } catch (err) {
-    logRocket.captureException(err as Error)
-    toast.error()
-  } finally {
-    reset()
-  }
+function resetState (): void {
+  needConfirmation.value = false
+  isBulk.value = false
+  isUpdating.value = false
+  selected.value = []
+  isOpen.value = false
 }
 </script>
 
 <template>
   <Layout shadow>
     <div v-if="!store.error">
-      <div class="pb-2 flex flex-wrap gap-4 justify-between items-center">
+      <div class="border-b-2 border-slate-700 pb-1 mb-6 flex flex-wrap gap-4 justify-between items-center">
         <h1 class="grow">
           {{ $t('pages.campaigns.campaigns') }}
         </h1>
         <div class="flex items-end gap-2 flex-wrap">
           <span
             v-if="store.campaigns"
-            class="text-[10px]"
+            class="text-[12px]"
             :class="{ 'text-danger': store.campaigns.length >= store.max }"
           >
             {{ store.campaigns.length }}/{{ store.max }}
@@ -101,9 +82,7 @@ async function deleteCampaigns (): Promise<void> {
             class="btn-small-danger"
             @click="() => {
               isBulk = !isBulk;
-              if (!isBulk) {
-                reset()
-              }
+              if (!isBulk) { resetState() }
             }"
           >
             <Icon
@@ -122,34 +101,13 @@ async function deleteCampaigns (): Promise<void> {
         </div>
       </template>
       <template v-else-if="store.allowedCampaigns?.length">
-        <ContentHeader v-model:grid="isTable" v-model:search="search" />
-        <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
-          <div v-if="isBulk">
-            <h2 class="text-danger">
-              {{ $t('pages.campaigns.remove.title') }}
-            </h2>
-            <p class="pt-2 pb-6">
-              {{ $t('pages.campaigns.remove.subtitle') }}
-            </p>
-            <div class="flex gap-2 mb-12">
-              <button
-                class="btn-danger"
-                :disabled="!selected.length"
-                :aria-label="$t('pages.campaigns.remove.amount', { number: selected.length })"
-                @click="needConfirmation = true"
-              >
-                {{ $t('pages.campaigns.remove.amount', { number: selected.length }) }}
-              </button>
-              <button
-                class="btn-success"
-                :aria-label="$t('actions.cancel')"
-                @click="isBulk = false, selected = []"
-              >
-                {{ $t('actions.cancel') }}
-              </button>
-            </div>
-          </div>
-        </Transition>
+        <ContentHeader v-model:grid="isTable" v-model:search="search" shadow />
+        <BulkRemove
+          v-model:isBulk="isBulk"
+          v-model:needConfirmation="needConfirmation"
+          v-model:selected="selected"
+          type="campaigns"
+        />
         <LimitCta
           v-if="!isBulk && store.campaigns && store.max <= store.campaigns.length"
           class="mb-10"
@@ -189,7 +147,7 @@ async function deleteCampaigns (): Promise<void> {
               {{ td }}
             </td>
             <td class="td">
-              <div class="flex justify-center items-center gap-1">
+              <div class="flex justify-center items-center gap-2">
                 <FormKit
                   v-if="isBulk"
                   name="marketing"
@@ -202,6 +160,7 @@ async function deleteCampaigns (): Promise<void> {
                 <template v-else>
                   <button
                     v-tippy="$t('actions.update')"
+                    class="icon-btn-info"
                     :aria-label="$t('actions.update')"
                     @click="() => {
                       selected = [item];
@@ -210,12 +169,13 @@ async function deleteCampaigns (): Promise<void> {
                   >
                     <Icon
                       name="lucide:wrench"
-                      class="text-info w-6 h-6"
+                      class="w-6 h-6"
                       aria-hidden="true"
                     />
                   </button>
                   <button
                     v-tippy="$t('actions.delete')"
+                    class="icon-btn-danger"
                     :aria-label="$t('actions.delete')"
                     @click="() => {
                       selected = [item];
@@ -224,7 +184,7 @@ async function deleteCampaigns (): Promise<void> {
                   >
                     <Icon
                       name="material-symbols:delete-outline-rounded"
-                      class="w-6 h-6 text-danger outline-none"
+                      class="w-6 h-6"
                       aria-hidden="true"
                     />
                   </button>
@@ -247,14 +207,11 @@ async function deleteCampaigns (): Promise<void> {
             :key="campaign.id"
             class="relative"
           >
-            <div
+            <BulkRemoveCard
               v-if="isBulk"
-              class="absolute inset-0 z-[1] rounded-lg border-4 cursor-pointer"
-              :class="{
-                '!border-danger bg-danger/50': selected.find(c => c.id === campaign.id)
-              }"
-              :style="{ 'border-color': campaign.background }"
-              @click="toggleSelection(campaign)"
+              :selected="!!selected.find(e => e.id === campaign.id)"
+              :border="campaign.background"
+              @toggled="toggleSelection<Campaign>(campaign, selected)"
             />
             <CampaignCard
               :campaign="campaign"
@@ -300,19 +257,21 @@ async function deleteCampaigns (): Promise<void> {
       :open="needConfirmation"
       :title="selected.length === 1
         ? selected[0].title
-        : $t('pages.campaigns.remove.multiple', {number: selected.length})
+        : $t('pages.campaigns.remove.multiple', { number: selected.length })
       "
-      @close="reset"
-      @delete="deleteCampaigns"
+      @close="resetState"
+      @delete="() => {
+        store.deleteCampaign(
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+        );
+        resetState()
+      }"
     />
     <CampaignModal
       :open="isOpen || (isUpdating && !!selected.length)"
       :campaign="selected.length ? selected[0] : undefined"
       :update="isUpdating"
-      @close="() => {
-        isOpen = false
-        reset();
-      }"
+      @close="resetState"
     />
   </Layout>
 </template>

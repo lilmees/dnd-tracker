@@ -3,6 +3,7 @@ import logRocket from 'logrocket'
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
+  const toast = useToastStore()
 
   const loading = ref<boolean>(true)
   const error = ref<string>()
@@ -44,7 +45,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   async function getCampaignById (id: number): Promise<Campaign> {
     const { data, error } = await supabase
       .from('campaigns')
-      .select('*, created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(*), notes(*), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
+      .select('*, created_by(id, created_at, username, name, avatar, email, badges), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
       .eq('id', id)
       .single()
 
@@ -69,33 +70,24 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     }
   }
 
-  async function deleteCampaign (id: number): Promise<void> {
-    const { data, error } = await supabase
-      .from('campaigns')
-      .delete()
-      .eq('id', id)
-      .select('*')
+  async function deleteCampaign (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('campaigns').delete()
 
-    if (error) {
-      throw error
-    }
-    if (data) {
-      fetch()
-    }
-  }
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
 
-  async function bulkDeleteCampaigns (ids: number[]): Promise<void> {
-    const { data, error } = await supabase
-      .from('campaigns')
-      .delete()
-      .in('id', ids)
-      .select('*')
+      const { error: err } = await query
 
-    if (error) {
-      throw error
-    }
-    if (data) {
-      fetch()
+      if (err) {
+        throw err
+      } else {
+        fetch()
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
@@ -128,7 +120,6 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     getCampaignById,
     addCampaign,
     deleteCampaign,
-    bulkDeleteCampaigns,
     updateCampaign
   }
 })
