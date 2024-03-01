@@ -1,19 +1,15 @@
 <script setup lang="ts">
-const localePath = useLocalePath()
 const umami = useRuntimeConfig().public.umamiId
 const profile = useProfileStore()
 const { auth } = useSupabaseClient()
 
 useSeo()
 
-auth.onAuthStateChange((event, session) => {
-  profile.fetch()
-  if (event === 'PASSWORD_RECOVERY') {
-    navigateTo(localePath('/reset-password'))
+auth.onAuthStateChange((event) => {
+  if (['INITIAL_SESSION', 'USER_UPDATED', 'SIGNED_IN'].includes(event)) {
+    profile.fetch()
   }
 })
-
-onBeforeMount(() => profile.fetch())
 
 useHead({
   script: [

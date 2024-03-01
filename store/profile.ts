@@ -21,12 +21,13 @@ export const useProfileStore = defineStore('useProfileStore', () => {
 
   async function fetch (): Promise<void> {
     error.value = null
-    loading.value = true
 
     try {
       if (!user.value) {
         data.value = null
-      } else {
+      } else if (!loading.value) {
+        loading.value = true
+
         const { data: prof, error: err } = await supabase
           .from('profiles')
           .select('*')
@@ -115,7 +116,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
         throw err
       }
 
-      return data as SocialProfile
+      return data as unknown as SocialProfile
     } catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
@@ -134,7 +135,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
         throw err
       }
 
-      return data as SocialProfile[]
+      return data as unknown as SocialProfile[]
     } catch (err) {
       logRocket.captureException(err as Error)
       toast.error()

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-definePageMeta({ middleware: ['loggedin'] })
-
 const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
@@ -14,8 +12,9 @@ const error = ref<string | null>(null)
 
 async function resetPassword ({ __init, password }: Obj): Promise<void> {
   error.value = null
+  isLoading.value = true
+
   try {
-    isLoading.value = true
     await store.updateUser({ password })
     toast.success({ title: t('pages.resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
@@ -38,10 +37,10 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
       <NuxtImg
         src="/dice.webp"
         alt="D20 logo dice"
-        sizes="sm:40px md:40px lg:40px"
+        sizes="sm:80px md:80px lg:80px"
         format="webp"
         provider="imagekit"
-        class="w-10 h-10 mx-auto visibility-pulse"
+        class="w-20 h-20 mx-auto visibility-pulse"
       />
       <p v-if="error" class="text-danger text-center">
         {{ error }}
