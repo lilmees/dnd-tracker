@@ -2,8 +2,8 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   const supabase = useSupabaseClient()
   const localePath = useLocalePath()
 
-  async function register (credentails: Login, data: Register): Promise<void> {
-    const { error, data: userData } = await supabase.auth.signUp(credentails)
+  async function register (credentials: Login, data: Register): Promise<void> {
+    const { error, data: userData } = await supabase.auth.signUp(credentials)
 
     if (error) {
       throw error
@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     if (userData?.user) {
       const profile: Profile = {
         ...data,
-        email: credentails.email,
+        email: credentials.email,
         id: userData.user.id,
         role: 'User',
         subscription_type: 'free',
@@ -53,7 +53,9 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   }
 
   async function forgotPassword (email: string): Promise<void> {
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`
+    })
 
     if (error) {
       throw error
