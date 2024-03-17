@@ -27,6 +27,7 @@ const profile = useProfileStore()
         interactive
         placement="bottom"
         :z-index="2"
+        :delay="0"
       >
         <Icon
           name="tabler:dots"

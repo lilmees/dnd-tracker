@@ -53,7 +53,7 @@ export function createCone (width: number, height: number, grid: number): fabric
     },
     stroke: '#FBBD23',
     ...options
-  })
+  } as Partial<fabric.Polygon & { aoe: AOE }>)
 }
 
 export function createLine (height: number, grid: number): fabric.Rect {
