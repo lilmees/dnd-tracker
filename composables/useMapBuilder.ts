@@ -2,8 +2,6 @@ import * as fabric from 'fabric'
 import sprites from '@/fixtures/sprites.json'
 
 export const useMapBuilder = () => {
-  const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
-
   const toast = useToastStore()
   const { t } = useI18n()
 
@@ -15,9 +13,6 @@ export const useMapBuilder = () => {
 
   const cellWidth = ref<number>(32)
   const isDrawingMode = ref<boolean>(false)
-  const activeBrush = ref<FabricBrush>('Pencil')
-  const activeColor = ref<string>('#000000')
-  const brushSize = ref<string>('32')
   const draggedOver = ref<boolean>(false)
   const maxSprites = ref<number>(200)
   const spriteAmount = ref<number>(0)
@@ -26,7 +21,6 @@ export const useMapBuilder = () => {
   const useSnapToGrid = ref<boolean>(false)
   const selectedSprite = ref<Sprite>()
   const selectedType = ref<SpriteType>()
-  const recentCategorySearch = ref<{ sprite: Sprite, category: SpriteType }>()
   const isPanning = ref<boolean>(false)
   const lastPosX = ref<number>()
   const lastPosY = ref<number>()
@@ -44,9 +38,7 @@ export const useMapBuilder = () => {
   function mount (element: HTMLCanvasElement): void {
     canvas.value = markRaw(new fabric.Canvas(element))
 
-    if (canvas.value) {
-      setCanvasValues()
-    }
+    if (canvas.value) { setCanvasValues() }
   }
 
   function resetCanvas (): void {
@@ -63,50 +55,61 @@ export const useMapBuilder = () => {
   function setCanvasValues (): void {
     if (!canvas.value) { return }
 
-    canvas.value?.set({
-      backgroundColor: '#21252EB3',
-      isDrawingMode: isDrawingMode.value
-    })
-
     window.addEventListener('keydown', keydownHandler)
 
-    canvas.value.add(floorLayer.value)
-    canvas.value.add(middleLayer.value)
-    canvas.value.add(gridLayer.value)
-
-    setBrush('Pencil')
-
-    // Draw grid lines on the canvas
-    const options = { stroke: '#000000', strokeWidth: 1 }
-    for (let i = 1; i < canvas.value.getWidth() / cellWidth.value + 1; i++) {
-      gridLayer.value.add(new fabric.Line([cellWidth.value * i, 0, cellWidth.value * i, 512], options))
-      gridLayer.value.add(new fabric.Line([0, cellWidth.value * i, 512, cellWidth.value * i], options))
-    }
-
+    set('backgroundColor', '#21252EB3')
+    addLayers()
+    drawGridLines(canvas.value, cellWidth.value, gridLayer.value as fabric.Group)
     calculateCount()
+    setCanvasHooks()
+  }
+
+  function setCanvasHooks (): void {
+    if (!canvas.value) { return }
 
     canvas.value.on({
       dragenter: () => { draggedOver.value = true },
       dragleave: () => { draggedOver.value = false },
-      'object:added': e => calculateCount(e as { target: fabric.Object }),
+      'object:added': ({ target }: { target: fabric.Object }) => {
+        if (target) { calculateCount(target) }
+      },
       'object:removed': () => calculateCount(),
       'object:moving': ({ target }) => {
         if (useSnapToGrid.value) { snapToGrid(target, cellWidth.value) }
       },
-      'object:modified': ({ target }) => handleBoundaries(target),
+      'object:modified': ({ target }) => { if (target) { handleBoundaries(canvas.value, target) } },
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
-      'mouse:move': ({ e, target }) => {
-        handleTooltip(target, e)
+      'mouse:move': ({ e, target }: { e: MouseEvent, target: fabric.Object }) => {
+        if (target) { handleTooltip(target, e) }
         handleMouse(e, 'move')
       },
       'mouse:up': ({ e }) => handleMouse(e, 'up'),
-      'mouse:wheel': ({ e }) => handleMouseWheel(e)
+      'mouse:wheel': ({ e }) => handleMouseWheel(e as WheelEvent)
     })
   }
 
-  function handleTooltip (target: fabric.Object, e: fabric.TPointerEvent): void {
+  function addLayers (): void {
+    if (!canvas.value) { return }
+
+    if (floorLayer.value instanceof fabric.Group) {
+      canvas.value.add(floorLayer.value)
+    }
+
+    if (middleLayer.value instanceof fabric.Group) {
+      canvas.value.add(middleLayer.value)
+    }
+
+    if (gridLayer.value instanceof fabric.Group) {
+      canvas.value.add(gridLayer.value)
+    }
+  }
+
+  function handleTooltip (
+    target: fabric.Object & { aoe?: AOE },
+    e: fabric.TPointerEvent
+  ): void {
     if (!canvas.value || !target) { return }
 
     if (
@@ -143,9 +146,9 @@ export const useMapBuilder = () => {
     const spriteData = getSprite(selectedType.value, selectedSprite.value)
 
     if (spriteData) {
-      const layer: fabric.Group = selectedType.value === 'floors'
-        ? floorLayer.value
-        : middleLayer.value
+      const layer = selectedType.value === 'floors'
+        ? floorLayer.value as fabric.Group
+        : middleLayer.value as fabric.Group
 
       switch (action) {
         case 'down':
@@ -221,36 +224,17 @@ export const useMapBuilder = () => {
   }
 
   function changeZoom (out: boolean): void {
-    const currentZoom = Math.max(1, Math.min(out ? zoom.value - 1 : zoom.value + 1))
+    const currentZoom = calculateZoom(out, zoom.value)
 
     canvas.value?.setZoom(currentZoom)
     zoom.value = currentZoom
   }
 
-  function findType (sprite: Sprite): SpriteType | undefined {
-    if (recentCategorySearch.value?.sprite === sprite) {
-      return recentCategorySearch.value.category
-    }
-
-    for (const category in sprites) {
-      const json = sprites as SpriteMap
-
-      const categoryArray = json[category as keyof SpriteMap]
-      const match = categoryArray.find(item => item.value === sprite)
-
-      if (match) {
-        recentCategorySearch.value = { sprite, category: category as SpriteType }
-
-        return category as SpriteType
-      }
-    }
-  }
-
-  function calculateCount (event?: { target: fabric.Object }): void {
+  function calculateCount (target?: fabric.Object): void {
     let count: number = canvas.value?.getObjects().filter(obj => !(obj instanceof fabric.Group)).length || 0
 
-    if (event && count > maxSprites.value) {
-      canvas.value?.remove(event.target)
+    if (target && count > maxSprites.value) {
+      canvas.value?.remove(target)
       canvas.value?.requestRenderAll()
       count--
 
@@ -263,26 +247,13 @@ export const useMapBuilder = () => {
     spriteAmount.value = count
   }
 
-  function getSprite (type: SpriteType, sprite: Sprite): SpriteData | undefined {
-    const spriteMeta = sprites[type].find(svg => svg.value === sprite) as SpriteMetaData<Sprite>
-
-    if (!spriteMeta) { return }
-
-    return {
-      url: `${siteUrl}/art/${type}/${sprite}${spriteMeta?.variations ? '-1' : ''}.svg`,
-      ...spriteMeta
-    }
-  }
-
   function setSprite (sprite: Sprite, type: SpriteType): void {
     selectedSprite.value = selectedSprite.value === sprite ? undefined : sprite
     selectedType.value = selectedSprite.value ? type : undefined
-
-    toggleDrawing(false)
   }
 
-  function setBackgroundImage (img: fabric.Image): void {
-    canvas.value?.set({ backgroundImage: img })
+  function set (key: string, value: any): void {
+    canvas.value?.set(key, value)
     canvas.value?.requestRenderAll()
   }
 
@@ -297,6 +268,11 @@ export const useMapBuilder = () => {
 
   function update (object: fabric.Object, key: string, value: any): void {
     object.set(key, value)
+
+    if (useSnapToGrid.value && (key === 'left' || key === 'top')) {
+      snapToGrid(object, cellWidth.value)
+    }
+
     object.setCoords()
     canvas.value?.requestRenderAll()
   }
@@ -309,7 +285,7 @@ export const useMapBuilder = () => {
 
   function keydownHandler (e: KeyboardEvent): void {
     const object: fabric.Object | undefined = canvas.value?.getActiveObject()
-    const step = 8
+    const step = useSnapToGrid.value ? cellWidth.value : 8
 
     if (!object || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       return
@@ -336,92 +312,17 @@ export const useMapBuilder = () => {
     }
   }
 
-  function handleBoundaries (target: fabric.Image): void {
-    if (!canvas.value) { return }
-
-    const width = canvas.value.getWidth()
-    const height = canvas.value.getHeight()
-    const boundingBox = target.getBoundingRect()
-
-    if (boundingBox.left < 0) {
-      target.set({ left: 0 })
-    } else if (boundingBox.left + boundingBox.width > width) {
-      target.set({ left: width - boundingBox.width })
-    }
-
-    if (boundingBox.top < 0) {
-      target.set({ top: 0 })
-    } else if (boundingBox.top + boundingBox.height > height) {
-      target.set({ top: height - boundingBox.height })
-    }
-
-    target.setCoords()
-    canvas.value.requestRenderAll()
-  }
-
   function toggleGridLines (): void {
     showGrid.value = !showGrid.value
 
-    if (showGrid.value) {
-      canvas.value?.add(gridLayer.value)
-    } else {
-      canvas.value?.remove(gridLayer.value)
-    }
+    if (canvas.value && gridLayer.value instanceof fabric.Group) {
+      showGrid.value
+        ? canvas.value.add(gridLayer.value)
+        : canvas.value.remove(gridLayer.value)
 
-    canvas.value?.requestRenderAll()
-  }
-
-  function toggleDrawing (value?: boolean): void {
-    isDrawingMode.value = value ?? !isDrawingMode.value
-    canvas.value?.set('isDrawingMode', isDrawingMode.value)
-
-    if (isDrawingMode.value) {
-      selectedSprite.value = undefined
-      selectedType.value = undefined
+      canvas.value.requestRenderAll()
     }
   }
-
-  function setBrush (brush: FabricBrush): void {
-    if (!canvas.value) {
-      return
-    }
-
-    activeBrush.value = brush
-
-    canvas.value.freeDrawingBrush = new fabric[`${brush}Brush`](canvas.value)
-
-    if (canvas.value.freeDrawingBrush) {
-      canvas.value.freeDrawingBrush.width = +brushSize.value
-      canvas.value.freeDrawingBrush.limitedToCanvasSize = true
-      canvas.value.freeDrawingBrush.color = activeColor.value
-
-      if (brush === 'Spray' && canvas.value.freeDrawingBrush?.density) {
-        canvas.value.freeDrawingBrush.density = 50
-      }
-    }
-  }
-
-  function serializeCanvas (): void {}
-
-  function deserializeCanvas (items: fabric.Object[]): void {}
-
-  watch(
-    () => brushSize.value,
-    (size: string) => {
-      if (canvas.value?.freeDrawingBrush) {
-        canvas.value.freeDrawingBrush.width = +size
-      }
-    }
-  )
-
-  watch(
-    () => activeColor.value,
-    (color: string) => {
-      if (canvas.value?.freeDrawingBrush) {
-        canvas.value.freeDrawingBrush.color = color
-      }
-    }
-  )
 
   onUnmounted(() => {
     window.removeEventListener('keydown', keydownHandler)
@@ -436,9 +337,6 @@ export const useMapBuilder = () => {
     spriteAmount,
     maxSprites,
     isDrawingMode,
-    activeBrush,
-    brushSize,
-    activeColor,
     spriteSelected,
     selectedSprite,
     selectedType,
@@ -448,16 +346,12 @@ export const useMapBuilder = () => {
     tooltip,
     mount,
     resetCanvas,
-    getSprite,
     fillBackground,
-    setBackgroundImage,
+    set,
     add,
     remove,
     update,
     keydownHandler,
-    toggleDrawing,
-    setBrush,
-    findType,
     setSprite,
     toggleGridLines,
     changeZoom

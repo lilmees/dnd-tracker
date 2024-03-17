@@ -6,16 +6,11 @@ useHead({ title: 'Map' })
 
 const {
   canvas,
-  cellWidth,
-  floorLayer,
   sprites,
+  floorLayer,
   draggedOver,
   spriteAmount,
   maxSprites,
-  isDrawingMode,
-  brushSize,
-  activeColor,
-  activeBrush,
   spriteSelected,
   selectedSprite,
   selectedType,
@@ -25,12 +20,9 @@ const {
   tooltip,
   mount,
   resetCanvas,
-  getSprite,
   fillBackground,
-  setBackgroundImage,
-  toggleDrawing,
-  setBrush,
   setSprite,
+  set,
   update,
   add,
   remove,
@@ -59,22 +51,23 @@ onKeyStroke(['V', 'v'], (e) => {
 function changeBackground (sprite : Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
-  if (spriteData && canvas.value) {
+  if (spriteData && canvas.value && floorLayer.value instanceof fabric.Group) {
     fillBackground(spriteData, canvas.value, floorLayer.value)
   }
 }
 
 function handleDrag (event: DragEvent): void {
-  toggleDrawing(false)
   selectedSprite.value = undefined
   selectedType.value = undefined
 
-  if (event.target?.src) {
+  if (event.target instanceof HTMLImageElement) {
     const split = event.target.src.split('/')
 
+    if (split.length < 2) { return }
+
     draggingSprite.value = {
-      sprite: split.at(-1).replace('.svg', ''),
-      type: split.at(-2)
+      sprite: split[split.length - 1].replace('.svg', '') as Sprite,
+      type: split[split.length - 2] as SpriteType
     }
   }
 }
@@ -115,19 +108,17 @@ function handleSubmit ({ __init, file }: Obj): void {
       const htmlImg = new Image()
 
       htmlImg.onload = () => {
-        if (!canvas.value) {
-          return
-        }
+        if (!canvas.value) { return }
 
         const img = new fabric.Image(htmlImg, {
           scaleX: canvas.value.width / htmlImg.width,
           scaleY: canvas.value.height / htmlImg.height
         })
 
-        setBackgroundImage(img)
+        set('backgroundImage', img)
       }
 
-      if (e.target?.result) {
+      if (e.target instanceof FileReader) {
         htmlImg.src = e.target.result as string
       }
     })
@@ -246,69 +237,6 @@ function handleSubmit ({ __init, file }: Obj): void {
               </div>
             </div>
           </Accordion>
-          <!-- <Accordion
-            :title="$t('general.drawing')"
-            :active="isDrawingMode"
-            only-open-active
-            @open="toggleDrawing(true)"
-            @close="toggleDrawing(false)"
-          >
-            <div class="space-y-4">
-              <FormKit
-                v-model="brushSize"
-                type="slider"
-                :label="$t('pages.map.brushSize', { size: `${brushSize}px` })"
-                min="1"
-                max="150"
-              />
-              <FormKit
-                type="colorpicker"
-                format="hex"
-                value="#000000"
-                inline
-                @input="activeColor = $event || '#000000'"
-              />
-              <div class="flex gap-2 flex-wrap">
-                <span> {{ $t('general.brushes') }}: </span>
-                <button
-                  v-tippy="$t('general.pencil')"
-                  :aria-label="$t('general.pencil')"
-                  @click="setBrush('Pencil')"
-                >
-                  <Icon
-                    name="ph:pencil-bold"
-                    aria-hidden="true"
-                    class="w-6 h-6 transition-colors duration-300 ease-in-out"
-                    :class="{ 'text-primary': activeBrush === 'Pencil' }"
-                  />
-                </button>
-                <button
-                  v-tippy="$t('general.spraycan')"
-                  :aria-label="$t('general.spraycan')"
-                  @click="setBrush('Spray')"
-                >
-                  <Icon
-                    name="tabler:spray"
-                    aria-hidden="true"
-                    class="w-6 h-6 transition-colors duration-300 ease-in-out"
-                    :class="{ 'text-primary': activeBrush === 'Spray' }"
-                  />
-                </button>
-                <button
-                  v-tippy="$t('general.eraser')"
-                  :aria-label="$t('general.eraser')"
-                  @click="setBrush('Eraser')"
-                >
-                  <Icon
-                    name="ph:eraser-bold"
-                    aria-hidden="true"
-                    class="w-6 h-6 transition-colors duration-300 ease-in-out"
-                    :class="{ 'text-primary': activeBrush === 'Eraser' }"
-                  />
-                </button>
-              </div>
-            </div>
-          </Accordion> -->
           <button
             class="btn-primary w-full"
             :aria-label="$t('actions.export')"
@@ -428,6 +356,7 @@ function handleSubmit ({ __init, file }: Obj): void {
             <tippy
               interactive
               trigger="click"
+              :delay="0"
             >
               <Icon
                 v-tippy="{

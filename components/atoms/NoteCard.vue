@@ -20,7 +20,7 @@ onMounted(() => {
     class="rounded-lg w-full bg-tracker/50 border-4 border-tracker relative group min-w-[250px] max-w-prose"
   >
     <div class="flex justify-end mr-2">
-      <tippy interactive :z-index="2">
+      <tippy :delay="0" interactive :z-index="2">
         <Icon
           v-if="isAdmin(campaign, profile.data?.id || '')"
           name="tabler:dots"
