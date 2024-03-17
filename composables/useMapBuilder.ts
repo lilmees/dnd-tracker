@@ -268,6 +268,11 @@ export const useMapBuilder = () => {
 
   function update (object: fabric.Object, key: string, value: any): void {
     object.set(key, value)
+
+    if (useSnapToGrid.value && (key === 'left' || key === 'top')) {
+      snapToGrid(object, cellWidth.value)
+    }
+
     object.setCoords()
     canvas.value?.requestRenderAll()
   }
@@ -280,7 +285,7 @@ export const useMapBuilder = () => {
 
   function keydownHandler (e: KeyboardEvent): void {
     const object: fabric.Object | undefined = canvas.value?.getActiveObject()
-    const step = 8
+    const step = useSnapToGrid.value ? cellWidth.value : 8
 
     if (!object || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       return
