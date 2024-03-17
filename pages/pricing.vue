@@ -134,7 +134,7 @@ function isUpgradeable (type: StripeSubscriptionType): boolean {
               {{ $t('actions.buyCoffee') }}
             </span>
             <Icon
-              name="tabler:coffee"
+              name="simple-icons:kofi"
               class="w-5 h-5"
               aria-hidden="true"
             />
