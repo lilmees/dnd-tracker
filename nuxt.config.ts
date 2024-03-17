@@ -33,7 +33,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@vite-pwa/nuxt',
     '@vue-email/nuxt',
-    '@nuxt/image'
+    '@nuxt/image',
+    'nuxt-lazy-hydrate'
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -154,5 +155,9 @@ export default defineNuxtConfig({
     i18n: {
       defaultLocale: 'en'
     }
+  },
+  sitemap: {
+    autoI18n: false,
+    credits: false
   }
 })

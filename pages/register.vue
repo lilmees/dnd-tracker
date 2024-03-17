@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { FormKitNode } from '@formkit/core'
 import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['loggedin'] })
+useHead({ title: 'Register' })
 
 const { t } = useI18n()
 const store = useAuthStore()
@@ -47,7 +47,7 @@ function randomAvatar (): void {
     .substring(7)}&size=100`
 }
 
-function handleIconClick (node: FormKitNode) {
+function handleIconClick (node: any) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
@@ -67,6 +67,7 @@ function handleIconClick (node: FormKitNode) {
             preload
             alt="avatar"
             sizes="sm:100px md:100px lg:100px"
+            class="w-full h-full"
           />
         </div>
         <TextButton @click="randomAvatar">

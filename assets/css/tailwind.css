@@ -7,6 +7,21 @@
     @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold transition-all;
     @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
+
+  .btn-small {
+    @apply body-small py-[2px] px-3 rounded outline-none border-2 text-white duration-200 ease-in-out font-medium transition-all;
+    @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .icon-btn {
+    @apply body-small outline-none font-medium relative;
+    @apply active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply before:content-[''] before:p-1 before:rounded-lg before:absolute before:-inset-1 before:duration-300 before:ease-in-out before:transition-all;
+  }
+
+  .icon-btn > * {
+    @apply relative z-[1];
+  }
 }
 
 @layer utilities {
@@ -43,8 +58,20 @@
     animation: pulsate-shadow 2s ease-in-out infinite;
   }
 
+  .tracker-shadow {
+    box-shadow: 0 0 20px #4F19AA
+  }
+
   .visibility-pulse {
     animation: pulsate-opacity 2s ease-in-out infinite;
+  }
+
+  .expand-leave-active, .expand-enter-active {
+    @apply duration-500 ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
   }
 }
 
@@ -131,6 +158,70 @@
     @apply btn bg-danger/50 hover:bg-danger/60 border-danger;
   }
 
+  .btn-small-black {
+    @apply btn-small bg-black/50 hover:bg-black/60 border-black;
+  }
+
+  .btn-small-primary {
+    @apply btn-small bg-primary/50 hover:bg-primary/60 border-primary;
+  }
+
+  .btn-small-secondary {
+    @apply btn-small bg-secondary/50 hover:bg-secondary/60 border-secondary;
+  }
+
+  .btn-small-success {
+    @apply btn-small bg-success/50 hover:bg-success/60 border-success;
+  }
+
+  .btn-small-info {
+    @apply btn-small bg-info/50 hover:bg-info/60 border-info;
+  }
+
+  .btn-small-warning {
+    @apply btn-small bg-warning/50 hover:bg-warning/60 border-warning;
+  }
+
+  .btn-small-help {
+    @apply btn-small bg-help/50 hover:bg-help/60 border-help;
+  }
+
+  .btn-small-danger {
+    @apply btn-small bg-danger/50 hover:bg-danger/60 border-danger;
+  }
+
+  .icon-btn-black {
+    @apply icon-btn hover:before:bg-black/50;
+  }
+
+  .icon-btn-primary {
+    @apply icon-btn hover:before:bg-primary/50;
+  }
+
+  .icon-btn-secondary {
+    @apply icon-btn hover:before:bg-secondary/50;
+  }
+
+  .icon-btn-success {
+    @apply icon-btn hover:before:bg-success/50;
+  }
+
+  .icon-btn-info {
+    @apply icon-btn hover:before:bg-info/50;
+  }
+
+  .icon-btn-warning {
+    @apply icon-btn hover:before:bg-warning/50;
+  }
+
+  .icon-btn-help {
+    @apply icon-btn hover:before:bg-help/50;
+  }
+
+  .icon-btn-danger {
+    @apply icon-btn hover:before:bg-danger/50;
+  }
+
   kbd {
     @apply border-2 rounded p-1;
   }
@@ -165,6 +256,14 @@
 
   .html-richtext a, u {
     @apply text-primary;
+  }
+
+  .tr {
+    @apply border-b last:border-b-0 border-slate-700;
+  }
+
+  .td {
+    @apply px-2 py-1 border-r last:border-r-0 border-slate-700;
   }
 
   .no-scrollbar::-webkit-scrollbar {

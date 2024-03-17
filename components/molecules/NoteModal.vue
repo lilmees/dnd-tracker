@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-const emit = defineEmits(['close', 'added', 'updated'])
+const emit = defineEmits(['close'])
 const props = withDefaults(
   defineProps<{
   id: number,
@@ -32,35 +32,27 @@ whenever(
   }
 )
 
-function handleSubmit ({ __init, ...formData }: Obj): void {
+async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
 
   try {
-    props.update
-      ? updateNote(formData as Note)
-      : addNote(formData as Note)
+    const note = formData as Note
+
+    if (props.update && props.note) {
+      await store.updateNote(
+        { ...note, campaign: props.note.campaign },
+        props.note.id
+      )
+    } else if (!props.update) {
+      await store.addNote({ ...note, campaign: props.id })
+    }
   } catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
   } finally {
     resetState()
   }
-}
-
-async function updateNote (note: Note): Promise<void> {
-  if (props.note) {
-    const updatedNote = await store.updateNote(
-      { ...note, campaign: props.note.campaign },
-      props.note.id
-    )
-    emit('updated', updatedNote)
-  }
-}
-
-async function addNote (note: Note): Promise<void> {
-  const newNote: Note = await store.addNote({ ...note, campaign: props.id })
-  emit('added', newNote)
 }
 
 function resetState (): void {

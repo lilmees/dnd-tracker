@@ -1,6 +1,4 @@
 import logRocket from 'logrocket'
-import { sortEncountersByCampaign, sortEncountersByUserCreated } from '@/utils/sort'
-import { getMax } from '@/utils/subscription-helpers'
 
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
@@ -10,8 +8,19 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const { t, locale } = useI18n()
 
   const loading = ref<boolean>(true)
+  const searching = ref<boolean>(true)
   const error = ref<string | null>(null)
   const data = ref<Encounter[]>([])
+  const pages = ref<number>(0)
+  const page = ref<number>(0)
+  const perPage = ref<number>(20)
+  const encounterCount = ref<number>(0)
+
+  const filters = ref<TableFilters>({
+    search: '',
+    sortedBy: 'title',
+    sortACS: true
+  })
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
 
@@ -22,18 +31,39 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return [...userArr.splice(0, max.value), ...nonUserArr]
   })
 
-  const sortedEncounters = computed<SortedCampaignEncounter>(() => {
-    return sortEncountersByCampaign(restrictionEncounters.value)
-  })
+  const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
-  async function fetch (): Promise<void> {
-    loading.value = true
+  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
+    fuzzy ? searching.value = true : loading.value = true
+
+    if (!fuzzy) { loading.value = true }
 
     try {
-      const { data: sheets, error: err } = await supabase
+      const { from, to } = generateRange(page.value, perPage.value)
+
+      let query = supabase
         .from('initiative_sheets')
-        .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
+        .select(
+          '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
+          { count: 'exact' }
+        )
+        .range(from, to)
+        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
+
+      if (eq) {
+        query = query.eq(eq.field, eq.value)
+      }
+
+      if (filters.value.search && fuzzy) {
+        query = query.ilike('title', `%${filters.value.search}%`)
+      }
+
+      const { data: sheets, error: err, count } = await query
+
+      pages.value = calcPages((count || 1), perPage.value)
+
+      getCount()
 
       if (err) {
         throw err
@@ -46,7 +76,22 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       error.value = err as string
     } finally {
       loading.value = false
+      searching.value = false
     }
+  }
+
+  async function getCount (): Promise<void> {
+    const { count } = await supabase
+      .from('initiative_sheets')
+      .select('id', { count: 'exact' })
+      .limit(1)
+
+    encounterCount.value = count || 0
+  }
+
+  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+    page.value = newPage
+    await fetch(eq, true)
   }
 
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
@@ -71,9 +116,9 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      data.value && data.value.length
-        ? data.value.push(sheets[0])
-        : (data.value = [sheets[0]])
+      data.value = data.value && data.value.length
+        ? [sheets[0] as Encounter, ...data.value]
+        : [sheets[0]]
 
       return sheets[0]
     }
@@ -101,31 +146,24 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return await addEncounter(encounter as AddEncounter)
   }
 
-  async function deleteEncounter (id: number): Promise<void> {
-    const { error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .eq('id', id)
-      .select('*')
+  async function deleteEncounter (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('initiative_sheets').delete()
 
-    if (err) {
-      throw err
-    } else {
-      fetch()
-    }
-  }
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
 
-  async function bulkDeleteEncounters (ids: number[]): Promise<void> {
-    const { error: err } = await supabase
-      .from('initiative_sheets')
-      .delete()
-      .in('id', ids)
-      .select('*')
+      const { error: err } = await query
 
-    if (err) {
-      throw err
-    } else {
-      fetch()
+      if (err) {
+        throw err
+      } else {
+        fetch(undefined, !!filters.value.search)
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
@@ -139,12 +177,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     if (err) {
       throw err
     } else {
-      if (data.value) {
-        data.value = data.value.filter(e => e.id !== id)
-        data.value.push(sheets[0])
-      } else {
-        data.value = [sheets[0]]
-      }
+      fetch(undefined, !!filters.value.search)
       return sheets[0]
     }
   }
@@ -165,20 +198,37 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
+  function resetPagination (): void {
+    pages.value = 0
+    page.value = 0
+    filters.value = {
+      search: '',
+      sortedBy: 'id',
+      sortACS: true
+    }
+  }
+
   return {
     loading,
+    searching,
     error,
     data,
     restrictionEncounters,
-    sortedEncounters,
     max,
+    pages,
+    page,
+    perPage,
+    filters,
+    encounterCount,
+    noItems,
     fetch,
+    paginate,
     getEncountersByCampaign,
     addEncounter,
     copyEncounter,
     deleteEncounter,
-    bulkDeleteEncounters,
     updateEncounter,
-    shareEncounter
+    shareEncounter,
+    resetPagination
   }
 })

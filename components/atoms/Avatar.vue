@@ -26,7 +26,7 @@ const date = computed<string>(() => {
 
 <template>
   <div v-if="user" class="w-fit">
-    <tippy interactive :trigger="interactive ? 'mouseenter click' : ''">
+    <tippy interactive :delay="0" :trigger="interactive ? 'mouseenter click' : ''">
       <div class="flex items-end gap-2 w-fit">
         <div
           class="w-10 h-10 bg-secondary/50 rounded-lg border-4 border-secondary overflow-hidden"
@@ -52,7 +52,7 @@ const date = computed<string>(() => {
           <p class="head-3">
             {{ user.username }}
           </p>
-          <div class="text-[10px] bg-background w-fit px-2 py-1 rounded-lg">
+          <div class="text-[12px] bg-background w-fit px-2 py-1 rounded-lg">
             {{ date }}
           </div>
           <div

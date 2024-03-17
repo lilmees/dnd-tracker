@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
+useHead({ title: 'Info' })
+
 const open5e = useOpen5eStore()
 const toast = useToastStore()
 

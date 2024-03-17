@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getRole } from '@/utils/permission-helpers'
-
 definePageMeta({ middleware: ['auth'] })
 
 const profile = useProfileStore()
@@ -52,10 +50,10 @@ onMounted(() => {
         ]"
       />
       <div class="fixed !top-1/4 !left-0 !w-[50vw] !h-[50vh] fancy-shadow z-[-1] opacity-70" />
+      <div class="dnd-container">
+        <NuxtPage />
+      </div>
     </template>
-    <div v-if="!route.fullPath.includes('/join')" class="dnd-container">
-      <NuxtPage />
-    </div>
     <Layout v-else name="centered">
       <NuxtPage />
     </Layout>

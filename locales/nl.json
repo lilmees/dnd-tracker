@@ -3,7 +3,9 @@
     "add": "Toevoegen",
     "addSelected": "Selectie toevoegen",
     "addAll": "Alles toevoegen",
+    "select": "Selecteer",
     "selectOption": "Selecteer een optie",
+    "clickToSelect": "Klik om te selecteren",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
     "save": "Opslaan",
@@ -21,12 +23,14 @@
     "tryAgain": "Probeer opnieuw",
     "info": "Toon informatie",
     "copy": "Kopiëren",
+    "copyItem": "{item} kopiëren",
     "copyClipboard": "Naar klemboard gekopieerd",
     "pasteSelected": "Geselecteerd plakken",
     "moveSelected": "Geselecteerd bewegen",
     "panMap": "Map verschuiven",
     "random": "Willekeurig",
     "create": "Creëren",
+    "createItem": "{item} creëren",
     "generate": "Genereren",
     "openSettings": "Instelling",
     "closeSettings": "Sluit instelling",
@@ -54,8 +58,11 @@
     "Left": "Links",
     "Right": "Rechts",
     "campaigns": "Campagnes",
+    "campaign": "Campagne",
     "encounters": "Encounters",
+    "encounter": "Encounter",
     "players": "Spelers",
+    "player": "Speler",
     "members": "Leden",
     "monsters": "Monsters",
     "characters": "Karakters",
@@ -66,6 +73,7 @@
     "total": "Totaal",
     "grandTotal": "Eindtotaal",
     "homebrew": "Homebrew",
+    "homebrews": "Homebrews",
     "round": "Ronde",
     "link": "Link",
     "month": "maand",
@@ -97,6 +105,14 @@
     "syncing": "Synchroniseren",
     "online": "Online",
     "offline": "Offline",
+    "table": "Tabel",
+    "cards": "Kaarten",
+    "color": "Kleur",
+    "name": "Naam",
+    "modify": "Aanpassen",
+    "type": "Type",
+    "actions": "Acties",
+    "rows": "Rijen",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -122,18 +138,20 @@
     "noContent": {
       "title": "Nog geen {content}",
       "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
-    }
+    },
+    "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder",
+    "selectedToRemove": "Geselecteerd om te verwijderen"
   },
   "pages": {
     "home": {
       "textBlock1": {
-        "title": "Met liefde gemaakt 💜",
+        "title": "Met liefde gemaakt",
         "text": "Wat begon als een encounter tracker die we voor wat vrienden ineen hebben geknutseld, werd al gauw een project om GM's echt te ondersteunen in hun campagnes. We blijven de DND Tracker uitbreiden met meer en meer ideeën en input. Zo wordt D&D spelen nog spannender, mysterieuzer en vooral vlotter.",
         "text2": "Probeer de Encounter Tracker nu zonder account!",
         "button": "Begin met ontdekken"
       },
       "summary": {
-        "title": "Een tracker met unieke skills 🤝",
+        "title": "Een tracker met unieke skills",
         "item1": "Live synchronisatie tussen verschillende toestellen",
         "item2": "Regelmatige optimalisaties en nieuwe functies",
         "item3": "Alles op één handige plaats voor de GM",
@@ -142,15 +160,15 @@
         "item6": "Fantasie naam generator"
       },
       "textBlock2": {
-        "title": "Samenwerking in Dungeon Mastering 🧙‍♂️🧙",
+        "title": "Samenwerking in Dungeon Mastering",
         "text": "Verenig krachten met mede Dungeon Masters in een rijk waar creativiteit geen grenzen kent. Ons platform stelt je in staat om naadloos samen te werken aan je Dungeons & Dragons campagnes, waardoor een dynamische en meeslepende ervaring ontstaat. Of je nu epische avonturen smeedt, eigen homebrew creëert, of samen games beheert, ons systeem brengt DM's samen en maakt jouw campagnes nog spannender en gedenkwaardiger."
       },
       "textBlock3": {
-        "title": "Verbeterde betrokkenheid 🧠",
+        "title": "Verbeterde betrokkenheid",
         "text": "Verrijk je ervaring met onze unieke functionaliteit. We hebben een functie geïntegreerd waarmee je een link kunt toevoegen aan een specifieke encounter speler. Wanneer de gelinkte website dit ondersteunt, opent deze direct binnen een iframe, zodat je niet hoeft te zoeken tussen al je tabbladen. Dit houdt je betrokken en ondergedompeld in het spel en biedt de mogelijkheid voor een snelle raadpleging van monsters, spelerstatistieken, of zelfs een grappige kattenvideo."
       },
       "textBlock4": {
-        "title": "Vreemde gebeurtenissen 🐛",
+        "title": "Vreemde gebeurtenissen",
         "text": "Doordat deze DnD Tracker nog in zijn kinderschoenen staat, kunnen er soms mysterieuze fouten tevoorschijn komen. Aarzel niet om ons iets te laten weten, zodat we deze snel kunnen oplossen."
       }
     },
@@ -162,13 +180,7 @@
     "campaigns": {
       "campaigns": "Campagnes",
       "add": "Campagne creëren",
-      "update": "Campagne bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen campagnes",
-        "subtitle": "Selecteer campagnes om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} campagnes",
-        "multiple": "{number} campagnes"
-      }
+      "update": "Campagne bijwerken"
     },
     "campaign": {
       "content": {},
@@ -200,13 +212,7 @@
     "encounters": {
       "encounters": "Encounters",
       "add": "Encounter creëren",
-      "update": "Encounter bijwerken",
-      "remove": {
-        "title": "Bulk verwijderen encounters",
-        "subtitle": "Selecteer encounters om te verwijderen door erop te klikken.",
-        "amount": "Verwijder {number} encounters",
-        "multiple": "{number} encounters"
-      }
+      "update": "Encounter bijwerken"
     },
     "encounter": {
       "back": "Terug naar encounters",
@@ -471,6 +477,9 @@
     "homebrewTable": {
       "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
     },
+    "table": {
+      "nothing": "We hebben geen { item } gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
+    },
     "encounterTable": {
       "empty": "Voeg een rij toe aan je encounter om te starten!",
       "headers": {
@@ -611,6 +620,15 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
+    },
+    "contentHeader": {
+      "toMuch": "Te veel items voor kaartweergave"
+    },
+    "bulkRemove": {
+      "title": "Bulk verwijderen {type}",
+      "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",
+      "amount": "Verwijder {number} {type}",
+      "multiple": "{number} {type}"
     }
   }
 }

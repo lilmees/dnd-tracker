@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import * as fabric from 'fabric'
 import { reset } from '@formkit/core'
-import {
-  getShapeIcon,
-  getShapeColor,
-  createRectangle,
-  createCube,
-  createCone,
-  createLine,
-  createSphere
-} from '@/utils/fabric-shapes'
 
 const emit = defineEmits(['add'])
 

@@ -19,7 +19,8 @@ const props = withDefaults(
   }
 )
 
-const store = useCurrentCampaignStore()
+const currentStore = useCurrentCampaignStore()
+const homebrewStore = useHomebrewStore()
 const table = useTableStore()
 
 const isLoading = ref<boolean>(false)
@@ -69,7 +70,7 @@ function setForm (): HomebrewForm {
   }
 }
 
-function handleSumbit ({ __init, data, slots, ...formData }: Obj): void {
+function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
   error.value = ''
   isLoading.value = true
 
@@ -105,21 +106,19 @@ function handleSumbit ({ __init, data, slots, ...formData }: Obj): void {
 }
 
 async function updateHomebrew (formData: Obj): Promise<void> {
-  if (!props.item?.id) {
-    return
-  }
+  if (!props.item?.id) { return }
 
   const updated = useEmptyKeyRemover(formData) as Homebrew
-  await store.updateHomebrew(updated, props.item.id as number)
+  await homebrewStore.updateHomebrew(updated, props.item.id as number)
 
   emit('updated', updated)
 }
 
 async function addHomebrew (formData: Obj): Promise<void> {
-  await store.addHomebrew(
+  await homebrewStore.addHomebrew(
     useEmptyKeyRemover({
       ...formData,
-      campaign: store?.campaign?.id
+      campaign: currentStore?.campaign?.id
     }) as AddHomebrew
   )
 }
@@ -163,7 +162,13 @@ function closeModal (): void {
         {{ $t(`components.homebrewModal.${update ? 'update' : 'new'}`) }}
       </h2>
     </template>
-    <FormKit id="form" v-model="form" type="form" :actions="false" @submit="handleSumbit">
+    <FormKit
+      id="form"
+      v-model="form"
+      type="form"
+      :actions="false"
+      @submit="handleSubmit"
+    >
       <div
         :class="{
           'grid sm:grid-cols-2 gap-x-3': (form.type === 'monster' || form.type === 'summon') && encounter,

@@ -19,18 +19,18 @@ export default defineFormKitConfig((): any => {
       classes: generateClasses(
         {
           global: {
-            fieldset: 'border-4 border-black rounded-lg px-2 pb-1',
+            fieldset: 'border-4 border-black rounded-lg px-2 pb-1 bg-tracker/50',
             help: 'text-xs text-gray-300',
-            inner: 'formkit-disabled:cursor-not-allowed formkit-disabled:pointer-events-none',
-            input: 'outline-none text-white bg-transparent disabled:cursor-not-allowed placeholder:text-gray-400',
+            inner: 'formkit-disabled:cursor-not-allowed formkit-disabled:pointer-events-none transition-all duration-200',
+            input: 'outline-none text-white bg-tracker/50 disabled:cursor-not-allowed placeholder:text-gray-400',
             legend: 'block mb-1 font-bold body-small',
             loaderIcon: 'inline-flex items-center w-4 text-gray-300 animate-spin',
             label: 'block mb-1 font-bold body-small',
             messages: 'list-none p-0 mt-1 mb-0',
             message: 'text-danger text-xs mt-1',
             outer: 'mb-4 formkit-disabled:opacity-50',
-            prefixIcon: 'cursor-pointer w-10 flex self-stretch grow-0 shrink-0 rounded-tl rounded-bl [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
-            suffixIcon: 'cursor-pointer w-10 flex border-l-4 border-black self-stretch grow-0 shrink-0 [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto'
+            prefixIcon: 'bg-tracker/50 cursor-pointer w-10 flex self-stretch grow-0 shrink-0 rounded-tl rounded-bl [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
+            suffixIcon: 'bg-tracker/50 cursor-pointer w-10 flex border-l-4 border-black self-stretch grow-0 shrink-0 [&>svg]:w-full [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto'
           },
           'family:box': {
             decorator: 'block relative h-5 w-5 mr-2 rounded-lg bg-transparant border-4 border-black peer-checked:border-primary peer-checked:bg-primary/50',
@@ -41,7 +41,7 @@ export default defineFormKitConfig((): any => {
             wrapper: 'flex items-center mb-1'
           },
           'family:button': {
-            input: '$remove:bg-transparent btn-black',
+            input: '$remove:bg-tracker/50 btn-black',
             wrapper: 'flex justify-end'
           },
           'family:dropdown': {
@@ -62,7 +62,7 @@ export default defineFormKitConfig((): any => {
             selectIcon: 'flex box-content w-4 px-2 self-stretch grow-0 shrink-0 [&>svg]:w-[1em]'
           },
           'family:text': {
-            inner: 'flex items-center border-4 border-black focus-within:border-primary [&>label:first-child]:focus-within:text-primary rounded-lg mb-1',
+            inner: 'flex items-center border-4 border-black focus-within:border-primary [&>label:first-child]:focus-within:text-primary rounded-lg',
             input: 'w-full px-3 py-2 border-none placeholder:text-gray-400'
           },
           color: {
@@ -82,7 +82,7 @@ export default defineFormKitConfig((): any => {
           },
           select: {
             inner: 'flex relative items-center rounded-lg mb-1 border-4 border-black focus-within:border-primary [&>span:first-child]:focus-within:text-primary',
-            input: '!bg-transparent w-full pl-3 pr-8 py-2 h-10 border-none placeholder:text-gray-400 formkit-multiple:p-0 data-[placeholder="true"]:text-gray-400 formkit-multiple:data-[placeholder="true"]:text-inherit',
+            input: '!bg-tracker/50 w-full pl-3 pr-8 py-2 h-10 border-none placeholder:text-gray-400 formkit-multiple:p-0 data-[placeholder="true"]:text-gray-400 formkit-multiple:data-[placeholder="true"]:text-inherit',
             selectIcon: 'flex p-[3px] shrink-0 w-5 mr-2 -ml-[1.5em] h-full pointer-events-none [&>svg]:w-[1em]',
             option: 'formkit-multiple:p-3 formkit-multiple:text-sm',
             icon: 'hidden'

@@ -1,12 +1,9 @@
 import logRocket from 'logrocket'
-import { isMember } from '@/utils/permission-helpers'
-import { getMax } from '@/utils/subscription-helpers'
 
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const supabase = useSupabaseClient()
-  const store = useCampaignsStore()
-  const homebrew = useHomebrewStore()
-  const encounterStore = useEncountersStore()
+  const campaignStore = useCampaignsStore()
+  const homebrewStore = useHomebrewStore()
   const profile = useProfileStore()
   const toast = useToastStore()
   const localePath = useLocalePath()
@@ -14,7 +11,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
   const loading = ref<boolean>(true)
   const error = ref<string | null>(null)
   const campaign = ref<Campaign | null>(null)
-  const encounters = ref<Encounter[]>([])
 
   const activeModal = ref<HomebrewModal>()
   const activeHomebrew = ref<Homebrew>()
@@ -27,15 +23,13 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     error.value = null
 
     try {
-      campaign.value = await store.getCampaignById(id)
+      campaign.value = await campaignStore.getCampaignById(id)
 
       if (profile.data && !isMember(campaign.value, profile.data.id)) {
         navigateTo(localePath('/not-member'))
       }
 
       useHead({ title: campaign.value.title })
-      await encounterStore.fetch()
-      encounters.value = encounterStore.restrictionEncounters.filter(enc => enc.campaign?.id === campaign.value!.id)
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
@@ -43,49 +37,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       navigateTo(localePath('/campaigns'))
     } finally {
       loading.value = false
-    }
-  }
-
-  async function addHomebrew (hb: AddHomebrew): Promise<void> {
-    try {
-      const data = await homebrew.addHomebrew(hb)
-
-      if (campaign?.value?.homebrew_items) {
-        campaign.value.homebrew_items = [...campaign.value.homebrew_items, data]
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
-  }
-
-  async function updateHomebrew (hb: Homebrew, id: number): Promise<void> {
-    try {
-      await homebrew.updateHomebrew(hb, id)
-
-      if (campaign?.value?.homebrew_items) {
-        const index = campaign.value.homebrew_items.findIndex(e => e.id === id)
-        campaign.value.homebrew_items[index] = {
-          ...campaign.value.homebrew_items[index],
-          ...hb
-        }
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
-    }
-  }
-
-  async function removeHomebrew (id: number): Promise<void> {
-    try {
-      await homebrew.deleteHomebrew(id)
-
-      if (campaign?.value?.homebrew_items) {
-        campaign.value.homebrew_items = campaign.value.homebrew_items.filter(h => h.id !== id)
-      }
-    } catch (err) {
-      logRocket.captureException(err as Error)
-      toast.error()
     }
   }
 
@@ -198,15 +149,11 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     loading,
     error,
     campaign,
-    encounters,
     activeModal,
     activeHomebrew,
     activeIndex,
     max,
     getCampaignInfo,
-    addHomebrew,
-    updateHomebrew,
-    removeHomebrew,
     resetActiveState,
     findJoinCampaignToken,
     createJoinCampaignToken,

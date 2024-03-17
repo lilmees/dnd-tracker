@@ -53,7 +53,7 @@ interface EncounterForm {
 interface SortedCampaignEncounter {
   [key: string]: {
     encounters: Encounter[]
-    campaign?: number
+    campaign?: Campaign
     created_by?: string
   }
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
-import { backUrl } from '@/utils/url-genarators'
 
 definePageMeta({ middleware: ['auth'] })
 

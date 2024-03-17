@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "1.0.17",
+  "version": "1.0.18",
   "scripts": {
     "check": "tsc",
     "build": "nuxt build",
@@ -49,12 +49,13 @@
     "@vueup/vue-quill": "^1.2.0",
     "aos": "^3.0.0-beta.6",
     "click-outside-vue3": "^4.0.1",
-    "fabric": "^6.0.0-beta16",
+    "fabric": "^6.0.0-beta19",
     "ipx": "^3.0.0",
     "logrocket": "^4.0.1",
     "markdown-it": "^13.0.1",
     "nodemailer": "^6.9.5",
     "nuxt-icon": "^0.3.3",
+    "nuxt-lazy-hydrate": "^1.0.0",
     "nuxt-umami": "^2.5.2",
     "swiper": "^10.3.1",
     "vue-tippy": "v6",

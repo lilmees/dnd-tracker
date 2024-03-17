@@ -1,13 +1,34 @@
 <script setup lang="ts">
+useHead({ title: 'Changelogs' })
+
 const { data } = await useAsyncData('changelog', async () => {
   const logs = await queryContent('changelogs').find()
   return (logs || []).reverse()
 })
+
 const { locale } = useI18n()
+const blob = ref<HTMLDivElement>()
+
+if (process.client) {
+  document.body.onmousemove = (event) => {
+    if (blob.value) {
+      const { clientX, clientY } = event
+
+      blob.value.animate({
+        left: `${clientX}px`,
+        top: `${clientY}px`
+      }, { duration: 3000, fill: 'forwards' })
+    }
+  }
+}
 </script>
 
 <template>
   <Layout shadow>
+    <div
+      ref="blob"
+      class="hidden md:block -z-[1] h-[200px] w-[200px] fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full from-info to-secondary bg-gradient-to-r rotates blur-[100px]"
+    />
     <ul
       aria-label="Changelog feed"
       role="feed"

@@ -7,3 +7,8 @@ interface SupabaseRealTime {
   schema: string
   table: string
 }
+
+interface SupabaseEq {
+  field: string,
+  value: string | number
+}

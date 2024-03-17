@@ -5,7 +5,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
 
 <template>
   <div
-    v-if="showNav"
+    v-show="showNav"
     class="bg-tracker/60 border-4 border-tracker m-4 rounded-lg py-8"
   >
     <div class="dnd-container flex flex-col gap-4">
@@ -43,6 +43,41 @@ const showNav = useState<boolean>('showNavigation', () => true)
                 />
                 <span>
                   Form
+                </span>
+              </NuxtLink>
+            </div>
+          </div>
+          <div class="mt-4 md:mt-0">
+            <p class="mb-4 head-3">
+              Socials
+            </p>
+            <div class="flex flex-col gap-4">
+              <NuxtLink
+                to="https://www.instagram.com/dnd.tracker/"
+                target="_blank"
+                class="flex"
+              >
+                <Icon
+                  name="mdi:instagram"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
+                <span>
+                  Instagram
+                </span>
+              </NuxtLink>
+              <NuxtLink
+                to="https://ko-fi.com/jeremymees"
+                target="_blank"
+                class="flex"
+              >
+                <Icon
+                  name="simple-icons:kofi"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
+                <span>
+                  Kofi
                 </span>
               </NuxtLink>
             </div>

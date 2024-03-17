@@ -10,6 +10,15 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   const error = ref<string | null>(null)
   const data = ref<Profile | null>(null)
 
+  const getSocialProfile = computed<SocialProfile | null>(() => {
+    if (!data.value) {
+      return null
+    } else {
+      const { role, marketing, subscription_type, temp_subscription, ...social } = data.value
+      return social as SocialProfile
+    }
+  })
+
   async function fetch (): Promise<void> {
     error.value = null
 
@@ -137,6 +146,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     loading,
     error,
     data,
+    getSocialProfile,
     fetch,
     updateProfile,
     deleteProfile,

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
 import logRocket from 'logrocket'
-import { isMember, isInvited } from '@/utils/permission-helpers'
-import { generateToken } from '@/utils/generate-token'
-import { campaignUrl } from '@/utils/url-genarators'
 
 const emit = defineEmits(['close'])
 const props = defineProps<{ open: boolean, campaign: Campaign }>()

@@ -1,6 +1,8 @@
 <script setup lang='ts'>
 import logRocket from 'logrocket'
 
+useHead({ title: 'Feature request' })
+
 const features = useFeaturesStore()
 const profile = useProfileStore()
 const toast = useToastStore()

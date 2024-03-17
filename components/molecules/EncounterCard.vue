@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { encounterUrl } from '@/utils/url-genarators'
-import { isAdmin } from '@/utils/permission-helpers'
-
 defineEmits(['remove', 'copy', 'update', 'share'])
 withDefaults(
   defineProps<{
@@ -17,7 +14,7 @@ const profile = useProfileStore()
 
 <template>
   <div
-    class="rounded-lg min-w-[250px] max-w-md relative group border-4 flex flex-col"
+    class="rounded-lg min-w-[250px] max-w-md relative border-4 flex flex-col"
     :style="{
       'background-color': `${encounter.background}80`,
       'border-color': encounter.background,
@@ -30,29 +27,30 @@ const profile = useProfileStore()
         interactive
         placement="bottom"
         :z-index="2"
+        :delay="0"
       >
         <Icon
           name="tabler:dots"
-          class="w-6 h-6 cursor-pointer opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
+          class="w-6 h-6 cursor-pointer"
           :style="{ color: encounter.color }"
           aria-hidden="true"
         />
         <template #content>
           <div class="p-4 space-y-2 overflow-auto">
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-success"
               :aria-label="$t('actions.share')"
               @click="$emit('share', encounter)"
             >
               <Icon
-                name="ph:link-simple-horizontal"
+                name="material-symbols:share"
                 class="h-4 w-4"
                 aria-hidden="true"
               />
               <p>{{ $t('actions.share') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-info"
               :aria-label="$t('actions.update')"
               @click="$emit('update', encounter)"
             >
@@ -64,7 +62,7 @@ const profile = useProfileStore()
               <p>{{ $t('actions.update') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max disabled:opacity-50 disabled:cursor-not-allowed"
+              class="flex gap-2 items-center max-w-max icon-btn-primary"
               :aria-label="$t('actions.copy')"
               :disabled="disableCopy"
               @click="$emit('copy', encounter)"
@@ -77,7 +75,7 @@ const profile = useProfileStore()
               <p>{{ $t('actions.copy') }}</p>
             </button>
             <button
-              class="flex gap-2 items-center max-w-max"
+              class="flex gap-2 items-center max-w-max icon-btn-danger"
               :aria-label="$t('actions.delete')"
               @click="$emit('remove', encounter)"
             >
@@ -91,6 +89,13 @@ const profile = useProfileStore()
           </div>
         </template>
       </tippy>
+      <Icon
+        v-else
+        v-tippy="$t('general.notAllowed')"
+        name="tabler:dots"
+        class="w-6 h-6 cursor-not-allowed opacity-50 absolute"
+        aria-hidden="true"
+      />
     </div>
     <RouteLink
       :url="encounterUrl(encounter)"

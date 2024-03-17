@@ -1,4 +1,46 @@
-export function sortCreatedAt (arr: Encounter[] | Campaign[]): Encounter[] | Campaign[] {
+function getValueFromNestedKeys<T> (v: T, keys: string): any {
+  let value: any = v
+
+  for (const key of keys.split('.')) {
+    if (!value) { return value }
+    value = value[key as keyof T] as any
+  }
+
+  return value
+}
+
+export function sortArray<T> (arr: T[], key: string, acs = true) : T[] {
+  return [...arr].sort((a: T, b: T) => {
+    const aValue = getValueFromNestedKeys<T>(a, key)
+    const bValue = getValueFromNestedKeys<T>(b, key)
+
+    return typeof aValue === 'number' || Array.isArray(aValue)
+      ? sortByNumber(aValue, bValue, acs)
+      : sortByString(aValue, bValue, acs)
+  })
+}
+
+export function sortByNumber (a: number|any[], b: number|any[], acs: boolean): number {
+  a = Array.isArray(a) ? a.length : a
+  b = Array.isArray(b) ? b.length : b
+
+  if (a == null) {
+    return b == null ? 0 : 1
+  } else if (b == null) {
+    return -1
+  }
+
+  return acs ? a - b : b - a
+}
+
+export function sortByString (a: string, b: string, acs: boolean): number {
+  a = a ?? ''
+  b = b ?? ''
+
+  return acs ? a.localeCompare(b) : b.localeCompare(a)
+}
+
+export function sortCreatedAt<T extends { created_at: string }> (arr: T[]): T[] {
   return arr.sort((a, b) => {
     return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
   })
@@ -13,7 +55,7 @@ export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampa
     if (encounter.campaign) {
       groupObj[key] = {
         ...groupObj[key],
-        campaign: encounter.campaign.id,
+        campaign: encounter.campaign,
         created_by: encounter.campaign.created_by.id
       }
     }
@@ -22,10 +64,6 @@ export function sortEncountersByCampaign (encounters: Encounter[]) : SortedCampa
       ? groupObj[key].encounters.push(encounter)
       : groupObj[key] = { ...groupObj[key], encounters: [encounter] }
   })
-
-  for (const key in groupObj) {
-    groupObj[key].encounters = sortCreatedAt(groupObj[key].encounters) as Encounter[]
-  }
 
   return groupObj
 }

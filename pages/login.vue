@@ -2,6 +2,7 @@
 import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['loggedin'] })
+useHead({ title: 'Log in' })
 
 const store = useAuthStore()
 const localePath = useLocalePath()

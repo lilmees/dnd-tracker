@@ -1,0 +1,54 @@
+{
+  "version": "v1.0.18",
+  "date": "2024-03-17",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Added the ability to search encounters, campaigns and notes"
+        },
+        {
+          "text": "Alternative table view for encounter/campaign overview page with sorting"
+        },
+        {
+          "text": "Added socials in the footer"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Improvements to the loading of the campaign content page"
+        },
+        {
+          "text": "Added background color to all the inputs for better visibility"
+        },
+        {
+          "text": "Arrow keys now respect the snap to grid setting when an object is selected on the map"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Password reset email would not be sent when requested"
+        },
+        {
+          "text": "Initiative modifier was not correctly calculated when adding a new monster from the bestiary"
+        },
+        {
+          "text": "Upon opening the campaign update modal, the form did not contain the current content"
+        },
+        {
+          "text": "Sitemap was not correctly generated"
+        },
+        {
+          "text": "When not logged in, the pricing page incorrectly displayed a free subscription status, which is only applicable to users with an account"
+        }
+      ]
+    }
+  ]
+}

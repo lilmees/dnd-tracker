@@ -1,10 +1,9 @@
 import logRocket from 'logrocket'
-import { sortCampaignsByCreatedAt, sortCreatedAt } from '@/utils/sort'
-import { getMax } from '@/utils/subscription-helpers'
 
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
+  const toast = useToastStore()
 
   const loading = ref<boolean>(true)
   const error = ref<string>()
@@ -12,18 +11,12 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
 
   const max = computed<number>(() => getMax('campaign', profile.data?.subscription_type || 'free'))
 
-  const restrictionCampaigns = computed<Campaign[] | null>(() => {
+  const allowedCampaigns = computed<Campaign[] | null>(() => {
     if (!profile.data || !campaigns.value) { return null }
 
     const { userArr, nonUserArr } = sortCampaignsByCreatedAt(campaigns.value, profile.data.id)
 
     return [...userArr.splice(0, max.value), ...nonUserArr]
-  })
-
-  const sortedCampaigns = computed<Campaign[] | null>(() => {
-    return restrictionCampaigns.value
-      ? sortCreatedAt(restrictionCampaigns.value) as Campaign[]
-      : null
   })
 
   async function fetch (): Promise<void> {
@@ -52,7 +45,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   async function getCampaignById (id: number): Promise<Campaign> {
     const { data, error } = await supabase
       .from('campaigns')
-      .select('*, created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(*), notes(*), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
+      .select('*, created_by(id, created_at, username, name, avatar, email, badges), team(id, role, user(id, created_at, username, name, avatar, email, badges)), join_campaign(id, role, user(id, created_at, username, name, avatar, email, badges))')
       .eq('id', id)
       .single()
 
@@ -73,39 +66,28 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       throw error
     }
     if (data) {
-      campaigns.value
-        ? campaigns.value.push(data[0])
-        : campaigns.value = [data[0]]
-    }
-  }
-
-  async function deleteCampaign (id: number): Promise<void> {
-    const { data, error } = await supabase
-      .from('campaigns')
-      .delete()
-      .eq('id', id)
-      .select('*')
-
-    if (error) {
-      throw error
-    }
-    if (data) {
       fetch()
     }
   }
 
-  async function bulkDeleteCampaigns (ids: number[]): Promise<void> {
-    const { data, error } = await supabase
-      .from('campaigns')
-      .delete()
-      .in('id', ids)
-      .select('*')
+  async function deleteCampaign (id: number|number[]): Promise<void> {
+    try {
+      let query = supabase.from('campaigns').delete()
 
-    if (error) {
-      throw error
-    }
-    if (data) {
-      fetch()
+      query = Array.isArray(id)
+        ? query.in('id', id)
+        : query.eq('id', id)
+
+      const { error: err } = await query
+
+      if (err) {
+        throw err
+      } else {
+        fetch()
+      }
+    } catch (err) {
+      logRocket.captureException(err as Error)
+      toast.error()
     }
   }
 
@@ -132,13 +114,12 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     loading,
     error,
     campaigns,
-    sortedCampaigns,
+    allowedCampaigns,
     max,
     fetch,
     getCampaignById,
     addCampaign,
     deleteCampaign,
-    bulkDeleteCampaigns,
     updateCampaign
   }
 })
