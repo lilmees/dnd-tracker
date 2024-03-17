@@ -22,7 +22,7 @@ async function addMonster (monster: Open5eItem) {
     if (store.encounter) {
       const row = useCreateRow({
         ...monster,
-        initiative_modifier: Math.max(0, Math.floor((monster.dexterity - 8) / 2))
+        initiative_modifier: initiativeModifierFromDEX(monster.dexterity)
       } as unknown as Row, 'monster', store.encounter.rows)
       await store.encounterUpdate({
         rows: [...store.encounter.rows, row]
