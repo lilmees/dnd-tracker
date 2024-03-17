@@ -24,7 +24,7 @@ const selected = ref<Encounter[]>([])
 const headers = [
   { label: '', sort: false, id: '' },
   { label: t('general.name'), sort: true, id: 'title' },
-  { label: t('general.campaign'), sort: false, id: 'campaign.title' },
+  ...(props.campaignView ? [] : [{ label: t('general.campaign'), sort: false, id: 'campaign.title' }]),
   { label: t('general.rows'), sort: false, id: 'rows' },
   { label: t('general.actions'), sort: false, id: 'actions' }
 ]
@@ -174,7 +174,7 @@ function resetState (): void {
               {{ encounter.title }}
             </RouteLink>
           </td>
-          <td class="td">
+          <td v-if="!campaignView" class="td">
             <RouteLink
               v-if="encounter.campaign"
               :url="campaignUrl(encounter.campaign, 'content')"

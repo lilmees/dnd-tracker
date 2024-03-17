@@ -15,7 +15,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const page = ref<number>(0)
   const perPage = ref<number>(20)
   const encounterCount = ref<number>(0)
-  const encounterCountLocal = ref<number>(0)
 
   const filters = ref<TableFilters>({
     search: '',
@@ -64,9 +63,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
       pages.value = calcPages((count || 1), perPage.value)
 
-      if (fuzzy) {
-        await getCount()
-      }
+      getCount()
 
       if (err) {
         throw err
