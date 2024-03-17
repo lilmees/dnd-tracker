@@ -1,4 +1,5 @@
 import * as fabric from 'fabric'
+import sprites from '@/fixtures/sprites.json'
 
 export function flip (
   axis: 'x' | 'y',
@@ -16,7 +17,7 @@ export function flip (
   cb(object, key, !object.get(key))
 }
 
-export function clone (canvas: fabric.Canvas | undefined): void {
+export function clone (canvas: fabric.Canvas|undefined): void {
   const activeObjects = canvas?.getActiveObjects()
 
   if (!activeObjects || !activeObjects.length) {
@@ -35,7 +36,7 @@ export function clone (canvas: fabric.Canvas | undefined): void {
   canvas?.requestRenderAll()
 }
 
-export function exportCanvas (canvas: fabric.Canvas | undefined): void {
+export function exportCanvas (canvas: fabric.Canvas|undefined): void {
   if (!canvas) {
     return
   }
@@ -53,14 +54,20 @@ export function snapToGrid (object: fabric.Object, grid: number): void {
   })
 }
 
-export function getCoordsFromGroupItem (group: fabric.Group, object: fabric.BaseFabricObject): fabric.Point {
+export function getCoordsFromGroupItem (
+  group: fabric.Group,
+  object: fabric.BaseFabricObject
+): fabric.Point {
   return {
     x: object.left + group.left + group.width / 2,
     y: object.top + group.top + group.height / 2
   } as fabric.Point
 }
 
-export function getGridObjectByCoords (group: fabric.Group, point: fabric.Point): fabric.BaseFabricObject | undefined {
+export function getGridObjectByCoords (
+  group: fabric.Group,
+  point: fabric.Point
+): fabric.BaseFabricObject|undefined {
   for (const object of group.getObjects()) {
     const { x, y } = getCoordsFromGroupItem(group, object)
 
@@ -198,7 +205,11 @@ export function withinBoundaries (event: MouseEvent, canvas: fabric.Canvas): boo
   return !(x < 0 || x > height || y < 0 || y > width)
 }
 
-export function clipPathToPolygon (clipPath: string, width: number, height: number): Coords[] {
+export function clipPathToPolygon (
+  clipPath: string,
+  width: number,
+  height: number
+): Coords[] {
   return clipPath.split(',').map((point) => {
     const coords = point.trim().split(' ')
 
@@ -208,3 +219,74 @@ export function clipPathToPolygon (clipPath: string, width: number, height: numb
     }
   })
 }
+
+export function drawGridLines (
+  canvas: fabric.Canvas|undefined,
+  grid: number,
+  layer: fabric.Group
+): void {
+  if (!canvas) { return }
+
+  const options = { stroke: '#000000', strokeWidth: 1 }
+
+  for (let i = 1; i < canvas.getWidth() / grid + 1; i++) {
+    layer.add(new fabric.Line([grid * i, 0, grid * i, 512], options))
+    layer.add(new fabric.Line([0, grid * i, 512, grid * i], options))
+  }
+}
+
+export function calculateZoom (out: boolean, current: number): number {
+  return Math.max(1, Math.min(out ? current - 1 : current + 1))
+}
+
+export function findSpriteTypeInJSON (sprite: Sprite): SpriteType|undefined {
+  const json = sprites as SpriteMap
+
+  for (const category in json) {
+    const categoryArray = json[category as keyof SpriteMap]
+    const match = categoryArray.find(item => item.value === sprite)
+
+    if (match) {
+      return category as SpriteType
+    }
+  }
+}
+
+export function getSprite (type: SpriteType, sprite: Sprite): SpriteData|undefined {
+  const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
+  const spriteMeta = sprites[type].find(svg => svg.value === sprite) as SpriteMetaData<Sprite>
+
+  if (!spriteMeta) { return }
+
+  return {
+    url: `${siteUrl}/art/${type}/${sprite}${spriteMeta?.variations ? '-1' : ''}.svg`,
+    ...spriteMeta
+  }
+}
+
+export function handleBoundaries (canvas: fabric.Canvas|undefined, target: fabric.Object): void {
+  if (!canvas) { return }
+
+  const width = canvas.getWidth()
+  const height = canvas.getHeight()
+  const boundingBox = target.getBoundingRect()
+
+  if (boundingBox.left < 0) {
+    target.set({ left: 0 })
+  } else if (boundingBox.left + boundingBox.width > width) {
+    target.set({ left: width - boundingBox.width })
+  }
+
+  if (boundingBox.top < 0) {
+    target.set({ top: 0 })
+  } else if (boundingBox.top + boundingBox.height > height) {
+    target.set({ top: height - boundingBox.height })
+  }
+
+  target.setCoords()
+  canvas.requestRenderAll()
+}
+
+export function serializeCanvas (): void {}
+
+export function deserializeCanvas (items: fabric.Object[]): void {}

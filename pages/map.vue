@@ -6,8 +6,8 @@ useHead({ title: 'Map' })
 
 const {
   canvas,
-  floorLayer,
   sprites,
+  floorLayer,
   draggedOver,
   spriteAmount,
   maxSprites,
@@ -20,10 +20,9 @@ const {
   tooltip,
   mount,
   resetCanvas,
-  getSprite,
   fillBackground,
-  setBackgroundImage,
   setSprite,
+  set,
   update,
   add,
   remove,
@@ -109,16 +108,14 @@ function handleSubmit ({ __init, file }: Obj): void {
       const htmlImg = new Image()
 
       htmlImg.onload = () => {
-        if (!canvas.value) {
-          return
-        }
+        if (!canvas.value) { return }
 
         const img = new fabric.Image(htmlImg, {
           scaleX: canvas.value.width / htmlImg.width,
           scaleY: canvas.value.height / htmlImg.height
         })
 
-        setBackgroundImage(img)
+        set('backgroundImage', img)
       }
 
       if (e.target instanceof FileReader) {
