@@ -1,4 +1,10 @@
 import logRocket from 'logrocket'
+import armor from '@/fixtures/armor.json'
+import conditions from '@/fixtures/conditions.json'
+import magicitems from '@/fixtures/magicitems.json'
+import spells from '@/fixtures/spells.json'
+import weapons from '@/fixtures/weapons.json'
+import monsters from '@/fixtures/monsters.json'
 
 export const useOpen5eStore = defineStore('useOpen5eStore', () => {
   const toast = useToastStore()
@@ -28,24 +34,42 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     { debounce: 500, maxWait: 1000, deep: true }
   )
 
-  async function getData (filters: Open5eFilters): Promise<Open5eResponse> {
-    let url = `https://api.open5e.com/${filters.type ? filters.type + '/' : ''}?limit=${filters.limit || '20'}&ordering=${filters.type === 'monsters' ? sortBy.value : 'name'}&document__slug=wotc-srd`
+  function getData (filters: Open5eFilters): Open5eResponse {
+    let results: any[] = []
 
-    const query = useEmptyKeyRemover(filters.query)
-
-    if (query) {
-      Object.keys(query).forEach((key: string) => {
-        url += `&${key}=${query![key as keyof Open5eQuery]}`
-      })
+    switch (filters.type) {
+      case 'armor':
+        results = armor
+        break
+      case 'conditions':
+        results = conditions
+        break
+      case 'magicitems':
+        results = magicitems
+        break
+      case 'spells':
+        results = spells
+        break
+      case 'weapons':
+        results = weapons
+        break
+      default:
+        results = monsters
+        break
     }
 
-    return await $fetch(url)
+    return {
+      count: 20,
+      previous: null,
+      next: null,
+      results: results as Open5eItem[]
+    }
   }
 
   async function fetchMonsters (query: Open5eSearch, page: number): Promise<void> {
     isLoading.value = true
     try {
-      const { results, count } = await getData({
+      const { results, count } = getData({
         query: { ...query, page: page + 1 },
         type: 'monsters'
       })

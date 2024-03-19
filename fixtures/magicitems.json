@@ -1,0 +1,222 @@
+[
+  {
+    "slug": "adamantine-armor",
+    "name": "Adamantine Armor",
+    "type": "Armor (medium or heavy)",
+    "desc": "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit.",
+    "rarity": "uncommon",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "amulet-of-health",
+    "name": "Amulet of Health",
+    "type": "Wondrous Item",
+    "desc": "Wearing this amulet increases your Constitution score to 19\\. It has no effect if your Constitution is equal to or greater than 19.",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "amulet-of-proof-against-detection-and-location",
+    "name": "Amulet of Proof against Detection and Location",
+    "type": "Wondrous Item",
+    "desc": "You are hidden from divination magic while wearing this amulet, including any form of _scrying_  (magical scrying sensors are unable to perceive you).",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "amulet-of-the-planes",
+    "name": "Amulet of the Planes",
+    "type": "Wondrous Item",
+    "desc": "While wearing this amulet, you can use an action and name a location that you are familiar with on another plane of existence, making a DC 15 Intelligence check. On a success you cast the _plane shift_  spell, but on a failure you and every creature and object within a 15-foot radius are transported to a random location determined with a d100 roll. On a 1–60 you transport to a random location on the plane you named, or on a 61–100 you are transported to a randomly determined plane of existence.",
+    "rarity": "Very Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "animated-shield",
+    "name": "Animated Shield",
+    "type": "Armor",
+    "desc": "As a bonus action, you can verbally command the shield to animate and float in your space, or for it to stop doing so. The shield continues to act as if you were wielding it, but with your hands free. The shield remains animated for 1 minute, or until you are _incapacitated_  or die. It then returns to your free hand, if you have one, or else it falls to the ground. You can benefit from only one shield at a time.",
+    "rarity": "Very Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "apparatus-of-the-crab",
+    "name": "Apparatus of the Crab",
+    "type": "Wondrous Item",
+    "desc": "This ingeniously crafted item (known by some as the crabaratus) is a tightly shut 500 pound iron barrel. Making a DC 20 Investigation check reveals a hidden catch which unlocks one end of the barrel—a hatch. Two Medium or smaller creatures can crawl inside where there are 10 levers in a row at the far end. Each lever is in a neutral position but can move up or down. Use of these levers makes the barrel reconfigure to resemble a giant metal crab.\n\nThis item is a Large object with the following statistics:\n\n**Armor Class:** 20\n\n**Hit Points:** 200\n\n**Speed:** 30 ft., swim 30 ft. (both are 0 ft. without legs and tail extended)\n\n**Damage Immunities:** poison, psychic\n\nThe item requires a pilot to be used as a vehicle. The hatch must be closed for it to be airtight and watertight. The apparatus holds 10 hours worth of air for breathing, dividing by the number of breathing creatures inside.\n\nThe apparatus floats on water and may dive underwater down to 900 feet, taking 2d6 bludgeoning damage at the end of each minute spent at a lower depth.\n\nAny creature inside the apparatus can use an action to position up to two of the levers either up or down, with the lever returning to its neutral position upon use. From left to right, the Apparatus of the Crab table shows how each lever functions.\n\n  \n**Table: Apparatus of the Crab**\n\n| **Lever** | **Up**                                                                                                                            | **Down**                                                                                                                    |\n| --------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |\n| 1         | Extends legs and tail.                                                                                                            | Retracts legs and tail. Speed is 0 ft. and it cannot benefit from bonuses to Speed.                                         |\n| 2         | Shutter on forward window opens.                                                                                                  | Shutter on forward window closes.                                                                                           |\n| 3         | Shutters (two each side) on side windows open.                                                                                    | Shutters on side windows close.                                                                                             |\n| 4         | Two claws extend, one on each front side.                                                                                         | The claws retract.                                                                                                          |\n| 5         | Each extended claw makes a melee attack: +8 to hit, reach 5 ft., one target. Hit: 7 (2d6) bludgeoning damage.                     | Each extended claw makes a melee attack: +8 to hit, reach 5 ft., one target. Hit: The target is _grappled_  (escape DC 15). |\n| 6         | The apparatus moves forward.                                                                                                      | The apparatus moves backward.                                                                                               |\n| 7         | The apparatus turns 90 degrees left.                                                                                              | The apparatus turns 90 degrees right.                                                                                       |\n| 8         | Bright light shines from fixtures resembling eyes, shedding bright light in a 30-foot radius and dim light an additional 30 feet. | The light extinguishes.                                                                                                     |\n| 9         | If in liquid, the apparatus sinks 20 feet.                                                                                        | If in liquid, the apparatus rises 20 feet.                                                                                  |\n| 10        | The hatch opens.                                                                                                                  | The hatch closes.                                                                                                           |",
+    "rarity": "Legendary",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "armor-of-invulnerability",
+    "name": "Armor of Invulnerability",
+    "type": "Armor",
+    "desc": "This armor grants you resistance to nonmagical damage. Once between _long rests_ , you can use an action to become immune to nonmagical damage for 10 minutes or until you are no longer wearing the armor.",
+    "rarity": "Legendary",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "armor-of-resistance",
+    "name": "Armor of Resistance",
+    "type": "Armor",
+    "desc": "This armor grants you resistance to one type of damage. The type of damage is determined when the armor is created, from the following list: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, thunder.\n\nA suit of light or medium _armor of resistance_ is rare, and a heavy suit is very rare.",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "armor-of-vulnerability",
+    "name": "Armor of Vulnerability",
+    "type": "Armor",
+    "desc": "This armor grants you resistance to one of the following damage types: bludgeoning, piercing, or slashing. The type of damage is determined when the armor is created.\n\n**Cursed.** Once attuned to this armor, you are _cursed_  until you are targeted by __remove curse_ or similar magic; removing the armor does not end it. While cursed, you have vulnerability to the other two damage types this armor does not protect against.",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "arrow-of-slaying",
+    "name": "Arrow of Slaying",
+    "type": "Weapon",
+    "desc": "A particular kind of creature is chosen when this magic arrow is created. When the _arrow of slaying_ damages a creature belonging to the chosen type, heritage, or group, the creature makes a DC 17 Constitution _saving throw_ , taking an extra 6d10 piercing damage on a failed save, or half as much extra damage on a successful one. Once the _arrow of slaying_ deals its extra damage to a creature, it loses its magical properties. \n\nOther types of magic ammunition of this kind exist, such as bolts meant for a crossbow, or bullets for a firearm or sling.",
+    "rarity": "Very Rare",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "arrow-catching-shield",
+    "name": "Arrow-Catching Shield",
+    "type": "Armor",
+    "desc": "This shield grants you +2 to AC against ranged attacks, in addition to the shield’s normal bonus to AC. In addition, whenever a target within 5 feet of you is targeted by a ranged attack, you can use your reaction to become the target of the attack instead.",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "bag-of-beans",
+    "name": "Bag of Beans",
+    "type": "Wondrous Item",
+    "desc": "This cloth bag contains 3d4 dry beans and weighs ½ pound plus ¼ pound for each bean inside.\n\nDumping the bag’s contents on the ground creates a fiery 10-foot radius explosion. The fire ignites unattended flammable objects. Each creature in the area makes a DC 15 Dexterity _saving throw_ , taking 5d4 fire damage on a failure, or half damage on a success. \n\nYou may also take a bean from the bag and plant it in dirt or sand and water it, producing an effect 1 minute later centered on where it was planted.\n\nTo determine the effect the Narrator may create something entirely new, choose one from the following table, or roll.\n\nTable: Bag of Beans\n\n| 1     | 5d4 toadstools with strange markings appear. When a creature eats a toadstool (raw or cooked), roll any die. An even result grants 5d6 temporary hit points for 1 hour, and an odd result requires the creature to make a DC 15 Constitution _saving throw_  or take 5d6 poison damage and become _poisoned_  for 1 hour.                                                                                                                                                                                                                                                                                                                                                                                                                                        |\n| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| 2–10  | 1d4+1 geysers erupt. Each one spews a different liquid (chosen by the Narrator) 30 feet into the air for 1d6 rounds: beer, berry juice, cooking oil, tea, vinegar, water, or wine.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |\n| 11–20 | A fully developed _treant_  appears. There is a 50% chance it is chaotic evil, in which case it immediately attacks the nearest creature.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |\n| 21–30 | A stone statue in your likeness with an angry countenance rises. The statue is immobile except for its mouth, which can move and speak. It constantly rails threats and insults against you. If you leave the statue, it knows where you are (if you are on the same plane of existence) and tells anyone who comes near that you are the worst of villains, urging them to kill you. The statue attempts to cast _geas_ (save DC 10) on any nearby creature that can speak a language you do (and isn’t your friend or companion) with the command to find and kill you. After 24 hours, the statue loses the ability to speak and cast geas, becoming completely inanimate.                                                                                    |\n| 31–40 | A campfire with green flames appears for 24 hours or until it is extinguished. The area in a 10-foot radius is a haven.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |\n| 41–50 | 1d6+6 fully developed _shriekers_  appear.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |\n| 51–60 | 1d4+8 small pods sprout, which then unfurl to allow a luminescent pink toad to crawl out of each one. A toad transforms into a Large or smaller beast (determined by the Narrator) whenever touched. The beast remains for 1 minute, then disappears in a puff of luminescent pink smoke.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |\n| 61–70 | A fully developed _shambling mound_  appears. It is not hostile but appears perplexed as it is _stunned_  for 1d4 rounds. Once the stun effect ends, it is _frightened_  for 1d10+1 rounds. The source of its fear is one randomly determined creature it can see.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |\n| 71–80 | A tree with tantalizing fruit appears, but then turns into glass that refracts light in a dazzlingly beautiful manner. The glass tree evaporates over the next 24 hours.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |\n| 81–90 | A nest appears containing 1d4+3 vibrantly multicolored eggs with equally multicolored yolks. Any creature that eats an egg (raw or cooked) makes a DC 20 Constitution _saving throw_ . On a success, the creature's lowest ability score permanently increases by 1 (randomly choosing among equally low scores). On a failure, the creature takes 10d6 force damage from an internal magical explosion.                                                                                                                                                                                                                                                                                                                                                         |\n| 91–99 | A 5-foot hole with swirling multicolored vapors inside appears. All creatures within 10 feet of the hole that have an Intelligence of 6 or higher hear urgent, loving whispers from within in a language they understand. Each creature makes a DC 15 Wisdom _saving throw_  or try to leap into the hole. The first creature to jump into the hole (or more than one, if multiple creatures jump in simultaneously) disappears for 1 day before reappearing. A creature has no memory of the previous 24 hours when it reappears, but finds a new randomly determined magic item of uncommon rarity among its possessions. It also gains the benefits of a _long rest_ . The hole disappears after 1 minute, or as soon as a creature jumps completely into it. |\n| 100   | A fantastic, gargantuan beanstalk erupts and grows to a height determined by the Narrator. The Narrator also chooses where the top leads. These options (and more) are possible: the castle of a giant, a magnificent view, a different plane of existence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |",
+    "rarity": "Rare",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "bag-of-devouring",
+    "name": "Bag of Devouring",
+    "type": "Wondrous Item",
+    "desc": "This item is actually an aperture for the mouth of an immense extradimensional creature and is often mistaken for a _bag of holding_ . \n\nThe creature can perceive everything placed inside the bag. Up to a cubic foot of inanimate objects can be stored inside, however once per day the creature swallows any inanimate objects inside and spews them into another plane of existence (with the Narrator deciding the plane and time of day). Animal or vegetable matter placed completely inside is instead ingested and destroyed. \n\nThis item can be very dangerous. When part of a creature is inside the bag (including a creature reaching a hand inside) there is a 50% chance the bag pulls it inside. A creature that ends its turn inside the bag is ingested and destroyed. \n\nA creature inside the bag can try to escape by using an action and making a DC 15 Strength check. Creatures outside the bag may use an action to attempt to reach in and pull a creature out with a DC 20 Strength check. This rescue attempt is subject to the same 50% chance to be pulled inside.\n\nPiercing or tearing the item destroys it, with anything currently inside shifted to a random location on the Astral Plane. Turning the bag inside out closes the mouth.",
+    "rarity": "Very Rare",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "bag-of-holding",
+    "name": "Bag of Holding",
+    "type": "Wondrous Item",
+    "desc": "This bag’s interior space is significantly larger than its apparent size of roughly 2 feet at the mouth and 4 feet deep. The bag can hold up to 500 pounds and has an internal volume of 64 cubic feet. Regardless of its contents, it weighs 15 pounds. Retrieving an item from the bag requires an action. If you have never interacted with a specific bag of holding before, the first time you use it, it requires 1d4 rounds to take stock of its contents before anything can be retrieved from the bag.\n\nFood or water placed in the bag immediately and permanently lose all nourishing qualities—after being in the bag, water no longer slakes thirst and food does not sate hunger or nourish. In a similar fashion, the body of a dead creature placed in the bag cannot be restored to life by __revivify , raise dead ,_ or other similar magic. Breathing creatures inside the bag can survive for up to 2d4 minutes divided by the number of creatures (minimum 1 minute), after which time they begin to suffocate.\n\nThe bag cannot hold any item that would not fit in a normal bag of its apparent size or any item with the Bulky quality. \n\nIf the bag is punctured, torn, or otherwise structurally damaged, it ruptures and is destroyed, and the contents are scattered throughout the Astral Plane.\n\nPlacing a _bag of holding_ inside another extradimensional storage device such as a _portable hole_  or __handy haversack_ results in planar rift that destroys both items and pulls everything within 10 feet into the Astral Plane. The rift then closes and disappears.",
+    "rarity": "Uncommon",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "bag-of-tricks",
+    "name": "Bag of Tricks",
+    "type": "Wondrous Item",
+    "desc": "This seemingly empty cloth bag comes in several colors and has a small, fuzzy object inside. \n\nYou can use an action to pull a fuzzy object from the bag and throw it up to 20 feet. Upon landing, it becomes a creature determined by a roll on the Bag of Tricks table (depending on the bag’s color). \n\nThe resulting creature is friendly to you and any companions you have. It acts on your turn, during which you can use a bonus action to give it simple commands such as “attack that creature” or “move over there”. If the creature dies or if you use the bag again, it disappears without a trace. After the first use each day, there is a 50% chance that a creature from the bag is hostile instead of friendly and obedient.\n\nOnce you have used the bag three times, you cannot do so again until the next dawn.\n\n__**Table: Bags of Tricks**__\n| Blue bag of tricks (uncommon; cost 400 gp) |                     | Gray bag of tricks (uncommon; cost 350 gp) |                | Green bag of tricks (rare; cost 800 gp) |                   | Rust bag of tricks (uncommon; cost 400 gp**)** |              | Tan bag of tricks (uncommon; cost 300 gp) |                |\n| ------------------------------------------ | ------------------- | ------------------------------------------ | -------------- | --------------------------------------- | ----------------- | ---------------------------------------------- | ------------ | ----------------------------------------- | -------------- |\n| **d8**                                     | **Creatu**re        | d8                                         | **Creature**   | **d8**                                  | **Creature**      | **d8**                                         | **Creature** | **d8**                                    | **Creature**   |\n| 1                                          | _Quipper_           | 1                                          | _Weasel_       | 1                                       | _Giant Crocodile_ | 1                                              | _Rat_        | 1                                         | _Jackal_       |\n| 2                                          | _Octopus_           | 2                                          | _Giant rat_    | 2                                       | _Allosaurus_      | 2                                              | _Owl_        | 2                                         | _Ape_          |\n| 3                                          | _Seahorse_          | 3                                          | _Badger_       | 3                                       | _Ankylosaurus_    | 3                                              | _Mastiff_    | 3                                         | _Baboon_       |\n| 4                                          | _Hunter Shark_      | 4                                          | _Boar_         | 4                                       | _Raptor_          | 4                                              | _Goat_       | 4                                         | _Axe Beak_     |\n| 5                                          | _Swarm of quippers_ | 5                                          | _Panther_      | 5                                       | _Giant lizard_    | 5                                              | _Giant Goat_ | 5                                         | _Black Bear_   |\n| 6                                          | _Reef shark_        | 6                                          | _Giant Badger_ | 6                                       | _Triceratops_     | 6                                              | _Giant Boar_ | 6                                         | _Giant Weasel_ |\n| 7                                          | _Giant Seahorse_    | 7                                          | _Dire Wolf_    | 7                                       | _Plesiosaurus_    | 7                                              | _Lion_       | 7                                         | _Giant Hyena_  |\n| 8                                          | _Giant Octopus_     | 8                                          | _Giant Elk_    | 8                                       | _Pteranodon_      | 8                                              | _Brown Bear_ | 8                                         | _Tiger_        |",
+    "rarity": "Uncommon",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "bead-of-force",
+    "name": "Bead of Force",
+    "type": "Wondrous Item",
+    "desc": "This sphere of black glass is ¾ an inch in diameter and can be thrown up to 60 feet as an action. On impact it creates a 10-foot radius explosion. Creatures in the area make a DC 15 Dexterity _saving throw_ , taking 5d4 force damage on a failure. A sphere of force then encloses the same area for 1 minute. Any creature that is completely in the area and fails its save is trapped within the sphere. Creatures that succeed on the save or that are only partially within the area are pushed away from the point of impact until they are outside the sphere instead. \n\nThe wall of the sphere only allows air to pass, stopping all other attacks and effects. A creature inside the sphere can use its action to push against the sides of the sphere, moving up to half its Speed. The sphere only weighs 1 pound if lifted, regardless of the weight of the creatures inside.",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "belt-of-dwarvenkind",
+    "name": "Belt of Dwarvenkind",
+    "type": "Wondrous Item",
+    "desc": "While wearing this belt, you gain the following benefits:\n\n* Your Constitution score increases by 2, to a maximum of 20.\n* _Advantage_  on Charisma (Persuasion) checks made against dwarves.\n* _Advantage_  on saving throws against poison, and resistance to poison damage.\n* Darkvision to a range of 60 feet.\n* The ability to speak, read, sign, and write Dwarvish.\n\nIn addition, while you are attuned to this belt there is a 50% chance at dawn each day that you grow a full beard (or a noticeably thicker beard if you have one already).",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "belt-of-giant-strength",
+    "name": "Belt of Giant Strength",
+    "type": "Wondrous Item",
+    "desc": "Braided rope made of hair from the same kind of giant as the belt to be made\n\nWearing this belt increases your Strength score to the score granted by the belt. It has no effect if your Strength is equal to or greater than the belt’s score.\n\nEach variety of belt corresponds with a different kind of giant.\n\n__**Table: Belts of Giant Strength**__\n| **Type**                  | **Strength** | **Rarity** | **Cost**   |\n| ------------------------- | ------------ | ---------- | ---------- |\n| _Hill giant_              | 20           | Rare       | 4,000 gp   |\n| _Frost_  or _stone giant_ | 23           | Very rare  | 9,000 gp   |\n| _Fire giant_              | 25           | Very rare  | 20,000 gp  |\n| _Cloud giant_             | 27           | Legendary  | 55,000 gp  |\n| _Storm giant_             | 29           | Legendary  | 150,000 gp |",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "berserker-axe",
+    "name": "Berserker Axe",
+    "type": "Weapon",
+    "desc": "You gain +1 bonus to attack and damage rolls made with this magic axe, and while you are attuned to it your hit point maximum is increased by 1 for each level you have attained. \n\n**Curse.** After you attune to this axe you are unwilling to part with it, keeping it within reach at all times. In addition, you have _disadvantage_  on attack rolls with weapons other than this one unless the nearest foe you are aware of is 60 feet or more away from you.\n\nIn addition, when you are damaged by a hostile creature you make a DC 15 Wisdom _saving throw_  or go berserk. While berserk, on your turn each round you move to the nearest creature and take the Attack action against it, moving to attack the next nearest creature after you _incapacitate_  your current target. When there is more than one possible target, you randomly determine which to attack. You continue to be berserk until there are no creatures you can see or hear within 60 feet of you at the start of your turn. ",
+    "rarity": "Rare",
+    "requires_attunement": "requires attunement",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  },
+  {
+    "slug": "boots-of-elvenkind",
+    "name": "Boots of Elvenkind",
+    "type": "Wondrous Item",
+    "desc": "These boots cause your steps to make no sound, no matter the material stepped upon. While wearing these boots, you gain _advantage_  on Dexterity (Stealth) checks to move silently.",
+    "rarity": "Uncommon",
+    "requires_attunement": "",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+  }
+]

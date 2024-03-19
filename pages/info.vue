@@ -38,6 +38,7 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
       query: { search: query.search, page: page.value + 1 },
       type: query.type
     })
+
     pages.value = Math.ceil(count / 20)
 
     hits.value = results
