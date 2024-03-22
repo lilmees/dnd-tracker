@@ -53,6 +53,7 @@ function updateConditions (): void {
             :key="condition.id"
             :condition="condition"
             addable
+            color="black"
             :selected="selected.map(s => s.slug).includes(condition.slug)"
             :removable="selected.map(s => s.slug).includes(condition.slug)"
             @add="selected = [...selected, $event]"

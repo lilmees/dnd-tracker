@@ -13,10 +13,11 @@ function removeEffect (slug: string): void {
 
 <template>
   <div>
-    <div class="flex flex-wrap justify-center md:justify-start">
+    <div class="flex flex-wrap justify-center md:justify-start gap-1">
       <Tag
         v-for="condition in conditions"
         :key="condition.slug"
+        color="black"
         removable
         :condition="condition"
         @remove="removeEffect($event)"

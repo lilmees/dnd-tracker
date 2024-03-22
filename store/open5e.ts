@@ -98,8 +98,8 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     'conditions',
     'magicitems',
     'weapons',
-    'armor',
-    'sections'
+    'armor'
+    // 'sections'
   ]
 
   return {

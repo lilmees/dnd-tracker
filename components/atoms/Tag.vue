@@ -10,7 +10,7 @@ withDefaults(
   }>(), {
     removable: false,
     addable: false,
-    selected: true,
+    selected: false,
     color: 'danger'
   }
 )
@@ -18,45 +18,23 @@ withDefaults(
 
 <template>
   <div
-    class="px-3 py-1 m-1 font-semibold leading-tight rounded-lg flex gap-2 w-fit items-center text-white"
+    class="px-2 py-1 font-semibold leading-tight rounded-lg flex gap-2 w-fit items-center text-white border-4 transition-colors duration-200"
     :class="{
-      'bg-primary/50 ring-primary': color === 'primary',
-      'bg-secondary/50 ring-secondary': color === 'secondary',
-      'bg-success/50 ring-success': color === 'success',
-      'bg-info/50 ring-info': color === 'info',
-      'bg-warning/50 ring-warning': color === 'warning',
-      'bg-help/50 ring-help': color === 'help',
-      'bg-danger/50 ring-danger': color === 'danger',
-      'ring-2': selected,
+      'bg-black/50 border-black': color === 'black',
+      'bg-primary/50 border-primary': color === 'primary',
+      'bg-secondary/50 border-secondary': color === 'secondary',
+      'bg-success/50 border-success': color === 'success',
+      'bg-info/50 border-info': color === 'info',
+      'bg-warning/50 border-warning': color === 'warning',
+      'bg-help/50 border-help': color === 'help',
+      'bg-danger/50  border-danger': color === 'danger',
+      'border-white': selected,
     }"
   >
-    <Icon
-      v-if="removable"
-      v-tippy="{ content: $t('actions.remove') }"
-      name="ic:round-clear"
-      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
-      :aria-label="$t('actions.remove')"
-      aria-hidden="true"
-      @click="$emit('remove', condition.slug)"
-    />
-    <Icon
-      v-if="addable && !removable"
-      v-tippy="{ content: $t('actions.add') }"
-      name="material-symbols:add"
-      class="w-6 h-6 cursor-pointer hover:scale-110 duration-200 ease-in-out outline-none"
-      aria-hidden="true"
-      :aria-label="$t('actions.add')"
-      @click="$emit('add', condition)"
-    />
-    <div>
-      {{ condition.name }}
-    </div>
-    <tippy>
-      <Icon
-        name="material-symbols:info-outline-rounded"
-        class="w-6 h-6 hover:scale-110 cursor-pointer outline-none"
-        aria-hidden="true"
-      />
+    <tippy :delay="0">
+      <div class="cursor-pointer">
+        {{ condition.name }}
+      </div>
       <template #content>
         <div class="p-4 space-y-2 overflow-auto">
           <h3>
@@ -87,5 +65,31 @@ withDefaults(
         </div>
       </template>
     </tippy>
+    <button
+      v-if="removable"
+      v-tippy="{ content: $t('actions.remove') }"
+      :aria-label="$t('actions.remove')"
+      class="icon-btn-danger group"
+      @click="$emit('remove', condition.slug)"
+    >
+      <Icon
+        name="ic:round-clear"
+        class="icon"
+        aria-hidden="true"
+      />
+    </button>
+    <button
+      v-if="addable && !removable"
+      v-tippy="{ content: $t('actions.add') }"
+      :aria-label="$t('actions.add')"
+      class="icon-btn-success group"
+      @click="$emit('add', condition)"
+    >
+      <Icon
+        name="material-symbols:add"
+        class="icon"
+        aria-hidden="true"
+      />
+    </button>
   </div>
 </template>
