@@ -22,6 +22,10 @@
   .icon-btn > * {
     @apply relative z-[1];
   }
+
+  .icon {
+    @apply w-6 h-6 group-hover:text-white transition-colors duration-200;
+  }
 }
 
 @layer utilities {
@@ -220,6 +224,38 @@
 
   .icon-btn-danger {
     @apply icon-btn hover:before:bg-danger/50;
+  }
+
+  .icon-black {
+    @apply icon text-black;
+  }
+
+  .icon-primary {
+    @apply icon text-primary;
+  }
+
+  .icon-secondary {
+    @apply icon text-secondary;
+  }
+
+  .icon-success {
+    @apply icon text-success;
+  }
+
+  .icon-info {
+    @apply icon text-info;
+  }
+
+  .icon-warning {
+    @apply icon text-warning;
+  }
+
+  .icon-help {
+    @apply icon text-help;
+  }
+
+  .icon-danger {
+    @apply icon text-danger;
   }
 
   kbd {

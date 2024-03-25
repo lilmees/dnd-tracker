@@ -113,6 +113,7 @@
     "type": "Type",
     "actions": "Acties",
     "rows": "Rijen",
+    "concentration": "Concentratie",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
