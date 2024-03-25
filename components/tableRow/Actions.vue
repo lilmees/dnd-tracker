@@ -9,6 +9,7 @@ const store = useTableStore()
     <button
       v-tippy="{ content: $t('components.actions.link') }"
       :aria-label="$t('actions.open')"
+      class="icon-btn-info group"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
@@ -18,7 +19,7 @@ const store = useTableStore()
     >
       <Icon
         name="ph:link-simple-horizontal"
-        class="w-6 h-6 text-info"
+        class="icon-info"
         aria-hidden="true"
       />
     </button>
@@ -26,6 +27,7 @@ const store = useTableStore()
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.ac') }"
       :aria-label="$t('actions.open')"
+      class="icon-btn-help group"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
@@ -35,7 +37,7 @@ const store = useTableStore()
     >
       <Icon
         name="ic:outline-shield"
-        class="w-6 h-6 cursor-pointer text-help"
+        class="icon-help"
         aria-hidden="true"
       />
     </button>
@@ -43,6 +45,7 @@ const store = useTableStore()
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.hp') }"
       :aria-label="$t('actions.open')"
+      class="icon-btn-danger group"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
@@ -52,7 +55,7 @@ const store = useTableStore()
     >
       <Icon
         name="mdi:cards-heart-outline"
-        class="w-6 h-6 cursor-pointer text-danger"
+        class="icon-danger"
         aria-hidden="true"
       />
     </button>
@@ -60,6 +63,7 @@ const store = useTableStore()
       v-if="!['lair'].includes(row.type)"
       v-tippy="{ content: $t('components.actions.condition') }"
       :aria-label="$t('actions.open')"
+      class="icon-btn-success group"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
@@ -69,7 +73,7 @@ const store = useTableStore()
     >
       <Icon
         name="iconoir:round-flask"
-        class="w-6 h-6 cursor-pointer text-success"
+        class="icon-success"
         aria-hidden="true"
       />
     </button>
@@ -81,8 +85,8 @@ const store = useTableStore()
           || row.special_abilities?.length
       "
       v-tippy="{ content: $t('components.actions.attacks') }"
-      class="flex flex-wrap items-center gap-x-2"
       :aria-label="$t('actions.open')"
+      class="icon-btn-primary group"
       @click="() => {
         store.activeRow = row
         store.activeIndex = index
@@ -91,7 +95,7 @@ const store = useTableStore()
     >
       <Icon
         name="charm:sword"
-        class="w-6 h-6 text-primary"
+        class="icon-primary"
         aria-hidden="true"
       />
     </button>

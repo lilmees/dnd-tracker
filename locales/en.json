@@ -113,6 +113,7 @@
     "type": "Type",
     "actions": "Actions",
     "rows": "Rows",
+    "concentration": "Concentration",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
