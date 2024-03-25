@@ -75,11 +75,10 @@ async function logout (): Promise<void> {
         <div class="flex gap-4">
           <NuxtLink :to="localePath('/')">
             <NuxtImg
-              src="/logo.svg"
+              src="./logo.png"
               alt="DnD Tracker logo"
               sizes="sm:500px md:500px lg:500px"
               class="h-16"
-              provider="imagekit"
             />
           </NuxtLink>
           <p

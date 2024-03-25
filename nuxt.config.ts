@@ -125,7 +125,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true
   },
   devtools: {
-    enabled: true
+    enabled: false
   },
   security: {
     headers: {

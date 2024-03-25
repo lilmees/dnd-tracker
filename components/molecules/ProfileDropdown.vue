@@ -38,7 +38,7 @@ function close (): void {
           src="/dice.webp"
           alt="D20 dice"
           sizes="sm:40px md:40px lg:40px"
-          class="w-12"
+          class="w-12 p-2 animate-pulse"
           format="webp"
           provider="imagekit"
         />

@@ -214,7 +214,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
   function setPlaygroundValues (): void {
     encounter.value = {
-      title: 'Playground',
+      title: 'Day of Dungeons 2024',
       round: 1,
       rows: [
         {
@@ -391,8 +391,8 @@ export const useTableStore = defineStore('useTableStore', () => {
           note: '',
           maxHealth: 37,
           maxAc: 13,
-          tempHealth: 0,
-          tempAc: 6,
+          tempHealth: 6,
+          tempAc: 0,
           concentration: false,
           deathSaves: {
             save: [
@@ -507,7 +507,7 @@ export const useTableStore = defineStore('useTableStore', () => {
         {
           type: 'npc',
           id: 1710875489198,
-          name: 'Rocky',
+          name: 'Bijoux',
           health: 0,
           ac: 16,
           created_at: 'now',
@@ -548,7 +548,7 @@ export const useTableStore = defineStore('useTableStore', () => {
         {
           type: 'npc',
           id: 1710875489207,
-          name: 'Gray',
+          name: 'Nooi',
           health: 20,
           ac: 16,
           created_at: 'now',

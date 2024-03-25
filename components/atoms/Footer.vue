@@ -12,11 +12,10 @@ const showNav = useState<boolean>('showNavigation', () => true)
       <div class="flex flex-col gap-x-4 md:flex-row justify-between">
         <NuxtLink :to="localePath('/')" class="mt-2">
           <NuxtImg
-            src="/logo.svg"
+            src="./logo.png"
             alt="DnD Tracker logo"
             sizes="sm:500px md:500px lg:500px"
             class="h-16"
-            provider="imagekit"
           />
         </NuxtLink>
         <div class="flex flex-col sm:flex-row gap-y-4 gap-x-20 mt-3">
@@ -138,12 +137,10 @@ const showNav = useState<boolean>('showNavigation', () => true)
           </div>
         </div>
         <NuxtImg
-          src="/cat.webp"
+          src="./cat-wizard.png"
           alt="Wizard cat"
           sizes="sm:500px md:500px lg:500px"
           class="h-[200px] hidden md:block float"
-          format="webp"
-          provider="imagekit"
         />
       </div>
       <div class="flex flex-col md:flex-row justify-center gap-x-20 gap-y-4 mt-4 md:mt-0">
