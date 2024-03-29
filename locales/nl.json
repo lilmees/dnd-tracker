@@ -141,7 +141,13 @@
       "text": "De zoektocht naar {content} begint hier, maar moet nog worden ondernomen"
     },
     "notAllowed": "Actie niet toegestaan: u bent geen eigenaar of beheerder",
-    "selectedToRemove": "Geselecteerd om te verwijderen"
+    "selectedToRemove": "Geselecteerd om te verwijderen",
+    "mail": {
+      "fail": {
+        "title": "Mail is niet verstuurd",
+        "text": "Er is iets fout gegaan bij het versturen van de mail"
+      }
+    }
   },
   "pages": {
     "home": {
