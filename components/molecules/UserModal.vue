@@ -114,9 +114,6 @@ function resetState (): void {
         {{ $t(`components.userModal.title`, { campaign: campaign.title }) }}
       </h2>
     </template>
-    <button class="btn-primary" @click="sentMail('178378523748782537475')">
-      test mail
-    </button>
     <FormKit
       v-model="search"
       name="search"
