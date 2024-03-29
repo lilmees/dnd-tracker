@@ -64,6 +64,10 @@
     "players": "Spelers",
     "player": "Speler",
     "members": "Leden",
+    "summon": "Summon",
+    "lair": "Lair",
+    "npc": "Npc",
+    "monster": "Monster",
     "monsters": "Monsters",
     "characters": "Karakters",
     "animals": "Dieren",
@@ -623,7 +627,9 @@
     },
     "quickInitiativeModal": {
       "title": "Initiatieven snel toevoegen",
-      "roll": "Alle initiatieven rollen"
+      "roll": "Geselecteerde soorten rollen",
+      "select": "Selecteer de soorten om voor te rollen",
+      "ignore": "Negeer modifier"
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"

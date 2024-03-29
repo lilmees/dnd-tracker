@@ -64,6 +64,10 @@
     "players": "Players",
     "player": "Player",
     "members": "Members",
+    "summon": "Summon",
+    "lair": "Lair",
+    "npc": "Npc",
+    "monster": "Monster",
     "monsters": "Monsters",
     "characters": "Characters",
     "animals": "Animals",
@@ -637,7 +641,9 @@
     },
     "quickInitiativeModal": {
       "title": "Quick add initiatives",
-      "roll": "Roll all initiatives"
+      "roll": "Roll selected types",
+      "select": "Select types to roll for",
+      "ignore": "Ignore modifier"
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
