@@ -68,7 +68,7 @@ function setOpenState (filters: DraggableSprites): void {
         </p>
         <Icon
           name="tabler:chevron-down"
-          class="duration-200 h-6 w-6 stroke-2"
+          class="duration-200 transition-transform h-6 w-6 stroke-2"
           :class="{ 'rotate-180': open.includes(index) }"
           aria-hidden="true"
         />

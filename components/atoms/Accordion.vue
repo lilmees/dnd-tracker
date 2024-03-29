@@ -36,7 +36,7 @@ if (props.onlyOpenActive) {
       </h3>
       <Icon
         name="tabler:chevron-down"
-        class="duration-200 h-6 w-6 stroke-2"
+        class="duration-200 transition-transform h-6 w-6 stroke-2"
         :class="{ 'rotate-180': open }"
         aria-hidden="true"
       />

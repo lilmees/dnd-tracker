@@ -32,7 +32,7 @@ function close (): void {
         {{ label }}
       </span>
       <Icon
-        class="duration-200 ease-in-out w-6 h-6"
+        class="transition-transform duration-200 ease-in-out w-6 h-6"
         :class="{ 'rotate-180': isOpen }"
         name="tabler:chevron-down"
         aria-hidden="true"
@@ -73,3 +73,12 @@ function close (): void {
     </Transition>
   </div>
 </template>
+
+<!-- <style>
+.expand-leave-active, .expand-enter-active {
+    @apply duration-1000 transition-all ease-in-out overflow-hidden;
+  }
+
+  .expand-leave-to, .expand-enter-from {
+    @apply !h-0 opacity-0;
+  }</style> -->

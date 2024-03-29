@@ -71,7 +71,7 @@
   }
 
   .expand-leave-active, .expand-enter-active {
-    @apply duration-500 ease-in-out overflow-hidden;
+    @apply duration-300 transition-all overflow-hidden;
   }
 
   .expand-leave-to, .expand-enter-from {
