@@ -38,7 +38,7 @@ export default defineFormKitConfig((): any => {
             help: 'mb-2 mt-1.5',
             input: 'absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none peer',
             label: 'mt-1 select-none',
-            wrapper: 'flex items-center mb-1'
+            wrapper: 'flex items-center mb-1 cursor-pointer'
           },
           'family:button': {
             input: '$remove:bg-tracker/50 btn-black',
@@ -134,9 +134,10 @@ export default defineFormKitConfig((): any => {
             input: 'peer absolute opacity-0 pointer-events-none',
             innerLabel: 'text-[10px] font-bold absolute left-full top-1/2 -translate-x-full -translate-y-1/2 px-1',
             thumb: 'relative left-0 aspect-square rounded-full transition-all w-5 bg-gray-100',
-            track: 'p-0.5 min-w-[3em] relative rounded-full transition-all bg-black peer-checked:bg-primary peer-checked:[&>div:last-child]:left-full peer-checked:[&>div:last-child]:-translate-x-full peer-checked:[&>div:first-child:not(:last-child)]:left-0 peer-checked:[&>div:first-child:not(:last-child)]:translate-x-0',
+            track: 'cursor-pointer p-0.5 min-w-[3em] relative rounded-full transition-all bg-black peer-checked:bg-primary peer-checked:[&>div:last-child]:left-full peer-checked:[&>div:last-child]:-translate-x-full peer-checked:[&>div:first-child:not(:last-child)]:left-0 peer-checked:[&>div:first-child:not(:last-child)]:translate-x-0',
             valueLabel: 'font-bold text-sm',
-            wrapper: 'flex flex-wrap items-center mb-1'
+            wrapper: 'flex flex-wrap items-center mb-1',
+            label: 'cursor-pointer'
           },
           slider: {
             outer: 'max-w-md',

@@ -181,11 +181,11 @@ function closeModal (): void {
           :placeholder="$t('components.inputs.nothing')"
           validation="required"
           :options="[
-            { label: 'Player', value: 'player' },
-            { label: 'Summon', value: 'summon' },
-            { label: 'Npc', value: 'npc' },
-            { label: 'Monster', value: 'monster' },
-            { label: 'Lair', value: 'lair' },
+            { label: $t('general.player'), value: 'player' },
+            { label: $t('general.summon'), value: 'summon' },
+            { label: $t('general.npc'), value: 'npc' },
+            { label: $t('general.monster'), value: 'monster' },
+            { label: $t('general.lair'), value: 'lair' },
           ]"
           outer-class="grow"
         />
