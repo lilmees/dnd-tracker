@@ -140,7 +140,13 @@
       "text": "The quest for {content} begins here, but it's yet to be undertaken"
     },
     "notAllowed": "Action not allowed: you are not the owner or administrator",
-    "selectedToRemove": "Selected to remove"
+    "selectedToRemove": "Selected to remove",
+    "mail": {
+      "fail": {
+        "title": "Mail is not sent",
+        "text": "Something went wrong while trying to send the email"
+      }
+    }
   },
   "pages": {
     "home": {
@@ -637,6 +643,12 @@
     },
     "contentHeader": {
       "toMuch": "To much items for card view"
+    },
+    "bulkRemove": {
+      "title": "Bulk remove {type}",
+      "subtitle": "Select {type} for removing by clicking on it.",
+      "amount": "Remove {number} {type}",
+      "multiple": "{number} {type}"
     }
   }
 }

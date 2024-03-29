@@ -1,18 +1,28 @@
 <script setup lang="ts">
+import logRocket from 'logrocket'
+
 useHead({ title: 'Contact' })
 
 const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-function sendContactMail ({ __init, ...formData }: Obj): void {
-  useFetch('/api/emails/contact-request', {
+async function sendContactMail ({ __init, ...formData }: Obj): Promise<void> {
+  const { error } = await useFetch('/api/emails/contact-request', {
     method: 'POST',
     body: { props: formData }
   })
 
-  toast.success({ title: t('pages.contact.success') })
-  navigateTo(localePath('/'))
+  if (error.value) {
+    logRocket.captureException(new Error('Failed to send email'))
+    toast.error({
+      text: t('general.mail.fail.text'),
+      title: t('general.mail.fail.title')
+    })
+  } else {
+    toast.success({ title: t('pages.contact.success') })
+    navigateTo(localePath('/'))
+  }
 }
 </script>
 

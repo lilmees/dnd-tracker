@@ -7,6 +7,7 @@ defineProps<{ open: boolean }>()
 
 const feature = useFeaturesStore()
 const profile = useProfileStore()
+const { t } = useI18n()
 
 const isAccepted = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
@@ -30,7 +31,7 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
     const feat = await feature.addFeature(newFeature)
 
     if (feat) {
-      useFetch('/api/emails/feature-request', {
+      const { error } = await useFetch('/api/emails/feature-request', {
         method: 'POST',
         body: {
           props: {
@@ -41,6 +42,10 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
           }
         }
       })
+
+      if (error.value) {
+        throw new Error(t('general.mail.fail.text'))
+      }
     }
 
     isAccepted.value = true

@@ -77,7 +77,7 @@ async function handleSubmit (): Promise<void> {
 async function sentMail (token: string): Promise<void> {
   const link = `https://dnd-tracker.com${campaignUrl(props.campaign, 'join')}?token=${token}`
 
-  await useFetch('/api/emails/campaign-invite', {
+  const { error } = await useFetch('/api/emails/campaign-invite', {
     method: 'POST',
     body: {
       locale: locale.value,
@@ -90,6 +90,10 @@ async function sentMail (token: string): Promise<void> {
       }
     }
   })
+
+  if (error.value) {
+    throw new Error(t('general.mail.fail.text'))
+  }
 }
 
 function resetState (): void {
@@ -110,6 +114,9 @@ function resetState (): void {
         {{ $t(`components.userModal.title`, { campaign: campaign.title }) }}
       </h2>
     </template>
+    <button class="btn-primary" @click="sentMail('178378523748782537475')">
+      test mail
+    </button>
     <FormKit
       v-model="search"
       name="search"
