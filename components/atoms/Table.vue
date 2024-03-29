@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { search } from '@formkit/icons'
-
 defineEmits(['paginate'])
 
 withDefaults(

@@ -142,6 +142,7 @@ function resetState (): void {
         v-show="isTable"
         v-model:sorted-by="encounterStore.filters.sortedBy"
         v-model:acs="encounterStore.filters.sortACS"
+        v-model:page="encounterStore.page"
         :headers="headers"
         :pages="encounterStore.pages"
         :searching="encounterStore.searching"
