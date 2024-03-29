@@ -32,7 +32,7 @@ function close (): void {
         {{ label }}
       </span>
       <Icon
-        class="duration-200 ease-in-out w-6 h-6"
+        class="transition-transform duration-200 ease-in-out w-6 h-6"
         :class="{ 'rotate-180': isOpen }"
         name="tabler:chevron-down"
         aria-hidden="true"
