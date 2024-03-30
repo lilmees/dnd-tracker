@@ -33,7 +33,16 @@ export const useTableStore = defineStore('useTableStore', () => {
 
     const { data, error } = await supabase
       .from('initiative_sheets')
-      .select('*, campaign(id, title, background, color, created_by(id, created_at, username, name, avatar, email, badges), team(*))')
+      .select(`
+        *, 
+        campaign(id, title, background, color, 
+          created_by(id, created_at, username, name, avatar, email, badges), 
+          team(
+            role, 
+            user(id, created_at, username, name, avatar, email, badges)
+          )
+        )
+      `)
       .eq('id', id)
       .single()
 
@@ -44,7 +53,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     if (enc.campaign && profile.data && !isMember(enc.campaign, profile.data.id)) {
-      navigateTo(localePath('/not-member'))
+      navigateTo(localePath('/no-member'))
     }
 
     enc.rows = typeof enc.rows === 'string'
