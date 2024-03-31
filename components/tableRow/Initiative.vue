@@ -58,9 +58,16 @@ function updateInitiative ({ __init, initiative, amount }: Obj): void {
           outer-class="grow"
         />
       </div>
-      <FormKit :aria-label="$t('actions.update')" type="submit">
-        {{ $t('actions.update') }}
-      </FormKit>
+      <InlineConfirmation>
+        <template #submit>
+          <FormKit
+            type="submit"
+            :label="$t('actions.update')"
+            :aria-label="$t('actions.update')"
+            outer-class="$reset !mb-0"
+          />
+        </template>
+      </InlineConfirmation>
     </FormKit>
   </Modal>
 </template>

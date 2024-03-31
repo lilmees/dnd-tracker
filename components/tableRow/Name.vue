@@ -3,6 +3,11 @@ import { reset } from '@formkit/core'
 
 const emit = defineEmits(['update', 'close'])
 
+const form = ref<{ name: string }>({ name: '' })
+
+const random =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="1792.01" height="1600" viewBox="0 0 1792 1600"><path fill="currentColor" d="M666 449q-60 92-137 273q-22-45-37-72.5T451.5 586t-51-56.5t-63-35T256 480H32q-14 0-23-9t-9-23V256q0-14 9-23t23-9h224q250 0 410 225zm1126 799q0 14-9 23l-320 320q-9 9-23 9q-13 0-22.5-9.5t-9.5-22.5v-192q-32 0-85 .5t-81 1t-73-1t-71-5t-64-10.5t-63-18.5t-58-28.5t-59-40t-55-53.5t-56-69.5q59-93 136-273q22 45 37 72.5t40.5 63.5t51 56.5t63 35t81.5 14.5h256V928q0-14 9-23t23-9q12 0 24 10l319 319q9 9 9 23zm0-896q0 14-9 23l-320 320q-9 9-23 9q-13 0-22.5-9.5T1408 672V480h-256q-48 0-87 15t-69 45t-51 61.5t-45 77.5q-32 62-78 171q-29 66-49.5 111t-54 105t-64 100t-74 83t-90 68.5t-106.5 42t-128 16.5H32q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224q48 0 87-15t69-45t51-61.5t45-77.5q32-62 78-171q29-66 49.5-111t54-105t64-100t74-83t90-68.5t106.5-42t128-16.5h256V32q0-14 9-23t23-9q12 0 24 10l319 319q9 9 9 23z"/></svg>'
+
 function updateName ({ __init, name }: Obj): void {
   emit('update', name.trim())
   reset('form')
@@ -16,6 +21,7 @@ function updateName ({ __init, name }: Obj): void {
     </template>
     <FormKit
       id="form"
+      v-model="form"
       type="form"
       :actions="false"
       @submit="updateName"
@@ -24,10 +30,21 @@ function updateName ({ __init, name }: Obj): void {
         name="name"
         :label="$t('components.inputs.nameLabel')"
         validation="required|length:3,30"
+        :suffix-icon="random"
+        @suffix-icon-click="() => {
+          form.name = useRandomName()
+        }"
       />
-      <FormKit type="submit" :aria-label="$t('actions.update')">
-        {{ $t('actions.update') }}
-      </FormKit>
+      <InlineConfirmation>
+        <template #submit>
+          <FormKit
+            type="submit"
+            :label="$t('actions.update')"
+            :aria-label="$t('actions.update')"
+            outer-class="$reset !mb-0"
+          />
+        </template>
+      </InlineConfirmation>
     </FormKit>
   </Modal>
 </template>

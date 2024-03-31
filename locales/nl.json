@@ -642,6 +642,9 @@
       "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",
       "amount": "Verwijder {number} {type}",
       "multiple": "{number} {type}"
+    },
+    "inlineConfirmation": {
+      "text": "Weet je zeker dat je dit wilt updaten? Je oude waarde wordt niet opgeslagen."
     }
   }
 }

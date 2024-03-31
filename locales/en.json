@@ -656,6 +656,9 @@
       "subtitle": "Select {type} for removing by clicking on it.",
       "amount": "Remove {number} {type}",
       "multiple": "{number} {type}"
+    },
+    "inlineConfirmation": {
+      "text": "Are you sure you want to update this? Your old value won't be saved."
     }
   }
 }
