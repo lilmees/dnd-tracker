@@ -124,19 +124,21 @@ async function addHomebrew (formData: Obj): Promise<void> {
 }
 
 async function addInitiative ({ amount, ...data }: Obj): Promise<void> {
-  if (!table.encounter?.rows) {
-    return
-  }
+  if (!table.encounter?.rows) { return }
 
   const rows = []
 
-  if (!amount) {
-    amount = 1
-  }
+  if (!amount) { amount = 1 }
 
+  // Set summoner data when it's an id
   if (typeof data.summoner === 'number') {
     const sum = table.encounter.rows.filter(r => r.id === data.summoner)[0]
     data.summoner = { name: sum.name, id: +sum.id }
+  }
+
+  // Add init modifier to initiative when it's set
+  if (!isNaN(+data.initiative) && !isNaN(+data.initiative_modifier)) {
+    data.initiative = +data.initiative + +data.initiative_modifier
   }
 
   for (let i = 0; i < amount; i++) {
