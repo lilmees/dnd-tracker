@@ -193,6 +193,7 @@ function closeModal (): void {
         />
         <FormKit
           v-if="(form.type === 'monster' || form.type === 'summon') && encounter"
+          value="1"
           name="amount"
           type="number"
           min="1"
