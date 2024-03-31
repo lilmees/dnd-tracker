@@ -1,3 +1,4 @@
+import { is, ro } from '@formkit/i18n'
 import logRocket from 'logrocket'
 
 export const useTableStore = defineStore('useTableStore', () => {
@@ -12,6 +13,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const isLoading = ref<boolean>(true)
   const isSyncing = ref<boolean>(false)
   const isSandbox = ref<boolean>(false)
+  const isPlayground = ref<boolean>(false)
 
   const activeModal = ref<EncounterModal>()
   const activeField = ref<EncounterUpdateField>()
@@ -24,12 +26,12 @@ export const useTableStore = defineStore('useTableStore', () => {
       : false
   })
 
-  const isPlayground = computed<boolean>(() => route.fullPath.includes('/playground'))
   const isHome = computed<boolean>(() => route.fullPath.replace('en', '') === '/')
 
   async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
+    isPlayground.value = route.fullPath.includes('/playground')
 
     const { data, error } = await supabase
       .from('initiative_sheets')

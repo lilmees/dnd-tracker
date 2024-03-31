@@ -78,7 +78,7 @@ if (process.client) {
               >
               <EncounterHeader />
               <EncounterTable />
-              <EncounterOptions />
+              <EncounterOptions home />
             </div>
           </div>
           <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">

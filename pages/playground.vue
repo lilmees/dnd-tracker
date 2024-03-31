@@ -5,6 +5,8 @@ const store = useTableStore()
 const route = useRoute()
 
 onMounted(async () => {
+  store.isPlayground = true
+
   if (route.query.content) {
     await store.loadSharedEncounter(route.query.content as string)
   } else {
