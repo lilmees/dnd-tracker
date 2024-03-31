@@ -1,4 +1,3 @@
-import { is, ro } from '@formkit/i18n'
 import logRocket from 'logrocket'
 
 export const useTableStore = defineStore('useTableStore', () => {
