@@ -81,8 +81,13 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
     const enc = await store.updateEncounter(
-      { ...data, color: contrastColor(data.background) },
-      props.encounter.id
+      useEmptyKeyRemover({
+        ...data,
+        ...props.campaignId && { campaign: props.campaignId },
+        color: contrastColor(data.background)
+      }),
+      props.encounter.id,
+      !!props.campaignId
     )
 
     emit('updated', enc)
@@ -93,6 +98,7 @@ async function addEncounter (data: EncounterForm): Promise<void> {
   if (user.value) {
     const enc = useEmptyKeyRemover({
       ...data,
+      ...props.campaignId && { campaign: props.campaignId },
       round: 1,
       rows: [],
       created_by: user.value.id,

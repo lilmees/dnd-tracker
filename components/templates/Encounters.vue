@@ -321,7 +321,8 @@ function resetState (): void {
       @close="resetState"
       @delete="() => {
         encounterStore.deleteEncounter(
-          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id),
+          campaignView && currentStore.campaign ? currentStore.campaign.id : undefined
         );
         resetState()
       }"
@@ -329,7 +330,7 @@ function resetState (): void {
     <EncounterModal
       :open="isUpdating || isOpen"
       :encounter="selected.length && isUpdating ? selected[0] : undefined"
-      :campaign="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
+      :campaign-id="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
       :update="isUpdating"
       @close="resetState"
       @updated="resetState"

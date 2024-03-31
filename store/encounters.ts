@@ -24,6 +24,16 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
 
+  const select = `
+    *, 
+    profiles(id, name, username, avatar), 
+    campaign( 
+      id, title, background, color,
+      created_by(id), 
+      team(id, user(id), role)
+    )
+  `
+
   const restrictionEncounters = computed<Encounter[]>(() => {
     if (!profile.data) { return [] }
     const { userArr, nonUserArr } = sortEncountersByUserCreated(data.value, profile.data.id)
@@ -44,10 +54,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
       let query = supabase
         .from('initiative_sheets')
-        .select(
-          '*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)',
-          { count: 'exact' }
-        )
+        .select(select, { count: 'exact' })
         .range(from, to)
         .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
 
@@ -97,7 +104,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
-      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
+      .select(select)
       .eq('campaign', `${id}`)
 
     if (err) {
@@ -111,7 +118,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .insert([encounter as never])
-      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
+      .select(select)
 
     if (err) {
       throw err
@@ -119,6 +126,8 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       data.value = data.value && data.value.length
         ? [sheets[0] as Encounter, ...data.value]
         : [sheets[0]]
+
+      encounterCount.value++
 
       return sheets[0]
     }
@@ -146,7 +155,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     return await addEncounter(encounter as AddEncounter)
   }
 
-  async function deleteEncounter (id: number|number[]): Promise<void> {
+  async function deleteEncounter (id: number|number[], campaign?: number): Promise<void> {
     try {
       let query = supabase.from('initiative_sheets').delete()
 
@@ -159,7 +168,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       if (err) {
         throw err
       } else {
-        fetch(undefined, !!filters.value.search)
+        fetch(
+          campaign ? { field: 'campaign', value: campaign } : undefined,
+          !!filters.value.search
+        )
       }
     } catch (err) {
       logRocket.captureException(err as Error)
@@ -167,17 +179,24 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function updateEncounter (encounter: UpdateEncounter, id: number): Promise<Encounter> {
+  async function updateEncounter (
+    encounter: UpdateEncounter,
+    id: number,
+    campaignView: boolean = false
+  ): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .update(encounter as never)
       .eq('id', id)
-      .select('*, profiles(id, name, username, avatar), campaign(id, created_by(id), team(id, user(id), role), title, background, color)')
+      .select(select)
 
     if (err) {
       throw err
     } else {
-      fetch(undefined, !!filters.value.search)
+      fetch(
+        campaignView && encounter.campaign ? { field: 'campaign', value: encounter.campaign } : undefined,
+        !!filters.value.search
+      )
       return sheets[0]
     }
   }
