@@ -1,4 +1,9 @@
 <script setup lang="ts">
+withDefaults(
+  defineProps<{ home?: boolean }>(),
+  { home: false }
+)
+
 const store = useTableStore()
 const online = useOnline()
 
@@ -9,11 +14,11 @@ const isOpen = ref<boolean>(false)
   <div
     class="p-4 flex justify-end"
     :class="{
-      'md:justify-between md:items-center': !store.isHome
+      'md:justify-between md:items-center': !home
     }"
   >
     <div
-      v-if="!store.isHome && !store.isPlayground"
+      v-if="!home && !store.isPlayground"
       v-tippy="
         !online
           ? $t('general.offline')
@@ -36,7 +41,7 @@ const isOpen = ref<boolean>(false)
       />
     </div>
     <div
-      v-else-if="store.isPlayground"
+      v-else-if="!home && store.isPlayground"
       class="hidden md:flex gap-2 max-w-[250px] items-center"
     >
       <Icon
