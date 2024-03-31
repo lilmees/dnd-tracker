@@ -43,9 +43,16 @@ function updateHealth ({ __init, health }: Obj): void {
           isRollingDice = false
         }"
       />
-      <FormKit type="submit" :aria-label="$t('actions.update')">
-        {{ $t('actions.update') }}
-      </FormKit>
+      <InlineConfirmation>
+        <template #submit>
+          <FormKit
+            type="submit"
+            :label="$t('actions.update')"
+            :aria-label="$t('actions.update')"
+            outer-class="$reset !mb-0"
+          />
+        </template>
+      </InlineConfirmation>
     </FormKit>
   </Modal>
 </template>
