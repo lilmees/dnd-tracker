@@ -26,7 +26,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       campaign.value = await campaignStore.getCampaignById(id)
 
       if (profile.data && !isMember(campaign.value, profile.data.id)) {
-        navigateTo(localePath('/not-member'))
+        navigateTo(localePath('/no-member'))
       }
 
       useHead({ title: campaign.value.title })

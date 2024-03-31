@@ -67,6 +67,20 @@ const showNav = useState<boolean>('showNavigation', () => true)
                 </span>
               </NuxtLink>
               <NuxtLink
+                to="https://discord.gg/NxghtztVX7"
+                target="_blank"
+                class="flex"
+              >
+                <Icon
+                  name="mingcute:discord-line"
+                  class="w-6 h-6 mr-2"
+                  aria-hidden="true"
+                />
+                <span>
+                  Discord
+                </span>
+              </NuxtLink>
+              <NuxtLink
                 to="https://ko-fi.com/jeremymees"
                 target="_blank"
                 class="flex"
