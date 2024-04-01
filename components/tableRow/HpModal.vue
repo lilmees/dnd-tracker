@@ -111,9 +111,11 @@ function handleHpChanges (number: number): void {
     ) ||
     store.activeRow.deathSaves.fail.every(v => v === true)
   ) {
+    const type = t(`general.${store.activeRow.type}`)
+
     toast.info({
-      title: t('pages.encounter.toasts.died.title'),
-      text: t('pages.encounter.toasts.died.textMinHP')
+      title: t('pages.encounter.toasts.died.title', { type }),
+      text: t('pages.encounter.toasts.died.textMinHP', { type: type.toLowerCase() })
     })
   }
 
@@ -134,7 +136,7 @@ function handleDeathSaves (): void {
           updatedFails++
         }
       })
-      store.checkDeathSaves(store.activeRow.deathSaves)
+      store.checkDeathSaves(store.activeRow.deathSaves, store.activeRow.type)
     } else {
       resetDeathSaves()
     }
@@ -142,7 +144,7 @@ function handleDeathSaves (): void {
 }
 
 function resetDeathSaves (): void {
-  if (store.activeRow) {
+  if (store.activeRow && !['summon', 'lair'].includes(store.activeRow.type)) {
     store.activeRow.deathSaves.fail = [false, false, false]
     store.activeRow.deathSaves.save = [false, false, false]
   }

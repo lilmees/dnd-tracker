@@ -247,13 +247,13 @@
           "text": "Iemand heeft de encounter verwijderd, dus je kan hem niet meer gebruiken"
         },
         "died": {
-          "title": "Speler is gestorven",
-          "textMinHP": "De speler heeft te veel negatieve hp en is dood",
-          "textDeathSaves": "De speler heeft 3 keer gefaald bij death saves en is dood"
+          "title": "{type} is gestorven",
+          "textMinHP": "De {type} heeft te veel negatieve hp en is dood",
+          "textDeathSaves": "De {type} heeft 3 keer gefaald bij death saves en is dood"
         },
         "stable": {
-          "title": "Speler is gestabiliseerd",
-          "textDeathSaves": "De speler heeft 3 keer gesaved bij death saves en is gestabiliseerd"
+          "title": "{type} is gestabiliseerd",
+          "textDeathSaves": "De {type} heeft 3 keer gesaved bij death saves en is gestabiliseerd"
         }
       }
     },

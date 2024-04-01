@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
-const props = defineProps<{ deathSaves: DeathSaves }>()
+const props = defineProps<{ deathSaves: DeathSaves, type: RowType }>()
 
 function updateDeathSave (index: number, save: boolean): void {
   save
@@ -15,7 +15,7 @@ function updateDeathSave (index: number, save: boolean): void {
   <div class="flex flex-wrap gap-1 justify-center items-center">
     <p
       v-if="deathSaves.stable"
-      v-tippy="{ content: $t('pages.encounter.toasts.stable.title') }"
+      v-tippy="$t('pages.encounter.toasts.stable.title', { type: $t(`general.${type}`) })"
       class="font-bold"
     >
       S

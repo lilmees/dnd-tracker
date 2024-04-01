@@ -259,13 +259,13 @@
           "text": "Someone removed the encounter so it can't be used anymore"
         },
         "died": {
-          "title": "Player died",
-          "textMinHP": "The player has too many negative hp and is dead",
-          "textDeathSaves": "The player failed his death saves three times and is dead"
+          "title": "{type} died",
+          "textMinHP": "The {type} has too many negative hp and is dead",
+          "textDeathSaves": "The {type} failed his death saves three times and is dead"
         },
         "stable": {
-          "title": "Player stabilized",
-          "textDeathSaves": "The player saved his death saves three times and is stabilized"
+          "title": "{type} stabilized",
+          "textDeathSaves": "The {type} saved his death saves three times and is stabilized"
         }
       }
     },
@@ -275,7 +275,7 @@
       "consent": "By registering, you agree to our terms and conditions",
       "toast": {
         "success": {
-          "title": "Successfully registrerd",
+          "title": "Successfully registered",
           "text": "Confirm your email address with the email we have sent you and afterwards you can login."
         }
       }
