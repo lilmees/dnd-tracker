@@ -266,6 +266,10 @@
         "stable": {
           "title": "{type} stabilized",
           "textDeathSaves": "The {type} saved his death saves three times and is stabilized"
+        },
+        "concentration": {
+          "title": "Make a concentration check",
+          "text": "The {type}, maintaining concentration took damage"
         }
       }
     },

@@ -156,6 +156,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (!activeRow.value || activeIndex.value === undefined) { return }
 
     const rows = encounter.value!.rows as Row[]
+
     // when updating health or ac also update the max values
     if (activeField.value === 'health' || activeField.value === 'ac') {
       activeRow.value[`max${activeField.value.charAt(0).toUpperCase() + activeField.value.slice(1)}` as keyof Row] = value

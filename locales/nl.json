@@ -254,6 +254,10 @@
         "stable": {
           "title": "{type} is gestabiliseerd",
           "textDeathSaves": "De {type} heeft 3 keer gesaved bij death saves en is gestabiliseerd"
+        },
+        "concentration": {
+          "title": "Maak een concentratie check",
+          "text": "{type} die zich concentreerde, liep schade op"
         }
       }
     },

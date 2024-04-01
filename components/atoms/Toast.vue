@@ -84,6 +84,7 @@ watch(() => isHover.value, (v: boolean) => {
       />
     </div>
     <div
+      v-if="toast.timed"
       ref="loader"
       class="h-2 ease-linear duration-200"
       :class="{
