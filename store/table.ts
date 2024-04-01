@@ -156,6 +156,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (!activeRow.value || activeIndex.value === undefined) { return }
 
     const rows = encounter.value!.rows as Row[]
+
     // when updating health or ac also update the max values
     if (activeField.value === 'health' || activeField.value === 'ac') {
       activeRow.value[`max${activeField.value.charAt(0).toUpperCase() + activeField.value.slice(1)}` as keyof Row] = value
@@ -171,7 +172,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     if (activeRow.value.deathSaves) {
-      checkDeathSaves(activeRow.value.deathSaves)
+      checkDeathSaves(activeRow.value.deathSaves, activeRow.value.type)
       activeRow.value.deathSaves.stable = activeRow.value.deathSaves.save.every(v => v === true)
     }
 
@@ -206,17 +207,19 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
-  function checkDeathSaves (saves: DeathSaves): void {
+  function checkDeathSaves (saves: DeathSaves, rowType: RowType): void {
+    const type = t(`general.${rowType}`)
+
     if (!saves.stable) {
       if (saves.fail.every(v => v === true)) {
         toast.info({
-          title: t('pages.encounter.toasts.died.title'),
-          text: t('pages.encounter.toasts.died.textDeathSaves')
+          title: t('pages.encounter.toasts.died.title', { type }),
+          text: t('pages.encounter.toasts.died.textDeathSaves', { type: type.toLowerCase() })
         })
       } else if (saves.save.every(v => v === true)) {
         toast.info({
-          title: t('pages.encounter.toasts.stable.title'),
-          text: t('pages.encounter.toasts.stable.textDeathSaves')
+          title: t('pages.encounter.toasts.stable.title', { type }),
+          text: t('pages.encounter.toasts.stable.textDeathSaves', { type: type.toLowerCase() })
         })
       }
     }

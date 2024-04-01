@@ -28,7 +28,7 @@ export const useToastStore = defineStore('useToastStore', () => {
     return add({
       ...success,
       actions: success.actions || [],
-      timed: success.timed || true,
+      timed: success.timed ?? true,
       type: 'success'
     } as Toast)
   }
@@ -37,7 +37,7 @@ export const useToastStore = defineStore('useToastStore', () => {
     return add({
       ...warn,
       actions: warn.actions || [],
-      timed: warn.timed || true,
+      timed: warn.timed ?? true,
       type: 'warn'
     } as Toast)
   }
@@ -48,7 +48,7 @@ export const useToastStore = defineStore('useToastStore', () => {
       title: error.title || t('general.error.title'),
       text: error.text || t('general.error.text'),
       actions: error.actions || [],
-      timed: error.timed || true,
+      timed: error.timed ?? true,
       type: 'error'
     } as Toast)
   }
@@ -57,7 +57,7 @@ export const useToastStore = defineStore('useToastStore', () => {
     return add({
       ...info,
       actions: info.actions || [],
-      timed: info.timed || true,
+      timed: info.timed ?? true,
       type: 'info'
     } as Toast)
   }

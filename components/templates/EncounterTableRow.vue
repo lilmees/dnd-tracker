@@ -279,6 +279,7 @@ async function moveRow (up: boolean): Promise<void> {
     >
       <DeathSaves
         v-if="row.deathSaves"
+        :type="row.type"
         :death-saves="row.deathSaves"
         @update="(v) => {
           store.activeRow = row

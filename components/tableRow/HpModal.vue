@@ -47,6 +47,8 @@ function updateHealth ({ __init, amount }: Obj): void {
 function handleHpChanges (number: number): void {
   if (!store.activeRow) { return }
 
+  const initType = t(`general.${store.activeRow.type}`)
+
   handleDeathSaves()
 
   switch (type.value) {
@@ -68,8 +70,14 @@ function handleHpChanges (number: number): void {
       } else if (store.activeRow.health) {
         store.activeRow.health = store.activeRow.health - number
       }
+
       if (typeof store.activeRow.health === 'number' && store.activeRow.health <= 0) {
         resetDeathSaves()
+      } else if (store.activeRow.concentration) {
+        toast.info({
+          title: t('pages.encounter.toasts.concentration.title'),
+          text: t('pages.encounter.toasts.concentration.text', { type: initType })
+        })
       }
       break
     case 'temp':
@@ -109,11 +117,14 @@ function handleHpChanges (number: number): void {
       store.activeRow.health < 0 &&
       Math.abs(store.activeRow.health) >= store.activeRow.maxHealth
     ) ||
-    store.activeRow.deathSaves.fail.every(v => v === true)
+    (
+      hasDeathSaves(store.activeRow.type) &&
+      store.activeRow.deathSaves.fail.every(v => v === true)
+    )
   ) {
     toast.info({
-      title: t('pages.encounter.toasts.died.title'),
-      text: t('pages.encounter.toasts.died.textMinHP')
+      title: t('pages.encounter.toasts.died.title', { type: initType }),
+      text: t('pages.encounter.toasts.died.textMinHP', { type: initType.toLowerCase() })
     })
   }
 
@@ -125,7 +136,10 @@ function handleHpChanges (number: number): void {
 
 function handleDeathSaves (): void {
   if (store.activeRow && store.activeRow.health === 0) {
-    store.activeRow.deathSaves.stable = false
+    if (hasDeathSaves(store.activeRow.type)) {
+      store.activeRow.deathSaves.stable = false
+    }
+
     if (type.value !== 'heal') {
       let updatedFails = 0
       store.activeRow.deathSaves.fail.forEach((s, i) => {
@@ -134,7 +148,7 @@ function handleDeathSaves (): void {
           updatedFails++
         }
       })
-      store.checkDeathSaves(store.activeRow.deathSaves)
+      store.checkDeathSaves(store.activeRow.deathSaves, store.activeRow.type)
     } else {
       resetDeathSaves()
     }
@@ -142,7 +156,7 @@ function handleDeathSaves (): void {
 }
 
 function resetDeathSaves (): void {
-  if (store.activeRow) {
+  if (store.activeRow && hasDeathSaves(store.activeRow.type)) {
     store.activeRow.deathSaves.fail = [false, false, false]
     store.activeRow.deathSaves.save = [false, false, false]
   }
