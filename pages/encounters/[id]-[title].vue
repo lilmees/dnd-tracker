@@ -21,6 +21,8 @@ onMounted(async () => {
     }
   }
 })
+
+onBeforeUnmount(async () => await store.unsubscribeEncounterChanges())
 </script>
 
 <template>
