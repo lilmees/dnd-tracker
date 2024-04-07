@@ -15,7 +15,8 @@ export default defineNuxtConfig({
   },
   css: [
     '@/assets/css/global.css',
-    '@/assets/css/quill.css'
+    '@/assets/css/quill.css',
+    '@/assets/css/driver.css'
   ],
   modules: [
     '@nuxt/content',
