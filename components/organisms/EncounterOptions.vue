@@ -54,14 +54,17 @@ const isOpen = ref<boolean>(false)
       </span>
     </div>
     <div class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-between gap-2">
-      <HotkeysEncounter class="hidden md:block" />
-      <InfoSearch />
-      <EncounterDiceRoller />
-      <AddInitiativeMonster />
+      <HotkeysEncounter id="tour-7" class="hidden md:block" />
+      <InfoSearch id="tour-6" />
+      <div id="tour-5">
+        <EncounterDiceRoller />
+      </div>
+      <AddInitiativeMonster id="tour-4" />
       <template v-if="(store.encounter?.campaign || store.isSandbox) && !store.isPlayground">
-        <AddInitiativeCampaignHomebrew />
+        <AddInitiativeCampaignHomebrew id="tour-3" />
       </template>
       <button
+        id="tour-2"
         v-tippy="$t('components.homebrewModal.add')"
         :aria-label="$t('components.homebrewModal.add')"
         class="flex gap-2 items-center"

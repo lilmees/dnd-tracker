@@ -39,6 +39,8 @@
     "open": "Openen",
     "next": "Volgende",
     "prev": "Vorige",
+    "start": "Start",
+    "finish": "Einde",
     "decline": "Afwijzen",
     "transfer": "Overdragen",
     "flip": "Flip {axis}",
@@ -649,6 +651,67 @@
     },
     "inlineConfirmation": {
       "text": "Weet je zeker dat je dit wilt updaten? Je oude waarde wordt niet opgeslagen."
+    }
+  },
+  "tour": {
+    "0": {
+      "title": "Welkom bij je eerste encounter! 🐲",
+      "description": "Welkom, dappere avonturier! We zijn enthousiast om je door onze applicatie te begeleiden. Laten we samen aan deze reis beginnen, zullen we?"
+    },
+    "1": {
+      "title": "Het meest basale van allemaal 🎯",
+      "description": "Aanschouw! De bescheiden pijlknoppen, je trouwe metgezellen bij het beheren van het huidige initiatief."
+    },
+    "2": {
+      "title": "Hier broeit iets 🍺",
+      "description": "Waag je in het rijk van homebrews! Maak je eigen homebrew om je encounter op te fleuren."
+    },
+    "3": {
+      "title": "Laten we lui zijn 🛋️",
+      "description": "Waarom moeite doen met het steeds opnieuw maken van dezelfde homebrews? Voeg met slechts een paar klikken moeiteloos je campagne's homebrews toe."
+    },
+    "4": {
+      "title": "Laten we weer lui zijn 🛌",
+      "description": "Geen noodzaak om monsters eindeloos op te jagen. Vind officiële monsters binnen handbereik, klaar om zich met één klik bij je encounter aan te sluiten."
+    },
+    "5": {
+      "title": "Wil je rollen zonder hoofdrekenen? 🎲",
+      "description": "Laat de berekeningen aan ons over! Gooi digitale dobbelstenen en geniet van de glorie van directe resultaten voor elke wending van het lot."
+    },
+    "6": {
+      "title": "Meer informatie nodig? 📚",
+      "description": "Zoek kennis in onze geheiligde boeken. Alles wat je nodig hebt, netjes georganiseerd voor jouw gemak. Pin het aan je encounter en laat de wijsheid stromen!"
+    },
+    "7": {
+      "title": "Hotkeys tot je dienst 🔥",
+      "description": "Bevrijd jezelf van de tirannie van de muis! Beheer met hotkeys en verover met gemak."
+    },
+    "8": {
+      "title": "Ontketen de kracht van initiatief items 💪",
+      "description": "Geen lange introductie nodig! Pas namen, initiatieven, AC en HP aan wanneer je erop klikt. Notities, death saves en concentratie met een fluitje van een cent."
+    },
+    "9": {
+      "title": "Beheer je initiatiefn items met finesse 🎩",
+      "description": "Het hart van je initiatief items! Pas AC en HP aan terwijl je bezig bent, voeg moeiteloos condities toe. Wij betoveren je ervaring door links voor te laden, waardoor je wordt gespaard van het gedoe van het openen van extra browsertabbladen."
+    },
+    "10": {
+      "title": "Condities voor de onderscheidende avonturier 👨‍🦯",
+      "description": "Aanschouw de condities die aan je kameraden zijn verleend! Zweef eroverheen en duik dieper in hun effecten."
+    },
+    "11": {
+      "title": "Verwijder of kopieer initiatief items in een flits ⚡",
+      "description": "Met snelheid en precisie, verwijder of dupliceer met een enkele knopklik."
+    },
+    "12": {
+      "title": "Nog nooit zo snel iedereens initiatief toevoegen 🚀",
+      "description": "Bereid je voor op razendsnelle initiatief invoer! Voeg alle initiatieven in één keer toe, of laat het aan de dobbelstenen over voor een vleugje willekeur. De keuze is aan jou, avonturier!"
+    },
+    "13": {
+      "title": "Als je brein een pauze nodig heeft 🧠",
+      "description": "Verminder de last en vereenvoudig je interface. Schakel onnodige functies uit, de keuze is aan jou."
+    },
+    "14": {
+      "title": "Gefeliciteerd, je bent nu een expert! 🎉"
     }
   }
 }

@@ -244,10 +244,11 @@ async function moveRow (up: boolean): Promise<void> {
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Actions :row="row" :index="index" />
+      <Actions id="tour-9" :row="row" :index="index" />
     </td>
     <td
       v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('conditions')"
+      id="tour-10"
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
@@ -307,6 +308,7 @@ async function moveRow (up: boolean): Promise<void> {
     </td>
     <td
       v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('modify')"
+      id="tour-11"
       :class="tableSpacing"
     >
       <Modify

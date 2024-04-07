@@ -26,7 +26,10 @@ const store = useTableStore()
       </button>
     </div>
     <h1>{{ store.encounter.title }}</h1>
-    <div class="flex gap-2 items-center bg-secondary/50 rounded-lg border-4 border-secondary">
+    <div
+      id="tour-1"
+      class="flex gap-2 items-center bg-secondary/50 rounded-lg border-4 border-secondary"
+    >
       <button
         v-tippy="{ content: $t('actions.prev') }"
         :disabled="store.encounter.round === 1 && store.encounter.activeIndex === 0"

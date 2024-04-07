@@ -1,0 +1,191 @@
+{
+  "id": 1,
+  "created_at": "1712298003746",
+  "title": "Playground",
+  "campaign": {
+    "id": 9,
+    "title": "Sandbox",
+    "background": "#2695ab",
+    "color": "#FFFFFF",
+    "created_by": {
+      "id": "dd460152-b973-4741-ba58-ea972c313b8b",
+      "created_at": "2022-10-24T12:37:56.862122+00:00",
+      "username": "lilmees",
+      "name": "Jeremy Mees",
+      "avatar": "https://api.dicebear.com/7.x/open-peeps/svg?seed=kntnjk&size=100",
+      "email": "jeremymees123@gmail.com",
+      "badges": []
+    },
+    "team": []
+  },
+  "round": 1,
+  "rows": [
+    {
+      "ac": 13,
+      "actions": [
+        {
+          "desc": "The fanatic makes two melee attacks.",
+          "name": "Multiattack"
+        },
+        {
+          "attack_bonus": 4,
+          "damage_bonus": 2,
+          "damage_dice": "1d4",
+          "desc": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one creature. Hit: 4 (1d4 + 2) piercing damage.",
+          "name": "Dagger"
+        }
+      ],
+      "concentration": true,
+      "conditions": [
+        {
+          "slug": "blinded",
+          "name": "Blinded",
+          "desc": "* A blinded creature can't see and automatically fails any ability check that requires sight.\n* Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
+          "document__slug": "wotc-srd",
+          "document__title": "5e Core Rules",
+          "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd"
+        }
+      ],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "health": 92,
+      "id": 1711960760586,
+      "index": 0,
+      "initiative": 20,
+      "initiative_modifier": 2,
+      "legendary_actions": null,
+      "maxAc": 13,
+      "maxHealth": 100,
+      "name": "Cult Fanatic",
+      "note": "",
+      "reactions": null,
+      "special_abilities": [
+        {
+          "desc": "The fanatic has advantage on saving throws against being charmed or frightened.",
+          "name": "Dark Devotion"
+        },
+        {
+          "desc": "The fanatic is a 4th-level spellcaster. Its spell casting ability is Wisdom (spell save DC 11, +3 to hit with spell attacks). The fanatic has the following cleric spells prepared:\n\nCantrips (at will): light, sacred flame, thaumaturgy\n* 1st level (4 slots): command, inflict wounds, shield of faith\n* 2nd level (3 slots): hold person, spiritual weapon",
+          "name": "Spellcasting"
+        }
+      ],
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "monster"
+    },
+    {
+      "ac": 10,
+      "actions": [],
+      "concentration": true,
+      "conditions": [],
+      "health": 20,
+      "id": 1711960886118,
+      "index": 1,
+      "initiative": 18,
+      "initiative_modifier": 1,
+      "legendary_actions": [],
+      "link": "",
+      "maxAc": 10,
+      "maxHealth": 20,
+      "name": "Balnor the Brave",
+      "note": "",
+      "reactions": [],
+      "special_abilities": [],
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "npc"
+    },
+    {
+      "ac": 14,
+      "actions": [],
+      "concentration": false,
+      "conditions": [],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "health": 25,
+      "id": 1711960673655,
+      "index": 2,
+      "initiative": 12,
+      "initiative_modifier": -1,
+      "legendary_actions": [],
+      "link": "",
+      "maxAc": 14,
+      "maxHealth": 25,
+      "name": "Vapor wavé",
+      "note": "",
+      "reactions": [],
+      "special_abilities": [],
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "player"
+    },
+    {
+      "ac": null,
+      "actions": [],
+      "concentration": false,
+      "conditions": [],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "health": null,
+      "id": 1711960673655,
+      "index": 2,
+      "initiative": 12,
+      "initiative_modifier": -1,
+      "legendary_actions": [],
+      "link": "",
+      "maxAc": null,
+      "maxHealth": null,
+      "name": "Mordain Dwarvenrage",
+      "note": "",
+      "reactions": [],
+      "special_abilities": [],
+      "tempAc": 0,
+      "tempHealth": 0,
+      "type": "player"
+    }
+  ],
+  "created_by": "user",
+  "background": "#7333E0",
+  "color": "#FFFFFF",
+  "activeIndex": 0,
+  "info_cards": [],
+  "settings": {
+    "spacing": "normal",
+    "rows": [],
+    "modified": false,
+    "widgets": []
+  }
+}

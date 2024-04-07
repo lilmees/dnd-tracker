@@ -74,6 +74,7 @@ const tableSpacing = computed<string>(() => {
                 @click="quickInit = true"
               >
                 <Icon
+                  id="tour-12"
                   name="ph:lightning-fill"
                   class="text-warning w-3 h-3"
                   aria-hidden="true"

@@ -3,6 +3,7 @@ useHead({ title: 'Playground' })
 
 const store = useTableStore()
 const route = useRoute()
+const { startTour } = useTour()
 
 onMounted(async () => {
   store.isPlayground = true
@@ -12,6 +13,8 @@ onMounted(async () => {
   } else {
     store.setPlaygroundValues()
   }
+
+  startTour()
 })
 </script>
 
@@ -20,13 +23,18 @@ onMounted(async () => {
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4">
-        <VisualOptions />
+        <VisualOptions id="tour-13" />
       </div>
-      <div class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4 relative">
-        <EncounterHeader />
-        <EncounterTable />
-        <EncounterOptions class="hidden md:flex" />
-        <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+      <div id="tour-8">
+        <div
+          id="tour-0"
+          class="rounded-lg bg-tracker/50 border-4 border-tracker space-y-4 relative"
+        >
+          <EncounterHeader />
+          <EncounterTable />
+          <EncounterOptions class="hidden md:flex" />
+          <div class="abolsute inset-0 z-[-1] fancy-shadow" />
+        </div>
       </div>
       <EncounterOptions class="md:hidden" />
       <div
