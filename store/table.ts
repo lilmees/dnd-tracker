@@ -64,7 +64,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     enc.rows = useIndexCorrecter(enc.rows as Row[])
 
     if (enc.campaign && profile.data && isMedior(profile.data)) {
-      subscribeEncounterChanges()
+      subscribeEncounterChanges(enc.id)
     }
 
     encounter.value = data
@@ -89,11 +89,16 @@ export const useTableStore = defineStore('useTableStore', () => {
     encounter.value = data
   }
 
-  function subscribeEncounterChanges (): void {
+  function subscribeEncounterChanges (id: number): void {
     supabase
       .channel('initiative_sheets-updates')
       .on('postgres_changes',
-        { event: '*', schema: 'public', table: 'initiative_sheets' },
+        {
+          event: '*',
+          schema: 'public',
+          table: 'initiative_sheets',
+          filter: `id=eq.${id}`
+        },
         (payload: SupabaseRealTime) => {
           isSyncing.value = true
 
@@ -113,6 +118,10 @@ export const useTableStore = defineStore('useTableStore', () => {
           isSyncing.value = false
         })
       .subscribe()
+  }
+
+  async function unsubscribeEncounterChanges (): Promise<void> {
+    await supabase.removeAllChannels()
   }
 
   async function encounterUpdate (enc: UpdateEncounter): Promise<void> {
@@ -283,6 +292,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     getEncounter,
     getSandboxEncounter,
     subscribeEncounterChanges,
+    unsubscribeEncounterChanges,
     encounterUpdate,
     updateRow,
     nextInitiative,
