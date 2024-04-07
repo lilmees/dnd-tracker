@@ -668,6 +668,7 @@
     }
   },
   "tour": {
+    "sure": "Are you sure that you have all the knowledge about the DnD Tracker? 🧙‍♂️",
     "0": {
       "title": "Welcome to your first encounter! 🐲",
       "description": "Welcome, brave adventurer! We're thrilled to guide you through our application. Let's embark on this journey together, shall we?"

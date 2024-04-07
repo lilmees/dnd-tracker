@@ -8,6 +8,7 @@ const store = useTableStore()
 const online = useOnline()
 
 const isOpen = ref<boolean>(false)
+const isTourActive = useState<boolean>('tour-active', () => false)
 </script>
 
 <template>
@@ -62,6 +63,21 @@ const isOpen = ref<boolean>(false)
       <AddInitiativeMonster id="tour-4" />
       <template v-if="(store.encounter?.campaign || store.isSandbox) && !store.isPlayground">
         <AddInitiativeCampaignHomebrew id="tour-3" />
+      </template>
+      <template v-else-if="isTourActive">
+        <button
+          id="tour-3"
+          class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <span class="md:hidden">
+            {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+          </span>
+          <Icon
+            name="material-symbols:table-chart-outline"
+            class="text-primary w-10 h-10"
+            aria-hidden="true"
+          />
+        </button>
       </template>
       <button
         id="tour-2"

@@ -654,6 +654,7 @@
     }
   },
   "tour": {
+    "sure": "Ben je zeker dat je alle kennis al hebt van de DnD Tracker? 🧙‍♂️",
     "0": {
       "title": "Welkom bij je eerste encounter! 🐲",
       "description": "Welkom, dappere avonturier! We zijn enthousiast om je door onze applicatie te begeleiden. Laten we samen aan deze reis beginnen, zullen we?"

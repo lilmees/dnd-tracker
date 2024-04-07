@@ -1,5 +1,5 @@
 .driver-popover {
-  @apply bg-tracker px-5 pb-4 pt-6 sm:p-6 w-full sm:max-w-md;
+  @apply !bg-primary/70 !px-5 !pb-4 !pt-6 sm:!p-6 !w-full sm:!max-w-md !ring-4 ring-primary;
 }
 
 .driver-popover-arrow {
@@ -7,15 +7,27 @@
 }
 
 .driver-popover-title {
-  @apply text-white mb-6;
+  @apply text-white !mb-4;
 }
 
 .driver-popover-description {
-  @apply text-slate-300 pb-4;
+  @apply text-white;
 }
 
 .driver-popover-progress-text {
-  @apply text-slate-300 font-medium body-small;
+  @apply !text-slate-300 font-medium body-small;
+}
+
+.driver-popover .driver-popover-prev-btn {
+  text-shadow: none;
+
+  @apply !btn-black;
+}
+
+.driver-popover .driver-popover-next-btn {
+  text-shadow: none;
+
+  @apply !btn-black;
 }
 
 .driver-popover .driver-popover-close-btn {
