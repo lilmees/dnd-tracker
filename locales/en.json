@@ -120,6 +120,7 @@
     "actions": "Actions",
     "rows": "Rows",
     "concentration": "Concentration",
+    "none": "Geen",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -572,7 +573,18 @@
       "tooltip": "Settings",
       "spacing": "Tabel style",
       "rows": "Rows to show",
-      "widgets": "Active widgets"
+      "widgets": "Active widgets",
+      "pets": {
+        "label": "Encounter pet",
+        "barmaid": "Barmaid",
+        "cat": "Cat",
+        "chicken": "Chicken",
+        "crawler": "Crawler",
+        "dragon": "Dragon",
+        "fairy": "Fairy",
+        "redcap": "Redcap",
+        "wolf-rider": "Wolf rider"
+      }
     },
     "infoSearch": {
       "show": "Show pinned items",

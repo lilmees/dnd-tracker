@@ -33,7 +33,7 @@ onBeforeUnmount(async () => await store.unsubscribeEncounterChanges())
   <Layout name="wide" padding>
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
-      <div class="container-max flex justify-end pb-4">
+      <div class="container-max flex justify-end pb-4 relative">
         <div class="flex gap-y-2 gap-x-6 items-center flex-wrap">
           <Back
             :url="backUrl(store.encounter.campaign)"
@@ -41,6 +41,7 @@ onBeforeUnmount(async () => await store.unsubscribeEncounterChanges())
           />
           <VisualOptions id="tour-13" />
         </div>
+        <EncounterPet />
       </div>
       <div id="tour-8">
         <div id="tour-0">

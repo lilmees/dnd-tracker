@@ -38,9 +38,9 @@ if (process.client) {
         class="bg-tracker/50 px-2 py-6 sm:p-8 rounded-lg relative border-4 border-tracker"
       >
         <img
-          src="/cat.gif"
+          src="/gifs/wolf-rider.gif"
           loading="lazy"
-          class="w-10 h-10 absolute -top-10"
+          class="w-8 h-8 absolute -top-8"
         >
         <NuxtLink :to="localePath('/')" class="group">
           <Icon

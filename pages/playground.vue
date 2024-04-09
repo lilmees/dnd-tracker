@@ -22,7 +22,8 @@ onMounted(async () => {
   <Layout name="wide" padding>
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
-      <div class="container-max flex justify-end pb-4">
+      <div class="container-max flex justify-end relative pb-4">
+        <EncounterPet />
         <VisualOptions id="tour-13" />
       </div>
       <div id="tour-8">
