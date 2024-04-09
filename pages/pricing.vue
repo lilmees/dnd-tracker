@@ -39,9 +39,9 @@ function isUpgradeable (type: StripeSubscriptionType): boolean {
       </p>
       <div class="relative">
         <img
-          src="/chicken.gif"
+          src="/gifs/dragon.gif"
           loading="lazy"
-          class="w-10 h-10 absolute -top-10 left-20"
+          class="w-8 h-8 absolute -top-8 left-20"
         >
         <div class="inline-block overflow-x-auto w-full">
           <div class="bg-tracker/50 border-4 border-tracker rounded-lg overflow-y-hidden">

@@ -120,6 +120,7 @@
     "actions": "Acties",
     "rows": "Rijen",
     "concentration": "Concentratie",
+    "none": "Geen",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -558,7 +559,18 @@
       "tooltip": "Instellingen",
       "spacing": "Tabel stijl",
       "rows": "Zichtbare rijen",
-      "widgets": "Actieve widgets"
+      "widgets": "Actieve widgets",
+      "pets": {
+        "label": "Encounter pet",
+        "barmaid": "Barmeid",
+        "cat": "Kat",
+        "chicken": "Kip",
+        "crawler": "Kruiper",
+        "dragon": "Draak",
+        "fairy": "Fee",
+        "redcap": "Paddenstoel",
+        "wolf-rider": "Wolf rijder"
+      }
     },
     "infoSearch": {
       "show": "Toon gepinde items",

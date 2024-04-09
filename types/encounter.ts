@@ -11,11 +11,14 @@ type EncounterModal = 'name' | 'initiative' | 'ac' | 'hp' | 'link-modal' | 'ac-m
 
 type EncounterUpdateField = 'name' | 'initiative' | 'ac' | 'health' | 'link' | 'note' | 'concentration' | 'deathSaves' | 'note' | 'conditions'
 
+type EncounterPet = 'cat' | 'chicken' | 'barmaid' | 'crawler' | 'dragon' | 'fairy' | 'redcap' | 'wolf-rider'
+
 interface EncounterSettings {
   spacing: TableSpacing
   rows: string[]
   widgets: string[]
   modified: boolean
+  pet: EncounterPet | undefined
 }
 
 interface Encounter {

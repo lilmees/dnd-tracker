@@ -250,7 +250,8 @@ export const useTableStore = defineStore('useTableStore', () => {
         spacing: 'normal',
         rows: [],
         modified: false,
-        widgets: []
+        widgets: [],
+        pet: 'fairy'
       }
     }
 

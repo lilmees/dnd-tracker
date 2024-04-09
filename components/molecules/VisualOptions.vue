@@ -18,11 +18,13 @@ whenever(() => isOpen.value, () => {
       form.value.widgets = table.encounter.settings.widgets || []
     }
     form.value.spacing = table.encounter.settings.spacing || 'normal'
+    form.value.pet = table.encounter.settings.pet || undefined
   }
 })
 
 const form = ref<Omit<EncounterSettings, 'modified'>>({
   spacing: table.encounter?.settings.spacing || 'normal',
+  pet: table.encounter?.settings.pet,
   rows: rowOptions,
   widgets: widgetOptions
 })
@@ -73,6 +75,7 @@ function resetState (): void {
         <FormKit
           name="spacing"
           type="radio"
+          options-class="flex flex-wrap gap-y-2 gap-x-6"
           :label="$t('components.visualOptions.spacing')"
           :options="[
             { label: 'Compact', value: 'compact' },
@@ -98,11 +101,29 @@ function resetState (): void {
         <FormKit
           name="widgets"
           type="checkbox"
+          options-class="flex flex-wrap gap-y-2 gap-x-6"
           :label="$t('components.visualOptions.widgets')"
           :options="[
             { label: $t('general.note'), value: 'note' },
             { label: $t('general.infoPins'), value: 'info-pins' },
             { label: $t('general.fantasyNameGenerator'), value: 'fantasy-name-generator' }
+          ]"
+        />
+
+        <FormKit
+          name="pet"
+          type="select"
+          :label="$t('components.visualOptions.pets.label')"
+          :options="[
+            { label: $t('general.none'), value: undefined },
+            { label: $t('components.visualOptions.pets.cat'), value: 'cat' },
+            { label: $t('components.visualOptions.pets.chicken'), value: 'chicken' },
+            { label: $t('components.visualOptions.pets.barmaid'), value: 'barmaid' },
+            { label: $t('components.visualOptions.pets.crawler'), value: 'crawler' },
+            { label: $t('components.visualOptions.pets.dragon'), value: 'dragon' },
+            { label: $t('components.visualOptions.pets.fairy'), value: 'fairy' },
+            { label: $t('components.visualOptions.pets.redcap'), value: 'redcap' },
+            { label: $t('components.visualOptions.pets.wolf-rider'), value: 'wolf-rider' }
           ]"
         />
         <FormKit type="submit" :aria-label="$t('actions.update')">
