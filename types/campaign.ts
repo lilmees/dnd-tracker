@@ -32,13 +32,11 @@ interface Campaign {
   initiative_sheets?: Encounter[]
   notes?: Note[]
   title: string
-  background: string
-  color: string
   team?: TeamMember[]
   join_campaign?: JoinCampaign[]
 }
 
-interface AddCampaign extends Pick<Campaign, 'title'|'background'|'color'> {
+interface AddCampaign extends Pick<Campaign, 'title'> {
   created_by: string
 }
 
@@ -46,7 +44,7 @@ interface UpdateCampaign extends Partial<Omit<Campaign, 'id'|'created_at'|'creat
   created_by?: string
 }
 
-interface CampaignForm extends Pick<Campaign, 'title'|'background'> {}
+interface CampaignForm extends Pick<Campaign, 'title'> {}
 
 type CampaignPageType = 'content'|'settings'|'danger-zone'|'join'
 

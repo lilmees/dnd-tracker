@@ -33,8 +33,6 @@ interface Encounter {
   owner?: string
   info?: string
   activeIndex: number
-  color: string
-  background: string
   info_cards: InfoCard[],
   settings: EncounterSettings
 }
@@ -50,7 +48,6 @@ interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'pro
 interface EncounterForm {
   title: string
   campaign?: number
-  background: string
 }
 
 interface SortedCampaignEncounter {

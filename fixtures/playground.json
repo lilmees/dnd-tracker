@@ -5,8 +5,6 @@
   "campaign": {
     "id": 9,
     "title": "Sandbox",
-    "background": "#2695ab",
-    "color": "#FFFFFF",
     "created_by": {
       "id": "dd460152-b973-4741-ba58-ea972c313b8b",
       "created_at": "2022-10-24T12:37:56.862122+00:00",

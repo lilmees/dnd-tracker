@@ -601,9 +601,6 @@
       "submitted": "Je feature request is met enthousiasme ontvangen en ondergaat momenteel een zorgvuldige evaluatie. Zodra het is goedgekeurd, zal iedereen de mogelijkheid hebben om erop te stemmen. Je kunt controleren of verzoek is goedgekeurd zodra het label 'Onder beoordeling' niet meer zichtbaar is.",
       "another": "Nog een feature request maken"
     },
-    "encounterCampaignHeader": {
-      "go": "Ga naar campagne"
-    },
     "userModal": {
       "title": "Mensen toevoegen aan {campaign}",
       "select": "Kies een persoon hierboven",

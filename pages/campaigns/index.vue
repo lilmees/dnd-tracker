@@ -7,7 +7,6 @@ const store = useCampaignsStore()
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
-const isTable = ref<boolean>(false)
 const search = ref<string>('')
 const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
@@ -94,14 +93,11 @@ function resetState (): void {
         </div>
       </div>
       <template v-if="store.loading && !store.allowedCampaigns">
-        <SkeletonContentHeader />
-        <SkeletonTable v-if="isTable" :headers="headers" />
-        <div v-else class="flex flex-wrap gap-4 items-start">
-          <SkeletonEncounterCard v-for="i in 10" :key="i" />
-        </div>
+        <SkeletonInput :label="false" class="w-[256px]" />
+        <SkeletonTable :headers="headers" />
       </template>
       <template v-else-if="store.allowedCampaigns?.length">
-        <ContentHeader v-model:grid="isTable" v-model:search="search" shadow />
+        <ContentHeader v-model:search="search" shadow />
         <BulkRemove
           v-model:isBulk="isBulk"
           v-model:needConfirmation="needConfirmation"
@@ -113,7 +109,6 @@ function resetState (): void {
           class="mb-10"
         />
         <Table
-          v-show="isTable"
           v-model:sorted-by="sortedBy"
           v-model:acs="sortACS"
           :headers="headers"
@@ -201,38 +196,6 @@ function resetState (): void {
             </div>
           </template>
         </Table>
-        <div v-show="!isTable" class="flex flex-wrap gap-4 items-start">
-          <div
-            v-for="campaign in visibleItems"
-            :key="campaign.id"
-            class="relative"
-          >
-            <BulkRemoveCard
-              v-if="isBulk"
-              :selected="!!selected.find(e => e.id === campaign.id)"
-              :border="campaign.background"
-              @toggled="toggleSelection<Campaign>(campaign, selected)"
-            />
-            <CampaignCard
-              :campaign="campaign"
-              :selecting="isBulk"
-              @update="(v: Campaign) => {
-                selected = [v];
-                isUpdating = true
-              }"
-              @remove="(v: Campaign) => {
-                selected = [v];
-                needConfirmation = true
-              }"
-            />
-          </div>
-          <div
-            v-if="noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
-          </div>
-        </div>
       </template>
       <NoContent
         v-else

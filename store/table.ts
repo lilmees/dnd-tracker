@@ -242,8 +242,6 @@ export const useTableStore = defineStore('useTableStore', () => {
       round: 1,
       rows: [],
       created_by: 'user',
-      background: '#7333E0',
-      color: '#FFFFFF',
       activeIndex: 0,
       info_cards: [],
       settings: {
