@@ -13,6 +13,9 @@ const search = ref<string>('')
 
 const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
 
+//  create proper loading state
+//  add player names to homepage sandbox
+
 const summonOptions = computed<Option[]>(() => {
   return store.encounter?.rows
     ? store.encounter.rows.map((r: Row) => {
@@ -113,16 +116,16 @@ function selectedSummoner (value: unknown): void {
   <section>
     <button
       v-tippy="{
-        content: $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew'),
+        content: $t('components.addInitiativeCampaignHomebrew.title'),
         touch: false
       }"
-      :aria-label="$t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew')"
+      :aria-label="$t('components.addInitiativeCampaignHomebrew.title')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       :disabled="!store.encounter?.campaign?.id && !store.isSandbox && !store.isPlayground"
       @click="isOpen = true"
     >
       <span class="md:hidden">
-        {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+        {{ $t('components.addInitiativeCampaignHomebrew.title') }}
       </span>
       <Icon
         name="material-symbols:table-chart-outline"
@@ -130,18 +133,18 @@ function selectedSummoner (value: unknown): void {
         aria-hidden="true"
       />
     </button>
-    <Modal :open="isOpen" @close="closeModal">
+    <Modal big :open="isOpen" @close="closeModal">
       <template #header>
         <h2>
-          {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+          {{ $t('components.addInitiativeCampaignHomebrew.title') }}
         </h2>
       </template>
-      <div v-if="homebrews?.length" class="space-y-4">
+      <div v-if="homebrews?.length" class="flex flex-col max-h-[70vh] gap-y-4">
         <FormKit
           v-if="!summon"
           v-model="search"
           type="search"
-          :label="$t('components.inputs.nameLabel')"
+          prefix-icon="search"
         />
         <FormKit
           v-else
@@ -152,56 +155,112 @@ function selectedSummoner (value: unknown): void {
           :options="summonOptions"
           @input="selectedSummoner"
         />
-        <div
+        <Table
           v-if="filteredHomebrews.length"
-          class="flex flex-col border-4 border-black rounded-lg overflow-hidden"
+          :headers="[
+            { label: '', sort: false, id: 'type' },
+            { label: $t('general.name'), sort: false, id: 'name' },
+            { label: $t('general.player'), sort: false, id: 'player' },
+            { label: $t('general.stats'), sort: false, id: 'stats' }
+          ]"
+          class="overflow-y-auto !max-h-[30vh] bg-red-500"
         >
-          <template
+          <tr
             v-for="hb in filteredHomebrews"
             :key="hb.id"
+            class="tr transition-colors"
           >
+            <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
+              <Icon
+                v-tippy="$t(`general.${hb.type}`)"
+                :name="useHomebrewIcon(hb.type)"
+                :class="useHomebrewColor(hb.type)"
+                aria-hidden="true"
+                size="20"
+              />
+            </td>
+            <td class="px-2 py-1 border-r border-slate-700">
+              {{ hb.name }}
+            </td>
+            <td class="px-2 py-1 border-r border-slate-700">
+              {{ hb.player || '' }}
+            </td>
+            <td class="px-2 py-1 flex gap-4">
+              <div v-if="hb.health" class="flex gap-1">
+                <p>
+                  {{ hb.health }}
+                </p>
+                <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
+              </div>
+              <div v-if="hb.ac" class="flex gap-1">
+                <p>
+                  {{ hb.ac }}
+                </p>
+                <Icon
+                  name="ic:outline-shield"
+                  class="w-6 h-6 text-help"
+                  aria-hidden="true"
+                />
+              </div>
+            </td>
+          </tr>
+        </Table>
+        <!-- <div
+          v-if="filteredHomebrews.length"
+          class="flex flex-col border-4 border-black rounded-lg overflow-y-auto"
+        >
+          <div class="flex gap-x-4 px-4 py-1 body-small uppercase font-bold text-slate-300">
+            <div class="w-6" />
+            <div class="grid grid-cols-3 w-full gap-x-2">
+              <span> {{ $t('general.name') }} </span>
+              <span> {{ $t('general.player') }} </span>
+              <span> {{ $t('general.stats') }} </span>
+            </div>
+          </div>
+          <template v-for="hb in filteredHomebrews" :key="hb.id">
             <div
-              class="w-full border-t last:border-b border-black cursor-pointer grid grid-cols-3 px-4 py-1"
+              class="w-full border-t last:border-b border-black cursor-pointer flex gap-x-4 px-4 py-1"
               :class="{
                 '!bg-primary/30': selected.filter(p => p.id === hb.id).length
               }"
               @click="selectHomebrew(hb)"
             >
-              <div class="flex gap-2 items-center">
-                <Icon
-                  :name="useHomebrewIcon(hb.type)"
-                  :class="useHomebrewColor(hb.type)"
-                  aria-hidden="true"
-                  size="20"
-                />
-                <p class="capitalize">
-                  {{ hb.type || '' }}
+              <Icon
+                v-tippy="$t(`general.${hb.type}`)"
+                :name="useHomebrewIcon(hb.type)"
+                :class="useHomebrewColor(hb.type)"
+                aria-hidden="true"
+                size="20"
+              />
+              <div class="grid grid-cols-3 w-full gap-x-2">
+                <p>
+                  {{ hb.name }}
                 </p>
-              </div>
-              <p>
-                {{ hb.name }}
-              </p>
-              <div class="flex gap-4">
-                <div v-if="hb.health" class="flex gap-1">
-                  <p>
-                    {{ hb.health }}
-                  </p>
-                  <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
-                </div>
-                <div v-if="hb.ac" class="flex gap-1">
-                  <p>
-                    {{ hb.ac }}
-                  </p>
-                  <Icon
-                    name="ic:outline-shield"
-                    class="w-6 h-6 text-help"
-                    aria-hidden="true"
-                  />
+                <p>
+                  {{ hb.player || '' }}
+                </p>
+                <div class="flex gap-4">
+                  <div v-if="hb.health" class="flex gap-1">
+                    <p>
+                      {{ hb.health }}
+                    </p>
+                    <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
+                  </div>
+                  <div v-if="hb.ac" class="flex gap-1">
+                    <p>
+                      {{ hb.ac }}
+                    </p>
+                    <Icon
+                      name="ic:outline-shield"
+                      class="w-6 h-6 text-help"
+                      aria-hidden="true"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </template>
-        </div>
+        </div> -->
         <p v-else-if="!summon" class="max-w-prose pb-4">
           {{ $t('components.addInitiativeCampaignHomebrew.initiative.nothing') }}
         </p>
@@ -213,7 +272,7 @@ function selectedSummoner (value: unknown): void {
               :disabled="isLoading || !selected.length"
               @click="addHomebrews(selected)"
             >
-              {{ $t('actions.addSelected') }}
+              {{ $t('actions.addSelected') }} ({{ selected.length }})
             </button>
             <button
               class="btn-success"
@@ -235,11 +294,12 @@ function selectedSummoner (value: unknown): void {
           </button>
         </div>
       </div>
-      <div v-else-if="homebrews && !homebrews.length">
-        <span class="font-bold">
-          {{ $t('general.noContent.title', { content: 'Homebrew' }) }}
-        </span>
-      </div>
+      <p
+        v-else-if="homebrews && !homebrews.length"
+        class="font-bold"
+      >
+        {{ $t('components.addInitiativeCampaignHomebrew.initiative.empty') }}
+      </p>
       <div v-else class="pt-20">
         <div class="loader !relative" />
       </div>

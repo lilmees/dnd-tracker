@@ -479,12 +479,13 @@
       }
     },
     "addInitiativeCampaignHomebrew": {
-      "addCampaignHomebrew": "campagne homebrew toevoegen",
+      "title": "campagne homebrew toevoegen",
       "initiative": {
         "info": "Wanneer je een summon selecteert, dien je ook een personage te kiezen dat deze summon oproept.",
         "add": "Summon toevoegen",
         "select": "Selecteer oproeper",
-        "nothing": "Helaas, onze queeste onthult geen schatten die overeenkomen met jouw zoektocht. Wellicht kan een andere naam het magische portaal openen, of je kunt je eigen homebrew legendes creëren."
+        "nothing": "Helaas, onze queeste onthult geen schatten die overeenkomen met jouw zoektocht. Wellicht kan een andere naam het magische portaal openen, of je kunt je eigen homebrew legendes creëren.",
+        "empty": "Er ontbreekt homebrew in je campagne. Wanneer je homebrew introduceert in je campagne, kun je ze hier selecteren om toe te voegen in je encounters."
       }
     },
     "homebrewModal": {
