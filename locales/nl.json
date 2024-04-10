@@ -649,9 +649,6 @@
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
     },
-    "contentHeader": {
-      "toMuch": "Te veel items voor kaartweergave"
-    },
     "bulkRemove": {
       "title": "Bulk verwijderen {type}",
       "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",

@@ -663,9 +663,6 @@
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
     },
-    "contentHeader": {
-      "toMuch": "To much items for card view"
-    },
     "bulkRemove": {
       "title": "Bulk remove {type}",
       "subtitle": "Select {type} for removing by clicking on it.",
