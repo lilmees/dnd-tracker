@@ -615,9 +615,6 @@
       "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
       "another": "Create another feature request"
     },
-    "encounterCampaignHeader": {
-      "go": "Go to campaign"
-    },
     "userModal": {
       "title": "Add people to {campaign}",
       "select": "Select a member above",
@@ -665,9 +662,6 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
-    },
-    "contentHeader": {
-      "toMuch": "To much items for card view"
     },
     "bulkRemove": {
       "title": "Bulk remove {type}",

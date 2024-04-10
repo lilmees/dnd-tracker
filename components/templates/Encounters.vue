@@ -1,10 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
-  defineProps<{
-    campaignView?: boolean
-  }>(), {
-    campaignView: false
-  }
+  defineProps<{ campaignView?: boolean }>(),
+  { campaignView: false }
 )
 
 const currentStore = useCurrentCampaignStore()
@@ -15,7 +12,6 @@ const { error } = storeToRefs(encounterStore)
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
-const isTable = ref<boolean>(false)
 const isBulk = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
@@ -29,11 +25,7 @@ const headers = [
   { label: t('general.actions'), sort: false, id: 'actions' }
 ]
 
-onMounted(() => {
-  props.campaignView
-    ? isTable.value = true
-    : encounterStore.fetch()
-})
+onMounted(() => encounterStore.fetch())
 
 onBeforeUnmount(() => encounterStore.resetPagination())
 
@@ -54,8 +46,6 @@ watchDebounced(() => encounterStore.filters, async () => {
     true
   )
 }, { debounce: 100, maxWait: 500, deep: true })
-
-const toMuch = computed<boolean>(() => encounterStore.encounterCount >= encounterStore.perPage)
 
 function resetState (): void {
   needConfirmation.value = false
@@ -117,21 +107,18 @@ function resetState (): void {
       </div>
     </div>
     <template v-if="encounterStore.loading">
-      <SkeletonContentHeader :hide-toggle="campaignView" />
-      <SkeletonTable v-if="isTable" :headers="headers" />
-      <div v-else class="flex flex-wrap gap-4 items-start">
-        <SkeletonEncounterCard v-for="i in 10" :key="i" />
-      </div>
+      <SkeletonInput :label="false" class="w-[256px]" />
+      <SkeletonTable :headers="headers" />
     </template>
     <div v-else-if="encounterStore.restrictionEncounters">
       <ContentHeader
-        v-model:grid="isTable"
         v-model:search="encounterStore.filters.search"
-        :to-much="toMuch"
-        :hide-toggle="campaignView"
         :shadow="!campaignView"
       />
-      <LimitCta v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount" class="mb-10" />
+      <LimitCta
+        v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount"
+        class="mb-10"
+      />
       <BulkRemove
         v-model:isBulk="isBulk"
         v-model:needConfirmation="needConfirmation"
@@ -139,7 +126,6 @@ function resetState (): void {
         type="encounters"
       />
       <Table
-        v-show="isTable"
         v-model:sorted-by="encounterStore.filters.sortedBy"
         v-model:acs="encounterStore.filters.sortACS"
         v-model:page="encounterStore.page"
@@ -266,34 +252,6 @@ function resetState (): void {
           </div>
         </template>
       </Table>
-      <div v-show="!isTable" class="flex flex-wrap gap-4 items-start">
-        <div
-          v-for="encounter in encounterStore.restrictionEncounters"
-          :key="encounter.id"
-          class="relative"
-        >
-          <BulkRemoveCard
-            v-if="isBulk"
-            :selected="!!selected.find(e => e.id === encounter.id)"
-            :border="encounter.background"
-            @toggled="toggleSelection<Encounter>(encounter, selected)"
-          />
-          <EncounterCard
-            :encounter="encounter"
-            :disable-copy="encounterStore.max <= encounterStore.data.length"
-            @update="(v: Encounter) => {
-              selected = [v];
-              isUpdating = true
-            }"
-            @remove="(v: Encounter) => {
-              selected = [v];
-              needConfirmation = true
-            }"
-            @copy="encounterStore.copyEncounter"
-            @share="encounterStore.shareEncounter"
-          />
-        </div>
-      </div>
     </div>
     <NoContent v-else content="encounters" icon="ri:table-line" />
   </div>
