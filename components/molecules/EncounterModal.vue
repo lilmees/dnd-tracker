@@ -27,8 +27,7 @@ const error = ref<string>()
 
 const form = ref<EncounterForm>({
   title: '',
-  campaign: props.campaignId || undefined,
-  background: '#7333E0'
+  campaign: props.campaignId || undefined
 })
 
 const campaignOptions = computed<Option[]>(() => {
@@ -56,7 +55,6 @@ whenever(() => props.update, () => {
   const camp = props.encounter?.campaign?.id
 
   form.value.title = props.encounter?.title || ''
-  form.value.background = props.encounter?.background || '#7333E0'
   form.value.campaign = props.campaignId || camp
 })
 
@@ -81,10 +79,9 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
     const enc = await store.updateEncounter(
-      useEmptyKeyRemover({
+      removeEmptyKeys({
         ...data,
-        ...props.campaignId && { campaign: props.campaignId },
-        color: contrastColor(data.background)
+        ...props.campaignId && { campaign: props.campaignId }
       }),
       props.encounter.id,
       !!props.campaignId
@@ -96,15 +93,14 @@ async function updateEncounter (data: EncounterForm): Promise<void> {
 
 async function addEncounter (data: EncounterForm): Promise<void> {
   if (user.value) {
-    const enc = useEmptyKeyRemover({
+    const enc = removeEmptyKeys<AddEncounter>({
       ...data,
       ...props.campaignId && { campaign: props.campaignId },
       round: 1,
       rows: [],
       created_by: user.value.id,
-      color: contrastColor(data.background),
       activeIndex: 0
-    }) as AddEncounter
+    })
 
     const encounter = await store.addEncounter(enc)
 
@@ -114,7 +110,6 @@ async function addEncounter (data: EncounterForm): Promise<void> {
 
 function resetState (): void {
   form.value.title = ''
-  form.value.background = '#7333E0'
   form.value.campaign = undefined
   emit('close')
 }
@@ -151,16 +146,10 @@ function resetState (): void {
         :options="campaignOptions"
       />
       <FormKit
-        name="background"
-        type="color"
-        :label="$t('components.inputs.backgroundLabel')"
-        validation="required"
-        required
-      />
-      <FormKit
         type="submit"
         :aria-label="$t(`pages.encounters.${update ? 'update' : 'add'}`)"
         :label="$t(`pages.encounters.${update ? 'update' : 'add'}`)"
+        outer-class="!mb-0"
       />
     </FormKit>
   </Modal>

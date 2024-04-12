@@ -27,6 +27,7 @@ interface HomebrewForm {
   initiative_modifier?: number | undefined
   amount?: number | undefined,
   summoner?: Summoner | undefined | number
+  save?: boolean
 }
 
 type HomebrewModal = 'possible-attacks-modal' | 'homebrew-model'

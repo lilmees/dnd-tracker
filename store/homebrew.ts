@@ -3,10 +3,12 @@ import logRocket from 'logrocket'
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
   const currentStore = useCurrentCampaignStore()
+  const tableStore = useTableStore()
   const toast = useToastStore()
 
   const loading = ref<boolean>(true)
   const searching = ref<boolean>(true)
+  const encounterModal = ref<boolean>(false)
   const error = ref<string | null>(null)
   const data = ref<Homebrew[]>([])
   const pages = ref<number>(0)
@@ -23,10 +25,18 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
 
-  watchDebounced(() => filters.value, async (v) => {
+  watchDebounced(() => filters.value, async () => {
+    let campaignId
     page.value = 0
-    if (currentStore.campaign) {
-      await fetch({ field: 'campaign', value: currentStore.campaign.id }, true)
+
+    if (encounterModal.value && tableStore.encounter?.campaign?.id) {
+      campaignId = tableStore.encounter.campaign.id
+    } else if (currentStore.campaign?.id) {
+      campaignId = currentStore.campaign.id
+    }
+
+    if (campaignId) {
+      await fetch({ field: 'campaign', value: campaignId }, true)
     }
   }, { debounce: 100, maxWait: 500, deep: true })
 
@@ -89,18 +99,6 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
-  }
-
-  async function getHomebrewByCampaignId (id: number): Promise<Homebrew[]> {
-    const { data, error } = await supabase.from('homebrew_items')
-      .select('*')
-      .eq('campaign', id)
-
-    if (error) {
-      throw error
-    }
-
-    return data
   }
 
   async function getHomebrewById (id: number): Promise<Homebrew> {
@@ -189,6 +187,15 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }
 
+  function reset (): void {
+    homebrewCount.value = 0
+    data.value = []
+    error.value = null
+    encounterModal.value = false
+
+    resetPagination()
+  }
+
   function resetPagination (): void {
     pages.value = 0
     page.value = 0
@@ -202,6 +209,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   return {
     loading,
     searching,
+    encounterModal,
     error,
     data,
     max,
@@ -213,13 +221,13 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     noItems,
     fetch,
     paginate,
-    getHomebrewByCampaignId,
     getHomebrewById,
     getHomebrewByType,
     addHomebrew,
     updateHomebrew,
     deleteHomebrew,
     resetPagination,
+    reset,
     sandbox: [
       { type: 'player', id: 1, name: 'Carlo', health: '37', ac: '13', created_at: 'now', campaign: 1 },
       { type: 'player', id: 2, name: 'Silvin', health: '33', ac: '14', created_at: 'now', campaign: 1 },

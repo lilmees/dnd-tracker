@@ -16,7 +16,8 @@ export default defineFormKitConfig((): any => {
     locales: { en, nl },
     locale: 'nl',
     config: {
-      classes: generateClasses(
+      classes:
+      generateClasses(
         {
           global: {
             fieldset: 'border-4 border-black rounded-lg px-2 pb-1 bg-tracker/50',
@@ -136,7 +137,7 @@ export default defineFormKitConfig((): any => {
             thumb: 'relative left-0 aspect-square rounded-full transition-all w-5 bg-gray-100',
             track: 'cursor-pointer p-0.5 min-w-[3em] relative rounded-full transition-all bg-black peer-checked:bg-primary peer-checked:[&>div:last-child]:left-full peer-checked:[&>div:last-child]:-translate-x-full peer-checked:[&>div:first-child:not(:last-child)]:left-0 peer-checked:[&>div:first-child:not(:last-child)]:translate-x-0',
             valueLabel: 'font-bold text-sm',
-            wrapper: 'flex flex-wrap items-center mb-1',
+            wrapper: 'flex flex-wrap items-center mb-1 disabled:!cursor-not-allowed disabled:!opacity-50',
             label: 'cursor-pointer'
           },
           slider: {

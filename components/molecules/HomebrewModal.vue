@@ -66,11 +66,12 @@ function setForm (): HomebrewForm {
     health: props.item?.health,
     actions: props.item
       ? [...props.item.actions, ...props.item.legendary_actions, ...props.item.reactions, ...props.item.special_abilities]
-      : []
+      : [],
+    save: false
   }
 }
 
-function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
+function handleSubmit ({ __init, data, slots, save, ...formData }: Obj): void {
   error.value = ''
   isLoading.value = true
 
@@ -90,6 +91,12 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 
     if (props.encounter) {
       addInitiative(homebrewData)
+
+      if (save && table.encounter?.campaign?.id) {
+        const { amount, initiative, summoner, ...payload } = homebrewData
+
+        addHomebrew(payload, table.encounter.campaign.id)
+      }
     } else {
       delete homebrewData.amount
       props.update ? updateHomebrew(homebrewData) : addHomebrew(homebrewData)
@@ -108,18 +115,18 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateHomebrew (formData: Obj): Promise<void> {
   if (!props.item?.id) { return }
 
-  const updated = useEmptyKeyRemover(formData) as Homebrew
+  const updated = removeEmptyKeys<Homebrew>(formData)
   await homebrewStore.updateHomebrew(updated, props.item.id as number)
 
   emit('updated', updated)
 }
 
-async function addHomebrew (formData: Obj): Promise<void> {
+async function addHomebrew (formData: Obj, id?: number): Promise<void> {
   await homebrewStore.addHomebrew(
-    useEmptyKeyRemover({
+    removeEmptyKeys<AddHomebrew>({
       ...formData,
-      campaign: currentStore?.campaign?.id
-    }) as AddHomebrew
+      campaign: id || currentStore?.campaign?.id
+    })
   )
 }
 
@@ -332,7 +339,22 @@ function closeModal (): void {
           />
         </div>
       </FormKit>
-      <p v-if="error" class="text-danger body-small mt-1">
+      <div v-if="encounter && !table.isSandbox" class="flex flex-col gap-x-2">
+        <FormKit
+          :disabled="homebrewStore.homebrewCount >= homebrewStore.max"
+          name="save"
+          :label="$t('components.homebrewModal.save')"
+          type="toggle"
+          outer-class="$reset !mb-0"
+        />
+        <span
+          v-if="homebrewStore.homebrewCount >= homebrewStore.max"
+          class="text-danger body-small pb-2"
+        >
+          {{ $t('components.homebrewModal.max') }}
+        </span>
+      </div>
+      <p v-if="error" class="text-danger body-small">
         {{ error }}
       </p>
       <div class="flex justify-end">
@@ -346,7 +368,7 @@ function closeModal (): void {
             )
           "
           :disabled="isLoading"
-          input-class="$reset btn-primary"
+          outer-class="$reset !mb-0"
         />
       </div>
     </FormKit>

@@ -505,7 +505,9 @@
     "homebrewModal": {
       "new": "Make a new homebrew",
       "add": "Create homebrew",
-      "update": "Update homebrew"
+      "update": "Update homebrew",
+      "save": "Add to campaign",
+      "max": "Max campaign homebrews"
     },
     "homebrewTable": {
       "nothing": "We haven't found any homebrew that matches this search, but that doesn't mean you can't create it yourself."
@@ -616,9 +618,6 @@
       "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
       "another": "Create another feature request"
     },
-    "encounterCampaignHeader": {
-      "go": "Go to campaign"
-    },
     "userModal": {
       "title": "Add people to {campaign}",
       "select": "Select a member above",
@@ -666,9 +665,6 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
-    },
-    "contentHeader": {
-      "toMuch": "To much items for card view"
     },
     "bulkRemove": {
       "title": "Bulk remove {type}",

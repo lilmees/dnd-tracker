@@ -491,7 +491,9 @@
     "homebrewModal": {
       "new": "Maak een nieuwe homebrew",
       "add": "Homebrew maken",
-      "update": "Homebrew aanpassen"
+      "update": "Homebrew aanpassen",
+      "save": "toevoegen aan campagne",
+      "max": "Max campagne homebrews"
     },
     "homebrewTable": {
       "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
@@ -602,9 +604,6 @@
       "submitted": "Je feature request is met enthousiasme ontvangen en ondergaat momenteel een zorgvuldige evaluatie. Zodra het is goedgekeurd, zal iedereen de mogelijkheid hebben om erop te stemmen. Je kunt controleren of verzoek is goedgekeurd zodra het label 'Onder beoordeling' niet meer zichtbaar is.",
       "another": "Nog een feature request maken"
     },
-    "encounterCampaignHeader": {
-      "go": "Ga naar campagne"
-    },
     "userModal": {
       "title": "Mensen toevoegen aan {campaign}",
       "select": "Kies een persoon hierboven",
@@ -652,9 +651,6 @@
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
-    },
-    "contentHeader": {
-      "toMuch": "Te veel items voor kaartweergave"
     },
     "bulkRemove": {
       "title": "Bulk verwijderen {type}",
