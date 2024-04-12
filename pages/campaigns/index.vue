@@ -187,13 +187,8 @@ function resetState (): void {
               </div>
             </td>
           </tr>
-          <template #empty>
-            <div
-              v-if="noItems"
-              class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-            >
-              {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
-            </div>
+          <template v-if="noItems" #empty>
+            {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
           </template>
         </Table>
       </template>

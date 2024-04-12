@@ -3,7 +3,9 @@ import logRocket from 'logrocket'
 
 const homebrew = useHomebrewStore()
 const store = useTableStore()
+const { t } = useI18n()
 
+const isFetched = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
 const selected = ref<Homebrew[]>([])
@@ -11,28 +13,41 @@ const summoner = ref<Option | null>(null)
 
 const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
 
-//  create proper loading state
-//  add player names to homepage sandbox
+const headers: TableHeader[] = [
+  { label: '', sort: false, id: 'type' },
+  { label: t('general.name'), sort: false, id: 'name' },
+  { label: t('general.player'), sort: false, id: 'player' },
+  { label: t('general.stats'), sort: false, id: 'stats' }
+]
 
 const summonOptions = computed<Option[]>(() => {
   return store.encounter?.rows
-    ? store.encounter.rows.map((r: Row) => {
+    ? store.encounter.rows.filter(row => row.type !== 'summon').map((r: Row) => {
       return { label: r.name, value: `${r.id}` }
     })
     : []
 })
 
-// delete selections that are not from the summon type when a summon is selected
+whenever(() => isOpen.value, () => {
+  if (store.encounter?.campaign?.id && !isFetched.value && !store.isSandbox) {
+    homebrew.encounterModal = true
+    homebrew.perPage = 10
+
+    homebrew.fetch({ field: 'campaign', value: store.encounter.campaign.id })
+
+    isFetched.value = true
+  } else if (store.isSandbox) {
+    homebrew.data = homebrew.sandbox
+    homebrew.loading = false
+  }
+})
+
 watch(() => summon.value, () => {
   selected.value = selected.value.filter(s => s.type === 'summon')
 })
 
-onMounted(async () => {
-  if (store.encounter?.campaign?.id) {
-    homebrew.encounterModal = true
-
-    await homebrew.fetch({ field: 'campaign', value: store.encounter.campaign.id })
-  } else if (store.isSandbox) {
+onMounted(() => {
+  if (store.isSandbox) {
     homebrew.data = homebrew.sandbox
   }
 })
@@ -40,12 +55,9 @@ onMounted(async () => {
 onBeforeUnmount(() => homebrew.reset())
 
 function selectHomebrew (homebrew: Homebrew): void {
-  const index = selected.value.findIndex(h => h.id === homebrew.id)
-  if (index > -1) {
-    selected.value = selected.value.filter(h => h.id !== homebrew.id)
-  } else {
-    selected.value.push(homebrew)
-  }
+  selected.value.findIndex(h => h.id === homebrew.id) > -1
+    ? selected.value = selected.value.filter(h => h.id !== homebrew.id)
+    : selected.value.push(homebrew)
 }
 
 async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void> {
@@ -93,6 +105,12 @@ function selectedSummoner (value: unknown): void {
     summoner.value = filtered || null
   }
 }
+
+function paginate (p: number): void {
+  if (store.encounter?.campaign?.id) {
+    homebrew.paginate(p, { field: 'campaign', value: store.encounter.campaign.id })
+  }
+}
 </script>
 
 <template>
@@ -116,21 +134,21 @@ function selectedSummoner (value: unknown): void {
         aria-hidden="true"
       />
     </button>
-    <Modal big :open="isOpen" @close="closeModal">
+    <Modal :open="isOpen" @close="closeModal">
       <template #header>
         <h2>
           {{ $t('components.addInitiativeCampaignHomebrew.title') }}
         </h2>
       </template>
-      <div v-if="homebrew.data?.length" class="space-y-4">
+      <div class="space-y-4">
         <FormKit
-          v-if="!summon"
+          v-if="!summon && !store.isSandbox"
           v-model="homebrew.filters.search"
           type="search"
           prefix-icon="search"
         />
         <FormKit
-          v-else
+          v-else-if="summon"
           type="select"
           :label="$t('components.inputs.summonerLabel')"
           :placeholder="$t('components.addInitiativeCampaignHomebrew.initiative.select')"
@@ -138,20 +156,23 @@ function selectedSummoner (value: unknown): void {
           :options="summonOptions"
           @input="selectedSummoner"
         />
+        <SkeletonTable v-if="homebrew.loading" :headers="headers" :rows="10" />
         <Table
-          v-if="homebrew.data.length"
-          :headers="[
-            { label: '', sort: false, id: 'type' },
-            { label: $t('general.name'), sort: false, id: 'name' },
-            { label: $t('general.player'), sort: false, id: 'player' },
-            { label: $t('general.stats'), sort: false, id: 'stats' }
-          ]"
-          class="overflow-y-auto !max-h-[30vh] bg-red-500"
+          v-else
+          v-model:page="homebrew.page"
+          :headers="headers"
+          :pages="homebrew.pages"
+          :searching="homebrew.searching"
+          @paginate="paginate"
         >
           <tr
-            v-for="hb in homebrew.data"
+            v-for="hb in summon ? homebrew.data.filter(h => h.type === 'summon') : homebrew.data"
             :key="hb.id"
-            class="tr transition-colors"
+            class="tr transition-colors cursor-pointer"
+            :class="{
+              '!bg-primary/30': selected.filter(p => p.id === hb.id).length
+            }"
+            @click="selectHomebrew(hb)"
           >
             <td class="px-2 py-1 border-r border-slate-700 flex justify-center">
               <Icon
@@ -187,66 +208,13 @@ function selectedSummoner (value: unknown): void {
               </div>
             </td>
           </tr>
-        </Table>
-        <!-- <div
-          v-if="filteredHomebrews.length"
-          class="flex flex-col border-4 border-black rounded-lg overflow-y-auto"
-        >
-          <div class="flex gap-x-4 px-4 py-1 body-small uppercase font-bold text-slate-300">
-            <div class="w-6" />
-            <div class="grid grid-cols-3 w-full gap-x-2">
-              <span> {{ $t('general.name') }} </span>
-              <span> {{ $t('general.player') }} </span>
-              <span> {{ $t('general.stats') }} </span>
-            </div>
-          </div>
-          <template v-for="hb in filteredHomebrews" :key="hb.id">
-            <div
-              class="w-full border-t last:border-b border-black cursor-pointer flex gap-x-4 px-4 py-1"
-              :class="{
-                '!bg-primary/30': selected.filter(p => p.id === hb.id).length
-              }"
-              @click="selectHomebrew(hb)"
-            >
-              <Icon
-                v-tippy="$t(`general.${hb.type}`)"
-                :name="useHomebrewIcon(hb.type)"
-                :class="useHomebrewColor(hb.type)"
-                aria-hidden="true"
-                size="20"
-              />
-              <div class="grid grid-cols-3 w-full gap-x-2">
-                <p>
-                  {{ hb.name }}
-                </p>
-                <p>
-                  {{ hb.player || '' }}
-                </p>
-                <div class="flex gap-4">
-                  <div v-if="hb.health" class="flex gap-1">
-                    <p>
-                      {{ hb.health }}
-                    </p>
-                    <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
-                  </div>
-                  <div v-if="hb.ac" class="flex gap-1">
-                    <p>
-                      {{ hb.ac }}
-                    </p>
-                    <Icon
-                      name="ic:outline-shield"
-                      class="w-6 h-6 text-help"
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+
+          <template v-if="!homebrew.data?.length" #empty>
+            <span>
+              {{ $t('components.addInitiativeCampaignHomebrew.initiative.nothing') }}
+            </span>
           </template>
-        </div> -->
-        <p v-else-if="!summon" class="max-w-prose pb-4">
-          {{ $t('components.addInitiativeCampaignHomebrew.initiative.nothing') }}
-        </p>
+        </Table>
         <div class="flex gap-2 flex-wrap justify-end">
           <template v-if="!summon">
             <button
@@ -258,7 +226,7 @@ function selectedSummoner (value: unknown): void {
               {{ $t('actions.addSelected') }} ({{ selected.length }})
             </button>
             <button
-              class="btn-success"
+              class="btn-black"
               :aria-label="$t('actions.addAll')"
               :disabled="isLoading"
               @click="addHomebrews(homebrew.data)"
@@ -268,7 +236,7 @@ function selectedSummoner (value: unknown): void {
           </template>
           <button
             v-else
-            class="btn-primary"
+            class="btn-black"
             :aria-label="$t('components.addInitiativeCampaignHomebrew.initiative.add')"
             :disabled="isLoading || !summoner"
             @click="addHomebrews(selected)"
@@ -276,15 +244,6 @@ function selectedSummoner (value: unknown): void {
             {{ $t('components.addInitiativeCampaignHomebrew.initiative.add') }}
           </button>
         </div>
-      </div>
-      <p
-        v-else-if="!homebrew.data?.length"
-        class="font-bold"
-      >
-        {{ $t('components.addInitiativeCampaignHomebrew.initiative.empty') }}
-      </p>
-      <div v-else class="pt-20">
-        <div class="loader !relative" />
       </div>
     </Modal>
   </section>

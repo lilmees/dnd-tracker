@@ -29,6 +29,13 @@
 }
 
 @layer utilities {
+  .font-outline {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #ffffff;
+
+    @apply text-transparent;
+  }
+
   .fancy-shadow {
     background:conic-gradient(
       from 230.29deg at 51.63% 52.16%, 
@@ -85,21 +92,13 @@
   }
 
   @font-face {
-    font-family: 'Lato';
-    src: url('@/assets/fonts/Lato-Bold.woff') format('woff');
-    font-weight: 800;
+    font-family: 'GeistMono';
+    src: url('@/assets/fonts/GeistMono.woff') format('woff');
   }
 
   @font-face {
-    font-family: 'Lato';
-    src: url('@/assets/fonts/Lato-Regular.woff') format('woff');
-    font-weight: 400;
-  }
-
-  @font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter.woff') format('woff');
-    font-weight: 400;
+    font-family: 'Geist';
+    src: url('@/assets/fonts/Geist.woff') format('woff');
   }
 
   html {

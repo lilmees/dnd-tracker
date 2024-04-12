@@ -1,5 +1,12 @@
 <script setup lang="ts">
-defineProps<{ headers: { label: string, sort: boolean, id: string }[] }>()
+withDefaults(
+  defineProps<{
+    headers: TableHeader[]
+    rows?: number
+    }>(), {
+    rows: 20
+  }
+)
 </script>
 
 <template>
@@ -19,7 +26,7 @@ defineProps<{ headers: { label: string, sort: boolean, id: string }[] }>()
     </thead>
     <tbody>
       <tr
-        v-for="i in 20"
+        v-for="i in rows"
         :key="i"
         class="border-b last:border-b-0 border-slate-700 animate-pulse"
       >

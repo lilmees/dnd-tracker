@@ -27,7 +27,7 @@ onKeyStroke('Escape', () => emit('close'))
     >
       <div
         v-if="open"
-        class="fixed inset-0 bg-black/50 cursor-pointer z-20"
+        class="fixed inset-0 bg-black/30 cursor-pointer z-20"
         @click="$emit('close')"
       />
     </Transition>

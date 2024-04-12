@@ -260,13 +260,8 @@ function getActionsAmount (item: Homebrew): number {
             </div>
           </td>
         </tr>
-        <template #empty>
-          <div
-            v-if="homebrewStore.noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.homebrew').toLowerCase() }) }}
-          </div>
+        <template v-if="homebrewStore.noItems" #empty>
+          {{ $t('components.table.nothing', { item: $t('general.homebrew').toLowerCase() }) }}
         </template>
       </Table>
       <component

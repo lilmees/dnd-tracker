@@ -9,8 +9,8 @@ export const content = [
 export const theme = {
   extend: {
     fontFamily: {
-      title: ['Lato', 'sans-serif'],
-      text: ['Inter', 'sans-serif']
+      title: ['Geist', 'sans-serif'],
+      text: ['GeistMono', 'sans-serif']
     },
     colors: {
       background: '#121111',

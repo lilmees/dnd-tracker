@@ -121,6 +121,7 @@
     "rows": "Rows",
     "concentration": "Concentration",
     "none": "Geen",
+    "stats": "Statistics",
     "error": {
       "title": "Error",
       "text": "Something went wrong"

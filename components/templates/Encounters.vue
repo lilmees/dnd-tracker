@@ -243,13 +243,8 @@ function resetState (): void {
             </div>
           </td>
         </tr>
-        <template #empty>
-          <div
-            v-if="encounterStore.noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
-          </div>
+        <template v-if="encounterStore.noItems" #empty>
+          {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
         </template>
       </Table>
     </div>
