@@ -68,7 +68,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
 
     if (prof.email || prof.password) {
       const { email, password } = prof
-      const { error: userErr } = await supabase.auth.updateUser(useEmptyKeyRemover({ email, password }))
+      const { error: userErr } = await supabase.auth.updateUser(removeEmptyKeys({ email, password }))
 
       if (userErr) {
         throw userErr
