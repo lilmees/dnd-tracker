@@ -6,10 +6,8 @@ const store = useTableStore()
 
 const isOpen = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
-const homebrews = ref<Homebrew[] | null>(null)
 const selected = ref<Homebrew[]>([])
 const summoner = ref<Option | null>(null)
-const search = ref<string>('')
 
 const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
 
@@ -21,25 +19,6 @@ const summonOptions = computed<Option[]>(() => {
     : []
 })
 
-const filteredHomebrews = computed<Homebrew[]>(() => {
-  let hbs: Homebrew[] = []
-  if (!homebrews.value) {
-    return hbs
-  } else {
-    hbs = homebrews.value
-  }
-
-  if (summon.value) {
-    hbs = hbs.filter((h: Homebrew) => h.type === 'summon')
-  }
-
-  if (search.value) {
-    hbs = hbs.filter((h: Homebrew) => h.name.toLowerCase().includes(search.value.toLowerCase()))
-  }
-
-  return hbs
-})
-
 // delete selections that are not from the summon type when a summon is selected
 watch(() => summon.value, () => {
   selected.value = selected.value.filter(s => s.type === 'summon')
@@ -47,11 +26,15 @@ watch(() => summon.value, () => {
 
 onMounted(async () => {
   if (store.encounter?.campaign?.id) {
-    homebrews.value = await homebrew.getHomebrewByCampaignId(store.encounter.campaign.id)
+    homebrew.encounterModal = true
+
+    await homebrew.fetch({ field: 'campaign', value: store.encounter.campaign.id })
   } else if (store.isSandbox) {
-    homebrews.value = homebrew.sandbox
+    homebrew.data = homebrew.sandbox
   }
 })
+
+onBeforeUnmount(() => homebrew.reset())
 
 function selectHomebrew (homebrew: Homebrew): void {
   const index = selected.value.findIndex(h => h.id === homebrew.id)
@@ -95,7 +78,7 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
 }
 
 function closeModal (): void {
-  search.value = ''
+  homebrew.filters.search = ''
   isOpen.value = false
   summoner.value = null
   selected.value = []
@@ -136,10 +119,10 @@ function selectedSummoner (value: unknown): void {
           {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
         </h2>
       </template>
-      <div v-if="homebrews?.length" class="space-y-4">
+      <div v-if="homebrew.data?.length" class="space-y-4">
         <FormKit
           v-if="!summon"
-          v-model="search"
+          v-model="homebrew.filters.search"
           type="search"
           :label="$t('components.inputs.nameLabel')"
         />
@@ -153,11 +136,11 @@ function selectedSummoner (value: unknown): void {
           @input="selectedSummoner"
         />
         <div
-          v-if="filteredHomebrews.length"
+          v-if="homebrew.data.length"
           class="flex flex-col border-4 border-black rounded-lg overflow-hidden"
         >
           <template
-            v-for="hb in filteredHomebrews"
+            v-for="hb in homebrew.data"
             :key="hb.id"
           >
             <div
@@ -219,7 +202,7 @@ function selectedSummoner (value: unknown): void {
               class="btn-success"
               :aria-label="$t('actions.addAll')"
               :disabled="isLoading"
-              @click="addHomebrews(homebrews as Homebrew[])"
+              @click="addHomebrews(homebrew.data)"
             >
               {{ $t('actions.addAll') }}
             </button>
@@ -235,7 +218,7 @@ function selectedSummoner (value: unknown): void {
           </button>
         </div>
       </div>
-      <div v-else-if="homebrews && !homebrews.length">
+      <div v-else-if="homebrew.data && !homebrew.data.length">
         <span class="font-bold">
           {{ $t('general.noContent.title', { content: 'Homebrew' }) }}
         </span>

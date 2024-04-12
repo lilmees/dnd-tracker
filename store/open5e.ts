@@ -31,7 +31,7 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
   async function getData (filters: Open5eFilters): Promise<Open5eResponse> {
     let url = `https://api.open5e.com/${filters.type ? filters.type + '/' : ''}?limit=${filters.limit || '20'}&ordering=${filters.type === 'monsters' ? sortBy.value : 'name'}&document__slug=wotc-srd`
 
-    const query = useEmptyKeyRemover(filters.query)
+    const query = removeEmptyKeys<Open5eQuery>(filters.query as Open5eQuery)
 
     if (query) {
       Object.keys(query).forEach((key: string) => {

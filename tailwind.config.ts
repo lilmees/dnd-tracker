@@ -3,7 +3,6 @@ export const content = [
   './layouts/**/*.{vue,js}',
   './components/**/*.{vue,js}',
   './plugins/**/*.{js,ts}',
-  './formkit/**/*.json',
   './formkit.config.ts'
 ]
 

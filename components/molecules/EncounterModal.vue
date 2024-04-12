@@ -79,7 +79,7 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
     const enc = await store.updateEncounter(
-      useEmptyKeyRemover({
+      removeEmptyKeys({
         ...data,
         ...props.campaignId && { campaign: props.campaignId }
       }),
@@ -93,14 +93,14 @@ async function updateEncounter (data: EncounterForm): Promise<void> {
 
 async function addEncounter (data: EncounterForm): Promise<void> {
   if (user.value) {
-    const enc = useEmptyKeyRemover({
+    const enc = removeEmptyKeys<AddEncounter>({
       ...data,
       ...props.campaignId && { campaign: props.campaignId },
       round: 1,
       rows: [],
       created_by: user.value.id,
       activeIndex: 0
-    }) as AddEncounter
+    })
 
     const encounter = await store.addEncounter(enc)
 
