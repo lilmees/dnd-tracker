@@ -50,7 +50,7 @@ onMounted(() => {
         ]"
       />
       <div class="fixed !top-1/4 !left-0 !w-[50vw] !h-[50vh] fancy-shadow z-[-1] opacity-70" />
-      <div class="dnd-container">
+      <div class="dnd-container min-h-[40vh]">
         <NuxtPage />
       </div>
     </template>

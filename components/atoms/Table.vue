@@ -17,6 +17,8 @@ withDefaults(
 const sortedBy = defineModel<string>('sortedBy')
 const sortACS = defineModel<boolean>('acs', { default: false })
 const page = defineModel<number>('page', { default: 0 })
+
+const slots = useSlots()
 </script>
 
 <template>
@@ -28,8 +30,11 @@ const page = defineModel<number>('page', { default: 0 })
             <th
               v-for="{ label, sort, id } in headers"
               :key="label"
-              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 cursor-pointer"
-              :class="{ '!cursor-progress': searching }"
+              class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
+              :class="{
+                'cursor-pointer': sort,
+                '!cursor-progress': searching
+              }"
               @click="() => {
                 if (sort && !searching) {
                   sortACS = id === sortedBy ? !sortACS : false
@@ -57,9 +62,19 @@ const page = defineModel<number>('page', { default: 0 })
         </thead>
         <tbody v-auto-animate>
           <slot />
+
+          <tr v-if="slots?.empty" class="py-20">
+            <td
+              :colspan="headers.length"
+              class="py-20 px-5 font-bold"
+            >
+              <div class="max-w-prose mx-auto text-center">
+                <slot name="empty" />
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <slot name="empty" />
       <div v-if="shadow" class="inset-0 z-[-1] fancy-shadow" />
     </div>
     <Pagination

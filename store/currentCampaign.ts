@@ -3,7 +3,6 @@ import logRocket from 'logrocket'
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const supabase = useSupabaseClient()
   const campaignStore = useCampaignsStore()
-  const homebrewStore = useHomebrewStore()
   const profile = useProfileStore()
   const toast = useToastStore()
   const localePath = useLocalePath()

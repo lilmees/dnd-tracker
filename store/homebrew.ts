@@ -26,6 +26,10 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
 
   watchDebounced(() => filters.value, async () => {
+    if (tableStore.isSandbox) {
+      return
+    }
+
     let campaignId
     page.value = 0
 
@@ -192,6 +196,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     data.value = []
     error.value = null
     encounterModal.value = false
+    perPage.value = 20
 
     resetPagination()
   }
@@ -229,11 +234,11 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     resetPagination,
     reset,
     sandbox: [
-      { type: 'player', id: 1, name: 'Carlo', health: '37', ac: '13', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 2, name: 'Silvin', health: '33', ac: '14', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 3, name: 'Alexis', health: '29', ac: '12', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 4, name: 'Thernus', health: '31', ac: '16', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 5, name: 'Banthaaja', health: '30', ac: '15', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 1, name: 'Carlo', player: 'Thomas', health: '37', ac: '13', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 2, name: 'Silvin', player: 'Sander', health: '33', ac: '14', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 3, name: 'Alexis', player: 'Davina', health: '29', ac: '12', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 4, name: 'Diadematus', player: 'Tom', health: '31', ac: '16', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 5, name: 'Banthaaja', player: 'Yves', health: '30', ac: '15', created_at: 'now', campaign: 1 },
       { type: 'monster', id: 6, name: 'Lulu', health: '69', ac: '20', created_at: 'now', campaign: 1 },
       { type: 'monster', id: 7, name: 'Pony', health: '33', ac: '10', created_at: 'now', campaign: 1 },
       { type: 'npc', id: 8, name: 'Rocky', health: '24', ac: '16', created_at: 'now', campaign: 1 },
