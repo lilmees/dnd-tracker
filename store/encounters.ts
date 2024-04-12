@@ -170,7 +170,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       } else {
         fetch(
           campaign ? { field: 'campaign', value: campaign } : undefined,
-          !!filters.value.search
+          true
         )
       }
     } catch (err) {
@@ -195,7 +195,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     } else {
       fetch(
         campaignView && encounter.campaign ? { field: 'campaign', value: encounter.campaign } : undefined,
-        !!filters.value.search
+        true
       )
       return sheets[0]
     }

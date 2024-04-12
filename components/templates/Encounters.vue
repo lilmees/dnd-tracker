@@ -25,7 +25,15 @@ const headers = [
   { label: t('general.actions'), sort: false, id: 'actions' }
 ]
 
-onMounted(() => encounterStore.fetch())
+const campaignId = computed<number | undefined>(() => {
+  return props.campaignView && currentStore.campaign ? currentStore.campaign.id : undefined
+})
+
+onMounted(() => {
+  if (!props.campaignView) {
+    encounterStore.fetch()
+  }
+})
 
 onBeforeUnmount(() => encounterStore.resetPagination())
 
@@ -40,8 +48,8 @@ whenever(() => currentStore.campaign, () => {
 watchDebounced(() => encounterStore.filters, async () => {
   encounterStore.page = 0
   await encounterStore.fetch(
-    props.campaignView && currentStore.campaign
-      ? { field: 'campaign', value: currentStore.campaign.id }
+    campaignId.value
+      ? { field: 'campaign', value: campaignId.value }
       : undefined,
     true
   )
@@ -110,7 +118,7 @@ function resetState (): void {
       <SkeletonInput :label="false" class="w-[256px]" />
       <SkeletonTable :headers="headers" />
     </template>
-    <div v-else-if="encounterStore.restrictionEncounters">
+    <div v-else-if="(!encounterStore.noItems || encounterStore.filters.search && encounterStore.noItems)">
       <ContentHeader
         v-model:search="encounterStore.filters.search"
         :shadow="!campaignView"
@@ -136,8 +144,8 @@ function resetState (): void {
         @paginate="(p) => {
           encounterStore.paginate(
             p,
-            props.campaignView && currentStore.campaign
-              ? { field: 'campaign', value: currentStore.campaign.id }
+            campaignId
+              ? { field: 'campaign', value: campaignId }
               : undefined
           )
         }"
@@ -262,32 +270,34 @@ function resetState (): void {
       {{ $t('actions.tryAgain') }}
     </button>
   </div>
-  <div class="absolute z-[1]">
-    <ConfirmationModal
-      :open="needConfirmation"
-      :title="selected.length === 1
-        ? selected[0].title
-        : $t('components.bulkRemove.multiple', {
-          number: selected.length,
-          type: $t('general.encounters').toLowerCase()
-        })"
-      @close="resetState"
-      @delete="() => {
-        encounterStore.deleteEncounter(
-          selected.length === 1 ? selected[0].id : selected.map(v => v.id),
-          campaignView && currentStore.campaign ? currentStore.campaign.id : undefined
-        );
-        resetState()
-      }"
-    />
-    <EncounterModal
-      :open="isUpdating || isOpen"
-      :encounter="selected.length && isUpdating ? selected[0] : undefined"
-      :campaign-id="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
-      :update="isUpdating"
-      @close="resetState"
-      @updated="resetState"
-      @added="resetState"
-    />
-  </div>
+  <ClientOnly>
+    <div class="absolute z-[1]">
+      <ConfirmationModal
+        :open="needConfirmation"
+        :title="selected.length === 1
+          ? selected[0].title
+          : $t('components.bulkRemove.multiple', {
+            number: selected.length,
+            type: $t('general.encounters').toLowerCase()
+          })"
+        @close="resetState"
+        @delete="() => {
+          encounterStore.deleteEncounter(
+            selected.length === 1 ? selected[0].id : selected.map(v => v.id),
+            campaignId
+          );
+          resetState()
+        }"
+      />
+      <EncounterModal
+        :open="isUpdating || isOpen"
+        :encounter="selected.length && isUpdating ? selected[0] : undefined"
+        :campaign-id="campaignId"
+        :update="isUpdating"
+        @close="resetState"
+        @updated="resetState"
+        @added="resetState"
+      />
+    </div>
+  </ClientOnly>
 </template>

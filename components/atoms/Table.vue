@@ -7,12 +7,10 @@ withDefaults(
     pages?: number
     shadow?: boolean
     searching?: boolean
-    empty?: boolean
   }>(), {
     pages: 0,
     shadow: false,
-    searching: false,
-    empty: false
+    searching: false
   }
 )
 
