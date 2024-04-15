@@ -99,7 +99,7 @@ export const useTableStore = defineStore('useTableStore', () => {
           table: 'initiative_sheets',
           filter: `id=eq.${id}`
         },
-        (payload: SupabaseRealTime) => {
+        (payload: SbRealTime) => {
           isSyncing.value = true
 
           if (payload.eventType === 'DELETE') {

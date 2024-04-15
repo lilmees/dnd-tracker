@@ -1,4 +1,4 @@
-export async function sbQuery<T> (options: SupabaseFetchOptions): Promise<SupabaseQuery<T>> {
+export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> {
   const supabase = useSupabaseClient()
 
   const { table, select, page, perPage, filters, eq, fuzzy, field } = options
@@ -32,7 +32,7 @@ export async function sbQuery<T> (options: SupabaseFetchOptions): Promise<Supaba
   return { data: data as T[], count }
 }
 
-export function generateRange (page: number, perPage: number): SupabaseRange {
+export function generateRange (page: number, perPage: number): SbRange {
   const from = page ? page * perPage : 0
   const to = page ? from + perPage - 1 : perPage - 1
 

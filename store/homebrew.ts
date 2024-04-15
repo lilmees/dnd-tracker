@@ -44,7 +44,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }, { debounce: 100, maxWait: 500, deep: true })
 
-  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
@@ -85,7 +85,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     homebrewCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
   }

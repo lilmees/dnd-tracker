@@ -118,7 +118,7 @@ function resetState (): void {
       <SkeletonInput :label="false" class="w-[256px]" />
       <SkeletonTable :headers="headers" />
     </template>
-    <div v-else-if="(!encounterStore.noItems || encounterStore.filters.search && encounterStore.noItems)">
+    <div v-else-if="!encounterStore.noItems || (encounterStore.filters.search !== '' && encounterStore.noItems)">
       <ContentHeader
         v-model:search="encounterStore.filters.search"
         :shadow="!campaignView"

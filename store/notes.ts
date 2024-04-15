@@ -17,7 +17,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
   const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SupabaseEq): Promise<void> {
+  async function fetch (eq?: SbEq): Promise<void> {
     loading.value = true
 
     try {

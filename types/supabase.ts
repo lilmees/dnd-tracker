@@ -1,10 +1,10 @@
-type SupabaseTables =
+type SbTables =
 | 'initiative_sheets'
 | 'homebrew_items'
 | 'campaigns'
 | 'notes'
 
-interface SupabaseRealTime {
+interface SbRealTime {
   commit_timestamp: string
   errors: any
   eventType: string
@@ -14,28 +14,28 @@ interface SupabaseRealTime {
   table: string
 }
 
-interface SupabaseEq {
+interface SbEq {
   field: string,
   value: string | number
 }
 
-interface SupabaseFetchOptions {
-  table: SupabaseTables
+interface SbFetchOptions {
+  table: SbTables
   field?: string
   select?: string
   page?: number
   perPage?: number
   filters?: TableFilters
-  eq?: SupabaseEq
+  eq?: SbEq
   fuzzy?: boolean
 }
 
-interface SupabaseRange {
+interface SbRange {
   from: number
   to: number
 }
 
-interface SupabaseQuery <T> {
+interface SbQuery <T> {
   data: T[],
   count: number | null
 }

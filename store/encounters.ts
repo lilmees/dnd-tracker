@@ -43,7 +43,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
@@ -81,7 +81,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     encounterCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
   }
