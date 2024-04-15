@@ -47,37 +47,22 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
-    if (!fuzzy) { loading.value = true }
-
     try {
-      const { from, to } = generateRange(page.value, perPage.value)
+      const { data: sheets, count } = await sbQuery<Encounter>({
+        table: 'initiative_sheets',
+        page: page.value,
+        perPage: perPage.value,
+        filters: filters.value,
+        select,
+        eq,
+        fuzzy
+      })
 
-      let query = supabase
-        .from('initiative_sheets')
-        .select(select, { count: 'exact' })
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      if (filters.value.search && fuzzy) {
-        query = query.ilike('title', `%${filters.value.search}%`)
-      }
-
-      const { data: sheets, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
+      pages.value = calcPages(count, perPage.value)
 
       getCount()
 
-      if (err) {
-        throw err
-      }
-      if (sheets) {
-        data.value = sheets
-      }
+      if (sheets) { data.value = sheets }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

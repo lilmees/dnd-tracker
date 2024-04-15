@@ -21,22 +21,11 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     loading.value = true
 
     try {
-      let query = supabase.from('notes').select('*', { count: 'exact' })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      const { data: notes, error: err, count } = await query
+      const { data: notes, count } = await sbQuery<Note>({ table: 'notes', eq })
 
       noteCount.value = count || 0
 
-      if (err) {
-        throw err
-      }
-      if (notes) {
-        data.value = notes
-      }
+      if (notes) { data.value = notes }
     } catch (err) {
       logRocket.captureException(err as Error)
     } finally {

@@ -24,16 +24,12 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     error.value = undefined
 
     try {
-      const { data, error: errorMessage } = await supabase
-        .from('campaigns')
-        .select('*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(id), team(id)')
+      const { data } = await sbQuery<Campaign>({
+        table: 'campaigns',
+        select: '*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(id), team(id)'
+      })
 
-      if (errorMessage) {
-        throw errorMessage
-      }
-      if (data) {
-        campaigns.value = data
-      }
+      if (data) { campaigns.value = data }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

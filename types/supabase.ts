@@ -1,3 +1,10 @@
+type SupabaseTables =
+| 'initiative_sheets'
+| 'homebrew_items'
+| 'campaigns'
+| 'notes'
+| 'features'
+
 interface SupabaseRealTime {
   commit_timestamp: string
   errors: any
@@ -11,4 +18,15 @@ interface SupabaseRealTime {
 interface SupabaseEq {
   field: string,
   value: string | number
+}
+
+interface SupabaseFetchOptions {
+  table: SupabaseTables
+  field?: string
+  select?: string
+  page?: number
+  perPage?: number
+  filters?: TableFilters
+  eq?: SupabaseEq
+  fuzzy?: boolean
 }

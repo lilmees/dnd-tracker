@@ -49,34 +49,21 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     fuzzy ? searching.value = true : loading.value = true
 
     try {
-      const { from, to } = generateRange(page.value, perPage.value)
+      const { data: homebrew, count } = await sbQuery<Homebrew>({
+        table: 'homebrew_items',
+        page: page.value,
+        perPage: perPage.value,
+        filters: filters.value,
+        field: 'name',
+        eq,
+        fuzzy
+      })
 
-      let query = supabase
-        .from('homebrew_items')
-        .select('*', { count: 'exact' })
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      if (filters.value.search && fuzzy) {
-        query = query.ilike('name', `%${filters.value.search}%`)
-      }
-
-      const { data: homebrew, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
+      pages.value = calcPages(count, perPage.value)
 
       getCount()
 
-      if (err) {
-        throw err
-      }
-      if (homebrew) {
-        data.value = homebrew
-      }
+      if (homebrew) { data.value = homebrew }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
