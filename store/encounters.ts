@@ -43,41 +43,26 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
-    if (!fuzzy) { loading.value = true }
-
     try {
-      const { from, to } = generateRange(page.value, perPage.value)
+      const { data: sheets, pagesCount } = await sbQuery<Encounter>({
+        table: 'initiative_sheets',
+        page: page.value,
+        perPage: perPage.value,
+        filters: filters.value,
+        select,
+        eq,
+        fuzzy
+      })
 
-      let query = supabase
-        .from('initiative_sheets')
-        .select(select, { count: 'exact' })
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
+      if (sheets) { data.value = sheets }
 
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      if (filters.value.search && fuzzy) {
-        query = query.ilike('title', `%${filters.value.search}%`)
-      }
-
-      const { data: sheets, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
+      pages.value = pagesCount
 
       getCount()
-
-      if (err) {
-        throw err
-      }
-      if (sheets) {
-        data.value = sheets
-      }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
@@ -96,7 +81,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     encounterCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
   }

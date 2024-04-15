@@ -17,26 +17,15 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
   const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SupabaseEq): Promise<void> {
+  async function fetch (eq?: SbEq): Promise<void> {
     loading.value = true
 
     try {
-      let query = supabase.from('notes').select('*', { count: 'exact' })
-
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
-
-      const { data: notes, error: err, count } = await query
+      const { data: notes, count } = await sbQuery<Note>({ table: 'notes', eq })
 
       noteCount.value = count || 0
 
-      if (err) {
-        throw err
-      }
-      if (notes) {
-        data.value = notes
-      }
+      if (notes) { data.value = notes }
     } catch (err) {
       logRocket.captureException(err as Error)
     } finally {

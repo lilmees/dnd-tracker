@@ -30,6 +30,8 @@ const campaignId = computed<number | undefined>(() => {
 })
 
 onMounted(() => {
+  encounterStore.loading = true
+
   if (!props.campaignView) {
     encounterStore.fetch()
   }
@@ -118,7 +120,7 @@ function resetState (): void {
       <SkeletonInput :label="false" class="w-[256px]" />
       <SkeletonTable :headers="headers" />
     </template>
-    <div v-else-if="(!encounterStore.noItems || encounterStore.filters.search && encounterStore.noItems)">
+    <div v-else-if="!encounterStore.noItems || (encounterStore.filters.search !== '' && encounterStore.noItems)">
       <ContentHeader
         v-model:search="encounterStore.filters.search"
         :shadow="!campaignView"
@@ -270,34 +272,28 @@ function resetState (): void {
       {{ $t('actions.tryAgain') }}
     </button>
   </div>
-  <ClientOnly>
-    <div class="absolute z-[1]">
-      <ConfirmationModal
-        :open="needConfirmation"
-        :title="selected.length === 1
-          ? selected[0].title
-          : $t('components.bulkRemove.multiple', {
-            number: selected.length,
-            type: $t('general.encounters').toLowerCase()
-          })"
-        @close="resetState"
-        @delete="() => {
-          encounterStore.deleteEncounter(
-            selected.length === 1 ? selected[0].id : selected.map(v => v.id),
-            campaignId
-          );
-          resetState()
-        }"
-      />
-      <EncounterModal
-        :open="isUpdating || isOpen"
-        :encounter="selected.length && isUpdating ? selected[0] : undefined"
-        :campaign-id="campaignId"
-        :update="isUpdating"
-        @close="resetState"
-        @updated="resetState"
-        @added="resetState"
-      />
-    </div>
-  </ClientOnly>
+  <ConfirmationModal
+    :open="needConfirmation"
+    :title="selected.length === 1
+      ? selected[0].title
+      : $t('components.bulkRemove.multiple', {
+        number: selected.length,
+        type: $t('general.encounters').toLowerCase()
+      })"
+    @close="resetState"
+    @delete="() => {
+      encounterStore.deleteEncounter(
+        selected.length === 1 ? selected[0].id : selected.map(v => v.id),
+        campaignId
+      );
+      resetState()
+    }"
+  />
+  <EncounterModal
+    :open="isUpdating || isOpen"
+    :encounter="selected.length && isUpdating ? selected[0] : undefined"
+    :update="isUpdating"
+    :campaign-id="campaignId"
+    @close="resetState"
+  />
 </template>
