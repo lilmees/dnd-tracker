@@ -1,29 +1,28 @@
-export async function sbQuery<T> (options: SupabaseFetchOptions): Promise<{
-  data: T[],
-  count: number | null
-}> {
+export async function sbQuery<T> (options: SupabaseFetchOptions): Promise<SupabaseQuery<T>> {
   const supabase = useSupabaseClient()
 
-  let query = supabase
-    .from(options.table)
-    .select(options.select || '*', { count: 'exact' })
+  const { table, select, page, perPage, filters, eq, fuzzy, field } = options
 
-  if (options.page && options.perPage) {
-    const { from, to } = generateRange(options.page, options.perPage)
+  let query = supabase
+    .from(table)
+    .select(select || '*', { count: 'exact' })
+
+  if (typeof page === 'number' && typeof perPage === 'number') {
+    const { from, to } = generateRange(page, perPage)
 
     query = query.range(from, to)
   }
 
-  if (options.filters) {
-    query = query.order(options.filters.sortedBy, { ascending: options.filters.sortACS })
+  if (filters) {
+    query = query.order(filters.sortedBy, { ascending: filters.sortACS })
   }
 
-  if (options.eq) {
-    query = query.eq(options.eq.field, options.eq.value)
+  if (eq) {
+    query = query.eq(eq.field, eq.value)
   }
 
-  if (options.filters?.search && options.fuzzy) {
-    query = query.ilike(options.field || 'title', `%${options.filters.search}%`)
+  if (filters?.search && fuzzy) {
+    query = query.ilike(field || 'title', `%${filters.search}%`)
   }
 
   const { data, error, count } = await query
@@ -33,7 +32,7 @@ export async function sbQuery<T> (options: SupabaseFetchOptions): Promise<{
   return { data: data as T[], count }
 }
 
-export function generateRange (page: number, perPage: number): { from: number, to: number } {
+export function generateRange (page: number, perPage: number): SupabaseRange {
   const from = page ? page * perPage : 0
   const to = page ? from + perPage - 1 : perPage - 1
 

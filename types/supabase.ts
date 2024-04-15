@@ -3,7 +3,6 @@ type SupabaseTables =
 | 'homebrew_items'
 | 'campaigns'
 | 'notes'
-| 'features'
 
 interface SupabaseRealTime {
   commit_timestamp: string
@@ -29,4 +28,14 @@ interface SupabaseFetchOptions {
   filters?: TableFilters
   eq?: SupabaseEq
   fuzzy?: boolean
+}
+
+interface SupabaseRange {
+  from: number
+  to: number
+}
+
+interface SupabaseQuery <T> {
+  data: T[],
+  count: number | null
 }
