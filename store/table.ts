@@ -30,7 +30,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
-    isPlayground.value = route.fullPath.includes('/playground')
+    isPlayground.value = false
 
     const { data, error } = await supabase
       .from('initiative_sheets')
