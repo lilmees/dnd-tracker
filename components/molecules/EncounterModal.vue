@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 
-const emit = defineEmits(['close', 'added', 'updated'])
+const emit = defineEmits<{ close: [] }>()
+
 const props = withDefaults(
   defineProps<{
     open: boolean,
@@ -18,8 +19,6 @@ const props = withDefaults(
 const store = useEncountersStore()
 const campaigns = useCampaignsStore()
 const user = useSupabaseUser()
-
-store.loading = false
 
 const isLoading = ref<boolean>(false)
 const campaign = ref<boolean>(false)
@@ -78,7 +77,7 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
 
 async function updateEncounter (data: EncounterForm): Promise<void> {
   if (props.encounter) {
-    const enc = await store.updateEncounter(
+    await store.updateEncounter(
       removeEmptyKeys({
         ...data,
         ...props.campaignId && { campaign: props.campaignId }
@@ -87,7 +86,7 @@ async function updateEncounter (data: EncounterForm): Promise<void> {
       !!props.campaignId
     )
 
-    emit('updated', enc)
+    emit('close')
   }
 }
 
@@ -102,9 +101,9 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       activeIndex: 0
     })
 
-    const encounter = await store.addEncounter(enc)
+    await store.addEncounter(enc)
 
-    emit('added', encounter)
+    emit('close')
   }
 }
 

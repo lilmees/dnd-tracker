@@ -49,7 +49,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     fuzzy ? searching.value = true : loading.value = true
 
     try {
-      const { data: homebrew, count } = await sbQuery<Homebrew>({
+      const { data: homebrew, pagesCount } = await sbQuery<Homebrew>({
         table: 'homebrew_items',
         page: page.value,
         perPage: perPage.value,
@@ -59,11 +59,11 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
         fuzzy
       })
 
-      pages.value = calcPages(count, perPage.value)
+      if (homebrew) { data.value = homebrew }
+
+      pages.value = pagesCount
 
       getCount()
-
-      if (homebrew) { data.value = homebrew }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

@@ -48,7 +48,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     fuzzy ? searching.value = true : loading.value = true
 
     try {
-      const { data: sheets, count } = await sbQuery<Encounter>({
+      const { data: sheets, pagesCount } = await sbQuery<Encounter>({
         table: 'initiative_sheets',
         page: page.value,
         perPage: perPage.value,
@@ -58,11 +58,11 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         fuzzy
       })
 
-      pages.value = calcPages(count, perPage.value)
+      if (sheets) { data.value = sheets }
+
+      pages.value = pagesCount
 
       getCount()
-
-      if (sheets) { data.value = sheets }
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

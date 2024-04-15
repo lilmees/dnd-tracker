@@ -96,7 +96,7 @@ function resetState (): void {
         <SkeletonInput :label="false" class="w-[256px]" />
         <SkeletonTable :headers="headers" />
       </template>
-      <template v-else-if="store.allowedCampaigns?.length">
+      <template v-else-if="!noItems || (noItems && search !== '')">
         <ContentHeader v-model:search="search" shadow />
         <BulkRemove
           v-model:isBulk="isBulk"
@@ -145,12 +145,11 @@ function resetState (): void {
               <div class="flex justify-center items-center gap-2">
                 <FormKit
                   v-if="isBulk"
-                  name="marketing"
                   type="checkbox"
                   :label="$t('actions.select')"
                   :value="!!selected.find(c => c.id === item.id)"
                   outer-class="$reset !pb-0"
-                  @click="toggleSelection(item)"
+                  @click="toggleSelection<Campaign>(item, selected)"
                 />
                 <template v-else>
                   <button

@@ -38,4 +38,5 @@ interface SbRange {
 interface SbQuery <T> {
   data: T[],
   count: number | null
+  pagesCount: number
 }

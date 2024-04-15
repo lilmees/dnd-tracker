@@ -29,7 +29,11 @@ export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> 
 
   if (error) { throw error }
 
-  return { data: data as T[], count }
+  return {
+    data: data as T[],
+    pagesCount: perPage ? calcPages(count, perPage) : 1,
+    count
+  }
 }
 
 export function generateRange (page: number, perPage: number): SbRange {
