@@ -3,7 +3,7 @@ export const content = [
   './layouts/**/*.{vue,js}',
   './components/**/*.{vue,js}',
   './plugins/**/*.{js,ts}',
-  './formkit.config.ts'
+  './formkit/theme.ts'
 ]
 
 export const theme = {

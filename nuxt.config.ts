@@ -93,7 +93,7 @@ export default defineNuxtConfig({
     plugins: [UnheadVite()]
   },
   formkit: {
-    configFile: './formkit.config.ts'
+    configFile: './formkit/config.ts'
   },
   i18n: {
     defaultLocale: 'nl',
