@@ -69,9 +69,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
       pages.value = calcPages((count || 1), perPage.value)
 
-      if (fuzzy) {
-        await getCount()
-      }
+      getCount()
 
       if (err) {
         throw err
