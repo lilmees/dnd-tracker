@@ -262,7 +262,7 @@
   }
 
   select, option {
-    @apply !text-white !bg-background
+    @apply text-white bg-background/50
   }
 
   .container-max {
