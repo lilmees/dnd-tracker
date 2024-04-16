@@ -26,7 +26,13 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     try {
       const { data } = await sbQuery<Campaign>({
         table: 'campaigns',
-        select: '*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(id), team(id)'
+        select: `
+          *, 
+          initiative_sheets(title), 
+          created_by(id, created_at, username, name, avatar, email, badges), 
+          homebrew_items(id),
+          team(id, user(id))
+        `
       })
 
       if (data) { campaigns.value = data }

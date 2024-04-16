@@ -4,6 +4,7 @@ useHead({ title: 'Campaigns' })
 
 const toast = useToastStore()
 const store = useCampaignsStore()
+const profile = useProfileStore()
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
@@ -143,19 +144,12 @@ function resetState (): void {
             </td>
             <td class="td">
               <div class="flex justify-center items-center gap-2">
-                <FormKit
-                  v-if="isBulk"
-                  type="checkbox"
-                  :label="$t('actions.select')"
-                  :value="!!selected.find(c => c.id === item.id)"
-                  outer-class="$reset !pb-0"
-                  @click="toggleSelection<Campaign>(item, selected)"
-                />
-                <template v-else>
+                <template v-if="!isBulk">
                   <button
                     v-tippy="$t('actions.update')"
                     class="icon-btn-info"
                     :aria-label="$t('actions.update')"
+                    :disabled="!isAdmin(item, profile.data?.id || '')"
                     @click="() => {
                       selected = [item];
                       isUpdating = true
@@ -171,6 +165,7 @@ function resetState (): void {
                     v-tippy="$t('actions.delete')"
                     class="icon-btn-danger"
                     :aria-label="$t('actions.delete')"
+                    :disabled="!isOwner(item, profile.data?.id || '')"
                     @click="() => {
                       selected = [item];
                       needConfirmation = true
@@ -183,6 +178,15 @@ function resetState (): void {
                     />
                   </button>
                 </template>
+                <FormKit
+                  v-else-if="isBulk && isOwner(item, profile.data?.id || '')"
+                  type="checkbox"
+                  :label="$t('actions.select')"
+                  :value="!!selected.find(c => c.id === item.id)"
+                  :disabled="!isOwner(item, profile.data?.id || '')"
+                  outer-class="$reset !pb-0"
+                  @click="toggleSelection<Campaign>(item, selected)"
+                />
               </div>
             </td>
           </tr>
