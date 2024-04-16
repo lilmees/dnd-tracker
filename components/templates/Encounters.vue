@@ -29,6 +29,10 @@ const campaignId = computed<number | undefined>(() => {
   return props.campaignView && currentStore.campaign ? currentStore.campaign.id : undefined
 })
 
+const campaignAdmin = computed<boolean>(() => {
+  return props.campaignView && isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
+})
+
 onMounted(() => {
   encounterStore.loading = true
 
@@ -99,7 +103,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="encounterStore.loading || encounterStore.searching"
+          :disabled="encounterStore.loading || encounterStore.searching || !campaignAdmin"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -223,6 +227,7 @@ function resetState (): void {
                   v-tippy="$t('actions.update')"
                   class="icon-btn-info"
                   :aria-label="$t('actions.update')"
+                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     isUpdating = true
@@ -238,6 +243,7 @@ function resetState (): void {
                   v-tippy="$t('actions.delete')"
                   class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
+                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     needConfirmation = true

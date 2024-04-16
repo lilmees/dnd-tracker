@@ -1,8 +1,12 @@
-export function isOwner (campaign: Campaign, id: string): boolean {
+export function isOwner (campaign: Campaign | undefined, id: string): boolean {
+  if (!campaign) { return false }
+
   return campaign.created_by.id === id
 }
 
-export function isAdmin (campaign: Campaign, id: string): boolean {
+export function isAdmin (campaign: Campaign | undefined, id: string): boolean {
+  if (!campaign) { return false }
+
   if (campaign.created_by.id === id) {
     return true
   }
@@ -10,7 +14,9 @@ export function isAdmin (campaign: Campaign, id: string): boolean {
   return !!campaign.team?.find(u => u.user.id === id && u.role === 'Admin') || false
 }
 
-export function isMember (campaign: Campaign, id: string): boolean {
+export function isMember (campaign: Campaign | undefined, id: string): boolean {
+  if (!campaign) { return false }
+
   if (campaign.created_by.id === id) {
     return true
   }

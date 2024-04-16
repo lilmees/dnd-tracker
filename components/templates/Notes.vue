@@ -45,9 +45,9 @@ function resetState (): void {
           class="btn-small-primary"
           :aria-label="$t('actions.createItem', { item: $t('general.note') })"
           :disabled="
-            !currentStore.campaign ||
-              !isAdmin(currentStore.campaign, profile.data?.id || '') ||
-              noteStore.noteCount >= noteStore.maxAmount
+            noteStore.loading ||
+              noteStore.noteCount >= noteStore.maxAmount ||
+              !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
           "
           @click="isOpen = true"
         >
@@ -56,7 +56,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="noteStore.loading"
+          :disabled="noteStore.loading || !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -127,19 +127,19 @@ function resetState (): void {
       >
         {{ $t('components.table.nothing', { item: $t('general.notes').toLowerCase() }) }}
       </div>
-
-      <NoteModal
-        :id="currentStore.campaign.id"
-        :open="isUpdating || isOpen"
-        :note="selected.length && isUpdating ? selected[0] : undefined"
-        :update="isUpdating"
-        @close="resetState"
-      />
     </template>
     <NoContent
       v-else
       :content="$t('general.notes').toLowerCase()"
       icon="clarity:note-line"
+    />
+
+    <NoteModal
+      :id="currentStore.campaign?.id || 0"
+      :open="(isUpdating || isOpen) && !!currentStore.campaign"
+      :note="selected.length && isUpdating ? selected[0] : undefined"
+      :update="isUpdating"
+      @close="resetState"
     />
 
     <ConfirmationModal

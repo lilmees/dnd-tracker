@@ -26,7 +26,13 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
     try {
       const { data } = await sbQuery<Campaign>({
         table: 'campaigns',
-        select: '*, initiative_sheets(title), created_by(id, created_at, username, name, avatar, email, badges), homebrew_items(id), team(id)'
+        select: `
+          *, 
+          initiative_sheets(title), 
+          created_by(id, created_at, username, name, avatar, email, badges), 
+          homebrew_items(id),
+          team(id, user(id))
+        `
       })
 
       if (data) { campaigns.value = data }
@@ -53,15 +59,13 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   }
 
   async function addCampaign (campaign: AddCampaign): Promise<void> {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('campaigns')
       .insert([campaign as never])
-      .select('*')
 
     if (error) {
       throw error
-    }
-    if (data) {
+    } else {
       fetch()
     }
   }
@@ -88,21 +92,15 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   }
 
   async function updateCampaign (campaign: UpdateCampaign, id: number): Promise<void> {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('campaigns')
       .update(campaign as never)
       .eq('id', id)
-      .select('*')
 
     if (error) {
       throw error
-    }
-
-    if (data.length && campaigns.value) {
-      const index = campaigns.value.findIndex(e => e.id === id)
-      const oldData = campaigns.value.splice(index, 1)
-
-      campaigns.value.push({ ...oldData[0], ...data[0] as object })
+    } else {
+      fetch()
     }
   }
 
