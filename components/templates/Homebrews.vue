@@ -28,11 +28,15 @@ const headers = computed<TableHeader[]>(() => [
 
 onBeforeUnmount(() => homebrewStore.resetPagination())
 
-whenever(() => currentStore.campaign, () => {
+onMounted(() => fetchHomebrew())
+
+whenever(() => currentStore.campaign, () => fetchHomebrew())
+
+function fetchHomebrew (): void {
   if (currentStore.campaign) {
     homebrewStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
-})
+}
 
 function resetState (): void {
   needConfirmation.value = false

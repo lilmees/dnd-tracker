@@ -38,13 +38,7 @@ function close (): void {
         aria-hidden="true"
       />
     </button>
-    <Transition
-      name="expand"
-      @enter="start"
-      @after-enter="end"
-      @before-leave="start"
-      @after-leave="end"
-    >
+    <Expand>
       <div
         v-show="isOpen"
         class="absolute z-[1] block w-max right-0"
@@ -70,6 +64,6 @@ function close (): void {
           </template>
         </div>
       </div>
-    </Transition>
+    </Expand>
   </div>
 </template>

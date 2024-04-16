@@ -9,11 +9,15 @@ const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
 const selected = ref<Note[]>([])
 
-whenever(() => currentStore.campaign, () => {
+onMounted(() => fetchNotes())
+
+whenever(() => currentStore.campaign, () => fetchNotes())
+
+function fetchNotes (): void {
   if (currentStore.campaign) {
     noteStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
-})
+}
 
 function resetState (): void {
   isOpen.value = false
@@ -72,12 +76,12 @@ function resetState (): void {
     <div v-if="currentStore.loading" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
       <SkeletonNoteCard v-for="i in 16" :key="i" />
     </div>
-    <NoContent
-      v-else-if="!noteStore.data.length && !noteStore.loading"
-      :content="$t('general.notes').toLowerCase()"
-      icon="clarity:note-line"
-    />
-    <template v-else-if="currentStore.campaign">
+    <template
+      v-else-if="
+        (!noteStore.noItems || (noteStore.search !== '' && noteStore.noItems)) &&
+          currentStore.campaign
+      "
+    >
       <FormKit
         v-model="noteStore.search"
         type="search"
@@ -123,15 +127,21 @@ function resetState (): void {
       >
         {{ $t('components.table.nothing', { item: $t('general.notes').toLowerCase() }) }}
       </div>
+
+      <NoteModal
+        :id="currentStore.campaign.id"
+        :open="isUpdating || isOpen"
+        :note="selected.length && isUpdating ? selected[0] : undefined"
+        :update="isUpdating"
+        @close="resetState"
+      />
     </template>
-    <NoteModal
-      v-if="currentStore.campaign"
-      :id="currentStore.campaign.id"
-      :open="isUpdating || isOpen"
-      :note="selected.length && isUpdating ? selected[0] : undefined"
-      :update="isUpdating"
-      @close="resetState"
+    <NoContent
+      v-else
+      :content="$t('general.notes').toLowerCase()"
+      icon="clarity:note-line"
     />
+
     <ConfirmationModal
       :open="needConfirmation"
       :title="selected.length === 1

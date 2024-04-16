@@ -76,14 +76,6 @@
   .visibility-pulse {
     animation: pulsate-opacity 2s ease-in-out infinite;
   }
-
-  .expand-leave-active, .expand-enter-active {
-    @apply duration-300 transition-all overflow-hidden;
-  }
-
-  .expand-leave-to, .expand-enter-from {
-    @apply !h-0 opacity-0;
-  }
 }
 
 @layer base {

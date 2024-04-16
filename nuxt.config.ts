@@ -10,11 +10,13 @@ export default defineNuxtConfig({
       '~/components/templates',
       '~/components/tableRow',
       '~/components/map',
-      '~/components/skeletons'
+      '~/components/skeletons',
+      '~/components/animations'
     ]
   },
   css: [
     '@/assets/css/global.css',
+    '@/assets/css/tailwind.css',
     '@/assets/css/quill.css',
     '@/assets/css/driver.css',
     '@/assets/css/tippy.css'
