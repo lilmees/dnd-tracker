@@ -50,14 +50,7 @@ onUnmounted(() => onClose())
 </script>
 
 <template>
-  <transition
-    enter-active-class="duration-300 ease-in-out"
-    enter-from-class="scale-0"
-    enter-to-class="scale-100"
-    leave-active-class="duration-300 ease-in-out"
-    leave-from-class="scale-100"
-    leave-to-class="scale-0"
-  >
+  <Scale>
     <section
       v-if="rolled"
       class="backdrop-blur border-4 rounded-lg overflow-hidden w-full max-w-lg fixed bottom-5 z-[1] left-1/2 -translate-x-1/2"
@@ -121,5 +114,5 @@ onUnmounted(() => onClose())
         />
       </div>
     </section>
-  </transition>
+  </Scale>
 </template>

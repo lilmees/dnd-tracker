@@ -41,10 +41,10 @@ if (props.onlyOpenActive) {
         aria-hidden="true"
       />
     </button>
-    <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
+    <Expand>
       <template v-if="open">
         <slot />
       </template>
-    </Transition>
+    </Expand>
   </div>
 </template>

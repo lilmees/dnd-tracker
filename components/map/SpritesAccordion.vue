@@ -73,13 +73,7 @@ function setOpenState (filters: DraggableSprites): void {
           aria-hidden="true"
         />
       </button>
-      <Transition
-        name="expand"
-        @enter="start"
-        @after-enter="end"
-        @before-leave="start"
-        @after-leave="end"
-      >
+      <Expand>
         <template v-if="open.includes(index)">
           <div
             class="flex flex-wrap gap-2 border-t-2 border-tracker mt-2 pt-1 max-h-[300px] xl:max-h-[200px] overflow-y-auto overflow-x-hidden"
@@ -104,7 +98,7 @@ function setOpenState (filters: DraggableSprites): void {
             </button>
           </div>
         </template>
-      </Transition>
+      </Expand>
     </div>
   </div>
 </template>
