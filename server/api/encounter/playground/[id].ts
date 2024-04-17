@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await supabase
     .from('initiative_sheets')
-    .select('rows, title, info, background, color, settings, activeIndex, round, info_cards')
+    .select('rows, title, info, settings, activeIndex, round, info_cards')
     .eq('id', `${id}`)
     .single()
 
