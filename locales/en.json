@@ -39,6 +39,8 @@
     "open": "Open",
     "next": "Next",
     "prev": "Previous",
+    "start": "Start",
+    "finish": "Finish",
     "decline": "Decline",
     "transfer": "Transfer",
     "flip": "Flip {axis}",
@@ -64,6 +66,10 @@
     "players": "Players",
     "player": "Player",
     "members": "Members",
+    "summon": "Summon",
+    "lair": "Lair",
+    "npc": "Npc",
+    "monster": "Monster",
     "monsters": "Monsters",
     "characters": "Characters",
     "animals": "Animals",
@@ -113,6 +119,9 @@
     "type": "Type",
     "actions": "Actions",
     "rows": "Rows",
+    "concentration": "Concentration",
+    "none": "Geen",
+    "stats": "Statistics",
     "error": {
       "title": "Error",
       "text": "Something went wrong"
@@ -254,13 +263,17 @@
           "text": "Someone removed the encounter so it can't be used anymore"
         },
         "died": {
-          "title": "Player died",
-          "textMinHP": "The player has too many negative hp and is dead",
-          "textDeathSaves": "The player failed his death saves three times and is dead"
+          "title": "{type} died",
+          "textMinHP": "The {type} has too many negative hp and is dead",
+          "textDeathSaves": "The {type} failed his death saves three times and is dead"
         },
         "stable": {
-          "title": "Player stabilized",
-          "textDeathSaves": "The player saved his death saves three times and is stabilized"
+          "title": "{type} stabilized",
+          "textDeathSaves": "The {type} saved his death saves three times and is stabilized"
+        },
+        "concentration": {
+          "title": "Make a concentration check",
+          "text": "The {type}, maintaining concentration took damage"
         }
       }
     },
@@ -270,7 +283,7 @@
       "consent": "By registering, you agree to our terms and conditions",
       "toast": {
         "success": {
-          "title": "Successfully registrerd",
+          "title": "Successfully registered",
           "text": "Confirm your email address with the email we have sent you and afterwards you can login."
         }
       }
@@ -481,18 +494,21 @@
       }
     },
     "addInitiativeCampaignHomebrew": {
-      "addCampaignHomebrew": "Add campaign homebrew",
-      "summoner": {
+      "title": "Add campaign homebrew",
+      "initiative": {
         "info": "when selecting a summon, you must also choose a character that will summon it.",
         "add": "Add summon",
         "select": "Select summoner",
-        "nothing": "Unfortunately, our quest unveils no treasures that align with your search. Perhaps another name can unlock the magical portal, or you can craft your own homebrew legends."
+        "nothing": "Unfortunately, our quest unveils no treasures that align with your search. Perhaps another name can unlock the magical portal, or you can craft your own homebrew legends.",
+        "empty": "There's a lack of homebrew incorporated into your campaign. When you introduce homebrew elements to your campaign, you can select them here to include in your encounters."
       }
     },
     "homebrewModal": {
       "new": "Make a new homebrew",
       "add": "Create homebrew",
-      "update": "Update homebrew"
+      "update": "Update homebrew",
+      "save": "Add to campaign",
+      "max": "Max campaign homebrews"
     },
     "homebrewTable": {
       "nothing": "We haven't found any homebrew that matches this search, but that doesn't mean you can't create it yourself."
@@ -540,7 +556,7 @@
       "profile": "Profile",
       "pricing": "Pricing",
       "play": "Play",
-      "fantasy": "Fantasie name generator",
+      "fantasy": "Fantasy name generator",
       "info": "Information",
       "map": "Map creator",
       "playground": "Encounter playground"
@@ -561,7 +577,18 @@
       "tooltip": "Settings",
       "spacing": "Tabel style",
       "rows": "Rows to show",
-      "widgets": "Active widgets"
+      "widgets": "Active widgets",
+      "pets": {
+        "label": "Encounter pet",
+        "barmaid": "Barmaid",
+        "cat": "Cat",
+        "chicken": "Chicken",
+        "crawler": "Crawler",
+        "dragon": "Dragon",
+        "fairy": "Fairy",
+        "redcap": "Redcap",
+        "wolf-rider": "Wolf rider"
+      }
     },
     "infoSearch": {
       "show": "Show pinned items",
@@ -591,9 +618,6 @@
       "title": "Create feature request",
       "submitted": "Your feature request has been received with enthusiasm and is currently undergoing a careful evaluation. Once it is approved, everyone will have the opportunity to vote on it. You can check if the request has been approved when the label 'Under review' is no longer visible.",
       "another": "Create another feature request"
-    },
-    "encounterCampaignHeader": {
-      "go": "Go to campaign"
     },
     "userModal": {
       "title": "Add people to {campaign}",
@@ -636,19 +660,83 @@
     },
     "quickInitiativeModal": {
       "title": "Quick add initiatives",
-      "roll": "Roll all initiatives"
+      "roll": "Roll selected types",
+      "select": "Select types to roll for",
+      "ignore": "Ignore modifier"
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters can't be saved"
-    },
-    "contentHeader": {
-      "toMuch": "To much items for card view"
     },
     "bulkRemove": {
       "title": "Bulk remove {type}",
       "subtitle": "Select {type} for removing by clicking on it.",
       "amount": "Remove {number} {type}",
       "multiple": "{number} {type}"
+    },
+    "inlineConfirmation": {
+      "text": "Are you sure you want to update this? Your old value won't be saved."
+    }
+  },
+  "tour": {
+    "sure": "Are you sure that you have all the knowledge about the DnD Tracker? 🧙‍♂️",
+    "0": {
+      "title": "Welcome to your first encounter! 🐲",
+      "description": "Welcome, brave adventurer! We're thrilled to guide you through our application. Let's embark on this journey together, shall we?"
+    },
+    "1": {
+      "title": "The most basic of all basics 🎯",
+      "description": "Behold! The humble arrow buttons, your trusty companions in managing the current initiative."
+    },
+    "2": {
+      "title": "There's something brewing here 🍺",
+      "description": "Venture forth into the realm of homebrew! Craft your own concoctions to spice up your encounters."
+    },
+    "3": {
+      "title": "Let's be lazy 🛋️",
+      "description": "Why struggle over creating the same homebrews repeatedly? With just a few clicks, add your campaign's homebrew effortlessly."
+    },
+    "4": {
+      "title": "Let's be lazy again 🛌",
+      "description": "No need to hunt down monsters tirelessly. Find official monsters at your fingertips, ready to join your encounter with a single click."
+    },
+    "5": {
+      "title": "Need to roll without the math headache? 🎲",
+      "description": "Leave the calculations to us! Roll digital dice and bask in the glory of instant results for every twist of fate."
+    },
+    "6": {
+      "title": "Want some more information? 📚",
+      "description": "Seek knowledge within our hallowed tomes. Everything you need, neatly organized for your convenience. Pin it to your encounter and let the wisdom flow!"
+    },
+    "7": {
+      "title": "Hotkeys at your service 🔥",
+      "description": "Free yourself from the tyranny of the mouse! Command with keystrokes and conquer with ease."
+    },
+    "8": {
+      "title": "Unleash the power of initiative items 💪",
+      "description": "No need for a lengthy introduction! Modify names, initiatives, AC, and HP when you click on them. Notes, death saves, and concentration—easy as pie."
+    },
+    "9": {
+      "title": "Manage your initiative items with finesse 🎩",
+      "description": "The heartbeat of your initiative items! Adjust AC and HP on the fly, add conditions effortlessly. We enchant your experience by preloading links, sparing you from the hassle of opening additional browser tabs."
+    },
+    "10": {
+      "title": "Conditions for the discerning adventurer 👨‍🦯",
+      "description": "Behold the conditions bestowed upon your comrades! Hover over them and delve deeper into their effects."
+    },
+    "11": {
+      "title": "Remove or copy initiative items in a flash ⚡",
+      "description": "With swiftness and precision, remove or duplicate with a single button click."
+    },
+    "12": {
+      "title": "Never been faster to add everyone's initiative 🚀",
+      "description": "Prepare for warp speed initiative entry! Add all initiatives at once, or delegate to the dice for a touch of randomness. The choice is yours, adventurer!"
+    },
+    "13": {
+      "title": "When your brain needs a break 🧠",
+      "description": "Ease the burden and simplify your interface. Disable unnecessary functions, the choice is yours."
+    },
+    "14": {
+      "title": "Congratulations, you're now an expert! 🎉"
     }
   }
 }

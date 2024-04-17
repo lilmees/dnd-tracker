@@ -1,19 +1,25 @@
 <script setup lang="ts">
+withDefaults(
+  defineProps<{ home?: boolean }>(),
+  { home: false }
+)
+
 const store = useTableStore()
 const online = useOnline()
 
 const isOpen = ref<boolean>(false)
+const isTourActive = useState<boolean>('tour-active', () => false)
 </script>
 
 <template>
   <div
     class="p-4 flex justify-end"
     :class="{
-      'md:justify-between md:items-center': !store.isHome
+      'md:justify-between md:items-center': !home
     }"
   >
     <div
-      v-if="!store.isHome && !store.isPlayground"
+      v-if="!home && !store.isPlayground"
       v-tippy="
         !online
           ? $t('general.offline')
@@ -36,7 +42,7 @@ const isOpen = ref<boolean>(false)
       />
     </div>
     <div
-      v-else-if="store.isPlayground"
+      v-else-if="!home && store.isPlayground"
       class="hidden md:flex gap-2 max-w-[250px] items-center"
     >
       <Icon
@@ -49,14 +55,32 @@ const isOpen = ref<boolean>(false)
       </span>
     </div>
     <div class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-between gap-2">
-      <HotkeysEncounter class="hidden md:block" />
-      <InfoSearch />
-      <EncounterDiceRoller />
-      <AddInitiativeMonster />
+      <HotkeysEncounter id="tour-7" class="hidden md:block" />
+      <InfoSearch id="tour-6" />
+      <div id="tour-5">
+        <EncounterDiceRoller />
+      </div>
+      <AddInitiativeMonster id="tour-4" />
       <template v-if="(store.encounter?.campaign || store.isSandbox) && !store.isPlayground">
-        <AddInitiativeCampaignHomebrew />
+        <AddInitiativeCampaignHomebrew id="tour-3" />
+      </template>
+      <template v-else-if="isTourActive">
+        <button
+          id="tour-3"
+          class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <span class="md:hidden">
+            {{ $t('components.addInitiativeCampaignHomebrew.addCampaignHomebrew') }}
+          </span>
+          <Icon
+            name="material-symbols:table-chart-outline"
+            class="text-primary w-10 h-10"
+            aria-hidden="true"
+          />
+        </button>
       </template>
       <button
+        id="tour-2"
         v-tippy="$t('components.homebrewModal.add')"
         :aria-label="$t('components.homebrewModal.add')"
         class="flex gap-2 items-center"

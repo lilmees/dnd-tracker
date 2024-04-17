@@ -12,6 +12,7 @@ export const useTableStore = defineStore('useTableStore', () => {
   const isLoading = ref<boolean>(true)
   const isSyncing = ref<boolean>(false)
   const isSandbox = ref<boolean>(false)
+  const isPlayground = ref<boolean>(false)
 
   const activeModal = ref<EncounterModal>()
   const activeField = ref<EncounterUpdateField>()
@@ -24,12 +25,12 @@ export const useTableStore = defineStore('useTableStore', () => {
       : false
   })
 
-  const isPlayground = computed<boolean>(() => route.fullPath.includes('/playground'))
   const isHome = computed<boolean>(() => route.fullPath.replace('en', '') === '/')
 
   async function getEncounter (id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
+    isPlayground.value = false
 
     const { data, error } = await supabase
       .from('initiative_sheets')
@@ -98,7 +99,7 @@ export const useTableStore = defineStore('useTableStore', () => {
           table: 'initiative_sheets',
           filter: `id=eq.${id}`
         },
-        (payload: SupabaseRealTime) => {
+        (payload: SbRealTime) => {
           isSyncing.value = true
 
           if (payload.eventType === 'DELETE') {
@@ -164,6 +165,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     if (!activeRow.value || activeIndex.value === undefined) { return }
 
     const rows = encounter.value!.rows as Row[]
+
     // when updating health or ac also update the max values
     if (activeField.value === 'health' || activeField.value === 'ac') {
       activeRow.value[`max${activeField.value.charAt(0).toUpperCase() + activeField.value.slice(1)}` as keyof Row] = value
@@ -179,7 +181,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
 
     if (activeRow.value.deathSaves) {
-      checkDeathSaves(activeRow.value.deathSaves)
+      checkDeathSaves(activeRow.value.deathSaves, activeRow.value.type)
       activeRow.value.deathSaves.stable = activeRow.value.deathSaves.save.every(v => v === true)
     }
 
@@ -214,17 +216,19 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
-  function checkDeathSaves (saves: DeathSaves): void {
+  function checkDeathSaves (saves: DeathSaves, rowType: RowType): void {
+    const type = t(`general.${rowType}`)
+
     if (!saves.stable) {
       if (saves.fail.every(v => v === true)) {
         toast.info({
-          title: t('pages.encounter.toasts.died.title'),
-          text: t('pages.encounter.toasts.died.textDeathSaves')
+          title: t('pages.encounter.toasts.died.title', { type }),
+          text: t('pages.encounter.toasts.died.textDeathSaves', { type: type.toLowerCase() })
         })
       } else if (saves.save.every(v => v === true)) {
         toast.info({
-          title: t('pages.encounter.toasts.stable.title'),
-          text: t('pages.encounter.toasts.stable.textDeathSaves')
+          title: t('pages.encounter.toasts.stable.title', { type }),
+          text: t('pages.encounter.toasts.stable.textDeathSaves', { type: type.toLowerCase() })
         })
       }
     }
@@ -238,15 +242,14 @@ export const useTableStore = defineStore('useTableStore', () => {
       round: 1,
       rows: [],
       created_by: 'user',
-      background: '#7333E0',
-      color: '#FFFFFF',
       activeIndex: 0,
       info_cards: [],
       settings: {
         spacing: 'normal',
         rows: [],
         modified: false,
-        widgets: []
+        widgets: [],
+        pet: 'fairy'
       }
     }
 

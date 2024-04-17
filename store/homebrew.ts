@@ -3,10 +3,12 @@ import logRocket from 'logrocket'
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
   const currentStore = useCurrentCampaignStore()
+  const tableStore = useTableStore()
   const toast = useToastStore()
 
   const loading = ref<boolean>(true)
   const searching = ref<boolean>(true)
+  const encounterModal = ref<boolean>(false)
   const error = ref<string | null>(null)
   const data = ref<Homebrew[]>([])
   const pages = ref<number>(0)
@@ -23,48 +25,45 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
   const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
 
-  watchDebounced(() => filters.value, async (v) => {
+  watchDebounced(() => filters.value, async () => {
+    if (tableStore.isSandbox) {
+      return
+    }
+
+    let campaignId
     page.value = 0
-    if (currentStore.campaign) {
-      await fetch({ field: 'campaign', value: currentStore.campaign.id }, true)
+
+    if (encounterModal.value && tableStore.encounter?.campaign?.id) {
+      campaignId = tableStore.encounter.campaign.id
+    } else if (currentStore.campaign?.id) {
+      campaignId = currentStore.campaign.id
+    }
+
+    if (campaignId) {
+      await fetch({ field: 'campaign', value: campaignId }, true)
     }
   }, { debounce: 100, maxWait: 500, deep: true })
 
-  async function fetch (eq?: SupabaseEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
     try {
-      const { from, to } = generateRange(page.value, perPage.value)
+      const { data: homebrew, pagesCount } = await sbQuery<Homebrew>({
+        table: 'homebrew_items',
+        page: page.value,
+        perPage: perPage.value,
+        filters: filters.value,
+        field: 'name',
+        eq,
+        fuzzy
+      })
 
-      let query = supabase
-        .from('homebrew_items')
-        .select('*', { count: 'exact' })
-        .range(from, to)
-        .order(filters.value.sortedBy, { ascending: filters.value.sortACS })
+      if (homebrew) { data.value = homebrew }
 
-      if (eq) {
-        query = query.eq(eq.field, eq.value)
-      }
+      pages.value = pagesCount
 
-      if (filters.value.search && fuzzy) {
-        query = query.ilike('name', `%${filters.value.search}%`)
-      }
-
-      const { data: homebrew, error: err, count } = await query
-
-      pages.value = calcPages((count || 1), perPage.value)
-
-      if (fuzzy) {
-        await getCount()
-      }
-
-      if (err) {
-        throw err
-      }
-      if (homebrew) {
-        data.value = homebrew
-      }
+      getCount()
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
@@ -86,21 +85,9 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     homebrewCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SupabaseEq): Promise<void> {
+  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
-  }
-
-  async function getHomebrewByCampaignId (id: number): Promise<Homebrew[]> {
-    const { data, error } = await supabase.from('homebrew_items')
-      .select('*')
-      .eq('campaign', id)
-
-    if (error) {
-      throw error
-    }
-
-    return data
   }
 
   async function getHomebrewById (id: number): Promise<Homebrew> {
@@ -189,6 +176,16 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }
 
+  function reset (): void {
+    homebrewCount.value = 0
+    data.value = []
+    error.value = null
+    encounterModal.value = false
+    perPage.value = 20
+
+    resetPagination()
+  }
+
   function resetPagination (): void {
     pages.value = 0
     page.value = 0
@@ -202,6 +199,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   return {
     loading,
     searching,
+    encounterModal,
     error,
     data,
     max,
@@ -213,19 +211,19 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     noItems,
     fetch,
     paginate,
-    getHomebrewByCampaignId,
     getHomebrewById,
     getHomebrewByType,
     addHomebrew,
     updateHomebrew,
     deleteHomebrew,
     resetPagination,
+    reset,
     sandbox: [
-      { type: 'player', id: 1, name: 'Carlo', health: '37', ac: '13', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 2, name: 'Silvin', health: '33', ac: '14', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 3, name: 'Alexis', health: '29', ac: '12', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 4, name: 'Thernus', health: '31', ac: '16', created_at: 'now', campaign: 1 },
-      { type: 'player', id: 5, name: 'Banthaaja', health: '30', ac: '15', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 1, name: 'Carlo', player: 'Thomas', health: '37', ac: '13', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 2, name: 'Silvin', player: 'Sander', health: '33', ac: '14', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 3, name: 'Alexis', player: 'Davina', health: '29', ac: '12', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 4, name: 'Diadematus', player: 'Tom', health: '31', ac: '16', created_at: 'now', campaign: 1 },
+      { type: 'player', id: 5, name: 'Banthaaja', player: 'Yves', health: '30', ac: '15', created_at: 'now', campaign: 1 },
       { type: 'monster', id: 6, name: 'Lulu', health: '69', ac: '20', created_at: 'now', campaign: 1 },
       { type: 'monster', id: 7, name: 'Pony', health: '33', ac: '10', created_at: 'now', campaign: 1 },
       { type: 'npc', id: 8, name: 'Rocky', health: '24', ac: '16', created_at: 'now', campaign: 1 },

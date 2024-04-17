@@ -103,7 +103,7 @@ function handleIconClick (node: any) {
         />
         <FormKit
           name="marketing"
-          type="checkbox"
+          type="toggle"
           :label="$t('components.inputs.marketingLabel')"
         />
         <FormKit

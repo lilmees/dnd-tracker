@@ -3,15 +3,14 @@ export const content = [
   './layouts/**/*.{vue,js}',
   './components/**/*.{vue,js}',
   './plugins/**/*.{js,ts}',
-  './formkit/**/*.json',
-  './formkit.config.ts'
+  './formkit/theme.ts'
 ]
 
 export const theme = {
   extend: {
     fontFamily: {
-      title: ['Lato', 'sans-serif'],
-      text: ['Inter', 'sans-serif']
+      title: ['Geist', 'sans-serif'],
+      text: ['GeistMono', 'sans-serif']
     },
     colors: {
       background: '#121111',

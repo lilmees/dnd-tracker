@@ -6,6 +6,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const data = ref<Condition[]>([])
+  const conditionsWithLevels = ['Exhaustion']
 
   async function fetch (): Promise<void> {
     if (data.value?.length || loading.value) {
@@ -19,9 +20,14 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
       const { results } = await open5e.getData({
         limit: 100,
         type: 'conditions'
-      }) as { results: Condition[] }
+      })
 
-      data.value = results
+      data.value = results.map((con) => {
+        return {
+          ...con,
+          ...(conditionsWithLevels.includes(con.name) ? { hasLevels: true } : {})
+        }
+      }) as unknown as Condition[]
     } catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string

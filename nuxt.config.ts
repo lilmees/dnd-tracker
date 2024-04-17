@@ -10,12 +10,16 @@ export default defineNuxtConfig({
       '~/components/templates',
       '~/components/tableRow',
       '~/components/map',
-      '~/components/skeletons'
+      '~/components/skeletons',
+      '~/components/animations'
     ]
   },
   css: [
     '@/assets/css/global.css',
-    '@/assets/css/quill.css'
+    '@/assets/css/tailwind.css',
+    '@/assets/css/quill.css',
+    '@/assets/css/driver.css',
+    '@/assets/css/tippy.css'
   ],
   modules: [
     '@nuxt/content',
@@ -91,7 +95,7 @@ export default defineNuxtConfig({
     plugins: [UnheadVite()]
   },
   formkit: {
-    configFile: './formkit.config.ts'
+    configFile: './formkit/config.ts'
   },
   i18n: {
     defaultLocale: 'nl',

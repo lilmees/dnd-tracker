@@ -20,19 +20,20 @@ const headers = computed<TableHeader[]>(() => [
   { label: 'Init mod', sort: false, id: 'initiative_modifier' },
   { label: t('general.link'), sort: false, id: 'link' },
   { label: t('general.actions'), sort: false, id: 'actions' },
-  ...(currentStore.campaign && isAdmin(currentStore.campaign, profile.data?.id || '')
-    ? [{ label: t('general.modify'), sort: false, id: 'modify' }]
-    : []
-  )
+  { label: t('general.modify'), sort: false, id: 'modify' }
 ])
 
 onBeforeUnmount(() => homebrewStore.resetPagination())
 
-whenever(() => currentStore.campaign, () => {
+onMounted(() => fetchHomebrew())
+
+whenever(() => currentStore.campaign, () => fetchHomebrew())
+
+function fetchHomebrew (): void {
   if (currentStore.campaign) {
     homebrewStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
-})
+}
 
 function resetState (): void {
   needConfirmation.value = false
@@ -89,7 +90,11 @@ function getActionsAmount (item: Homebrew): number {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="homebrewStore.loading || homebrewStore.searching"
+          :disabled="
+            homebrewStore.loading ||
+              homebrewStore.searching ||
+              !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
+          "
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -211,25 +216,14 @@ function getActionsAmount (item: Homebrew): number {
               </span>
             </button>
           </td>
-          <td
-            v-if="currentStore.campaign && isAdmin(currentStore.campaign, profile.data?.id || '')"
-            class="px-2 py-1"
-          >
+          <td class="px-2 py-1">
             <div class="flex justify-center items-center gap-2">
-              <FormKit
-                v-if="isBulk"
-                name="marketing"
-                type="checkbox"
-                :label="$t('actions.select')"
-                :value="!!selected.find(c => c.id === item.id)"
-                outer-class="$reset !pb-0"
-                @click="toggleSelection<Homebrew>(item, selected)"
-              />
-              <template v-else>
+              <template v-if="!isBulk">
                 <button
                   v-tippy="$t('actions.update')"
                   class="icon-btn-info"
                   :aria-label="$t('actions.update')"
+                  :disabled="!isAdmin(currentStore.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [item];
                     isUpdating = true
@@ -245,6 +239,7 @@ function getActionsAmount (item: Homebrew): number {
                   v-tippy="{ content: $t('actions.delete') }"
                   class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
+                  :disabled="!isAdmin(currentStore.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [item];
                     needConfirmation = true
@@ -257,16 +252,20 @@ function getActionsAmount (item: Homebrew): number {
                   />
                 </button>
               </template>
+              <FormKit
+                v-else-if="isBulk"
+                name="marketing"
+                type="checkbox"
+                :label="$t('actions.select')"
+                :value="!!selected.find(c => c.id === item.id)"
+                outer-class="$reset !pb-0"
+                @click="toggleSelection<Homebrew>(item, selected)"
+              />
             </div>
           </td>
         </tr>
-        <template #empty>
-          <div
-            v-if="homebrewStore.noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.homebrew').toLowerCase() }) }}
-          </div>
+        <template v-if="homebrewStore.noItems" #empty>
+          {{ $t('components.table.nothing', { item: $t('general.homebrew').toLowerCase() }) }}
         </template>
       </Table>
       <component

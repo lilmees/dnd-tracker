@@ -20,17 +20,13 @@ const user = useSupabaseUser()
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-const form = ref<CampaignForm>({
-  title: '',
-  background: '#7333E0'
-})
+const form = ref<CampaignForm>({ title: '' })
 
 whenever(
   () => props.open,
   () => {
     if (props.update) {
       form.value.title = props.campaign?.title || ''
-      form.value.background = props.campaign?.background || '#7333E0'
     }
   }
 )
@@ -54,27 +50,19 @@ async function addCampaign (data: Obj): Promise<void> {
   if (user.value) {
     await store.addCampaign({
       ...data as CampaignForm,
-      created_by: user.value.id,
-      color: contrastColor(data.background)
+      created_by: user.value.id
     })
   }
 }
 
 async function updateCampaign (data: Obj): Promise<void> {
   if (props.campaign) {
-    await store.updateCampaign(
-      {
-        ...data,
-        color: contrastColor(data.background)
-      },
-      props.campaign.id
-    )
+    await store.updateCampaign(data, props.campaign.id)
   }
 }
 
 function resetForm (): void {
   reset('form')
-  form.value.background = '#7333E0'
   form.value.title = ''
   emit('close')
 }
@@ -103,15 +91,10 @@ function resetForm (): void {
         validation="required|length:3,30"
       />
       <FormKit
-        type="color"
-        name="background"
-        :label="$t('components.inputs.backgroundLabel')"
-        validation="required"
-      />
-      <FormKit
         type="submit"
         :aria-label="$t(`pages.campaigns.${update ? 'update' : 'add'}`)"
         :disabled="store.loading"
+        outer-class="!mb-0"
       >
         {{ $t(`pages.campaigns.${update ? 'update' : 'add'}`) }}
       </FormKit>

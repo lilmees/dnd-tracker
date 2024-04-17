@@ -7,6 +7,7 @@ interface Profile extends Stripe {
   avatar?: string
   email: string
   marketing: boolean
+  completedTour: boolean
   badges: EarnedBadge[]
 }
 

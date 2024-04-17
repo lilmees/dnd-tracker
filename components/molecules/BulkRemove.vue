@@ -7,7 +7,7 @@ const needConfirmation = defineModel<boolean>('needConfirmation', { default: fal
 </script>
 
 <template>
-  <Transition name="expand" @enter="start" @after-enter="end" @before-leave="start" @after-leave="end">
+  <Expand>
     <div v-if="isBulk">
       <h2 class="text-danger">
         {{ $t('components.bulkRemove.title', { type: $t(`general.${type}`).toLowerCase() }) }}
@@ -36,5 +36,5 @@ const needConfirmation = defineModel<boolean>('needConfirmation', { default: fal
         </button>
       </div>
     </div>
-  </Transition>
+  </Expand>
 </template>

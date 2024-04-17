@@ -69,16 +69,18 @@ if (process.client) {
             <div class="flex justify-end relative z-[1]">
               <VisualOptions />
             </div>
-            <div class="rounded-lg bg-tracker/50 border-4 border-tracker backdrop-blur-xl relative z-0 container-max">
-              <div class="inset-0 z-[-1] fancy-shadow" />
+            <div class="relative z-0 container-max">
               <img
-                src="/cat.gif"
+                src="/gifs/cat.gif"
                 loading="lazy"
-                class="w-10 h-10 absolute -top-10 left-20"
+                class="w-8 h-8 absolute -top-8 left-20"
               >
-              <EncounterHeader />
-              <EncounterTable />
-              <EncounterOptions />
+              <div class="space-y-4 relative rounded-lg bg-tracker/50 border-4 border-tracker">
+                <EncounterHeader />
+                <EncounterTable />
+                <div class="inset-0 z-[-1] fancy-shadow" />
+              </div>
+              <EncounterOptions home />
             </div>
           </div>
           <div class="container grid md:grid-cols-2 gap-y-10 gap-x-20">

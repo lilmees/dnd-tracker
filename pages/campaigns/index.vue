@@ -4,10 +4,10 @@ useHead({ title: 'Campaigns' })
 
 const toast = useToastStore()
 const store = useCampaignsStore()
+const profile = useProfileStore()
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
-const isTable = ref<boolean>(false)
 const search = ref<string>('')
 const sortedBy = ref<string>('title')
 const sortACS = ref<boolean>(false)
@@ -94,14 +94,11 @@ function resetState (): void {
         </div>
       </div>
       <template v-if="store.loading && !store.allowedCampaigns">
-        <SkeletonContentHeader />
-        <SkeletonTable v-if="isTable" :headers="headers" />
-        <div v-else class="flex flex-wrap gap-4 items-start">
-          <SkeletonEncounterCard v-for="i in 10" :key="i" />
-        </div>
+        <SkeletonInput :label="false" class="w-[256px]" />
+        <SkeletonTable :headers="headers" />
       </template>
-      <template v-else-if="store.allowedCampaigns?.length">
-        <ContentHeader v-model:grid="isTable" v-model:search="search" shadow />
+      <template v-else-if="!noItems || (noItems && search !== '')">
+        <ContentHeader v-model:search="search" shadow />
         <BulkRemove
           v-model:isBulk="isBulk"
           v-model:needConfirmation="needConfirmation"
@@ -113,7 +110,6 @@ function resetState (): void {
           class="mb-10"
         />
         <Table
-          v-show="isTable"
           v-model:sorted-by="sortedBy"
           v-model:acs="sortACS"
           :headers="headers"
@@ -148,20 +144,12 @@ function resetState (): void {
             </td>
             <td class="td">
               <div class="flex justify-center items-center gap-2">
-                <FormKit
-                  v-if="isBulk"
-                  name="marketing"
-                  type="checkbox"
-                  :label="$t('actions.select')"
-                  :value="!!selected.find(c => c.id === item.id)"
-                  outer-class="$reset !pb-0"
-                  @click="toggleSelection(item)"
-                />
-                <template v-else>
+                <template v-if="!isBulk">
                   <button
                     v-tippy="$t('actions.update')"
                     class="icon-btn-info"
                     :aria-label="$t('actions.update')"
+                    :disabled="!isAdmin(item, profile.data?.id || '')"
                     @click="() => {
                       selected = [item];
                       isUpdating = true
@@ -177,6 +165,7 @@ function resetState (): void {
                     v-tippy="$t('actions.delete')"
                     class="icon-btn-danger"
                     :aria-label="$t('actions.delete')"
+                    :disabled="!isOwner(item, profile.data?.id || '')"
                     @click="() => {
                       selected = [item];
                       needConfirmation = true
@@ -189,50 +178,22 @@ function resetState (): void {
                     />
                   </button>
                 </template>
+                <FormKit
+                  v-else-if="isBulk && isOwner(item, profile.data?.id || '')"
+                  type="checkbox"
+                  :label="$t('actions.select')"
+                  :value="!!selected.find(c => c.id === item.id)"
+                  :disabled="!isOwner(item, profile.data?.id || '')"
+                  outer-class="$reset !pb-0"
+                  @click="toggleSelection<Campaign>(item, selected)"
+                />
               </div>
             </td>
           </tr>
-          <template #empty>
-            <div
-              v-if="noItems"
-              class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-            >
-              {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
-            </div>
+          <template v-if="noItems" #empty>
+            {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
           </template>
         </Table>
-        <div v-show="!isTable" class="flex flex-wrap gap-4 items-start">
-          <div
-            v-for="campaign in visibleItems"
-            :key="campaign.id"
-            class="relative"
-          >
-            <BulkRemoveCard
-              v-if="isBulk"
-              :selected="!!selected.find(e => e.id === campaign.id)"
-              :border="campaign.background"
-              @toggled="toggleSelection<Campaign>(campaign, selected)"
-            />
-            <CampaignCard
-              :campaign="campaign"
-              :selecting="isBulk"
-              @update="(v: Campaign) => {
-                selected = [v];
-                isUpdating = true
-              }"
-              @remove="(v: Campaign) => {
-                selected = [v];
-                needConfirmation = true
-              }"
-            />
-          </div>
-          <div
-            v-if="noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
-          </div>
-        </div>
       </template>
       <NoContent
         v-else

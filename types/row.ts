@@ -31,6 +31,8 @@ interface Condition {
   name: string
   id: string
   desc: string
+  level?: number
+  hasLevels?: boolean
 }
 
 interface Row extends Partial<PossibleAttacks> {

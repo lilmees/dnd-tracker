@@ -11,11 +11,14 @@ type EncounterModal = 'name' | 'initiative' | 'ac' | 'hp' | 'link-modal' | 'ac-m
 
 type EncounterUpdateField = 'name' | 'initiative' | 'ac' | 'health' | 'link' | 'note' | 'concentration' | 'deathSaves' | 'note' | 'conditions'
 
+type EncounterPet = 'cat' | 'chicken' | 'barmaid' | 'crawler' | 'dragon' | 'fairy' | 'redcap' | 'wolf-rider'
+
 interface EncounterSettings {
   spacing: TableSpacing
   rows: string[]
   widgets: string[]
   modified: boolean
+  pet: EncounterPet | undefined
 }
 
 interface Encounter {
@@ -30,8 +33,6 @@ interface Encounter {
   owner?: string
   info?: string
   activeIndex: number
-  color: string
-  background: string
   info_cards: InfoCard[],
   settings: EncounterSettings
 }
@@ -47,7 +48,6 @@ interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'pro
 interface EncounterForm {
   title: string
   campaign?: number
-  background: string
 }
 
 interface SortedCampaignEncounter {

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const emit = defineEmits(['close'])
 const props = withDefaults(
-  defineProps<{ conditions?: Condition[] }>(), {
+  defineProps<{
+    conditions?: Condition[]
+   }>(), {
     conditions: () => []
   }
 )

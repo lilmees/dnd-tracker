@@ -48,7 +48,7 @@ function angle (cx: number, cy: number, ex: number, ey: number): number {
           data-aos="zoom-in-up"
           :data-aos-duration="1000"
           :data-aos-once="true"
-          class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left opacity-0"
+          class="mt-20 lg:mt-0 text-[3rem] lg:text-[4rem] leading-[3.5rem] lg:leading-[4rem] max-w-sm lg:max-w-lg uppercase text-center md:text-left opacity-0 font-outline"
         >
           {{ $t('components.hero.start') }}
         </h1>

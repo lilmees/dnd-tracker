@@ -27,13 +27,7 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
   isLoading.value = true
   try {
     if (store.campaign) {
-      await campaignStore.updateCampaign(
-        {
-          ...formData,
-          color: contrastColor(formData.background)
-        },
-        store.campaign.id
-      )
+      await campaignStore.updateCampaign(formData, store.campaign.id)
 
       toast.success({ title: t('pages.campaign.toast.update') })
     }
@@ -184,16 +178,8 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
               :label="$t('components.inputs.titleLabel')"
               validation="required|length:3,30"
             />
-            <FormKit
-              :value="store.campaign.background"
-              type="color"
-              name="background"
-              :label="$t('components.inputs.backgroundLabel')"
-              validation="required"
-            />
           </template>
           <template v-else>
-            <SkeletonInput />
             <SkeletonInput />
           </template>
           <FormKit

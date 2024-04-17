@@ -44,13 +44,7 @@ function close (): void {
         />
       </ClientOnly>
     </button>
-    <Transition
-      name="expand"
-      @enter="start"
-      @after-enter="end"
-      @before-leave="start"
-      @after-leave="end"
-    >
+    <Expand>
       <div v-if="isOpen" class="absolute z-[1] block w-max right-0 top-[55px]">
         <div
           class="border-4 border-secondary bg-secondary/80 flex flex-col gap-y-3 p-5 pr-[30px] relative rounded-b-lg rounded-tl-lg box-border text-slate-300"
@@ -78,6 +72,6 @@ function close (): void {
           <LangSwitcher class="pt-4" @click="isOpen = false" />
         </div>
       </div>
-    </Transition>
+    </Expand>
   </div>
 </template>

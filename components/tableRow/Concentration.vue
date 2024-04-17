@@ -5,13 +5,11 @@ defineProps<{ concentration: boolean }>()
 
 <template>
   <div
-    v-tippy="{
-      content: $t('components.encounterTable.headers.concentration')
-    }"
+    v-tippy="$t('general.concentration')"
     class="flex justify-center"
   >
     <button
-      :aria-label="$t('components.encounterTable.headers.concentration')"
+      :aria-label="$t('general.concentration')"
       @click="$emit('toggle')"
     >
       <Icon

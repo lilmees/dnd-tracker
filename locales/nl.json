@@ -39,6 +39,8 @@
     "open": "Openen",
     "next": "Volgende",
     "prev": "Vorige",
+    "start": "Start",
+    "finish": "Einde",
     "decline": "Afwijzen",
     "transfer": "Overdragen",
     "flip": "Flip {axis}",
@@ -64,6 +66,10 @@
     "players": "Spelers",
     "player": "Speler",
     "members": "Leden",
+    "summon": "Summon",
+    "lair": "Lair",
+    "npc": "Npc",
+    "monster": "Monster",
     "monsters": "Monsters",
     "characters": "Karakters",
     "animals": "Dieren",
@@ -113,6 +119,9 @@
     "type": "Type",
     "actions": "Acties",
     "rows": "Rijen",
+    "concentration": "Concentratie",
+    "none": "Geen",
+    "stats": "Statistieken",
     "error": {
       "title": "Fout",
       "text": "Er ging iets mis"
@@ -242,13 +251,17 @@
           "text": "Iemand heeft de encounter verwijderd, dus je kan hem niet meer gebruiken"
         },
         "died": {
-          "title": "Speler is gestorven",
-          "textMinHP": "De speler heeft te veel negatieve hp en is dood",
-          "textDeathSaves": "De speler heeft 3 keer gefaald bij death saves en is dood"
+          "title": "{type} is gestorven",
+          "textMinHP": "De {type} heeft te veel negatieve hp en is dood",
+          "textDeathSaves": "De {type} heeft 3 keer gefaald bij death saves en is dood"
         },
         "stable": {
-          "title": "Speler is gestabiliseerd",
-          "textDeathSaves": "De speler heeft 3 keer gesaved bij death saves en is gestabiliseerd"
+          "title": "{type} is gestabiliseerd",
+          "textDeathSaves": "De {type} heeft 3 keer gesaved bij death saves en is gestabiliseerd"
+        },
+        "concentration": {
+          "title": "Maak een concentratie check",
+          "text": "{type} die zich concentreerde, liep schade op"
         }
       }
     },
@@ -467,18 +480,21 @@
       }
     },
     "addInitiativeCampaignHomebrew": {
-      "addCampaignHomebrew": "campagne homebrew toevoegen",
+      "title": "campagne homebrew toevoegen",
       "initiative": {
         "info": "Wanneer je een summon selecteert, dien je ook een personage te kiezen dat deze summon oproept.",
         "add": "Summon toevoegen",
         "select": "Selecteer oproeper",
-        "nothing": "Helaas, onze queeste onthult geen schatten die overeenkomen met jouw zoektocht. Wellicht kan een andere naam het magische portaal openen, of je kunt je eigen homebrew legendes creëren."
+        "nothing": "Helaas, onze queeste onthult geen schatten die overeenkomen met jouw zoektocht. Wellicht kan een andere naam het magische portaal openen, of je kunt je eigen homebrew legendes creëren.",
+        "empty": "Er ontbreekt homebrew in je campagne. Wanneer je homebrew introduceert in je campagne, kun je ze hier selecteren om toe te voegen in je encounters."
       }
     },
     "homebrewModal": {
       "new": "Maak een nieuwe homebrew",
       "add": "Homebrew maken",
-      "update": "Homebrew aanpassen"
+      "update": "Homebrew aanpassen",
+      "save": "Toevoegen aan campagne",
+      "max": "Max campagne homebrews"
     },
     "homebrewTable": {
       "nothing": "We hebben geen homebrew gevonden die bij deze zoekopdracht past, maar dat betekent niet dat je het niet zelf kunt maken."
@@ -547,7 +563,18 @@
       "tooltip": "Instellingen",
       "spacing": "Tabel stijl",
       "rows": "Zichtbare rijen",
-      "widgets": "Actieve widgets"
+      "widgets": "Actieve widgets",
+      "pets": {
+        "label": "Encounter pet",
+        "barmaid": "Barmeid",
+        "cat": "Kat",
+        "chicken": "Kip",
+        "crawler": "Kruiper",
+        "dragon": "Draak",
+        "fairy": "Fee",
+        "redcap": "Paddenstoel",
+        "wolf-rider": "Wolf rijder"
+      }
     },
     "infoSearch": {
       "show": "Toon gepinde items",
@@ -577,9 +604,6 @@
       "title": "Feature request maken",
       "submitted": "Je feature request is met enthousiasme ontvangen en ondergaat momenteel een zorgvuldige evaluatie. Zodra het is goedgekeurd, zal iedereen de mogelijkheid hebben om erop te stemmen. Je kunt controleren of verzoek is goedgekeurd zodra het label 'Onder beoordeling' niet meer zichtbaar is.",
       "another": "Nog een feature request maken"
-    },
-    "encounterCampaignHeader": {
-      "go": "Ga naar campagne"
     },
     "userModal": {
       "title": "Mensen toevoegen aan {campaign}",
@@ -622,19 +646,83 @@
     },
     "quickInitiativeModal": {
       "title": "Initiatieven snel toevoegen",
-      "roll": "Alle initiatieven rollen"
+      "roll": "Geselecteerde soorten rollen",
+      "select": "Selecteer de soorten om voor te rollen",
+      "ignore": "Negeer modifier"
     },
     "encounterOptions": {
       "playgroundWarning": "Playground encounters kunnen niet worden opgeslagen"
-    },
-    "contentHeader": {
-      "toMuch": "Te veel items voor kaartweergave"
     },
     "bulkRemove": {
       "title": "Bulk verwijderen {type}",
       "subtitle": "Selecteer {type} om te verwijderen door erop te klikken.",
       "amount": "Verwijder {number} {type}",
       "multiple": "{number} {type}"
+    },
+    "inlineConfirmation": {
+      "text": "Weet je zeker dat je dit wilt updaten? Je oude waarde wordt niet opgeslagen."
+    }
+  },
+  "tour": {
+    "sure": "Ben je zeker dat je alle kennis al hebt van de DnD Tracker? 🧙‍♂️",
+    "0": {
+      "title": "Welkom bij je eerste encounter! 🐲",
+      "description": "Welkom, dappere avonturier! We zijn enthousiast om je door onze applicatie te begeleiden. Laten we samen aan deze reis beginnen, zullen we?"
+    },
+    "1": {
+      "title": "Het meest basale van allemaal 🎯",
+      "description": "Aanschouw! De bescheiden pijlknoppen, je trouwe metgezellen bij het beheren van het huidige initiatief."
+    },
+    "2": {
+      "title": "Hier broeit iets 🍺",
+      "description": "Waag je in het rijk van homebrews! Maak je eigen homebrew om je encounter op te fleuren."
+    },
+    "3": {
+      "title": "Laten we lui zijn 🛋️",
+      "description": "Waarom moeite doen met het steeds opnieuw maken van dezelfde homebrews? Voeg met slechts een paar klikken moeiteloos je campagne's homebrews toe."
+    },
+    "4": {
+      "title": "Laten we weer lui zijn 🛌",
+      "description": "Geen noodzaak om monsters eindeloos op te jagen. Vind officiële monsters binnen handbereik, klaar om zich met één klik bij je encounter aan te sluiten."
+    },
+    "5": {
+      "title": "Wil je rollen zonder hoofdrekenen? 🎲",
+      "description": "Laat de berekeningen aan ons over! Gooi digitale dobbelstenen en geniet van de glorie van directe resultaten voor elke wending van het lot."
+    },
+    "6": {
+      "title": "Meer informatie nodig? 📚",
+      "description": "Zoek kennis in onze geheiligde boeken. Alles wat je nodig hebt, netjes georganiseerd voor jouw gemak. Pin het aan je encounter en laat de wijsheid stromen!"
+    },
+    "7": {
+      "title": "Hotkeys tot je dienst 🔥",
+      "description": "Bevrijd jezelf van de tirannie van de muis! Beheer met hotkeys en verover met gemak."
+    },
+    "8": {
+      "title": "Ontketen de kracht van initiatief items 💪",
+      "description": "Geen lange introductie nodig! Pas namen, initiatieven, AC en HP aan wanneer je erop klikt. Notities, death saves en concentratie met een fluitje van een cent."
+    },
+    "9": {
+      "title": "Beheer je initiatiefn items met finesse 🎩",
+      "description": "Het hart van je initiatief items! Pas AC en HP aan terwijl je bezig bent, voeg moeiteloos condities toe. Wij betoveren je ervaring door links voor te laden, waardoor je wordt gespaard van het gedoe van het openen van extra browsertabbladen."
+    },
+    "10": {
+      "title": "Condities voor de onderscheidende avonturier 👨‍🦯",
+      "description": "Aanschouw de condities die aan je kameraden zijn verleend! Zweef eroverheen en duik dieper in hun effecten."
+    },
+    "11": {
+      "title": "Verwijder of kopieer initiatief items in een flits ⚡",
+      "description": "Met snelheid en precisie, verwijder of dupliceer met een enkele knopklik."
+    },
+    "12": {
+      "title": "Nog nooit zo snel iedereens initiatief toevoegen 🚀",
+      "description": "Bereid je voor op razendsnelle initiatief invoer! Voeg alle initiatieven in één keer toe, of laat het aan de dobbelstenen over voor een vleugje willekeur. De keuze is aan jou, avonturier!"
+    },
+    "13": {
+      "title": "Als je brein een pauze nodig heeft 🧠",
+      "description": "Verminder de last en vereenvoudig je interface. Schakel onnodige functies uit, de keuze is aan jou."
+    },
+    "14": {
+      "title": "Gefeliciteerd, je bent nu een expert! 🎉"
     }
   }
 }

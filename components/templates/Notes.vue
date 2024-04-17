@@ -9,11 +9,15 @@ const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
 const selected = ref<Note[]>([])
 
-whenever(() => currentStore.campaign, () => {
+onMounted(() => fetchNotes())
+
+whenever(() => currentStore.campaign, () => fetchNotes())
+
+function fetchNotes (): void {
   if (currentStore.campaign) {
     noteStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
-})
+}
 
 function resetState (): void {
   isOpen.value = false
@@ -41,9 +45,9 @@ function resetState (): void {
           class="btn-small-primary"
           :aria-label="$t('actions.createItem', { item: $t('general.note') })"
           :disabled="
-            !currentStore.campaign ||
-              !isAdmin(currentStore.campaign, profile.data?.id || '') ||
-              noteStore.noteCount >= noteStore.maxAmount
+            noteStore.loading ||
+              noteStore.noteCount >= noteStore.maxAmount ||
+              !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
           "
           @click="isOpen = true"
         >
@@ -52,7 +56,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="noteStore.loading"
+          :disabled="noteStore.loading || !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -72,12 +76,12 @@ function resetState (): void {
     <div v-if="currentStore.loading" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
       <SkeletonNoteCard v-for="i in 16" :key="i" />
     </div>
-    <NoContent
-      v-else-if="!noteStore.data.length && !noteStore.loading"
-      :content="$t('general.notes').toLowerCase()"
-      icon="clarity:note-line"
-    />
-    <template v-else-if="currentStore.campaign">
+    <template
+      v-else-if="
+        (!noteStore.noItems || (noteStore.search !== '' && noteStore.noItems)) &&
+          currentStore.campaign
+      "
+    >
       <FormKit
         v-model="noteStore.search"
         type="search"
@@ -124,14 +128,20 @@ function resetState (): void {
         {{ $t('components.table.nothing', { item: $t('general.notes').toLowerCase() }) }}
       </div>
     </template>
+    <NoContent
+      v-else
+      :content="$t('general.notes').toLowerCase()"
+      icon="clarity:note-line"
+    />
+
     <NoteModal
-      v-if="currentStore.campaign"
-      :id="currentStore.campaign.id"
-      :open="isUpdating || isOpen"
+      :id="currentStore.campaign?.id || 0"
+      :open="(isUpdating || isOpen) && !!currentStore.campaign"
       :note="selected.length && isUpdating ? selected[0] : undefined"
       :update="isUpdating"
       @close="resetState"
     />
+
     <ConfirmationModal
       :open="needConfirmation"
       :title="selected.length === 1

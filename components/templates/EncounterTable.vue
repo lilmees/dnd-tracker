@@ -64,21 +64,24 @@ const tableSpacing = computed<string>(() => {
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700 uppercase"
               scope="col"
             >
-              {{ header }}
-              <button
-                v-if="header === 'Init'"
-                v-tippy="$t('components.encounterTable.quick')"
-                :aria-label="$t('components.encounterTable.quick')"
-                :disabled="!store?.encounter?.rows?.length"
-                class="disabled:opacity-60 disabled:cursor-not-allowed"
-                @click="quickInit = true"
-              >
-                <Icon
-                  name="ph:lightning-fill"
-                  class="text-warning w-3 h-3"
-                  aria-hidden="true"
-                />
-              </button>
+              <div class="flex justify-center gap-2">
+                {{ header }}
+                <button
+                  v-if="header === 'Init'"
+                  v-tippy="$t('components.encounterTable.quick')"
+                  :aria-label="$t('components.encounterTable.quick')"
+                  :disabled="!store?.encounter?.rows?.length"
+                  class="icon-btn-warning group"
+                  @click="quickInit = true"
+                >
+                  <Icon
+                    id="tour-12"
+                    name="ph:lightning-fill"
+                    class="icon w-5 h-5 text-warning"
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </th>
           </tr>
         </thead>
@@ -97,7 +100,7 @@ const tableSpacing = computed<string>(() => {
       </table>
       <div
         v-if="!store?.encounter?.rows.length"
-        class="w-full px-8 py-4 text-center font-bold"
+        class="w-full px-8 py-20 text-center head-3"
       >
         {{ $t('components.encounterTable.empty') }}
       </div>

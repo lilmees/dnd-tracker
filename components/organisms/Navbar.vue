@@ -138,14 +138,7 @@ async function logout (): Promise<void> {
         </button>
       </div>
       <Teleport to="body">
-        <Transition
-          enter-active-class="duration-300 ease-in-out"
-          enter-from-class="!-translate-y-full"
-          enter-to-class="!translate-y-0"
-          leave-active-class="duration-200 ease-in-out"
-          leave-from-class="!translate-y-0"
-          leave-to-class="!-translate-y-full"
-        >
+        <SlideIn>
           <NavbarPopup
             v-if="isOpen"
             :routes="visibleRoutes"
@@ -154,7 +147,7 @@ async function logout (): Promise<void> {
             @logout="logout"
             @close="isOpen = false"
           />
-        </Transition>
+        </SlideIn>
       </Teleport>
     </nav>
   </Transition>

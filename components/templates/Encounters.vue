@@ -1,10 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
-  defineProps<{
-    campaignView?: boolean
-  }>(), {
-    campaignView: false
-  }
+  defineProps<{ campaignView?: boolean }>(),
+  { campaignView: false }
 )
 
 const currentStore = useCurrentCampaignStore()
@@ -15,7 +12,6 @@ const { error } = storeToRefs(encounterStore)
 const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
-const isTable = ref<boolean>(false)
 const isBulk = ref<boolean>(false)
 const isUpdating = ref<boolean>(false)
 const needConfirmation = ref<boolean>(false)
@@ -29,10 +25,20 @@ const headers = [
   { label: t('general.actions'), sort: false, id: 'actions' }
 ]
 
+const campaignId = computed<number | undefined>(() => {
+  return props.campaignView && currentStore.campaign ? currentStore.campaign.id : undefined
+})
+
+const campaignAdmin = computed<boolean>(() => {
+  return props.campaignView && isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
+})
+
 onMounted(() => {
-  props.campaignView
-    ? isTable.value = true
-    : encounterStore.fetch()
+  encounterStore.loading = true
+
+  if (!props.campaignView) {
+    encounterStore.fetch()
+  }
 })
 
 onBeforeUnmount(() => encounterStore.resetPagination())
@@ -48,14 +54,12 @@ whenever(() => currentStore.campaign, () => {
 watchDebounced(() => encounterStore.filters, async () => {
   encounterStore.page = 0
   await encounterStore.fetch(
-    props.campaignView && currentStore.campaign
-      ? { field: 'campaign', value: currentStore.campaign.id }
+    campaignId.value
+      ? { field: 'campaign', value: campaignId.value }
       : undefined,
     true
   )
 }, { debounce: 100, maxWait: 500, deep: true })
-
-const toMuch = computed<boolean>(() => encounterStore.encounterCount >= encounterStore.perPage)
 
 function resetState (): void {
   needConfirmation.value = false
@@ -99,7 +103,7 @@ function resetState (): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="encounterStore.loading || encounterStore.searching"
+          :disabled="encounterStore.loading || encounterStore.searching || !campaignAdmin"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -117,21 +121,18 @@ function resetState (): void {
       </div>
     </div>
     <template v-if="encounterStore.loading">
-      <SkeletonContentHeader :hide-toggle="campaignView" />
-      <SkeletonTable v-if="isTable" :headers="headers" />
-      <div v-else class="flex flex-wrap gap-4 items-start">
-        <SkeletonEncounterCard v-for="i in 10" :key="i" />
-      </div>
+      <SkeletonInput :label="false" class="w-[256px]" />
+      <SkeletonTable :headers="headers" />
     </template>
-    <div v-else-if="encounterStore.restrictionEncounters">
+    <div v-else-if="!encounterStore.noItems || (encounterStore.filters.search !== '' && encounterStore.noItems)">
       <ContentHeader
-        v-model:grid="isTable"
         v-model:search="encounterStore.filters.search"
-        :to-much="toMuch"
-        :hide-toggle="campaignView"
         :shadow="!campaignView"
       />
-      <LimitCta v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount" class="mb-10" />
+      <LimitCta
+        v-if="!isBulk && encounterStore.max <= encounterStore.encounterCount"
+        class="mb-10"
+      />
       <BulkRemove
         v-model:isBulk="isBulk"
         v-model:needConfirmation="needConfirmation"
@@ -139,9 +140,9 @@ function resetState (): void {
         type="encounters"
       />
       <Table
-        v-show="isTable"
         v-model:sorted-by="encounterStore.filters.sortedBy"
         v-model:acs="encounterStore.filters.sortACS"
+        v-model:page="encounterStore.page"
         :headers="headers"
         :pages="encounterStore.pages"
         :searching="encounterStore.searching"
@@ -149,8 +150,8 @@ function resetState (): void {
         @paginate="(p) => {
           encounterStore.paginate(
             p,
-            props.campaignView && currentStore.campaign
-              ? { field: 'campaign', value: currentStore.campaign.id }
+            campaignId
+              ? { field: 'campaign', value: campaignId }
               : undefined
           )
         }"
@@ -226,6 +227,7 @@ function resetState (): void {
                   v-tippy="$t('actions.update')"
                   class="icon-btn-info"
                   :aria-label="$t('actions.update')"
+                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     isUpdating = true
@@ -241,6 +243,7 @@ function resetState (): void {
                   v-tippy="$t('actions.delete')"
                   class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
+                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     needConfirmation = true
@@ -256,43 +259,10 @@ function resetState (): void {
             </div>
           </td>
         </tr>
-        <template #empty>
-          <div
-            v-if="encounterStore.noItems"
-            class="max-w-prose mx-auto px-8 py-4 text-center font-bold"
-          >
-            {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
-          </div>
+        <template v-if="encounterStore.noItems" #empty>
+          {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
         </template>
       </Table>
-      <div v-show="!isTable" class="flex flex-wrap gap-4 items-start">
-        <div
-          v-for="encounter in encounterStore.restrictionEncounters"
-          :key="encounter.id"
-          class="relative"
-        >
-          <BulkRemoveCard
-            v-if="isBulk"
-            :selected="!!selected.find(e => e.id === encounter.id)"
-            :border="encounter.background"
-            @toggled="toggleSelection<Encounter>(encounter, selected)"
-          />
-          <EncounterCard
-            :encounter="encounter"
-            :disable-copy="encounterStore.max <= encounterStore.data.length"
-            @update="(v: Encounter) => {
-              selected = [v];
-              isUpdating = true
-            }"
-            @remove="(v: Encounter) => {
-              selected = [v];
-              needConfirmation = true
-            }"
-            @copy="encounterStore.copyEncounter"
-            @share="encounterStore.shareEncounter"
-          />
-        </div>
-      </div>
     </div>
     <NoContent v-else content="encounters" icon="ri:table-line" />
   </div>
@@ -308,31 +278,28 @@ function resetState (): void {
       {{ $t('actions.tryAgain') }}
     </button>
   </div>
-  <div class="absolute z-[1]">
-    <ConfirmationModal
-      :open="needConfirmation"
-      :title="selected.length === 1
-        ? selected[0].title
-        : $t('components.bulkRemove.multiple', {
-          number: selected.length,
-          type: $t('general.encounters').toLowerCase()
-        })"
-      @close="resetState"
-      @delete="() => {
-        encounterStore.deleteEncounter(
-          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
-        );
-        resetState()
-      }"
-    />
-    <EncounterModal
-      :open="isUpdating || isOpen"
-      :encounter="selected.length && isUpdating ? selected[0] : undefined"
-      :campaign="campaignView && currentStore.campaign ? currentStore.campaign.id : undefined"
-      :update="isUpdating"
-      @close="resetState"
-      @updated="resetState"
-      @added="resetState"
-    />
-  </div>
+  <ConfirmationModal
+    :open="needConfirmation"
+    :title="selected.length === 1
+      ? selected[0].title
+      : $t('components.bulkRemove.multiple', {
+        number: selected.length,
+        type: $t('general.encounters').toLowerCase()
+      })"
+    @close="resetState"
+    @delete="() => {
+      encounterStore.deleteEncounter(
+        selected.length === 1 ? selected[0].id : selected.map(v => v.id),
+        campaignId
+      );
+      resetState()
+    }"
+  />
+  <EncounterModal
+    :open="isUpdating || isOpen"
+    :encounter="selected.length && isUpdating ? selected[0] : undefined"
+    :update="isUpdating"
+    :campaign-id="campaignId"
+    @close="resetState"
+  />
 </template>
