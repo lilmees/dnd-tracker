@@ -28,7 +28,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     *, 
     profiles(id, name, username, avatar), 
     campaign( 
-      id, title, background, color,
+      id, title,
       created_by(id), 
       team(id, user(id), role)
     )

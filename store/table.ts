@@ -36,7 +36,7 @@ export const useTableStore = defineStore('useTableStore', () => {
       .from('initiative_sheets')
       .select(`
         *, 
-        campaign(id, title, background, color, 
+        campaign(id, title,
           created_by(id, created_at, username, name, avatar, email, badges), 
           team(
             role, 
@@ -143,7 +143,7 @@ export const useTableStore = defineStore('useTableStore', () => {
           .from('initiative_sheets')
           .update(data as never)
           .eq('id', id)
-          .select('*, campaign(id, title, background, color, created_by(id, created_at, username, name, avatar, email, badges), team(*))')
+          .select('*, campaign(id, title, created_by(id, created_at, username, name, avatar, email, badges), team(*))')
 
         if (error) {
           throw error
