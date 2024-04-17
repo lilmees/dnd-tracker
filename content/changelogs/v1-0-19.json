@@ -1,0 +1,66 @@
+{
+  "version": "v1.0.19",
+  "date": "2024-04-17",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Option to save encounter-created homebrew directly to your campaign"
+        },
+        {
+          "text": "Confirmation prompts when updating HP, AC, and Name directly within an encounter"
+        },
+        {
+          "text": "Introduced an interactive encounter tour to guide users through features"
+        },
+        {
+          "text": "Encounter pets are now here to accompany your adventures"
+        },
+        {
+          "text": "Removed card view for encounters and campaigns"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Improved quick initiative pop-up with added flexibility; now includes an option to bypass initiative modifiers"
+        },
+        {
+          "text": "Added some animations to make your experience smoother"
+        },
+        {
+          "text": "New design for condition badges and tooltips"
+        },
+        {
+          "text": "Added an asterisk for required input fields"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "Resolved issue where sorting a table wouldn't update pagination correctly"
+        },
+        {
+          "text": "Fixed translation error in the play dropdown menu"
+        },
+        {
+          "text": "Corrected a bug where creating an initiative item in an encounter would disregard the modifier"
+        },
+        {
+          "text": "Addressed autofill issue where amount wouldn't populate in homebrew form for monster or summon selection"
+        },
+        {
+          "text": "Fixed encounter syncing functionality to match expected behavior"
+        },
+        {
+          "text": "Corrected calculation error for homebrew amount"
+        }
+      ]
+    }
+  ]
+}
