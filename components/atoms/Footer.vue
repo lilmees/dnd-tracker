@@ -19,7 +19,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
             provider="imagekit"
           />
         </NuxtLink>
-        <div class="flex flex-col sm:flex-row gap-y-4 gap-x-20 mt-3">
+        <div class="flex flex-col md:flex-row gap-y-4 gap-x-20 mt-3">
           <div class="mt-4 md:mt-0">
             <p class="mb-4 head-3">
               Contact
@@ -155,7 +155,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
           src="/cat.webp"
           alt="Wizard cat"
           sizes="sm:500px md:500px lg:500px"
-          class="h-[200px] hidden md:block float"
+          class="h-[200px] hidden lg:block float"
           format="webp"
           provider="imagekit"
         />
