@@ -215,6 +215,7 @@ function resetState (): void {
                   v-tippy="$t('actions.copy')"
                   class="icon-btn-primary"
                   :aria-label="$t('actions.copy')"
+                  :disabled="encounter.campaign && !isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="encounterStore.copyEncounter(encounter)"
                 >
                   <Icon
@@ -227,7 +228,7 @@ function resetState (): void {
                   v-tippy="$t('actions.update')"
                   class="icon-btn-info"
                   :aria-label="$t('actions.update')"
-                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
+                  :disabled="encounter.campaign && !isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     isUpdating = true
@@ -243,7 +244,7 @@ function resetState (): void {
                   v-tippy="$t('actions.delete')"
                   class="icon-btn-danger"
                   :aria-label="$t('actions.delete')"
-                  :disabled="!isAdmin(encounter.campaign, profile.data?.id || '')"
+                  :disabled="encounter.campaign && !isAdmin(encounter.campaign, profile.data?.id || '')"
                   @click="() => {
                     selected = [encounter];
                     needConfirmation = true
