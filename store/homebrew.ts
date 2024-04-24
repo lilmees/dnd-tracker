@@ -54,7 +54,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
         page: page.value,
         perPage: perPage.value,
         filters: filters.value,
-        field: 'name',
+        fields: ['name', 'player'],
         eq,
         fuzzy
       })

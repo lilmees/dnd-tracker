@@ -21,7 +21,7 @@ interface SbEq {
 
 interface SbFetchOptions {
   table: SbTables
-  field?: string
+  fields?: string[]
   select?: string
   page?: number
   perPage?: number

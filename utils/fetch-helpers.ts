@@ -1,7 +1,7 @@
 export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> {
   const supabase = useSupabaseClient()
 
-  const { table, select, page, perPage, filters, eq, fuzzy, field } = options
+  const { table, select, page, perPage, filters, eq, fuzzy, fields } = options
 
   let query = supabase
     .from(table)
@@ -22,7 +22,7 @@ export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> 
   }
 
   if (filters?.search && fuzzy) {
-    query = query.ilike(field || 'title', `%${filters.search}%`)
+    query = query.or(sbOrQuery(fields || ['title'], filters.search))
   }
 
   const { data, error, count } = await query
@@ -34,6 +34,17 @@ export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> 
     pagesCount: perPage ? calcPages(count, perPage) : 1,
     count
   }
+}
+
+function sbOrQuery (keys: string[], search: string): string {
+  let queryString = ''
+
+  keys.forEach((key: string, i: number) => {
+    const escapedSearch = search.replace(/([%_])/g, '\\$1')
+    queryString += `${i ? ',' : ''}${key}.ilike.*${escapedSearch}*`
+  })
+
+  return queryString
 }
 
 export function generateRange (page: number, perPage: number): SbRange {
