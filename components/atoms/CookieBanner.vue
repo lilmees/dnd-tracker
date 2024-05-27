@@ -5,7 +5,7 @@ const localePath = useLocalePath()
 const cookiesConsent = useStorage('_dndtracker_cookies_consent', false)
 const cookiesSet = useStorage('_dndtracker_cookies_set', false)
 
-function handleConsent (): void {
+function handleConsent(): void {
   cookiesSet.value = true
   cookiesConsent.value = true
 }
@@ -28,10 +28,16 @@ function handleConsent (): void {
         </h2>
       </div>
       <div class="inline-flex gap-x-24 text-lg md:gap-x-8">
-        <NuxtLink :to="localePath('/cookie-policy')" class="underline whitespace-pre underline-offset-2">
+        <NuxtLink
+          :to="localePath('/cookie-policy')"
+          class="underline whitespace-pre underline-offset-2"
+        >
           {{ $t('components.cookieBanner.policy') }}
         </NuxtLink>
-        <button class="underline underline-offset-4" @click="handleConsent">
+        <button
+          class="underline underline-offset-4"
+          @click="handleConsent"
+        >
           {{ $t('components.cookieBanner.button') }}
         </button>
       </div>

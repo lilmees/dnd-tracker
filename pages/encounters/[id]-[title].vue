@@ -19,7 +19,8 @@ onMounted(async () => {
       }
 
       startTour(!!store.encounter?.campaign)
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
@@ -30,7 +31,10 @@ onBeforeUnmount(async () => await store.unsubscribeEncounterChanges())
 </script>
 
 <template>
-  <Layout name="wide" padding>
+  <Layout
+    name="wide"
+    padding
+  >
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end pb-4 relative">

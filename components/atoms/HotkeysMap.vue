@@ -2,7 +2,7 @@
   <tippy
     v-tippy="{
       content: 'Hotkeys',
-      touch: false
+      touch: false,
     }"
     trigger="click"
   >
@@ -22,9 +22,15 @@
           </p>
           <div class="flex flex-col gap-2 col-span-2">
             <div class="flex justify-wrap items-center gap-y-2">
-              <kbd><Icon name="carbon:mac-shift" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-shift"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">+</span>
-              <kbd><Icon name="ph:mouse-duotone" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="ph:mouse-duotone"
+                class="w-5 h-5"
+              /></kbd>
             </div>
           </div>
           <p class="font-bold">
@@ -32,11 +38,20 @@
           </p>
           <div class="flex flex-col gap-2 col-span-2">
             <div>
-              <kbd><Icon name="vaadin:ctrl-a" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:ctrl-a"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="carbon:mac-command" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-command"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="vaadin:alt-a" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:alt-a"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">+</span>
               <kbd>V</kbd>
             </div>
@@ -46,13 +61,25 @@
           </p>
           <div class="flex flex-col gap-2 col-span-2">
             <div>
-              <kbd><Icon name="vaadin:arrow-left" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:arrow-left"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="vaadin:arrow-up" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:arrow-up"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="vaadin:arrow-down" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:arrow-down"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="vaadin:arrow-right" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:arrow-right"
+                class="w-5 h-5"
+              /></kbd>
             </div>
           </div>
         </div>

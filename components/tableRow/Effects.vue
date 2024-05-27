@@ -2,20 +2,23 @@
 const emit = defineEmits(['update'])
 const props = withDefaults(
   defineProps<{ conditions?: Condition[] }>(), {
-    conditions: () => []
-  }
+    conditions: () => [],
+  },
 )
 
-function removeEffect (slug: string): void {
+function removeEffect(slug: string): void {
   emit('update', props.conditions.filter(s => s.slug !== slug))
 }
 
-function updateEffect (condition: Condition): void {
+function updateEffect(condition: Condition): void {
   const index = props.conditions.findIndex(s => s.slug === condition.slug)
 
   if (index > -1) {
-    props.conditions[index] = condition
-    emit('update', props.conditions)
+    const _conditions = [...props.conditions]
+
+    _conditions[index] = condition
+
+    emit('update', _conditions)
   }
 }
 </script>

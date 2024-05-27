@@ -15,7 +15,7 @@
 }
 
 .driver-popover-progress-text {
-  @apply !text-slate-300 font-medium body-small;
+  @apply !text-slate-300 font-medium text-sm;
 }
 
 .driver-popover .driver-popover-prev-btn {

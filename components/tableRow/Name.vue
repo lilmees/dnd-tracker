@@ -5,7 +5,7 @@ const emit = defineEmits(['update', 'close'])
 
 const form = ref<{ name: string }>({ name: '' })
 
-function updateName ({ __init, name }: Obj): void {
+function updateName({ __init, name }: Obj): void {
   emit('update', name.trim())
   reset('form')
 }

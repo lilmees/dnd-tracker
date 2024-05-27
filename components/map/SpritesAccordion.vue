@@ -12,23 +12,27 @@ const filteredSprites = computed<DraggableSprites>(() => {
     characters: props.sprites.characters.filter(sprite => searchSprite(sprite.label)),
     animals: props.sprites.animals.filter(sprite => searchSprite(sprite.label)),
     items: props.sprites.items.filter(sprite => searchSprite(sprite.label)),
-    nature: props.sprites.nature.filter(sprite => searchSprite(sprite.label))
+    nature: props.sprites.nature.filter(sprite => searchSprite(sprite.label)),
   }
 
-  search.value ? setOpenState(filters) : open.value = []
+  search.value ? setOpenState(filters) : resetOpen()
 
   return filters
 })
 
-function searchSprite (label: string): boolean {
+function resetOpen(): void {
+  open.value = []
+}
+
+function searchSprite(label: string): boolean {
   return label.toLowerCase().includes(search.value.trim())
 }
 
-function setOpenState (filters: DraggableSprites): void {
+function setOpenState(filters: DraggableSprites): void {
   open.value = Object.keys(filters).reduce((
     acc: number[],
-    key: Omit<SpriteType, 'walls'|'floors'>,
-    i: number
+    key: Omit<SpriteType, 'walls' | 'floors'>,
+    i: number,
   ) => {
     if (filters[key as keyof DraggableSprites].length) {
       acc.push(i)

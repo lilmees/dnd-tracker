@@ -27,7 +27,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
   const isHome = computed<boolean>(() => route.fullPath.replace('en', '') === '/')
 
-  async function getEncounter (id: string): Promise<void> {
+  async function getEncounter(id: string): Promise<void> {
     isSandbox.value = false
     isLoading.value = true
     isPlayground.value = false
@@ -71,7 +71,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     isLoading.value = false
   }
 
-  async function getSandboxEncounter (): Promise<void> {
+  async function getSandboxEncounter(): Promise<void> {
     isSandbox.value = true
     const { data, error } = await supabase.from('showcase').select('*').single()
 
@@ -89,7 +89,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     encounter.value = data
   }
 
-  function subscribeEncounterChanges (id: number): void {
+  function subscribeEncounterChanges(id: number): void {
     supabase
       .channel('initiative_sheets-updates')
       .on('postgres_changes',
@@ -97,7 +97,7 @@ export const useTableStore = defineStore('useTableStore', () => {
           event: '*',
           schema: 'public',
           table: 'initiative_sheets',
-          filter: `id=eq.${id}`
+          filter: `id=eq.${id}`,
         },
         (payload: SbRealTime) => {
           isSyncing.value = true
@@ -106,11 +106,12 @@ export const useTableStore = defineStore('useTableStore', () => {
             if (route.fullPath.includes('/encounters/')) {
               toast.info({
                 title: t('pages.encounter.toasts.removed.title'),
-                text: t('pages.encounter.toasts.removed.text')
+                text: t('pages.encounter.toasts.removed.text'),
               })
               navigateTo(localePath('/encounters'))
             }
-          } else {
+          }
+          else {
             const { campaign, created_at, id, ...updated } = payload.new
             encounter.value = { ...encounter.value, ...updated } as Encounter
           }
@@ -120,11 +121,11 @@ export const useTableStore = defineStore('useTableStore', () => {
       .subscribe()
   }
 
-  async function unsubscribeEncounterChanges (): Promise<void> {
+  async function unsubscribeEncounterChanges(): Promise<void> {
     await supabase.removeAllChannels()
   }
 
-  async function encounterUpdate (enc: UpdateEncounter): Promise<void> {
+  async function encounterUpdate(enc: UpdateEncounter): Promise<void> {
     isSyncing.value = true
 
     if (enc.rows?.length) {
@@ -150,19 +151,23 @@ export const useTableStore = defineStore('useTableStore', () => {
         }
 
         encounter.value = updated[0] as Encounter
-      } catch (err) {
+      }
+      catch (err) {
         logRocket.captureException(err as Error)
         toast.error()
       }
-    } else {
+    }
+    else {
       encounter.value = data as Encounter
     }
 
     isSyncing.value = false
   }
 
-  async function updateRow (value: never): Promise<void> {
-    if (!activeRow.value || activeIndex.value === undefined) { return }
+  async function updateRow(value: never): Promise<void> {
+    if (!activeRow.value || activeIndex.value === undefined) {
+      return
+    }
 
     const rows = encounter.value!.rows as Row[]
 
@@ -175,7 +180,8 @@ export const useTableStore = defineStore('useTableStore', () => {
       const calculatedIndex = useCalculateIndex(rows as Row[], value)
       rows[activeIndex.value]!.initiative = value
       rows[activeIndex.value]!.index = calculatedIndex
-    } else {
+    }
+    else {
       activeRow.value[activeField.value as keyof Row] = value
       rows[activeIndex.value] = activeRow.value
     }
@@ -190,14 +196,14 @@ export const useTableStore = defineStore('useTableStore', () => {
     resetActiveState()
   }
 
-  function resetActiveState (): void {
+  function resetActiveState(): void {
     activeIndex.value = undefined
     activeRow.value = undefined
     activeModal.value = undefined
     activeField.value = undefined
   }
 
-  function nextInitiative (): void {
+  function nextInitiative(): void {
     if (encounter.value && encounter.value.activeIndex >= 0) {
       encounter.value.activeIndex + 1 < encounter.value.rows.length
         ? encounterUpdate({ activeIndex: encounter.value.activeIndex + 1 })
@@ -205,7 +211,7 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
-  function prevInitiative (): void {
+  function prevInitiative(): void {
     if (encounter.value) {
       if (encounter.value.activeIndex === 0 && encounter.value.round === 1) {
         return
@@ -216,25 +222,26 @@ export const useTableStore = defineStore('useTableStore', () => {
     }
   }
 
-  function checkDeathSaves (saves: DeathSaves, rowType: RowType): void {
+  function checkDeathSaves(saves: DeathSaves, rowType: RowType): void {
     const type = t(`general.${rowType}`)
 
     if (!saves.stable) {
       if (saves.fail.every(v => v === true)) {
         toast.info({
           title: t('pages.encounter.toasts.died.title', { type }),
-          text: t('pages.encounter.toasts.died.textDeathSaves', { type: type.toLowerCase() })
+          text: t('pages.encounter.toasts.died.textDeathSaves', { type: type.toLowerCase() }),
         })
-      } else if (saves.save.every(v => v === true)) {
+      }
+      else if (saves.save.every(v => v === true)) {
         toast.info({
           title: t('pages.encounter.toasts.stable.title', { type }),
-          text: t('pages.encounter.toasts.stable.textDeathSaves', { type: type.toLowerCase() })
+          text: t('pages.encounter.toasts.stable.textDeathSaves', { type: type.toLowerCase() }),
         })
       }
     }
   }
 
-  function setPlaygroundValues (): void {
+  function setPlaygroundValues(): void {
     encounter.value = {
       id: 1,
       created_at: `${Date.now()}`,
@@ -249,14 +256,14 @@ export const useTableStore = defineStore('useTableStore', () => {
         rows: [],
         modified: false,
         widgets: [],
-        pet: 'fairy'
-      }
+        pet: 'fairy',
+      },
     }
 
     isLoading.value = false
   }
 
-  async function loadSharedEncounter (hash: string): Promise<void> {
+  async function loadSharedEncounter(hash: string): Promise<void> {
     try {
       const id = decodeURIComponent(window.atob(hash))
 
@@ -266,12 +273,14 @@ export const useTableStore = defineStore('useTableStore', () => {
         id: 1,
         created_at: `${Date.now()}`,
         created_by: 'user',
-        ...sheet
+        ...sheet,
       } as Encounter
-    } catch (err) {
+    }
+    catch (err) {
       setPlaygroundValues()
       toast.error()
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   }
@@ -299,6 +308,6 @@ export const useTableStore = defineStore('useTableStore', () => {
     checkDeathSaves,
     resetActiveState,
     setPlaygroundValues,
-    loadSharedEncounter
+    loadSharedEncounter,
   }
 })

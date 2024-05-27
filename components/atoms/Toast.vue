@@ -8,7 +8,8 @@ const { pause, resume } = useTimeoutPoll(() => {
   if (!loading.value) {
     pause()
     emit('remove', props.toast.key)
-  } else if (loader.value) {
+  }
+  else if (loader.value) {
     loader.value.style.width = `${loading.value}%`
   }
 }, props.toast.timeout / 100)
@@ -68,10 +69,16 @@ watch(() => isHover.value, (v: boolean) => {
         aria-hidden="true"
       />
       <div class="grow">
-        <p v-if="toast.title" class="pb-2 font-bold">
+        <p
+          v-if="toast.title"
+          class="pb-2 font-bold"
+        >
           {{ toast.title }}
         </p>
-        <p v-if="toast.text" class="body-small">
+        <p
+          v-if="toast.text"
+          class="body-small"
+        >
           {{ toast.text }}
         </p>
       </div>

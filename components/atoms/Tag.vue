@@ -2,17 +2,17 @@
 const emit = defineEmits(['remove', 'add', 'update'])
 const props = withDefaults(
   defineProps<{
-    condition: Condition,
-    removable?: boolean,
-    addable?: boolean,
-    selected?: boolean,
+    condition: Condition
+    removable?: boolean
+    addable?: boolean
+    selected?: boolean
     color?: Color
   }>(), {
     removable: false,
     addable: false,
     selected: false,
-    color: 'black'
-  }
+    color: 'black',
+  },
 )
 
 const amount = ref<number>(props.condition.level || 1)
@@ -21,7 +21,7 @@ watch(() => amount.value, (v) => {
   emit('update', { ...props.condition, level: v })
 })
 
-function listFromText (text: string, exhaustion: boolean = false): string[] {
+function listFromText(text: string, exhaustion: boolean = false): string[] {
   return exhaustion
     ? text.replace('*', '').split(/\|\s\d+\s+\|/g).slice(1).map(bullet => bullet.split('|')[0])
     : text.replace('*', '').split(/\s\*\s/g)

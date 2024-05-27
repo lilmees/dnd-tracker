@@ -19,7 +19,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   const filters = ref<TableFilters>({
     search: '',
     sortedBy: 'title',
-    sortACS: true
+    sortACS: true,
   })
 
   const max = computed<number>(() => getMax('encounter', profile.data?.subscription_type || 'free'))
@@ -35,7 +35,10 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
   `
 
   const restrictionEncounters = computed<Encounter[]>(() => {
-    if (!profile.data) { return [] }
+    if (!profile.data) {
+      return []
+    }
+
     const { userArr, nonUserArr } = sortEncountersByUserCreated(data.value, profile.data.id)
 
     return [...userArr.splice(0, max.value), ...nonUserArr]
@@ -43,7 +46,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
   const noItems = computed<boolean>(() => restrictionEncounters.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch(eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
@@ -55,24 +58,28 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
         filters: filters.value,
         select,
         eq,
-        fuzzy
+        fuzzy,
       })
 
-      if (sheets) { data.value = sheets }
+      if (sheets) {
+        data.value = sheets
+      }
 
       pages.value = pagesCount
 
       getCount()
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
-    } finally {
+    }
+    finally {
       loading.value = false
       searching.value = false
     }
   }
 
-  async function getCount (): Promise<void> {
+  async function getCount(): Promise<void> {
     const { count } = await supabase
       .from('initiative_sheets')
       .select('id', { count: 'exact' })
@@ -81,12 +88,12 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     encounterCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
+  async function paginate(newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
   }
 
-  async function getEncountersByCampaign (id: number): Promise<Encounter[]> {
+  async function getEncountersByCampaign(id: number): Promise<Encounter[]> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .select(select)
@@ -94,12 +101,13 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
     if (err) {
       throw err
-    } else {
+    }
+    else {
       return sheets
     }
   }
 
-  async function addEncounter (encounter: AddEncounter): Promise<Encounter> {
+  async function addEncounter(encounter: AddEncounter): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
       .insert([encounter as never])
@@ -107,7 +115,8 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
     if (err) {
       throw err
-    } else {
+    }
+    else {
       data.value = data.value && data.value.length
         ? [sheets[0] as Encounter, ...data.value]
         : [sheets[0]]
@@ -118,7 +127,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     }
   }
 
-  async function copyEncounter ({ created_at, id, profiles, ...enc }: Encounter): Promise<Encounter|undefined> {
+  async function copyEncounter({ created_at, id, profiles, ...enc }: Encounter): Promise<Encounter | undefined> {
     if (!profile.data) {
       return
     }
@@ -127,20 +136,20 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       ...enc,
       title: `copy ${enc.title}`.slice(0, 30),
       created_by: profile.data.id,
-      campaign: undefined
+      campaign: undefined,
     }
 
     if (enc.campaign) {
       encounter = {
         ...encounter,
-        campaign: enc.campaign.id
+        campaign: enc.campaign.id,
       }
     }
 
     return await addEncounter(encounter as AddEncounter)
   }
 
-  async function deleteEncounter (id: number|number[], campaign?: number): Promise<void> {
+  async function deleteEncounter(id: number | number[], campaign?: number): Promise<void> {
     try {
       let query = supabase.from('initiative_sheets').delete()
 
@@ -152,22 +161,24 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
       if (err) {
         throw err
-      } else {
+      }
+      else {
         fetch(
           campaign ? { field: 'campaign', value: campaign } : undefined,
-          true
+          true,
         )
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function updateEncounter (
+  async function updateEncounter(
     encounter: UpdateEncounter,
     id: number,
-    campaignView: boolean = false
+    campaignView: boolean = false,
   ): Promise<Encounter> {
     const { data: sheets, error: err } = await supabase
       .from('initiative_sheets')
@@ -177,16 +188,17 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
     if (err) {
       throw err
-    } else {
+    }
+    else {
       fetch(
         campaignView && encounter.campaign ? { field: 'campaign', value: encounter.campaign } : undefined,
-        true
+        true,
       )
       return sheets[0]
     }
   }
 
-  function shareEncounter (encounter: Encounter): void {
+  function shareEncounter(encounter: Encounter): void {
     try {
       const content = window.btoa(encodeURIComponent(encounter.id))
       const url = `https://dnd-tracker.com${locale.value === 'en' ? '/en/' : '/'}playground?content=${content}`
@@ -195,20 +207,21 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
 
       toast.info({
         title: t('actions.copyClipboard'),
-        timeout: 2000
+        timeout: 2000,
       })
-    } catch (err) {
+    }
+    catch (err) {
       toast.error()
     }
   }
 
-  function resetPagination (): void {
+  function resetPagination(): void {
     pages.value = 0
     page.value = 0
     filters.value = {
       search: '',
       sortedBy: 'id',
-      sortACS: true
+      sortACS: true,
     }
   }
 
@@ -233,6 +246,6 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
     deleteEncounter,
     updateEncounter,
     shareEncounter,
-    resetPagination
+    resetPagination,
   }
 })

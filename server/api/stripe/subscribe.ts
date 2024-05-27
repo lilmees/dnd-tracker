@@ -25,18 +25,18 @@ export default defineEventHandler(async (event) => {
     mode: 'payment',
     success_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/subscribe-success`,
     cancel_url: `${config.public.appDomain}${body.locale === 'en' ? '/en' : ''}/pricing`,
-    customer: body.customer || customer?.id
+    customer: body.customer || customer?.id,
   })
 
   await client.from('profiles')
     .update({
       ...update,
       stripe_session_id: session.id,
-      temp_subscription: body.type === 'upgrade to pro' ? 'pro' : body.type
+      temp_subscription: body.type === 'upgrade to pro' ? 'pro' : body.type,
     } as never)
     .eq('id', body.user.id)
 
   return {
-    url: session.url
+    url: session.url,
   }
 })

@@ -45,12 +45,13 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
             return aTotal - bTotal
           })
       }
-    } else {
+    }
+    else {
       return []
     }
   })
 
-  async function fetch (): Promise<void> {
+  async function fetch(): Promise<void> {
     loading.value = true
     error.value = undefined
 
@@ -64,15 +65,17 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
       }
 
       data.value = results as FeatureRequest[]
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
 
-  async function addFeature (feature: NewFeatureRequest): Promise<undefined|FeatureRequest> {
+  async function addFeature(feature: NewFeatureRequest): Promise<undefined | FeatureRequest> {
     const { data: results, error } = await supabase
       .from('features')
       .insert([feature as never])
@@ -91,7 +94,7 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
     }
   }
 
-  async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
+  async function vote(id: string, votes: FeatureRequestVotes): Promise<void> {
     const { data: results, error } = await supabase
       .from('features')
       .update({ voted: votes } as never)
@@ -123,6 +126,6 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
     createdBy,
     activeFilters,
     vote,
-    addFeature
+    addFeature,
   }
 })

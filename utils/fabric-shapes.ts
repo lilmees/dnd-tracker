@@ -4,44 +4,44 @@ const options = {
   fill: 'transparent',
   strokeDashArray: [5, 5],
   lockScalingX: true,
-  lockScalingY: true
+  lockScalingY: true,
 }
 
-function transformFT (number: number, grid: number): number {
+function transformFT(number: number, grid: number): number {
   return (number / 5) * grid
 }
 
-export function createRectangle (width: number, height: number, grid: number): fabric.Rect {
+export function createRectangle(width: number, height: number, grid: number): fabric.Rect {
   return new fabric.Rect({
     width: transformFT(+width, grid),
     height: transformFT(+height, grid),
     aoe: {
       width: +width,
-      height: +height
+      height: +height,
     },
     stroke: '#F87272',
-    ...options
+    ...options,
   })
 }
 
-export function createCube (width: number, grid: number): fabric.Rect {
+export function createCube(width: number, grid: number): fabric.Rect {
   return new fabric.Rect({
     width: transformFT(+width, grid),
     height: transformFT(+width, grid),
     aoe: {
       width: +width,
-      height: +width
+      height: +width,
     },
     stroke: '#1FB2A5',
-    ...options
+    ...options,
   })
 }
 
-export function createCone (width: number, height: number, grid: number): fabric.Polygon {
+export function createCone(width: number, height: number, grid: number): fabric.Polygon {
   const points = clipPathToPolygon(
     '0% 15%, 50% 100%, 100% 15%, 80% 5%, 50% 0%, 20% 5%',
     transformFT(+width, grid),
-    transformFT(+height, grid)
+    transformFT(+height, grid),
   )
 
   return new fabric.Polygon(points, {
@@ -49,38 +49,38 @@ export function createCone (width: number, height: number, grid: number): fabric
     height: transformFT(+height, grid),
     aoe: {
       width: +width,
-      height: +height
+      height: +height,
     },
     stroke: '#FBBD23',
-    ...options
+    ...options,
   } as Partial<fabric.Polygon & { aoe: AOE }>)
 }
 
-export function createLine (height: number, grid: number): fabric.Rect {
+export function createLine(height: number, grid: number): fabric.Rect {
   return new fabric.Rect({
     width: +grid,
     height: transformFT(+height, grid),
     aoe: {
       width: 5,
-      height: +height
+      height: +height,
     },
     stroke: '#3ABFF8',
-    ...options
+    ...options,
   })
 }
 
-export function createSphere (radius: number, grid: number): fabric.Circle {
+export function createSphere(radius: number, grid: number): fabric.Circle {
   return new fabric.Circle({
     radius: transformFT(+radius, grid),
     aoe: {
-      radius: +radius
+      radius: +radius,
     },
     stroke: '#36D399',
-    ...options
+    ...options,
   })
 }
 
-export function getShapeIcon (shape: string): string {
+export function getShapeIcon(shape: string): string {
   switch (shape) {
     case 'Rectangle':
       return 'material-symbols:rectangle-outline'
@@ -95,7 +95,7 @@ export function getShapeIcon (shape: string): string {
   }
 }
 
-export function getShapeColor (shape: string): string {
+export function getShapeColor(shape: string): string {
   switch (shape) {
     case 'Rectangle':
       return 'text-danger'

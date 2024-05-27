@@ -14,6 +14,6 @@ interface Badge {
   description: BadgeI18n
 }
 
-interface EarnedBadge extends Omit<Badge, 'created_at'|'code'> {
+interface EarnedBadge extends Omit<Badge, 'created_at' | 'code'> {
   earned: number
 }

@@ -10,30 +10,34 @@ const localePath = useLocalePath()
 const needConfirmation = ref<boolean>(false)
 const needSelection = ref<boolean>(false)
 
-async function deleteCampaign (): Promise<void> {
+async function deleteCampaign(): Promise<void> {
   try {
     if (current.campaign && isOwner(current.campaign, profile.data?.id || '')) {
       await store.deleteCampaign(current.campaign.id)
       navigateTo(localePath('/campaigns'))
     }
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     needConfirmation.value = false
   }
 }
 
-async function transferOwnership (): Promise<void> {
+async function transferOwnership(): Promise<void> {
   try {
     if (current.campaign && isOwner(current.campaign, profile.data?.id || '')) {
       await store.deleteCampaign(current.campaign.id)
       navigateTo(localePath('/campaigns'))
     }
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     needConfirmation.value = false
   }
 }

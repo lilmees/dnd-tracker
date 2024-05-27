@@ -4,14 +4,14 @@ import logRocket from 'logrocket'
 const emit = defineEmits(['close'])
 const props = withDefaults(
   defineProps<{
-  id: number,
-  note?: Note,
-  open: boolean,
-  update?: boolean
-}>(), {
+    id: number
+    note?: Note
+    open: boolean
+    update?: boolean
+  }>(), {
     note: undefined,
-    update: false
-  }
+    update: false,
+  },
 )
 
 const store = useNotesStore()
@@ -26,13 +26,13 @@ whenever(
     if (props.update && props.note) {
       form.value = {
         title: props.note.title,
-        text: props.note.text
+        text: props.note.text,
       }
     }
-  }
+  },
 )
 
-async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
+async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
 
@@ -42,20 +42,23 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
     if (props.update && props.note) {
       await store.updateNote(
         { ...note, campaign: props.note.campaign },
-        props.note.id
+        props.note.id,
       )
-    } else if (!props.update) {
+    }
+    else if (!props.update) {
       await store.addNote({ ...note, campaign: props.id })
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     resetState()
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   form.value = { title: '', text: '' }
   isLoading.value = false
   emit('close')
@@ -63,13 +66,19 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetState">
+  <Modal
+    :open="open"
+    @close="resetState"
+  >
     <template #header>
       <h2>
         {{ $t(`components.noteModal.${update ? 'update' : 'add'}`) }}
       </h2>
     </template>
-    <p v-if="error" class="text-danger text-center">
+    <p
+      v-if="error"
+      class="text-danger text-center"
+    >
       {{ error }}
     </p>
     <FormKit

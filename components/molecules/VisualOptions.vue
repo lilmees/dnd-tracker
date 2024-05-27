@@ -26,21 +26,23 @@ const form = ref<Omit<EncounterSettings, 'modified'>>({
   spacing: table.encounter?.settings.spacing || 'normal',
   pet: table.encounter?.settings.pet,
   rows: rowOptions,
-  widgets: widgetOptions
+  widgets: widgetOptions,
 })
 
-function update ({ __init, ...formData }: Obj): void {
+function update({ __init, ...formData }: Obj): void {
   try {
     table.encounterUpdate({ settings: { ...formData, modified: true } as EncounterSettings })
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     resetState()
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   reset('form')
   isOpen.value = false
   isLoading.value = false
@@ -61,7 +63,10 @@ function resetState (): void {
         aria-hidden="true"
       />
     </button>
-    <Modal :open="isOpen && !!table.encounter" @close="resetState">
+    <Modal
+      :open="isOpen && !!table.encounter"
+      @close="resetState"
+    >
       <template #header>
         <h2>{{ $t('components.visualOptions.tooltip') }}</h2>
       </template>
@@ -80,7 +85,7 @@ function resetState (): void {
           :options="[
             { label: 'Compact', value: 'compact' },
             { label: 'Normal', value: 'normal' },
-            { label: 'Cozy', value: 'cozy' }
+            { label: 'Cozy', value: 'cozy' },
           ]"
         />
         <FormKit
@@ -95,7 +100,7 @@ function resetState (): void {
             { label: 'Note', value: 'note' },
             { label: 'Death saves', value: 'deathSaves' },
             { label: 'Concentration', value: 'concentration' },
-            { label: 'Modify', value: 'modify' }
+            { label: 'Modify', value: 'modify' },
           ]"
         />
         <FormKit
@@ -106,7 +111,7 @@ function resetState (): void {
           :options="[
             { label: $t('general.note'), value: 'note' },
             { label: $t('general.infoPins'), value: 'info-pins' },
-            { label: $t('general.fantasyNameGenerator'), value: 'fantasy-name-generator' }
+            { label: $t('general.fantasyNameGenerator'), value: 'fantasy-name-generator' },
           ]"
         />
 
@@ -123,10 +128,13 @@ function resetState (): void {
             { label: $t('components.visualOptions.pets.dragon'), value: 'dragon' },
             { label: $t('components.visualOptions.pets.fairy'), value: 'fairy' },
             { label: $t('components.visualOptions.pets.redcap'), value: 'redcap' },
-            { label: $t('components.visualOptions.pets.wolf-rider'), value: 'wolf-rider' }
+            { label: $t('components.visualOptions.pets.wolf-rider'), value: 'wolf-rider' },
           ]"
         />
-        <FormKit type="submit" :aria-label="$t('actions.update')">
+        <FormKit
+          type="submit"
+          :aria-label="$t('actions.update')"
+        >
           {{ $t('actions.save') }}
         </FormKit>
       </FormKit>

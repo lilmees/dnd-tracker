@@ -4,13 +4,15 @@ const showNav = useState<boolean>('showNavigation', () => true)
 withDefaults(
   defineProps<{
     shadow?: boolean
-   }>(),
+  }>(),
   {
-    shadow: false
-  }
+    shadow: false,
+  },
 )
 
-onBeforeMount(() => { showNav.value = true })
+onBeforeMount(() => {
+  showNav.value = true
+})
 </script>
 
 <template>

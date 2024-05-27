@@ -1,4 +1,4 @@
-import { Pinia, Store } from 'pinia'
+import type { Pinia, Store } from 'pinia'
 import logRocket from 'logrocket'
 
 export default defineNuxtPlugin(({ pinia }) => {
@@ -11,7 +11,7 @@ export default defineNuxtPlugin(({ pinia }) => {
   logRocket.init(id)
 
   if (pinia) {
-    (pinia as Pinia).use(({ store }: {store: Store}) => {
+    (pinia as Pinia).use(({ store }: { store: Store }) => {
       store.$subscribe(m => logRocket.log('mutation', m))
     })
   }

@@ -9,14 +9,14 @@ const { data } = await useAsyncData('changelog', async () => {
 const { locale } = useI18n()
 const blob = ref<HTMLDivElement>()
 
-if (process.client) {
+if (import.meta.client) {
   document.body.onmousemove = (event) => {
     if (blob.value) {
       const { clientX, clientY } = event
 
       blob.value.animate({
         left: `${clientX}px`,
-        top: `${clientY}px`
+        top: `${clientY}px`,
       }, { duration: 3000, fill: 'forwards' })
     }
   }
@@ -74,14 +74,17 @@ if (process.client) {
                 :class="{
                   'border-primary bg-primary/50': feature.title === 'New',
                   'border-warning bg-warning/50': feature.title === 'Bug fixes',
-                  'border-help bg-help/50': feature.title === 'Improvements'
+                  'border-help bg-help/50': feature.title === 'Improvements',
                 }"
               >
                 {{ feature.title }}
               </h4>
 
               <ul class="pl-6 space-y-1.5 list-disc body-small marker:text-slate-700 md:text-base">
-                <template v-for="(element, k) in feature.items" :key="k">
+                <template
+                  v-for="(element, k) in feature.items"
+                  :key="k"
+                >
                   <li v-if="!element.adminOnly">
                     {{ element.text }}
                   </li>

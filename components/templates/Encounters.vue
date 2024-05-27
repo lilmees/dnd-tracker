@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{ campaignView?: boolean }>(),
-  { campaignView: false }
+  { campaignView: false },
 )
 
 const currentStore = useCurrentCampaignStore()
@@ -22,7 +22,7 @@ const headers = [
   { label: t('general.name'), sort: true, id: 'title' },
   ...(props.campaignView ? [] : [{ label: t('general.campaign'), sort: false, id: 'campaign.title' }]),
   { label: t('general.rows'), sort: false, id: 'rows' },
-  { label: t('general.actions'), sort: false, id: 'actions' }
+  { label: t('general.actions'), sort: false, id: 'actions' },
 ]
 
 const campaignId = computed<number | undefined>(() => {
@@ -43,7 +43,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => encounterStore.resetPagination())
 
-whenever(error, () => { toast.error() })
+whenever(error, () => toast.error())
 
 whenever(() => currentStore.campaign, () => {
   if (currentStore.campaign) {
@@ -57,11 +57,11 @@ watchDebounced(() => encounterStore.filters, async () => {
     campaignId.value
       ? { field: 'campaign', value: campaignId.value }
       : undefined,
-    true
+    true,
   )
 }, { debounce: 100, maxWait: 500, deep: true })
 
-function resetState (): void {
+function resetState(): void {
   needConfirmation.value = false
   isBulk.value = false
   isUpdating.value = false
@@ -83,7 +83,7 @@ function resetState (): void {
         <div
           class="body-small"
           :class="{
-            'text-danger': encounterStore.encounterCount >= encounterStore.max
+            'text-danger': encounterStore.encounterCount >= encounterStore.max,
           }"
         >
           {{ encounterStore.encounterCount }} / {{ encounterStore.max }}
@@ -121,7 +121,10 @@ function resetState (): void {
       </div>
     </div>
     <template v-if="encounterStore.loading">
-      <SkeletonInput :label="false" class="w-[256px]" />
+      <SkeletonInput
+        :label="false"
+        class="w-[256px]"
+      />
       <SkeletonTable :headers="headers" />
     </template>
     <div v-else-if="!encounterStore.noItems || (encounterStore.filters.search !== '' && encounterStore.noItems)">
@@ -152,7 +155,7 @@ function resetState (): void {
             p,
             campaignId
               ? { field: 'campaign', value: campaignId }
-              : undefined
+              : undefined,
           )
         }"
       >
@@ -161,7 +164,7 @@ function resetState (): void {
           :key="encounter.id"
           class="tr transition-colors"
           :class="{
-            'bg-danger/20': isBulk && selected.find(c => c.id === encounter.id)
+            'bg-danger/20': isBulk && selected.find(c => c.id === encounter.id),
           }"
         >
           <td class="py-1 px-2 border-r last:border-r-0 border-slate-700 max-w-5 text-slate-300">
@@ -175,7 +178,10 @@ function resetState (): void {
               {{ encounter.title }}
             </RouteLink>
           </td>
-          <td v-if="!campaignView" class="td">
+          <td
+            v-if="!campaignView"
+            class="td"
+          >
             <RouteLink
               v-if="encounter.campaign"
               :url="campaignUrl(encounter.campaign, 'content')"
@@ -260,14 +266,24 @@ function resetState (): void {
             </div>
           </td>
         </tr>
-        <template v-if="encounterStore.noItems" #empty>
+        <template
+          v-if="encounterStore.noItems"
+          #empty
+        >
           {{ $t('components.table.nothing', { item: $t('general.encounters').toLowerCase() }) }}
         </template>
       </Table>
     </div>
-    <NoContent v-else content="encounters" icon="ri:table-line" />
+    <NoContent
+      v-else
+      content="encounters"
+      icon="ri:table-line"
+    />
   </div>
-  <div v-else class="max-w-sm mx-auto py-20 space-y-4">
+  <div
+    v-else
+    class="max-w-sm mx-auto py-20 space-y-4"
+  >
     <h2 class="text-center text-danger">
       {{ $t('general.error.text') }}
     </h2>
@@ -285,13 +301,13 @@ function resetState (): void {
       ? selected[0].title
       : $t('components.bulkRemove.multiple', {
         number: selected.length,
-        type: $t('general.encounters').toLowerCase()
+        type: $t('general.encounters').toLowerCase(),
       })"
     @close="resetState"
     @delete="() => {
       encounterStore.deleteEncounter(
         selected.length === 1 ? selected[0].id : selected.map(v => v.id),
-        campaignId
+        campaignId,
       );
       resetState()
     }"

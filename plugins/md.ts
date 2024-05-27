@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      md: renderer
-    }
+      md: renderer,
+    },
   }
 })

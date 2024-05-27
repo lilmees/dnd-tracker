@@ -12,7 +12,7 @@ const { locale, t } = useI18n()
 
 const loadingUsers = ref<boolean>(false)
 const loadingSubmit = ref<boolean>(false)
-const error = ref<string|undefined>()
+const error = ref<string | undefined>()
 const search = ref<string>()
 const users = ref<SocialProfile[]>([])
 const selectedUser = ref<SocialProfile>()
@@ -29,12 +29,13 @@ watchDebounced(() => search.value, async () => {
     }
 
     loadingUsers.value = false
-  } else {
+  }
+  else {
     users.value = []
   }
 }, { debounce: 250, maxWait: 500 })
 
-async function handleSubmit (): Promise<void> {
+async function handleSubmit(): Promise<void> {
   loadingSubmit.value = true
 
   try {
@@ -42,7 +43,7 @@ async function handleSubmit (): Promise<void> {
       if (isInvited(props.campaign, selectedUser.value.id)) {
         toast.info({
           title: t('components.userModal.toast.alreadyInvited.title'),
-          text: t('components.userModal.toast.alreadyInvited.text')
+          text: t('components.userModal.toast.alreadyInvited.text'),
         })
 
         return
@@ -54,27 +55,29 @@ async function handleSubmit (): Promise<void> {
         user: selectedUser.value.id,
         campaign: props.campaign.id,
         role: userRole.value,
-        token
+        token,
       })
 
       sentMail(token)
 
       toast.success({
         title: t('components.userModal.toast.invited.title'),
-        text: t('components.userModal.toast.invited.text')
+        text: t('components.userModal.toast.invited.text'),
       })
 
       resetState()
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     loadingSubmit.value = false
   }
 }
 
-async function sentMail (token: string): Promise<void> {
+async function sentMail(token: string): Promise<void> {
   const link = `https://dnd-tracker.com${campaignUrl(props.campaign, 'join')}?token=${token}`
 
   const { error } = await useFetch('/api/emails/campaign-invite', {
@@ -86,9 +89,9 @@ async function sentMail (token: string): Promise<void> {
         inviteLink: link,
         invitedBy: profile.data?.username || 'Owner',
         username: selectedUser.value?.username || 'User',
-        campaign: props.campaign.title
-      }
-    }
+        campaign: props.campaign.title,
+      },
+    },
   })
 
   if (error.value) {
@@ -96,7 +99,7 @@ async function sentMail (token: string): Promise<void> {
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   error.value = undefined
   selectedUser.value = undefined
   users.value = []
@@ -108,7 +111,10 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetState">
+  <Modal
+    :open="open"
+    @close="resetState"
+  >
     <template #header>
       <h2>
         {{ $t(`components.userModal.title`, { campaign: campaign.title }) }}
@@ -121,14 +127,22 @@ function resetState (): void {
       prefix-icon="search"
       :placeholder="$t('components.inputs.searchByUsername')"
     />
-    <p v-if="error" class="text-danger text-center mb-3">
+    <p
+      v-if="error"
+      class="text-danger text-center mb-3"
+    >
       {{ error }}
     </p>
     <div
       v-if="loadingUsers"
       class="grid sm:grid-cols-3 gap-2 mb-3"
     >
-      <SkeletonAvatar v-for="i in 6" :key="i" name username />
+      <SkeletonAvatar
+        v-for="i in 6"
+        :key="i"
+        name
+        username
+      />
     </div>
     <div
       v-else-if="users.length && !selectedUser"
@@ -147,10 +161,16 @@ function resetState (): void {
           username
           name
         />
-        <span v-if="isMember(campaign, user.id)" class="body-small text-success">
+        <span
+          v-if="isMember(campaign, user.id)"
+          class="body-small text-success"
+        >
           {{ $t('components.userModal.member') }}
         </span>
-        <span v-else-if="isInvited(campaign, user.id)" class="body-small text-info">
+        <span
+          v-else-if="isInvited(campaign, user.id)"
+          class="body-small text-info"
+        >
           {{ $t('components.userModal.invited') }}
         </span>
       </button>
@@ -166,7 +186,10 @@ function resetState (): void {
           username
           name
         />
-        <button :aria-label="$t('actions.remove')" @click="selectedUser = undefined">
+        <button
+          :aria-label="$t('actions.remove')"
+          @click="selectedUser = undefined"
+        >
           <Icon
             name="ic:round-clear"
             class="text-danger w-6 h-6"
@@ -180,7 +203,7 @@ function resetState (): void {
         :label="$t('components.inputs.roleLabel')"
         :options="[
           { label: $t('general.roles.Viewer.title'), value: 'Viewer' },
-          { label: $t('general.roles.Admin.title'), value: 'Admin' }
+          { label: $t('general.roles.Admin.title'), value: 'Admin' },
         ]"
       />
     </div>

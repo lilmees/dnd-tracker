@@ -13,19 +13,21 @@ export const useProfileStore = defineStore('useProfileStore', () => {
   const getSocialProfile = computed<SocialProfile | null>(() => {
     if (!data.value) {
       return null
-    } else {
+    }
+    else {
       const { role, marketing, subscription_type, temp_subscription, ...social } = data.value
       return social as SocialProfile
     }
   })
 
-  async function fetch (): Promise<void> {
+  async function fetch(): Promise<void> {
     error.value = null
 
     try {
       if (!user.value) {
         data.value = null
-      } else if (!loading.value) {
+      }
+      else if (!loading.value) {
         loading.value = true
 
         const { data: prof, error: err } = await supabase
@@ -37,7 +39,8 @@ export const useProfileStore = defineStore('useProfileStore', () => {
         if (err) {
           if (err.details.includes('Results contain 0 rows')) {
             await auth.logout()
-          } else {
+          }
+          else {
             error.value = err.details
           }
         }
@@ -45,15 +48,17 @@ export const useProfileStore = defineStore('useProfileStore', () => {
           data.value = prof
         }
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
 
-  async function updateProfile (prof: ProfileUpdate): Promise<void> {
+  async function updateProfile(prof: ProfileUpdate): Promise<void> {
     if (!prof.password) {
       const { error: profileError } = await supabase
         .from('profiles')
@@ -78,7 +83,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     fetch()
   }
 
-  async function deleteProfile (): Promise<void> {
+  async function deleteProfile(): Promise<void> {
     const id = user.value!.id
     // logout user
     await auth.logout()
@@ -104,7 +109,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     data.value = null
   }
 
-  async function getProfileById (id: string): Promise<SocialProfile|undefined> {
+  async function getProfileById(id: string): Promise<SocialProfile | undefined> {
     try {
       const { data, error: err } = await supabase
         .from('profiles')
@@ -117,13 +122,14 @@ export const useProfileStore = defineStore('useProfileStore', () => {
       }
 
       return data as unknown as SocialProfile
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function getProfileByUsernameFuzzy (username: string): Promise<SocialProfile[]|undefined> {
+  async function getProfileByUsernameFuzzy(username: string): Promise<SocialProfile[] | undefined> {
     try {
       const { data, error: err } = await supabase
         .from('profiles')
@@ -136,7 +142,8 @@ export const useProfileStore = defineStore('useProfileStore', () => {
       }
 
       return data as unknown as SocialProfile[]
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
@@ -151,6 +158,6 @@ export const useProfileStore = defineStore('useProfileStore', () => {
     updateProfile,
     deleteProfile,
     getProfileById,
-    getProfileByUsernameFuzzy
+    getProfileByUsernameFuzzy,
   }
 })

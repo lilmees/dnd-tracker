@@ -15,7 +15,7 @@ export default defineEventHandler(async (event): Promise<StripeProduct[]> => {
       groupedProducts.push({
         name: product.name,
         price: (price.unit_amount || 0) / 100,
-        id: price.id
+        id: price.id,
       })
     }
   })

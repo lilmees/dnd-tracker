@@ -3,13 +3,13 @@ const emit = defineEmits(['close', 'open'])
 
 const props = withDefaults(
   defineProps<{
-    title: string,
-    active?: boolean,
+    title: string
+    active?: boolean
     onlyOpenActive?: boolean
   }>(), {
     active: false,
-    onlyOpenActive: false
-  }
+    onlyOpenActive: false,
+  },
 )
 
 const open = ref<boolean>(false)
@@ -17,7 +17,9 @@ const open = ref<boolean>(false)
 watch(() => open.value, v => emit(v ? 'open' : 'close'))
 
 if (props.onlyOpenActive) {
-  watch(() => props.active, (v) => { open.value = v || false })
+  watch(() => props.active, (v) => {
+    open.value = v || false
+  })
 }
 </script>
 

@@ -10,7 +10,7 @@ const form = ref<{ password: string }>({ password: '' })
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-async function resetPassword ({ __init, password }: Obj): Promise<void> {
+async function resetPassword({ __init, password }: Obj): Promise<void> {
   error.value = null
   isLoading.value = true
 
@@ -18,11 +18,13 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
     await store.updateUser({ password })
     toast.success({ title: t('pages.resetPassword.toast.success.title') })
     navigateTo(localePath('/'))
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
@@ -42,7 +44,10 @@ async function resetPassword ({ __init, password }: Obj): Promise<void> {
         provider="imagekit"
         class="w-20 h-20 mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center">
+      <p
+        v-if="error"
+        class="text-danger text-center"
+      >
         {{ error }}
       </p>
       <FormKit

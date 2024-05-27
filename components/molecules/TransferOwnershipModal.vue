@@ -15,16 +15,16 @@ const isLoading = ref<boolean>(false)
 const selectedUser = ref<SocialProfile>()
 
 const form = ref<{
-  title: string,
+  title: string
   role: UserRole | 'Remove'
 }>({
   title: '',
-  role: 'Admin'
+  role: 'Admin',
 })
 
 const same = computed<boolean>(() => props.campaign.title === form.value.title)
 
-async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
+async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
   isLoading.value = true
 
   try {
@@ -40,7 +40,7 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
         await store.addCampaignTeamMember({
           role: formData.role,
           user: oldOwner.id,
-          campaign: props.campaign.id.toString()
+          campaign: props.campaign.id.toString(),
         })
       }
 
@@ -52,20 +52,22 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
       }
 
       toast.success({
-        title: t('components.transferOwnershipModal.toast.success.title', { username: selectedUser.value.username })
+        title: t('components.transferOwnershipModal.toast.success.title', { username: selectedUser.value.username }),
       })
 
       resetState('transfered')
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     toast.error()
     logRocket.captureException(err as Error)
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function resetState (emitName: 'close' | 'transfered' = 'close'): void {
+function resetState(emitName: 'close' | 'transfered' = 'close'): void {
   selectedUser.value = undefined
   reset('form')
   emit(emitName)
@@ -73,13 +75,19 @@ function resetState (emitName: 'close' | 'transfered' = 'close'): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetState">
+  <Modal
+    :open="open"
+    @close="resetState"
+  >
     <template #header>
       <h2>
         {{ $t('components.transferOwnershipModal.title', { campaign: campaign.title }) }}
       </h2>
     </template>
-    <div v-if="!selectedUser" class="grid sm:grid-cols-3 gap-2 mb-3">
+    <div
+      v-if="!selectedUser"
+      class="grid sm:grid-cols-3 gap-2 mb-3"
+    >
       <button
         v-for="member in campaign.team"
         :key="member.id"
@@ -95,7 +103,10 @@ function resetState (emitName: 'close' | 'transfered' = 'close'): void {
         />
       </button>
     </div>
-    <div v-else class="mb-3 space-y-3">
+    <div
+      v-else
+      class="mb-3 space-y-3"
+    >
       <div class="border-primary border-4 bg-primary/50 rounded-lg px-4 py-2 flex items-center justify-between">
         <Avatar
           :user="selectedUser"
@@ -103,7 +114,10 @@ function resetState (emitName: 'close' | 'transfered' = 'close'): void {
           username
           name
         />
-        <button :aria-label="$t('actions.remove')" @click="selectedUser = undefined">
+        <button
+          :aria-label="$t('actions.remove')"
+          @click="selectedUser = undefined"
+        >
           <Icon
             name="ic:round-clear"
             class="text-danger w-6 h-6"
@@ -126,7 +140,7 @@ function resetState (emitName: 'close' | 'transfered' = 'close'): void {
           :options="[
             { label: $t('general.roles.Admin.title'), value: 'Admin' },
             { label: $t('general.roles.Viewer.title'), value: 'Viewer' },
-            { label: $t('components.transferOwnershipModal.removed'), value: 'Remove' }
+            { label: $t('components.transferOwnershipModal.removed'), value: 'Remove' },
           ]"
         />
         <p class="py-4">

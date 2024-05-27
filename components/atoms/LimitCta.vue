@@ -27,7 +27,10 @@ const isShown = ref<boolean>(true)
         {{ $t('components.limitCta.text') }}
       </p>
       <div class="flex justify-end">
-        <RouteLink url="/pricing" class="btn-primary whitespace-nowrap">
+        <RouteLink
+          url="/pricing"
+          class="btn-primary whitespace-nowrap"
+        >
           {{ $t('components.limitCta.cta') }}
         </RouteLink>
       </div>

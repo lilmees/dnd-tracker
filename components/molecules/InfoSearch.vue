@@ -28,12 +28,13 @@ watch(
     if (v) {
       page.value = 0
       fetchInfo(form.value)
-    } else {
+    }
+    else {
       form.value.search = ''
       hits.value = []
       isLoading.value = false
     }
-  }, { deep: true }
+  }, { deep: true },
 )
 
 const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
@@ -42,32 +43,34 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
   try {
     const { results, count } = await open5e.getData({
       query: { search: query.search, page: page.value + 1 },
-      type: query.type
+      type: query.type,
     })
     pages.value = Math.ceil(count / 20)
 
     hits.value = results
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }, 500, { maxWait: 1000 })
 
-function paginate (newPage: number): void {
+function paginate(newPage: number): void {
   page.value = newPage
   fetchInfo(form.value)
   scrollToTop()
 }
 
-function reset (): void {
+function reset(): void {
   form.value = { search: '', type: 'spells' }
   hits.value = []
   isOpen.value = false
 }
 
-async function handlePinToggle (data: { info: InfoCard, remove: boolean }): Promise<void> {
+async function handlePinToggle(data: { info: InfoCard, remove: boolean }): Promise<void> {
   if (!table.encounter) {
     return
   }
@@ -76,30 +79,32 @@ async function handlePinToggle (data: { info: InfoCard, remove: boolean }): Prom
 
   if (data.remove) {
     update = update.filter((i: InfoCard) => i.slug !== data.info.slug)
-  } else if (table.encounter.info_cards.length >= 10) {
+  }
+  else if (table.encounter.info_cards.length >= 10) {
     toast.error({
       title: t('components.infoSearch.toast.maxTitle'),
-      text: t('components.infoSearch.toast.maxText')
+      text: t('components.infoSearch.toast.maxText'),
     })
-  } else {
+  }
+  else {
     update.push(data.info)
   }
 
   await table.encounterUpdate({ info_cards: update })
 }
 
-function showToggle (): void {
+function showToggle(): void {
   showPinned.value = !showPinned.value
   scrollToTop()
 }
 
-async function removePins (): Promise<void> {
+async function removePins(): Promise<void> {
   await table.encounterUpdate({ info_cards: [] })
   showPinned.value = false
   scrollToTop()
 }
 
-function scrollToTop (): void {
+function scrollToTop(): void {
   const el = document.getElementById('el')
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -112,7 +117,7 @@ function scrollToTop (): void {
     <button
       v-tippy="{
         content: $t('components.fullScreenSearch.tooltip'),
-        touch: false
+        touch: false,
       }"
       :aria-label="$t('components.fullScreenSearch.tooltip')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
@@ -127,7 +132,10 @@ function scrollToTop (): void {
         aria-hidden="true"
       />
     </button>
-    <FullScreenSearch :open="isOpen" @close="reset">
+    <FullScreenSearch
+      :open="isOpen"
+      @close="reset"
+    >
       <div class="flex flex-col max-h-screen py-6">
         <div class="space-y-2">
           <div
@@ -153,17 +161,26 @@ function scrollToTop (): void {
             v-if="table.encounter?.info_cards?.length"
             class="flex gap-4 pt-2 pb-8 w-full max-w-prose mx-auto"
           >
-            <button class="btn-primary" @click="showToggle">
-              {{ $t(`components.infoSearch.${ showPinned ? 'hide' : 'show' }`) }}
+            <button
+              class="btn-primary"
+              @click="showToggle"
+            >
+              {{ $t(`components.infoSearch.${showPinned ? 'hide' : 'show'}`) }}
             </button>
-            <button class="btn-danger" @click="removePins">
+            <button
+              class="btn-danger"
+              @click="removePins"
+            >
               {{ $t('components.infoSearch.remove') }}
             </button>
           </div>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto">
           <template v-if="isLoading">
-            <SkeletonInfoCard v-for="i in 20" :key="i" />
+            <SkeletonInfoCard
+              v-for="i in 20"
+              :key="i"
+            />
           </template>
           <template v-else-if="hits.length || showPinned">
             <InfoCard

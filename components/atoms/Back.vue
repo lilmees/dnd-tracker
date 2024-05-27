@@ -5,7 +5,10 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <NuxtLink :to="localePath(url)" class="w-fit group">
+  <NuxtLink
+    :to="localePath(url)"
+    class="w-fit group"
+  >
     <div class="flex gap-2 items-center">
       <Icon
         name="ph:arrow-left"

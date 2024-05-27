@@ -1,10 +1,10 @@
 type RowType = 'summon' | 'lair' | 'monster' | 'player' | 'npc'
 
-type ActionType= 'actions' | 'legendary_actions' | 'reactions' | 'special_abilities'
+type ActionType = 'actions' | 'legendary_actions' | 'reactions' | 'special_abilities'
 
-type HPActionType= 'heal' | 'damage' | 'temp' | 'override' | 'override-reset'
+type HPActionType = 'heal' | 'damage' | 'temp' | 'override' | 'override-reset'
 
-type ACActionType= 'temp' | 'remove' | 'reset' | 'override' | 'override-reset'
+type ACActionType = 'temp' | 'remove' | 'reset' | 'override' | 'override-reset'
 
 interface DeathSaves {
   save: boolean[]

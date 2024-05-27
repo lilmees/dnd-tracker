@@ -5,13 +5,13 @@ import logRocket from 'logrocket'
 const emit = defineEmits(['close'])
 const props = withDefaults(
   defineProps<{
-    open: boolean,
-    campaign?: Campaign,
+    open: boolean
+    campaign?: Campaign
     update?: boolean
   }>(), {
     update: false,
-    campaign: undefined
-  }
+    campaign: undefined,
+  },
 )
 
 const store = useCampaignsStore()
@@ -28,40 +28,42 @@ whenever(
     if (props.update) {
       form.value.title = props.campaign?.title || ''
     }
-  }
+  },
 )
 
-function handleSubmit ({ __init, ...formData }: Obj): void {
+function handleSubmit({ __init, ...formData }: Obj): void {
   error.value = null
   isLoading.value = true
 
   try {
     props.update ? updateCampaign(formData) : addCampaign(formData)
     resetForm()
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-async function addCampaign (data: Obj): Promise<void> {
+async function addCampaign(data: Obj): Promise<void> {
   if (user.value) {
     await store.addCampaign({
       ...data as CampaignForm,
-      created_by: user.value.id
+      created_by: user.value.id,
     })
   }
 }
 
-async function updateCampaign (data: Obj): Promise<void> {
+async function updateCampaign(data: Obj): Promise<void> {
   if (props.campaign) {
     await store.updateCampaign(data, props.campaign.id)
   }
 }
 
-function resetForm (): void {
+function resetForm(): void {
   reset('form')
   form.value.title = ''
   emit('close')
@@ -69,13 +71,19 @@ function resetForm (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetForm">
+  <Modal
+    :open="open"
+    @close="resetForm"
+  >
     <template #header>
       <h2>
         {{ $t(`components.cammpaignModal.${update ? 'update' : 'add'}`) }}
       </h2>
     </template>
-    <p v-if="error" class="text-danger text-center">
+    <p
+      v-if="error"
+      class="text-danger text-center"
+    >
       {{ error }}
     </p>
     <FormKit

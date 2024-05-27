@@ -2,12 +2,14 @@
 const emit = defineEmits(['update'])
 const props = defineProps<{ deathSaves: DeathSaves, type: RowType }>()
 
-function updateDeathSave (index: number, save: boolean): void {
-  save
-    ? props.deathSaves.save[index] = !props.deathSaves.save[index]
-    : props.deathSaves.fail[index] = !props.deathSaves.fail[index]
+function updateDeathSave(index: number, save: boolean): void {
+  const _deathSaves = { ...props.deathSaves }
 
-  emit('update', props.deathSaves)
+  save
+    ? _deathSaves.save[index] = !_deathSaves.save[index]
+    : _deathSaves.fail[index] = !_deathSaves.fail[index]
+
+  emit('update', _deathSaves)
 }
 </script>
 
@@ -34,7 +36,7 @@ function updateDeathSave (index: number, save: boolean): void {
             'border-success': i === 0,
             'bg-success': value && i === 0,
             'border-danger': i === 1,
-            'bg-danger': value && i === 1
+            'bg-danger': value && i === 1,
           }"
           @click="updateDeathSave(j, i === 0)"
         />

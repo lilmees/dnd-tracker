@@ -7,17 +7,17 @@ export const useSeo = (): void => {
   useLocaleHead({
     addDirAttribute: true,
     identifierAttribute: 'hid',
-    addSeoAttributes: true
+    addSeoAttributes: true,
   })
 
   useSeoMeta({
-    ogUrl: 'https://dnd-tracker.com'
+    ogUrl: 'https://dnd-tracker.com',
   })
 
   useHead({
     titleTemplate: title => (title ? `${title} | ${appName}` : appName),
     htmlAttrs: {
-      lang: locale.value
+      lang: locale.value,
     },
     meta: [
       { hid: 'description', name: 'description', content: meta.description },
@@ -31,23 +31,23 @@ export const useSeo = (): void => {
       { hid: 'og:site_name', property: 'og:site_name', content: meta.og_sitename },
       { hid: 'og:image', property: 'og:image', content: meta.og_image },
       { hid: 'og:title', property: 'og:title', content: meta.og_title },
-      { hid: 'og:description', property: 'og:description', content: meta.og_description }
+      { hid: 'og:description', property: 'og:description', content: meta.og_description },
     ],
     link: [
       {
         rel: 'icon',
         type: 'image/png',
-        href: '/pwa-192.png'
-      }
-    ]
+        href: '/pwa-192.png',
+      },
+    ],
   })
 
   useSchemaOrg([
     defineOrganization({
       name: appName,
       url: 'https://dnd-tracker.com',
-      logo: 'https://dnd-tracker.com/socials.png'
+      logo: 'https://dnd-tracker.com/socials.png',
     }),
-    defineWebSite({ name: 'DnD Tracker: Effortless Encounter Management' })
+    defineWebSite({ name: 'DnD Tracker: Effortless Encounter Management' }),
   ])
 }

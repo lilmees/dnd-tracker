@@ -13,13 +13,13 @@ onMounted(() => fetchNotes())
 
 whenever(() => currentStore.campaign, () => fetchNotes())
 
-function fetchNotes (): void {
+function fetchNotes(): void {
   if (currentStore.campaign) {
     noteStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   isOpen.value = false
   isUpdating.value = false
   needConfirmation.value = false
@@ -36,7 +36,7 @@ function resetState (): void {
         <div
           class="text-[12px]"
           :class="{
-            'text-danger': noteStore.noteCount >= noteStore.maxAmount
+            'text-danger': noteStore.noteCount >= noteStore.maxAmount,
           }"
         >
           {{ noteStore.noteCount }} / {{ noteStore.maxAmount }}
@@ -45,9 +45,9 @@ function resetState (): void {
           class="btn-small-primary"
           :aria-label="$t('actions.createItem', { item: $t('general.note') })"
           :disabled="
-            noteStore.loading ||
-              noteStore.noteCount >= noteStore.maxAmount ||
-              !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
+            noteStore.loading
+              || noteStore.noteCount >= noteStore.maxAmount
+              || !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
           "
           @click="isOpen = true"
         >
@@ -73,13 +73,19 @@ function resetState (): void {
         </button>
       </div>
     </div>
-    <div v-if="currentStore.loading" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-      <SkeletonNoteCard v-for="i in 16" :key="i" />
+    <div
+      v-if="currentStore.loading"
+      class="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+    >
+      <SkeletonNoteCard
+        v-for="i in 16"
+        :key="i"
+      />
     </div>
     <template
       v-else-if="
-        (!noteStore.noItems || (noteStore.search !== '' && noteStore.noItems)) &&
-          currentStore.campaign
+        (!noteStore.noItems || (noteStore.search !== '' && noteStore.noItems))
+          && currentStore.campaign
       "
     >
       <FormKit
@@ -148,12 +154,12 @@ function resetState (): void {
         ? selected[0].title
         : $t('components.bulkRemove.multiple', {
           number: selected.length,
-          type: $t('general.notes').toLowerCase()
+          type: $t('general.notes').toLowerCase(),
         })"
       @close="resetState"
       @delete="() => {
         noteStore.deleteNote(
-          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id),
         )
         resetState()
       }"

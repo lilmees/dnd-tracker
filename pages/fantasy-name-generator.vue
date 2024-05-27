@@ -9,7 +9,7 @@ const names = ref<string[]>([])
 
 onMounted(() => generate())
 
-function generate (): void {
+function generate(): void {
   names.value = []
 
   for (let i = 0; i < 30; i++) {
@@ -17,12 +17,12 @@ function generate (): void {
   }
 }
 
-function handleCopy (name: string): void {
+function handleCopy(name: string): void {
   copy(name)
 
   toast.info({
     title: t('components.nameGenerator.toast.title', { name }),
-    timeout: 2000
+    timeout: 2000,
   })
 }
 </script>
@@ -41,8 +41,15 @@ function handleCopy (name: string): void {
           v-if="names.length"
           class="list-disc list-inside grid sm:grid-cols-2 gap-x-6"
         >
-          <li v-for="name in names" :key="name" class="mb-1 last:mb-0">
-            <button class="text-left cursor-copy" @click="handleCopy(name)">
+          <li
+            v-for="name in names"
+            :key="name"
+            class="mb-1 last:mb-0"
+          >
+            <button
+              class="text-left cursor-copy"
+              @click="handleCopy(name)"
+            >
               {{ name }}
             </button>
           </li>

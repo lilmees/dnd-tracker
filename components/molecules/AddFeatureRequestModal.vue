@@ -11,9 +11,9 @@ const { t } = useI18n()
 
 const isAccepted = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
-const error = ref<string|undefined>()
+const error = ref<string | undefined>()
 
-async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
+async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
   error.value = undefined
   isLoading.value = true
 
@@ -23,9 +23,9 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
       created_by: profile.data!.id,
       voted: {
         like: [profile.data!.id],
-        dislike: []
+        dislike: [],
       },
-      status: 'review'
+      status: 'review',
     }
 
     const feat = await feature.addFeature(newFeature)
@@ -38,9 +38,9 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
             ...formData,
             id: feat.id,
             name: profile.data!.username,
-            email: profile.data!.email
-          }
-        }
+            email: profile.data!.email,
+          },
+        },
       })
 
       if (error.value) {
@@ -49,15 +49,17 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
     }
 
     isAccepted.value = true
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function resetForm (): void {
+function resetForm(): void {
   isAccepted.value = false
   reset('form')
   emit('close')
@@ -65,14 +67,20 @@ function resetForm (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetForm">
+  <Modal
+    :open="open"
+    @close="resetForm"
+  >
     <template #header>
       <h2>
         {{ $t('components.addFeatureRequestModal.title') }}
       </h2>
     </template>
     <template v-if="!isAccepted">
-      <p v-if="error" class="text-danger text-center">
+      <p
+        v-if="error"
+        class="text-danger text-center"
+      >
         {{ error }}
       </p>
       <FormKit

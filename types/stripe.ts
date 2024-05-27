@@ -24,7 +24,7 @@ interface ProductPricing {
   price?: number
   id?: string
   items: {
-    icon: string,
+    icon: string
     number?: number
   }[]
 }

@@ -7,7 +7,7 @@ defineProps<{ open: boolean, title: string }>()
 const form = ref<{ title: string }>({ title: '' })
 const same = computed<boolean>(() => form.value.title.trim().toLowerCase() === 'delete')
 
-function deleteConfirmation (): void {
+function deleteConfirmation(): void {
   if (same.value) {
     reset('form')
     emit('delete')
@@ -16,7 +16,10 @@ function deleteConfirmation (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="$emit('close')">
+  <Modal
+    :open="open"
+    @close="$emit('close')"
+  >
     <template #header>
       <h2>
         {{ $t('components.confirmationModal.title') }}
@@ -24,7 +27,10 @@ function deleteConfirmation (): void {
     </template>
     <div class="text-white space-y-4">
       <div class="p-4 bg-danger/50 rounded-lg flex gap-4 items-center">
-        <Icon name="ph:warning-bold" class="min-w-[30px] min-h-[30px]" />
+        <Icon
+          name="ph:warning-bold"
+          class="min-w-[30px] min-h-[30px]"
+        />
         <p>
           <template
             v-for="text in $t('components.confirmationModal.text', { title }).split(title)"
