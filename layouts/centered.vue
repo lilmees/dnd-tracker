@@ -6,7 +6,7 @@ const blob = ref<HTMLDivElement>()
 
 onBeforeMount(() => { showNav.value = false })
 
-if (process.client) {
+if (import.meta.client) {
   document.body.onmousemove = (event) => {
     if (blob.value) {
       const { clientX, clientY } = event

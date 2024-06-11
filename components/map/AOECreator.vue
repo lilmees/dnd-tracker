@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as fabric from 'fabric'
+import type * as fabric from 'fabric'
 import { reset } from '@formkit/core'
 
 const emit = defineEmits(['add'])

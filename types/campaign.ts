@@ -54,7 +54,7 @@ interface CreateJoinCampaign extends Omit<JoinCampaign, 'id'|'created_at'|'user'
 
 interface CheckJoinCampaign extends Omit<JoinCampaign, 'campaign'> {
   campaign: {
-    title: String,
+    title: string,
     id: string
   }
 }

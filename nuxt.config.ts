@@ -38,7 +38,8 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@vue-email/nuxt',
     '@nuxt/image',
-    'nuxt-lazy-hydrate'
+    'nuxt-lazy-hydrate',
+    '@nuxt/eslint'
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {

@@ -19,6 +19,8 @@ const hasVoted = computed<FeatureRequestVote|undefined>(() => {
     return 'like'
   } else if (props.feature.voted.dislike.includes(profile.data.id)) {
     return 'dislike'
+  } else {
+    return undefined
   }
 })
 

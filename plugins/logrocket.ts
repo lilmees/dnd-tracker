@@ -1,4 +1,4 @@
-import { Pinia, Store } from 'pinia'
+import type { Pinia, Store } from 'pinia'
 import logRocket from 'logrocket'
 
 export default defineNuxtPlugin(({ pinia }) => {

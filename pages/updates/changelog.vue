@@ -9,7 +9,7 @@ const { data } = await useAsyncData('changelog', async () => {
 const { locale } = useI18n()
 const blob = ref<HTMLDivElement>()
 
-if (process.client) {
+if (import.meta.client) {
   document.body.onmousemove = (event) => {
     if (blob.value) {
       const { clientX, clientY } = event
