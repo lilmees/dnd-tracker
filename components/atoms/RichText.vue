@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps<{
-  content: string,
+  content: string
   label: string
- }>()
+}>()
 
 const quill = ref <string>()
 
@@ -19,7 +19,10 @@ const update = useDebounceFn((html: string) => {
 
 <template>
   <div class="relative">
-    <p v-if="label" class="font-bold body-small mb-1">
+    <p
+      v-if="label"
+      class="font-bold body-small mb-1"
+    >
       {{ label }}
     </p>
     <QuillEditor

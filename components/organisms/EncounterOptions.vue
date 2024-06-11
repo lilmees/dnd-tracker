@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{ home?: boolean }>(),
-  { home: false }
+  { home: false },
 )
 
 const store = useTableStore()
@@ -15,7 +15,7 @@ const isTourActive = useState<boolean>('tour-active', () => false)
   <div
     class="p-4 flex justify-end"
     :class="{
-      'md:justify-between md:items-center': !home
+      'md:justify-between md:items-center': !home,
     }"
   >
     <div
@@ -55,7 +55,10 @@ const isTourActive = useState<boolean>('tour-active', () => false)
       </span>
     </div>
     <div class="flex flex-wrap flex-col md:flex-row items-end md:items-center justify-between gap-2">
-      <HotkeysEncounter id="tour-7" class="hidden md:block" />
+      <HotkeysEncounter
+        id="tour-7"
+        class="hidden md:block"
+      />
       <InfoSearch id="tour-6" />
       <div id="tour-5">
         <EncounterDiceRoller />

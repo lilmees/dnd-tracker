@@ -23,13 +23,16 @@ onMounted(async () => {
   }
 })
 
-function handleConfetti (container: Container): void {
+function handleConfetti(container: Container): void {
   setTimeout(() => container.destroy(), 5000)
 }
 </script>
 
 <template>
-  <Layout name="centered" shadow>
+  <Layout
+    name="centered"
+    shadow
+  >
     <div class="space-y-6">
       <h2>
         {{ $t('pages.subscribeSuccess.title') }}

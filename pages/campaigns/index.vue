@@ -21,15 +21,21 @@ const headers = [
   { label: t('general.members'), sort: true, id: 'team' },
   { label: t('general.encounters'), sort: true, id: 'initiative_sheets' },
   { label: t('general.homebrew'), sort: true, id: 'homebrew_items' },
-  { label: t('general.modify'), sort: false, id: 'modify' }
+  { label: t('general.modify'), sort: false, id: 'modify' },
 ]
 
-onMounted(() => { store.fetch() })
+onMounted(() => {
+  store.fetch()
+})
 
-whenever(() => store.error, () => { toast.error() })
+whenever(() => store.error, () => {
+  toast.error()
+})
 
 const visibleItems = computed<Campaign[]>(() => {
-  if (!store.allowedCampaigns) { return [] }
+  if (!store.allowedCampaigns) {
+    return []
+  }
 
   const sorted = sortArray<Campaign>(store.allowedCampaigns, sortedBy.value, sortACS.value)
 
@@ -38,7 +44,7 @@ const visibleItems = computed<Campaign[]>(() => {
 
 const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !store.loading)
 
-function resetState (): void {
+function resetState(): void {
   needConfirmation.value = false
   isBulk.value = false
   isUpdating.value = false
@@ -94,11 +100,17 @@ function resetState (): void {
         </div>
       </div>
       <template v-if="store.loading && !store.allowedCampaigns">
-        <SkeletonInput :label="false" class="w-[256px]" />
+        <SkeletonInput
+          :label="false"
+          class="w-[256px]"
+        />
         <SkeletonTable :headers="headers" />
       </template>
       <template v-else-if="!noItems || (noItems && search !== '')">
-        <ContentHeader v-model:search="search" shadow />
+        <ContentHeader
+          v-model:search="search"
+          shadow
+        />
         <BulkRemove
           v-model:isBulk="isBulk"
           v-model:needConfirmation="needConfirmation"
@@ -120,7 +132,7 @@ function resetState (): void {
             :key="item.id"
             class="tr transition-colors"
             :class="{
-              'bg-danger/20': selected.find(c => c.id === item.id)
+              'bg-danger/20': selected.find(c => c.id === item.id),
             }"
           >
             <td class="td">
@@ -135,7 +147,7 @@ function resetState (): void {
               v-for="td in [
                 (item.team?.length || 0) + 1,
                 item.initiative_sheets?.length || 0,
-                item.homebrew_items?.length || 0
+                item.homebrew_items?.length || 0,
               ]"
               :key="td"
               class="td"
@@ -190,7 +202,10 @@ function resetState (): void {
               </div>
             </td>
           </tr>
-          <template v-if="noItems" #empty>
+          <template
+            v-if="noItems"
+            #empty
+          >
             {{ $t('components.table.nothing', { item: $t('general.campaigns').toLowerCase() }) }}
           </template>
         </Table>
@@ -202,7 +217,10 @@ function resetState (): void {
         class="mt-20"
       />
     </div>
-    <div v-else class="max-w-sm mx-auto py-20 space-y-4">
+    <div
+      v-else
+      class="max-w-sm mx-auto py-20 space-y-4"
+    >
       <h2 class="text-center text-danger">
         {{ $t('general.error.text') }}
       </h2>
@@ -223,7 +241,7 @@ function resetState (): void {
       @close="resetState"
       @delete="() => {
         store.deleteCampaign(
-          selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+          selected.length === 1 ? selected[0].id : selected.map(v => v.id),
         );
         resetState()
       }"

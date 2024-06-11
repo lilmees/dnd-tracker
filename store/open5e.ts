@@ -21,14 +21,15 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
       if (v) {
         fetchMonsters(form.value, page.value)
         page.value = 0
-      } else {
+      }
+      else {
         hits.value = []
       }
     },
-    { debounce: 500, maxWait: 1000, deep: true }
+    { debounce: 500, maxWait: 1000, deep: true },
   )
 
-  async function getData (filters: Open5eFilters): Promise<Open5eResponse> {
+  async function getData(filters: Open5eFilters): Promise<Open5eResponse> {
     let url = `https://api.open5e.com/${filters.type ? filters.type + '/' : ''}?limit=${filters.limit || '20'}&ordering=${filters.type === 'monsters' ? sortBy.value : 'name'}&document__slug=wotc-srd`
 
     const query = removeEmptyKeys<Open5eQuery>(filters.query as Open5eQuery)
@@ -42,24 +43,26 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     return await $fetch(url)
   }
 
-  async function fetchMonsters (query: Open5eSearch, page: number): Promise<void> {
+  async function fetchMonsters(query: Open5eSearch, page: number): Promise<void> {
     isLoading.value = true
     try {
       const { results, count } = await getData({
         query: { ...query, page: page + 1 },
-        type: 'monsters'
+        type: 'monsters',
       })
       pages.value = Math.ceil(count / 20)
       hits.value = results
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   }
 
-  function paginate (newPage: number): void {
+  function paginate(newPage: number): void {
     page.value = newPage
     fetchMonsters(form.value, newPage)
 
@@ -75,7 +78,7 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     'magicitems',
     'weapons',
     'armor',
-    'sections'
+    'sections',
   ]
 
   return {
@@ -88,6 +91,6 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     form,
     getData,
     fetchMonsters,
-    paginate
+    paginate,
   }
 })

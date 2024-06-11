@@ -3,7 +3,7 @@ const anchor = ref<HTMLElement>()
 const eyeLeft = ref<HTMLElement>()
 const eyeRight = ref<HTMLElement>()
 
-function calculateEyes (e: MouseEvent) {
+function calculateEyes(e: MouseEvent) {
   if (!anchor.value || !eyeLeft.value || !eyeRight.value) {
     return
   }
@@ -17,13 +17,16 @@ function calculateEyes (e: MouseEvent) {
   eyeRight.value.style.transform = `rotate(${90 + angleDeg}deg)`
 }
 
-function angle (cx: number, cy: number, ex: number, ey: number): number {
+function angle(cx: number, cy: number, ex: number, ey: number): number {
   return (Math.atan2(ey - cy, ex - cx) * 180) / Math.PI
 }
 </script>
 
 <template>
-  <div class="relative" @mousemove="calculateEyes">
+  <div
+    class="relative"
+    @mousemove="calculateEyes"
+  >
     <div class="relative">
       <div
         class="w-full scale-105 h-screen md:h-[80vh] md:min-h-[800px] rounded-lg blur-md pt-6 overflow-hidden"
@@ -60,10 +63,16 @@ function angle (cx: number, cy: number, ex: number, ey: number): number {
         data-dragon
         class="max-w-[500px] relative opacity-0 float"
       >
-        <div ref="eyeLeft" class="absolute top-[55%] left-[54%] pt-1 sm:pt-2">
+        <div
+          ref="eyeLeft"
+          class="absolute top-[55%] left-[54%] pt-1 sm:pt-2"
+        >
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
-        <div ref="eyeRight" class="absolute top-[55%] right-[61%] pt-1 sm:pt-2">
+        <div
+          ref="eyeRight"
+          class="absolute top-[55%] right-[61%] pt-1 sm:pt-2"
+        >
           <div class="rounded-full bg-black h-2 w-2 sm:h-4 sm:w-4" />
         </div>
         <div ref="anchor">

@@ -3,9 +3,9 @@ const emit = defineEmits(['close'])
 const props = withDefaults(
   defineProps<{
     conditions?: Condition[]
-   }>(), {
-    conditions: () => []
-  }
+  }>(), {
+    conditions: () => [],
+  },
 )
 
 const table = useTableStore()
@@ -19,7 +19,7 @@ onMounted(() => {
   }
 })
 
-function updateConditions (): void {
+function updateConditions(): void {
   if (table.encounter && table.activeIndex !== undefined && table.activeRow) {
     table.activeRow.conditions = selected.value
     const rows = table.encounter.rows
@@ -47,7 +47,10 @@ function updateConditions (): void {
     >
       <div class="flex flex-wrap gap-2">
         <template v-if="store.loading">
-          <SkeletonTag v-for="i in 15" :key="i" />
+          <SkeletonTag
+            v-for="i in 15"
+            :key="i"
+          />
         </template>
         <template v-else-if="store.data?.length">
           <Tag

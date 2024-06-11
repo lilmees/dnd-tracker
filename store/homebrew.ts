@@ -20,7 +20,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const filters = ref<TableFilters>({
     search: '',
     sortedBy: 'name',
-    sortACS: true
+    sortACS: true,
   })
 
   const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
@@ -35,7 +35,8 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
     if (encounterModal.value && tableStore.encounter?.campaign?.id) {
       campaignId = tableStore.encounter.campaign.id
-    } else if (currentStore.campaign?.id) {
+    }
+    else if (currentStore.campaign?.id) {
       campaignId = currentStore.campaign.id
     }
 
@@ -44,7 +45,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     }
   }, { debounce: 100, maxWait: 500, deep: true })
 
-  async function fetch (eq?: SbEq, fuzzy: boolean = false): Promise<void> {
+  async function fetch(eq?: SbEq, fuzzy: boolean = false): Promise<void> {
     error.value = null
     fuzzy ? searching.value = true : loading.value = true
 
@@ -56,25 +57,31 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
         filters: filters.value,
         fields: ['name', 'player'],
         eq,
-        fuzzy
+        fuzzy,
       })
 
-      if (homebrew) { data.value = homebrew }
+      if (homebrew) {
+        data.value = homebrew
+      }
 
       pages.value = pagesCount
 
       getCount()
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
-    } finally {
+    }
+    finally {
       loading.value = false
       searching.value = false
     }
   }
 
-  async function getCount (): Promise<void> {
-    if (currentStore.campaign === null) { return }
+  async function getCount(): Promise<void> {
+    if (currentStore.campaign === null) {
+      return
+    }
 
     const { count } = await supabase
       .from('homebrew_items')
@@ -85,12 +92,12 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     homebrewCount.value = count || 0
   }
 
-  async function paginate (newPage: number, eq?: SbEq): Promise<void> {
+  async function paginate(newPage: number, eq?: SbEq): Promise<void> {
     page.value = newPage
     await fetch(eq, true)
   }
 
-  async function getHomebrewById (id: number): Promise<Homebrew> {
+  async function getHomebrewById(id: number): Promise<Homebrew> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('id', id)
@@ -103,7 +110,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function getHomebrewByType (type: RowType): Promise<Homebrew[]> {
+  async function getHomebrewByType(type: RowType): Promise<Homebrew[]> {
     const { data, error } = await supabase.from('homebrew_items')
       .select('*')
       .eq('type', type)
@@ -115,7 +122,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     return data
   }
 
-  async function addHomebrew (homebrew: AddHomebrew): Promise<void> {
+  async function addHomebrew(homebrew: AddHomebrew): Promise<void> {
     try {
       const { data: newHomebrew, error } = await supabase.from('homebrew_items')
         .insert([homebrew as never])
@@ -123,17 +130,19 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
       if (error) {
         throw error
-      } else if (newHomebrew.length) {
+      }
+      else if (newHomebrew.length) {
         data.value = [newHomebrew[0] as Homebrew, ...data.value]
         homebrewCount.value++
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function deleteHomebrew (id: number|number[]): Promise<void> {
+  async function deleteHomebrew(id: number | number[]): Promise<void> {
     try {
       let query = supabase.from('homebrew_items').delete()
 
@@ -145,16 +154,18 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
       if (error) {
         throw error
-      } else {
+      }
+      else {
         fetch({ field: 'campaign', value: currentStore.campaign!.id }, !!filters.value.search)
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function updateHomebrew (homebrew: UpdateHomebrew, id: number): Promise<void> {
+  async function updateHomebrew(homebrew: UpdateHomebrew, id: number): Promise<void> {
     try {
       const { data: updatedHomebrew, error } = await supabase.from('homebrew_items')
         .update(homebrew as never)
@@ -163,20 +174,22 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
 
       if (error) {
         throw error
-      } else if (updatedHomebrew.length) {
+      }
+      else if (updatedHomebrew.length) {
         const index = data.value.findIndex(e => e.id === id)
         data.value[index] = {
           ...data.value[index],
-          ...updatedHomebrew[0] as Homebrew
+          ...updatedHomebrew[0] as Homebrew,
         }
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  function reset (): void {
+  function reset(): void {
     homebrewCount.value = 0
     data.value = []
     error.value = null
@@ -186,13 +199,13 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
     resetPagination()
   }
 
-  function resetPagination (): void {
+  function resetPagination(): void {
     pages.value = 0
     page.value = 0
     filters.value = {
       search: '',
       sortedBy: 'id',
-      sortACS: true
+      sortACS: true,
     }
   }
 
@@ -230,7 +243,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       { type: 'npc', id: 9, name: 'Gray', health: '20', ac: '16', created_at: 'now', campaign: 1 },
       { type: 'npc', id: 10, name: 'Ginger', health: '10', ac: '18', created_at: 'now', campaign: 1 },
       { type: 'summon', id: 11, name: 'Inli', health: '18', ac: '12', created_at: 'now', campaign: 1 },
-      { type: 'lair', id: 12, name: 'Lair action', created_at: 'now', campaign: 1 }
-    ] as Homebrew[]
+      { type: 'lair', id: 12, name: 'Lair action', created_at: 'now', campaign: 1 },
+    ] as Homebrew[],
   }
 })

@@ -32,16 +32,18 @@ export const useMapBuilder = () => {
     mouseMove,
     fillBackground,
     isDrawingFloor,
-    isDrawingWall
+    isDrawingWall,
   } = useFabricDraw(cellWidth.value)
 
-  function mount (element: HTMLCanvasElement): void {
+  function mount(element: HTMLCanvasElement): void {
     canvas.value = markRaw(new fabric.Canvas(element))
 
-    if (canvas.value) { setCanvasValues() }
+    if (canvas.value) {
+      setCanvasValues()
+    }
   }
 
-  function resetCanvas (): void {
+  function resetCanvas(): void {
     if (canvas.value) {
       lastPosX.value = undefined
       lastPosY.value = undefined
@@ -52,8 +54,10 @@ export const useMapBuilder = () => {
     }
   }
 
-  function setCanvasValues (): void {
-    if (!canvas.value) { return }
+  function setCanvasValues(): void {
+    if (!canvas.value) {
+      return
+    }
 
     window.addEventListener('keydown', keydownHandler)
 
@@ -64,34 +68,48 @@ export const useMapBuilder = () => {
     setCanvasHooks()
   }
 
-  function setCanvasHooks (): void {
-    if (!canvas.value) { return }
+  function setCanvasHooks(): void {
+    if (!canvas.value) {
+      return
+    }
 
     canvas.value.on({
-      dragenter: () => { draggedOver.value = true },
-      dragleave: () => { draggedOver.value = false },
+      'dragenter': () => { draggedOver.value = true },
+      'dragleave': () => { draggedOver.value = false },
       'object:added': ({ target }: { target: fabric.Object }) => {
-        if (target) { calculateCount(target) }
+        if (target) {
+          calculateCount(target)
+        }
       },
       'object:removed': () => calculateCount(),
       'object:moving': ({ target }) => {
-        if (useSnapToGrid.value) { snapToGrid(target, cellWidth.value) }
+        if (useSnapToGrid.value) {
+          snapToGrid(target, cellWidth.value)
+        }
       },
-      'object:modified': ({ target }) => { if (target) { handleBoundaries(canvas.value, target) } },
+      'object:modified': ({ target }) => {
+        if (target) {
+          handleBoundaries(canvas.value, target)
+        }
+      },
       'selection:created': () => { spriteSelected.value = true },
       'selection:cleared': () => { spriteSelected.value = false },
       'mouse:down': ({ e }) => handleMouse(e, 'down'),
       'mouse:move': ({ e, target }: { e: MouseEvent, target: fabric.Object }) => {
-        if (target) { handleTooltip(target, e) }
+        if (target) {
+          handleTooltip(target, e)
+        }
         handleMouse(e, 'move')
       },
       'mouse:up': ({ e }) => handleMouse(e, 'up'),
-      'mouse:wheel': ({ e }) => handleMouseWheel(e as WheelEvent)
+      'mouse:wheel': ({ e }) => handleMouseWheel(e as WheelEvent),
     })
   }
 
-  function addLayers (): void {
-    if (!canvas.value) { return }
+  function addLayers(): void {
+    if (!canvas.value) {
+      return
+    }
 
     if (floorLayer.value instanceof fabric.Group) {
       canvas.value.add(floorLayer.value)
@@ -106,29 +124,32 @@ export const useMapBuilder = () => {
     }
   }
 
-  function handleTooltip (
+  function handleTooltip(
     target: fabric.Object & { aoe?: AOE },
-    e: fabric.TPointerEvent
+    e: fabric.TPointerEvent,
   ): void {
-    if (!canvas.value || !target) { return }
+    if (!canvas.value || !target) {
+      return
+    }
 
     if (
-      !(target instanceof fabric.Group) &&
-      e instanceof MouseEvent &&
-      target.aoe
+      !(target instanceof fabric.Group)
+      && e instanceof MouseEvent
+      && target.aoe
     ) {
       tooltip.value = {
         aoe: target.aoe,
         hidden: false,
         left: `${e.clientX + 25}px`,
-        top: `${e.clientY - 200}px`
+        top: `${e.clientY - 200}px`,
       }
-    } else {
+    }
+    else {
       tooltip.value = { hidden: true }
     }
   }
 
-  function handleMouse (e: fabric.TPointerEvent, action: 'move'|'down'|'up'): void {
+  function handleMouse(e: fabric.TPointerEvent, action: 'move' | 'down' | 'up'): void {
     const { shiftKey } = e
 
     if (canvas.value && shiftKey) {
@@ -137,10 +158,10 @@ export const useMapBuilder = () => {
     }
 
     if (
-      !selectedSprite.value ||
-      !selectedType.value ||
-      (selectedType.value !== 'floors' && selectedType.value !== 'walls') ||
-      ((!isDrawingWall.value && !isDrawingFloor.value) && action === 'move')
+      !selectedSprite.value
+      || !selectedType.value
+      || (selectedType.value !== 'floors' && selectedType.value !== 'walls')
+      || ((!isDrawingWall.value && !isDrawingFloor.value) && action === 'move')
     ) { return }
 
     const spriteData = getSprite(selectedType.value, selectedSprite.value)
@@ -164,8 +185,10 @@ export const useMapBuilder = () => {
     }
   }
 
-  function handleMouseWheel (e: WheelEvent): void {
-    if (!canvas.value) { return }
+  function handleMouseWheel(e: WheelEvent): void {
+    if (!canvas.value) {
+      return
+    }
 
     let currentZoom = canvas.value.getZoom()
     const width = canvas.value.getWidth()
@@ -178,7 +201,7 @@ export const useMapBuilder = () => {
 
     canvas.value.zoomToPoint(
       new fabric.Point({ x: e.offsetX, y: e.offsetY }),
-      currentZoom
+      currentZoom,
     )
 
     zoom.value = currentZoom
@@ -189,7 +212,7 @@ export const useMapBuilder = () => {
     setViewPortTransformWithinBounds(vpt, currentZoom, width, height)
   }
 
-  function handlePanning (e: MouseEvent, action: 'move'|'down'|'up'): void {
+  function handlePanning(e: MouseEvent, action: 'move' | 'down' | 'up'): void {
     switch (action) {
       case 'down':
         isPanning.value = true
@@ -223,14 +246,14 @@ export const useMapBuilder = () => {
     }
   }
 
-  function changeZoom (out: boolean): void {
+  function changeZoom(out: boolean): void {
     const currentZoom = calculateZoom(out, zoom.value)
 
     canvas.value?.setZoom(currentZoom)
     zoom.value = currentZoom
   }
 
-  function calculateCount (target?: fabric.Object): void {
+  function calculateCount(target?: fabric.Object): void {
     let count: number = canvas.value?.getObjects().filter(obj => !(obj instanceof fabric.Group)).length || 0
 
     if (target && count > maxSprites.value) {
@@ -240,24 +263,24 @@ export const useMapBuilder = () => {
 
       toast.warn({
         title: t('pages.map.toast.max.title'),
-        text: t('pages.map.toast.max.text')
+        text: t('pages.map.toast.max.text'),
       })
     }
 
     spriteAmount.value = count
   }
 
-  function setSprite (sprite: Sprite, type: SpriteType): void {
+  function setSprite(sprite: Sprite, type: SpriteType): void {
     selectedSprite.value = selectedSprite.value === sprite ? undefined : sprite
     selectedType.value = selectedSprite.value ? type : undefined
   }
 
-  function set (key: string, value: any): void {
+  function set(key: string, value: any): void {
     canvas.value?.set(key, value)
     canvas.value?.requestRenderAll()
   }
 
-  function add (object: fabric.Object): void {
+  function add(object: fabric.Object): void {
     if (useSnapToGrid.value) {
       snapToGrid(object, cellWidth.value)
     }
@@ -266,7 +289,7 @@ export const useMapBuilder = () => {
     canvas.value?.requestRenderAll()
   }
 
-  function update (object: fabric.Object, key: string, value: any): void {
+  function update(object: fabric.Object, key: string, value: any): void {
     object.set(key, value)
 
     if (useSnapToGrid.value && (key === 'left' || key === 'top')) {
@@ -277,13 +300,13 @@ export const useMapBuilder = () => {
     canvas.value?.requestRenderAll()
   }
 
-  function remove (): void {
+  function remove(): void {
     canvas.value?.remove(...canvas.value.getActiveObjects())
     canvas.value?.discardActiveObject()
     canvas.value?.requestRenderAll()
   }
 
-  function keydownHandler (e: KeyboardEvent): void {
+  function keydownHandler(e: KeyboardEvent): void {
     const object: fabric.Object | undefined = canvas.value?.getActiveObject()
     const step = useSnapToGrid.value ? cellWidth.value : 8
 
@@ -312,7 +335,7 @@ export const useMapBuilder = () => {
     }
   }
 
-  function toggleGridLines (): void {
+  function toggleGridLines(): void {
     showGrid.value = !showGrid.value
 
     if (canvas.value && gridLayer.value instanceof fabric.Group) {
@@ -354,6 +377,6 @@ export const useMapBuilder = () => {
     keydownHandler,
     setSprite,
     toggleGridLines,
-    changeZoom
+    changeZoom,
   }
 }

@@ -1,10 +1,10 @@
 import * as fabric from 'fabric'
 import sprites from '@/fixtures/sprites.json'
 
-export function flip (
+export function flip(
   axis: 'x' | 'y',
-  canvas: fabric.Canvas|undefined,
-  cb: (object: fabric.Object, key: string, value: boolean) => void
+  canvas: fabric.Canvas | undefined,
+  cb: (object: fabric.Object, key: string, value: boolean) => void,
 ): void {
   const object = canvas?.getActiveObject()
 
@@ -17,7 +17,7 @@ export function flip (
   cb(object, key, !object.get(key))
 }
 
-export function clone (canvas: fabric.Canvas|undefined): void {
+export function clone(canvas: fabric.Canvas | undefined): void {
   const activeObjects = canvas?.getActiveObjects()
 
   if (!activeObjects || !activeObjects.length) {
@@ -36,7 +36,7 @@ export function clone (canvas: fabric.Canvas|undefined): void {
   canvas?.requestRenderAll()
 }
 
-export function exportCanvas (canvas: fabric.Canvas|undefined): void {
+export function exportCanvas(canvas: fabric.Canvas | undefined): void {
   if (!canvas) {
     return
   }
@@ -47,27 +47,27 @@ export function exportCanvas (canvas: fabric.Canvas|undefined): void {
   link.click()
 }
 
-export function snapToGrid (object: fabric.Object, grid: number): void {
+export function snapToGrid(object: fabric.Object, grid: number): void {
   object?.set({
     left: Math.floor(object.left / grid) * grid,
-    top: Math.floor(object.top / grid) * grid
+    top: Math.floor(object.top / grid) * grid,
   })
 }
 
-export function getCoordsFromGroupItem (
+export function getCoordsFromGroupItem(
   group: fabric.Group,
-  object: fabric.BaseFabricObject
+  object: fabric.BaseFabricObject,
 ): fabric.Point {
   return {
     x: object.left + group.left + group.width / 2,
-    y: object.top + group.top + group.height / 2
+    y: object.top + group.top + group.height / 2,
   } as fabric.Point
 }
 
-export function getGridObjectByCoords (
+export function getGridObjectByCoords(
   group: fabric.Group,
-  point: fabric.Point
-): fabric.BaseFabricObject|undefined {
+  point: fabric.Point,
+): fabric.BaseFabricObject | undefined {
   for (const object of group.getObjects()) {
     const { x, y } = getCoordsFromGroupItem(group, object)
 
@@ -77,20 +77,20 @@ export function getGridObjectByCoords (
   }
 }
 
-export function pixelToGrid (pixel: number, grid: number): number {
+export function pixelToGrid(pixel: number, grid: number): number {
   return Math.floor(pixel / grid)
 }
 
-export function sameImgSource (object: fabric.Image, sprite: Sprite): boolean {
+export function sameImgSource(object: fabric.Image, sprite: Sprite): boolean {
   return object.getSrc().includes(sprite)
 }
 
-export function getAdjacentSprites (
+export function getAdjacentSprites(
   group: fabric.Group,
   coords: Coords,
   grid: number,
   sprite?: Sprite,
-  sameImage = true
+  sameImage = true,
 ): AdjacentSprite {
   let left = false
   let right = false
@@ -123,9 +123,9 @@ export function getAdjacentSprites (
   return { left, right, bottom, top }
 }
 
-export function createAdjacentString (
+export function createAdjacentString(
   { left, right, bottom, top }: AdjacentSprite,
-  versions?: SpriteDirection[]
+  versions?: SpriteDirection[],
 ): SpriteDirection {
   if (!left && !right && !bottom && !top) {
     return 'default'
@@ -133,18 +133,26 @@ export function createAdjacentString (
 
   let string = ''
 
-  if (left) { string += 'l' }
-  if (right) { string += 'r' }
-  if (top) { string += 't' }
-  if (bottom) { string += 'b' }
+  if (left) {
+    string += 'l'
+  }
+  if (right) {
+    string += 'r'
+  }
+  if (top) {
+    string += 't'
+  }
+  if (bottom) {
+    string += 'b'
+  }
 
   return string === '' ? 'default' : string as SpriteDirection
 }
 
-export function getConnectedCellCoords (
+export function getConnectedCellCoords(
   connection: Connection,
   coords: fabric.Point,
-  grid: number
+  grid: number,
 ): fabric.Point {
   let { x, y } = coords
 
@@ -166,38 +174,44 @@ export function getConnectedCellCoords (
   return { x, y } as fabric.Point
 }
 
-export async function createPattern (url: string): Promise<fabric.Pattern> {
+export async function createPattern(url: string): Promise<fabric.Pattern> {
   const patternImg = await fabric.util.loadImage(url)
 
   return new fabric.Pattern({ source: patternImg })
 }
 
-export function setViewPortTransformWithinBounds (
+export function setViewPortTransformWithinBounds(
   vpt: fabric.TMat2D,
   zoom: number,
   width: number,
   height: number,
-  cb?: () => void
+  cb?: () => void,
 ): void {
   if (zoom < 200 / width) {
     vpt[4] = 200 - width * zoom / 2
     vpt[5] = 200 - height * zoom / 2
-  } else {
-    if (cb) { cb() }
+  }
+  else {
+    if (cb) {
+      cb()
+    }
+
     if (vpt[4] >= 0) {
       vpt[4] = 0
-    } else if (vpt[4] < width - width * zoom) {
+    }
+    else if (vpt[4] < width - width * zoom) {
       vpt[4] = width - width * zoom
     }
     if (vpt[5] >= 0) {
       vpt[5] = 0
-    } else if (vpt[5] < height - height * zoom) {
+    }
+    else if (vpt[5] < height - height * zoom) {
       vpt[5] = height - height * zoom
     }
   }
 }
 
-export function withinBoundaries (event: MouseEvent, canvas: fabric.Canvas): boolean {
+export function withinBoundaries(event: MouseEvent, canvas: fabric.Canvas): boolean {
   const width = canvas.getWidth()
   const height = canvas.getHeight()
   const { x, y } = canvas.getPointer(event)
@@ -205,27 +219,29 @@ export function withinBoundaries (event: MouseEvent, canvas: fabric.Canvas): boo
   return !(x < 0 || x > height || y < 0 || y > width)
 }
 
-export function clipPathToPolygon (
+export function clipPathToPolygon(
   clipPath: string,
   width: number,
-  height: number
+  height: number,
 ): Coords[] {
   return clipPath.split(',').map((point) => {
     const coords = point.trim().split(' ')
 
     return {
       x: (parseFloat(coords[0]) / 100) * width,
-      y: (parseFloat(coords[1]) / 100) * height
+      y: (parseFloat(coords[1]) / 100) * height,
     }
   })
 }
 
-export function drawGridLines (
-  canvas: fabric.Canvas|undefined,
+export function drawGridLines(
+  canvas: fabric.Canvas | undefined,
   grid: number,
-  layer: fabric.Group
+  layer: fabric.Group,
 ): void {
-  if (!canvas) { return }
+  if (!canvas) {
+    return
+  }
 
   const options = { stroke: '#000000', strokeWidth: 1 }
 
@@ -235,11 +251,11 @@ export function drawGridLines (
   }
 }
 
-export function calculateZoom (out: boolean, current: number): number {
+export function calculateZoom(out: boolean, current: number): number {
   return Math.max(1, Math.min(out ? current - 1 : current + 1))
 }
 
-export function findSpriteTypeInJSON (sprite: Sprite): SpriteType|undefined {
+export function findSpriteTypeInJSON(sprite: Sprite): SpriteType | undefined {
   const json = sprites as SpriteMap
 
   for (const category in json) {
@@ -252,20 +268,24 @@ export function findSpriteTypeInJSON (sprite: Sprite): SpriteType|undefined {
   }
 }
 
-export function getSprite (type: SpriteType, sprite: Sprite): SpriteData|undefined {
+export function getSprite(type: SpriteType, sprite: Sprite): SpriteData | undefined {
   const siteUrl = process.env.NODE_ENV === 'production' ? 'https://dnd-tracker.com' : 'http://localhost:3000'
   const spriteMeta = sprites[type].find(svg => svg.value === sprite) as SpriteMetaData<Sprite>
 
-  if (!spriteMeta) { return }
+  if (!spriteMeta) {
+    return
+  }
 
   return {
     url: `${siteUrl}/art/${type}/${sprite}${spriteMeta?.variations ? '-1' : ''}.svg`,
-    ...spriteMeta
+    ...spriteMeta,
   }
 }
 
-export function handleBoundaries (canvas: fabric.Canvas|undefined, target: fabric.Object): void {
-  if (!canvas) { return }
+export function handleBoundaries(canvas: fabric.Canvas | undefined, target: fabric.Object): void {
+  if (!canvas) {
+    return
+  }
 
   const width = canvas.getWidth()
   const height = canvas.getHeight()
@@ -273,13 +293,15 @@ export function handleBoundaries (canvas: fabric.Canvas|undefined, target: fabri
 
   if (boundingBox.left < 0) {
     target.set({ left: 0 })
-  } else if (boundingBox.left + boundingBox.width > width) {
+  }
+  else if (boundingBox.left + boundingBox.width > width) {
     target.set({ left: width - boundingBox.width })
   }
 
   if (boundingBox.top < 0) {
     target.set({ top: 0 })
-  } else if (boundingBox.top + boundingBox.height > height) {
+  }
+  else if (boundingBox.top + boundingBox.height > height) {
     target.set({ top: height - boundingBox.height })
   }
 
@@ -287,6 +309,6 @@ export function handleBoundaries (canvas: fabric.Canvas|undefined, target: fabri
   canvas.requestRenderAll()
 }
 
-export function serializeCanvas (): void {}
+export function serializeCanvas(): void {}
 
-export function deserializeCanvas (items: fabric.Object[]): void {}
+export function deserializeCanvas(items: fabric.Object[]): void {}

@@ -1,17 +1,19 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    padding?: boolean,
+    padding?: boolean
     shadow?: boolean
   }>(), {
     padding: false,
-    shadow: false
-  }
+    shadow: false,
+  },
 )
 
 const showNav = useState<boolean>('showNavigation', () => true)
 
-onBeforeMount(() => { showNav.value = true })
+onBeforeMount(() => {
+  showNav.value = true
+})
 </script>
 
 <template>

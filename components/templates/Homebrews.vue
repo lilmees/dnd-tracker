@@ -20,7 +20,7 @@ const headers = computed<TableHeader[]>(() => [
   { label: 'Init mod', sort: false, id: 'initiative_modifier' },
   { label: t('general.link'), sort: false, id: 'link' },
   { label: t('general.actions'), sort: false, id: 'actions' },
-  { label: t('general.modify'), sort: false, id: 'modify' }
+  { label: t('general.modify'), sort: false, id: 'modify' },
 ])
 
 onBeforeUnmount(() => homebrewStore.resetPagination())
@@ -29,13 +29,13 @@ onMounted(() => fetchHomebrew())
 
 whenever(() => currentStore.campaign, () => fetchHomebrew())
 
-function fetchHomebrew (): void {
+function fetchHomebrew(): void {
   if (currentStore.campaign) {
     homebrewStore.fetch({ field: 'campaign', value: currentStore.campaign.id })
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   needConfirmation.value = false
   isBulk.value = false
   isUpdating.value = false
@@ -43,12 +43,12 @@ function resetState (): void {
   isOpen.value = false
 }
 
-function getActionsAmount (item: Homebrew): number {
+function getActionsAmount(item: Homebrew): number {
   return [
     ...(item.actions || []),
     ...(item.legendary_actions || []),
     ...(item.reactions || []),
-    ...(item.special_abilities || [])
+    ...(item.special_abilities || []),
   ].length
 }
 </script>
@@ -70,7 +70,7 @@ function getActionsAmount (item: Homebrew): number {
         <div
           class="body-small"
           :class="{
-            'text-danger': homebrewStore.homebrewCount >= homebrewStore.max
+            'text-danger': homebrewStore.homebrewCount >= homebrewStore.max,
           }"
         >
           {{ homebrewStore.homebrewCount }} / {{ homebrewStore.max }}
@@ -79,9 +79,9 @@ function getActionsAmount (item: Homebrew): number {
           class="btn-small-primary"
           :aria-label="$t('actions.createItem', { item: $t('general.homebrew') })"
           :disabled="
-            !currentStore.campaign ||
-              !isAdmin(currentStore?.campaign, profile.data?.id || '') ||
-              homebrewStore.homebrewCount >= homebrewStore.max
+            !currentStore.campaign
+              || !isAdmin(currentStore?.campaign, profile.data?.id || '')
+              || homebrewStore.homebrewCount >= homebrewStore.max
           "
           @click="isOpen = true"
         >
@@ -91,9 +91,9 @@ function getActionsAmount (item: Homebrew): number {
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
           :disabled="
-            homebrewStore.loading ||
-              homebrewStore.searching ||
-              !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
+            homebrewStore.loading
+              || homebrewStore.searching
+              || !isAdmin(currentStore.campaign || undefined, profile.data?.id || '')
           "
           class="btn-small-danger"
           @click="() => {
@@ -111,7 +111,11 @@ function getActionsAmount (item: Homebrew): number {
         </button>
       </div>
     </div>
-    <SkeletonTable v-if="homebrewStore.loading" :headers="headers" shadow />
+    <SkeletonTable
+      v-if="homebrewStore.loading"
+      :headers="headers"
+      shadow
+    />
     <template
       v-else-if="
         (!homebrewStore.noItems || homebrewStore.filters.search && homebrewStore.noItems)
@@ -141,7 +145,7 @@ function getActionsAmount (item: Homebrew): number {
         @paginate="(p) => {
           homebrewStore.paginate(
             p,
-            { field: 'campaign', value: currentStore.campaign!.id }
+            { field: 'campaign', value: currentStore.campaign!.id },
           )
         }"
       >
@@ -150,7 +154,7 @@ function getActionsAmount (item: Homebrew): number {
           :key="item.id"
           class="tr transition-colors"
           :class="{
-            'bg-danger/20': isBulk && selected.find(c => c.id === item.id)
+            'bg-danger/20': isBulk && selected.find(c => c.id === item.id),
           }"
         >
           <td class="py-1 px-2 border-r last:border-r-0 border-slate-700 max-w-10 text-slate-300">
@@ -194,7 +198,11 @@ function getActionsAmount (item: Homebrew): number {
                 rel="noreferrer noopener"
                 class="w-fit icon-btn-info"
               >
-                <Icon name="ph:link-simple-horizontal" class="w-8 h-8" aria-hidden="true" />
+                <Icon
+                  name="ph:link-simple-horizontal"
+                  class="w-8 h-8"
+                  aria-hidden="true"
+                />
               </NuxtLink>
             </div>
           </td>
@@ -210,7 +218,11 @@ function getActionsAmount (item: Homebrew): number {
                 }
               "
             >
-              <Icon name="iconamoon:search-bold" class="w-4 h-4" aria-hidden="true" />
+              <Icon
+                name="iconamoon:search-bold"
+                class="w-4 h-4"
+                aria-hidden="true"
+              />
               <span class="whitespace-nowrap">
                 {{ `${getActionsAmount(item)} ${$t('components.inputs.actionsLabel')}` }}
               </span>
@@ -264,7 +276,10 @@ function getActionsAmount (item: Homebrew): number {
             </div>
           </td>
         </tr>
-        <template v-if="homebrewStore.noItems" #empty>
+        <template
+          v-if="homebrewStore.noItems"
+          #empty
+        >
           {{ $t('components.table.nothing', { item: $t('general.homebrew').toLowerCase() }) }}
         </template>
       </Table>
@@ -279,18 +294,22 @@ function getActionsAmount (item: Homebrew): number {
           ? selected[0].name
           : $t('components.bulkRemove.multiple', {
             number: selected.length,
-            type: $t('general.homebrews').toLowerCase()
+            type: $t('general.homebrews').toLowerCase(),
           })"
         @close="resetState"
         @delete="() => {
           homebrewStore.deleteHomebrew(
-            selected.length === 1 ? selected[0].id : selected.map(v => v.id)
+            selected.length === 1 ? selected[0].id : selected.map(v => v.id),
           );
           resetState()
         }"
       />
     </template>
-    <NoContent v-else content="homebrew" icon="la:dragon" />
+    <NoContent
+      v-else
+      content="homebrew"
+      icon="la:dragon"
+    />
     <HomebrewModal
       :open="isOpen || isUpdating"
       :update="isUpdating"

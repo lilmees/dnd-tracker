@@ -8,19 +8,20 @@ const blob = ref<HTMLDivElement>()
 
 try {
   await store.getSandboxEncounter()
-} catch (err) {
+}
+catch (err) {
   logRocket.captureException(err as Error)
   toast.error()
 }
 
-if (process.client) {
+if (import.meta.client) {
   document.body.onmousemove = (event) => {
     if (blob.value) {
       const { clientX, clientY } = event
 
       blob.value.animate({
         left: `${clientX}px`,
-        top: `${clientY}px`
+        top: `${clientY}px`,
       }, { duration: 3000, fill: 'forwards' })
     }
   }

@@ -18,19 +18,20 @@ const data = ref<CheckJoinCampaign>()
 
 whenever(() => profile.data, v => getInvite(v.id))
 
-async function getInvite (id: string): Promise<void> {
+async function getInvite(id: string): Promise<void> {
   const check = await store.findJoinCampaignToken(route.query.token as string)
 
   if (!check || (id !== check.user.id)) {
     routeToNoMember()
-  } else {
+  }
+  else {
     data.value = check as CheckJoinCampaign
   }
 
   isLoading.value = false
 }
 
-async function acceptInvite (): Promise<void> {
+async function acceptInvite(): Promise<void> {
   isLoading.value = true
 
   try {
@@ -38,7 +39,7 @@ async function acceptInvite (): Promise<void> {
       await store.addCampaignTeamMember({
         campaign: data.value.campaign.id,
         role: data.value.role,
-        user: data.value.user.id
+        user: data.value.user.id,
       }, data.value.id)
 
       container.value?.play()
@@ -47,15 +48,17 @@ async function acceptInvite (): Promise<void> {
         navigateTo(localePath(route.fullPath.split('?')[0].replace('/join', '/content')))
       }, 5000)
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     toast.error()
     logRocket.captureException(err as Error)
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-async function declineInvite (): Promise<void> {
+async function declineInvite(): Promise<void> {
   isLoading.value = true
 
   try {
@@ -63,15 +66,17 @@ async function declineInvite (): Promise<void> {
       await store.deleteJoinCampaignToken(data.value.id)
       navigateTo(localePath('/'))
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     toast.error()
     logRocket.captureException(err as Error)
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function routeToNoMember (): void {
+function routeToNoMember(): void {
   navigateTo(localePath('/no-member'))
 }
 </script>
@@ -108,11 +113,11 @@ function routeToNoMember (): void {
       class="absolute"
       :options="{
         fullScreen: {
-          zIndex: 1
+          zIndex: 1,
         },
         particles: {
           number: {
-            value: 0
+            value: 0,
           },
           color: {
             value: [
@@ -122,15 +127,15 @@ function routeToNoMember (): void {
               '#3ABFF8',
               '#FBBD23',
               '#1FB2A5',
-              '#F87272'
-            ]
+              '#F87272',
+            ],
           },
           shape: {
             type: [
               'circle',
-              'square'
+              'square',
             ],
-            options: {}
+            options: {},
           },
           opacity: {
             value: 1,
@@ -139,55 +144,55 @@ function routeToNoMember (): void {
               minimumValue: 0,
               speed: 2,
               startValue: 'max',
-              destroy: 'min'
-            }
+              destroy: 'min',
+            },
           },
           size: {
             value: 4,
             random: {
               enable: true,
-              minimumValue: 2
-            }
+              minimumValue: 2,
+            },
           },
           links: {
-            enable: false
+            enable: false,
           },
           life: {
             duration: {
               sync: true,
-              value: 5
+              value: 5,
             },
-            count: 1
+            count: 1,
           },
           move: {
             enable: true,
             gravity: {
               enable: true,
-              acceleration: 10
+              acceleration: 10,
             },
             speed: {
               min: 10,
-              max: 20
+              max: 20,
             },
             decay: 0.1,
             direction: 'none',
             straight: false,
             outModes: {
               default: 'destroy',
-              top: 'none'
-            }
+              top: 'none',
+            },
           },
           rotate: {
             value: {
               min: 0,
-              max: 360
+              max: 360,
             },
             direction: 'random',
             move: true,
             animation: {
               enable: true,
-              speed: 60
-            }
+              speed: 60,
+            },
           },
           tilt: {
             direction: 'random',
@@ -195,23 +200,23 @@ function routeToNoMember (): void {
             move: true,
             value: {
               min: 0,
-              max: 360
+              max: 360,
             },
             animation: {
               enable: true,
-              speed: 60
-            }
+              speed: 60,
+            },
           },
           roll: {
             darken: {
               enable: true,
-              value: 25
+              value: 25,
             },
             enable: true,
             speed: {
               min: 15,
-              max: 25
-            }
+              max: 25,
+            },
           },
           wobble: {
             distance: 30,
@@ -219,25 +224,25 @@ function routeToNoMember (): void {
             move: true,
             speed: {
               min: -15,
-              max: 15
-            }
-          }
+              max: 15,
+            },
+          },
         },
         emitters: {
           life: {
             count: 0,
             duration: 0.1,
-            delay: 0.4
+            delay: 0.4,
           },
           rate: {
             delay: 0.1,
-            quantity: 150
+            quantity: 150,
           },
           size: {
             width: 0,
-            height: 0
-          }
-        }
+            height: 0,
+          },
+        },
       }
       "
       @load="(con: Container) => {

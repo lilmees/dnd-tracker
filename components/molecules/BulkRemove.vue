@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ type: 'campaigns'|'encounters'|'homebrews'|'notes' }>()
+defineProps<{ type: 'campaigns' | 'encounters' | 'homebrews' | 'notes' }>()
 
 const selected = defineModel<any[]>('selected', { default: [] })
 const isBulk = defineModel<boolean>('isBulk', { default: false })
@@ -21,7 +21,7 @@ const needConfirmation = defineModel<boolean>('needConfirmation', { default: fal
           :disabled="!selected.length"
           :aria-label="$t('components.bulkRemove.amount', {
             number: selected.length,
-            type: $t(`general.${type}`).toLowerCase()
+            type: $t(`general.${type}`).toLowerCase(),
           })"
           @click="needConfirmation = true"
         >

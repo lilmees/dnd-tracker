@@ -7,7 +7,7 @@ export default eventHandler((event) => {
     event.context.transporter = createTransport({
       host: process.env.HOST || 'smtp.ethereal.email',
       service: 'gmail',
-      auth: { user, pass }
+      auth: { user, pass },
     })
   }
 })

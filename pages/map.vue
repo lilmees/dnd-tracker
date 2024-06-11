@@ -27,7 +27,7 @@ const {
   add,
   remove,
   toggleGridLines,
-  changeZoom
+  changeZoom,
 } = useMapBuilder()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -48,7 +48,7 @@ onKeyStroke(['V', 'v'], (e) => {
   }
 })
 
-function changeBackground (sprite : Sprite): void {
+function changeBackground(sprite: Sprite): void {
   const spriteData = getSprite('floors', sprite)
 
   if (spriteData && canvas.value && floorLayer.value instanceof fabric.Group) {
@@ -56,30 +56,36 @@ function changeBackground (sprite : Sprite): void {
   }
 }
 
-function handleDrag (event: DragEvent): void {
+function handleDrag(event: DragEvent): void {
   selectedSprite.value = undefined
   selectedType.value = undefined
 
   if (event.target instanceof HTMLImageElement) {
     const split = event.target.src.split('/')
 
-    if (split.length < 2) { return }
+    if (split.length < 2) {
+      return
+    }
 
     draggingSprite.value = {
       sprite: split[split.length - 1].replace('.svg', '') as Sprite,
-      type: split[split.length - 2] as SpriteType
+      type: split[split.length - 2] as SpriteType,
     }
   }
 }
 
-async function handleDrop (event: DragEvent): Promise<void> {
+async function handleDrop(event: DragEvent): Promise<void> {
   draggedOver.value = false
 
-  if (!draggingSprite.value) { return }
+  if (!draggingSprite.value) {
+    return
+  }
 
   const spriteData = getSprite(draggingSprite.value.type, draggingSprite.value.sprite)
 
-  if (!spriteData) { return }
+  if (!spriteData) {
+    return
+  }
 
   const img = await fabric.util.loadImage(spriteData.url)
 
@@ -92,27 +98,30 @@ async function handleDrop (event: DragEvent): Promise<void> {
     width,
     height,
     left: offsetX < 0 ? 0 : offsetX,
-    top: offsetY < 0 ? 0 : offsetY
+    top: offsetY < 0 ? 0 : offsetY,
   }))
 
   draggingSprite.value = undefined
 }
 
-function handleSubmit ({ __init, file }: Obj): void {
+function handleSubmit({ __init, file }: Obj): void {
   const maxSize = 524288 // 0.5MB
 
   if (file[0].file.size > maxSize) {
     alert('File is too big!')
-  } else {
+  }
+  else {
     readFile(file[0].file, (e: ProgressEvent) => {
       const htmlImg = new Image()
 
       htmlImg.onload = () => {
-        if (!canvas.value) { return }
+        if (!canvas.value) {
+          return
+        }
 
         const img = new fabric.Image(htmlImg, {
           scaleX: canvas.value.width / htmlImg.width,
-          scaleY: canvas.value.height / htmlImg.height
+          scaleY: canvas.value.height / htmlImg.height,
         })
 
         set('backgroundImage', img)
@@ -153,7 +162,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                   :key="sprite.value"
                   class="w-12 p-1 transition-colors duration-200 ease-in-out"
                   :class="{
-                    'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors'
+                    'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'floors',
                   }"
                 >
                   <img
@@ -220,7 +229,7 @@ function handleSubmit ({ __init, file }: Obj): void {
                 :key="sprite.value"
                 class="w-12 p-1 transition-colors duration-200 ease-in-out"
                 :class="{
-                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls'
+                  'bg-primary/50 rounded-lg': sprite.value === selectedSprite && selectedType === 'walls',
                 }"
               >
                 <img
@@ -361,7 +370,7 @@ function handleSubmit ({ __init, file }: Obj): void {
               <Icon
                 v-tippy="{
                   content: $t('actions.reset'),
-                  touch: false
+                  touch: false,
                 }"
                 name="carbon:reset"
                 class="w-6 h-6 text-danger outline-none"
@@ -398,9 +407,17 @@ function handleSubmit ({ __init, file }: Obj): void {
               @dragenter.prevent
               @mouseleave="tooltip = { hidden: true }"
             >
-              <canvas ref="canvasEl" width="512" height="512" class="rounded" />
+              <canvas
+                ref="canvasEl"
+                width="512"
+                height="512"
+                class="rounded"
+              />
             </div>
-            <div class="flex justify-end" :class="{ 'text-danger': spriteAmount >= maxSprites }">
+            <div
+              class="flex justify-end"
+              :class="{ 'text-danger': spriteAmount >= maxSprites }"
+            >
               {{ spriteAmount }} / {{ maxSprites }}
             </div>
           </div>

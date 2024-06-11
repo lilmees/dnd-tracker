@@ -26,7 +26,11 @@ const date = computed<string>(() => {
         color,
       }"
     >
-      <Icon :name="icon" width="22" height="22" />
+      <Icon
+        :name="icon"
+        width="22"
+        height="22"
+      />
       {{ label[locale as keyof BadgeI18n] }}
     </button>
     <template #content>

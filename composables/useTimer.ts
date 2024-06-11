@@ -1,6 +1,6 @@
 import type { UseTimestampOptions } from '@vueuse/core'
 
-export function useTimer (cb: (...args: unknown[]) => any, interval: number, options?: UseTimestampOptions<true>) {
+export function useTimer(cb: (...args: unknown[]) => any, interval: number, options?: UseTimestampOptions<true>) {
   let timer: number | null = null
   const { pause: tPause, resume: tResume, timestamp } = useTimestamp({ ...(options || {}), controls: true })
   const startTime = ref<number | null>(null)
@@ -12,7 +12,7 @@ export function useTimer (cb: (...args: unknown[]) => any, interval: number, opt
     return interval - (timestamp.value - startTime.value)
   })
 
-  function set (...args: unknown[]) {
+  function set(...args: unknown[]) {
     timer = setTimeout(() => {
       timer = null
       startTime.value = null
@@ -20,29 +20,29 @@ export function useTimer (cb: (...args: unknown[]) => any, interval: number, opt
     }, remaining.value) as unknown as number
   }
 
-  function clear () {
+  function clear() {
     if (timer) {
       clearTimeout(timer)
       timer = null
     }
   }
 
-  function start (): void {
+  function start(): void {
     startTime.value = Date.now()
     set()
   }
 
-  function stop (): void {
+  function stop(): void {
     clear()
     tPause()
   }
 
-  function pause (): void {
+  function pause(): void {
     clear()
     tPause()
   }
 
-  function resume (): void {
+  function resume(): void {
     set()
     tResume()
     startTime.value = (startTime.value || 0) + (Date.now() - timestamp.value)
@@ -55,6 +55,6 @@ export function useTimer (cb: (...args: unknown[]) => any, interval: number, opt
     stop,
     pause,
     resume,
-    remaining
+    remaining,
   }
 }

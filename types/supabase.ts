@@ -1,8 +1,8 @@
 type SbTables =
-| 'initiative_sheets'
-| 'homebrew_items'
-| 'campaigns'
-| 'notes'
+  | 'initiative_sheets'
+  | 'homebrew_items'
+  | 'campaigns'
+  | 'notes'
 
 interface SbRealTime {
   commit_timestamp: string
@@ -15,7 +15,7 @@ interface SbRealTime {
 }
 
 interface SbEq {
-  field: string,
+  field: string
   value: string | number
 }
 
@@ -35,8 +35,8 @@ interface SbRange {
   to: number
 }
 
-interface SbQuery <T> {
-  data: T[],
+interface SbQuery<T> {
+  data: T[]
   count: number | null
   pagesCount: number
 }

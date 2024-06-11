@@ -19,11 +19,11 @@ const members = computed<any[]>(() => {
     : [
         { role: 'Owner', user: store.campaign.created_by },
         ...store.campaign.team || [],
-        ...store.campaign.join_campaign?.map((join) => { return { ...join, invite: true } }) || []
+        ...store.campaign.join_campaign?.map((join) => { return { ...join, invite: true } }) || [],
       ]
 })
 
-async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
+async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
   isLoading.value = true
   try {
     if (store.campaign) {
@@ -31,36 +31,42 @@ async function handleSubmit ({ __init, ...formData }: Obj): Promise<void> {
 
       toast.success({ title: t('pages.campaign.toast.update') })
     }
-  } catch (err: any) {
+  }
+  catch (err: any) {
     toast.error()
     logRocket.captureException(err as Error)
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-async function handleDelete (): Promise<void> {
+async function handleDelete(): Promise<void> {
   try {
     if (selectedTeamMember.value) {
       await store.deleteCampaignTeamMember(selectedTeamMember.value.id)
-    } else if (selectedInvite.value) {
+    }
+    else if (selectedInvite.value) {
       await store.deleteJoinCampaignToken(selectedInvite.value.id)
     }
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     selectedTeamMember.value = undefined
     selectedInvite.value = undefined
   }
 }
 
-async function changeRole (role: string | undefined, member: TeamMember): Promise<void> {
+async function changeRole(role: string | undefined, member: TeamMember): Promise<void> {
   try {
     if (role) {
       await store.updateCampaignTeamMember({ role: role as UserRole }, member.id)
     }
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
   }
@@ -90,12 +96,22 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
             :key="member.user.id"
             class="flex flex-col sm:flex-row gap-x-4 gap-y-2 sm:items-center sm:justify-between border-b border-slate-700 mb-2 pb-1 last:border-none last:mb-0 last:pb-0"
           >
-            <Avatar :user="member.user" :username="isSmall" />
+            <Avatar
+              :user="member.user"
+              :username="isSmall"
+            />
             <p class="w-[200px] hidden sm:block font-bold">
               {{ member.user.username }}
             </p>
-            <div v-if="member?.invite" class="max-w-[300px] grow flex items-center gap-2">
-              <Icon name="mingcute:invite-line" :aria-hidden="true" class="w-5 h-5" />
+            <div
+              v-if="member?.invite"
+              class="max-w-[300px] grow flex items-center gap-2"
+            >
+              <Icon
+                name="mingcute:invite-line"
+                :aria-hidden="true"
+                class="w-5 h-5"
+              />
               <span>
                 {{ $t('components.userModal.invited') }}
               </span>
@@ -104,7 +120,11 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
               v-else-if="member.role === 'Owner'"
               class="max-w-[300px] grow flex items-center gap-2"
             >
-              <Icon name="tabler:chess-king" :aria-hidden="true" class="w-5 h-5" />
+              <Icon
+                name="tabler:chess-king"
+                :aria-hidden="true"
+                class="w-5 h-5"
+              />
               <span>
                 {{ $t('general.roles.Owner.title') }}
               </span>
@@ -117,7 +137,7 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
               :disabled="member.role === 'Owner'"
               :options="[
                 { value: 'Viewer', label: $t('general.roles.Viewer.title') },
-                { value: 'Admin', label: $t('general.roles.Admin.title') }
+                { value: 'Admin', label: $t('general.roles.Admin.title') },
               ]"
               outer-class="$reset max-w-[300px] grow !pb-0"
               @input="changeRole($event, member)"
@@ -132,7 +152,7 @@ async function changeRole (role: string | undefined, member: TeamMember): Promis
               }"
             >
               <Icon
-                v-tippy="{ content: $t('actions.delete')}"
+                v-tippy="{ content: $t('actions.delete') }"
                 name="material-symbols:delete-outline-rounded"
                 class="w-6 h-6 text-danger outline-none"
                 aria-hidden="true"

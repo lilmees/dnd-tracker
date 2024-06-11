@@ -18,7 +18,7 @@ watch(() => rolled.value, (v) => {
   }
 }, { immediate: true })
 
-function startTimer (): void {
+function startTimer(): void {
   timer = useTimer(() => onClose(), timeout)
   watchEffect(() => {
     remaining.value = timer.remaining.value
@@ -28,19 +28,19 @@ function startTimer (): void {
   })
 }
 
-function onMouseover (): void {
+function onMouseover(): void {
   if (timer) {
     timer.pause()
   }
 }
 
-function onMouseleave (): void {
+function onMouseleave(): void {
   if (timer) {
     timer.resume()
   }
 }
 
-function onClose (): void {
+function onClose(): void {
   if (timer) {
     timer.stop()
   }

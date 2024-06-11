@@ -15,8 +15,8 @@ const props = withDefaults(
     item: undefined,
     encounter: false,
     update: false,
-    disabled: false
-  }
+    disabled: false,
+  },
 )
 
 const currentStore = useCurrentCampaignStore()
@@ -32,7 +32,7 @@ whenever(
   () => props.open,
   () => {
     form.value = setForm()
-  }
+  },
 )
 
 const summonersOptions = computed<Option[]>(() => {
@@ -42,12 +42,13 @@ const summonersOptions = computed<Option[]>(() => {
       .map((o) => {
         return { label: o.name, value: o.id }
       })
-  } else {
+  }
+  else {
     return []
   }
 })
 
-function setForm (): HomebrewForm {
+function setForm(): HomebrewForm {
   return {
     name: props.item?.name || '',
     player: props.item?.player || '',
@@ -62,11 +63,11 @@ function setForm (): HomebrewForm {
     actions: props.item
       ? [...props.item.actions, ...props.item.legendary_actions, ...props.item.reactions, ...props.item.special_abilities]
       : [],
-    save: false
+    save: false,
   }
 }
 
-function handleSubmit ({ __init, data, slots, save, ...formData }: Obj): void {
+function handleSubmit({ __init, data, slots, save, ...formData }: Obj): void {
   error.value = ''
   isLoading.value = true
 
@@ -92,23 +93,28 @@ function handleSubmit ({ __init, data, slots, save, ...formData }: Obj): void {
 
         addHomebrew(payload, table.encounter.campaign.id)
       }
-    } else {
+    }
+    else {
       delete homebrewData.amount
       props.update ? updateHomebrew(homebrewData) : addHomebrew(homebrewData)
     }
 
     reset('form')
     closeModal()
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-async function updateHomebrew (formData: Obj): Promise<void> {
-  if (!props.item?.id) { return }
+async function updateHomebrew(formData: Obj): Promise<void> {
+  if (!props.item?.id) {
+    return
+  }
 
   const updated = removeEmptyKeys<Homebrew>(formData)
   await homebrewStore.updateHomebrew(updated, props.item.id as number)
@@ -116,21 +122,25 @@ async function updateHomebrew (formData: Obj): Promise<void> {
   emit('updated', updated)
 }
 
-async function addHomebrew (formData: Obj, id?: number): Promise<void> {
+async function addHomebrew(formData: Obj, id?: number): Promise<void> {
   await homebrewStore.addHomebrew(
     removeEmptyKeys<AddHomebrew>({
       ...formData,
-      campaign: id || currentStore?.campaign?.id
-    })
+      campaign: id || currentStore?.campaign?.id,
+    }),
   )
 }
 
-async function addInitiative ({ amount, ...data }: Obj): Promise<void> {
-  if (!table.encounter?.rows) { return }
+async function addInitiative({ amount, ...data }: Obj): Promise<void> {
+  if (!table.encounter?.rows) {
+    return
+  }
 
   const rows = []
 
-  if (!amount) { amount = 1 }
+  if (!amount) {
+    amount = 1
+  }
 
   // Set summoner data when it's an id
   if (typeof data.summoner === 'number') {
@@ -148,11 +158,11 @@ async function addInitiative ({ amount, ...data }: Obj): Promise<void> {
   }
 
   await table.encounterUpdate({
-    rows: [...table.encounter.rows, ...rows]
+    rows: [...table.encounter.rows, ...rows],
   } as UpdateEncounter)
 }
 
-function closeModal (): void {
+function closeModal(): void {
   reset('form')
   form.value.type = 'player'
   emit('close')
@@ -160,7 +170,10 @@ function closeModal (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="closeModal">
+  <Modal
+    :open="open"
+    @close="closeModal"
+  >
     <template #header>
       <h2>
         {{ $t(`components.homebrewModal.${update ? 'update' : 'new'}`) }}
@@ -256,7 +269,10 @@ function closeModal (): void {
           validation="between:-20,20|number"
         />
       </div>
-      <div v-if="form.type !== 'lair'" class="grid sm:grid-cols-2 gap-x-3">
+      <div
+        v-if="form.type !== 'lair'"
+        class="grid sm:grid-cols-2 gap-x-3"
+      >
         <FormKit
           name="ac"
           type="number"
@@ -276,7 +292,12 @@ function closeModal (): void {
           outer-class="grow"
         />
       </div>
-      <FormKit name="link" type="url" :label="$t('components.inputs.linkLabel')" validation="url" />
+      <FormKit
+        name="link"
+        type="url"
+        :label="$t('components.inputs.linkLabel')"
+        validation="url"
+      />
       <FormKit
         type="repeater"
         name="actions"
@@ -299,7 +320,11 @@ function closeModal (): void {
             { label: 'Special ability', value: 'special_abilities' },
           ]"
         />
-        <FormKit name="name" :label="$t('components.inputs.nameLabel')" validation="required|length:3,30" />
+        <FormKit
+          name="name"
+          :label="$t('components.inputs.nameLabel')"
+          validation="required|length:3,30"
+        />
         <FormKit
           name="desc"
           type="textarea"
@@ -352,7 +377,10 @@ function closeModal (): void {
           {{ $t('components.homebrewModal.max') }}
         </span>
       </div>
-      <p v-if="error" class="text-danger body-small">
+      <p
+        v-if="error"
+        class="text-danger body-small"
+      >
         {{ error }}
       </p>
       <div class="flex justify-end">
@@ -362,7 +390,7 @@ function closeModal (): void {
             $t(
               encounter || (!encounter && !update)
                 ? 'components.homebrewModal.add'
-                : 'components.homebrewModal.update'
+                : 'components.homebrewModal.update',
             )
           "
           :disabled="isLoading"

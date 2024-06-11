@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
-  row: Row,
-  index: number,
+  row: Row
+  index: number
   tableSpacing: string
 }>()
 
@@ -13,7 +13,8 @@ const summoner = computed<string | null>(() => {
   if (store.encounter) {
     const sum = store.encounter.rows.filter(r => r.id === props.row.summoner?.id)
     return sum.length ? sum[0].name : null
-  } else {
+  }
+  else {
     return null
   }
 })
@@ -25,7 +26,7 @@ watchDebounced(note, () => {
   store.updateRow(note.value as never)
 }, { debounce: 500, maxWait: 1000 })
 
-async function moveRow (up: boolean): Promise<void> {
+async function moveRow(up: boolean): Promise<void> {
   if (store?.encounter) {
     const rows = store.encounter.rows
     const lowestIndex = rows.findIndex(r => r.index === props.index)
@@ -36,12 +37,13 @@ async function moveRow (up: boolean): Promise<void> {
       for (let i = lowestIndex + 1; i < rows.length; i++) {
         rows[i].index = i
       }
-    } else {
+    }
+    else {
       rows[lowestIndex].index = lowestIndex + 1
       rows[lowestIndex + 1].index = lowestIndex
     }
     await store.encounterUpdate({
-      rows: rows.sort((a, b) => a.index - b.index)
+      rows: rows.sort((a, b) => a.index - b.index),
     })
   }
 }
@@ -94,8 +96,8 @@ async function moveRow (up: boolean): Promise<void> {
     </td>
     <td
       v-if="
-        store.includesSummond &&
-          (!store.encounter.settings.modified || store.encounter.settings.rows.includes('summoner'))
+        store.includesSummond
+          && (!store.encounter.settings.modified || store.encounter.settings.rows.includes('summoner'))
       "
       class="border-r border-slate-700"
       :class="tableSpacing"
@@ -219,12 +221,15 @@ async function moveRow (up: boolean): Promise<void> {
           <p
             v-if="row.health !== null"
             :class="{
-              'text-danger font-bold': typeof row.health === 'number' && +row.health < 1
+              'text-danger font-bold': typeof row.health === 'number' && +row.health < 1,
             }"
           >
             {{ row.health }}
           </p>
-          <p v-else-if="row.type !== 'lair'" class="text-slate-600">
+          <p
+            v-else-if="row.type !== 'lair'"
+            class="text-slate-600"
+          >
             Add
           </p>
           <span
@@ -244,7 +249,11 @@ async function moveRow (up: boolean): Promise<void> {
       class="border-r border-slate-700"
       :class="tableSpacing"
     >
-      <Actions id="tour-9" :row="row" :index="index" />
+      <Actions
+        id="tour-9"
+        :row="row"
+        :index="index"
+      />
     </td>
     <td
       v-if="!store.encounter.settings.modified || store.encounter.settings.rows.includes('conditions')"
@@ -313,13 +322,13 @@ async function moveRow (up: boolean): Promise<void> {
     >
       <Modify
         @copy="store.encounterUpdate({
-          rows:[
+          rows: [
             ...store.encounter.rows,
-            { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() }
-          ]
+            { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() },
+          ],
         })"
         @delete="store.encounterUpdate({
-          rows: store.encounter.rows.filter(r => r.id !== row.id)
+          rows: store.encounter.rows.filter(r => r.id !== row.id),
         })"
       />
     </td>

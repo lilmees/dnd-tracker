@@ -1,4 +1,4 @@
-export function generateToken (length = 32): string {
+export function generateToken(length = 32): string {
   const numbers = '0123456789'
   const charsLower = 'abcdefghijklmnopqrstuvwxyz'
   const charsUpper = charsLower.toUpperCase()

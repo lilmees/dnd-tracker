@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{ shadow?: boolean }>(),
-  { shadow: false }
+  { shadow: false },
 )
 
 const search = defineModel<string>('search')

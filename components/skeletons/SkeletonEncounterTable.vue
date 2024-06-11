@@ -33,7 +33,7 @@
                 'components.encounterTable.headers.note',
                 'components.encounterTable.headers.deathSaves',
                 'components.encounterTable.headers.concentration',
-                'components.encounterTable.headers.modify'
+                'components.encounterTable.headers.modify',
               ]"
               :key="header"
               class="py-3 px-2 bg-tracker border-b border-r last:border-r-0 border-slate-700 uppercase"

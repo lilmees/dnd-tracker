@@ -8,13 +8,13 @@ import 'swiper/css/navigation'
 defineEmits(['loaded', 'slideChange'])
 withDefaults(
   defineProps<{
-    space?: number,
-    speed?: number,
-    slideOffset?: number,
-    loop?: boolean,
-    centered?: boolean,
-    pagination?: boolean,
-    navigation?: boolean,
+    space?: number
+    speed?: number
+    slideOffset?: number
+    loop?: boolean
+    centered?: boolean
+    pagination?: boolean
+    navigation?: boolean
   }>(), {
     space: 32,
     speed: 600,
@@ -22,8 +22,8 @@ withDefaults(
     loop: false,
     centered: false,
     pagination: false,
-    navigation: false
-  }
+    navigation: false,
+  },
 )
 </script>
 
@@ -43,7 +43,7 @@ withDefaults(
       :slides-per-view="'auto'"
       :pagination="{
         enabled: pagination,
-        clickable: true
+        clickable: true,
       }"
       :navigation="navigation"
       :modules="[Keyboard, Pagination, Navigation]"

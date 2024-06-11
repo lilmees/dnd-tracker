@@ -40,26 +40,26 @@ interface AddCampaign extends Pick<Campaign, 'title'> {
   created_by: string
 }
 
-interface UpdateCampaign extends Partial<Omit<Campaign, 'id'|'created_at'|'created_by'|'initiative_sheets'>> {
+interface UpdateCampaign extends Partial<Omit<Campaign, 'id' | 'created_at' | 'created_by' | 'initiative_sheets'>> {
   created_by?: string
 }
 
 interface CampaignForm extends Pick<Campaign, 'title'> {}
 
-type CampaignPageType = 'content'|'settings'|'danger-zone'|'join'
+type CampaignPageType = 'content' | 'settings' | 'danger-zone' | 'join'
 
-interface CreateJoinCampaign extends Omit<JoinCampaign, 'id'|'created_at'|'user'> {
+interface CreateJoinCampaign extends Omit<JoinCampaign, 'id' | 'created_at' | 'user'> {
   user: string
 }
 
 interface CheckJoinCampaign extends Omit<JoinCampaign, 'campaign'> {
   campaign: {
-    title: String,
+    title: string
     id: string
   }
 }
 
-interface AddTeamMember extends Omit<TeamMember, 'id'|'user'> {
+interface AddTeamMember extends Omit<TeamMember, 'id' | 'user'> {
   user: string
 }
 

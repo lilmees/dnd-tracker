@@ -22,7 +22,10 @@ onMounted(() => {
       <h1 class="pb-4 dnd-container flex gap-4 items-center">
         <span class="text-slate-300">Campaign:</span>
         <span v-if="store.campaign">{{ store.campaign.title }}</span>
-        <div v-else class="w-[150px] h-8 rounded-full bg-tracker animate-pulse" />
+        <div
+          v-else
+          class="w-[150px] h-8 rounded-full bg-tracker animate-pulse"
+        />
       </h1>
       <Tabs
         class="mb-10"
@@ -33,19 +36,19 @@ onMounted(() => {
             label: 'Content',
             icon: 'fluent:content-view-24-regular',
             link: `${url}/content`,
-            role: 'Viewer'
+            role: 'Viewer',
           },
           {
             label: 'Settings',
             icon: 'iconamoon:options',
             link: `${url}/settings`,
-            role: 'Admin'
+            role: 'Admin',
           },
           {
             label: 'Danger zone',
             icon: 'solar:danger-triangle-outline',
             link: `${url}/danger-zone`,
-            role: 'Owner'
+            role: 'Owner',
           },
         ]"
       />
@@ -54,7 +57,10 @@ onMounted(() => {
         <NuxtPage />
       </div>
     </template>
-    <Layout v-else name="centered">
+    <Layout
+      v-else
+      name="centered"
+    >
       <NuxtPage />
     </Layout>
   </div>

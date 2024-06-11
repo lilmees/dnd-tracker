@@ -15,7 +15,7 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
     index,
     initiative: initiative || -1,
     initiative_modifier,
-    note: ''
+    note: '',
   }
 
   if (type !== 'lair') {
@@ -27,7 +27,7 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
       maxAc: ac as number,
       tempHealth: 0,
       tempAc: 0,
-      concentration: false
+      concentration: false,
     }
   }
 
@@ -37,8 +37,8 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
       deathSaves: {
         save: [false, false, false],
         fail: [false, false, false],
-        stable: false
-      }
+        stable: false,
+      },
     }
   }
 
@@ -47,7 +47,7 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
   return row
 }
 
-function sanitizeRow (row: Row): void {
+function sanitizeRow(row: Row): void {
   const keys: string[] = [
     'ac',
     'campaign',
@@ -74,7 +74,7 @@ function sanitizeRow (row: Row): void {
     'actions',
     'legendary_actions',
     'reactions',
-    'special_abilities'
+    'special_abilities',
   ]
 
   for (const key in row) {

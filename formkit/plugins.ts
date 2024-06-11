@@ -1,7 +1,9 @@
 const legends = ['checkbox_multi', 'radio_multi', 'repeater', 'transferlist']
 
-function createAsteriskPlugin (node: any) {
-  if (['button', 'submit', 'hidden', 'group', 'list', 'meta'].includes(node.props.type)) { return }
+function createAsteriskPlugin(node: any) {
+  if (['button', 'submit', 'hidden', 'group', 'list', 'meta'].includes(node.props.type)) {
+    return
+  }
 
   node.on('created', () => {
     const legendOrLabel = legends.includes(`${node.props.type}${node.props.options ? '_multi' : ''}`) ? 'legend' : 'label'
@@ -17,10 +19,10 @@ function createAsteriskPlugin (node: any) {
           $el: 'span',
           if: '$state.required',
           attrs: {
-            class: 'text-secondary'
+            class: 'text-secondary',
           },
-          children: ['*']
-        }]
+          children: ['*'],
+        }],
       }
 
       return schemaFn(sectionsSchema)
@@ -28,7 +30,7 @@ function createAsteriskPlugin (node: any) {
   })
 }
 
-function createIconMessagePlugin (node) {
+function createIconMessagePlugin(node) {
   const icon = `
     <span class="w-6 text-current-color">
       <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 100" x="0px" y="0px">
@@ -46,10 +48,10 @@ function createIconMessagePlugin (node) {
       if (!extensions.message) {
         extensions.message = {
           attrs: {
-            class: "$classes.message + ' flex items-center'",
-            innerHTML: '$warningIcon + " " + $message.value'
+            class: '$classes.message + \' flex items-center\'',
+            innerHTML: '$warningIcon + " " + $message.value',
           },
-          children: null
+          children: null,
         }
       }
       return original(extensions)

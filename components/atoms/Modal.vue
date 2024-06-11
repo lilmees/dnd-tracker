@@ -5,11 +5,11 @@ withDefaults(
     open?: boolean
     big?: boolean
     title?: boolean
-   }>(), {
+  }>(), {
     open: false,
     big: false,
-    title: true
-  }
+    title: true,
+  },
 )
 
 onKeyStroke('Escape', () => emit('close'))

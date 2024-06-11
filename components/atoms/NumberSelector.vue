@@ -3,12 +3,16 @@ const { min, max } = defineProps<{ max: number, min: number }>()
 
 const amount = defineModel<number>({ required: true })
 
-function increment () {
-  if (amount.value < max) { amount.value++ }
+function increment() {
+  if (amount.value < max) {
+    amount.value++
+  }
 }
 
-function decrement () {
-  if (amount.value > min) { amount.value-- }
+function decrement() {
+  if (amount.value > min) {
+    amount.value--
+  }
 }
 </script>
 

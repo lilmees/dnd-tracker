@@ -7,19 +7,20 @@ const { t } = useI18n()
 const toast = useToastStore()
 const localePath = useLocalePath()
 
-async function sendContactMail ({ __init, ...formData }: Obj): Promise<void> {
+async function sendContactMail({ __init, ...formData }: Obj): Promise<void> {
   const { error } = await useFetch('/api/emails/contact-request', {
     method: 'POST',
-    body: { props: formData }
+    body: { props: formData },
   })
 
   if (error.value) {
     logRocket.captureException(new Error('Failed to send email'))
     toast.error({
       text: t('general.mail.fail.text'),
-      title: t('general.mail.fail.title')
+      title: t('general.mail.fail.title'),
     })
-  } else {
+  }
+  else {
     toast.success({ title: t('pages.contact.success') })
     navigateTo(localePath('/'))
   }
@@ -57,7 +58,10 @@ async function sendContactMail ({ __init, ...formData }: Obj): Promise<void> {
           :label="$t('components.inputs.questionLabel')"
           validation="required|length:3,1000"
         />
-        <FormKit type="submit" :aria-label="$t('pages.contact.send')">
+        <FormKit
+          type="submit"
+          :aria-label="$t('pages.contact.send')"
+        >
           {{ $t('pages.contact.send') }}
         </FormKit>
       </FormKit>

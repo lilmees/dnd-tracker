@@ -5,7 +5,7 @@ const headers = ref<{ label: string, key: string }[]>([
   { label: 'Special abilities', key: 'special_abilities' },
   { label: 'Legendary actions', key: 'legendary_actions' },
   { label: 'Actions', key: 'actions' },
-  { label: 'Reactions', key: 'reactions' }
+  { label: 'Reactions', key: 'reactions' },
 ])
 </script>
 
@@ -19,7 +19,10 @@ const headers = ref<{ label: string, key: string }[]>([
     "
   >
     <div class="space-y-4">
-      <template v-for="item in headers" :key="item.key">
+      <template
+        v-for="item in headers"
+        :key="item.key"
+      >
         <div
           v-if="
             Array.isArray(row[item.key as keyof Row])
@@ -48,7 +51,10 @@ const headers = ref<{ label: string, key: string }[]>([
                 v-if="action.attack_bonus || action.damage_dice"
                 class="flex flex-wrap gap-x-4 items-center mt-2"
               >
-                <div v-if="action.attack_bonus" class="flex flex-wrap gap-x-2 items-center">
+                <div
+                  v-if="action.attack_bonus"
+                  class="flex flex-wrap gap-x-2 items-center"
+                >
                   <p class="font-bold">
                     To hit:
                   </p>
@@ -56,7 +62,10 @@ const headers = ref<{ label: string, key: string }[]>([
                     +{{ action.attack_bonus }}
                   </p>
                 </div>
-                <div v-if="action.damage_dice" class="flex flex-wrap gap-x-2 items-center">
+                <div
+                  v-if="action.damage_dice"
+                  class="flex flex-wrap gap-x-2 items-center"
+                >
                   <p class="font-bold">
                     Dice:
                   </p>

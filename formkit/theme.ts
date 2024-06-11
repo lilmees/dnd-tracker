@@ -1,5 +1,5 @@
 export default {
-  global: {
+  'global': {
     fieldset: 'border-4 border-black rounded-lg px-2 pb-1 bg-background/50',
     help: 'text-xs text-slate-300',
     inner: 'formkit-disabled:cursor-not-allowed formkit-disabled:pointer-events-none transition-all duration-200',
@@ -11,7 +11,7 @@ export default {
     message: 'text-danger text-xs mt-1',
     outer: 'mb-4 formkit-disabled:opacity-50',
     prefixIcon: 'flex items-center -mr-1 ml-2 w-5 shrink-0 [&>svg]:max-w-[1rem] [&>svg]:max-h-[1rem]',
-    suffixIcon: 'flex items-center -ml-1 mr-2 w-5 shrink-0 [&>svg]:max-w-[1rem] [&>svg]:max-h-[1rem]'
+    suffixIcon: 'flex items-center -ml-1 mr-2 w-5 shrink-0 [&>svg]:max-w-[1rem] [&>svg]:max-h-[1rem]',
   },
   'family:box': {
     decorator: 'block relative h-5 w-5 mr-2 rounded-lg bg-transparent border-4 border-black peer-checked:border-primary peer-checked:bg-primary/50',
@@ -19,11 +19,11 @@ export default {
     help: 'mb-2 mt-1.5',
     input: 'absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none peer',
     label: 'mt-1 select-none',
-    wrapper: 'flex items-center mb-1 cursor-pointer'
+    wrapper: 'flex items-center mb-1 cursor-pointer',
   },
   'family:button': {
     input: '$remove:bg-background/50 btn-black',
-    wrapper: 'flex justify-end'
+    wrapper: 'flex justify-end',
   },
   'family:dropdown': {
     dropdownWrapper: 'my-2 w-full rounded-lg [&::-webkit-scrollbar]:hidden',
@@ -40,40 +40,40 @@ export default {
     placeholder: 'p-2.5 text-slate-300',
     selector: 'flex w-full justify-between items-center max-h-[40px] [&u]',
     selectedIcon: 'block absolute top-1/2 left-2 w-3 -translate-y-1/2',
-    selectIcon: 'flex box-content w-4 px-2 self-stretch grow-0 shrink-0 [&>svg]:w-[1em]'
+    selectIcon: 'flex box-content w-4 px-2 self-stretch grow-0 shrink-0 [&>svg]:w-[1em]',
   },
   'family:text': {
     inner: 'bg-background/50 flex items-center border-4 border-black focus-within:border-primary rounded-lg',
-    input: 'bg-background/50 bg-transparent w-full px-3 py-2 border-none placeholder:text-slate-300'
+    input: 'bg-background/50 bg-transparent w-full px-3 py-2 border-none placeholder:text-slate-300',
   },
-  radio: {
+  'radio': {
     decorator: 'rounded-full',
-    decoratorIcon: 'w-5 p-[5px]'
+    decoratorIcon: 'w-5 p-[5px]',
   },
-  range: {
+  'range': {
     inner: '$reset flex items-center',
     input: '$reset w-full mb-1 h-2 p-0 rounded-full',
     prefixIcon: '$reset w-4 mr-1 flex self-stretch grow-0 shrink-0 [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
-    suffixIcon: '$reset w-4 ml-1 flex self-stretch grow-0 shrink-0 [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto'
+    suffixIcon: '$reset w-4 ml-1 flex self-stretch grow-0 shrink-0 [&>svg]:max-w-[1em] [&>svg]:max-h-[1em] [&>svg]:m-auto',
   },
-  select: {
+  'select': {
     inner: 'flex relative items-center rounded-lg mb-1 border-4 border-black focus-within:border-primary',
     input: 'w-full px-3 py-2 h-10 border-none placeholder:text-slate-300 formkit-multiple:p-0 data-[placeholder="true"]:text-slate-300 formkit-multiple:data-[placeholder="true"]:text-inherit',
     selectIcon: 'flex p-[3px] shrink-0 w-5 mr-2 -ml-[1.5em] h-full pointer-events-none [&>svg]:w-[1em]',
     option: 'formkit-multiple:p-3 formkit-multiple:text-sm',
-    icon: 'hidden'
+    icon: 'hidden',
   },
-  textarea: {
+  'textarea': {
     inner: 'flex rounded-lg mb-1 border-4 border-black focus-within:border-primary',
-    input: 'block w-full min-h-[40px] h-32 px-3 py-3 border-none text-base placeholder:text-slate-300'
+    input: 'block w-full min-h-[40px] h-32 px-3 py-3 border-none text-base placeholder:text-slate-300',
   },
-  autocomplete: {
+  'autocomplete': {
     closeIcon: 'block grow-0 shrink-0 w-3 mr-3.5',
     inner: '[&>div>[data-value]]:absolute [&>div>[data-value]]:mb-0',
     option: 'grow text-ellipsis',
-    selection: 'static flex left-0 top-0 right-0 bottom-0 mt-0 mb-2 rounded-lg bg-gray-100'
+    selection: 'static flex left-0 top-0 right-0 bottom-0 mt-0 mb-2 rounded-lg bg-gray-100',
   },
-  repeater: {
+  'repeater': {
     content: 'grow p-3 flex flex-col align-center',
     controlLabel: 'absolute opacity-0 pointer-events-none',
     controls: 'flex flex-col items-center justify-center bg-transparent p-2',
@@ -86,9 +86,9 @@ export default {
     removeIcon: 'block w-5',
     removeControl: 'hover:text-danger disabled:hover:text-inherit disabled:opacity-25 px-2 transition-colors duration-200',
     upControl: 'hover:text-secondary disabled:hover:text-inherit disabled:opacity-25 px-2 transition-colors duration-200',
-    downControl: 'hover:text-secondary disabled:hover:text-inherit disabled:opacity-25 px-2 transition-colors duration-200'
+    downControl: 'hover:text-secondary disabled:hover:text-inherit disabled:opacity-25 px-2 transition-colors duration-200',
   },
-  file: {
+  'file': {
     fileItem: 'flex items-center text-white mb-1 last:mb-0',
     fileItemIcon: 'w-4 mr-2 shrink-0',
     fileList:
@@ -102,9 +102,9 @@ export default {
     input:
         'cursor-pointer text-transparent absolute top-0 right-0 left-0 bottom-0 opacity-0 z-[2]',
     noFiles: 'flex w-full items-center px-3 py-2 text-slate-300',
-    noFilesIcon: 'w-4 mr-2'
+    noFilesIcon: 'w-4 mr-2',
   },
-  toggle: {
+  'toggle': {
     altLabel: 'block w-full mb-1 font-bold text-sm',
     inner: '$reset inline-block mr-2',
     input: 'peer absolute opacity-0 pointer-events-none',
@@ -113,11 +113,11 @@ export default {
     track: 'cursor-pointer p-0.5 min-w-[3em] relative rounded-full transition-all bg-black peer-checked:bg-primary peer-checked:[&>div:last-child]:left-full peer-checked:[&>div:last-child]:-translate-x-full peer-checked:[&>div:first-child:not(:last-child)]:left-0 peer-checked:[&>div:first-child:not(:last-child)]:translate-x-0',
     valueLabel: 'font-bold text-sm',
     wrapper: 'flex flex-wrap items-center mb-1 disabled:!cursor-not-allowed disabled:!opacity-50',
-    label: '$reset !mb-0 cursor-pointer body-small font-bold'
+    label: '$reset !mb-0 cursor-pointer body-small font-bold',
   },
-  togglebuttons: {
+  'togglebuttons': {
     wrapper: 'flex flex-col',
     options: 'flex gap-2',
-    input: 'ring-0 aria-pressed:border-primary focus-within:border-primary'
-  }
+    input: 'ring-0 aria-pressed:border-primary focus-within:border-primary',
+  },
 }

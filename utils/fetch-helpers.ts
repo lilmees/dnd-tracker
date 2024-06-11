@@ -1,4 +1,4 @@
-export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> {
+export async function sbQuery<T>(options: SbFetchOptions): Promise<SbQuery<T>> {
   const supabase = useSupabaseClient()
 
   const { table, select, page, perPage, filters, eq, fuzzy, fields } = options
@@ -27,16 +27,18 @@ export async function sbQuery<T> (options: SbFetchOptions): Promise<SbQuery<T>> 
 
   const { data, error, count } = await query
 
-  if (error) { throw error }
+  if (error) {
+    throw error
+  }
 
   return {
     data: data as T[],
     pagesCount: perPage ? calcPages(count, perPage) : 1,
-    count
+    count,
   }
 }
 
-function sbOrQuery (keys: string[], search: string): string {
+function sbOrQuery(keys: string[], search: string): string {
   let queryString = ''
 
   keys.forEach((key: string, i: number) => {
@@ -47,13 +49,13 @@ function sbOrQuery (keys: string[], search: string): string {
   return queryString
 }
 
-export function generateRange (page: number, perPage: number): SbRange {
+export function generateRange(page: number, perPage: number): SbRange {
   const from = page ? page * perPage : 0
   const to = page ? from + perPage - 1 : perPage - 1
 
   return { from, to }
 }
 
-export function calcPages (count: number | null, perPage: number): number {
+export function calcPages(count: number | null, perPage: number): number {
   return Math.ceil((count || 1) / perPage)
 }

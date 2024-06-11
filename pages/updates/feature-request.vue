@@ -10,10 +10,11 @@ const localePath = useLocalePath()
 
 const isOpen = ref<boolean>(false)
 
-async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
+async function vote(id: string, votes: FeatureRequestVotes): Promise<void> {
   try {
     await features.vote(id, votes)
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
   }
@@ -41,7 +42,7 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
           type="select"
           :options="[
             { label: $t('pages.featureRequest.filter.options.my'), value: 'my' },
-            { label: $t('pages.featureRequest.filter.options.all'), value: 'all' }
+            { label: $t('pages.featureRequest.filter.options.all'), value: 'all' },
           ]"
           outer-class="$reset !pb-0"
         />
@@ -55,7 +56,7 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
             { label: $t('pages.featureRequest.sort.options.mostVotes'), value: 'voted_most' },
             { label: $t('pages.featureRequest.sort.options.leastVotes'), value: 'voted_least' },
             { label: $t('pages.featureRequest.sort.options.newestFirst'), value: 'first_new' },
-            { label: $t('pages.featureRequest.sort.options.oldestFirst'), value: 'first_old' }
+            { label: $t('pages.featureRequest.sort.options.oldestFirst'), value: 'first_old' },
           ]"
           outer-class="$reset !pb-0"
         />
@@ -70,7 +71,10 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
       </div>
       <template v-if="features.data?.length">
         <!-- Feature requests -->
-        <div v-if="!features.loading && features.sortedFeatures.length" class="flex flex-col gap-4">
+        <div
+          v-if="!features.loading && features.sortedFeatures.length"
+          class="flex flex-col gap-4"
+        >
           <template
             v-for="feature in features.sortedFeatures"
             :key="feature.id"
@@ -97,8 +101,14 @@ async function vote (id: string, votes: FeatureRequestVotes): Promise<void> {
         </div>
       </template>
       <!-- Loading feature request -->
-      <div v-else-if="features.loading" class="flex flex-col gap-4">
-        <SkeletonFeatureRequestCard v-for="i in 5" :key="i" />
+      <div
+        v-else-if="features.loading"
+        class="flex flex-col gap-4"
+      >
+        <SkeletonFeatureRequestCard
+          v-for="i in 5"
+          :key="i"
+        />
       </div>
       <!-- No feature request found -->
       <div
