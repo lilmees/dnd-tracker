@@ -11,12 +11,13 @@ const localeLang = computed<string>(() => cookieLang.value || locale.value)
 onMounted(() => {
   if (cookieLang.value) {
     setLang(cookieLang.value)
-  } else {
+  }
+  else {
     setLang(router.currentRoute.value.fullPath.includes('/en/') ? 'en' : 'nl')
   }
 })
 
-function setLang (lang: string): void {
+function setLang(lang: string): void {
   cookieLang.value = lang
   locale.value = lang
   if (config) {

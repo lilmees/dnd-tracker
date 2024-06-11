@@ -5,12 +5,12 @@ const badge = useBadgesStore()
 
 const isOpen = ref<boolean>(false)
 
-async function handleSubmit ({ code, ...formData }: Obj): Promise<void> {
+async function handleSubmit({ code, ...formData }: Obj): Promise<void> {
   const success = await badge.addBadge(code)
   success ? resetState() : reset('form')
 }
 
-function resetState (): void {
+function resetState(): void {
   reset('form')
   badge.loading = false
   badge.error = undefined
@@ -22,13 +22,19 @@ function resetState (): void {
   <TextButton @click="isOpen = true">
     {{ $t('components.badgeModal.claim') }}
   </TextButton>
-  <Modal :open="isOpen" @close="resetState">
+  <Modal
+    :open="isOpen"
+    @close="resetState"
+  >
     <template #header>
       <h2>
         {{ $t('components.badgeModal.title') }}
       </h2>
     </template>
-    <p v-if="badge.error" class="text-danger text-center">
+    <p
+      v-if="badge.error"
+      class="text-danger text-center"
+    >
       {{ badge.error }}
     </p>
     <FormKit

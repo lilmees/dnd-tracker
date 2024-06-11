@@ -6,15 +6,18 @@ const emit = defineEmits(['update', 'close'])
 const store = useTableStore()
 
 const form = ref<{
-  initiative: number|null,
-  amount: number|null
+  initiative: number | null
+  amount: number | null
 }>({
   initiative: store.activeRow?.initiative_modifier || null,
-  amount: null
+  amount: null,
 })
 
-function updateInitiative ({ __init, initiative, amount }: Obj): void {
-  if (amount < 0) { emit('update', -1) }
+function updateInitiative({ __init, initiative, amount }: Obj): void {
+  if (amount < 0) {
+    emit('update', -1)
+  }
+
   const init: number = +amount + +initiative
   emit('update', init < 0 ? 0 : init)
 

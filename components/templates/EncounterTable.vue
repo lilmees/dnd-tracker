@@ -29,10 +29,12 @@ const headers = computed<string[]>(() => {
   options.forEach((option: string) => {
     if (always.includes(option)) {
       headers.push(t(`components.encounterTable.headers.${option}`))
-    } else if (!store.encounter?.settings.modified || store.encounter?.settings.rows.includes(option)) {
+    }
+    else if (!store.encounter?.settings.modified || store.encounter?.settings.rows.includes(option)) {
       if (store.includesSummond && option === 'summoner') {
         headers.push(t('components.encounterTable.headers.summoner'))
-      } else if (option !== 'summoner') {
+      }
+      else if (option !== 'summoner') {
         headers.push(t(`components.encounterTable.headers.${option}`))
       }
     }
@@ -45,7 +47,7 @@ const tableSpacing = computed<string>(() => {
   const style: Obj = {
     compact: 'px-1 py-0',
     normal: 'px-2 py-1',
-    cozy: 'px-3 py-2'
+    cozy: 'px-3 py-2',
   }
 
   return style[store.encounter?.settings.spacing || 'normal']
@@ -111,6 +113,9 @@ const tableSpacing = computed<string>(() => {
       @update="store.updateRow($event as never)"
       @close="store.resetActiveState()"
     />
-    <QuickInitiativeModal v-if="quickInit" @close="quickInit = false" />
+    <QuickInitiativeModal
+      v-if="quickInit"
+      @close="quickInit = false"
+    />
   </section>
 </template>

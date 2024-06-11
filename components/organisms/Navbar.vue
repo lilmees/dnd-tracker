@@ -17,7 +17,7 @@ const dropdown = ref()
 const profileDropdown = ref()
 
 const visibleRoutes = computed<Route[]>(() =>
-  user.value ? route.routes : route.routes.filter(r => !r.requiredLogIn)
+  user.value ? route.routes : route.routes.filter(r => !r.requiredLogIn),
 )
 
 watch(isSmall, (v: boolean) => {
@@ -46,12 +46,13 @@ onMounted(() => {
   }
 })
 
-async function logout (): Promise<void> {
+async function logout(): Promise<void> {
   try {
     await auth.logout()
     profile.data = null
     isOpen.value = false
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
   }

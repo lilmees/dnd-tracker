@@ -13,23 +13,25 @@ const ignoreModifier = ref<boolean>(false)
 
 const usedTypes = computed<RowType[]>(() => [...new Set(store.encounter?.rows.map(({ type }) => type))])
 
-onMounted(() => { selected.value = usedTypes.value })
+onMounted(() => {
+  selected.value = usedTypes.value
+})
 
-function generateForm (): QuickInitiativeForm {
+function generateForm(): QuickInitiativeForm {
   const form: QuickInitiativeForm = {}
 
   store.encounter?.rows.forEach((row) => {
     form[row.id] = {
       amount: undefined,
       initiative: row.initiative_modifier || undefined,
-      type: row.type
+      type: row.type,
     }
   })
 
   return form
 }
 
-function rollAllInitiatives (): void {
+function rollAllInitiatives(): void {
   for (const key in form.value) {
     if (selected.value.includes(form.value[key].type)) {
       form.value[key].amount = useDiceRoll(20) as number
@@ -37,7 +39,7 @@ function rollAllInitiatives (): void {
   }
 }
 
-async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
+async function handleSubmit({ __init, ...rows }: Obj): Promise<void> {
   try {
     for (const key in rows) {
       if (rows[key].amount !== undefined) {
@@ -56,10 +58,12 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
     }
 
     await store.encounterUpdate({ rows: store.encounter!.rows })
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     ignoreModifier.value = false
     reset('form')
     emit('close')
@@ -68,7 +72,10 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
 </script>
 
 <template>
-  <Modal open @close="$emit('close')">
+  <Modal
+    open
+    @close="$emit('close')"
+  >
     <template #header>
       <h2>
         {{ $t('components.quickInitiativeModal.title') }}
@@ -120,7 +127,7 @@ async function handleSubmit ({ __init, ...rows }: Obj): Promise<void> {
           :label="$t('components.quickInitiativeModal.select')"
           :options="usedTypes.map((type) => ({
             label: $t(`general.${type}`),
-            value: type
+            value: type,
           }))"
           options-class="flex flex-wrap gap-y-2 gap-x-6"
         />

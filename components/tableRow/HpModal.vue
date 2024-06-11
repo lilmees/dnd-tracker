@@ -7,8 +7,8 @@ const { t } = useI18n()
 
 const isRollingDice = ref<boolean>(false)
 const type = ref<HPActionType>('heal')
-const formAmount = ref<{ amount: number|undefined}>({ amount: undefined })
-const formOverride = ref<{ amount: number|undefined}>({ amount: undefined })
+const formAmount = ref<{ amount: number | undefined }>({ amount: undefined })
+const formOverride = ref<{ amount: number | undefined }>({ amount: undefined })
 
 whenever(() => store.activeRow?.maxHealthOld, () => {
   if (store.activeRow?.maxHealth) {
@@ -16,17 +16,18 @@ whenever(() => store.activeRow?.maxHealthOld, () => {
   }
 }, { immediate: true })
 
-function overrideHealth (obj: Obj): void {
+function overrideHealth(obj: Obj): void {
   if (obj.reset || (!isNaN(Number(obj.amount)) && Number(obj.amount) === store.activeRow?.maxHealthOld)) {
     obj.amount = store.activeRow?.maxHealthOld ?? 0
     type.value = 'override-reset'
-  } else {
+  }
+  else {
     type.value = 'override'
   }
   updateHealth(obj)
 }
 
-function updateHealth ({ __init, amount }: Obj): void {
+function updateHealth({ __init, amount }: Obj): void {
   if (!isNaN(Number(amount)) && store.activeRow) {
     handleHpChanges(Number(amount))
 
@@ -42,8 +43,10 @@ function updateHealth ({ __init, amount }: Obj): void {
   resetState()
 }
 
-function handleHpChanges (number: number): void {
-  if (!store.activeRow) { return }
+function handleHpChanges(number: number): void {
+  if (!store.activeRow) {
+    return
+  }
 
   const initType = t(`general.${store.activeRow.type}`)
 
@@ -61,20 +64,23 @@ function handleHpChanges (number: number): void {
       if (typeof store.activeRow.tempHealth === 'number') {
         if (store.activeRow.tempHealth >= number) {
           store.activeRow.tempHealth = store.activeRow.tempHealth - number
-        } else if (store.activeRow.health) {
+        }
+        else if (store.activeRow.health) {
           store.activeRow.health = store.activeRow.health - (number - store.activeRow.tempHealth)
           store.activeRow.tempHealth = 0
         }
-      } else if (store.activeRow.health) {
+      }
+      else if (store.activeRow.health) {
         store.activeRow.health = store.activeRow.health - number
       }
 
       if (typeof store.activeRow.health === 'number' && store.activeRow.health <= 0) {
         resetDeathSaves()
-      } else if (store.activeRow.concentration) {
+      }
+      else if (store.activeRow.concentration) {
         toast.info({
           title: t('pages.encounter.toasts.concentration.title'),
-          text: t('pages.encounter.toasts.concentration.text', { type: initType })
+          text: t('pages.encounter.toasts.concentration.text', { type: initType }),
         })
       }
       break
@@ -88,7 +94,8 @@ function handleHpChanges (number: number): void {
         store.activeRow.health = number < store.activeRow.maxHealth
           ? number
           : number - (store.activeRow.maxHealth - store.activeRow.health)
-      } else {
+      }
+      else {
         store.activeRow.health = number
       }
 
@@ -110,19 +117,19 @@ function handleHpChanges (number: number): void {
   // when user is dies because of going to much in the negative hp
   if (
     (
-      store.activeRow.health &&
-      store.activeRow.maxHealth &&
-      store.activeRow.health < 0 &&
-      Math.abs(store.activeRow.health) >= store.activeRow.maxHealth
-    ) ||
-    (
-      hasDeathSaves(store.activeRow.type) &&
-      store.activeRow.deathSaves.fail.every(v => v === true)
+      store.activeRow.health
+      && store.activeRow.maxHealth
+      && store.activeRow.health < 0
+      && Math.abs(store.activeRow.health) >= store.activeRow.maxHealth
+    )
+    || (
+      hasDeathSaves(store.activeRow.type)
+      && store.activeRow.deathSaves.fail.every(v => v === true)
     )
   ) {
     toast.info({
       title: t('pages.encounter.toasts.died.title', { type: initType }),
-      text: t('pages.encounter.toasts.died.textMinHP', { type: initType.toLowerCase() })
+      text: t('pages.encounter.toasts.died.textMinHP', { type: initType.toLowerCase() }),
     })
   }
 
@@ -132,7 +139,7 @@ function handleHpChanges (number: number): void {
   }
 }
 
-function handleDeathSaves (): void {
+function handleDeathSaves(): void {
   if (store.activeRow && store.activeRow.health === 0) {
     if (hasDeathSaves(store.activeRow.type)) {
       store.activeRow.deathSaves.stable = false
@@ -147,20 +154,21 @@ function handleDeathSaves (): void {
         }
       })
       store.checkDeathSaves(store.activeRow.deathSaves, store.activeRow.type)
-    } else {
+    }
+    else {
       resetDeathSaves()
     }
   }
 }
 
-function resetDeathSaves (): void {
+function resetDeathSaves(): void {
   if (store.activeRow && hasDeathSaves(store.activeRow.type)) {
     store.activeRow.deathSaves.fail = [false, false, false]
     store.activeRow.deathSaves.save = [false, false, false]
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   formAmount.value.amount = undefined
   formOverride.value.amount = undefined
   type.value = 'heal'
@@ -169,7 +177,10 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal :title="false" @close="$emit('close')">
+  <Modal
+    :title="false"
+    @close="$emit('close')"
+  >
     <div
       v-if="
         (store.activeRow?.health === 0 || store.activeRow?.health)
@@ -200,7 +211,7 @@ function resetState (): void {
                 ? undefined
                 : store.activeRow.maxHealthOld < store.activeRow.maxHealth
                   ? 'text-success'
-                  : 'text-danger'
+                  : 'text-danger',
             ]"
           >
             {{ store.activeRow.maxHealth || 0 }}

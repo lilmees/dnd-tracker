@@ -4,7 +4,7 @@ import 'driver.js/dist/driver.css'
 
 import playground from '@/fixtures/playground.json'
 
-export function useTour () {
+export function useTour() {
   const user = useSupabaseUser()
   const table = useTableStore()
   const profile = useProfileStore()
@@ -26,8 +26,8 @@ export function useTour () {
           title: t(`tour.${i}.title`),
           description: i === (tourSteps - 1)
             ? '<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/xT8qBepJQzUjXpeWU8" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/olympics-shaun-the-sheep-aardman-xT8qBepJQzUjXpeWU8">via GIPHY</a></p>'
-            : t(`tour.${i}.description`)
-        }
+            : t(`tour.${i}.description`),
+        },
       })
     }
 
@@ -38,7 +38,7 @@ export function useTour () {
     return steps
   })
 
-  function initializeTour (): void {
+  function initializeTour(): void {
     driverObj.value?.destroy()
 
     driverObj.value = driver({
@@ -55,16 +55,17 @@ export function useTour () {
         if (!driverObj.value?.hasNextStep() || confirm(t('tour.sure'))) {
           close()
         }
-      }
+      },
     })
 
     driverObj.value.drive()
   }
 
-  function close (): void {
+  function close(): void {
     if (user.value) {
       profile.updateProfile({ completedTour: true })
-    } else {
+    }
+    else {
       tourCompleted.value = true
     }
 
@@ -78,7 +79,7 @@ export function useTour () {
     driverObj.value?.destroy()
   }
 
-  async function startTour (campaign: boolean = false): Promise<void> {
+  async function startTour(campaign: boolean = false): Promise<void> {
     if (user.value && !profile.data) {
       await until(!!profile.data).toBe(true, { timeout: 1000 })
     }

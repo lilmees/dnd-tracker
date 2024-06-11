@@ -1,24 +1,27 @@
-export function isPro (profile: Profile): boolean {
+export function isPro(profile: Profile): boolean {
   return profile.subscription_type === 'pro'
 }
 
-export function isMedior (profile: Profile): boolean {
+export function isMedior(profile: Profile): boolean {
   return profile.subscription_type === 'pro' || profile.subscription_type === 'medior'
 }
 
-export function hasCorrectSubscription (subscription: StripeSubscriptionType, expected: StripeSubscriptionType): boolean {
+export function hasCorrectSubscription(subscription: StripeSubscriptionType, expected: StripeSubscriptionType): boolean {
   if (subscription === 'pro') {
     return true
-  } else if (subscription === 'medior' && expected === 'free') {
+  }
+  else if (subscription === 'medior' && expected === 'free') {
     return true
-  } else if (subscription === expected) {
+  }
+  else if (subscription === expected) {
     return true
-  } else {
+  }
+  else {
     return false
   }
 }
 
-export function getMax (type: 'encounter'|'campaign'|'team', subscription: StripeSubscriptionType): number {
+export function getMax(type: 'encounter' | 'campaign' | 'team', subscription: StripeSubscriptionType): number {
   switch (subscription) {
     case 'free':
       switch (type) {

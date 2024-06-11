@@ -19,7 +19,10 @@ const localePath = useLocalePath()
         {{ $t('pages.error.text') }}
       </p>
       <div class="flex flex-wrap gap-x-4 pb-10">
-        <NuxtLink :to="localePath('/')" class="w-fit">
+        <NuxtLink
+          :to="localePath('/')"
+          class="w-fit"
+        >
           <button class="btn-primary">
             {{ $t('pages.error.goHome') }}
           </button>

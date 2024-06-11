@@ -20,12 +20,13 @@ watch(
     if (v) {
       page.value = 0
       fetchInfo(form.value)
-    } else {
+    }
+    else {
       form.value.search = ''
       hits.value = []
       isLoading.value = false
     }
-  }, { deep: true }
+  }, { deep: true },
 )
 
 onMounted(() => fetchInfo(form.value))
@@ -36,20 +37,22 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
   try {
     const { results, count } = await open5e.getData({
       query: { search: query.search, page: page.value + 1 },
-      type: query.type
+      type: query.type,
     })
     pages.value = Math.ceil(count / 20)
 
     hits.value = results
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }, 500, { maxWait: 1000 })
 
-function paginate (newPage: number): void {
+function paginate(newPage: number): void {
   page.value = newPage
   fetchInfo(form.value)
 
@@ -82,7 +85,10 @@ function paginate (newPage: number): void {
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto">
         <template v-if="isLoading">
-          <SkeletonInfoCard v-for="i in 20" :key="i" />
+          <SkeletonInfoCard
+            v-for="i in 20"
+            :key="i"
+          />
         </template>
         <template v-else-if="hits.length">
           <InfoCard

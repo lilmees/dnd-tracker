@@ -1,11 +1,11 @@
 interface TableHeader {
-  label: string,
-  sort: boolean,
+  label: string
+  sort: boolean
   id: string
 }
 
 interface TableFilters {
-  search: string,
-  sortedBy: string,
+  search: string
+  sortedBy: string
   sortACS: boolean
 }

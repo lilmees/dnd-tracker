@@ -8,6 +8,6 @@ export default {
   fallbackLocale: 'nl',
   messages: {
     en,
-    nl
-  }
+    nl,
+  },
 }

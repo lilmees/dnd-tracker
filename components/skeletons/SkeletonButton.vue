@@ -3,8 +3,8 @@ withDefaults(
   defineProps<{
     block?: boolean
   }>(), {
-    block: false
-  }
+    block: false,
+  },
 )
 </script>
 

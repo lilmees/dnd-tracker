@@ -2,7 +2,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   const supabase = useSupabaseClient()
   const localePath = useLocalePath()
 
-  async function register (credentials: Login, data: Register): Promise<void> {
+  async function register(credentials: Login, data: Register): Promise<void> {
     const { error, data: userData } = await supabase.auth.signUp(credentials)
 
     if (error) {
@@ -17,44 +17,47 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         role: 'User',
         subscription_type: 'free',
         temp_subscription: 'free',
-        badges: []
+        badges: [],
       }
 
       const { error } = await supabase.from('profiles').insert([profile as never])
 
       if (error?.message.includes('duplicate key')) {
         throw new Error('Email already in use')
-      } else if (error) {
+      }
+      else if (error) {
         throw error
       }
     }
   }
 
-  async function login (credentials: Login): Promise<void> {
+  async function login(credentials: Login): Promise<void> {
     const { error } = Object.values(credentials).length
       ? await supabase.auth.signInWithPassword(credentials)
       : await supabase.auth.signInWithOAuth({ provider: 'google' })
 
     if (error) {
       throw error
-    } else {
+    }
+    else {
       setTimeout(() => navigateTo(localePath('/')), 100)
     }
   }
 
-  async function logout (): Promise<void> {
+  async function logout(): Promise<void> {
     const { error } = await supabase.auth.signOut()
 
     if (error) {
       throw error
-    } else {
+    }
+    else {
       setTimeout(() => navigateTo(localePath('/')), 100)
     }
   }
 
-  async function forgotPassword (email: string): Promise<void> {
+  async function forgotPassword(email: string): Promise<void> {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`
+      redirectTo: `${window.location.origin}/reset-password`,
     })
 
     if (error) {
@@ -62,7 +65,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     }
   }
 
-  async function updateUser (payload: { password: string }): Promise<void> {
+  async function updateUser(payload: { password: string }): Promise<void> {
     const { error } = await supabase.auth.updateUser(payload)
 
     if (error) {
@@ -75,6 +78,6 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     login,
     logout,
     forgotPassword,
-    updateUser
+    updateUser,
   }
 })

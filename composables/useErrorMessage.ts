@@ -3,7 +3,8 @@ export const useErrorMessage = (error: unknown): string => {
 
   if (typeof error === 'string') {
     e = error.toUpperCase()
-  } else if (error instanceof Error) {
+  }
+  else if (error instanceof Error) {
     e = error.message
   }
 

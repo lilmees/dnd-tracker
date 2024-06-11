@@ -13,8 +13,8 @@ auth.onAuthStateChange((event) => {
 
 useHead({
   script: [
-    { src: 'https://analytics.umami.is/script.js', async: true, 'data-website-id': umami }
-  ]
+    { 'src': 'https://analytics.umami.is/script.js', 'async': true, 'data-website-id': umami },
+  ],
 })
 </script>
 

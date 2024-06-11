@@ -8,7 +8,8 @@ const blob = ref<HTMLDivElement>()
 
 try {
   await store.getSandboxEncounter()
-} catch (err) {
+}
+catch (err) {
   logRocket.captureException(err as Error)
   toast.error()
 }
@@ -20,7 +21,7 @@ if (import.meta.client) {
 
       blob.value.animate({
         left: `${clientX}px`,
-        top: `${clientY}px`
+        top: `${clientY}px`,
       }, { duration: 3000, fill: 'forwards' })
     }
   }

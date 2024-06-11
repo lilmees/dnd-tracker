@@ -3,14 +3,14 @@ export const content = [
   './layouts/**/*.{vue,js}',
   './components/**/*.{vue,js}',
   './plugins/**/*.{js,ts}',
-  './formkit/theme.ts'
+  './formkit/theme.ts',
 ]
 
 export const theme = {
   extend: {
     fontFamily: {
       title: ['Geist', 'sans-serif'],
-      text: ['GeistMono', 'sans-serif']
+      text: ['GeistMono', 'sans-serif'],
     },
     colors: {
       background: '#121111',
@@ -21,25 +21,25 @@ export const theme = {
       info: '#3ABFF8',
       warning: '#FBBD23',
       help: '#1FB2A5',
-      danger: '#F87272'
-    }
+      danger: '#F87272',
+    },
   },
   container: {
     center: true,
     padding: {
-      DEFAULT: '1rem',
-      sm: '2rem',
-      lg: '4rem',
-      xl: '5rem',
-      '2xl': '6rem'
-    }
+      'DEFAULT': '1rem',
+      'sm': '2rem',
+      'lg': '4rem',
+      'xl': '5rem',
+      '2xl': '6rem',
+    },
   },
   screens: {
     sm: '768px',
     md: '1024px',
     lg: '1440px',
-    xl: '1920px'
-  }
+    xl: '1920px',
+  },
 }
 
 export const plugins = []

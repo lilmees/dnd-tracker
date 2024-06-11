@@ -1,15 +1,15 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-  name?: 'centered'|'wide'
-  shadow?: boolean
-  padding?: boolean,
-}>(),
+    name?: 'centered' | 'wide'
+    shadow?: boolean
+    padding?: boolean
+  }>(),
   {
     name: undefined,
     shadow: false,
-    padding: false
-  }
+    padding: false,
+  },
 )
 </script>
 

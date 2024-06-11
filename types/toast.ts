@@ -1,4 +1,4 @@
-type ToastType = 'error'|'warn'|'info'|'success'
+type ToastType = 'error' | 'warn' | 'info' | 'success'
 
 interface Toast {
   key: number

@@ -3,12 +3,12 @@ import { SwiperSlide } from 'swiper/vue'
 
 withDefaults(
   defineProps<{
-    tabs: Tab[],
-    role: UserRole,
+    tabs: Tab[]
+    role: UserRole
     disabled?: boolean
   }>(), {
-    disabled: false
-  }
+    disabled: false,
+  },
 )
 
 const { width } = useWindowSize()
@@ -33,17 +33,24 @@ watch(width, v => (slideOffset.value = calculateSliderOverflow(v)), { immediate:
           class="flex gap-2 items-center py-1 px-2 rounded-lg text-slate-300 hover:bg-tracker hover:text-white"
           active-class="text-white"
           :class="{
-            'pointer-events-none opacity-50': !hasPermission(role, tab.role)
+            'pointer-events-none opacity-50': !hasPermission(role, tab.role),
           }"
         >
-          <Icon :name="tab.icon" class="w-5 h-5" />
+          <Icon
+            :name="tab.icon"
+            class="w-5 h-5"
+          />
           <span>
             {{ tab.label }}
           </span>
         </RouteLink>
       </div>
     </div>
-    <Carousel class="pb-1 w-full sm:hidden" :space="8" :slide-offset="slideOffset">
+    <Carousel
+      class="pb-1 w-full sm:hidden"
+      :space="8"
+      :slide-offset="slideOffset"
+    >
       <SwiperSlide
         v-for="(tab, i) in tabs"
         :key="i"
@@ -55,10 +62,13 @@ watch(width, v => (slideOffset.value = calculateSliderOverflow(v)), { immediate:
           active-class="text-white"
           :class="{
             'pointer-events-none opacity-50': !hasPermission(role, tab.role),
-            '!border-slate-300': tab.link === route.fullPath
+            '!border-slate-300': tab.link === route.fullPath,
           }"
         >
-          <Icon :name="tab.icon" class="w-5 h-5" />
+          <Icon
+            :name="tab.icon"
+            class="w-5 h-5"
+          />
           <span>
             {{ tab.label }}
           </span>

@@ -6,7 +6,10 @@ const campaign = useCurrentCampaignStore()
 </script>
 
 <template>
-  <Modal big @close="$emit('close')">
+  <Modal
+    big
+    @close="$emit('close')"
+  >
     <ActionsTable
       v-if="table.activeRow || campaign.activeHomebrew"
       :row="table.activeRow || (campaign.activeHomebrew as Row)"

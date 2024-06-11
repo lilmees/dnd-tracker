@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineEmits(['logout', 'close'])
 defineProps<{
-  routes: Route[],
-  dropDownRoutes: Route[],
+  routes: Route[]
+  dropDownRoutes: Route[]
   loggedIn: boolean
 }>()
 
@@ -14,7 +14,10 @@ const localePath = useLocalePath()
     class="fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto bg-tracker p-4 z-20"
   >
     <div class="flex justify-between items-center gap-4 pb-10">
-      <NuxtLink :to="localePath('/')" @click="$emit('close')">
+      <NuxtLink
+        :to="localePath('/')"
+        @click="$emit('close')"
+      >
         <NuxtImg
           src="/logo.svg"
           alt="DnD Tracker logo"
@@ -35,7 +38,10 @@ const localePath = useLocalePath()
       </button>
     </div>
     <div class="flex flex-col gap-y-2 pt-4">
-      <div v-show="!loggedIn" class="flex flex-col gap-y-2">
+      <div
+        v-show="!loggedIn"
+        class="flex flex-col gap-y-2"
+      >
         <RouteLink
           :label="$t('components.navbar.login')"
           url="login"

@@ -5,13 +5,13 @@ import { reset } from '@formkit/core'
 const emit = defineEmits(['add'])
 
 const props = defineProps<{
-  grid: number,
+  grid: number
   tooltip?: AOETooltip
 }>()
 
 const form = ref<ShapeForm>({ shape: 'Rectangle' })
 
-function createShape ({ shape, width, height, radius }: Obj): void {
+function createShape({ shape, width, height, radius }: Obj): void {
   let object: fabric.Object
 
   switch (shape) {
@@ -43,7 +43,10 @@ function createShape ({ shape, width, height, radius }: Obj): void {
     class="bg-black/50 backdrop-blur body-small rounded-lg absolute p-2 flex flex-col gap-1 z-[1]"
     :style="{ left: tooltip.left, top: tooltip.top }"
   >
-    <div v-for="key in Object.keys(tooltip.aoe || {})" :key="key">
+    <div
+      v-for="key in Object.keys(tooltip.aoe || {})"
+      :key="key"
+    >
       <span> {{ $t(`general.${key}`) }}: </span>
       <span class="font-bold"> {{ tooltip.aoe![key as keyof AOE] }} </span>
       <span class="body-extra-small"> ft </span>

@@ -11,15 +11,17 @@ const form = ref<Login>({ email: '', password: '' })
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise<void> {
+async function login({ __init, isTrusted, _vts, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
     await store.login(credentials as Login)
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
@@ -41,7 +43,10 @@ async function login ({ __init, isTrusted, _vts, ...credentials }: Obj): Promise
         provider="imagekit"
         class="mx-auto visibility-pulse"
       />
-      <p v-if="error" class="text-danger text-center body-small">
+      <p
+        v-if="error"
+        class="text-danger text-center body-small"
+      >
         {{ error }}
       </p>
       <FormKit

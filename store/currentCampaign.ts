@@ -17,7 +17,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
 
   const max = computed<number>(() => getMax('team', profile.data?.subscription_type || 'free'))
 
-  async function getCampaignInfo (id: number): Promise<void> {
+  async function getCampaignInfo(id: number): Promise<void> {
     loading.value = true
     error.value = null
 
@@ -29,17 +29,19 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       }
 
       useHead({ title: campaign.value.title })
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       error.value = err as string
       toast.error()
       navigateTo(localePath('/campaigns'))
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
 
-  async function findJoinCampaignToken (token: string): Promise<CheckJoinCampaign|undefined> {
+  async function findJoinCampaignToken(token: string): Promise<CheckJoinCampaign | undefined> {
     const { data, error } = await supabase
       .from('join_campaign')
       .select('*, user(id, created_at, username, name, avatar, email, badges), campaign(title, id)')
@@ -53,7 +55,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function createJoinCampaignToken (join: CreateJoinCampaign): Promise<void> {
+  async function createJoinCampaignToken(join: CreateJoinCampaign): Promise<void> {
     const { data, error } = await supabase
       .from('join_campaign')
       .insert([join as never])
@@ -67,7 +69,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function deleteJoinCampaignToken (id: number): Promise<void> {
+  async function deleteJoinCampaignToken(id: number): Promise<void> {
     const { error } = await supabase
       .from('join_campaign')
       .delete()
@@ -83,7 +85,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function addCampaignTeamMember (member: AddTeamMember, id?: number): Promise<void> {
+  async function addCampaignTeamMember(member: AddTeamMember, id?: number): Promise<void> {
     const { data, error } = await supabase
       .from('team')
       .insert([member as never])
@@ -102,7 +104,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function deleteCampaignTeamMember (id: number): Promise<void> {
+  async function deleteCampaignTeamMember(id: number): Promise<void> {
     const { error } = await supabase
       .from('team')
       .delete()
@@ -118,7 +120,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     }
   }
 
-  async function updateCampaignTeamMember (member: UpdateTeamMember, id: number): Promise<void> {
+  async function updateCampaignTeamMember(member: UpdateTeamMember, id: number): Promise<void> {
     const { error } = await supabase
       .from('team')
       .update(member as never)
@@ -133,12 +135,12 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
 
       campaign.value.team[index] = {
         ...campaign.value.team[index],
-        ...member
+        ...member,
       }
     }
   }
 
-  function resetActiveState (): void {
+  function resetActiveState(): void {
     activeIndex.value = undefined
     activeHomebrew.value = undefined
     activeModal.value = undefined
@@ -159,6 +161,6 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
     deleteJoinCampaignToken,
     addCampaignTeamMember,
     deleteCampaignTeamMember,
-    updateCampaignTeamMember
+    updateCampaignTeamMember,
   }
 })

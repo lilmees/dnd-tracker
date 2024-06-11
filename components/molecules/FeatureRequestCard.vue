@@ -10,21 +10,23 @@ const date = computed<string>(() => {
   return dateString.toLocaleDateString(locale.value === 'nl' ? 'nl-NL' : 'en-US')
 })
 
-const hasVoted = computed<FeatureRequestVote|undefined>(() => {
+const hasVoted = computed<FeatureRequestVote | undefined>(() => {
   if (!profile.data) {
     return undefined
   }
 
   if (props.feature.voted.like.includes(profile.data.id)) {
     return 'like'
-  } else if (props.feature.voted.dislike.includes(profile.data.id)) {
+  }
+  else if (props.feature.voted.dislike.includes(profile.data.id)) {
     return 'dislike'
-  } else {
+  }
+  else {
     return undefined
   }
 })
 
-function toggleVote (vote: FeatureRequestVote): void {
+function toggleVote(vote: FeatureRequestVote): void {
   if (!profile.data) {
     return
   }
@@ -48,7 +50,7 @@ function toggleVote (vote: FeatureRequestVote): void {
           <button
             class="bg-black/50 border-4 border-black rounded-lg py-1 px-2 flex flex-col items-center"
             :class="{
-              '!bg-primary/50 !border-primary': hasVoted === 'like'
+              '!bg-primary/50 !border-primary': hasVoted === 'like',
             }"
             @click="profile.data ? toggleVote('like') : emit('login')"
           >
@@ -63,7 +65,7 @@ function toggleVote (vote: FeatureRequestVote): void {
           <button
             class="bg-black/50 border-4 border-black rounded-lg py-1 px-2 flex flex-col items-center"
             :class="{
-              '!bg-primary/50 !border-primary': hasVoted === 'dislike'
+              '!bg-primary/50 !border-primary': hasVoted === 'dislike',
             }"
             @click="profile.data ? toggleVote('like') : emit('login')"
           >
@@ -80,7 +82,10 @@ function toggleVote (vote: FeatureRequestVote): void {
 
       <div class="flex flex-col flex-1 items-start justify-between gap-y-3">
         <div class="space-y-2">
-          <Avatar :user="feature.created_by" username />
+          <Avatar
+            :user="feature.created_by"
+            username
+          />
           <h2 class="py-2">
             {{ feature.title }}
             <span class="body-extra-small ml-2 bg-black/50 rounded-lg px-2 py-1">
@@ -92,7 +97,7 @@ function toggleVote (vote: FeatureRequestVote): void {
             class="body-small"
             :class="{
               'text-info': feature.status === 'review',
-              'text-success': feature.status === 'progress'
+              'text-success': feature.status === 'progress',
             }"
           >
             {{ $t(`pages.featureRequest.status.${feature.status}`) }}

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    url: string,
-    label?: string,
+    url: string
+    label?: string
     style?: boolean
   }>(), {
     label: undefined,
-    style: true
-  }
+    style: true,
+  },
 )
 
 const localePath = useLocalePath()
