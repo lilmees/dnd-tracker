@@ -8,7 +8,7 @@ const showNav = useState<boolean>('showNavigation', () => true)
     v-show="showNav"
     class="bg-tracker/60 border-4 border-tracker m-4 rounded-lg py-8"
   >
-    <div class="dnd-container flex flex-col gap-4">
+    <div class="dnd-container flex flex-col gap-12">
       <div class="flex flex-col gap-x-4 md:flex-row justify-between">
         <NuxtLink
           :to="localePath('/')"
