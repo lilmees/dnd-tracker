@@ -33,15 +33,15 @@ interface Encounter {
   owner?: string
   info?: string
   activeIndex: number
-  info_cards: InfoCard[],
+  info_cards: InfoCard[]
   settings: EncounterSettings
 }
 
-interface AddEncounter extends Omit<Encounter, 'id'|'created_at'|'profiles'|'info_cards'|'campaign'|'settings'> {
+interface AddEncounter extends Omit<Encounter, 'id' | 'created_at' | 'profiles' | 'info_cards' | 'campaign' | 'settings'> {
   campaign: undefined | number
 }
 
-interface UpdateEncounter extends Partial<Omit<Encounter, 'id'|'created_at'|'profiles'|'campaign'>> {
+interface UpdateEncounter extends Partial<Omit<Encounter, 'id' | 'created_at' | 'profiles' | 'campaign'>> {
   campaign?: number
 }
 

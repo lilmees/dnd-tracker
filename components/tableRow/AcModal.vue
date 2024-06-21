@@ -5,8 +5,8 @@ const store = useTableStore()
 
 const isRollingDice = ref<boolean>(false)
 const type = ref<ACActionType>('temp')
-const formAmount = ref<{ amount: number|undefined}>({ amount: undefined })
-const formOverride = ref<{ amount: number|undefined}>({ amount: undefined })
+const formAmount = ref<{ amount: number | undefined }>({ amount: undefined })
+const formOverride = ref<{ amount: number | undefined }>({ amount: undefined })
 
 whenever(() => store.activeRow?.maxAcOld, () => {
   if (store.activeRow?.maxAc) {
@@ -14,24 +14,25 @@ whenever(() => store.activeRow?.maxAcOld, () => {
   }
 }, { immediate: true })
 
-function resetAc (): void {
+function resetAc(): void {
   type.value = 'reset'
   handleAcChanges(0)
   isRollingDice.value = false
   resetState()
 }
 
-function overrideAc (obj: Obj): void {
+function overrideAc(obj: Obj): void {
   if (obj.reset || (!isNaN(Number(obj.amount)) && Number(obj.amount) === store.activeRow?.maxAcOld)) {
     obj.amount = store.activeRow?.maxAcOld ?? 0
     type.value = 'override-reset'
-  } else {
+  }
+  else {
     type.value = 'override'
   }
   updateAc(obj)
 }
 
-function updateAc ({ __init, amount }: Obj): void {
+function updateAc({ __init, amount }: Obj): void {
   if (!isNaN(Number(amount)) && store.activeRow) {
     handleAcChanges(Number(amount))
 
@@ -47,8 +48,10 @@ function updateAc ({ __init, amount }: Obj): void {
   resetState()
 }
 
-function handleAcChanges (number: number): void {
-  if (!store.activeRow) { return }
+function handleAcChanges(number: number): void {
+  if (!store.activeRow) {
+    return
+  }
 
   switch (type.value) {
     case 'reset':
@@ -59,11 +62,13 @@ function handleAcChanges (number: number): void {
       if (store.activeRow.tempAc) {
         if (store.activeRow.tempAc >= number) {
           store.activeRow.tempAc = store.activeRow.tempAc - number
-        } else if (store.activeRow.ac) {
+        }
+        else if (store.activeRow.ac) {
           store.activeRow.ac = store.activeRow.ac - (number - store.activeRow.tempAc)
           store.activeRow.tempAc = 0
         }
-      } else if (store.activeRow.ac) {
+      }
+      else if (store.activeRow.ac) {
         store.activeRow.ac = store.activeRow.ac - number
       }
       break
@@ -75,7 +80,8 @@ function handleAcChanges (number: number): void {
         store.activeRow.ac = number < store.activeRow.maxAc
           ? number
           : number - (store.activeRow.maxAc - store.activeRow.ac)
-      } else {
+      }
+      else {
         store.activeRow.ac = number
       }
 
@@ -99,7 +105,7 @@ function handleAcChanges (number: number): void {
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   formAmount.value.amount = undefined
   formOverride.value.amount = undefined
   type.value = 'temp'
@@ -108,7 +114,10 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal :title="false" @close="$emit('close')">
+  <Modal
+    :title="false"
+    @close="$emit('close')"
+  >
     <div
       v-if="
         (store.activeRow?.ac === 0 || store.activeRow?.ac)
@@ -120,7 +129,10 @@ function resetState (): void {
         <p class="font-bold">
           {{ $t('general.current') }}
         </p>
-        <p class="head-1" :class="{ 'text-danger': store.activeRow.ac < 1 }">
+        <p
+          class="head-1"
+          :class="{ 'text-danger': store.activeRow.ac < 1 }"
+        >
           {{ store.activeRow.ac }}
         </p>
       </div>
@@ -136,7 +148,7 @@ function resetState (): void {
                 ? undefined
                 : store.activeRow.maxAcOld < store.activeRow.maxAc
                   ? 'text-success'
-                  : 'text-danger'
+                  : 'text-danger',
             ]"
           >
             {{ store.activeRow.maxAc || 0 }}

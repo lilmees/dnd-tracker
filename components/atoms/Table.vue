@@ -10,8 +10,8 @@ withDefaults(
   }>(), {
     pages: 0,
     shadow: false,
-    searching: false
-  }
+    searching: false,
+  },
 )
 
 const sortedBy = defineModel<string>('sortedBy')
@@ -33,7 +33,7 @@ const slots = useSlots()
               class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
               :class="{
                 'cursor-pointer': sort,
-                '!cursor-progress': searching
+                '!cursor-progress': searching,
               }"
               @click="() => {
                 if (sort && !searching) {
@@ -52,7 +52,7 @@ const slots = useSlots()
                   class="w-5 h-5 text-secondary/50 transition-all"
                   :class="{
                     '!text-secondary': sortedBy === id,
-                    'rotate-180': sortedBy === id && !sortACS
+                    'rotate-180': sortedBy === id && !sortACS,
                   }"
                   aria-hidden="true"
                 />
@@ -63,7 +63,10 @@ const slots = useSlots()
         <tbody v-auto-animate>
           <slot />
 
-          <tr v-if="slots?.empty" class="py-20">
+          <tr
+            v-if="slots?.empty"
+            class="py-20"
+          >
             <td
               :colspan="headers.length"
               class="py-20 px-5 font-bold"
@@ -75,7 +78,10 @@ const slots = useSlots()
           </tr>
         </tbody>
       </table>
-      <div v-if="shadow" class="inset-0 z-[-1] fancy-shadow" />
+      <div
+        v-if="shadow"
+        class="inset-0 z-[-1] fancy-shadow"
+      />
     </div>
     <Pagination
       v-if="pages > 1"

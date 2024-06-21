@@ -10,7 +10,8 @@ onMounted(async () => {
 
   if (route.query.content) {
     await store.loadSharedEncounter(route.query.content as string)
-  } else {
+  }
+  else {
     store.setPlaygroundValues()
   }
 
@@ -19,7 +20,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Layout name="wide" padding>
+  <Layout
+    name="wide"
+    padding
+  >
     <SkeletonEncounterTable v-if="store.isLoading" />
     <div v-else-if="store.encounter">
       <div class="container-max flex justify-end relative pb-4">

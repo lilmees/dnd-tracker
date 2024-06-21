@@ -6,7 +6,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     settings: {
       hide_launcher: true,
       shortcut: true,
-      widget_position: 'center'
-    }
+      widget_position: 'center',
+    },
   })
 })

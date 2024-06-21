@@ -212,32 +212,32 @@ interface SpriteMetaData<T> {
   size?: {
     width: number
     height: number
-  },
+  }
   versions?: SpriteDirection[]
 }
 
 interface SpriteMap {
-  nature: SpriteMetaData<NatureSprite>[],
-  animals: SpriteMetaData<AnimalSprite>[],
-  characters: SpriteMetaData<CharacterSprite>[],
-  monsters: SpriteMetaData<MonsterSprite>[],
-  items: SpriteMetaData<ItemSprite>[],
-  floors: SpriteMetaData<FloorSprite>[],
+  nature: SpriteMetaData<NatureSprite>[]
+  animals: SpriteMetaData<AnimalSprite>[]
+  characters: SpriteMetaData<CharacterSprite>[]
+  monsters: SpriteMetaData<MonsterSprite>[]
+  items: SpriteMetaData<ItemSprite>[]
+  floors: SpriteMetaData<FloorSprite>[]
   walls: SpriteMetaData<WallSprite>[]
 }
 
-interface DraggableSprites extends Omit<SpriteMap, 'walls'|'floors'> {}
+interface DraggableSprites extends Omit<SpriteMap, 'walls' | 'floors'> {}
 
-type FabricBrush = 'Pencil'|'Eraser'|'Spray'
+type FabricBrush = 'Pencil' | 'Eraser' | 'Spray'
 
-type FabricShape = 'Rectangle'|'Cube'|'Cone'|'Line'|'Sphere'
+type FabricShape = 'Rectangle' | 'Cube' | 'Cone' | 'Line' | 'Sphere'
 
 interface SpriteData extends SpriteMetaData<Sprite> {
   url: string
 }
 
 interface Coords {
-  x: number,
+  x: number
   y: number
 }
 
@@ -260,5 +260,5 @@ interface AOETooltip {
   hidden: boolean
   top?: string
   left?: string
-  aoe?: AOE,
+  aoe?: AOE
 }

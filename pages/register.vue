@@ -13,41 +13,43 @@ const form = ref<Register>({ email: '', password: '', name: '', username: '', ma
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 const image = ref<string>(
-  `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1).toString(36).substring(7)}&size=100`
+  `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1).toString(36).substring(7)}&size=100`,
 )
 
-async function register ({ __init, username, name, marketing, ...credentials }: Obj): Promise<void> {
+async function register({ __init, username, name, marketing, ...credentials }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
 
     await store.register(
       credentials as Login,
-      { username, name, marketing, avatar: image.value, role: 'User' }
+      { username, name, marketing, avatar: image.value, role: 'User' },
     )
 
     toast.success({
       title: t('pages.register.toast.success.title'),
-      text: t('pages.register.toast.success.text')
+      text: t('pages.register.toast.success.text'),
     })
 
     navigateTo(localePath('/login'))
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function randomAvatar (): void {
+function randomAvatar(): void {
   image.value = `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1)
     .toString(36)
     .substring(7)}&size=100`
 }
 
-function handleIconClick (node: any) {
+function handleIconClick(node: any) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
@@ -74,10 +76,18 @@ function handleIconClick (node: any) {
           {{ $t('pages.register.random') }}
         </TextButton>
       </div>
-      <p v-if="error" class="text-danger text-center">
+      <p
+        v-if="error"
+        class="text-danger text-center"
+      >
         {{ error }}
       </p>
-      <FormKit v-model="form" type="form" :actions="false" @submit="register">
+      <FormKit
+        v-model="form"
+        type="form"
+        :actions="false"
+        @submit="register"
+      >
         <FormKit
           name="name"
           :label="$t('components.inputs.fullNameLabel')"

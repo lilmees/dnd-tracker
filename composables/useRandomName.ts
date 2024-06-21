@@ -1,6 +1,6 @@
 import { firstname, lastname, middlename } from '@/fixtures/names.json'
 
-export function useRandomName (): string {
+export function useRandomName(): string {
   const first = randomArrayItem(firstname)
   const last = randomArrayItem(lastname.prefixes) + randomArrayItem(lastname.suffixes)
 

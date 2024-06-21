@@ -12,21 +12,23 @@ const form = ref<{ email: string }>({ email: '' })
 const isLoading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-async function forgotPassword ({ __init, email }: Obj): Promise<void> {
+async function forgotPassword({ __init, email }: Obj): Promise<void> {
   error.value = null
   try {
     isLoading.value = true
     await store.forgotPassword(email)
     toast.success({
       title: t('pages.forgotPassword.toast.success.title'),
-      text: t('pages.forgotPassword.toast.success.text')
+      text: t('pages.forgotPassword.toast.success.text'),
     })
     navigateTo(localePath('/login'))
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
@@ -38,7 +40,10 @@ async function forgotPassword ({ __init, email }: Obj): Promise<void> {
       <h1 class="text-center">
         {{ $t('pages.forgotPassword.title') }}
       </h1>
-      <p v-if="error" class="text-danger text-center">
+      <p
+        v-if="error"
+        class="text-danger text-center"
+      >
         {{ error }}
       </p>
       <FormKit

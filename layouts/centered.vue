@@ -4,16 +4,18 @@ const showNav = useState<boolean>('showNavigation', () => true)
 
 const blob = ref<HTMLDivElement>()
 
-onBeforeMount(() => { showNav.value = false })
+onBeforeMount(() => {
+  showNav.value = false
+})
 
-if (process.client) {
+if (import.meta.client) {
   document.body.onmousemove = (event) => {
     if (blob.value) {
       const { clientX, clientY } = event
 
       blob.value.animate({
         left: `${clientX}px`,
-        top: `${clientY}px`
+        top: `${clientY}px`,
       }, { duration: 3000, fill: 'forwards' })
     }
   }
@@ -42,7 +44,10 @@ if (process.client) {
           loading="lazy"
           class="w-8 h-8 absolute -top-8"
         >
-        <NuxtLink :to="localePath('/')" class="group">
+        <NuxtLink
+          :to="localePath('/')"
+          class="group"
+        >
           <Icon
             name="ic:round-clear"
             class="w-8 h-8 text-danger cursor-pointer absolute right-4 top-4 rounded-full ring-danger group-focus-within:ring"

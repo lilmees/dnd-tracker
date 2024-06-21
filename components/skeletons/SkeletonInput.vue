@@ -3,8 +3,8 @@ withDefaults(
   defineProps<{
     label?: boolean
   }>(), {
-    label: true
-  }
+    label: true,
+  },
 )
 </script>
 

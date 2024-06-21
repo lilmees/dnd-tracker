@@ -36,7 +36,12 @@ defineProps<{
       <EBody class="bg-background my-auto mx-auto text-white">
         <EContainer class="p-4 md:p-7 my-10 mx-auto max-w-[700px]">
           <ESection class="mt-[32px]">
-            <EImg src="/logo.png" width="250" alt="DnD Tracker" class="my-0 mx-auto" />
+            <EImg
+              src="/logo.png"
+              width="250"
+              alt="DnD Tracker"
+              class="my-0 mx-auto"
+            />
           </ESection>
           <EHeading class="font-normal text-center p-0 my-[30px] mx-0">
             New feature request

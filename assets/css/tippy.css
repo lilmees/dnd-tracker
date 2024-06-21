@@ -1,5 +1,5 @@
 .tippy-box[data-theme~='dnd'] {
-  @apply bg-primary/50 border-2 border-primary backdrop-blur-sm text-white tracker-shadow;
+  @apply bg-primary/50 border-2 border-primary backdrop-blur-sm text-white;
 }
 
 .tippy-arrow {

@@ -17,7 +17,7 @@ const headers: TableHeader[] = [
   { label: '', sort: false, id: 'type' },
   { label: t('general.name'), sort: false, id: 'name' },
   { label: t('general.player'), sort: false, id: 'player' },
-  { label: t('general.stats'), sort: false, id: 'stats' }
+  { label: t('general.stats'), sort: false, id: 'stats' },
 ]
 
 const summonOptions = computed<Option[]>(() => {
@@ -36,7 +36,8 @@ whenever(() => isOpen.value, () => {
     homebrew.fetch({ field: 'campaign', value: store.encounter.campaign.id })
 
     isFetched.value = true
-  } else if (store.isSandbox) {
+  }
+  else if (store.isSandbox) {
     homebrew.data = homebrew.sandbox
     homebrew.loading = false
   }
@@ -54,13 +55,13 @@ onMounted(() => {
 
 onBeforeUnmount(() => homebrew.reset())
 
-function selectHomebrew (homebrew: Homebrew): void {
+function selectHomebrew(homebrew: Homebrew): void {
   selected.value.findIndex(h => h.id === homebrew.id) > -1
     ? selected.value = selected.value.filter(h => h.id !== homebrew.id)
     : selected.value.push(homebrew)
 }
 
-async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void> {
+async function addHomebrews(homebrews: RowUpdate[] | Homebrew[]): Promise<void> {
   try {
     isLoading.value = true
     const homebrewRows: Row[] = []
@@ -69,7 +70,7 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
       if (summoner.value && hb.type === 'summon') {
         hb.summoner = {
           name: summoner.value.label,
-          id: +summoner.value.value
+          id: +summoner.value.value,
         }
       }
 
@@ -80,33 +81,35 @@ async function addHomebrews (homebrews: RowUpdate[] | Homebrew[]): Promise<void>
 
     if (store?.encounter?.rows) {
       await store.encounterUpdate({
-        rows: [...store.encounter.rows, ...homebrewRows]
+        rows: [...store.encounter.rows, ...homebrewRows],
       })
     }
 
     closeModal()
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function closeModal (): void {
+function closeModal(): void {
   homebrew.filters.search = ''
   isOpen.value = false
   summoner.value = null
   selected.value = []
 }
 
-function selectedSummoner (value: unknown): void {
+function selectedSummoner(value: unknown): void {
   if (!isNaN(Number(value))) {
     const filtered = summonOptions.value.find(s => s.value === value)
     summoner.value = filtered || null
   }
 }
 
-function paginate (p: number): void {
+function paginate(p: number): void {
   if (store.encounter?.campaign?.id) {
     homebrew.paginate(p, { field: 'campaign', value: store.encounter.campaign.id })
   }
@@ -118,7 +121,7 @@ function paginate (p: number): void {
     <button
       v-tippy="{
         content: $t('components.addInitiativeCampaignHomebrew.title'),
-        touch: false
+        touch: false,
       }"
       :aria-label="$t('components.addInitiativeCampaignHomebrew.title')"
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
@@ -134,7 +137,10 @@ function paginate (p: number): void {
         aria-hidden="true"
       />
     </button>
-    <Modal :open="isOpen" @close="closeModal">
+    <Modal
+      :open="isOpen"
+      @close="closeModal"
+    >
       <template #header>
         <h2>
           {{ $t('components.addInitiativeCampaignHomebrew.title') }}
@@ -156,7 +162,11 @@ function paginate (p: number): void {
           :options="summonOptions"
           @input="selectedSummoner"
         />
-        <SkeletonTable v-if="homebrew.loading" :headers="headers" :rows="10" />
+        <SkeletonTable
+          v-if="homebrew.loading"
+          :headers="headers"
+          :rows="10"
+        />
         <Table
           v-else
           v-model:page="homebrew.page"
@@ -170,7 +180,7 @@ function paginate (p: number): void {
             :key="hb.id"
             class="tr transition-colors cursor-pointer"
             :class="{
-              '!bg-primary/30': selected.filter(p => p.id === hb.id).length
+              '!bg-primary/30': selected.filter(p => p.id === hb.id).length,
             }"
             @click="selectHomebrew(hb)"
           >
@@ -190,13 +200,22 @@ function paginate (p: number): void {
               {{ hb.player || '' }}
             </td>
             <td class="px-2 py-1 flex gap-4">
-              <div v-if="hb.health" class="flex gap-1">
+              <div
+                v-if="hb.health"
+                class="flex gap-1"
+              >
                 <p>
                   {{ hb.health }}
                 </p>
-                <Icon name="mdi:cards-heart-outline" class="w-6 h-6 text-danger" />
+                <Icon
+                  name="mdi:cards-heart-outline"
+                  class="w-6 h-6 text-danger"
+                />
               </div>
-              <div v-if="hb.ac" class="flex gap-1">
+              <div
+                v-if="hb.ac"
+                class="flex gap-1"
+              >
                 <p>
                   {{ hb.ac }}
                 </p>
@@ -209,7 +228,10 @@ function paginate (p: number): void {
             </td>
           </tr>
 
-          <template v-if="!homebrew.data?.length" #empty>
+          <template
+            v-if="!homebrew.data?.length"
+            #empty
+          >
             <span>
               {{ $t('components.addInitiativeCampaignHomebrew.initiative.nothing') }}
             </span>

@@ -5,19 +5,21 @@ const { locale } = useI18n({ useScope: 'global' })
 const stripe = useStripeStore()
 const profile = useProfileStore()
 
-async function subscribe (id: string, type: StripeSubscriptionType): Promise<void> {
+async function subscribe(id: string, type: StripeSubscriptionType): Promise<void> {
   await stripe.subscribe(id, locale.value, type)
 }
 
-function isCurrent (type: StripeSubscriptionType): boolean {
-  if (!profile.data) { return false }
+function isCurrent(type: StripeSubscriptionType): boolean {
+  if (!profile.data) {
+    return false
+  }
 
   const current = profile.data.subscription_type || 'free'
 
   return type === current
 }
 
-function isUpgradeable (type: StripeSubscriptionType): boolean {
+function isUpgradeable(type: StripeSubscriptionType): boolean {
   const current = profile.data?.subscription_type || 'free'
 
   if (current === 'free') {
@@ -51,20 +53,32 @@ function isUpgradeable (type: StripeSubscriptionType): boolean {
                   <th
                     v-for="(header, index) in [
                       undefined,
-                      ...stripe.shownProduct.map(({ title, price }) => { return { title, price } })
+                      ...stripe.shownProduct.map(({ title, price }) => { return { title, price } }),
                     ]"
                     :key="index"
                     class="py-3 px-2 border-b border-r last:border-r-0 border-slate-700"
                   >
-                    <div v-if="header" class="flex flex-col text-xl">
+                    <div
+                      v-if="header"
+                      class="flex flex-col text-xl"
+                    >
                       <span>
                         {{ header.title }}
                       </span>
-                      <div v-if="stripe.loading" class="w-[140px] mx-auto h-8 rounded-lg bg-tracker animate-pulse relative top-1" />
-                      <div v-else-if="header.price" class="font-extrabold flex items-baseline justify-center">
+                      <div
+                        v-if="stripe.loading"
+                        class="w-[140px] mx-auto h-8 rounded-lg bg-tracker animate-pulse relative top-1"
+                      />
+                      <div
+                        v-else-if="header.price"
+                        class="font-extrabold flex items-baseline justify-center"
+                      >
                         {{ header.price }}€ <span class="body-small"> /{{ $t('general.oneTime') }} </span>
                       </div>
-                      <div v-else class="font-extrabold flex items-baseline justify-center">
+                      <div
+                        v-else
+                        class="font-extrabold flex items-baseline justify-center"
+                      >
                         0€ <span class="body-small"> /{{ $t('general.forever') }} </span>
                       </div>
                     </div>
@@ -104,8 +118,14 @@ function isUpgradeable (type: StripeSubscriptionType): boolean {
                     :key="product.type"
                     class="px-2 py-1 border-r last:border-r-0 border-slate-700 text-center font-bold"
                   >
-                    <SkeletonButton v-if="stripe.loading" block />
-                    <div v-else-if="isCurrent(product.type)" class="btn-secondary w-full">
+                    <SkeletonButton
+                      v-if="stripe.loading"
+                      block
+                    />
+                    <div
+                      v-else-if="isCurrent(product.type)"
+                      class="btn-secondary w-full"
+                    >
                       {{ $t('general.current') }}
                     </div>
                     <button
@@ -128,7 +148,10 @@ function isUpgradeable (type: StripeSubscriptionType): boolean {
         {{ $t('pages.pricing.text') }}
       </p>
       <div class="flex justify-center">
-        <a href="https://ko-fi.com/B0B2SSBBQ" target="_blank">
+        <a
+          href="https://ko-fi.com/B0B2SSBBQ"
+          target="_blank"
+        >
           <div class="btn-primary flex items-center gap-4">
             <span>
               {{ $t('actions.buyCoffee') }}

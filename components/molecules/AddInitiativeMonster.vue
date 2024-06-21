@@ -15,29 +15,31 @@ whenever(() => isOpen.value, () => {
   }
 })
 
-async function addMonster (monster: Open5eItem) {
+async function addMonster(monster: Open5eItem) {
   isLoading.value = true
 
   try {
     if (store.encounter) {
       const row = useCreateRow({
         ...monster,
-        initiative_modifier: initiativeModifierFromDEX(monster.dexterity)
+        initiative_modifier: initiativeModifierFromDEX(monster.dexterity),
       } as unknown as Row, 'monster', store.encounter.rows)
       await store.encounterUpdate({
-        rows: [...store.encounter.rows, row]
+        rows: [...store.encounter.rows, row],
       })
       reset()
     }
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function reset () {
+function reset() {
   open5e.form = { search: '', cr: undefined }
   open5e.hits = []
   isOpen.value = false
@@ -49,7 +51,7 @@ function reset () {
     <button
       v-tippy="{
         content: $t('components.addInitiativeMonster.bestiary'),
-        touch: false
+        touch: false,
       }"
       :aria-label="$t('components.addInitiativeMonster.bestiary')"
       class="flex gap-2 items-center"
@@ -64,12 +66,18 @@ function reset () {
         aria-hidden="true"
       />
     </button>
-    <FullScreenSearch :open="isOpen" @close="reset">
+    <FullScreenSearch
+      :open="isOpen"
+      @close="reset"
+    >
       <div class="flex flex-col max-h-screen py-6">
         <h1 class="pb-4 text-center">
           {{ $t('components.addInitiativeMonster.bestiary') }}
         </h1>
-        <div id="el" class="flex w-full items-start gap-4 max-w-prose mx-auto">
+        <div
+          id="el"
+          class="flex w-full items-start gap-4 max-w-prose mx-auto"
+        >
           <FormKit
             v-model="open5e.form.search"
             type="search"
@@ -110,7 +118,10 @@ function reset () {
         <div class="overflow-y-auto max-h-full">
           <div class="grid lg:grid-cols-2 gap-4 items-start">
             <template v-if="open5e.isLoading">
-              <SkeletonMonsterCard v-for="i in 20" :key="i" />
+              <SkeletonMonsterCard
+                v-for="i in 20"
+                :key="i"
+              />
             </template>
             <template v-else-if="open5e.hits.length">
               <MonsterCard

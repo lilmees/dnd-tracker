@@ -4,7 +4,7 @@ const rolled = useState<Rolled | null>('rolled', () => null)
 const amount = ref<number>(1)
 const isOpen = ref<boolean>(false)
 
-function rollDice (dice: string): void {
+function rollDice(dice: string): void {
   if (amount.value < 1 || amount.value > 50) {
     amount.value = 1
   }
@@ -14,7 +14,7 @@ function rollDice (dice: string): void {
     dice,
     result: useDiceRoll(+dice.replace('d', ''), amount.value),
     max: +dice.replace('d', ''),
-    amount: amount.value
+    amount: amount.value,
   }
 
   amount.value = 1
@@ -89,7 +89,10 @@ function rollDice (dice: string): void {
               </template>
             </div>
             <div class="flex flex-col pt-2">
-              <label for="amount" class="body-extra-small">
+              <label
+                for="amount"
+                class="body-extra-small"
+              >
                 AMOUNT
               </label>
               <input

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 const umami = useRuntimeConfig().public.umamiId
 const profile = useProfileStore()
 const { auth } = useSupabaseClient()
@@ -13,9 +16,14 @@ auth.onAuthStateChange((event) => {
 
 useHead({
   script: [
-    { src: 'https://analytics.umami.is/script.js', async: true, 'data-website-id': umami }
-  ]
+    { 'src': 'https://analytics.umami.is/script.js', 'async': true, 'data-website-id': umami },
+  ],
 })
+
+if (import.meta.client) {
+  gsap.registerPlugin(ScrollTrigger)
+  ScrollTrigger.getAll().forEach((t: any) => t.kill())
+}
 </script>
 
 <template>

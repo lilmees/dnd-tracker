@@ -19,22 +19,23 @@ const formInfo = ref<ProfileUpdate>({
   email: '',
   name: '',
   username: '',
-  marketing: true
+  marketing: true,
 })
 
 if (profile.data) {
   setUserData()
-} else {
+}
+else {
   whenever(() => profile.data, () => setUserData())
 }
 
-function setUserData (): void {
+function setUserData(): void {
   image.value = profile.data?.avatar || randomAvatar()
   formInfo.value = {
     email: profile.data?.email || '',
     name: profile.data?.name || '',
     username: profile.data?.username || '',
-    marketing: profile.data?.marketing ?? true
+    marketing: profile.data?.marketing ?? true,
   }
 }
 
@@ -47,43 +48,48 @@ const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): 
     await profile.updateProfile(formData)
     reset('password')
     toast.success({ title: t('pages.profile.toast.success.text') })
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
 
     if (formData.password) {
       passwordError.value = err.message
-    } else if (!formData.avatar) {
+    }
+    else if (!formData.avatar) {
       infoError.value = err.message
     }
 
     toast.error({ text: err.message })
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }, 1000)
 
-function randomAvatar (): string {
+function randomAvatar(): string {
   return `https://api.dicebear.com/7.x/open-peeps/svg?seed=${(Math.random() + 1)
     .toString(36)
     .substring(7)}&size=100`
 }
 
-async function deleteUser (): Promise<void> {
+async function deleteUser(): Promise<void> {
   needConfirmation.value = false
   isLoading.value = true
 
   try {
     await profile.deleteProfile()
     toast.success({ text: t('pages.profile.toast.delete.text') })
-  } catch (err) {
+  }
+  catch (err) {
     logRocket.captureException(err as Error)
     toast.error()
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-function handleIconClick (node: any) {
+function handleIconClick(node: any) {
   node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
   node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
@@ -91,7 +97,10 @@ function handleIconClick (node: any) {
 
 <template>
   <Layout shadow>
-    <section v-if="profile.data" class="space-y-2">
+    <section
+      v-if="profile.data"
+      class="space-y-2"
+    >
       <div
         class="flex flex-wrap gap-y-2 gap-x-4 items-end pb-4 border-b-2 border-slate-700"
       >
@@ -106,10 +115,16 @@ function handleIconClick (node: any) {
           />
         </div>
         <div class="flex flex-col gap-2">
-          <TextButton class="w-fit" @click="image = randomAvatar()">
+          <TextButton
+            class="w-fit"
+            @click="image = randomAvatar()"
+          >
             {{ $t('pages.register.random') }}
           </TextButton>
-          <div v-if="image !== profile.data.avatar" class="flex gap-2">
+          <div
+            v-if="image !== profile.data.avatar"
+            class="flex gap-2"
+          >
             <button
               class="btn-black"
               @click="updateProfile({ avatar: image })"
@@ -182,7 +197,10 @@ function handleIconClick (node: any) {
               :label="$t('actions.save')"
               input-class="$reset btn-primary"
             />
-            <p v-if="infoError" class="text-danger body-small mt-1">
+            <p
+              v-if="infoError"
+              class="text-danger body-small mt-1"
+            >
               {{ infoError }}
             </p>
           </FormKit>
@@ -219,7 +237,10 @@ function handleIconClick (node: any) {
               :label="$t('actions.save')"
               input-class="$reset btn-primary"
             />
-            <p v-if="passwordError" class="text-danger body-small mt-1">
+            <p
+              v-if="passwordError"
+              class="text-danger body-small mt-1"
+            >
               {{ passwordError }}
             </p>
           </FormKit>

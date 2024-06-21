@@ -17,7 +17,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
   const noItems = computed<boolean>(() => visibleItems.value.length === 0 && !loading.value)
 
-  async function fetch (eq?: SbEq): Promise<void> {
+  async function fetch(eq?: SbEq): Promise<void> {
     loading.value = true
 
     try {
@@ -25,15 +25,19 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
       noteCount.value = count || 0
 
-      if (notes) { data.value = notes }
-    } catch (err) {
+      if (notes) {
+        data.value = notes
+      }
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
 
-  async function addNote (note: Note): Promise<void> {
+  async function addNote(note: Note): Promise<void> {
     try {
       const { data: newNote, error } = await supabase
         .from('notes')
@@ -42,17 +46,19 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
       if (error) {
         throw error
-      } else {
+      }
+      else {
         data.value = [newNote[0], ...data.value]
         noteCount.value++
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function deleteNote (id: number|number[]): Promise<void> {
+  async function deleteNote(id: number | number[]): Promise<void> {
     try {
       let query = supabase.from('notes').delete()
 
@@ -64,16 +70,18 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
       if (err) {
         throw err
-      } else {
+      }
+      else {
         fetch({ field: 'campaign', value: currentStore.campaign!.id })
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
   }
 
-  async function updateNote (note: Note, id: number): Promise<void> {
+  async function updateNote(note: Note, id: number): Promise<void> {
     try {
       const { data: updatedNote, error } = await supabase
         .from('notes')
@@ -83,14 +91,16 @@ export const useNotesStore = defineStore('useNotesStore', () => {
 
       if (error) {
         throw error
-      } else {
+      }
+      else {
         const index = data.value.findIndex(e => e.id === id)
         data.value[index] = {
           ...data.value[index],
-          ...updatedNote[0] as Note
+          ...updatedNote[0] as Note,
         }
       }
-    } catch (err) {
+    }
+    catch (err) {
       logRocket.captureException(err as Error)
       toast.error()
     }
@@ -107,6 +117,6 @@ export const useNotesStore = defineStore('useNotesStore', () => {
     fetch,
     addNote,
     deleteNote,
-    updateNote
+    updateNote,
   }
 })

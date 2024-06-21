@@ -8,18 +8,19 @@ const store = useTableStore()
 const isUpdating = ref<boolean>(false)
 
 const formatUrl = computed<string>(() => {
-  if (store.activeRow?.link &&
-  store.activeRow.link.includes('youtube') &&
-  store.activeRow.link.includes('watch?v=')
+  if (store.activeRow?.link
+    && store.activeRow.link.includes('youtube')
+    && store.activeRow.link.includes('watch?v=')
   ) {
     const split: string[] = store.activeRow.link.split('watch?v=')
     return `${split[0]}embed/${split[1]}`
-  } else {
+  }
+  else {
     return store.activeRow?.link || ''
   }
 })
 
-function updateLink ({ __init, link }: Obj): void {
+function updateLink({ __init, link }: Obj): void {
   emit('update', link)
   reset('form')
   isUpdating.value = false
@@ -65,7 +66,10 @@ function updateLink ({ __init, link }: Obj): void {
           </button>
         </div>
       </template>
-      <div v-else class="space-y-3">
+      <div
+        v-else
+        class="space-y-3"
+      >
         <p class="max-w-prose">
           {{ $t('components.linkModal.placeholder') }}
         </p>

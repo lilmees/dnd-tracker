@@ -1,7 +1,7 @@
 export const useRouteStore = defineStore('useRouteStore', () => {
   const routes = ref<Route[]>([
     { label: 'components.navbar.contact', url: 'contact', requiredLogIn: false },
-    { label: 'components.navbar.pricing', url: 'pricing', requiredLogIn: false }
+    { label: 'components.navbar.pricing', url: 'pricing', requiredLogIn: false },
   ])
 
   const playRoutes = ref<Route[]>([
@@ -10,16 +10,16 @@ export const useRouteStore = defineStore('useRouteStore', () => {
     { label: 'components.navbar.playground', url: 'playground', requiredLogIn: false },
     { label: 'components.navbar.fantasy', url: 'fantasy-name-generator', requiredLogIn: false },
     { label: 'components.navbar.info', url: 'info', requiredLogIn: false },
-    { label: 'components.navbar.map', url: 'map', requiredLogIn: false, beta: true }
+    { label: 'components.navbar.map', url: 'map', requiredLogIn: false, beta: true },
   ])
 
   const profileRoutes = ref<Route[]>([
-    { label: 'components.navbar.profile', url: 'profile', requiredLogIn: true }
+    { label: 'components.navbar.profile', url: 'profile', requiredLogIn: true },
   ])
 
   return {
     routes,
     playRoutes,
-    profileRoutes
+    profileRoutes,
   }
 })

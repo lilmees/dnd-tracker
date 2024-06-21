@@ -5,15 +5,15 @@ const emit = defineEmits<{ close: [] }>()
 
 const props = withDefaults(
   defineProps<{
-    open: boolean,
-    encounter?: Encounter,
-    campaignId?: number,
+    open: boolean
+    encounter?: Encounter
+    campaignId?: number
     update?: boolean
   }>(), {
     encounter: undefined,
     campaignId: undefined,
-    update: false
-  }
+    update: false,
+  },
 )
 
 const store = useEncountersStore()
@@ -26,7 +26,7 @@ const error = ref<string>()
 
 const form = ref<EncounterForm>({
   title: '',
-  campaign: props.campaignId || undefined
+  campaign: props.campaignId || undefined,
 })
 
 const campaignOptions = computed<Option[]>(() => {
@@ -34,7 +34,8 @@ const campaignOptions = computed<Option[]>(() => {
     return campaigns.campaigns.map((c: Campaign) => {
       return { label: c.title, value: c.id }
     })
-  } else {
+  }
+  else {
     return []
   }
 })
@@ -57,7 +58,7 @@ whenever(() => props.update, () => {
   form.value.campaign = props.campaignId || camp
 })
 
-function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
+function handleSubmit({ __init, data, slots, ...formData }: Obj): void {
   error.value = undefined
   isLoading.value = true
 
@@ -67,30 +68,32 @@ function handleSubmit ({ __init, data, slots, ...formData }: Obj): void {
       : addEncounter(formData as EncounterForm)
 
     resetState()
-  } catch (err: any) {
+  }
+  catch (err: any) {
     logRocket.captureException(err as Error)
     error.value = err.message
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
 
-async function updateEncounter (data: EncounterForm): Promise<void> {
+async function updateEncounter(data: EncounterForm): Promise<void> {
   if (props.encounter) {
     await store.updateEncounter(
       removeEmptyKeys({
         ...data,
-        ...props.campaignId && { campaign: props.campaignId }
+        ...props.campaignId && { campaign: props.campaignId },
       }),
       props.encounter.id,
-      !!props.campaignId
+      !!props.campaignId,
     )
 
     emit('close')
   }
 }
 
-async function addEncounter (data: EncounterForm): Promise<void> {
+async function addEncounter(data: EncounterForm): Promise<void> {
   if (user.value) {
     const enc = removeEmptyKeys<AddEncounter>({
       ...data,
@@ -98,7 +101,7 @@ async function addEncounter (data: EncounterForm): Promise<void> {
       round: 1,
       rows: [],
       created_by: user.value.id,
-      activeIndex: 0
+      activeIndex: 0,
     })
 
     await store.addEncounter(enc)
@@ -107,7 +110,7 @@ async function addEncounter (data: EncounterForm): Promise<void> {
   }
 }
 
-function resetState (): void {
+function resetState(): void {
   form.value.title = ''
   form.value.campaign = undefined
   emit('close')
@@ -115,13 +118,19 @@ function resetState (): void {
 </script>
 
 <template>
-  <Modal :open="open" @close="resetState">
+  <Modal
+    :open="open"
+    @close="resetState"
+  >
     <template #header>
       <h2>
         {{ $t(`components.encounterModal.${update ? 'update' : 'add'}`) }}
       </h2>
     </template>
-    <p v-if="error" class="text-danger text-center">
+    <p
+      v-if="error"
+      class="text-danger text-center"
+    >
       {{ error }}
     </p>
     <FormKit

@@ -16,8 +16,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { number: 3, icon: 'check' },
         { icon: 'cross' },
         { icon: 'cross' },
-        { icon: 'check' }
-      ]
+        { icon: 'check' },
+      ],
     },
     {
       type: 'medior',
@@ -28,8 +28,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { number: 10, icon: 'check' },
         { icon: 'cross' },
         { icon: 'check' },
-        { icon: 'check' }
-      ]
+        { icon: 'check' },
+      ],
     },
     {
       type: 'pro',
@@ -40,8 +40,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { number: 25, icon: 'check' },
         { icon: 'check' },
         { icon: 'check' },
-        { icon: 'check' }
-      ]
+        { icon: 'check' },
+      ],
     },
     {
       type: 'upgrade to pro',
@@ -52,20 +52,21 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         { number: 25, icon: 'check' },
         { icon: 'check' },
         { icon: 'check' },
-        { icon: 'check' }
-      ]
-    }
+        { icon: 'check' },
+      ],
+    },
   ])
 
   const shownProduct = computed<ProductPricing[]>(() => {
     if (profile?.data?.subscription_type === 'medior') {
       return products.value.filter(p => p.type !== 'pro')
-    } else {
+    }
+    else {
       return products.value.filter(p => p.type !== 'upgrade to pro')
     }
   })
 
-  async function fetchProducts (): Promise<void> {
+  async function fetchProducts(): Promise<void> {
     const stripeProducts = await $fetch('/api/stripe/products')
 
     stripeProducts.forEach((product) => {
@@ -80,7 +81,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
     loading.value = false
   }
 
-  async function subscribe (lookup: string, locale: string, type: StripeSubscriptionType): Promise<void> {
+  async function subscribe(lookup: string, locale: string, type: StripeSubscriptionType): Promise<void> {
     if (!user || !profile.data) {
       navigateTo(localePath('/login'))
     }
@@ -92,8 +93,8 @@ export const useStripeStore = defineStore('useStripeStore', () => {
         lookup,
         locale,
         type,
-        customer: profile.data!.stripe_id
-      }
+        customer: profile.data!.stripe_id,
+      },
     })
 
     if (data.value) {
@@ -116,7 +117,7 @@ export const useStripeStore = defineStore('useStripeStore', () => {
       'general.campaigns',
       'pages.pricing.multiple',
       'pages.pricing.live',
-      'pages.pricing.update'
-    ]
+      'pages.pricing.update',
+    ],
   }
 })

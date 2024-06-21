@@ -6,18 +6,19 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { html } = await useCompiler('FeatureRequest.vue', {
-      props: body.props
+      props: body.props,
     })
 
     const options = {
       from: body.props.email,
       to: 'jeremy@dnd-tracker.com',
       subject: 'New feature request',
-      html
+      html,
     }
 
     return await transporter.sendMail(options)
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error('Failed to send email.')
   }
 })

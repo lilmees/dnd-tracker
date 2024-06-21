@@ -1,13 +1,13 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-  title?: string
-  text?: string
-  text2?: string
-  buttonLabel?: string
-  buttonLink?: string
-  center?: boolean
-  sprite?: string
+    title?: string
+    text?: string
+    text2?: string
+    buttonLabel?: string
+    buttonLink?: string
+    center?: boolean
+    sprite?: string
   }>(), {
     text: '',
     text2: '',
@@ -15,13 +15,16 @@ withDefaults(
     center: false,
     buttonLabel: '',
     buttonLink: '',
-    sprite: undefined
-  }
+    sprite: undefined,
+  },
 )
 </script>
 
 <template>
-  <div class="group" :class="{ 'text-center': center }">
+  <div
+    class="group"
+    :class="{ 'text-center': center }"
+  >
     <h2
       v-if="title"
       class="pb-4 relative max-w-max"

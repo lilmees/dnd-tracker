@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineEmits(['add'])
 withDefaults(
-  defineProps<{ monster: Open5eItem, addable?: boolean}>(),
-  { addable: false }
+  defineProps<{ monster: Open5eItem, addable?: boolean }>(),
+  { addable: false },
 )
 
 const abilities = ref<string[]>(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'])
@@ -68,7 +68,11 @@ const isOpen = ref<boolean>(false)
       </div>
     </div>
     <div class="flex gap-x-4 gap-y-1 flex-wrap">
-      <div v-for="(ability, index) in abilities" :key="ability" class="flex gap-1">
+      <div
+        v-for="(ability, index) in abilities"
+        :key="ability"
+        class="flex gap-1"
+      >
         <p>{{ ability }}:</p>
         <p class="font-bold">
           {{ monster[abilitiesNames[index] as keyof Open5eItem] || '_' }}
@@ -76,8 +80,14 @@ const isOpen = ref<boolean>(false)
       </div>
     </div>
     <div class="flex gap-x-4 gap-y-1 flex-wrap">
-      <template v-for="stat in stats" :key="stat">
-        <div v-if="monster[stat as keyof Open5eItem]" class="flex gap-1">
+      <template
+        v-for="stat in stats"
+        :key="stat"
+      >
+        <div
+          v-if="monster[stat as keyof Open5eItem]"
+          class="flex gap-1"
+        >
           <p>
             {{ stat }}:
           </p>

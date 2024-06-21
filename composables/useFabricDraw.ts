@@ -1,64 +1,69 @@
 import * as fabric from 'fabric'
 
-export function useFabricDraw (grid: number) {
+export function useFabricDraw(grid: number) {
   const isDrawingFloor = ref<boolean>(false)
   const isDrawingWall = ref<boolean>(false)
 
-  function mouseDown (
+  function mouseDown(
     event: fabric.TPointerEvent,
     canvas?: fabric.Canvas,
     layer?: fabric.Group,
-    sprite?: SpriteData
+    sprite?: SpriteData,
   ): void {
     if (
-      !sprite ||
-      !canvas ||
-      !layer ||
-      (event && !withinBoundaries(event as MouseEvent, canvas))
+      !sprite
+      || !canvas
+      || !layer
+      || (event && !withinBoundaries(event as MouseEvent, canvas))
     ) { return }
 
     canvas.selection = false
 
     if (sprite.url.includes('floors')) {
       isDrawingFloor.value = true
-    } else {
+    }
+    else {
       isDrawingWall.value = true
     }
 
     createTile(canvas, layer, sprite, event)
   }
 
-  function mouseMove (
+  function mouseMove(
     event: fabric.TPointerEvent,
     canvas?: fabric.Canvas,
     layer?: fabric.Group,
-    sprite?: SpriteData
+    sprite?: SpriteData,
   ): void {
     if (
-      (isDrawingFloor.value || isDrawingWall.value) &&
-      sprite &&
-      canvas &&
-      layer &&
-      withinBoundaries(event as MouseEvent, canvas)
+      (isDrawingFloor.value || isDrawingWall.value)
+      && sprite
+      && canvas
+      && layer
+      && withinBoundaries(event as MouseEvent, canvas)
     ) {
       createTile(canvas, layer, sprite, event)
     }
   }
 
-  function mouseUp (canvas?: fabric.Canvas): void {
-    if (!canvas) { return }
+  function mouseUp(canvas?: fabric.Canvas): void {
+    if (!canvas) {
+      return
+    }
 
     canvas.selection = true
     isDrawingFloor.value = false
     isDrawingWall.value = false
   }
 
-  function fillBackground (
+  function fillBackground(
     sprite: SpriteData,
     canvas: fabric.Canvas,
-    layer: fabric.Group
+    layer: fabric.Group,
   ): void {
-    if (!sprite || !canvas || !layer) { return }
+    if (!sprite || !canvas || !layer) {
+      return
+    }
 
     const xCells: number = canvas.getWidth() / grid
     const yCells: number = canvas.getHeight() / grid
@@ -70,11 +75,11 @@ export function useFabricDraw (grid: number) {
     }
   }
 
-  async function createTile (
+  async function createTile(
     canvas: fabric.Canvas,
     layer: fabric.Group,
     sprite: SpriteData,
-    event: fabric.TPointerEvent | Coords
+    event: fabric.TPointerEvent | Coords,
   ): Promise<void> {
     const pointer: Coords = event instanceof Object && 'target' in event
       ? canvas!.getPointer(event)
@@ -83,7 +88,7 @@ export function useFabricDraw (grid: number) {
     // Snap to grid
     const coords = {
       x: Math.floor(pointer.x / grid) * grid,
-      y: Math.floor(pointer.y / grid) * grid
+      y: Math.floor(pointer.y / grid) * grid,
     } as fabric.Point
 
     const occupiedSlot = getGridObjectByCoords(layer!, coords)
@@ -104,13 +109,17 @@ export function useFabricDraw (grid: number) {
       }
 
       // If it's already the right sprite don't update it
-      if (sameImgSource(occupiedSlot as fabric.Image, sprite.value)) { return }
+      if (sameImgSource(occupiedSlot as fabric.Image, sprite.value)) {
+        return
+      }
 
       layer!.remove(occupiedSlot as fabric.Object)
     }
 
     // Don't create new sprite if it's the remove brush
-    if (sprite.value === 'remove') { return }
+    if (sprite.value === 'remove') {
+      return
+    }
 
     let imgUrl = sprite.url
 
@@ -118,7 +127,8 @@ export function useFabricDraw (grid: number) {
 
     if (sprite.variations) {
       imgUrl = sprite.url.replace('-1.svg', `-${Math.floor(Math.random() * sprite.variations) + 1}.svg`)
-    } else if (sprite.versions && adjacent) {
+    }
+    else if (sprite.versions && adjacent) {
       imgUrl = `${sprite.url.split(sprite.value)[0]}${sprite.value}-${createAdjacentString(adjacent, sprite.versions)}.svg`
     }
 
@@ -129,7 +139,7 @@ export function useFabricDraw (grid: number) {
       top: coords.y,
       width: grid,
       height: grid,
-      selectable: false
+      selectable: false,
     }))
 
     canvas!.requestRenderAll()
@@ -137,29 +147,30 @@ export function useFabricDraw (grid: number) {
     await checkForUpdatingConnections(sprite, adjacent, layer, coords, canvas)
   }
 
-  async function checkForUpdatingConnections (
+  async function checkForUpdatingConnections(
     sprite: SpriteData,
     adjacent: AdjacentSprite | undefined,
     layer: fabric.Group,
     coords: fabric.Point,
-    canvas: fabric.Canvas
+    canvas: fabric.Canvas,
   ): Promise<void> {
     if (sprite.versions && adjacent) {
       for (const connection in adjacent) {
         if (adjacent[connection as keyof AdjacentSprite]) {
           await handleConnection(connection as Connection, sprite, layer, coords, canvas)
-        } else if (sprite.value === 'remove') {
+        }
+        else if (sprite.value === 'remove') {
           await handleRemoveConnection(connection as Connection, layer, coords, canvas)
         }
       }
     }
   }
 
-  async function handleRemoveConnection (
+  async function handleRemoveConnection(
     connection: Connection,
     layer: fabric.Group,
     coords: fabric.Point,
-    canvas: fabric.Canvas
+    canvas: fabric.Canvas,
   ): Promise<void> {
     const cellCoords = getConnectedCellCoords(connection, coords, grid)
     const object = getGridObjectByCoords(layer, cellCoords)
@@ -182,19 +193,19 @@ export function useFabricDraw (grid: number) {
         top: cellCoords.y,
         width: grid,
         height: grid,
-        selectable: false
+        selectable: false,
       }))
 
       canvas.requestRenderAll()
     }
   }
 
-  async function handleConnection (
+  async function handleConnection(
     connection: Connection,
     sprite: SpriteData,
     layer: fabric.Group,
     coords: fabric.Point,
-    canvas: fabric.Canvas
+    canvas: fabric.Canvas,
   ): Promise<void> {
     const cellCoords = getConnectedCellCoords(connection, coords, grid)
     const object = getGridObjectByCoords(layer, cellCoords)
@@ -213,7 +224,7 @@ export function useFabricDraw (grid: number) {
         top: cellCoords.y,
         width: grid,
         height: grid,
-        selectable: false
+        selectable: false,
       }))
 
       canvas.requestRenderAll()
@@ -226,6 +237,6 @@ export function useFabricDraw (grid: number) {
     mouseMove,
     fillBackground,
     isDrawingFloor,
-    isDrawingWall
+    isDrawingWall,
   }
 }

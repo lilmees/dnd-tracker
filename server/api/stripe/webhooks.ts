@@ -12,7 +12,9 @@ export default defineEventHandler(async (event) => {
     const webhookSecret = config.stripeWebhook // changes everytime you spin up the locale stripe listener
     const event = stripe.webhooks.constructEvent(raw, signature, webhookSecret)
 
-    if (event.type !== 'checkout.session.completed') { return }
+    if (event.type !== 'checkout.session.completed') {
+      return
+    }
 
     const subscription = event.data.object
 
@@ -29,12 +31,14 @@ export default defineEventHandler(async (event) => {
           .update({ subscription_type: data.temp_subscription } as never)
           .eq('stripe_id', subscription.customer)
       }
-    } catch (error) {
+    }
+    catch (error) {
       return 'Error fetching or updating user'
     }
 
     return `handled ${event.type}`
-  } catch (err) {
+  }
+  catch (err) {
     return 'Wehbook error'
   }
 })

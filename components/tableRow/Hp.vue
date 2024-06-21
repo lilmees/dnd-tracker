@@ -6,7 +6,7 @@ const emit = defineEmits(['update', 'close'])
 const isRollingDice = ref<boolean>(false)
 const form = ref<{ health: number | null }>({ health: null })
 
-function updateHealth ({ __init, health }: Obj): void {
+function updateHealth({ __init, health }: Obj): void {
   emit('update', Number(health))
   reset('form')
   isRollingDice.value = false

@@ -7,7 +7,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     defaultProps: {
       delay: 400,
       animation: 'shift-away',
-      theme: 'dnd'
-    }
+      theme: 'dnd',
+    },
   })
 })

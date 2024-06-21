@@ -2,7 +2,7 @@
   <tippy
     v-tippy="{
       content: 'Hotkeys',
-      touch: false
+      touch: false,
     }"
     trigger="click"
   >
@@ -22,13 +22,25 @@
           </p>
           <div class="flex flex-col gap-2 col-span-2">
             <div>
-              <kbd><Icon name="vaadin:ctrl-a" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:ctrl-a"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="carbon:mac-command" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-command"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="carbon:mac-shift" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-shift"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">+</span>
-              <kbd><Icon name="carbon:arrow-left" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:arrow-left"
+                class="w-5 h-5"
+              /></kbd>
             </div>
             <div>
               {{ $t('general.or') }} <kbd>PageUp</kbd>
@@ -39,13 +51,25 @@
           </p>
           <div class="flex flex-col gap-2 col-span-2">
             <div>
-              <kbd><Icon name="vaadin:ctrl-a" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="vaadin:ctrl-a"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="carbon:mac-command" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-command"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">/</span>
-              <kbd><Icon name="carbon:mac-shift" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:mac-shift"
+                class="w-5 h-5"
+              /></kbd>
               <span class="mx-1 font-bold">+</span>
-              <kbd><Icon name="carbon:arrow-right" class="w-5 h-5" /></kbd>
+              <kbd><Icon
+                name="carbon:arrow-right"
+                class="w-5 h-5"
+              /></kbd>
             </div>
             <div>
               {{ $t('general.or') }} <kbd>PageDown</kbd>
