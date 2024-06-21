@@ -38,10 +38,10 @@ function close(): void {
         />
         <NuxtImg
           v-else
-          src="/dice.webp"
+          src="/pixel-d20.png"
           alt="D20 dice"
           sizes="sm:40px md:40px lg:40px"
-          class="w-12"
+          class="w-10 m-[6px]"
           format="webp"
           provider="imagekit"
         />
