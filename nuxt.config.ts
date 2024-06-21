@@ -1,3 +1,5 @@
+import seo from './fixtures/seo'
+
 export default defineNuxtConfig({
   components: {
     global: true,
@@ -36,6 +38,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-lazy-hydrate',
     '@nuxt/eslint',
+    '@nuxtjs/seo',
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -95,9 +98,7 @@ export default defineNuxtConfig({
     ],
   },
   image: {
-    imagekit: {
-      baseURL: 'https://ik.imagekit.io/c2es1qasw',
-    },
+    imagekit: { baseURL: 'https://ik.imagekit.io/c2es1qasw' },
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
@@ -135,11 +136,18 @@ export default defineNuxtConfig({
   },
   vueEmail: {
     baseUrl: process.env.production ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
-    i18n: {
-      defaultLocale: 'en',
-    },
+    i18n: { defaultLocale: 'en' },
   },
   eslint: {
     config: { stylistic: true },
   },
+  site: {
+    url: seo.url,
+    name: seo.name,
+    description: seo.description,
+  },
+  sitemap: {
+    exclude: ['/forgot-password', '/no-member', '/reset-password', '/subscribe-success'],
+  },
+  robots: { disallow: ['/_nuxt/', '/_nuxt'] },
 })
