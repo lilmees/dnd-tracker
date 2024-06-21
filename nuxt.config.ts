@@ -1,5 +1,3 @@
-import UnheadVite from '@unhead/addons/vite'
-
 export default defineNuxtConfig({
   components: {
     global: true,
@@ -27,14 +25,12 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     'nuxt-security',
     'nuxt-icon',
-    'nuxt-schema-org',
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@formkit/nuxt',
     '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
     '@vite-pwa/nuxt',
     '@vue-email/nuxt',
     '@nuxt/image',
@@ -55,9 +51,7 @@ export default defineNuxtConfig({
     stripeWebhook: process.env.STRIPE_WEBHOOK,
   },
   appConfig: {
-    umami: {
-      version: 2,
-    },
+    umami: { version: 2 },
   },
   pwa: {
     registerType: 'autoUpdate',
@@ -92,21 +86,13 @@ export default defineNuxtConfig({
       installPrompt: true,
     },
   },
-  vite: {
-    plugins: [UnheadVite()],
-  },
-  formkit: {
-    configFile: './formkit/config.ts',
-  },
+  formkit: { configFile: './formkit/config.ts' },
   i18n: {
     defaultLocale: 'nl',
     locales: [
       { code: 'nl', iso: 'nl-BE', name: 'Nederlands', icon: '🇧🇪' },
       { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' },
     ],
-  },
-  schemaOrg: {
-    host: process.env.NUXT_PUBLIC_SITE_URL,
   },
   image: {
     imagekit: {
@@ -120,18 +106,10 @@ export default defineNuxtConfig({
     viewer: false,
     exposeConfig: true,
   },
-  supabase: {
-    redirect: false,
-  },
-  imports: {
-    dirs: ['store'],
-  },
-  nitro: {
-    compressPublicAssets: true,
-  },
-  devtools: {
-    enabled: true,
-  },
+  supabase: { redirect: false },
+  imports: { dirs: ['store'] },
+  nitro: { compressPublicAssets: true },
+  devtools: { enabled: true },
   security: {
     headers: {
       contentSecurityPolicy: {
@@ -160,10 +138,6 @@ export default defineNuxtConfig({
     i18n: {
       defaultLocale: 'en',
     },
-  },
-  sitemap: {
-    autoI18n: false,
-    credits: false,
   },
   eslint: {
     config: { stylistic: true },

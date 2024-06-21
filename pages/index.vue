@@ -54,6 +54,7 @@ if (import.meta.client) {
               $t('pages.home.summary.item5'),
               $t('pages.home.summary.item6'),
             ]"
+            class="max-w-prose"
           />
           <TitleText
             :title="$t('pages.home.textBlock1.title')"
