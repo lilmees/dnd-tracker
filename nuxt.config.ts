@@ -1,4 +1,4 @@
-import UnheadVite from '@unhead/addons/vite'
+import seo from './fixtures/seo'
 
 export default defineNuxtConfig({
   components: {
@@ -27,19 +27,18 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     'nuxt-security',
     'nuxt-icon',
-    'nuxt-schema-org',
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@formkit/nuxt',
     '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
     '@vite-pwa/nuxt',
     '@vue-email/nuxt',
     '@nuxt/image',
     'nuxt-lazy-hydrate',
     '@nuxt/eslint',
+    '@nuxtjs/seo',
   ],
   extends: ['nuxt-umami'],
   runtimeConfig: {
@@ -55,9 +54,7 @@ export default defineNuxtConfig({
     stripeWebhook: process.env.STRIPE_WEBHOOK,
   },
   appConfig: {
-    umami: {
-      version: 2,
-    },
+    umami: { version: 2 },
   },
   pwa: {
     registerType: 'autoUpdate',
@@ -92,12 +89,7 @@ export default defineNuxtConfig({
       installPrompt: true,
     },
   },
-  vite: {
-    plugins: [UnheadVite()],
-  },
-  formkit: {
-    configFile: './formkit/config.ts',
-  },
+  formkit: { configFile: './formkit/config.ts' },
   i18n: {
     defaultLocale: 'nl',
     locales: [
@@ -105,13 +97,8 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', name: 'English', icon: '🇬🇧' },
     ],
   },
-  schemaOrg: {
-    host: process.env.NUXT_PUBLIC_SITE_URL,
-  },
   image: {
-    imagekit: {
-      baseURL: 'https://ik.imagekit.io/c2es1qasw',
-    },
+    imagekit: { baseURL: 'https://ik.imagekit.io/c2es1qasw' },
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
@@ -120,18 +107,10 @@ export default defineNuxtConfig({
     viewer: false,
     exposeConfig: true,
   },
-  supabase: {
-    redirect: false,
-  },
-  imports: {
-    dirs: ['store'],
-  },
-  nitro: {
-    compressPublicAssets: true,
-  },
-  devtools: {
-    enabled: true,
-  },
+  supabase: { redirect: false },
+  imports: { dirs: ['store'] },
+  nitro: { compressPublicAssets: true },
+  devtools: { enabled: true },
   security: {
     headers: {
       contentSecurityPolicy: {
@@ -157,15 +136,18 @@ export default defineNuxtConfig({
   },
   vueEmail: {
     baseUrl: process.env.production ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
-    i18n: {
-      defaultLocale: 'en',
-    },
-  },
-  sitemap: {
-    autoI18n: false,
-    credits: false,
+    i18n: { defaultLocale: 'en' },
   },
   eslint: {
     config: { stylistic: true },
   },
+  site: {
+    url: seo.url,
+    name: seo.name,
+    description: seo.description,
+  },
+  sitemap: {
+    exclude: ['/forgot-password', '/no-member', '/reset-password', '/subscribe-success'],
+  },
+  robots: { disallow: ['/_nuxt/', '/_nuxt'] },
 })
