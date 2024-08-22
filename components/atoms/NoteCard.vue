@@ -19,7 +19,7 @@ onMounted(() => {
   <section
     class="rounded-lg w-full bg-tracker/50 border-4 border-tracker relative group min-w-[250px] max-w-prose"
   >
-    <div class="flex justify-end mr-2">
+    <div class="absolute right-2">
       <tippy
         :delay="0"
         interactive
@@ -62,7 +62,7 @@ onMounted(() => {
       </tippy>
     </div>
     <div
-      class="flex flex-col gap-2 justify-between px-6 pb-8 pt-2"
+      class="flex flex-col gap-2 justify-between p-3"
       :class="{ 'pt-8': !isAdmin(campaign, profile.data?.id || '') }"
     >
       <h3 v-if="note.title">
@@ -80,7 +80,7 @@ onMounted(() => {
         class="flex justify-end mt-4"
       >
         <button
-          class="flex gap-2 btn-black"
+          class="flex gap-2"
           :aria-label="$t(`actions.read.${showAll ? 'less' : 'more'}`)"
           @click="showAll = !showAll"
         >
