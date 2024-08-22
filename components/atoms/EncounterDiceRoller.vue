@@ -32,7 +32,7 @@ function rollDice(dice: string): void {
         :aria-label="$t('actions.roll')"
         class="flex gap-2 items-center"
       >
-        <span class="md:hidden">
+        <span class="md:hidden text-right">
           {{ $t('actions.roll') }}
         </span>
         <Icon

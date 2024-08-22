@@ -131,7 +131,7 @@ function scrollToTop(): void {
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >
-      <span class="md:hidden">
+      <span class="md:hidden text-right">
         {{ $t('components.fullScreenSearch.tooltip') }}
       </span>
       <Icon
