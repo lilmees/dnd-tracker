@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const store = useTableStore()
 const toast = useToastStore()
