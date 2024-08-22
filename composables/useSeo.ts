@@ -1,4 +1,4 @@
-import seo from '@/fixtures/seo'
+import seo from '~/constants/seo'
 
 export const useSeo = (): void => {
   const { locale } = useI18n({ useScope: 'global' })

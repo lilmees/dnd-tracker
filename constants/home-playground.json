@@ -1,0 +1,418 @@
+{
+  "id": 2,
+  "created_at": "2022-12-07T07:34:18+00:00",
+  "title": "Sandbox",
+  "round": 1,
+  "activeIndex": 0,
+  "rows": [
+    {
+      "link": null,
+      "id": 0,
+      "name": "Lair action",
+      "type": "lair",
+      "index": 0,
+      "curses": [],
+      "conditions": [],
+      "initiative": 20,
+      "initiative_modifier": 2
+    },
+    {
+      "ac": 22,
+      "id": 1,
+      "link": "https://www.youtube.com/watch?v=uxauCAtFckw",
+      "name": "Kees",
+      "type": "player",
+      "index": 1,
+      "maxAc": 22,
+      "curses": [],
+      "health": 69,
+      "tempAc": 0,
+      "maxHealth": 69,
+      "conditions": [],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "initiative": 19,
+      "tempHealth": 0,
+      "concentration": true,
+      "initiative_modifier": 1
+    },
+    {
+      "ac": 15,
+      "id": 2,
+      "link": "https://www.youtube.com/embed/y90yaLFoYoA?si=zWL9zZslBib6Fcni&amp;controls=0",
+      "name": "Nuxt",
+      "type": "player",
+      "index": 2,
+      "maxAc": 15,
+      "curses": [],
+      "health": 0,
+      "tempAc": 0,
+      "maxHealth": 60,
+      "initiative_modifier": 4,
+      "conditions": [
+        {
+          "slug": "exhaustion",
+          "name": "Exhaustion",
+          "desc": "* Some special abilities and environmental hazards, such as starvation and the long-term effects of freezing or scorching temperatures, can lead to a special condition called exhaustion. Exhaustion is measured in six levels. An effect can give a creature one or more levels of exhaustion, as specified in the effect's description.\n\n| Level | Effect                                         |\n|-------|------------------------------------------------|\n| 1     | Disadvantage on ability checks                 |\n| 2     | Speed halved                                   |\n| 3     | Disadvantage on attack rolls and saving throws |\n| 4     | Hit point maximum halved                       |\n| 5     | Speed reduced to 0                             |\n| 6     | Death                                          |\n\nIf an already exhausted creature suffers another effect that causes exhaustion, its current level of exhaustion increases by the amount specified in the effect's description.\n\nA creature suffers the effect of its current level of exhaustion as well as all lower levels. For example, a creature suffering level 2 exhaustion has its speed halved and has disadvantage on ability checks.\n\nAn effect that removes exhaustion reduces its level as specified in the effect's description, with all exhaustion effects ending if a creature's exhaustion level is reduced below 1.\n\nFinishing a long rest reduces a creature's exhaustion level by 1, provided that the creature has also ingested some food and drink.",
+          "document__slug": "wotc-srd",
+          "document__title": "5e Core Rules",
+          "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+          "hasLevels": true,
+          "level": 3
+        }
+      ],
+      "deathSaves": {
+        "fail": [
+          true,
+          true,
+          false
+        ],
+        "save": [
+          true,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "initiative": 19,
+      "tempHealth": 0,
+      "concentration": false
+    },
+    {
+      "ac": 16,
+      "id": 3,
+      "link": "https://www.youtube.com/embed/AWM5ZNdWlqw?si=l-87E9B2t65gR35X&amp;controls=0",
+      "name": "Billy Bob",
+      "type": "player",
+      "index": 3,
+      "maxAc": 16,
+      "curses": [],
+      "health": 70,
+      "tempAc": 0,
+      "maxHealth": 70,
+      "conditions": [],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "initiative": 19,
+      "tempHealth": 0,
+      "concentration": false,
+      "initiative_modifier": 3
+    },
+    {
+      "slug": "dragon-turtle",
+      "name": "Dragon Turtle",
+      "size": "Gargantuan",
+      "type": "monster",
+      "subtype": "",
+      "group": null,
+      "alignment": "neutral",
+      "armor_class": 20,
+      "armor_desc": "natural armor",
+      "hit_points": 341,
+      "hit_dice": "22d20+110",
+      "speed": {
+        "walk": 20,
+        "swim": 40
+      },
+      "strength": 25,
+      "dexterity": 10,
+      "constitution": 20,
+      "intelligence": 10,
+      "wisdom": 12,
+      "charisma": 12,
+      "strength_save": null,
+      "dexterity_save": 6,
+      "constitution_save": 11,
+      "intelligence_save": null,
+      "wisdom_save": 7,
+      "charisma_save": null,
+      "perception": null,
+      "skills": {},
+      "damage_vulnerabilities": "",
+      "damage_resistances": "fire",
+      "damage_immunities": "",
+      "condition_immunities": "",
+      "senses": "darkvision 120 ft., passive Perception 11",
+      "languages": "Aquan, Draconic",
+      "challenge_rating": "17",
+      "cr": 17,
+      "initiative_modifier": 2,
+      "actions": [
+        {
+          "name": "Multiattack",
+          "desc": "The dragon turtle makes three attacks: one with its bite and two with its claws. It can make one tail attack in place of its two claw attacks."
+        },
+        {
+          "name": "Bite",
+          "desc": "Melee Weapon Attack: +13 to hit, reach 15 ft., one target. Hit: 26 (3d12 + 7) piercing damage.",
+          "attack_bonus": 13,
+          "damage_dice": "3d12",
+          "damage_bonus": 7
+        },
+        {
+          "name": "Claw",
+          "desc": "Melee Weapon Attack: +13 to hit, reach 10 ft., one target. Hit: 16 (2d8 + 7) slashing damage.",
+          "attack_bonus": 13,
+          "damage_dice": "2d8",
+          "damage_bonus": 7
+        },
+        {
+          "name": "Tail",
+          "desc": "Melee Weapon Attack: +13 to hit, reach 15 ft., one target. Hit: 26 (3d12 + 7) bludgeoning damage. If the target is a creature, it must succeed on a DC 20 Strength saving throw or be pushed up to 10 feet away from the dragon turtle and knocked prone.",
+          "attack_bonus": 13,
+          "damage_dice": "3d12",
+          "damage_bonus": 7
+        },
+        {
+          "name": "Steam Breath (Recharge 5-6)",
+          "desc": "The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater doesn't grant resistance against this damage.",
+          "attack_bonus": 0,
+          "damage_dice": "15d6"
+        }
+      ],
+      "reactions": "",
+      "legendary_desc": "",
+      "legendary_actions": "",
+      "special_abilities": [
+        {
+          "name": "Amphibious",
+          "desc": "The dragon turtle can breathe air and water."
+        }
+      ],
+      "spell_list": [],
+      "page_no": 303,
+      "img_main": null,
+      "document__slug": "wotc-srd",
+      "document__title": "Systems Reference Document",
+      "document__license_url": "http://open5e.com/legal",
+      "id": 1682257367892,
+      "conditions": [],
+      "index": 4,
+      "initiative": 17,
+      "note": "",
+      "health": 341,
+      "ac": 20,
+      "maxHealth": 341,
+      "maxAc": 20,
+      "tempHealth": 0,
+      "tempAc": 0,
+      "concentration": false,
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "link": "https://www.aidedd.org/dnd/monstres.php?vo=dragon-turtle"
+    },
+    {
+      "ac": 12,
+      "id": 5,
+      "link": null,
+      "name": "Beast",
+      "type": "summon",
+      "index": 5,
+      "maxAc": 12,
+      "curses": [],
+      "health": 20,
+      "tempAc": 0,
+      "summoner": {
+        "name": "Kees",
+        "id": 3
+      },
+      "maxHealth": 20,
+      "conditions": [],
+      "initiative": 16,
+      "tempHealth": 0,
+      "concentration": false,
+      "initiative_modifier": 2
+    },
+    {
+      "link": "https://www.aidedd.org/dnd/monstres.php?vo=water-elemental",
+      "slug": "water-elemental",
+      "name": "Water Elemental",
+      "size": "Large",
+      "type": "monster",
+      "subtype": "",
+      "group": "Elementals",
+      "alignment": "neutral",
+      "armor_class": 14,
+      "armor_desc": "natural armor",
+      "hit_points": 114,
+      "hit_dice": "12d10+48",
+      "speed": {
+        "walk": 30,
+        "swim": 90
+      },
+      "strength": 18,
+      "dexterity": 14,
+      "constitution": 18,
+      "intelligence": 5,
+      "wisdom": 10,
+      "charisma": 8,
+      "strength_save": null,
+      "dexterity_save": null,
+      "constitution_save": null,
+      "intelligence_save": null,
+      "wisdom_save": null,
+      "initiative_modifier": 6,
+      "charisma_save": null,
+      "perception": null,
+      "skills": {},
+      "damage_vulnerabilities": "",
+      "damage_resistances": "acid; bludgeoning, piercing, and slashing from nonmagical attacks",
+      "damage_immunities": "poison",
+      "condition_immunities": "exhaustion, grappled, paralyzed, petrified, poisoned, prone, restrained, unconscious",
+      "senses": "darkvision 60 ft., passive Perception 10",
+      "languages": "Aquan",
+      "challenge_rating": "5",
+      "cr": 5,
+      "actions": [
+        {
+          "name": "Multiattack",
+          "desc": "The elemental makes two slam attacks."
+        },
+        {
+          "name": "Slam",
+          "desc": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) bludgeoning damage.",
+          "attack_bonus": 7,
+          "damage_dice": "2d8",
+          "damage_bonus": 4
+        },
+        {
+          "name": "Whelm (Recharge 4-6)",
+          "desc": "Each creature in the elemental's space must make a DC 15 Strength saving throw. On a failure, a target takes 13 (2d8 + 4) bludgeoning damage. If it is Large or smaller, it is also grappled (escape DC 14). Until this grapple ends, the target is restrained and unable to breathe unless it can breathe water. If the saving throw is successful, the target is pushed out of the elemental's space.\nThe elemental can grapple one Large creature or up to two Medium or smaller creatures at one time. At the start of each of the elemental's turns, each target grappled by it takes 13 (2d8 + 4) bludgeoning damage. A creature within 5 feet of the elemental can pull a creature or object out of it by taking an action to make a DC 14 Strength and succeeding."
+        }
+      ],
+      "reactions": "",
+      "legendary_desc": "",
+      "legendary_actions": "",
+      "special_abilities": [
+        {
+          "name": "Water Form",
+          "desc": "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+        },
+        {
+          "name": "Freeze",
+          "desc": "If the elemental takes cold damage, it partially freezes; its speed is reduced by 20 ft. until the end of its next turn."
+        }
+      ],
+      "spell_list": [],
+      "page_no": 307,
+      "img_main": null,
+      "document__slug": "wotc-srd",
+      "document__title": "Systems Reference Document",
+      "document__license_url": "http://open5e.com/legal",
+      "id": 1682257384816,
+      "conditions": [],
+      "index": 6,
+      "initiative": 7,
+      "note": "",
+      "health": 114,
+      "ac": 14,
+      "maxHealth": 114,
+      "maxAc": 14,
+      "tempHealth": 0,
+      "tempAc": 0,
+      "concentration": false,
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      }
+    },
+    {
+      "ac": 10,
+      "id": 7,
+      "link": null,
+      "name": "Random npc",
+      "type": "npc",
+      "index": 7,
+      "maxAc": 10,
+      "curses": [],
+      "health": 25,
+      "tempAc": 0,
+      "maxHealth": 25,
+      "conditions": [
+        {
+          "slug": "charmed",
+          "name": "Charmed",
+          "desc": "* A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.\n* The charmer has advantage on any ability check to interact socially with the creature.",
+          "document__slug": "wotc-srd",
+          "document__title": "Systems Reference Document"
+        }
+      ],
+      "deathSaves": {
+        "fail": [
+          false,
+          false,
+          false
+        ],
+        "save": [
+          false,
+          false,
+          false
+        ],
+        "stable": false
+      },
+      "initiative": 1,
+      "tempHealth": 0,
+      "concentration": false,
+      "initiative_modifier": -1
+    }
+  ],
+  "background": "#1ab489",
+  "color": "#ffffff",
+  "settings": {
+    "spacing": "normal",
+    "pet": "cat",
+    "rows": [
+      "summoner",
+      "ac",
+      "health",
+      "conditions",
+      "note",
+      "deathSaves",
+      "concentration",
+      "modify"
+    ],
+    "modified": false
+  }
+}

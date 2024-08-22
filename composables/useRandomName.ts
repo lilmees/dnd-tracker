@@ -1,4 +1,4 @@
-import { firstname, lastname, middlename } from '@/fixtures/names.json'
+import { firstname, lastname, middlename } from '@/constants/names.json'
 
 export function useRandomName(): string {
   const first = randomArrayItem(firstname)
