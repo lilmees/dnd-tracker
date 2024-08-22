@@ -1,4 +1,5 @@
 import logRocket from 'logrocket'
+import playground from '@/constants/home-playground.json'
 
 export const useTableStore = defineStore('useTableStore', () => {
   const supabase = useSupabaseClient()
@@ -73,20 +74,7 @@ export const useTableStore = defineStore('useTableStore', () => {
 
   async function getSandboxEncounter(): Promise<void> {
     isSandbox.value = true
-    const { data, error } = await supabase.from('showcase').select('*').single()
-
-    if (error) {
-      throw error
-    }
-
-    const enc = data as unknown as Encounter
-
-    enc.rows = typeof enc.rows === 'string'
-      ? JSON.parse(enc.rows)
-      : enc.rows
-
-    enc.rows = useIndexCorrecter(enc.rows as Row[])
-    encounter.value = data
+    encounter.value = playground as unknown as Encounter
   }
 
   function subscribeEncounterChanges(id: number): void {

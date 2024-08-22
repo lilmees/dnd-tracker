@@ -1,5 +1,5 @@
 import * as fabric from 'fabric'
-import sprites from '@/fixtures/sprites.json'
+import sprites from '@/constants/sprites.json'
 
 export function flip(
   axis: 'x' | 'y',

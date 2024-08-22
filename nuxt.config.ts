@@ -1,4 +1,4 @@
-import seo from './fixtures/seo'
+import seo from './constants/seo'
 
 export default defineNuxtConfig({
   components: {
