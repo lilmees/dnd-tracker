@@ -4,15 +4,22 @@ import logRocket from 'logrocket'
 useHead({ title: 'Info' })
 
 const open5e = useOpen5eStore()
+const isSmall = useMediaQuery('(max-width: 768px)')
+const isLarge = useMediaQuery('(min-width: 1440px)')
 const toast = useToastStore()
 
 interface Form { search: string, type: Open5eType }
 
 const form = ref<Form>({ search: '', type: 'spells' })
-const isLoading = ref<boolean>(false)
+const isLoading = ref<boolean>(true)
 const hits = ref<InfoCard[]>([])
 const page = ref<number>(0)
 const pages = ref<number>(0)
+
+const hitColumns = computed<InfoCard[][]>(() => {
+  const amount = isSmall.value ? 1 : isLarge.value ? 3 : 2
+  return splitArray<InfoCard>(hits.value, amount)
+})
 
 watch(
   form,
@@ -83,24 +90,36 @@ function paginate(newPage: number): void {
           @input="form.search = ''"
         />
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto">
-        <template v-if="isLoading">
-          <SkeletonInfoCard
-            v-for="i in 20"
-            :key="i"
-          />
-        </template>
-        <template v-else-if="hits.length">
+      <div
+        v-if="isLoading"
+        class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto"
+      >
+        <SkeletonInfoCard
+          v-for="i in 20"
+          :key="i"
+        />
+      </div>
+      <div
+        v-else-if="hits.length"
+        class="grid gap-4 overflow-y-auto"
+        :style="{
+          gridTemplateColumns: `repeat(${hitColumns.length}, minmax(0, 1fr))`,
+        }"
+      >
+        <div
+          v-for="(column, i) in hitColumns"
+          :key="i"
+          class="flex flex-col gap-4"
+        >
           <InfoCard
-            v-for="(hit, index) in hits"
-            :id="index === 0 ? 'el' : ''"
+            v-for="(hit, j) in column"
+            :id="j === 0 ? 'el' : ''"
             :key="hit.slug"
             :type="form.type"
             :hit="hit"
             sandbox
-            gray
           />
-        </template>
+        </div>
       </div>
       <Pagination
         v-if="pages > 1 && !isLoading && hits.length"

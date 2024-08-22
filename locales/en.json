@@ -55,6 +55,12 @@
     "share": "Share"
   },
   "general": {
+    "spells": "Spells",
+    "conditions": "Conditions",
+    "magicitems": "Magic items",
+    "weapons": "Weapons",
+    "armor": "Armor",
+    "sections": "Info sections",
     "up": "Up",
     "down": "Down",
     "Left": "Left",
