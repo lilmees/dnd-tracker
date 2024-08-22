@@ -57,7 +57,7 @@ function reset() {
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >
-      <span class="md:hidden">
+      <span class="md:hidden text-right">
         {{ $t('components.addInitiativeMonster.bestiary') }}
       </span>
       <Icon
