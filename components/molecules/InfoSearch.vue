@@ -218,7 +218,7 @@ function scrollToTop(): void {
         </div>
         <Pagination
           v-if="pages > 1 && !isLoading && hits.length && !showPinned"
-          v-model="page"
+          v-model:page="page"
           :total-pages="pages"
           class="mt-2"
           @paginate="paginate"

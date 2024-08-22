@@ -100,7 +100,7 @@ function resetState(): void {
         v-model:selected="selected"
         type="notes"
       />
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <div class="grid gap-4 items-start sm:grid-cols-2 md:grid-cols-3">
         <div
           v-for="note in noteStore.visibleItems"
           :key="note.created_at"

@@ -142,7 +142,7 @@ function reset() {
         </div>
         <Pagination
           v-if="!open5e.isLoading && open5e.hits.length && open5e.pages > 1"
-          v-model="open5e.page"
+          v-model:page="open5e.page"
           :total-pages="open5e.pages"
           @paginate="open5e.paginate"
         />

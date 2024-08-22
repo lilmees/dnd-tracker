@@ -123,7 +123,7 @@ function paginate(newPage: number): void {
       </div>
       <Pagination
         v-if="pages > 1 && !isLoading && hits.length"
-        v-model="page"
+        v-model:page="page"
         :total-pages="pages"
         class="mt-2"
         @paginate="paginate"
