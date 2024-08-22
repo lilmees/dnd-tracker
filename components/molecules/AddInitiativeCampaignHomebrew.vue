@@ -128,7 +128,7 @@ function paginate(p: number): void {
       :disabled="!store.encounter?.campaign?.id && !store.isSandbox && !store.isPlayground"
       @click="isOpen = true"
     >
-      <span class="md:hidden">
+      <span class="md:hidden text-right">
         {{ $t('components.addInitiativeCampaignHomebrew.title') }}
       </span>
       <Icon
