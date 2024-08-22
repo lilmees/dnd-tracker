@@ -55,6 +55,12 @@
     "share": "Delen"
   },
   "general": {
+    "spells": "Spreuken",
+    "conditions": "Condities",
+    "magicitems": "Magische items",
+    "weapons": "Wapens",
+    "armor": "Pantser",
+    "sections": "Info secties",
     "up": "Omhoog",
     "down": "Omlaag",
     "Left": "Links",

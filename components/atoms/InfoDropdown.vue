@@ -22,7 +22,7 @@ async function removePin(info: InfoCard): Promise<void> {
 
 <template>
   <div>
-    <p class="font-bold body-small mb-1">
+    <p class="font-bold text-white body-small mb-1">
       {{ $t('components.infoDropdown.title') }}
     </p>
     <div
@@ -45,7 +45,10 @@ async function removePin(info: InfoCard): Promise<void> {
           aria-hidden="true"
         />
       </button>
-      <template v-if="open === index">
+      <div
+        v-if="open === index"
+        class="text-slate-300"
+      >
         <div
           v-if="card.desc"
           class="mt-4 html-richtext"
@@ -55,19 +58,19 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.category"
           class="mt-4"
         >
-          <span class="font-bold">Category:</span> {{ card.category }}
+          <span class="font-bold text-white">Category:</span> {{ card.category }}
         </p>
         <p
           v-if="card.ac_string"
           class="mt-1"
         >
-          <span class="font-bold">AC:</span> {{ card.ac_string }}
+          <span class="font-bold text-white">AC:</span> {{ card.ac_string }}
         </p>
         <p
           v-if="card.strength_requirement"
           class="mt-1"
         >
-          <span class="font-bold">Strength requirement:</span> {{ card.strength_requirement }}
+          <span class="font-bold text-white">Strength requirement:</span> {{ card.strength_requirement }}
         </p>
         <p
           v-if="card.stealth_disadvantage"
@@ -79,31 +82,31 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.cost"
           class="mt-1"
         >
-          <span class="font-bold">Cost:</span> {{ card.cost }}
+          <span class="font-bold text-white">Cost:</span> {{ card.cost }}
         </p>
         <p
           v-if="card.damage_dice"
           class="mt-1"
         >
-          <span class="font-bold">Damage dice:</span> {{ card.damage_dice }}
+          <span class="font-bold text-white">Damage dice:</span> {{ card.damage_dice }}
         </p>
         <p
           v-if="card.damage_type"
           class="mt-1"
         >
-          <span class="font-bold">Damage type:</span> {{ card.damage_type }}
+          <span class="font-bold text-white">Damage type:</span> {{ card.damage_type }}
         </p>
         <p
           v-if="card.weight"
           class="mt-1"
         >
-          <span class="font-bold">Weight:</span> {{ card.weight }}
+          <span class="font-bold text-white">Weight:</span> {{ card.weight }}
         </p>
         <div
           v-if="card.properties"
           class="mt-1"
         >
-          <p class="font-bold">
+          <p class="font-bold text-white">
             Properties
           </p>
           <ul class="list-disc list-outside ml-5 mb-5">
@@ -119,13 +122,13 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.type"
           class="mt-4"
         >
-          <span class="font-bold">Type:</span> {{ card.type }}
+          <span class="font-bold text-white">Type:</span> {{ card.type }}
         </p>
         <p
           v-if="card.rarity"
           class="mt-1"
         >
-          <span class="font-bold">Rarity:</span> {{ card.rarity }}
+          <span class="font-bold text-white">Rarity:</span> {{ card.rarity }}
         </p>
         <p
           v-if="card.requires_attunement"
@@ -137,25 +140,25 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.skill_proficiencies"
           class="mt-4"
         >
-          <span class="font-bold">Skill proficiencies:</span> {{ card.skill_proficiencies }}
+          <span class="font-bold text-white">Skill proficiencies:</span> {{ card.skill_proficiencies }}
         </p>
         <p
           v-if="card.tool_proficiencies"
           class="mt-1"
         >
-          <span class="font-bold">Tool proficiencies:</span> {{ card.tool_proficiencies }}
+          <span class="font-bold text-white">Tool proficiencies:</span> {{ card.tool_proficiencies }}
         </p>
         <p
           v-if="card.languages"
           class="mt-1"
         >
-          <span class="font-bold">Languages:</span> {{ card.languages }}
+          <span class="font-bold text-white">Languages:</span> {{ card.languages }}
         </p>
         <p
           v-if="card.equipment"
           class="mt-1"
         >
-          <span class="font-bold">Equipment:</span> {{ card.equipment }}
+          <span class="font-bold text-white">Equipment:</span> {{ card.equipment }}
         </p>
         <p
           v-if="card.feature"
@@ -173,45 +176,45 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.level"
           class="mt-4"
         >
-          <span class="font-bold">Level:</span> {{ card.level }}
+          <span class="font-bold text-white">Level:</span> {{ card.level }}
         </p>
         <p
           v-if="card.higher_level"
           class="mt-1"
         >
-          <span class="font-bold">Higher level:</span> {{ card.higher_level }}
+          <span class="font-bold text-white">Higher level:</span> {{ card.higher_level }}
         </p>
         <p
           v-if="card.casting_time"
           class="mt-1"
         >
-          <span class="font-bold">Casting time:</span> {{ card.casting_time }}
+          <span class="font-bold text-white">Casting time:</span> {{ card.casting_time }}
         </p>
         <p
           v-if="card.range"
           class="mt-1"
         >
-          <span class="font-bold">Range:</span> {{ card.range }}
+          <span class="font-bold text-white">Range:</span> {{ card.range }}
         </p>
         <p
           v-if="card.duration"
           class="mt-1"
         >
-          <span class="font-bold">Duration:</span>
+          <span class="font-bold text-white">Duration:</span>
           {{ card.duration }}
         </p>
         <p
           v-if="card.concentration"
           class="mt-1"
         >
-          <span class="font-bold">Concentration:</span>
+          <span class="font-bold text-white">Concentration:</span>
           {{ card.concentration }}
         </p>
         <p
           v-if="card.ritual"
           class="mt-1"
         >
-          <span class="font-bold">Ritual:</span>
+          <span class="font-bold text-white">Ritual:</span>
           {{ card.ritual }}
           <span class="ml-2 body-extra-small">can be cast as ritual</span>
         </p>
@@ -219,31 +222,31 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.components"
           class="mt-1"
         >
-          <span class="font-bold">Components:</span> {{ card.components }}
+          <span class="font-bold text-white">Components:</span> {{ card.components }}
         </p>
         <p
           v-if="card.material"
           class="mt-1"
         >
-          <span class="font-bold">Material:</span> {{ card.material }}
+          <span class="font-bold text-white">Material:</span> {{ card.material }}
         </p>
         <p
           v-if="card.school"
           class="mt-1"
         >
-          <span class="font-bold">School:</span> {{ card.school }}
+          <span class="font-bold text-white">School:</span> {{ card.school }}
         </p>
         <p
           v-if="card.dnd_class"
           class="mt-1"
         >
-          <span class="font-bold">Classes that can use this spell:</span> {{ card.dnd_class }}
+          <span class="font-bold text-white">Classes that can use this spell:</span> {{ card.dnd_class }}
         </p>
         <div
           v-if="card.prerequisite"
           class="mt-4"
         >
-          <p class="font-bold">
+          <p class="font-bold text-white">
             Prerequisite
           </p>
           <p>
@@ -254,7 +257,7 @@ async function removePin(info: InfoCard): Promise<void> {
           v-if="card.effects_desc?.length"
           class="mt-4"
         >
-          <p class="font-bold">
+          <p class="font-bold text-white">
             Effects
           </p>
           <ul class="list-disc list-outside ml-5 mb-5">
@@ -281,7 +284,7 @@ async function removePin(info: InfoCard): Promise<void> {
             />
           </button>
         </div>
-      </template>
+      </div>
     </div>
     <div
       v-if="cards && !cards.length"

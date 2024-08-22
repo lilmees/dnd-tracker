@@ -2,6 +2,7 @@ import logRocket from 'logrocket'
 
 export const useOpen5eStore = defineStore('useOpen5eStore', () => {
   const toast = useToastStore()
+  const { t } = useI18n()
 
   const isLoading = ref<boolean>(false)
   const sortBy = ref<Open5eSortBy>('name')
@@ -72,13 +73,13 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
     }
   }
 
-  const options: Open5eType[] = [
-    'spells',
-    'conditions',
-    'magicitems',
-    'weapons',
-    'armor',
-    'sections',
+  const options: Option<Open5eType>[] = [
+    { value: 'spells', label: t('general.spells') },
+    { value: 'conditions', label: t('general.conditions') },
+    { value: 'magicitems', label: t('general.magicitems') },
+    { value: 'weapons', label: t('general.weapons') },
+    { value: 'armor', label: t('general.armor') },
+    { value: 'sections', label: t('general.sections') },
   ]
 
   return {
