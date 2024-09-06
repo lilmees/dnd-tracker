@@ -30,7 +30,7 @@
 .driver-popover .driver-popover-prev-btn {
   text-shadow: none;
 
-  @apply  !btn-black;
+  @apply !btn-black;
 }
 
 .driver-popover .driver-popover-next-btn {
