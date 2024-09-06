@@ -18,10 +18,19 @@
   @apply !text-slate-300 font-medium font-text text-[0.75rem] leading-[1.25rem] sm:text-[0.875rem] sm:leading-[1.25rem];
 }
 
+.btn {
+  @apply py-2 px-6 rounded-lg outline-none border-4 text-white duration-200 ease-in-out font-bold transition-all;
+  @apply focus-within:border-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.btn-black {
+  @apply btn bg-black/50 hover:bg-black/60 border-black;
+}
+
 .driver-popover .driver-popover-prev-btn {
   text-shadow: none;
 
-  @apply !btn-black;
+  @apply  !btn-black;
 }
 
 .driver-popover .driver-popover-next-btn {
