@@ -57,7 +57,7 @@ function reset() {
       class="flex gap-2 items-center"
       @click="isOpen = true"
     >
-      <span class="md:hidden">
+      <span class="md:hidden text-right">
         {{ $t('components.addInitiativeMonster.bestiary') }}
       </span>
       <Icon
@@ -142,7 +142,7 @@ function reset() {
         </div>
         <Pagination
           v-if="!open5e.isLoading && open5e.hits.length && open5e.pages > 1"
-          v-model="open5e.page"
+          v-model:page="open5e.page"
           :total-pages="open5e.pages"
           @paginate="open5e.paginate"
         />

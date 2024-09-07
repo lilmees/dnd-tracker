@@ -5,6 +5,8 @@ const open5e = useOpen5eStore()
 const toast = useToastStore()
 const table = useTableStore()
 const { t } = useI18n()
+const isSmall = useMediaQuery('(max-width: 768px)')
+const isLarge = useMediaQuery('(min-width: 1440px)')
 
 interface Form { search: string, type: Open5eType }
 
@@ -15,6 +17,12 @@ const showPinned = ref<boolean>(false)
 const hits = ref<InfoCard[]>([])
 const page = ref<number>(0)
 const pages = ref<number>(0)
+
+const hitColumns = computed<InfoCard[][]>(() => {
+  const amount = isSmall.value ? 1 : isLarge.value ? 3 : 2
+  const items = showPinned.value ? table.encounter?.info_cards : hits.value
+  return splitArray<InfoCard>(items as InfoCard[], amount)
+})
 
 whenever(() => isOpen.value, () => {
   if (!hits.value.length) {
@@ -123,7 +131,7 @@ function scrollToTop(): void {
       class="flex gap-2 items-center disabled:opacity-40 disabled:cursor-not-allowed"
       @click="isOpen = true"
     >
-      <span class="md:hidden">
+      <span class="md:hidden text-right">
         {{ $t('components.fullScreenSearch.tooltip') }}
       </span>
       <Icon
@@ -175,29 +183,42 @@ function scrollToTop(): void {
             </button>
           </div>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto">
-          <template v-if="isLoading">
-            <SkeletonInfoCard
-              v-for="i in 20"
-              :key="i"
-            />
-          </template>
-          <template v-else-if="hits.length || showPinned">
+        <div
+          v-if="isLoading"
+          class="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 overflow-y-auto"
+        >
+          <SkeletonInfoCard
+            v-for="i in 20"
+            :key="i"
+          />
+        </div>
+        <div
+          v-else-if="hits.length || showPinned"
+          class="grid gap-4 overflow-y-auto"
+          :style="{
+            gridTemplateColumns: `repeat(${hitColumns.length}, minmax(0, 1fr))`,
+          }"
+        >
+          <div
+            v-for="(column, i) in hitColumns"
+            :key="i"
+            class="flex flex-col gap-4"
+          >
             <InfoCard
-              v-for="(hit, index) in showPinned ? table.encounter?.info_cards : hits"
-              :id="index === 0 ? 'el' : ''"
+              v-for="(hit, j) in column"
+              :id="j === 0 ? 'el' : ''"
               :key="hit.slug"
+              :type="form.type"
               :hit="hit"
               :sandbox="table.isSandbox"
-              :type="form.type"
               :pinned="table.encounter?.info_cards?.some(info => info.slug === hit.slug) || false"
               @pin="handlePinToggle"
             />
-          </template>
+          </div>
         </div>
         <Pagination
           v-if="pages > 1 && !isLoading && hits.length && !showPinned"
-          v-model="page"
+          v-model:page="page"
           :total-pages="pages"
           class="mt-2"
           @paginate="paginate"

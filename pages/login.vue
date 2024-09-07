@@ -66,28 +66,14 @@ async function login({ __init, isTrusted, _vts, ...credentials }: Obj): Promise<
           :label="$t('components.inputs.passwordLabel')"
           validation="required|length:6,50"
         />
-        <div class="flex justify-end gap-x-3 items-start">
-          <FormKit
-            type="submit"
-            :aria-label="$t('pages.login.signIn')"
-            :label="$t('pages.login.signIn')"
-            :disabled="isLoading"
-            outer-class="$reset grow"
-            input-class="w-full"
-          />
-          <button
-            type="button"
-            class="btn-black"
-            aria-label="Google SSO"
-            @click="login"
-          >
-            <Icon
-              name="flat-color-icons:google"
-              class="w-5 h-5"
-              aria-hidden="true"
-            />
-          </button>
-        </div>
+        <FormKit
+          type="submit"
+          :aria-label="$t('pages.login.signIn')"
+          :label="$t('pages.login.signIn')"
+          :disabled="isLoading"
+          outer-class="$reset grow"
+          input-class="w-full"
+        />
       </FormKit>
       <div class="flex flex-wrap gap-2 justify-center">
         <NuxtLink :to="localePath('/register')">

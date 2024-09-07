@@ -1,0 +1,48 @@
+{
+  "version": "v2.0.0",
+  "date": "2024-09-07",
+  "features": [
+    {
+      "title": "New",
+      "items": [
+        {
+          "text": "Got married 💍"
+        }
+      ]
+    },
+    {
+      "title": "Improvements",
+      "items": [
+        {
+          "text": "Attack description limit is now 1000 characters"
+        },
+        {
+          "text": "Updated layout for info page and popup"
+        },
+        {
+          "text": "Showcase encounter on homepage should load faster"
+        },
+        {
+          "text": "Updated styling and functionality of the pagination component"
+        },
+        {
+          "text": "Updated styling for name generator list"
+        }
+      ]
+    },
+    {
+      "title": "Bug fixes",
+      "items": [
+        {
+          "text": "When copying an initiative item, the copied item could have the same id as the original"
+        },
+        {
+          "text": "The bulk remove button was always disabled on the encounter overview page"
+        },
+        {
+          "text": "Some labels were not displaying correctly for encounter options"
+        }
+      ]
+    }
+  ]
+}

@@ -85,7 +85,7 @@ const slots = useSlots()
     </div>
     <Pagination
       v-if="pages > 1"
-      v-model="page"
+      v-model:page="page"
       :total-pages="pages"
       :searching="searching"
       @paginate="$emit('paginate', $event)"

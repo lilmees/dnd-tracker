@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logRocket from 'logrocket'
+import { gsap } from 'gsap'
 
 const store = useTableStore()
 const toast = useToastStore()
@@ -26,6 +27,20 @@ if (import.meta.client) {
       }, { duration: 3000, fill: 'forwards' })
     }
   }
+
+  gsap.to(
+    '.encounter-table',
+    {
+      rotationX: 0,
+      autoAlpha: 1,
+      scrollTrigger: {
+        trigger: '.encounter-table',
+        scrub: 2,
+        start: 'top center',
+        end: 'bottom bottom',
+      },
+    },
+  )
 }
 </script>
 
@@ -67,7 +82,10 @@ if (import.meta.client) {
         </div>
         <Dragon ref="dragon" />
         <NuxtLazyHydrate when-visible>
-          <div v-if="store.encounter">
+          <div
+            v-if="store.encounter"
+            class="encounter-table"
+          >
             <div class="flex justify-end relative z-[1] container-max">
               <EncounterPet />
               <VisualOptions class="mb-4" />
@@ -115,3 +133,14 @@ if (import.meta.client) {
     </div>
   </Layout>
 </template>
+
+<style scoped>
+.encounter-table {
+  @media (min-width: 1024px) {
+    transform-style: preserve-3d;
+    transform-origin: 50% 100%;
+    transform: perspective(1600px) rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+    will-change: transform;
+  }
+}
+</style>

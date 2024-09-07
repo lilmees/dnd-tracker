@@ -55,6 +55,12 @@
     "share": "Delen"
   },
   "general": {
+    "spells": "Spreuken",
+    "conditions": "Condities",
+    "magicitems": "Magische items",
+    "weapons": "Wapens",
+    "armor": "Pantser",
+    "sections": "Info secties",
     "up": "Omhoog",
     "down": "Omlaag",
     "Left": "Links",
@@ -702,7 +708,7 @@
       "description": "Geen lange introductie nodig! Pas namen, initiatieven, AC en HP aan wanneer je erop klikt. Notities, death saves en concentratie met een fluitje van een cent."
     },
     "9": {
-      "title": "Beheer je initiatiefn items met finesse 🎩",
+      "title": "Beheer je initiatief items met finesse 🎩",
       "description": "Het hart van je initiatief items! Pas AC en HP aan terwijl je bezig bent, voeg moeiteloos condities toe. Wij betoveren je ervaring door links voor te laden, waardoor je wordt gespaard van het gedoe van het openen van extra browsertabbladen."
     },
     "10": {

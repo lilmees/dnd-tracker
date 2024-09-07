@@ -324,7 +324,7 @@ async function moveRow(up: boolean): Promise<void> {
         @copy="store.encounterUpdate({
           rows: [
             ...store.encounter.rows,
-            { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: Date.now() },
+            { ...store.encounter.rows.filter(r => r.id === row.id)[0], id: generateId() },
           ],
         })"
         @delete="store.encounterUpdate({

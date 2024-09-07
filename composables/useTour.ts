@@ -2,7 +2,7 @@ import { driver } from 'driver.js'
 import type { DriveStep, Driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 
-import playground from '@/fixtures/playground.json'
+import playground from '@/constants/tour-playground.json'
 
 export function useTour() {
   const user = useSupabaseUser()

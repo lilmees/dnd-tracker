@@ -4,8 +4,14 @@ useHead({ title: 'Fantasy name generator' })
 const { copy } = useClipboard()
 const toast = useToastStore()
 const { t } = useI18n()
+const isSmall = useMediaQuery('(max-width: 768px)')
 
 const names = ref<string[]>([])
+
+const nameColumns = computed<string[][]>(() => {
+  const amount = isSmall.value ? 1 : 2
+  return splitArray<string>(names.value, amount)
+})
 
 onMounted(() => generate())
 
@@ -39,20 +45,25 @@ function handleCopy(name: string): void {
       <div class="relative p-6 border-4 border-tracker bg-tracker/50 rounded-lg max-w-prose mx-auto w-full">
         <ol
           v-if="names.length"
-          class="list-disc list-inside grid sm:grid-cols-2 gap-x-6"
+          class="grid list-disc list-inside gap-x-6"
+          :style="{
+            gridTemplateColumns: `repeat(${nameColumns.length}, minmax(0, 1fr))`,
+          }"
         >
-          <li
-            v-for="name in names"
-            :key="name"
-            class="mb-1 last:mb-0"
+          <div
+            v-for="(column, i) in nameColumns"
+            :key="i"
+            class="flex flex-col gap-1"
           >
-            <button
-              class="text-left cursor-copy"
+            <li
+              v-for="(name, j) in column"
+              :key="name"
+              class="cursor-copy"
               @click="handleCopy(name)"
             >
               {{ name }}
-            </button>
-          </li>
+            </li>
+          </div>
         </ol>
         <SkeletonList v-else />
         <div class="flex justify-end gap-2 items-end pt-6">

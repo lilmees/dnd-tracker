@@ -105,7 +105,7 @@ function resetState(): void {
         <button
           v-tippy="$t('actions.bulkRemove')"
           :aria-label="$t('actions.bulkRemove')"
-          :disabled="encounterStore.loading || encounterStore.searching || !campaignAdmin"
+          :disabled="encounterStore.loading || encounterStore.searching || (currentStore.campaign && !campaignAdmin)"
           class="btn-small-danger"
           @click="() => {
             isBulk = !isBulk;
@@ -139,8 +139,8 @@ function resetState(): void {
         class="mb-10"
       />
       <BulkRemove
-        v-model:isBulk="isBulk"
-        v-model:needConfirmation="needConfirmation"
+        v-model:is-bulk="isBulk"
+        v-model:need-confirmation="needConfirmation"
         v-model:selected="selected"
         type="encounters"
       />
