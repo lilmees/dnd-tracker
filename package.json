@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "1.0.19",
+  "version": "2.0.0",
   "scripts": {
     "check": "tsc",
     "build": "nuxt build",
