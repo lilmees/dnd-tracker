@@ -1,3 +1,7 @@
+export function generateId(): string {
+  return Math.random().toString(36).substring(2, 16)
+}
+
 export const calculateLines = (tag: HTMLParagraphElement, text: string): number => {
   const tempDiv = document.createElement('div')
 
