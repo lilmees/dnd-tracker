@@ -95,7 +95,7 @@ const limitedNumbersList = computed<number[]>(() => {
         :key="pageNumber"
         :aria-label="`Page ${pageNumber}`"
         :disabled="searching"
-        class="flex items-center justify-center w-8 h-8 rounded-lg border-r-4 border-tracker"
+        class="flex items-center justify-center w-8 h-8 border-r-4 border-tracker"
         :class="{
           'font-bold text-secondary': page === pageNumber - 1,
           'cursor-progress': searching,
@@ -121,7 +121,7 @@ const limitedNumbersList = computed<number[]>(() => {
       />
     </button>
     <button
-      class="flex items-center justify-center w-8 h-8 border-r-4 border-tracker"
+      class="flex items-center justify-center w-8 h-8"
       :class="{ 'cursor-progress': searching }"
       :disabled="page === totalPages - 1 || searching"
       aria-label="Last page"

@@ -5,7 +5,7 @@ export const useCreateRow = (formData: Row, type: RowType, encounterRows: Row[])
   const initiative_modifier = Number(formData.initiative_modifier) || undefined
 
   const index = useCalculateIndex(encounterRows, initiative)
-  const id = Date.now() + Math.floor(Math.random() * 100)
+  const id = generateId()
 
   let row = {
     ...formData,
