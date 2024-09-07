@@ -329,7 +329,7 @@ function closeModal(): void {
           name="desc"
           type="textarea"
           :label="$t('components.inputs.descriptionLabel')"
-          validation="required|length:10,500"
+          validation="required|length:10,1000"
         />
         <div class="flex gap-x-3">
           <FormKit
