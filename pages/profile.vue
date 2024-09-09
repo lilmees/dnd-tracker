@@ -107,12 +107,11 @@ function handleIconClick(node: any) {
         <div
           class="w-20 h-20 bg-primary/50 rounded-lg border-4 border-primary overflow-hidden"
         >
-          <NuxtImg
+          <img
             :src="image"
             alt="avatar"
-            sizes="sm:100px md:100px lg:100px"
-            class="w-full h-full object-cover "
-          />
+            class="w-full h-full object-cover"
+          >
         </div>
         <div class="flex flex-col gap-2">
           <TextButton
