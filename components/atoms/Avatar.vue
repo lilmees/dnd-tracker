@@ -38,12 +38,11 @@ const date = computed<string>(() => {
         <div
           class="w-10 h-10 bg-secondary/50 rounded-lg border-4 border-secondary overflow-hidden"
         >
-          <NuxtImg
+          <img
             :src="user.avatar"
-            alt="avatar"
-            sizes="sm:150px md:150px lg:150px"
+            alt="Avatar"
             class="w-full h-full object-cover"
-          />
+          >
         </div>
         <div
           v-if="username || name"

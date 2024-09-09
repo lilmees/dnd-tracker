@@ -2,6 +2,10 @@ export function generateId(): string {
   return Math.random().toString(36).substring(2, 16)
 }
 
+export function tryCastToNumber(value: string | number): string | number {
+  return isNaN(+value) ? value : +value
+}
+
 export const calculateLines = (tag: HTMLParagraphElement, text: string): number => {
   const tempDiv = document.createElement('div')
 
