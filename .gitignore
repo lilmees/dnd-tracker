@@ -9,3 +9,5 @@ dist
 .DS_Store
 DS_Store
 .vscode
+# Local Netlify folder
+.netlify

@@ -28,14 +28,12 @@ function close(): void {
       @click="isOpen = !isOpen"
     >
       <ClientOnly>
-        <NuxtImg
+        <img
           v-if="profile.data?.avatar"
           :src="profile.data.avatar"
           alt="Avatar image"
-          sizes="sm:40px md:40px lg:40px"
           class="w-12 -scale-x-100"
-          format="webp"
-        />
+        >
         <NuxtImg
           v-else
           src="/pixel-d20.png"

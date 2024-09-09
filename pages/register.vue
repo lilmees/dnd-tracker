@@ -63,14 +63,13 @@ function handleIconClick(node: any) {
       </h1>
       <div class="flex flex-col gap-2 items-center">
         <div class="w-[100px] h-[100px]">
-          <NuxtImg
+          <img
             v-if="image"
             :src="image"
-            preload
-            alt="avatar"
-            sizes="sm:100px md:100px lg:100px"
+            loading="eager"
+            alt="Avatar"
             class="w-full h-full"
-          />
+          >
         </div>
         <TextButton @click="randomAvatar">
           {{ $t('pages.register.random') }}
