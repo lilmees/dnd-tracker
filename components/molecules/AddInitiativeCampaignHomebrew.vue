@@ -9,7 +9,7 @@ const isFetched = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
 const selected = ref<Homebrew[]>([])
-const summoner = ref<Option | null>(null)
+const summoner = ref<Option<string> | null>(null)
 
 const summon = computed<boolean>(() => !!selected.value.filter(s => s.type === 'summon').length)
 
@@ -20,7 +20,7 @@ const headers: TableHeader[] = [
   { label: t('general.stats'), sort: false, id: 'stats' },
 ]
 
-const summonOptions = computed<Option[]>(() => {
+const summonOptions = computed<Option<string>[]>(() => {
   return store.encounter?.rows
     ? store.encounter.rows.filter(row => row.type !== 'summon').map((r: Row) => {
       return { label: r.name, value: `${r.id}` }
@@ -103,7 +103,7 @@ function closeModal(): void {
 }
 
 function selectedSummoner(value: unknown): void {
-  if (!isNaN(Number(value))) {
+  if (value) {
     const filtered = summonOptions.value.find(s => s.value === value)
     summoner.value = filtered || null
   }
