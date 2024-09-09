@@ -43,7 +43,9 @@ async function handleSubmit({ __init, ...rows }: Obj): Promise<void> {
   try {
     for (const key in rows) {
       if (rows[key].amount !== undefined) {
-        const index = store.encounter!.rows.findIndex(({ id }) => id === +key)
+        const index = store.encounter!.rows.findIndex(({ id }) => {
+          return id === tryCastToNumber(key)
+        })
 
         if (index >= 0) {
           let init: number = +rows[key].amount
