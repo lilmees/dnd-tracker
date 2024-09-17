@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useOpen5eStore = defineStore('useOpen5eStore', () => {
   const toast = useToastStore()
   const { t } = useI18n()
@@ -55,7 +53,7 @@ export const useOpen5eStore = defineStore('useOpen5eStore', () => {
       hits.value = results
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
     finally {

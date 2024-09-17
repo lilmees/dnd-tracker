@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const emit = defineEmits<{ close: [] }>()
 
 const props = withDefaults(
@@ -70,7 +68,7 @@ function handleSubmit({ __init, data, slots, ...formData }: Obj): void {
     resetState()
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
   }
   finally {

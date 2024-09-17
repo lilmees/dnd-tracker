@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
@@ -21,7 +19,7 @@ onMounted(async () => {
       startTour(!!store.encounter?.campaign)
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }

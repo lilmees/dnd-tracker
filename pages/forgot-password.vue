@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['loggedin'] })
 
 const { t } = useI18n()
@@ -24,7 +22,7 @@ async function forgotPassword({ __init, email }: Obj): Promise<void> {
     navigateTo(localePath('/login'))
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
     toast.error()
   }

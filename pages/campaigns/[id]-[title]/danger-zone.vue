@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const toast = useToastStore()
 const store = useCampaignsStore()
 const profile = useProfileStore()
@@ -18,7 +16,7 @@ async function deleteCampaign(): Promise<void> {
     }
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {
@@ -34,7 +32,7 @@ async function transferOwnership(): Promise<void> {
     }
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {

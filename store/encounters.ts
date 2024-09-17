@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useEncountersStore = defineStore('useEncountersStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
@@ -70,7 +68,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       getCount()
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {
@@ -170,7 +168,7 @@ export const useEncountersStore = defineStore('useEncountersStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }

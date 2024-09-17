@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-import { _0 } from '#tailwind-config/theme/backdropBlur'
-
 const store = useTableStore()
 const toast = useToastStore()
 const open5e = useOpen5eStore()
@@ -31,7 +28,7 @@ async function addMonster(monster: Open5eItem) {
     }
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {

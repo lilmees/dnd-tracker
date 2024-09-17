@@ -1,4 +1,3 @@
-import logRocket from 'logrocket'
 import playground from '@/constants/home-playground.json'
 
 export const useTableStore = defineStore('useTableStore', () => {
@@ -141,7 +140,7 @@ export const useTableStore = defineStore('useTableStore', () => {
         encounter.value = updated[0] as Encounter
       }
       catch (err) {
-        logRocket.captureException(err as Error)
+        console.error(err)
         toast.error()
       }
     }

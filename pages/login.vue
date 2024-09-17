@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['loggedin'] })
 useHead({ title: 'Log in' })
 
@@ -18,7 +16,7 @@ async function login({ __init, isTrusted, _vts, ...credentials }: Obj): Promise<
     await store.login(credentials as Login)
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
   }
   finally {

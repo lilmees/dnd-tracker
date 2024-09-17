@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import logRocket from 'logrocket'
 
 const emit = defineEmits(['close'])
 defineProps<{ open: boolean }>()
@@ -51,7 +50,6 @@ async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
     isAccepted.value = true
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
     error.value = err.message
   }
   finally {

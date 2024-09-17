@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useBadgesStore = defineStore('useBadgesStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
@@ -38,7 +36,7 @@ export const useBadgesStore = defineStore('useBadgesStore', () => {
       return false
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
       return false
     }
@@ -58,7 +56,7 @@ export const useBadgesStore = defineStore('useBadgesStore', () => {
       return result as Badge
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
     }
   }
 

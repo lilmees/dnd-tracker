@@ -46,7 +46,6 @@ export default defineNuxtConfig({
       beta: process.env.BETA,
       appDomain: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
       siteUrl: process.env.NODE_ENV === 'production' ? process.env.NUXT_PUBLIC_SITE_URL : 'http://localhost:3000',
-      logRocket: process.env.LOGROCKET_ID,
       formkit: process.env.FORMKIT_PRO,
     },
     mailAddress: process.env.MAIL,

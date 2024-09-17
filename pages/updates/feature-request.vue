@@ -1,6 +1,4 @@
 <script setup lang='ts'>
-import logRocket from 'logrocket'
-
 useHead({ title: 'Feature request' })
 
 const features = useFeaturesStore()
@@ -15,7 +13,7 @@ async function vote(id: string, votes: FeatureRequestVotes): Promise<void> {
     await features.vote(id, votes)
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
 }

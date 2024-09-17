@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const supabase = useSupabaseClient()
   const currentStore = useCurrentCampaignStore()
@@ -69,7 +67,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       getCount()
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {
@@ -137,7 +135,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
@@ -160,7 +158,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
@@ -184,7 +182,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }

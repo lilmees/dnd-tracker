@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 definePageMeta({ middleware: ['loggedin'] })
 useHead({ title: 'Register' })
 
@@ -34,7 +32,7 @@ async function register({ __init, username, name, marketing, ...credentials }: O
     navigateTo(localePath('/login'))
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
     toast.error()
   }

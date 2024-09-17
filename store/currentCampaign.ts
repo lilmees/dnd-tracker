@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', () => {
   const supabase = useSupabaseClient()
   const campaignStore = useCampaignsStore()
@@ -31,7 +29,7 @@ export const useCurrentCampaignStore = defineStore('useCurrentCampaignStore', ()
       useHead({ title: campaign.value.title })
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
       toast.error()
       navigateTo(localePath('/campaigns'))

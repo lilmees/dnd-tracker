@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useConditionsStore = defineStore('useConditionsStore', () => {
   const open5e = useOpen5eStore()
 
@@ -30,7 +28,7 @@ export const useConditionsStore = defineStore('useConditionsStore', () => {
       }) as unknown as Condition[]
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {
