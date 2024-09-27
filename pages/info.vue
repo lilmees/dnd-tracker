@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 useHead({ title: 'Info' })
 
 const open5e = useOpen5eStore()
@@ -51,7 +49,7 @@ const fetchInfo = useDebounceFn(async (query: Form): Promise<void> => {
     hits.value = results
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 useHead({ title: 'Contact' })
 
 const { t } = useI18n()
@@ -14,7 +12,6 @@ async function sendContactMail({ __init, ...formData }: Obj): Promise<void> {
   })
 
   if (error.value) {
-    logRocket.captureException(new Error('Failed to send email'))
     toast.error({
       text: t('general.mail.fail.text'),
       title: t('general.mail.fail.title'),

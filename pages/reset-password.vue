@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const { t } = useI18n()
 const store = useAuthStore()
 const toast = useToastStore()
@@ -20,7 +18,7 @@ async function resetPassword({ __init, password }: Obj): Promise<void> {
     navigateTo(localePath('/'))
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
     toast.error()
   }

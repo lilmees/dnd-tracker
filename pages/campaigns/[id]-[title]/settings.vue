@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const store = useCurrentCampaignStore()
 const campaignStore = useCampaignsStore()
 const toast = useToastStore()
@@ -34,7 +32,7 @@ async function handleSubmit({ __init, ...formData }: Obj): Promise<void> {
   }
   catch (err: any) {
     toast.error()
-    logRocket.captureException(err as Error)
+    console.error(err)
   }
   finally {
     isLoading.value = false
@@ -51,7 +49,7 @@ async function handleDelete(): Promise<void> {
     }
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {
@@ -67,7 +65,7 @@ async function changeRole(role: string | undefined, member: TeamMember): Promise
     }
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
 }

@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useFeaturesStore = defineStore('useFeaturesStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
@@ -67,7 +65,7 @@ export const useFeaturesStore = defineStore('useFeaturesStore', () => {
       data.value = results as FeatureRequest[]
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {

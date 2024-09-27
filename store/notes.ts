@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useNotesStore = defineStore('useNotesStore', () => {
   const currentStore = useCurrentCampaignStore()
   const supabase = useSupabaseClient()
@@ -30,7 +28,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
     }
     finally {
       loading.value = false
@@ -53,7 +51,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
@@ -76,7 +74,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
@@ -101,7 +99,7 @@ export const useNotesStore = defineStore('useNotesStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }

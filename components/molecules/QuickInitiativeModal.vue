@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
 import { reset } from '@formkit/core'
 
 const emit = defineEmits(['close'])
@@ -62,7 +61,7 @@ async function handleSubmit({ __init, ...rows }: Obj): Promise<void> {
     await store.encounterUpdate({ rows: store.encounter!.rows })
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {
