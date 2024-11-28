@@ -14,10 +14,6 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         ...data,
         email: credentials.email,
         id: userData.user.id,
-        role: 'User',
-        subscription_type: 'free',
-        temp_subscription: 'free',
-        badges: [],
       }
 
       const { error } = await supabase.from('profiles').insert([profile as never])

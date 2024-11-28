@@ -21,7 +21,7 @@ async function register({ __init, username, name, marketing, ...credentials }: O
 
     await store.register(
       credentials as Login,
-      { username, name, marketing, avatar: image.value, role: 'User' },
+      { username, name, marketing, avatar: image.value },
     )
 
     toast.success({
