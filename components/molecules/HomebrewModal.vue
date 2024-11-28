@@ -143,7 +143,7 @@ async function addInitiative({ amount, ...data }: Obj): Promise<void> {
   }
 
   // Set summoner data when it's an id
-  if (typeof data.summoner === 'number') {
+  if (typeof data.summoner === 'number' || typeof data.summoner === 'string') {
     const sum = table.encounter.rows.filter(r => r.id === data.summoner)[0]
     data.summoner = { name: sum.name, id: +sum.id }
   }
