@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
 import { gsap } from 'gsap'
 
 const store = useTableStore()
@@ -12,7 +11,7 @@ try {
   await store.getSandboxEncounter()
 }
 catch (err) {
-  logRocket.captureException(err as Error)
+  console.error(err)
   toast.error()
 }
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import logRocket from 'logrocket'
 
 const emit = defineEmits(['close'])
 const props = withDefaults(
@@ -40,7 +39,7 @@ function handleSubmit({ __init, ...formData }: Obj): void {
     resetForm()
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
   }
   finally {

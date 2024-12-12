@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const toast = useToastStore()
 const route = useRouteStore()
 const auth = useAuthStore()
@@ -53,7 +51,7 @@ async function logout(): Promise<void> {
     isOpen.value = false
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
 }

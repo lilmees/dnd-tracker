@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
 import type { Container } from 'tsparticles-engine'
 
 const toast = useToastStore()
@@ -51,7 +50,7 @@ async function acceptInvite(): Promise<void> {
   }
   catch (err: any) {
     toast.error()
-    logRocket.captureException(err as Error)
+    console.error(err)
   }
   finally {
     isLoading.value = false
@@ -69,7 +68,7 @@ async function declineInvite(): Promise<void> {
   }
   catch (err: any) {
     toast.error()
-    logRocket.captureException(err as Error)
+    console.error(err)
   }
   finally {
     isLoading.value = false

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
-
 const homebrew = useHomebrewStore()
 const store = useTableStore()
 const { t } = useI18n()
@@ -88,7 +86,7 @@ async function addHomebrews(homebrews: RowUpdate[] | Homebrew[]): Promise<void> 
     closeModal()
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
   }
   finally {
     isLoading.value = false

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import logRocket from 'logrocket'
 
 const emit = defineEmits(['updated', 'close'])
 const props = withDefaults(
@@ -81,7 +80,13 @@ function handleSubmit({ __init, data, slots, save, ...formData }: Obj): void {
 
     if (actions.length) {
       actions.forEach((a: Action) => {
-        homebrewData[a.type || 'action'] = [...(homebrewData[a.type || 'action'] || []), a]
+        homebrewData[a.type || 'action'] = [...(homebrewData[a.type || 'action'] || []), a].map((o) => {
+          return {
+            ...o,
+            ...(o.damage_bonus && !isNaN(+o.damage_bonus) ? { damage_bonus: +o.damage_bonus } : {}),
+            ...(o.attack_bonus && !isNaN(+o.attack_bonus) ? { attack_bonus: +o.attack_bonus } : {}),
+          }
+        })
       })
     }
 
@@ -103,7 +108,7 @@ function handleSubmit({ __init, data, slots, save, ...formData }: Obj): void {
     closeModal()
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     error.value = err.message
   }
   finally {

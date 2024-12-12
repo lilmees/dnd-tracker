@@ -101,14 +101,8 @@
     "current": "Huidig",
     "temp": "Tijdelijk",
     "max": "Max",
-    "drawing": "Tekenen",
-    "brushes": "Penselen",
-    "pencil": "Potlood",
-    "spraycan": "Spuitbus",
-    "eraser": "Wisser",
     "width": "Breedte",
     "height": "Hoogte",
-    "radius": "Straal",
     "note": "Notitie",
     "infoPins": "Info pins",
     "fantasyNameGenerator": "Fantasy name generator",
@@ -389,24 +383,6 @@
     "noMember": {
       "title": "Je bent geen teamlid",
       "text": "Oeps! Het lijkt erop dat je geen lid bent en geen toegang hebt tot deze inhoud. Als je denkt dat dit een vergissing is, aarzel dan niet om contact op te nemen met de eigenaar of een beheerder voor hulp."
-    },
-    "map": {
-      "tileSet": "Vloertegels",
-      "wallSet": "Muurtegels",
-      "fillBackground": "Achtergrond vullen",
-      "addBackground": "Achtergrond toevoegen",
-      "customBackground": "Eigen achtergrond",
-      "drawingMode": "Tekenmodus",
-      "snapToGrid": "Rasteruitlijning",
-      "showGrid": "Toon raster",
-      "brushSize": "Borstelgrootte: {size}",
-      "smallScreenCta": "Attention Dungeon Architects! Duik in de wereld van grotere schermen (850px en meer) en ontdek de kracht om verbluffende kerkerskaarten te creëren",
-      "toast": {
-        "max": {
-          "title": "Maximaal aantal sprites bereikt",
-          "text": "Je hebt het maximale aantal toegestane sprites op de kaart bereikt. Overweeg om wat sprites te verwijderen voordat je nieuwe toevoegt."
-        }
-      }
     },
     "fantasyNameGenerator": {
       "title": "Fantasy name generator",

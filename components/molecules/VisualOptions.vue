@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import logRocket from 'logrocket'
 import { reset } from '@formkit/core'
 
 const toast = useToastStore()
@@ -34,7 +33,7 @@ function update({ __init, ...formData }: Obj): void {
     table.encounterUpdate({ settings: { ...formData, modified: true } as EncounterSettings })
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {

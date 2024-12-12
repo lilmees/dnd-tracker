@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reset } from '@formkit/core'
-import logRocket from 'logrocket'
 
 definePageMeta({ middleware: ['auth'] })
 useHead({ title: 'Profile' })
@@ -50,7 +49,7 @@ const updateProfile = useThrottleFn(async ({ __init, data, ...formData }: Obj): 
     toast.success({ title: t('pages.profile.toast.success.text') })
   }
   catch (err: any) {
-    logRocket.captureException(err as Error)
+    console.error(err)
 
     if (formData.password) {
       passwordError.value = err.message
@@ -81,7 +80,7 @@ async function deleteUser(): Promise<void> {
     toast.success({ text: t('pages.profile.toast.delete.text') })
   }
   catch (err) {
-    logRocket.captureException(err as Error)
+    console.error(err)
     toast.error()
   }
   finally {

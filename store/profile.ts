@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useProfileStore = defineStore('useProfileStore', () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
@@ -50,7 +48,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {
@@ -124,7 +122,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
       return data as unknown as SocialProfile
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
@@ -144,7 +142,7 @@ export const useProfileStore = defineStore('useProfileStore', () => {
       return data as unknown as SocialProfile[]
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }

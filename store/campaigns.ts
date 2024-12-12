@@ -1,5 +1,3 @@
-import logRocket from 'logrocket'
-
 export const useCampaignsStore = defineStore('useCampaignsStore', () => {
   const supabase = useSupabaseClient()
   const profile = useProfileStore()
@@ -42,7 +40,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       error.value = err as string
     }
     finally {
@@ -96,7 +94,7 @@ export const useCampaignsStore = defineStore('useCampaignsStore', () => {
       }
     }
     catch (err) {
-      logRocket.captureException(err as Error)
+      console.error(err)
       toast.error()
     }
   }
