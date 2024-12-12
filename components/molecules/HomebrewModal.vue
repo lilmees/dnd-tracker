@@ -80,7 +80,13 @@ function handleSubmit({ __init, data, slots, save, ...formData }: Obj): void {
 
     if (actions.length) {
       actions.forEach((a: Action) => {
-        homebrewData[a.type || 'action'] = [...(homebrewData[a.type || 'action'] || []), a]
+        homebrewData[a.type || 'action'] = [...(homebrewData[a.type || 'action'] || []), a].map((o) => {
+          return {
+            ...o,
+            ...(o.damage_bonus && !isNaN(+o.damage_bonus) ? { damage_bonus: +o.damage_bonus } : {}),
+            ...(o.attack_bonus && !isNaN(+o.attack_bonus) ? { attack_bonus: +o.attack_bonus } : {}),
+          }
+        })
       })
     }
 
