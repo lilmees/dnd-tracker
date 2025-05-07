@@ -50,6 +50,7 @@ export default defineNuxtConfig({
     mailAddress: process.env.MAIL,
     mailPassword: process.env.MAIL_PASSWORD,
     stripeWebhook: process.env.STRIPE_WEBHOOK,
+    trmnl: process.env.TRMNL,
   },
   appConfig: {
     umami: { version: 2 },
