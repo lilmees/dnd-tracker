@@ -3,6 +3,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const currentStore = useCurrentCampaignStore()
   const tableStore = useTableStore()
   const toast = useToastStore()
+  const route = useRoute()
 
   const loading = ref<boolean>(true)
   const searching = ref<boolean>(true)
@@ -24,7 +25,7 @@ export const useHomebrewStore = defineStore('useHomebrewStore', () => {
   const noItems = computed<boolean>(() => data.value.length === 0 && !loading.value)
 
   watchDebounced(() => filters.value, async () => {
-    if (tableStore.isSandbox) {
+    if (tableStore.isSandbox && !route.fullPath.includes('/content')) {
       return
     }
 
